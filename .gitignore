@@ -1,0 +1,83 @@
+## .NET / Visual Studio
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# Rider
+.idea/
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+# Build results
+*.dll
+*.pdb
+*.cache
+
+# NuGet
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nupkg
+**/packages/
+!**/packages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.TestAdapter.config
+
+# Code coverage
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+
+# NCrunch
+_NCrunch_*
+.*crunch*.local.xml
+nCrunchTemp_*
+
+# Misc
+StyleCopReport.xml
+*.pidb
+*.svclog
+*.scc
+*.orig
+.mfractor/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Optimizely / EPiServer
+/src/EditorPowertools.SampleSite/App_Data/*.mdf
+/src/EditorPowertools.SampleSite/App_Data/*.ldf
+/src/EditorPowertools.SampleSite/App_Data/blobs/
+modulesbin/
+
+# Local settings
+appsettings.local.json
+.claude/
