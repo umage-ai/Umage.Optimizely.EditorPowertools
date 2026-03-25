@@ -1,0 +1,102 @@
+@using EPiServer.Shell
+@{
+    Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
+    ViewData["Title"] = "Overview";
+    string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
+}
+
+@section NavItems {
+    <a href="@ActionPath("EditorPowertools/Overview")" class="active">Overview</a>
+    <a href="@ActionPath("EditorPowertools/ContentTypeAudit")">Content Type Audit</a>
+}
+
+<div class="ept-page-header">
+    <h1>Editor Powertools</h1>
+    <p>A collection of power tools for Optimizely CMS editors and admins.</p>
+</div>
+
+<div class="ept-tool-grid">
+    <a href="@ActionPath("EditorPowertools/ContentTypeAudit")" class="ept-tool-card">
+        <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+        </svg>
+        <div class="ept-tool-card__title">Content Type Audit</div>
+        <div class="ept-tool-card__desc">Audit content types, usage counts, properties, and inheritance. Find orphaned types and unused content.</div>
+    </a>
+
+    <div class="ept-tool-card disabled">
+        <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <div class="ept-tool-card__title">Personalization Audit</div>
+        <div class="ept-tool-card__desc">Find where visitor groups and personalization are used across your content.</div>
+        <div class="ept-tool-card__status"><span class="ept-badge ept-badge--default">Coming soon</span></div>
+    </div>
+
+    <div class="ept-tool-card disabled">
+        <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        <div class="ept-tool-card__title">Activity Timeline</div>
+        <div class="ept-tool-card__desc">Full timeline of all site activities. See who changed what and when.</div>
+        <div class="ept-tool-card__status"><span class="ept-badge ept-badge--default">Coming soon</span></div>
+    </div>
+
+    <div class="ept-tool-card disabled">
+        <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
+        <div class="ept-tool-card__title">Scheduled Jobs Gantt</div>
+        <div class="ept-tool-card__desc">Interactive Gantt chart of scheduled job execution and planned runs.</div>
+        <div class="ept-tool-card__status"><span class="ept-badge ept-badge--default">Coming soon</span></div>
+    </div>
+
+    <div class="ept-tool-card disabled">
+        <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+        <div class="ept-tool-card__title">Bulk Property Editor</div>
+        <div class="ept-tool-card__desc">Edit a property value across multiple content items at once.</div>
+        <div class="ept-tool-card__status"><span class="ept-badge ept-badge--default">Coming soon</span></div>
+    </div>
+
+    <div class="ept-tool-card disabled">
+        <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+        <div class="ept-tool-card__title">CMS Health Check</div>
+        <div class="ept-tool-card__desc">Pluggable health check dashboard showing how your CMS is doing with actionable suggestions.</div>
+        <div class="ept-tool-card__status"><span class="ept-badge ept-badge--default">Coming soon</span></div>
+    </div>
+
+    <div class="ept-tool-card disabled">
+        <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <circle cx="19" cy="11" r="2"/>
+        </svg>
+        <div class="ept-tool-card__title">Active Editors</div>
+        <div class="ept-tool-card__desc">See who is currently editing and what they are working on. Message editors directly.</div>
+        <div class="ept-tool-card__status"><span class="ept-badge ept-badge--default">Coming soon</span></div>
+    </div>
+
+    <div class="ept-tool-card disabled">
+        <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"/>
+        </svg>
+        <div class="ept-tool-card__title">Content Type Recommendations</div>
+        <div class="ept-tool-card__desc">Configure rules to suggest content types when creating content under specific parents.</div>
+        <div class="ept-tool-card__status"><span class="ept-badge ept-badge--default">Coming soon</span></div>
+    </div>
+
+    <div class="ept-tool-card disabled">
+        <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        <div class="ept-tool-card__title">Content Type Visibility</div>
+        <div class="ept-tool-card__desc">Configure which content types are hidden from the normal content type selection dialog.</div>
+        <div class="ept-tool-card__status"><span class="ept-badge ept-badge--default">Coming soon</span></div>
+    </div>
+</div>

@@ -24,4 +24,15 @@
   <ItemGroup>
     <ProjectReference Include="..\EditorPowertools\EditorPowertools.csproj" />
   </ItemGroup>
+
+  <!-- Copy module files from the addon project during build (dev only, NuGet handles this via .targets) -->
+  <Target Name="CopyEditorPowertoolsModuleFiles" BeforeTargets="Build">
+    <ItemGroup>
+      <EditorPowertoolsModuleFiles Include="..\EditorPowertools\modules\_protected\EditorPowertools\**\*" />
+    </ItemGroup>
+    <Copy
+      SourceFiles="@(EditorPowertoolsModuleFiles)"
+      DestinationFiles="@(EditorPowertoolsModuleFiles->'$(MSBuildProjectDirectory)\modules\_protected\EditorPowertools\%(RecursiveDir)%(Filename)%(Extension)')"
+      SkipUnchangedFiles="true" />
+  </Target>
 </Project>

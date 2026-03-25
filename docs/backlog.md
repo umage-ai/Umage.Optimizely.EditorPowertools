@@ -4,7 +4,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 
 ## Carried Over (from old Blazor project - re-implement)
 
-- [ ] **Content Type Audit** - Audit all content types: name, base type, group, property count, usage count. Filterable, CSV export.
+- [x] **Content Type Audit** - Audit all content types, usage counts, properties (inherited/defined/orphaned), inheritance tree, CSV export. Includes drill-down dialogs for content of type and soft link references.
 - [ ] **Personalization Usage Audit** - Report where visitor groups are used (access rights, content areas, XHTML). Requires scheduled job to analyze.
 - [ ] **Content Type Recommendations** - Rules engine suggesting content types when creating content under specific parents. Rules stored in DynamicDataStore.
 - [ ] **Audience Manager** - Enhanced visitor group management with usage statistics and criteria counts.
@@ -22,6 +22,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 ## Bulk Operations
 
 - [ ] **Bulk Property Editor** - Edit a property value across multiple content items at once. (Details TBD - existing implementation to be provided.)
+- [ ] **Content Importer** - Upload Excel, CSV, or JSON files, then map fields to properties on a chosen content type. Pick a target location in the content tree and import. Supports preview before import, validation, and dry-run mode.
 
 ## Editor Collaboration
 
@@ -49,10 +50,14 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 
 ## Content Tools
 
+- [ ] **Content Audit** - Comprehensive content list: filterable, searchable, sortable with configurable columns. Export to Excel/CSV/JSON. Aggregated columns for personalization usage, where content is used, and who has read/write access.
+- [ ] **Content Statistics** - Dashboards showing content type distribution, content creation over time, content age analysis (oldest content), editor activity statistics, top 10 most active editors (per language). Some graphs can appear on the overview page.
 - [ ] **Orphaned Content Finder** - Find content not linked from anywhere
 - [ ] **Content Tree Exporter** - Export content tree structure to CSV
 - [ ] **Missing Alt Text Report** - Find images missing alt text
 - [ ] **Broken Link Checker** - Scan content for broken internal/external links
+- [ ] **Content Cleanup Tool** - Overview of stale drafts, never-published content, expired content, and old versions. Helps editors and admins identify content that can be cleaned up. Supports bulk delete/publish/archive actions. (Existing implementation in another project to reference.)
+- [ ] **Content Lifecycle Manager** - Define review intervals for content to ensure it stays relevant. Editors set review cadence per content item via an assets panel widget (e.g. "review every 6 months"). A full-page overview shows all content due for review, overdue items, and review history. Supports bulk actions (mark as reviewed, snooze, reassign). Data stored in DDS.
 
 ## Media Tools
 
@@ -62,6 +67,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 
 ## Admin Tools
 
+- [ ] **Content Type Visibility Manager** - Configure which content types are hidden from the normal content type selection dialog (e.g. accordion items that should only appear in accordion containers).
 - [ ] **Cache Inspector** - View and manage CMS cache entries
 - [ ] **Content Type Diff** - Compare content types between environments
 - [ ] **Environment Info Panel** - CMS version, loaded assemblies, config summary
@@ -79,5 +85,11 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Sitemap Validator** - Validate sitemap entries against actual content
 
 ---
+
+## Shared Infrastructure
+
+- [x] **Aggregation Scheduled Job** - Single scheduled job that traverses all content once and collects statistics for all tools (content type counts, personalization usage, etc.). Results stored in DDS.
+- [x] **Shared UI Design System** - CSS design system with cards, tables, dialogs, badges, buttons, tree views. Defined in `wwwroot/css/editorpowertools.css`.
+- [x] **Overview Page** - Dashboard showing all available tools with cards. Will later include content statistics graphs.
 
 *Priority: Carried-over tools first, then Activity Timeline, Scheduled Jobs Gantt, Bulk Edit, Active Editors, Health Check.*

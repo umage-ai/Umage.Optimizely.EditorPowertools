@@ -1,5 +1,7 @@
 using EditorPowertools.Configuration;
 using EditorPowertools.Permissions;
+using EditorPowertools.Services;
+using EditorPowertools.Tools.ContentTypeAudit;
 using EPiServer.Shell.Modules;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -52,6 +54,10 @@ public static class ServiceCollectionExtensions
 
         // Core services
         services.AddSingleton<FeatureAccessChecker>();
+        services.AddSingleton<ContentTypeStatisticsRepository>();
+
+        // Tool services
+        services.AddTransient<ContentTypeAuditService>();
 
         // Register as a protected module
         services.Configure<ProtectedModuleOptions>(options =>
@@ -61,8 +67,6 @@ public static class ServiceCollectionExtensions
                 Name = "EditorPowertools"
             });
         });
-
-        // TODO: Register tool-specific services here as they are implemented
 
         return services;
     }

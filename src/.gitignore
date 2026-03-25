@@ -14,7 +14,8 @@ obj/
 
 # Optimizely files
 *license.config
-modules/
+# Ignore modules in sample site (copied during build) but not in the plugin source
+EditorPowertools.SampleSite/modules/
 
 # OS crap
 .DS_Store

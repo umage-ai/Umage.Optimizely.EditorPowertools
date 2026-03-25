@@ -78,6 +78,11 @@ Thumbs.db
 /src/EditorPowertools.SampleSite/App_Data/blobs/
 modulesbin/
 
+# Sample site modules (copied during build, not source)
+/src/EditorPowertools.SampleSite/modules/
+
 # Local settings
 appsettings.local.json
-.claude/
+
+# Claude Code - include project settings, exclude local
+.claude/settings.local.json

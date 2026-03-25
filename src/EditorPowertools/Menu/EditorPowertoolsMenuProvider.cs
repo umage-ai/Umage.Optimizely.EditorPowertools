@@ -1,4 +1,5 @@
 using EditorPowertools.Permissions;
+using EPiServer.Shell;
 using EPiServer.Shell.Navigation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,58 +9,56 @@ namespace EditorPowertools.Menu;
 [MenuProvider]
 public class EditorPowertoolsMenuProvider : IMenuProvider
 {
+    private static readonly string BaseMenuPath = MenuPaths.Global + "/cms/editorpowertools";
+
     public IEnumerable<MenuItem> GetMenuItems()
     {
-        var section = new SectionMenuItem("Editor Powertools", MenuPaths.Global + "/cms/editorpowertools")
+        yield return new SectionMenuItem("Editor Powertools", BaseMenuPath)
         {
+            Url = GetResourcePath("EditorPowertools/Overview"),
             SortIndex = 500,
             IsAvailable = _ => true
         };
 
-        var overview = new UrlMenuItem("Overview", MenuPaths.Global + "/cms/editorpowertools/overview",
-            "/editorpowertools")
+        yield return new UrlMenuItem("Overview", BaseMenuPath + "/overview",
+            GetResourcePath("EditorPowertools/Overview"))
         {
             SortIndex = 100,
             IsAvailable = _ => true
         };
 
-        var contentTypeAudit = new UrlMenuItem("Content Type Audit", MenuPaths.Global + "/cms/editorpowertools/contenttypeaudit",
-            "/editorpowertools/content-type-audit")
+        yield return new UrlMenuItem("Content Type Audit", BaseMenuPath + "/contenttypeaudit",
+            GetResourcePath("EditorPowertools/ContentTypeAudit"))
         {
             SortIndex = 200,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentTypeAudit))
         };
 
-        var personalizationAudit = new UrlMenuItem("Personalization Audit", MenuPaths.Global + "/cms/editorpowertools/personalizationaudit",
-            "/editorpowertools/personalization-audit")
+        yield return new UrlMenuItem("Personalization Audit", BaseMenuPath + "/personalizationaudit",
+            GetResourcePath("EditorPowertools/PersonalizationAudit"))
         {
             SortIndex = 300,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.PersonalizationUsageAudit))
         };
 
-        var audienceManager = new UrlMenuItem("Audience Manager", MenuPaths.Global + "/cms/editorpowertools/audiencemanager",
-            "/editorpowertools/audience-manager")
+        yield return new UrlMenuItem("Audience Manager", BaseMenuPath + "/audiencemanager",
+            GetResourcePath("EditorPowertools/AudienceManager"))
         {
             SortIndex = 400,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.AudienceManager))
         };
 
-        var contentTypeRecommendations = new UrlMenuItem("Content Type Recommendations", MenuPaths.Global + "/cms/editorpowertools/contenttyperecommendations",
-            "/editorpowertools/content-type-recommendations")
+        yield return new UrlMenuItem("Content Type Recommendations", BaseMenuPath + "/contenttyperecommendations",
+            GetResourcePath("EditorPowertools/ContentTypeRecommendations"))
         {
             SortIndex = 500,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentTypeRecommendations))
         };
+    }
 
-        return new MenuItem[]
-        {
-            section,
-            overview,
-            contentTypeAudit,
-            personalizationAudit,
-            audienceManager,
-            contentTypeRecommendations
-        };
+    private static string GetResourcePath(string resourcePath)
+    {
+        return Paths.ToResource(typeof(EditorPowertoolsMenuProvider), resourcePath);
     }
 
     private static bool IsFeatureEnabled(HttpContext context, string featureName)
