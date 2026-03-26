@@ -16,6 +16,10 @@ obj/
 *license.config
 # Ignore modules in sample site (copied during build) but not in the plugin source
 EditorPowertools.SampleSite/modules/
+# Ignore Optimizely system modules that appear during builds (keep only our EditorPowertools module)
+EditorPowertools/modules/_protected/CMS/
+EditorPowertools/modules/_protected/EPiServer.*/
+EditorPowertools/modules/_protected/Shell/
 
 # OS crap
 .DS_Store

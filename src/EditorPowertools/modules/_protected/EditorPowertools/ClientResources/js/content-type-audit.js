@@ -42,26 +42,44 @@
         const el = document.createElement('div');
         el.id = 'audit-job-alert';
 
+        const runBtn = `<button class="ept-btn ept-btn--sm" id="ept-run-job-btn" style="margin-left:8px">Run now</button>`;
+
         if (jobStatus.isRunning) {
             el.className = 'ept-alert ept-alert--info';
-            el.innerHTML = `${EPT.icons.spinner || '⏳'} <strong>Aggregation job is currently running.</strong> Content counts will be updated when it completes. <a href="javascript:void(0)" onclick="location.reload()">Refresh</a>`;
+            el.innerHTML = `⏳ <strong>Aggregation job is currently running.</strong> Content counts will be updated when it completes. <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">Refresh</button>`;
         } else if (!jobStatus.hasRun) {
             el.className = 'ept-alert ept-alert--warning';
-            el.innerHTML = `<strong>Content statistics have not been collected yet.</strong> The "Content" column will show data after the <em>[EditorPowertools] Aggregate Content Type Statistics</em> scheduled job has been run. <a href="/EPiServer/EPiServer.Cms.UI.Admin/default#/ScheduledJobs" target="_blank">Go to Scheduled Jobs</a>`;
+            el.innerHTML = `<strong>Content statistics have not been collected yet.</strong> The "Content" column will show data after the aggregation job has been run. ${runBtn}`;
         } else {
             const ago = timeAgo(new Date(jobStatus.lastRunUtc));
             const isOld = (Date.now() - new Date(jobStatus.lastRunUtc).getTime()) > 24 * 60 * 60 * 1000;
             if (isOld) {
                 el.className = 'ept-alert ept-alert--warning';
-                el.innerHTML = `Statistics were last updated <strong>${ago}</strong>. Consider running the aggregation job for fresh data. <a href="/EPiServer/EPiServer.Cms.UI.Admin/default#/ScheduledJobs" target="_blank">Go to Scheduled Jobs</a>`;
+                el.innerHTML = `Statistics were last updated <strong>${ago}</strong>. Consider running the aggregation job for fresh data. ${runBtn}`;
             } else {
-                // Recent run, no alert needed
                 return;
             }
         }
 
         const container = document.getElementById('audit-stats');
         container.parentNode.insertBefore(el, container);
+
+        // Wire up "Run now" button
+        const btn = document.getElementById('ept-run-job-btn');
+        if (btn) {
+            btn.addEventListener('click', async () => {
+                btn.disabled = true;
+                btn.textContent = 'Starting...';
+                try {
+                    await EPT.postJson(`${API}/aggregation-start`);
+                    el.className = 'ept-alert ept-alert--info';
+                    el.innerHTML = `⏳ <strong>Aggregation job has been started.</strong> Content counts will be updated when it completes. <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">Refresh</button>`;
+                } catch (err) {
+                    btn.textContent = 'Failed';
+                    console.error('Failed to start job:', err);
+                }
+            });
+        }
     }
 
     function timeAgo(date) {
@@ -172,14 +190,21 @@
     function renderTable() {
         const data = getFiltered();
 
+        // Collect distinct values for filterable columns
+        const distinctBases = [...new Set(data.map(r => r.base).filter(Boolean))].sort();
+        const distinctGroups = [...new Set(data.map(r => r.groupName).filter(Boolean))].sort();
+
         const columns = [
             { key: 'name', label: 'Name', render: (r) => renderTypeName(r) },
-            { key: 'base', label: 'Base' },
-            { key: 'groupName', label: 'Group' },
+            { key: 'base', label: 'Base', filterable: distinctBases },
+            { key: 'groupName', label: 'Group', filterable: distinctGroups },
             { key: 'propertyCount', label: 'Properties', align: 'right' },
             { key: 'contentCount', label: 'Content', align: 'right', render: (r) => renderCount(r.contentCount) },
             { key: 'actions', label: '', sortable: false, render: (r) => renderActions(r) }
         ];
+
+        // Column filters state
+        const colFilters = {};
 
         tableInstance = EPT.createTable(columns, data, {
             defaultSort: 'name',
@@ -194,6 +219,39 @@
         content.innerHTML = '';
         const card = document.createElement('div');
         card.className = 'ept-card';
+
+        // Add filter row below header
+        const thead = tableInstance.table.querySelector('thead');
+        const filterRow = document.createElement('tr');
+        filterRow.className = 'ept-filter-row';
+        columns.forEach(col => {
+            const td = document.createElement('td');
+            td.style.padding = '2px 4px';
+            td.style.background = 'var(--ept-bg, #f5f6f8)';
+            if (col.filterable) {
+                const sel = document.createElement('select');
+                sel.className = 'ept-select';
+                sel.style.cssText = 'width:100%;font-size:11px;padding:2px 20px 2px 4px';
+                sel.innerHTML = `<option value="">All</option>${col.filterable.map(v => `<option value="${v}">${v}</option>`).join('')}`;
+                sel.addEventListener('change', () => {
+                    colFilters[col.key] = sel.value || null;
+                    applyColumnFilters();
+                });
+                td.appendChild(sel);
+            }
+            filterRow.appendChild(td);
+        });
+        thead.appendChild(filterRow);
+
+        function applyColumnFilters() {
+            const activeFilters = Object.entries(colFilters).filter(([, v]) => v);
+            if (activeFilters.length === 0) {
+                tableInstance.render(null);
+            } else {
+                tableInstance.render(row => activeFilters.every(([key, val]) => row[key] === val));
+            }
+        }
+
         const body = document.createElement('div');
         body.className = 'ept-card__body ept-card__body--flush';
         body.style.overflow = 'auto';
@@ -488,6 +546,10 @@
             if (node.isOrphaned) {
                 label.innerHTML += ' <span class="ept-badge ept-badge--danger">Orphaned</span>';
             }
+            label.title = 'Click to view content of this type';
+            label.addEventListener('click', () => {
+                showContentOfType({ id: node.id, displayName: node.displayName, name: node.name });
+            });
             line.appendChild(label);
 
             if (node.contentCount != null) {

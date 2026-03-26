@@ -98,4 +98,12 @@ public class ContentTypeAuditApiController : Controller
         var status = _jobStatusService.GetStatus();
         return Ok(status);
     }
+
+    [HttpPost]
+    [Route("editorpowertools/api/aggregation-start")]
+    public async Task<IActionResult> StartAggregationJob()
+    {
+        var started = await _jobStatusService.StartJobAsync();
+        return Ok(new { started });
+    }
 }

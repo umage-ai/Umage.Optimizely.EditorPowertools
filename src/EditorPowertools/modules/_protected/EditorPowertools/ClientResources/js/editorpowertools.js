@@ -11,6 +11,16 @@ const EPT = {
         return resp.json();
     },
 
+    async postJson(url, body) {
+        const resp = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: body ? JSON.stringify(body) : undefined
+        });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
+        return resp.json();
+    },
+
     /**
      * Show a loading indicator inside an element.
      */
@@ -106,14 +116,17 @@ const EPT = {
         const tbody = document.createElement('tbody');
         table.appendChild(tbody);
 
+        let lastFilterFn = null;
+
         function render(filterFn) {
+            if (filterFn !== undefined) lastFilterFn = filterFn;
             // Sort indicators
             headerRow.querySelectorAll('th').forEach((th, i) => {
                 th.removeAttribute('data-sort-dir');
                 if (columns[i].key === sortKey) th.setAttribute('data-sort-dir', sortDir);
             });
 
-            let rows = filterFn ? data.filter(filterFn) : [...data];
+            let rows = lastFilterFn ? data.filter(lastFilterFn) : [...data];
 
             if (sortKey) {
                 rows.sort((a, b) => {
