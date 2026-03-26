@@ -1,11 +1,18 @@
 using EditorPowertools.Configuration;
 using EditorPowertools.Permissions;
 using EditorPowertools.Services;
+using EditorPowertools.Tools.AudienceManager;
+using EditorPowertools.Tools.BulkPropertyEditor;
+using EditorPowertools.Tools.ActivityTimeline;
 using EditorPowertools.Tools.ContentTypeAudit;
+using EditorPowertools.Tools.ScheduledJobsGantt;
+using EditorPowertools.Tools.ContentTypeRecommendations;
+using EditorPowertools.Tools.PersonalizationAudit;
 using EPiServer.Shell.Modules;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace EditorPowertools.Infrastructure;
 
@@ -26,18 +33,6 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         Action<EditorPowertoolsOptions> configureOptions)
     {
-        return services.AddEditorPowertools(configureOptions, policy =>
-            policy.RequireRole("WebAdmins", "CmsAdmins", "Administrators"));
-    }
-
-    /// <summary>
-    /// Adds Editor Powertools with custom options and authorization policy.
-    /// </summary>
-    public static IServiceCollection AddEditorPowertools(
-        this IServiceCollection services,
-        Action<EditorPowertoolsOptions> configureOptions,
-        Action<AuthorizationPolicyBuilder> configurePolicy)
-    {
         // Bind options from appsettings section, then apply code overrides
         services.AddOptions<EditorPowertoolsOptions>()
             .Configure<IConfiguration>((options, configuration) =>
@@ -46,19 +41,39 @@ public static class ServiceCollectionExtensions
             })
             .Configure(configureOptions);
 
-        // Authorization policy
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy("codeart:editorpowertools", configurePolicy);
-        });
+        // Build the authorization policy from configured roles.
+        // Uses PostConfigure to read the final merged options, then configures the policy.
+        services.AddSingleton<IPostConfigureOptions<AuthorizationOptions>, ConfigureEditorPowertoolsPolicy>();
 
         // Core services
         services.AddSingleton<FeatureAccessChecker>();
         services.AddSingleton<ContentTypeStatisticsRepository>();
+        services.AddSingleton<UserPreferencesService>();
 
         // Tool services
         services.AddTransient<ContentTypeAuditService>();
         services.AddTransient<AggregationJobStatusService>();
+
+        // Personalization Audit
+        services.AddSingleton<PersonalizationUsageRepository>();
+        services.AddTransient<PersonalizationAuditService>();
+        services.AddTransient<PersonalizationJobStatusService>();
+
+        // Audience Manager
+        services.AddTransient<AudienceManagerService>();
+
+        // Content Type Recommendations
+        services.AddSingleton<ContentTypeRecommendationRepository>();
+        services.AddTransient<ContentTypeRecommendationService>();
+
+        // Bulk Property Editor
+        services.AddTransient<BulkPropertyEditorService>();
+
+        // Scheduled Jobs Gantt
+        services.AddTransient<ScheduledJobsGanttService>();
+
+        // Activity Timeline
+        services.AddTransient<ActivityTimelineService>();
 
         // Register as a protected module
         services.Configure<ProtectedModuleOptions>(options =>
@@ -70,5 +85,28 @@ public static class ServiceCollectionExtensions
         });
 
         return services;
+    }
+}
+
+/// <summary>
+/// Configures the authorization policy using roles from EditorPowertoolsOptions.
+/// This runs after all option configurations have been applied, so it sees the final merged roles.
+/// </summary>
+internal class ConfigureEditorPowertoolsPolicy : IPostConfigureOptions<AuthorizationOptions>
+{
+    private readonly IOptions<EditorPowertoolsOptions> _eptOptions;
+
+    public ConfigureEditorPowertoolsPolicy(IOptions<EditorPowertoolsOptions> eptOptions)
+    {
+        _eptOptions = eptOptions;
+    }
+
+    public void PostConfigure(string? name, AuthorizationOptions options)
+    {
+        var roles = _eptOptions.Value.AuthorizedRoles;
+        if (roles == null || roles.Length == 0)
+            roles = ["WebAdmins", "Administrators"];
+
+        options.AddPolicy("codeart:editorpowertools", policy => policy.RequireRole(roles));
     }
 }

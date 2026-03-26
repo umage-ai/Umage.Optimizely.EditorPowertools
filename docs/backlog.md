@@ -36,9 +36,13 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Personalization Coverage Report** - Overview of which pages/content areas have personalization applied and which don't.
 - [ ] **Visitor Group Dependency Map** - Visualize which visitor groups are used where and how they relate to each other.
 
+## Visualization
+
+- [ ] **Content Connection Visualizer** - Interactive D3.js visualization of page connections, interlinks, and blocks-in-blocks within a page. Shows how content items relate to each other through links, content areas, and block hierarchies. Dynamic, beautiful, and interactive graph exploration.
+
 ## Health & Diagnostics
 
-- [ ] **CMS Health Check Dashboard** - Pluggable health check system showing how the CMS is doing. Each check reports status (healthy/warning/critical) with actionable suggestions. Extensible so custom checks can be added. Example checks:
+- [ ] **CMS Health Check Dashboard** - Pluggable health check system showing how the CMS is doing. Inspired by [CodeArt Optimizely Health Checker](https://www.codeart.dk/blog/2021/5/new-project-optimizely-episerver-health-checker/) and its accompanying repo. Each check reports status (healthy/warning/critical) with actionable suggestions. Extensible so custom checks can be added. Example checks:
   - Orphaned content detection
   - Missing media references
   - Unused content types
@@ -55,7 +59,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Orphaned Content Finder** - Find content not linked from anywhere
 - [ ] **Content Tree Exporter** - Export content tree structure to CSV
 - [ ] **Missing Alt Text Report** - Find images missing alt text
-- [ ] **Broken Link Checker** - Scan content for broken internal/external links
+- [ ] **Link Checker** - Comprehensive link health monitoring. Scheduled job crawls all content to catalog internal and external (outbound) links. Checks link status (200/301/404/timeout/etc.), tracks history over time. UI shows broken links with filters by status code, content type, internal/external. Links to affected content items for easy fixing. Uses the shared aggregation scheduled job for link discovery, with a separate background check for outbound URL validation.
 - [ ] **Content Cleanup Tool** - Overview of stale drafts, never-published content, expired content, and old versions. Helps editors and admins identify content that can be cleaned up. Supports bulk delete/publish/archive actions. (Existing implementation in another project to reference.)
 - [ ] **Content Lifecycle Manager** - Define review intervals for content to ensure it stays relevant. Editors set review cadence per content item via an assets panel widget (e.g. "review every 6 months"). A full-page overview shows all content due for review, overdue items, and review history. Supports bulk actions (mark as reviewed, snooze, reassign). Data stored in DDS.
 
@@ -65,12 +69,24 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Media Usage Report** - Show where each media item is used
 - [ ] **Duplicate Media Finder** - Find duplicate media files (by hash or name)
 
+## Settings & Configuration
+
+- [ ] **PowerTools Settings Area** - In-app settings UI for configuring EditorPowertools options. Toggle features on/off, configure permissions, set scheduled job intervals, and manage tool-specific settings without editing appsettings.json. Persisted via DDS or options pattern.
+
 ## Admin Tools
 
 - [ ] **Content Type Visibility Manager** - Configure which content types are hidden from the normal content type selection dialog (e.g. accordion items that should only appear in accordion containers).
 - [ ] **Cache Inspector** - View and manage CMS cache entries
 - [ ] **Content Type Diff** - Compare content types between environments
 - [ ] **Environment Info Panel** - CMS version, loaded assemblies, config summary
+
+## Content Calendar
+
+- [ ] **Content Calendar** - Calendar view showing when content was published and when it's scheduled to be published. Monthly/weekly view with content items placed on their publish dates. Click to navigate to the content item. Filter by content type, language, editor. Shows both past publications and future scheduled publishes.
+
+## Fun & Easter Eggs
+
+- [ ] **Konami Code Easter Egg** - Hidden feature toggled in PowerTools settings. When enabled, entering the Konami code (↑↑↓↓←→←→BA) in a text field in edit mode triggers a fun classic game popup (Breakout, Sudoku, or similar). A little surprise for editors who discover it.
 
 ## Editor UX
 
@@ -83,6 +99,18 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **SEO Checklist** - Per-page checklist for SEO best practices
 - [ ] **Redirect Manager** - UI for managing URL redirects
 - [ ] **Sitemap Validator** - Validate sitemap entries against actual content
+
+## Forms Management (Separate NuGet: `CodeArt.Optimizely.EditorPowertools.Forms`)
+
+*Separate project/NuGet package with dependency on EPiServer.Forms.*
+
+- [ ] **Form Manager** - Comprehensive form management tool:
+  - List all forms on the site with property counts
+  - Detect forms with duplicate properties
+  - Track which forms are used the most (submission counts)
+  - List recent form submissions
+  - GDPR data audit: identify where old personal data exists
+  - GDPR cleanup: tools to purge old form submission data based on age/form
 
 ---
 

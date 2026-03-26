@@ -604,3 +604,270 @@
 .ept-mt-md { margin-top: var(--ept-space-md); }
 .ept-mb-md { margin-bottom: var(--ept-space-md); }
 .ept-hidden { display: none !important; }
+
+/* ========================================================================
+   Bulk Property Editor - Tool-specific styles
+   ======================================================================== */
+
+/* Alert */
+.bpe-alert {
+    padding: 10px 16px;
+    border-radius: var(--ept-radius);
+    margin-bottom: 12px;
+    font-size: 13px;
+    display: none;
+}
+
+.bpe-alert--visible { display: block; }
+.bpe-alert--success { background: var(--ept-success-light); color: var(--ept-success); border: 1px solid var(--ept-success); }
+.bpe-alert--error { background: var(--ept-danger-light); color: var(--ept-danger); border: 1px solid var(--ept-danger); }
+
+/* Toolbar extras */
+.bpe-toolbar-sep {
+    width: 1px;
+    height: 28px;
+    background: var(--ept-border);
+}
+
+.bpe-toolbar-check {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ept-text-secondary);
+    cursor: pointer;
+}
+
+.bpe-toolbar-check input[type="checkbox"] { margin: 0; }
+
+/* Column picker dropdown */
+.bpe-col-picker {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 4px;
+    background: var(--ept-surface);
+    border: 1px solid var(--ept-border);
+    border-radius: var(--ept-radius);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    min-width: 240px;
+    max-height: 320px;
+    overflow-y: auto;
+    z-index: 100;
+    padding: 6px 0;
+}
+
+.bpe-col-picker--open { display: block; }
+
+.bpe-col-picker-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ept-text);
+}
+
+.bpe-col-picker-item:hover { background: var(--ept-surface-hover); }
+.bpe-col-picker-item input[type="checkbox"] { margin: 0; }
+
+/* Filter bar */
+.bpe-filter-bar {
+    background: var(--ept-surface);
+    border: 1px solid var(--ept-border);
+    border-radius: var(--ept-radius);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    display: none;
+}
+
+.bpe-filter-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.bpe-filter-row:last-child { margin-bottom: 0; }
+
+.bpe-filter-row .bpe-filter-prop { min-width: 180px; }
+.bpe-filter-row .bpe-filter-op { min-width: 120px; }
+.bpe-filter-row .bpe-filter-val { flex: 1; min-width: 150px; }
+
+/* Editable cells */
+td.bpe-editable {
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+td.bpe-editable:hover {
+    background: var(--ept-primary-light);
+}
+
+td.bpe-edited {
+    background: var(--ept-warning-light) !important;
+}
+
+td.bpe-editing {
+    padding: 4px 8px;
+}
+
+td.bpe-editing input,
+td.bpe-editing select {
+    width: 100%;
+    padding: 4px 8px;
+    border: 2px solid var(--ept-primary);
+    border-radius: 3px;
+    font-size: 13px;
+    outline: none;
+}
+
+/* Row actions */
+.bpe-row-actions {
+    display: flex;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.bpe-btn-row-save {
+    border-color: var(--ept-primary) !important;
+    color: var(--ept-primary) !important;
+}
+
+.bpe-btn-row-save:hover {
+    background: var(--ept-primary) !important;
+    color: #fff !important;
+}
+
+.bpe-btn-row-publish {
+    border-color: var(--ept-success) !important;
+    color: var(--ept-success) !important;
+}
+
+.bpe-btn-row-publish:hover {
+    background: var(--ept-success) !important;
+    color: #fff !important;
+}
+
+/* Sortable headers */
+.bpe-sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.bpe-sortable:hover { background: var(--ept-surface-hover); }
+
+.bpe-sort-arrow {
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 11px;
+    color: var(--ept-text-muted);
+}
+
+.bpe-sorted-asc .bpe-sort-arrow,
+.bpe-sorted-desc .bpe-sort-arrow {
+    color: var(--ept-primary);
+}
+
+/* Reference count badge */
+.bpe-ref-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 1px 6px;
+    background: var(--ept-surface-hover);
+    border-radius: 10px;
+    font-size: 11px;
+    color: var(--ept-text-secondary);
+    cursor: pointer;
+}
+
+.bpe-ref-count:hover { background: var(--ept-surface-active); }
+
+/* Pagination */
+.bpe-pagination {
+    background: var(--ept-surface);
+    border: 1px solid var(--ept-border);
+    border-radius: var(--ept-radius);
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.bpe-pagination-info {
+    font-size: 13px;
+    color: var(--ept-text-secondary);
+}
+
+.bpe-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.bpe-page-size {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.bpe-page-size label {
+    font-size: 13px;
+    color: var(--ept-text-secondary);
+    margin: 0;
+}
+
+/* Pending changes bar */
+.bpe-pending-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--ept-surface);
+    border-top: 2px solid var(--ept-primary);
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.12);
+    padding: 12px 24px;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 200;
+}
+
+.bpe-pending-bar--visible { display: flex; }
+
+.bpe-pending-info {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ept-text);
+}
+
+.bpe-pending-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.bpe-btn-discard {
+    background: var(--ept-surface) !important;
+    color: var(--ept-danger) !important;
+    border: 1px solid var(--ept-danger) !important;
+}
+
+.bpe-btn-discard:hover {
+    background: var(--ept-danger) !important;
+    color: #fff !important;
+}
+
+.bpe-btn-success {
+    background: var(--ept-success) !important;
+    color: #fff !important;
+    border: 1px solid var(--ept-success) !important;
+}
+
+.bpe-btn-success:hover {
+    background: var(--ept-success) !important;
+    filter: brightness(0.9);
+}

@@ -73,8 +73,29 @@ Options can also be set via `appsettings.json`:
 Each tool is protected by three independent checks:
 
 1. **Feature Toggle** - Is the tool enabled at all? (`FeatureToggles` in options)
-2. **Authorization Policy** - Is the user in an authorized role? (default: WebAdmins/CmsAdmins/Administrators)
-3. **EPiServer Permission** - Optional per-user check via `PermissionTypes` (when `CheckPermissionForEachFeature = true`)
+2. **Authorization Policy** - Is the user in an authorized role? Configured via `AuthorizedRoles` in options (default: `WebAdmins`, `Administrators`). Users in these roles have full access to everything.
+3. **Permissions For Functions** - Optional per-tool access via Optimizely's "Permissions For Functions" admin UI (when `CheckPermissionForEachFeature = true`). This allows granting access to specific tools for users/roles not in `AuthorizedRoles`.
+
+**Configuration example:**
+```json
+{
+  "CodeArt": {
+    "EditorPowertools": {
+      "authorizedRoles": ["WebAdmins", "Administrators", "PowerUsers"],
+      "checkPermissionForEachFeature": true
+    }
+  }
+}
+```
+
+Or in code:
+```csharp
+services.AddEditorPowertools(options =>
+{
+    options.AuthorizedRoles = ["WebAdmins", "Administrators"];
+    options.CheckPermissionForEachFeature = true;
+});
+```
 
 **Every tool must be toggleable.** When adding a new tool, always:
 1. Add a `bool` property to `FeatureToggles` (default `true`)
@@ -297,6 +318,26 @@ This makes it straightforward to add new UI languages by adding additional `<lan
 - A **single shared scheduled job** (`ContentTypeStatisticsJob`) traverses all content and collects statistics for all tools in one pass. Extend it when adding new tools that need aggregated data.
 - Use **in-memory caching** with TTL for frequently accessed but cheap-to-compute data.
 - Never use a separate database.
+
+## Polite UX – Remember User Preferences
+
+Tools MUST remember user preferences (selected columns, filters, sort order, page size, view mode, etc.) so the UI returns to the same state next time the user visits. This is a core usability principle.
+
+**Implementation:** Use the shared `UserPreferencesService` which stores per-user, per-tool settings as JSON in DDS:
+
+```csharp
+// Reading preferences in a controller/service:
+var prefs = _userPreferencesService.Get(username, "BulkPropertyEditor");
+
+// Saving preferences:
+_userPreferencesService.Save(username, "BulkPropertyEditor", jsonString);
+```
+
+**Frontend pattern:** Each tool's JS should:
+1. On load: fetch preferences from `GET /editorpowertools/api/preferences/{toolName}` and apply them
+2. On change: debounce-save preferences to `POST /editorpowertools/api/preferences/{toolName}`
+
+**What to persist:** Selected columns, sort column/direction, page size, active filters, view mode (table/tree), checkbox states (show system types, include references, etc.). Do NOT persist transient state like search queries or pending changes.
 
 ## NuGet Packaging
 

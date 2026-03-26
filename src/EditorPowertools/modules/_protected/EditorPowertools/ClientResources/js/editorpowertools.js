@@ -203,6 +203,32 @@ const EPT = {
         URL.revokeObjectURL(url);
     },
 
+    /**
+     * Load user preferences for a tool. Returns parsed JSON or empty object.
+     */
+    async loadPreferences(toolName) {
+        try {
+            return await this.fetchJson(`/editorpowertools/api/preferences/${encodeURIComponent(toolName)}`);
+        } catch { return {}; }
+    },
+
+    /**
+     * Save user preferences for a tool. Debounced - call freely on every change.
+     */
+    savePreferences(toolName, prefs) {
+        if (this._prefTimers && this._prefTimers[toolName]) {
+            clearTimeout(this._prefTimers[toolName]);
+        }
+        if (!this._prefTimers) this._prefTimers = {};
+        this._prefTimers[toolName] = setTimeout(() => {
+            fetch(`/editorpowertools/api/preferences/${encodeURIComponent(toolName)}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(prefs)
+            }).catch(() => {});
+        }, 1000);
+    },
+
     /** SVG icon helpers */
     icons: {
         search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>',

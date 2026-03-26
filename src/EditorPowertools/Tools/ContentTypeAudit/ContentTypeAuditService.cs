@@ -275,6 +275,7 @@ public class ContentTypeAuditService
             PropertyCount = ct.PropertyDefinitions.Count,
             IsSystemType = IsSystemType(ct),
             IsOrphaned = ct.ModelType == null,
+            IconUrl = GetIconUrl(ct),
             Created = ct.Created,
             Saved = ct.Saved,
             SavedBy = ct.SavedBy,
@@ -298,5 +299,11 @@ public class ContentTypeAuditService
             return true;
 
         return false;
+    }
+
+    private static string? GetIconUrl(ContentType ct)
+    {
+        var attr = ct.ModelType?.GetCustomAttribute<ImageUrlAttribute>();
+        return attr?.Path;
     }
 }

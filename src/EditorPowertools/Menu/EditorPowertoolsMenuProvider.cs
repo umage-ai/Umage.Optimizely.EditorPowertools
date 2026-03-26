@@ -54,6 +54,27 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
             SortIndex = 500,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentTypeRecommendations))
         };
+
+        yield return new UrlMenuItem("Bulk Property Editor", BaseMenuPath + "/bulkpropertyeditor",
+            GetResourcePath("EditorPowertools/BulkPropertyEditor"))
+        {
+            SortIndex = 600,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.BulkPropertyEditor))
+        };
+
+        yield return new UrlMenuItem("Scheduled Jobs Gantt", BaseMenuPath + "/scheduledjobsgantt",
+            GetResourcePath("EditorPowertools/ScheduledJobsGantt"))
+        {
+            SortIndex = 700,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ScheduledJobsGantt))
+        };
+
+        yield return new UrlMenuItem("Activity Timeline", BaseMenuPath + "/activitytimeline",
+            GetResourcePath("EditorPowertools/ActivityTimeline"))
+        {
+            SortIndex = 800,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ActivityTimeline))
+        };
     }
 
     private static string GetResourcePath(string resourcePath)

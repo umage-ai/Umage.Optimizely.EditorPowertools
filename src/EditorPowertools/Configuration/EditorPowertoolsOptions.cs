@@ -13,8 +13,16 @@ public class EditorPowertoolsOptions
     public FeatureToggles Features { get; set; } = new();
 
     /// <summary>
-    /// When true, each feature checks the user's EPiServer permissions (PermissionTypes)
-    /// in addition to the authorization policy. When false, only the policy is checked.
+    /// When true, each feature checks the user's EPiServer permissions (Permissions For Functions)
+    /// in addition to the authorization policy. When false, only the role-based policy is checked.
+    /// Enable this to allow granular per-tool access control via the CMS admin "Permissions For Functions" UI.
     /// </summary>
     public bool CheckPermissionForEachFeature { get; set; }
+
+    /// <summary>
+    /// Roles that have full access to all Editor Powertools features.
+    /// Users in these roles bypass per-feature permission checks.
+    /// Default: WebAdmins, Administrators.
+    /// </summary>
+    public string[] AuthorizedRoles { get; set; } = ["WebAdmins", "Administrators"];
 }

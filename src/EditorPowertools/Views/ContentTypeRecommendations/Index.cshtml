@@ -1,0 +1,21 @@
+@using EPiServer.Shell
+@{
+    Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
+    ViewData["Title"] = "Content Type Recommendations";
+    string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
+}
+
+@section NavItems {
+    <a href="@ActionPath("EditorPowertools/Overview")">Overview</a>
+}
+
+<div class="ept-page-header">
+    <h1>Content Type Recommendations</h1>
+    <p>Define rules for which content types are suggested when creating content under specific parents.</p>
+</div>
+
+<div id="recommendations-content"></div>
+
+@section Scripts {
+    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/content-type-recommendations.js"))"></script>
+}

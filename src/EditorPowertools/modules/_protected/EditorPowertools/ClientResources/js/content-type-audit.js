@@ -195,6 +195,7 @@
         const distinctGroups = [...new Set(data.map(r => r.groupName).filter(Boolean))].sort();
 
         const columns = [
+            { key: 'iconUrl', label: '', sortable: false, render: (r) => r.iconUrl ? `<img src="${escHtml(r.iconUrl)}" alt="" style="height:36px;width:36px;object-fit:contain;">` : '' },
             { key: 'name', label: 'Name', render: (r) => renderTypeName(r) },
             { key: 'base', label: 'Base', filterable: distinctBases },
             { key: 'groupName', label: 'Group', filterable: distinctGroups },
@@ -209,8 +210,8 @@
         tableInstance = EPT.createTable(columns, data, {
             defaultSort: 'name',
             rowClass: (r) => {
-                if (r.isOrphaned) return 'ept-row--orphaned';
                 if (r.isSystemType) return 'ept-row--system';
+                if (r.isOrphaned) return 'ept-row--orphaned';
                 return '';
             }
         });
@@ -254,8 +255,6 @@
 
         const body = document.createElement('div');
         body.className = 'ept-card__body ept-card__body--flush';
-        body.style.overflow = 'auto';
-        body.style.maxHeight = 'calc(100vh - 300px)';
         body.appendChild(tableInstance.table);
         card.appendChild(body);
         content.appendChild(card);
@@ -264,8 +263,8 @@
     function renderTypeName(r) {
         const name = r.displayName || r.name;
         const badges = [];
-        if (r.isOrphaned) badges.push('<span class="ept-badge ept-badge--danger">Orphaned</span>');
         if (r.isSystemType) badges.push('<span class="ept-badge ept-badge--default">System</span>');
+        else if (r.isOrphaned) badges.push('<span class="ept-badge ept-badge--danger">Orphaned</span>');
         return `<div>
             <strong>${escHtml(name)}</strong>
             ${r.displayName && r.displayName !== r.name ? `<span class="ept-muted"> (${escHtml(r.name)})</span>` : ''}

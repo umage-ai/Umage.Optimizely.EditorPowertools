@@ -16,6 +16,7 @@ public class ContentTypeDto
     public int PropertyCount { get; set; }
     public bool IsSystemType { get; set; }
     public bool IsOrphaned { get; set; }
+    public string? IconUrl { get; set; }
     public DateTime? Created { get; set; }
     public DateTime? Saved { get; set; }
     public string? SavedBy { get; set; }

@@ -16,4 +16,6 @@ public class FeatureToggles
     public bool UnusedMediaCleaner { get; set; } = true;
     public bool ContentExporter { get; set; } = true;
     public bool BulkPropertyEditor { get; set; } = true;
+    public bool ScheduledJobsGantt { get; set; } = true;
+    public bool ActivityTimeline { get; set; } = true;
 }

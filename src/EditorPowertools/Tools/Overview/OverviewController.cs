@@ -41,13 +41,69 @@ public class EditorPowertoolsController : Controller
         return View("/Views/ContentTypeAudit/Index.cshtml");
     }
 
-    // Placeholder actions for future tools - return 404 until implemented
     [HttpGet]
-    public IActionResult PersonalizationAudit() => View("/Views/Overview/Index.cshtml");
+    public IActionResult PersonalizationAudit()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.PersonalizationUsageAudit),
+            EditorPowertoolsPermissions.PersonalizationUsageAudit))
+            return Forbid();
+
+        return View("/Views/PersonalizationAudit/Index.cshtml");
+    }
 
     [HttpGet]
-    public IActionResult AudienceManager() => View("/Views/Overview/Index.cshtml");
+    public IActionResult AudienceManager()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.AudienceManager),
+            EditorPowertoolsPermissions.AudienceManager))
+            return Forbid();
+
+        return View("/Views/AudienceManager/Index.cshtml");
+    }
 
     [HttpGet]
-    public IActionResult ContentTypeRecommendations() => View("/Views/Overview/Index.cshtml");
+    public IActionResult ContentTypeRecommendations()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ContentTypeRecommendations),
+            EditorPowertoolsPermissions.ContentTypeRecommendations))
+            return Forbid();
+
+        return View("/Views/ContentTypeRecommendations/Index.cshtml");
+    }
+
+    [HttpGet]
+    public IActionResult BulkPropertyEditor()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.BulkPropertyEditor),
+            EditorPowertoolsPermissions.BulkPropertyEditor))
+            return Forbid();
+
+        return View("/Views/BulkPropertyEditor/Index.cshtml");
+    }
+
+    [HttpGet]
+    public IActionResult ScheduledJobsGantt()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ScheduledJobsGantt),
+            EditorPowertoolsPermissions.ScheduledJobsGantt))
+            return Forbid();
+
+        return View("/Views/ScheduledJobsGantt/Index.cshtml");
+    }
+
+    [HttpGet]
+    public IActionResult ActivityTimeline()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ActivityTimeline),
+            EditorPowertoolsPermissions.ActivityTimeline))
+            return Forbid();
+
+        return View("/Views/ActivityTimeline/Index.cshtml");
+    }
 }

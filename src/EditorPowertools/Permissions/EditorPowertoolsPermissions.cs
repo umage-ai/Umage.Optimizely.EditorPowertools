@@ -41,4 +41,10 @@ public static class EditorPowertoolsPermissions
 
     public static PermissionType BulkPropertyEditor { get; } =
         new("EditorPowertools", "BulkPropertyEditor");
+
+    public static PermissionType ScheduledJobsGantt { get; } =
+        new("EditorPowertools", "ScheduledJobsGantt");
+
+    public static PermissionType ActivityTimeline { get; } =
+        new("EditorPowertools", "ActivityTimeline");
 }
