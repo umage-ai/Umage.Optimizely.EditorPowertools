@@ -161,6 +161,19 @@
                 }
                 html += ` <span class="ept-muted" style="font-size:11px">via ${escHtml(r.propertyName)}</span>`;
                 if (r.breadcrumb) html += `<div class="ept-muted" style="font-size:11px">${escHtml(r.breadcrumb)}</div>`;
+                if (r.usedOn) {
+                    html += `<div style="font-size:11px;margin-top:2px">Used on: `;
+                    if (r.usedOnEditUrls) {
+                        const pages = r.usedOnEditUrls.split(';;').map(p => {
+                            const parts = p.split('|');
+                            return `<a href="${escHtml(parts[2] || '')}" target="_blank" title="${escHtml(parts[1] || '')}" style="color:var(--ept-primary,#3b82f6)">${escHtml(parts[0])}</a>`;
+                        });
+                        html += pages.join(', ');
+                    } else {
+                        html += escHtml(r.usedOn);
+                    }
+                    html += `</div>`;
+                }
                 return html;
             }},
             { key: 'lastChecked', label: 'Checked', render: r => `<span title="${r.lastChecked}">${timeAgo(r.lastChecked)}</span>` }

@@ -6,7 +6,7 @@ namespace EditorPowertools.Services;
 /// <summary>
 /// DDS-persisted record holding per-user, per-tool UI preferences as a JSON string.
 /// </summary>
-[EPiServerDataStore(AutomaticallyCreateStore = true, StoreName = "EditorPowertools_UserPreferences")]
+[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "EditorPowertools_UserPreferences")]
 public class UserPreferencesRecord : IDynamicData
 {
     public Identity Id { get; set; } = Identity.NewIdentity();

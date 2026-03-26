@@ -8,6 +8,7 @@ using EPiServer.PlugIn;
 using EPiServer.Scheduler;
 using EPiServer.Web.Routing;
 using Microsoft.Extensions.Logging;
+using EPiServer.Core.Internal;
 
 namespace EditorPowertools.Tools.LinkChecker;
 
@@ -93,6 +94,11 @@ public class LinkCheckerJob : ScheduledJobBase
         }
 
         linksFound = linkEntries.Count;
+        OnStatusChanged($"Found {linksFound} links. Resolving block usage...");
+
+        // For links found in blocks, resolve where the block is used (which pages reference it)
+        ResolveBlockUsage(linkEntries);
+
         OnStatusChanged($"Found {linksFound} links. Checking status...");
 
         // Now check all links
@@ -233,6 +239,70 @@ public class LinkCheckerJob : ScheduledJobBase
     {
         return url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
                url.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private void ResolveBlockUsage(List<LinkEntry> entries)
+    {
+        // Group entries by content ID and check if the content is a block
+        var contentIds = entries.Select(e => e.Record.ContentId).Distinct().ToList();
+        var blockUsageCache = new Dictionary<int, (string names, string urls)>();
+
+        foreach (var contentId in contentIds)
+        {
+            if (_stopSignaled) break;
+
+            try
+            {
+                var contentRef = new ContentReference(contentId);
+                if (!_contentLoader.TryGet<IContent>(contentRef, out var content))
+                    continue;
+
+                // Only resolve for blocks (not pages or media used as pages)
+                if (content is not BlockData)
+                    continue;
+
+                var references = _contentRepository.GetReferencesToContent(contentRef, false);
+                var pageNames = new List<string>();
+                var pageUrls = new List<string>();
+
+                foreach (var reference in references.Take(10)) // Limit to 10 references
+                {
+                    try
+                    {
+                        if (_contentLoader.TryGet<IContent>(reference.OwnerID, out var owner) && owner is PageData)
+                        {
+                            pageNames.Add(owner.Name);
+                            var friendlyUrl = _urlResolver.GetUrl(owner.ContentLink);
+                            var editUrl = $"/EPiServer/CMS/#/content/{owner.ContentLink.ID}";
+                            pageUrls.Add($"{owner.Name}|{friendlyUrl ?? ""}|{editUrl}");
+                        }
+                    }
+                    catch { /* Skip inaccessible references */ }
+                }
+
+                if (pageNames.Count > 0)
+                {
+                    blockUsageCache[contentId] = (
+                        string.Join(", ", pageNames),
+                        string.Join(";;", pageUrls)
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDebug(ex, "Error resolving block usage for content {ContentId}", contentId);
+            }
+        }
+
+        // Apply usage info to all matching entries
+        foreach (var entry in entries)
+        {
+            if (blockUsageCache.TryGetValue(entry.Record.ContentId, out var usage))
+            {
+                entry.Record.UsedOn = usage.names;
+                entry.Record.UsedOnEditUrls = usage.urls;
+            }
+        }
     }
 
     private void CheckLink(LinkEntry entry)

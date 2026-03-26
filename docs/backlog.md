@@ -54,7 +54,52 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 
 ## Content Tools
 
-- [ ] **Content Audit** - Comprehensive content list: filterable, searchable, sortable with configurable columns. Export to Excel/CSV/JSON. Aggregated columns for personalization usage, where content is used, and who has read/write access.
+- [ ] **Content Audit** - Comprehensive content inventory with configurable columns, filters, and Excel export. Inspired by the NTI export (75K+ items, 5 sheets). Must handle large sites with server-side pagination.
+
+  **Sheet 1: Content Details** (main sheet, all content items)
+  Columns (28 in reference export):
+  - Content ID, Language, Content Type, Main Type (Page/Block/Media/Catalog/Other)
+  - Url (friendly), Editmode Url, Editmode Url owner page (for "for this page" blocks)
+  - Site Name (for multi-site), Breadcrumb, Name
+  - DraftStatus (Published/Draft/Ready to Publish/etc.)
+  - Created By, Created, Changed By, Changed, Saved By, Saved
+  - Published (start publish date), Published until (stop publish date)
+  - Master Language, Languages (all language versions)
+  - Read ACL (who can read), Publish ACL (who can publish) - resolved role/user names
+  - **Computed: How many places is it used** (reference count)
+  - **Computed: Where is it used** (list of referencing pages with names)
+  - **Computed: How many versions** (version count)
+  - **Computed: List of reviewers** (approval flow info)
+  - **Computed: Visitor Groups used** (personalization on this content)
+
+  **Sheet 2: Visitor Group Details** (audience configuration dump)
+  - Name, Notes, Criteria Operator (All/Any), Is Security Role, Enable Statistics
+  - Points Threshold, Criteria Name, Criteria Type, Criteria Model (JSON), Required, Points
+
+  **Sheet 3: Visitor Group Usage** (where personalization is used)
+  - Page Id, Page Name, Visitor Group, Property Name, Content Name, Content Type, Content Id
+
+  **Sheet 4: Form Usage** (requires Forms package - separate NuGet)
+  - Form Id, Name, Edit link, Title, Description
+  - Anonymous Submissions, Allow Data Feed, Allow Multiple Submissions, Store submission data
+  - Show Summary, Show Navigation, No. of elements, No. of steps
+  - Redirect on submission, Finalized/Partial Retention Period
+  - Webhooks, Emails, Used on (page references)
+  - No. of stored submissions, Last submission, First submission
+
+  **Sheet 5: Invalid/Orphaned Content** (custom validation rules)
+  - Content with missing required data, broken references, expired content, etc.
+
+  **UI Features:**
+  - Server-side pagination (essential for 75K+ items)
+  - Column picker (choose which of the 28 columns to show)
+  - Multi-column filtering with operators (contains, equals, startsWith, isEmpty, isNotEmpty)
+  - Multi-column sorting
+  - Export to Excel (.xlsx) with multiple sheets, or CSV for single sheet
+  - Quick filters: "Show only blocks", "Show only pages", "Show unpublished", "Show unused content"
+  - Saved filter presets (via user preferences)
+
+  **Architecture:** Uses the unified scheduled job to pre-compute expensive columns (reference counts, usage, version counts). Direct columns (name, dates, ACL) loaded on-demand per page.
 - [ ] **Content Statistics** - Dashboards showing content type distribution, content creation over time, content age analysis (oldest content), editor activity statistics, top 10 most active editors (per language). Some graphs can appear on the overview page.
 - [ ] **Orphaned Content Finder** - Find content not linked from anywhere
 - [ ] **Content Tree Exporter** - Export content tree structure to CSV
@@ -62,6 +107,19 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Link Checker** - Comprehensive link health monitoring. Scheduled job crawls all content to catalog internal and external (outbound) links. Checks link status (200/301/404/timeout/etc.), tracks history over time. UI shows broken links with filters by status code, content type, internal/external. Links to affected content items for easy fixing. Uses the shared aggregation scheduled job for link discovery, with a separate background check for outbound URL validation.
 - [ ] **Content Cleanup Tool** - Overview of stale drafts, never-published content, expired content, and old versions. Helps editors and admins identify content that can be cleaned up. Supports bulk delete/publish/archive actions. (Existing implementation in another project to reference.)
 - [ ] **Content Lifecycle Manager** - Define review intervals for content to ensure it stays relevant. Editors set review cadence per content item via an assets panel widget (e.g. "review every 6 months"). A full-page overview shows all content due for review, overdue items, and review history. Supports bulk actions (mark as reviewed, snooze, reassign). Data stored in DDS.
+
+## Language & Translation
+
+- [ ] **Language Audit** - Comprehensive language version analysis for multilingual sites. Key features:
+  - Overview dashboard: total content per language, publish rates, coverage percentages
+  - **Missing translations**: hierarchical view showing which branches/subtrees are missing specific languages. E.g. "Marketing > Campaigns: 45 pages in English, only 12 in German"
+  - **Stale translations**: content where one language was updated significantly more recently than others. E.g. "English version updated 2 days ago, German version last updated 8 months ago" - configurable staleness threshold
+  - **Last published per language**: when each language was last published, with timeline visualization
+  - **Translation coverage by content type**: which content types have the best/worst translation coverage
+  - **Translation queue**: exportable list of content needing translation, sorted by priority (most visited pages first, or most recently updated master language)
+  - Filters: by language pair, content type, site, subtree, staleness threshold
+  - Export to Excel with per-language sheets
+  - Uses the unified scheduled job to pre-compute language statistics
 
 ## Media Tools
 

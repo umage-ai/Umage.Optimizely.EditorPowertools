@@ -7,7 +7,7 @@ namespace EditorPowertools.Tools.LinkChecker;
 /// DDS-persisted record holding a single link check result.
 /// Updated by the scheduled job that scans content for links.
 /// </summary>
-[EPiServerDataStore(AutomaticallyCreateStore = true, StoreName = "EditorPowertools_LinkChecker")]
+[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "EditorPowertools_LinkChecker")]
 public class LinkCheckRecord : IDynamicData
 {
     public Identity Id { get; set; } = Identity.NewIdentity();
@@ -26,6 +26,10 @@ public class LinkCheckRecord : IDynamicData
     public bool IsValid { get; set; }
     public string? Breadcrumb { get; set; }
     public string? EditUrl { get; set; }
+    /// <summary>For blocks: comma-separated list of page names where this block is used.</summary>
+    public string? UsedOn { get; set; }
+    /// <summary>For blocks: comma-separated list of page edit URLs.</summary>
+    public string? UsedOnEditUrls { get; set; }
     public DateTime LastChecked { get; set; }
 }
 

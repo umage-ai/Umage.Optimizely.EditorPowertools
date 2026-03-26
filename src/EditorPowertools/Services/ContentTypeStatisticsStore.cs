@@ -7,7 +7,7 @@ namespace EditorPowertools.Services;
 /// DDS-persisted record holding aggregated statistics for a content type.
 /// Updated by the scheduled job that traverses all content.
 /// </summary>
-[EPiServerDataStore(AutomaticallyCreateStore = true, StoreName = "EditorPowertools_ContentTypeStatistics")]
+[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "EditorPowertools_ContentTypeStatistics")]
 public class ContentTypeStatisticsRecord : IDynamicData
 {
     public Identity Id { get; set; } = Identity.NewIdentity();

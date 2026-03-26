@@ -60,6 +60,8 @@ public class LinkCheckerService
             IsValid = record.IsValid,
             Breadcrumb = record.Breadcrumb,
             EditUrl = record.EditUrl,
+            UsedOn = record.UsedOn,
+            UsedOnEditUrls = record.UsedOnEditUrls,
             LastChecked = record.LastChecked
         };
     }

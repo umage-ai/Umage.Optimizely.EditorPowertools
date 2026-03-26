@@ -312,9 +312,33 @@ All user-facing text MUST be localized using Optimizely's built-in translation s
 
 This makes it straightforward to add new UI languages by adding additional `<language>` blocks to the XML files.
 
+## Recursive Property Traversal
+
+When scanning content for links, personalization, or any analysis, use `ContentPropertyTraverser.TraverseProperties()` to recursively iterate all properties including:
+- Direct properties (string, XhtmlString, Url, ContentReference)
+- Block properties (IContentData values on the content type)
+- ContentArea items (loaded and recursed into)
+- List/collection properties (IList<BlockData>, etc.)
+
+```csharp
+foreach (var discovered in ContentPropertyTraverser.TraverseProperties(content, _contentLoader))
+{
+    if (discovered.Property.Value is XhtmlString xhtml)
+    {
+        // Process XHTML at discovered.PropertyPath
+    }
+    else if (discovered.Property.Value is ContentArea contentArea)
+    {
+        // Process content area items
+    }
+}
+```
+
+All tools that scan content (Link Checker, Personalization Audit, etc.) MUST use this helper instead of manually iterating `content.Property`. This ensures consistent handling of nested blocks, inline blocks, and collection properties.
+
 ## Data Persistence
 
-- Use Optimizely's **DynamicDataStore (DDS)** for aggregated/pre-computed data (content type statistics, personalization usage, etc.).
+- Use Optimizely's **DynamicDataStore (DDS)** for aggregated/pre-computed data. Always set `AutomaticallyRemapStore = true` on the `[EPiServerDataStore]` attribute to handle schema changes gracefully (content type statistics, personalization usage, etc.).
 - A **single shared scheduled job** (`ContentTypeStatisticsJob`) traverses all content and collects statistics for all tools in one pass. Extend it when adding new tools that need aggregated data.
 - Use **in-memory caching** with TTL for frequently accessed but cheap-to-compute data.
 - Never use a separate database.

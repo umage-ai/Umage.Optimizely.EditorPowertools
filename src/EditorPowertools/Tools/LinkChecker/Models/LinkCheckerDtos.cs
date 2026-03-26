@@ -15,6 +15,10 @@ public class LinkCheckDto
     public bool IsValid { get; set; }
     public string? Breadcrumb { get; set; }
     public string? EditUrl { get; set; }
+    /// <summary>For blocks: where this block is used (page names).</summary>
+    public string? UsedOn { get; set; }
+    /// <summary>For blocks: structured usage info (name|friendlyUrl|editUrl separated by ;;).</summary>
+    public string? UsedOnEditUrls { get; set; }
     public DateTime LastChecked { get; set; }
 }
 
