@@ -428,6 +428,20 @@
 
 .ept-dialog__body--flush { padding: 0; }
 
+/* ── Alert Box ──────────────────────────────────────────────────── */
+.ept-alert {
+    padding: var(--ept-space-sm) var(--ept-space-md);
+    border-radius: var(--ept-radius);
+    font-size: var(--ept-text-sm);
+    margin-bottom: var(--ept-space-md);
+    line-height: 1.5;
+}
+.ept-alert a { color: inherit; font-weight: 600; }
+.ept-alert--info { background: var(--ept-info-light); color: var(--ept-info); border: 1px solid var(--ept-info); }
+.ept-alert--warning { background: var(--ept-warning-light); color: #5d4037; border: 1px solid var(--ept-warning); }
+.ept-alert--danger { background: var(--ept-danger-light); color: var(--ept-danger); border: 1px solid var(--ept-danger); }
+.ept-alert--success { background: var(--ept-success-light); color: var(--ept-success); border: 1px solid var(--ept-success); }
+
 /* ── Empty State ────────────────────────────────────────────────── */
 .ept-empty {
     text-align: center;

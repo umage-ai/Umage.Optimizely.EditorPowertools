@@ -5,7 +5,8 @@
     const API = '/editorpowertools/api';
     let allTypes = [];
     let tableInstance = null;
-    let currentView = 'table'; // 'table' or 'tree'
+    let currentView = 'table';
+    let jobStatus = null;
 
     // Filters
     let showSystem = false;
@@ -15,7 +16,13 @@
     async function init() {
         EPT.showLoading(document.getElementById('audit-content'));
         try {
-            allTypes = await EPT.fetchJson(`${API}/content-types`);
+            const [types, status] = await Promise.all([
+                EPT.fetchJson(`${API}/content-types`),
+                EPT.fetchJson(`${API}/aggregation-status`).catch(() => null)
+            ]);
+            allTypes = types;
+            jobStatus = status;
+            renderJobAlert();
             renderToolbar();
             renderStats();
             renderTable();
@@ -25,14 +32,55 @@
         }
     }
 
+    // ── Job Status Alert ───────────────────────────────────────────
+    function renderJobAlert() {
+        let existing = document.getElementById('audit-job-alert');
+        if (existing) existing.remove();
+
+        if (!jobStatus) return;
+
+        const el = document.createElement('div');
+        el.id = 'audit-job-alert';
+
+        if (jobStatus.isRunning) {
+            el.className = 'ept-alert ept-alert--info';
+            el.innerHTML = `${EPT.icons.spinner || '⏳'} <strong>Aggregation job is currently running.</strong> Content counts will be updated when it completes. <a href="javascript:void(0)" onclick="location.reload()">Refresh</a>`;
+        } else if (!jobStatus.hasRun) {
+            el.className = 'ept-alert ept-alert--warning';
+            el.innerHTML = `<strong>Content statistics have not been collected yet.</strong> The "Content" column will show data after the <em>[EditorPowertools] Aggregate Content Type Statistics</em> scheduled job has been run. <a href="/EPiServer/EPiServer.Cms.UI.Admin/default#/ScheduledJobs" target="_blank">Go to Scheduled Jobs</a>`;
+        } else {
+            const ago = timeAgo(new Date(jobStatus.lastRunUtc));
+            const isOld = (Date.now() - new Date(jobStatus.lastRunUtc).getTime()) > 24 * 60 * 60 * 1000;
+            if (isOld) {
+                el.className = 'ept-alert ept-alert--warning';
+                el.innerHTML = `Statistics were last updated <strong>${ago}</strong>. Consider running the aggregation job for fresh data. <a href="/EPiServer/EPiServer.Cms.UI.Admin/default#/ScheduledJobs" target="_blank">Go to Scheduled Jobs</a>`;
+            } else {
+                // Recent run, no alert needed
+                return;
+            }
+        }
+
+        const container = document.getElementById('audit-stats');
+        container.parentNode.insertBefore(el, container);
+    }
+
+    function timeAgo(date) {
+        const diff = Date.now() - date.getTime();
+        const mins = Math.floor(diff / 60000);
+        if (mins < 60) return `${mins} minute${mins !== 1 ? 's' : ''} ago`;
+        const hours = Math.floor(mins / 60);
+        if (hours < 24) return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+        const days = Math.floor(hours / 24);
+        return `${days} day${days !== 1 ? 's' : ''} ago`;
+    }
+
     function getFiltered() {
         return allTypes.filter(t => {
             if (!showSystem && t.isSystemType) return false;
             if (baseFilter && t.base !== baseFilter) return false;
             if (searchQuery) {
                 const q = searchQuery.toLowerCase();
-                // Special syntax: property:name
-                if (q.startsWith('property:')) return false; // handled via API later
+                if (q.startsWith('property:')) return false;
                 return (t.name?.toLowerCase().includes(q) ||
                     t.displayName?.toLowerCase().includes(q) ||
                     t.description?.toLowerCase().includes(q) ||
@@ -49,21 +97,20 @@
         const total = allTypes.filter(t => !t.isSystemType).length;
         const system = allTypes.filter(t => t.isSystemType).length;
         const orphaned = allTypes.filter(t => t.isOrphaned).length;
-        const unused = filtered.filter(t => t.contentCount === 0).length;
         const hasStats = allTypes.some(t => t.statisticsUpdated != null);
+        const unused = hasStats ? filtered.filter(t => t.contentCount === 0).length : null;
 
         const el = document.getElementById('audit-stats');
         el.innerHTML = `
             <div class="ept-stat"><div class="ept-stat__value">${total}</div><div class="ept-stat__label">Content Types</div></div>
             <div class="ept-stat"><div class="ept-stat__value">${system}</div><div class="ept-stat__label">System Types</div></div>
             <div class="ept-stat"><div class="ept-stat__value">${orphaned}</div><div class="ept-stat__label">Orphaned</div></div>
-            ${hasStats ? `<div class="ept-stat"><div class="ept-stat__value">${unused}</div><div class="ept-stat__label">Unused (0 content)</div></div>` : ''}
+            ${unused != null ? `<div class="ept-stat"><div class="ept-stat__value">${unused}</div><div class="ept-stat__label">Unused (0 content)</div></div>` : ''}
             <div class="ept-stat"><div class="ept-stat__value">${filtered.length}</div><div class="ept-stat__label">Showing</div></div>
         `;
     }
 
     function renderToolbar() {
-        // Collect distinct base types
         const bases = [...new Set(allTypes.map(t => t.base))].sort();
 
         const toolbar = document.getElementById('audit-toolbar');
@@ -89,19 +136,19 @@
         document.getElementById('audit-search').addEventListener('input', (e) => {
             searchQuery = e.target.value;
             renderStats();
-            if (currentView === 'table') updateTable();
+            if (currentView === 'table') renderTable();
         });
 
         document.getElementById('audit-base-filter').addEventListener('change', (e) => {
             baseFilter = e.target.value;
             renderStats();
-            if (currentView === 'table') updateTable();
+            if (currentView === 'table') renderTable();
         });
 
         document.getElementById('audit-show-system').addEventListener('change', (e) => {
             showSystem = e.target.checked;
             renderStats();
-            if (currentView === 'table') updateTable();
+            if (currentView === 'table') renderTable();
         });
 
         document.getElementById('audit-view-table').addEventListener('click', () => {
@@ -119,31 +166,20 @@
         });
 
         document.getElementById('audit-export').addEventListener('click', exportCsv);
-
-        // Set initial active view button
         document.getElementById('audit-view-table').classList.add('ept-btn--primary');
     }
 
     function renderTable() {
         const data = getFiltered();
-        const hasStats = allTypes.some(t => t.statisticsUpdated != null);
 
         const columns = [
             { key: 'name', label: 'Name', render: (r) => renderTypeName(r) },
             { key: 'base', label: 'Base' },
             { key: 'groupName', label: 'Group' },
             { key: 'propertyCount', label: 'Properties', align: 'right' },
+            { key: 'contentCount', label: 'Content', align: 'right', render: (r) => renderCount(r.contentCount) },
+            { key: 'actions', label: '', sortable: false, render: (r) => renderActions(r) }
         ];
-
-        if (hasStats) {
-            columns.push(
-                { key: 'contentCount', label: 'Content', align: 'right', render: (r) => renderCount(r.contentCount) },
-                { key: 'referencedCount', label: 'Referenced', align: 'right', render: (r) => renderCount(r.referencedCount) },
-                { key: 'unreferencedCount', label: 'Unreferenced', align: 'right', render: (r) => renderUnreferenced(r) },
-            );
-        }
-
-        columns.push({ key: 'actions', label: '', sortable: false, render: (r) => renderActions(r) });
 
         tableInstance = EPT.createTable(columns, data, {
             defaultSort: 'name',
@@ -161,16 +197,10 @@
         const body = document.createElement('div');
         body.className = 'ept-card__body ept-card__body--flush';
         body.style.overflow = 'auto';
-        body.style.maxHeight = 'calc(100vh - 280px)';
+        body.style.maxHeight = 'calc(100vh - 300px)';
         body.appendChild(tableInstance.table);
         card.appendChild(body);
         content.appendChild(card);
-    }
-
-    function updateTable() {
-        if (!tableInstance) return;
-        // Re-render with fresh data
-        renderTable();
     }
 
     function renderTypeName(r) {
@@ -188,20 +218,18 @@
 
     function renderCount(val) {
         if (val == null) return '<span class="ept-muted">-</span>';
+        if (val === 0) return '<span class="ept-badge ept-badge--warning">0</span>';
         return String(val);
-    }
-
-    function renderUnreferenced(r) {
-        if (r.unreferencedCount == null) return '<span class="ept-muted">-</span>';
-        if (r.unreferencedCount > 0 && r.contentCount > 0) {
-            return `<span class="ept-badge ept-badge--warning">${r.unreferencedCount}</span>`;
-        }
-        return String(r.unreferencedCount);
     }
 
     function renderActions(r) {
         const div = document.createElement('div');
         div.className = 'ept-flex';
+
+        if (r.editUrl) {
+            const editBtn = createIconBtn(EPT.icons.edit, 'Edit content type', () => window.open(r.editUrl, '_blank'));
+            div.appendChild(editBtn);
+        }
 
         const propsBtn = createIconBtn(EPT.icons.props, 'Properties', () => showProperties(r));
         div.appendChild(propsBtn);
@@ -228,12 +256,13 @@
 
         try {
             const props = await EPT.fetchJson(`${API}/content-types/${type.id}/properties`);
+            body.innerHTML = ''; // Clear loading spinner
+
             if (props.length === 0) {
                 EPT.showEmpty(body, 'No properties defined');
                 return;
             }
 
-            // Legend
             const legend = document.createElement('div');
             legend.style.padding = '12px 16px';
             legend.innerHTML = `
@@ -253,7 +282,6 @@
                 { key: 'languageSpecific', label: 'Language', render: (r) => r.languageSpecific ? '✓' : '' },
                 {
                     key: 'origin', label: 'Origin', render: (r) => {
-                        const map = { Defined: 'default', Inherited: 'success', Orphaned: 'danger' };
                         const label = r.origin === 0 ? 'Defined' : r.origin === 1 ? 'Inherited' : 'Orphaned';
                         const cls = r.origin === 0 ? 'default' : r.origin === 1 ? 'success' : 'danger';
                         return `<span class="ept-badge ept-badge--${cls}">${label}</span>`;
@@ -282,14 +310,40 @@
 
         try {
             const items = await EPT.fetchJson(`${API}/content-types/${type.id}/content`);
+            body.innerHTML = ''; // Clear loading spinner
+
             if (items.length === 0) {
                 EPT.showEmpty(body, 'No content of this type');
                 return;
             }
 
+            // Language filter
+            const languages = [...new Set(items.map(i => i.language).filter(Boolean))].sort();
+            if (languages.length > 1) {
+                const filterBar = document.createElement('div');
+                filterBar.style.padding = '8px 16px';
+                filterBar.className = 'ept-flex';
+                filterBar.innerHTML = `<label class="ept-muted" style="font-size:12px">Language:</label>
+                    <select class="ept-select ept-content-lang-filter">
+                        <option value="">All (${items.length})</option>
+                        ${languages.map(l => `<option value="${l}">${l} (${items.filter(i => i.language === l).length})</option>`).join('')}
+                    </select>`;
+                body.appendChild(filterBar);
+
+                filterBar.querySelector('select').addEventListener('change', (e) => {
+                    const lang = e.target.value;
+                    tbl.render(lang ? (r => r.language === lang) : null);
+                });
+            }
+
             const columns = [
                 { key: 'contentId', label: 'ID', align: 'right' },
-                { key: 'name', label: 'Name', render: (r) => `<strong>${escHtml(r.name)}</strong>` },
+                {
+                    key: 'name', label: 'Name', render: (r) => {
+                        if (r.editUrl) return `<a href="${escAttr(r.editUrl)}" target="_blank" style="color:inherit;text-decoration:none"><strong>${escHtml(r.name)}</strong> <span style="opacity:.4">↗</span></a>`;
+                        return `<strong>${escHtml(r.name)}</strong>`;
+                    }
+                },
                 { key: 'language', label: 'Lang' },
                 {
                     key: 'breadcrumb', label: 'Location', render: (r) =>
@@ -314,8 +368,8 @@
                 }
             ];
 
-            const { table } = EPT.createTable(columns, items, { defaultSort: 'name' });
-            body.appendChild(table);
+            const tbl = EPT.createTable(columns, items, { defaultSort: 'name' });
+            body.appendChild(tbl.table);
         } catch (err) {
             body.innerHTML = `<div class="ept-empty"><p>Error: ${err.message}</p></div>`;
         }
@@ -328,21 +382,47 @@
 
         try {
             const refs = await EPT.fetchJson(`${API}/content/${content.contentId}/references`);
+            body.innerHTML = ''; // Clear loading spinner
+
             if (refs.length === 0) {
                 EPT.showEmpty(body, 'No references found');
                 return;
             }
 
+            // Language filter
+            const languages = [...new Set(refs.map(r => r.language).filter(Boolean))].sort();
+            if (languages.length > 1) {
+                const filterBar = document.createElement('div');
+                filterBar.style.padding = '8px 16px';
+                filterBar.className = 'ept-flex';
+                filterBar.innerHTML = `<label class="ept-muted" style="font-size:12px">Language:</label>
+                    <select class="ept-select ept-refs-lang-filter">
+                        <option value="">All (${refs.length})</option>
+                        ${languages.map(l => `<option value="${l}">${l} (${refs.filter(r => r.language === l).length})</option>`).join('')}
+                    </select>`;
+                body.appendChild(filterBar);
+
+                filterBar.querySelector('select').addEventListener('change', (e) => {
+                    const lang = e.target.value;
+                    tbl.render(lang ? (r => r.language === lang) : null);
+                });
+            }
+
             const columns = [
                 { key: 'ownerContentId', label: 'ID', align: 'right' },
-                { key: 'ownerName', label: 'Referenced By', render: (r) => `<strong>${escHtml(r.ownerName)}</strong>` },
+                {
+                    key: 'ownerName', label: 'Referenced By', render: (r) => {
+                        if (r.editUrl) return `<a href="${escAttr(r.editUrl)}" target="_blank" style="color:inherit;text-decoration:none"><strong>${escHtml(r.ownerName)}</strong> <span style="opacity:.4">↗</span></a>`;
+                        return `<strong>${escHtml(r.ownerName)}</strong>`;
+                    }
+                },
                 { key: 'ownerTypeName', label: 'Type' },
                 { key: 'language', label: 'Lang' },
                 { key: 'propertyName', label: 'Property' },
             ];
 
-            const { table } = EPT.createTable(columns, refs, { defaultSort: 'ownerName' });
-            body.appendChild(table);
+            const tbl = EPT.createTable(columns, refs, { defaultSort: 'ownerName' });
+            body.appendChild(tbl.table);
         } catch (err) {
             body.innerHTML = `<div class="ept-empty"><p>Error: ${err.message}</p></div>`;
         }
@@ -398,8 +478,7 @@
                 line.appendChild(toggle);
             } else {
                 const spacer = document.createElement('span');
-                spacer.style.width = '24px';
-                spacer.style.display = 'inline-block';
+                spacer.style.cssText = 'width:24px;display:inline-block';
                 line.appendChild(spacer);
             }
 
@@ -417,6 +496,16 @@
                 count.textContent = `(${node.contentCount})`;
                 line.appendChild(count);
             }
+
+            // Edit content type link
+            const editBtn = document.createElement('a');
+            editBtn.className = 'ept-btn ept-btn--sm ept-btn--icon';
+            editBtn.title = 'Edit content type';
+            editBtn.href = `/EPiServer/EPiServer.Cms.UI.Admin/default#/ContentType/${node.id}`;
+            editBtn.target = '_blank';
+            editBtn.innerHTML = EPT.icons.edit;
+            editBtn.style.marginLeft = '4px';
+            line.appendChild(editBtn);
 
             li.appendChild(line);
 
@@ -458,9 +547,9 @@
     // ── Helpers ────────────────────────────────────────────────────
     function escHtml(s) {
         if (!s) return '';
-        const div = document.createElement('div');
-        div.textContent = s;
-        return div.innerHTML;
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
     }
 
     function escAttr(s) {

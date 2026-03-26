@@ -136,12 +136,14 @@ public class ContentTypeAuditService
                 var referenceCount = softLinks?.Count(sl =>
                     !sl.OwnerContentLink.CompareToIgnoreWorkID(contentRef)) ?? 0;
 
+                var lang = usage.LanguageBranch ?? string.Empty;
                 results.Add(new ContentUsageDto
                 {
                     ContentId = contentRef.ID,
                     Name = usage.Name ?? "[No name]",
-                    Language = usage.LanguageBranch ?? string.Empty,
+                    Language = lang,
                     Breadcrumb = contentRef.GetBreadcrumb(),
+                    EditUrl = $"/episerver/cms#context=epi.cms.contentdata:///{contentRef.ID}&viewsetting=viewlanguage:///{lang}",
                     IsPublished = isPublished,
                     ReferenceCount = referenceCount
                 });
@@ -194,13 +196,15 @@ public class ContentTypeAuditService
                 ownerName = $"[Missing content {link.OwnerContentLink.ID}]";
             }
 
+            var ownerLang = link.OwnerLanguage?.TwoLetterISOLanguageName ?? "";
             results.Add(new SoftLinkDto
             {
                 OwnerContentId = link.OwnerContentLink.ID,
                 OwnerName = ownerName,
                 OwnerTypeName = ownerTypeName,
-                Language = link.OwnerLanguage?.TwoLetterISOLanguageName,
-                PropertyName = link.OwnerPropertyDefinition?.Name
+                Language = ownerLang,
+                PropertyName = link.OwnerPropertyDefinition?.Name,
+                EditUrl = $"/episerver/cms#context=epi.cms.contentdata:///{link.OwnerContentLink.ID}&viewsetting=viewlanguage:///{ownerLang}"
             });
         }
 
@@ -267,6 +271,7 @@ public class ContentTypeAuditService
             ModelType = ct.ModelTypeString,
             ParentTypeName = ct.ModelType?.BaseType?.Name,
             DefaultController = ct.DefaultMvcController?.Name,
+            EditUrl = $"/EPiServer/EPiServer.Cms.UI.Admin/default#/ContentType/{ct.GUID}",
             PropertyCount = ct.PropertyDefinitions.Count,
             IsSystemType = IsSystemType(ct),
             IsOrphaned = ct.ModelType == null,
@@ -283,7 +288,15 @@ public class ContentTypeAuditService
 
     private static bool IsSystemType(ContentType ct)
     {
+        // Check model namespace
         var ns = ct.ModelType?.Namespace;
-        return ns != null && ns.StartsWith("EPiServer", StringComparison.OrdinalIgnoreCase);
+        if (ns != null && ns.StartsWith("EPiServer", StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        // Optimizely built-in types like SysContentFolder, SysRoot, SysRecycleBin etc.
+        if (ct.Name.StartsWith("Sys", StringComparison.Ordinal))
+            return true;
+
+        return false;
     }
 }

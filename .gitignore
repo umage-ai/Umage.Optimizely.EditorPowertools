@@ -86,3 +86,5 @@ appsettings.local.json
 
 # Claude Code - include project settings, exclude local
 .claude/settings.local.json
+.playwright-mcp/
+*.png

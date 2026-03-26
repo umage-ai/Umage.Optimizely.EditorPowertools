@@ -1,4 +1,5 @@
 using EditorPowertools.Permissions;
+using EditorPowertools.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +14,16 @@ public class ContentTypeAuditApiController : Controller
 {
     private readonly ContentTypeAuditService _service;
     private readonly FeatureAccessChecker _accessChecker;
+    private readonly AggregationJobStatusService _jobStatusService;
 
     public ContentTypeAuditApiController(
         ContentTypeAuditService service,
-        FeatureAccessChecker accessChecker)
+        FeatureAccessChecker accessChecker,
+        AggregationJobStatusService jobStatusService)
     {
         _service = service;
         _accessChecker = accessChecker;
+        _jobStatusService = jobStatusService;
     }
 
     [HttpGet]
@@ -85,5 +89,13 @@ public class ContentTypeAuditApiController : Controller
 
         var tree = _service.GetInheritanceTree();
         return Ok(tree);
+    }
+
+    [HttpGet]
+    [Route("editorpowertools/api/aggregation-status")]
+    public IActionResult GetAggregationStatus()
+    {
+        var status = _jobStatusService.GetStatus();
+        return Ok(status);
     }
 }

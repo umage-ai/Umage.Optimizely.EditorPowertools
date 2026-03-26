@@ -58,6 +58,7 @@ public static class ServiceCollectionExtensions
 
         // Tool services
         services.AddTransient<ContentTypeAuditService>();
+        services.AddTransient<AggregationJobStatusService>();
 
         // Register as a protected module
         services.Configure<ProtectedModuleOptions>(options =>

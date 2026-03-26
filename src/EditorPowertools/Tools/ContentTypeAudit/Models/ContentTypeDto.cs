@@ -12,6 +12,7 @@ public class ContentTypeDto
     public string? ModelType { get; set; }
     public string? ParentTypeName { get; set; }
     public string? DefaultController { get; set; }
+    public string? EditUrl { get; set; }
     public int PropertyCount { get; set; }
     public bool IsSystemType { get; set; }
     public bool IsOrphaned { get; set; }
