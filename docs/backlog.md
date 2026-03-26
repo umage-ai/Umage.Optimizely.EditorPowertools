@@ -116,7 +116,8 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 
 ## Shared Infrastructure
 
-- [x] **Aggregation Scheduled Job** - Single scheduled job that traverses all content once and collects statistics for all tools (content type counts, personalization usage, etc.). Results stored in DDS.
+- [ ] **Unified Scheduled Job** - Merge the three current jobs (Content Type Statistics, Personalization Analysis, Link Checker) into a single pluggable job that traverses content once. Each "analyzer" plugin registers via DI and receives each content item during traversal. This avoids scanning all content 3+ times. Architecture: `IContentAnalyzer` interface with `Analyze(IContent, ContentReference)` method, registered as `IEnumerable<IContentAnalyzer>`. The job iterates all content once and calls each analyzer. Each analyzer stores its own results in its own DDS store.
+- [x] **Aggregation Scheduled Job** (legacy) - Single scheduled job that traverses all content once and collects statistics for all tools (content type counts, personalization usage, etc.). Results stored in DDS.
 - [x] **Shared UI Design System** - CSS design system with cards, tables, dialogs, badges, buttons, tree views. Defined in `wwwroot/css/editorpowertools.css`.
 - [x] **Overview Page** - Dashboard showing all available tools with cards. Will later include content statistics graphs.
 

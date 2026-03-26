@@ -4,7 +4,9 @@ using EditorPowertools.Services;
 using EditorPowertools.Tools.AudienceManager;
 using EditorPowertools.Tools.BulkPropertyEditor;
 using EditorPowertools.Tools.ActivityTimeline;
+using EditorPowertools.Tools.ContentDetails;
 using EditorPowertools.Tools.ContentTypeAudit;
+using EditorPowertools.Tools.LinkChecker;
 using EditorPowertools.Tools.ScheduledJobsGantt;
 using EditorPowertools.Tools.ContentTypeRecommendations;
 using EditorPowertools.Tools.PersonalizationAudit;
@@ -74,6 +76,15 @@ public static class ServiceCollectionExtensions
 
         // Activity Timeline
         services.AddTransient<ActivityTimelineService>();
+
+        // Content Details (assets panel widget)
+        services.AddTransient<ContentDetailsService>();
+
+        // Link Checker
+        services.AddSingleton<LinkCheckerRepository>();
+        services.AddTransient<LinkCheckerService>();
+        services.AddTransient<LinkCheckerJobStatusService>();
+        services.AddHttpClient();
 
         // Register as a protected module
         services.Configure<ProtectedModuleOptions>(options =>

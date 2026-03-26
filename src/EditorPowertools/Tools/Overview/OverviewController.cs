@@ -106,4 +106,15 @@ public class EditorPowertoolsController : Controller
 
         return View("/Views/ActivityTimeline/Index.cshtml");
     }
+
+    [HttpGet]
+    public IActionResult LinkChecker()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.BrokenLinkChecker),
+            EditorPowertoolsPermissions.BrokenLinkChecker))
+            return Forbid();
+
+        return View("/Views/LinkChecker/Index.cshtml");
+    }
 }

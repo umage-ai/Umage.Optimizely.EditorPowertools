@@ -75,6 +75,13 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
             SortIndex = 800,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ActivityTimeline))
         };
+
+        yield return new UrlMenuItem("Link Checker", BaseMenuPath + "/linkchecker",
+            GetResourcePath("EditorPowertools/LinkChecker"))
+        {
+            SortIndex = 900,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.BrokenLinkChecker))
+        };
     }
 
     private static string GetResourcePath(string resourcePath)
