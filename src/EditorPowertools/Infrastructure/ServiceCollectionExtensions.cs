@@ -9,6 +9,7 @@ using EditorPowertools.Tools.ContentTypeAudit;
 using EditorPowertools.Tools.LinkChecker;
 using EditorPowertools.Tools.ScheduledJobsGantt;
 using EditorPowertools.Tools.ContentTypeRecommendations;
+using EditorPowertools.Services.Analyzers;
 using EditorPowertools.Tools.PersonalizationAudit;
 using EPiServer.Shell.Modules;
 using Microsoft.AspNetCore.Authorization;
@@ -85,6 +86,11 @@ public static class ServiceCollectionExtensions
         services.AddTransient<LinkCheckerService>();
         services.AddTransient<LinkCheckerJobStatusService>();
         services.AddHttpClient();
+
+        // Unified content analysis (pluggable analyzers)
+        services.AddTransient<IContentAnalyzer, ContentTypeStatisticsAnalyzer>();
+        services.AddTransient<IContentAnalyzer, PersonalizationAnalyzer>();
+        services.AddTransient<IContentAnalyzer, LinkCheckerAnalyzer>();
 
         // Register as a protected module
         services.Configure<ProtectedModuleOptions>(options =>

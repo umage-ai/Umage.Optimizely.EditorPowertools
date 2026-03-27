@@ -1,178 +1,204 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/when",
+    "dojo/on",
     "dojo/dom-construct",
+    "dojo/dom-class",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
+    "dijit/layout/_LayoutWidget",
     "epi/dependency",
-    "epi/shell/widget/_ValueRequiredMixin"
+    "epi/shell/context"
 ], function (
-    declare, lang, when, domConstruct,
-    _WidgetBase, _TemplatedMixin,
-    dependency, _ValueRequiredMixin
+    declare, lang, on, domConstruct, domClass,
+    _WidgetBase, _TemplatedMixin, _LayoutWidget,
+    dependency, context
 ) {
-    return declare("editorpowertools.ContentDetailsWidget", [_WidgetBase, _TemplatedMixin, _ValueRequiredMixin], {
-        templateString: '<div class="ept-content-details"><div data-dojo-attach-point="containerNode">Loading...</div></div>',
+    return declare("editorpowertools.ContentDetailsWidget", [_LayoutWidget, _TemplatedMixin], {
+        templateString: '<div class="ept-cd-root">' +
+            '<div data-dojo-attach-point="containerNode" class="ept-cd-container">Select content to see details.</div>' +
+            '</div>',
 
-        // Called when the content context changes
-        _setValueAttr: function (value) {
-            this._set("value", value);
-            if (value && value.contentLink) {
-                this._loadDetails(value.contentLink);
+        _currentContentId: null,
+
+        postCreate: function () {
+            this.inherited(arguments);
+            this._initContextListener();
+        },
+
+        _initContextListener: function () {
+            var self = this;
+
+            // Subscribe to context changes via the EPiServer context service
+            var contextService = dependency.resolve("epi.shell.context");
+            if (contextService) {
+                contextService.on("changed", function (ctx) {
+                    self._onContextChanged(ctx);
+                });
+                // Load initial context
+                var current = contextService.get("currentContext");
+                if (current) {
+                    self._onContextChanged(current);
+                }
             }
         },
 
-        _loadDetails: function (contentLink) {
-            var self = this;
+        _onContextChanged: function (ctx) {
+            if (!ctx || !ctx.id) return;
+
+            // Extract content ID from context
+            var contentId = ctx.id;
+            if (typeof contentId === "string") {
+                // Remove version info and provider prefix
+                contentId = contentId.split("_")[0].replace(/[^0-9]/g, "");
+            }
+            if (!contentId || contentId === this._currentContentId) return;
+
+            this._currentContentId = contentId;
+            this._loadDetails(contentId);
+        },
+
+        // Also handle the component model being set by the framework
+        _setCurrentContextAttr: function (value) {
+            if (value && value.id) {
+                this._onContextChanged(value);
+            }
+        },
+
+        _loadDetails: function (contentId) {
             var container = this.containerNode;
-            container.innerHTML = '<div style="text-align:center;padding:20px;color:#666"><div class="ept-cd-spinner"></div><div style="margin-top:8px">Loading...</div></div>';
+            container.innerHTML = '<div class="ept-cd-loading">Loading...</div>';
 
-            // Extract just the ID from contentLink (may be "5_103" format)
-            var contentId = contentLink.toString().split('_')[0];
-
-            fetch('/editorpowertools/api/content-details/' + contentId)
-                .then(function (response) {
-                    if (!response.ok) throw new Error('HTTP ' + response.status);
-                    return response.json();
+            var self = this;
+            fetch("/editorpowertools/api/content-details/" + contentId)
+                .then(function (r) {
+                    if (!r.ok) throw new Error("HTTP " + r.status);
+                    return r.json();
                 })
                 .then(function (data) {
                     self._renderDetails(data);
                 })
                 .catch(function (err) {
-                    container.innerHTML = '<div style="padding:10px;color:#c00">Error loading details: ' + err.message + '</div>';
+                    container.innerHTML = '<div class="ept-cd-error">Error: ' + self._esc(err.message) + '</div>';
                 });
         },
 
         _renderDetails: function (data) {
             var container = this.containerNode;
+            var self = this;
+
             var html = '';
 
             // Tabs
             html += '<div class="ept-cd-tabs">';
-            html += '<button class="ept-cd-tab active" data-tab="info">Info</button>';
-            html += '<button class="ept-cd-tab" data-tab="properties">Properties</button>';
-            html += '<button class="ept-cd-tab" data-tab="references">References</button>';
-            html += '<button class="ept-cd-tab" data-tab="versions">Versions</button>';
+            html += '<button class="ept-cd-tab ept-cd-tab--active" data-tab="info">Info</button>';
+            html += '<button class="ept-cd-tab" data-tab="props">Props</button>';
+            html += '<button class="ept-cd-tab" data-tab="refs">Refs</button>';
+            html += '<button class="ept-cd-tab" data-tab="vers">Versions</button>';
             html += '</div>';
 
-            // Info tab
-            html += '<div class="ept-cd-panel active" data-panel="info">';
-            html += '<table class="ept-cd-info-table">';
-            html += '<tr><td class="ept-cd-label">Name</td><td>' + this._esc(data.name) + '</td></tr>';
-            html += '<tr><td class="ept-cd-label">Type</td><td>' + this._esc(data.contentTypeName) + '</td></tr>';
-            html += '<tr><td class="ept-cd-label">ID</td><td>' + data.contentId + '</td></tr>';
-            html += '<tr><td class="ept-cd-label">GUID</td><td class="ept-cd-guid">' + this._esc(data.contentGuid) + '</td></tr>';
-            html += '<tr><td class="ept-cd-label">Status</td><td><span class="ept-cd-status ept-cd-status--' + this._statusClass(data.status) + '">' + this._esc(data.status) + '</span></td></tr>';
-            html += '<tr><td class="ept-cd-label">Created</td><td>' + this._formatDate(data.created) + '<br><span class="ept-cd-by">by ' + this._esc(data.createdBy) + '</span></td></tr>';
-            html += '<tr><td class="ept-cd-label">Changed</td><td>' + this._formatDate(data.changed) + '<br><span class="ept-cd-by">by ' + this._esc(data.changedBy) + '</span></td></tr>';
-            if (data.published) {
-                html += '<tr><td class="ept-cd-label">Published</td><td>' + this._formatDate(data.published) + '</td></tr>';
-            }
-            html += '<tr><td class="ept-cd-label">Language</td><td>' + this._esc(data.language || 'N/A') + '</td></tr>';
-            html += '<tr><td class="ept-cd-label">Versions</td><td>' + (data.versionCount || 0) + '</td></tr>';
-            if (data.parentName) {
-                html += '<tr><td class="ept-cd-label">Parent</td><td>' + this._esc(data.parentName) + '</td></tr>';
-            }
-            html += '</table>';
+            // Info panel
+            html += '<div class="ept-cd-panel ept-cd-panel--active" data-panel="info">';
+            html += this._row("Name", data.name);
+            html += this._row("Type", data.contentTypeName);
+            html += this._row("ID", data.contentId);
+            html += this._row("Status", data.status);
+            html += this._row("Created", this._fmtDate(data.created) + (data.createdBy ? " by " + this._esc(data.createdBy) : ""));
+            html += this._row("Changed", this._fmtDate(data.changed) + (data.changedBy ? " by " + this._esc(data.changedBy) : ""));
+            if (data.published) html += this._row("Published", this._fmtDate(data.published));
+            html += this._row("Language", data.language || "N/A");
+            html += this._row("Versions", data.versionCount || 0);
+            if (data.parentName) html += this._row("Parent", data.parentName);
+            html += this._row("GUID", '<span style="font-size:10px;word-break:break-all">' + this._esc(data.contentGuid) + '</span>');
             html += '</div>';
 
-            // Properties tab
-            html += '<div class="ept-cd-panel" data-panel="properties">';
+            // Properties panel
+            html += '<div class="ept-cd-panel" data-panel="props">';
             if (data.properties && data.properties.length > 0) {
-                html += '<table class="ept-cd-info-table">';
                 for (var i = 0; i < data.properties.length; i++) {
-                    var prop = data.properties[i];
-                    var val;
-                    if (prop.isContentArea) {
-                        val = '<span class="ept-cd-content-area">' + prop.itemCount + ' items</span>';
-                    } else if (prop.value) {
-                        val = this._esc(prop.value);
-                    } else {
-                        val = '<span class="ept-cd-empty">empty</span>';
-                    }
-                    html += '<tr><td class="ept-cd-label" title="' + this._esc(prop.name) + '">' + this._esc(prop.displayName) + '</td><td>' + val + '</td></tr>';
+                    var p = data.properties[i];
+                    var val = p.value || '<span class="ept-cd-empty">empty</span>';
+                    if (p.isContentArea) val = '<span class="ept-cd-ca">' + p.itemCount + ' items</span>';
+                    html += this._row(p.displayName, val);
                 }
-                html += '</table>';
             } else {
-                html += '<div class="ept-cd-empty-msg">No properties</div>';
+                html += '<div class="ept-cd-empty">No properties</div>';
             }
             html += '</div>';
 
-            // References tab
-            html += '<div class="ept-cd-panel" data-panel="references">';
+            // References panel
+            html += '<div class="ept-cd-panel" data-panel="refs">';
             if (data.referencedBy && data.referencedBy.length > 0) {
-                html += '<div class="ept-cd-ref-list">';
                 for (var j = 0; j < data.referencedBy.length; j++) {
                     var ref = data.referencedBy[j];
-                    html += '<div class="ept-cd-ref-item">';
+                    html += '<div class="ept-cd-ref">';
                     html += '<strong>' + this._esc(ref.name) + '</strong>';
-                    html += ' <span class="ept-cd-ref-type">' + this._esc(ref.contentTypeName) + '</span>';
-                    if (ref.propertyName) {
-                        html += ' <span class="ept-cd-ref-prop">via ' + this._esc(ref.propertyName) + '</span>';
-                    }
+                    html += ' <span class="ept-cd-muted">' + this._esc(ref.contentTypeName) + '</span>';
+                    if (ref.propertyName) html += ' <span class="ept-cd-muted">via ' + this._esc(ref.propertyName) + '</span>';
                     html += '</div>';
                 }
-                html += '</div>';
             } else {
-                html += '<div class="ept-cd-empty-msg">Not referenced by other content</div>';
+                html += '<div class="ept-cd-empty">Not referenced</div>';
             }
             html += '</div>';
 
-            // Versions tab
-            html += '<div class="ept-cd-panel" data-panel="versions">';
+            // Versions panel
+            html += '<div class="ept-cd-panel" data-panel="vers">';
             if (data.versions && data.versions.length > 0) {
                 for (var k = 0; k < data.versions.length; k++) {
-                    var ver = data.versions[k];
-                    html += '<div class="ept-cd-version">';
-                    html += '<span class="ept-cd-status ept-cd-status--' + this._statusClass(ver.status) + '">' + this._esc(ver.status) + '</span>';
-                    html += ' <span class="ept-cd-version-id">v' + ver.versionId + '</span>';
-                    html += ' <span class="ept-cd-version-meta">' + this._formatDate(ver.saved) + ' by ' + this._esc(ver.savedBy) + '</span>';
+                    var v = data.versions[k];
+                    var sc = v.status === "Published" ? "color:#16a34a" : (v.status === "Draft" ? "color:#3b82f6" : "color:#666");
+                    html += '<div class="ept-cd-ver">';
+                    html += '<span style="' + sc + ';font-weight:600">' + this._esc(v.status) + '</span>';
+                    html += ' v' + v.versionId;
+                    html += ' <span class="ept-cd-muted">' + this._fmtDate(v.saved) + ' ' + this._esc(v.savedBy || "") + '</span>';
                     html += '</div>';
                 }
             } else {
-                html += '<div class="ept-cd-empty-msg">No versions found</div>';
+                html += '<div class="ept-cd-empty">No versions</div>';
             }
             html += '</div>';
 
             container.innerHTML = html;
 
-            // Bind tab clicks
-            var tabs = container.querySelectorAll('.ept-cd-tab');
-            var panels = container.querySelectorAll('.ept-cd-panel');
+            // Bind tabs
+            var tabs = container.querySelectorAll(".ept-cd-tab");
+            var panels = container.querySelectorAll(".ept-cd-panel");
             for (var t = 0; t < tabs.length; t++) {
-                tabs[t].addEventListener('click', function () {
-                    for (var a = 0; a < tabs.length; a++) { tabs[a].classList.remove('active'); }
-                    for (var b = 0; b < panels.length; b++) { panels[b].classList.remove('active'); }
-                    this.classList.add('active');
-                    container.querySelector('[data-panel="' + this.getAttribute('data-tab') + '"]').classList.add('active');
-                });
+                (function (tab) {
+                    on(tab, "click", function () {
+                        for (var x = 0; x < tabs.length; x++) {
+                            domClass.remove(tabs[x], "ept-cd-tab--active");
+                            domClass.remove(panels[x], "ept-cd-panel--active");
+                        }
+                        domClass.add(tab, "ept-cd-tab--active");
+                        var panel = container.querySelector('[data-panel="' + tab.getAttribute("data-tab") + '"]');
+                        if (panel) domClass.add(panel, "ept-cd-panel--active");
+                    });
+                })(tabs[t]);
             }
         },
 
+        _row: function (label, value) {
+            return '<div class="ept-cd-row"><span class="ept-cd-label">' + this._esc(label) + '</span><span class="ept-cd-value">' + value + '</span></div>';
+        },
+
         _esc: function (s) {
-            if (!s) return '';
-            var div = document.createElement('div');
-            div.textContent = s;
-            return div.innerHTML;
+            if (!s && s !== 0) return "";
+            var d = document.createElement("div");
+            d.textContent = String(s);
+            return d.innerHTML;
         },
 
-        _formatDate: function (dateStr) {
-            if (!dateStr) return 'N/A';
-            var d = new Date(dateStr);
-            if (isNaN(d.getTime())) return dateStr;
-            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        _fmtDate: function (s) {
+            if (!s) return "N/A";
+            var d = new Date(s);
+            if (isNaN(d.getTime())) return s;
+            return d.toLocaleDateString() + " " + d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
         },
 
-        _statusClass: function (status) {
-            if (!status) return 'default';
-            var s = status.toLowerCase();
-            if (s === 'published') return 'published';
-            if (s === 'checkedout' || s === 'draft') return 'draft';
-            if (s === 'previouslypublished') return 'previous';
-            if (s === 'rejected') return 'rejected';
-            if (s === 'delayedpublish') return 'delayed';
-            return 'default';
+        resize: function () {
+            this.inherited(arguments);
         }
     });
 });

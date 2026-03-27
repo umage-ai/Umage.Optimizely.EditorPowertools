@@ -61,7 +61,8 @@ public class PersonalizationJobStatusService
     {
         return _jobRepository.List()
             .FirstOrDefault(j =>
-                j.TypeName?.Contains("PersonalizationAnalysisJob", StringComparison.OrdinalIgnoreCase) == true);
+                j.TypeName?.Contains("UnifiedContentAnalysisJob", StringComparison.OrdinalIgnoreCase) == true
+                || j.TypeName?.Contains("PersonalizationAnalysisJob", StringComparison.OrdinalIgnoreCase) == true);
     }
 }
 

@@ -62,7 +62,8 @@ public class LinkCheckerJobStatusService
     {
         return _jobRepository.List()
             .FirstOrDefault(j =>
-                j.TypeName?.Contains("LinkCheckerJob", StringComparison.OrdinalIgnoreCase) == true);
+                j.TypeName?.Contains("UnifiedContentAnalysisJob", StringComparison.OrdinalIgnoreCase) == true
+                || j.TypeName?.Contains("LinkCheckerJob", StringComparison.OrdinalIgnoreCase) == true);
     }
 }
 
