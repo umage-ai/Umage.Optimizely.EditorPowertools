@@ -537,6 +537,12 @@
     font-size: var(--ept-text-sm);
 }
 
+.ept-tree__toggle svg {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+}
+
 .ept-tree__label {
     font-size: var(--ept-text-sm);
     cursor: pointer;
