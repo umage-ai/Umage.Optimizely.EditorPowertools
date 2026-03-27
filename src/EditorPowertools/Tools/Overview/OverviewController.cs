@@ -130,6 +130,17 @@ public class EditorPowertoolsController : Controller
     }
 
     [HttpGet]
+    public IActionResult ContentAudit()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ContentAudit),
+            EditorPowertoolsPermissions.ContentAudit))
+            return Forbid();
+
+        return View("/Views/ContentAudit/Index.cshtml");
+    }
+
+    [HttpGet]
     public IActionResult LinkChecker()
     {
         if (!_accessChecker.HasAccess(HttpContext,

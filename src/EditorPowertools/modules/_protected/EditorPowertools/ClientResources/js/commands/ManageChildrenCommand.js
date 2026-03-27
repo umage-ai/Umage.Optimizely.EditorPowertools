@@ -1,9 +1,11 @@
 define([
     "dojo/_base/declare",
-    "epi/shell/command/_Command"
+    "epi/shell/command/_Command",
+    "epi/routes"
 ], function (
     declare,
-    _Command
+    _Command,
+    routes
 ) {
     return declare([_Command], {
         label: "Manage Child Items",
@@ -19,7 +21,6 @@ define([
                 return;
             }
 
-            // Only available for content that has children and is not an asset folder
             var available = !this.model.ownerContentLink && this.model.hasChildren;
             this.set("canExecute", !!available);
             this.set("isAvailable", !!available);
@@ -29,18 +30,12 @@ define([
             if (!this.model || !this.model.contentLink) return;
 
             var contentId = String(this.model.contentLink).split("_")[0];
-
-            // Open the Manage Children tool for this content
-            var url = this._getToolUrl("EditorPowertools/ManageChildren") +
-                "?parentId=" + encodeURIComponent(contentId);
-            window.open(url, "_blank");
-        },
-
-        _getToolUrl: function (path) {
-            if (window.__eptModuleBasePath) {
-                return window.__eptModuleBasePath + path;
-            }
-            return "/EPiServer/" + path;
+            var url = routes.getActionPath({
+                moduleArea: "EditorPowertools",
+                controller: "EditorPowertools",
+                action: "ManageChildren"
+            });
+            window.open(url + "?parentId=" + encodeURIComponent(contentId), "_blank");
         }
     });
 });

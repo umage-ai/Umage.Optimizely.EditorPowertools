@@ -224,7 +224,7 @@
 
         // Search
         html += '<div class="ept-search" style="min-width:200px;">';
-        html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>';
+        html += '<span class="ept-search__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>';
         html += '<input type="text" id="ca-search" placeholder="Search by name..." value="' + escapeHtml(state.search) + '">';
         html += '</div>';
 
