@@ -30,8 +30,8 @@ define([
 
             var contentId = String(this.model.contentLink).split("_")[0];
 
-            // Open the Bulk Property Editor filtered to children of this content
-            var url = this._getToolUrl("EditorPowertools/BulkPropertyEditor") +
+            // Open the Manage Children tool for this content
+            var url = this._getToolUrl("EditorPowertools/ManageChildren") +
                 "?parentId=" + encodeURIComponent(contentId);
             window.open(url, "_blank");
         },

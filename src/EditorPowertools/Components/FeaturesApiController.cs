@@ -29,9 +29,9 @@ public class FeaturesApiController : Controller
             ActivityTimeline = _accessChecker.HasAccess(HttpContext,
                 nameof(FeatureToggles.ActivityTimeline),
                 EditorPowertoolsPermissions.ActivityTimeline),
-            BulkPropertyEditor = _accessChecker.HasAccess(HttpContext,
-                nameof(FeatureToggles.BulkPropertyEditor),
-                EditorPowertoolsPermissions.BulkPropertyEditor)
+            ManageChildren = _accessChecker.HasAccess(HttpContext,
+                nameof(FeatureToggles.ManageChildren),
+                EditorPowertoolsPermissions.ManageChildren)
         });
     }
 }

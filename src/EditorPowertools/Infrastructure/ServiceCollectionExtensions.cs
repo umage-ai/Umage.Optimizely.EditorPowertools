@@ -7,11 +7,13 @@ using EditorPowertools.Tools.ActivityTimeline;
 using EditorPowertools.Tools.ContentDetails;
 using EditorPowertools.Tools.ContentTypeAudit;
 using EditorPowertools.Tools.ContentImporter;
+using EditorPowertools.Tools.ManageChildren;
 using EditorPowertools.Tools.ContentImporter.Parsers;
 using EditorPowertools.Tools.LinkChecker;
 using EditorPowertools.Tools.ScheduledJobsGantt;
 using EditorPowertools.Tools.ContentTypeRecommendations;
 using EditorPowertools.Services.Analyzers;
+using EditorPowertools.Tools.ContentAudit;
 using EditorPowertools.Tools.PersonalizationAudit;
 using EPiServer.Shell.Modules;
 using Microsoft.AspNetCore.Authorization;
@@ -89,6 +91,12 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IFileParser, CsvFileParser>();
         services.AddTransient<IFileParser, JsonFileParser>();
         services.AddTransient<IFileParser, ExcelFileParser>();
+
+        // Manage Children
+        services.AddTransient<ManageChildrenService>();
+
+        // Content Audit
+        services.AddTransient<ContentAuditService>();
 
         // Link Checker
         services.AddSingleton<LinkCheckerRepository>();

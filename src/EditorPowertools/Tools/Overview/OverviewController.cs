@@ -108,6 +108,17 @@ public class EditorPowertoolsController : Controller
     }
 
     [HttpGet]
+    public IActionResult ManageChildren()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ManageChildren),
+            EditorPowertoolsPermissions.ManageChildren))
+            return Forbid();
+
+        return View("/Views/ManageChildren/Index.cshtml");
+    }
+
+    [HttpGet]
     public IActionResult ContentImporter()
     {
         if (!_accessChecker.HasAccess(HttpContext,

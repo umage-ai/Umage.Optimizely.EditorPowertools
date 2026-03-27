@@ -1,0 +1,14 @@
+@using EPiServer.Shell
+@{
+    Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
+    ViewData["Title"] = "Manage Children";
+    string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
+}
+@section NavItems {
+    <a href="@ActionPath("EditorPowertools/Overview")">Overview</a>
+    <a href="@ActionPath("EditorPowertools/ManageChildren")" class="active">Manage Children</a>
+}
+<div id="manage-children-root"></div>
+@section Scripts {
+    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/manage-children.js"))"></script>
+}

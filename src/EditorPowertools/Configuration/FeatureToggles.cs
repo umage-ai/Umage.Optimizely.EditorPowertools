@@ -19,4 +19,6 @@ public class FeatureToggles
     public bool ScheduledJobsGantt { get; set; } = true;
     public bool ActivityTimeline { get; set; } = true;
     public bool ContentImporter { get; set; } = true;
+    public bool ManageChildren { get; set; } = true;
+    public bool ContentAudit { get; set; } = true;
 }

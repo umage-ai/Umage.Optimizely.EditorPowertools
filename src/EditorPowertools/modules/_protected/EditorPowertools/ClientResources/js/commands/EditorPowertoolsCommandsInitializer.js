@@ -53,7 +53,7 @@ define([
                 commands.push(new ContentTimelineCommand({ order: 500 }));
             }
 
-            if (features.bulkPropertyEditor !== false) {
+            if (features.manageChildren !== false) {
                 commands.push(new ManageChildrenCommand({ order: 510 }));
             }
 

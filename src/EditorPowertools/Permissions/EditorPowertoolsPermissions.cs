@@ -50,4 +50,10 @@ public static class EditorPowertoolsPermissions
 
     public static PermissionType ContentImporter { get; } =
         new("EditorPowertools", "ContentImporter");
+
+    public static PermissionType ManageChildren { get; } =
+        new("EditorPowertools", "ManageChildren");
+
+    public static PermissionType ContentAudit { get; } =
+        new("EditorPowertools", "ContentAudit");
 }

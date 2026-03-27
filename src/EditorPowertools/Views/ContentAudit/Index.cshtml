@@ -1,0 +1,21 @@
+@using EPiServer.Shell
+@{
+    Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
+    ViewData["Title"] = "Content Audit";
+    string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
+}
+
+@section NavItems {
+    <a href="@ActionPath("EditorPowertools/Overview")">Overview</a>
+}
+
+<div class="ept-page-header">
+    <h1>Content Audit</h1>
+    <p>Comprehensive content inventory with configurable columns, filters, and export.</p>
+</div>
+
+<div id="content-audit-root"></div>
+
+@section Scripts {
+    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/content-audit.js"))"></script>
+}
