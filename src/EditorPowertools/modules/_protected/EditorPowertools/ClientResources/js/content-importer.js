@@ -362,6 +362,10 @@
             }
             html += '</select>';
 
+            if (prop.isBoolean) {
+                var isChecked = existing && existing.hardcodedValue === 'true' ? ' checked' : '';
+                html += '<label class="ept-toggle mapping-bool" data-prop="' + escHtml(prop.name) + '" style="display:none"><input type="checkbox" class="mapping-bool-check" data-prop="' + escHtml(prop.name) + '"' + isChecked + '> Set to true</label>';
+            }
             html += '<input class="ept-importer-input mapping-val" data-prop="' + escHtml(prop.name) + '" placeholder="Value or {Column} template" style="display:none" value="' + escHtml((existing && existing.hardcodedValue) || '') + '">';
             html += '<div class="ept-importer-hint mapping-val-hint" data-prop="' + escHtml(prop.name) + '" style="display:none">Use <code>{ColumnName}</code> to insert column values</div>';
 
@@ -384,11 +388,20 @@
         var colSel = row.querySelector('.mapping-col');
         var valInput = row.querySelector('.mapping-val');
         var valHint = row.querySelector('.mapping-val-hint');
+        var boolLabel = row.querySelector('.mapping-bool');
         var blocksContainer = row.querySelector('.mapping-blocks-container');
 
         colSel.style.display = type === 'column' ? '' : 'none';
-        valInput.style.display = type === 'hardcoded' ? '' : 'none';
-        if (valHint) valHint.style.display = type === 'hardcoded' ? '' : 'none';
+        // For booleans, show checkbox instead of text input
+        var hasBool = boolLabel !== null;
+        if (hasBool) {
+            boolLabel.style.display = type === 'hardcoded' ? '' : 'none';
+            valInput.style.display = 'none';
+            if (valHint) valHint.style.display = 'none';
+        } else {
+            valInput.style.display = type === 'hardcoded' ? '' : 'none';
+            if (valHint) valHint.style.display = type === 'hardcoded' ? '' : 'none';
+        }
         if (blocksContainer) blocksContainer.style.display = type === 'inline-block' ? '' : 'none';
 
         if (type === 'inline-block' && blocksContainer) {
@@ -507,8 +520,13 @@
                 var colSel = document.querySelector('.mapping-col[data-prop="' + propName + '"]');
                 mapping.sourceColumn = colSel ? colSel.value : '';
             } else if (type === 'hardcoded') {
-                var valInput = document.querySelector('.mapping-val[data-prop="' + propName + '"]');
-                mapping.hardcodedValue = valInput ? valInput.value : '';
+                var boolCheck = document.querySelector('.mapping-bool-check[data-prop="' + propName + '"]');
+                if (boolCheck) {
+                    mapping.hardcodedValue = boolCheck.checked ? 'true' : 'false';
+                } else {
+                    var valInput = document.querySelector('.mapping-val[data-prop="' + propName + '"]');
+                    mapping.hardcodedValue = valInput ? valInput.value : '';
+                }
             } else if (type === 'inline-block') {
                 // Collect all block entries for this property
                 var blockEntries = document.querySelectorAll('.mapping-blocks-list[data-prop="' + propName + '"] .ept-importer-block-entry');

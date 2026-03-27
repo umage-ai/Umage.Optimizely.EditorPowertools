@@ -36,6 +36,7 @@ public class ImportPropertyInfo
     public bool IsContentArea { get; set; }
     public bool IsXhtmlString { get; set; }
     public bool IsContentReference { get; set; }
+    public bool IsBoolean { get; set; }
     public bool IsBuiltIn { get; set; }
 }
 

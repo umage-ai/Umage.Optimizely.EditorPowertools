@@ -1,8 +1,11 @@
 using System.Globalization;
 using EPiServer;
 using EPiServer.Core;
+using EPiServer.Core.Internal;
+using EPiServer.Web;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAccess;
+using EPiServer.Framework.Blobs;
 using EPiServer.Security;
 using EPiServer.SpecializedProperties;
 using EditorPowertools.Tools.ContentImporter.Models;
@@ -18,6 +21,9 @@ public class ContentImporterService
     private readonly IContentTypeRepository _contentTypeRepository;
     private readonly IContentRepository _contentRepository;
     private readonly ILanguageBranchRepository _languageBranchRepository;
+    private readonly ContentAssetHelper _contentAssetHelper;
+    private readonly IBlobFactory _blobFactory;
+    private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<ContentImporterService> _logger;
 
     // System properties to exclude from mapping
@@ -48,6 +54,9 @@ public class ContentImporterService
         IContentTypeRepository contentTypeRepository,
         IContentRepository contentRepository,
         ILanguageBranchRepository languageBranchRepository,
+        ContentAssetHelper contentAssetHelper,
+        IBlobFactory blobFactory,
+        IHttpClientFactory httpClientFactory,
         ILogger<ContentImporterService> logger)
     {
         _sessionStore = sessionStore;
@@ -55,6 +64,9 @@ public class ContentImporterService
         _contentTypeRepository = contentTypeRepository;
         _contentRepository = contentRepository;
         _languageBranchRepository = languageBranchRepository;
+        _contentAssetHelper = contentAssetHelper;
+        _blobFactory = blobFactory;
+        _httpClientFactory = httpClientFactory;
         _logger = logger;
     }
 
@@ -156,6 +168,7 @@ public class ContentImporterService
                 IsXhtmlString = propTypeName.Contains("XhtmlString", StringComparison.OrdinalIgnoreCase),
                 IsContentReference = propTypeName.Contains("ContentReference", StringComparison.OrdinalIgnoreCase)
                     || propTypeName.Contains("PageReference", StringComparison.OrdinalIgnoreCase),
+                IsBoolean = propTypeName.Contains("Boolean", StringComparison.OrdinalIgnoreCase),
                 IsBuiltIn = isBuiltIn
             });
         }
@@ -321,6 +334,9 @@ public class ContentImporterService
             content.Name = $"Import-{rowIndex + 1}";
         }
 
+        // Separate image URL mappings (need content saved first for asset folder)
+        var deferredImageMappings = new List<(PropertyMapping mapping, string value)>();
+
         // Apply property mappings
         foreach (var propMapping in mapping.Mappings.Where(m => m.MappingType != "skip"))
         {
@@ -333,11 +349,28 @@ public class ContentImporterService
                 {
                     case "column":
                         if (row.TryGetValue(propMapping.SourceColumn ?? "", out var value))
-                            SetPropertyValue(prop, value);
+                        {
+                            // Check if this is an image/media reference with a URL value
+                            if (IsImageProperty(prop) && IsUrl(value))
+                            {
+                                deferredImageMappings.Add((propMapping, value));
+                            }
+                            else
+                            {
+                                SetPropertyValue(prop, value);
+                            }
+                        }
                         break;
                     case "hardcoded":
                         var resolved = ResolveTemplate(propMapping.HardcodedValue, row);
-                        SetPropertyValue(prop, resolved);
+                        if (IsImageProperty(prop) && IsUrl(resolved))
+                        {
+                            deferredImageMappings.Add((propMapping, resolved!));
+                        }
+                        else
+                        {
+                            SetPropertyValue(prop, resolved);
+                        }
                         break;
                     case "inline-block":
                         var blocks = propMapping.InlineBlocks ?? (propMapping.InlineBlock != null
@@ -355,9 +388,96 @@ public class ContentImporterService
             }
         }
 
-        var saveAction = mapping.PublishAfterImport ? SaveAction.Publish : SaveAction.Save;
-        var saved = _contentRepository.Save(content, saveAction, AccessLevel.NoAccess);
+        // Save content first (as draft if we have deferred images, otherwise final save)
+        var hasDeferredImages = deferredImageMappings.Count > 0;
+        var initialSaveAction = hasDeferredImages ? SaveAction.Save : (mapping.PublishAfterImport ? SaveAction.Publish : SaveAction.Save);
+        var saved = _contentRepository.Save(content, initialSaveAction, AccessLevel.NoAccess);
+
+        // Now handle deferred image downloads — content exists, so we can create assets
+        if (hasDeferredImages)
+        {
+            var loaded = _contentRepository.Get<IContent>(saved);
+            var writableContent = (IContent)((ContentData)loaded).CreateWritableClone();
+            foreach (var (imgMapping, imgUrl) in deferredImageMappings)
+            {
+                try
+                {
+                    var imageRef = DownloadAndCreateImage(saved, imgUrl, content.Name, imgMapping.TargetProperty);
+                    if (!ContentReference.IsNullOrEmpty(imageRef))
+                    {
+                        var prop = writableContent.Property[imgMapping.TargetProperty];
+                        if (prop != null)
+                            prop.Value = imageRef;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to download image for {Property} from {Url} on row {Row}",
+                        imgMapping.TargetProperty, imgUrl, rowIndex + 1);
+                }
+            }
+
+            var finalAction = mapping.PublishAfterImport ? SaveAction.Publish : SaveAction.Save;
+            saved = _contentRepository.Save(writableContent, finalAction | SaveAction.ForceCurrentVersion, AccessLevel.NoAccess);
+        }
+
         return saved.ID;
+    }
+
+    private static bool IsImageProperty(PropertyData prop)
+    {
+        var typeName = prop.Type.ToString();
+        return typeName.Contains("ContentReference", StringComparison.OrdinalIgnoreCase)
+            || typeName.Contains("PageReference", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsUrl(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return false;
+        return value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+            || value.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private ContentReference DownloadAndCreateImage(ContentReference ownerContentLink, string imageUrl, string contentName, string propertyName)
+    {
+        using var httpClient = _httpClientFactory.CreateClient();
+        httpClient.Timeout = TimeSpan.FromSeconds(30);
+
+        using var response = httpClient.GetAsync(imageUrl).GetAwaiter().GetResult();
+        response.EnsureSuccessStatusCode();
+
+        var contentType = response.Content.Headers.ContentType?.MediaType ?? "image/jpeg";
+        var uri = new Uri(imageUrl);
+        var fileName = Path.GetFileName(uri.LocalPath);
+        if (string.IsNullOrWhiteSpace(fileName) || !fileName.Contains('.'))
+        {
+            var ext = contentType switch
+            {
+                "image/png" => ".png",
+                "image/gif" => ".gif",
+                "image/webp" => ".webp",
+                "image/svg+xml" => ".svg",
+                _ => ".jpg"
+            };
+            fileName = $"{contentName}-{propertyName}{ext}";
+        }
+
+        // Get or create the "For this content" asset folder
+        var assetFolder = _contentAssetHelper.GetOrCreateAssetFolder(ownerContentLink);
+
+        // Create the image media content
+        var imageMedia = _contentRepository.GetDefault<ImageData>(assetFolder.ContentLink);
+        imageMedia.Name = fileName;
+
+        // Write blob data
+        var blob = _blobFactory.CreateBlob(imageMedia.BinaryDataContainer, Path.GetExtension(fileName));
+        using (var blobStream = blob.OpenWrite())
+        {
+            response.Content.ReadAsStream().CopyTo(blobStream);
+        }
+        imageMedia.BinaryData = blob;
+
+        return _contentRepository.Save(imageMedia, SaveAction.Publish, AccessLevel.NoAccess);
     }
 
     private void SetPropertyValue(PropertyData prop, string? value)
