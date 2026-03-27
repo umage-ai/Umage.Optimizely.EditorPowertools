@@ -2,17 +2,16 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/on",
+    "dojo/topic",
     "dojo/dom-construct",
     "dojo/dom-class",
-    "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/layout/_LayoutWidget",
-    "epi/dependency",
-    "epi/shell/context"
+    "epi/dependency"
 ], function (
-    declare, lang, on, domConstruct, domClass,
-    _WidgetBase, _TemplatedMixin, _LayoutWidget,
-    dependency, context
+    declare, lang, on, topic, domConstruct, domClass,
+    _TemplatedMixin, _LayoutWidget,
+    dependency
 ) {
     return declare("editorpowertools.ContentDetailsWidget", [_LayoutWidget, _TemplatedMixin], {
         templateString: '<div class="ept-cd-root">' +
@@ -29,18 +28,11 @@ define([
         _initContextListener: function () {
             var self = this;
 
-            // Subscribe to context changes via the EPiServer context service
-            var contextService = dependency.resolve("epi.shell.context");
-            if (contextService) {
-                contextService.on("changed", function (ctx) {
-                    self._onContextChanged(ctx);
-                });
-                // Load initial context
-                var current = contextService.get("currentContext");
-                if (current) {
-                    self._onContextChanged(current);
-                }
-            }
+            // The CMS shell sets currentContext on asset panel components automatically.
+            // Also subscribe to the context change topic as a fallback.
+            topic.subscribe("/epi/shell/context/changed", function (sender, ctx) {
+                self._onContextChanged(ctx || sender);
+            });
         },
 
         _onContextChanged: function (ctx) {
