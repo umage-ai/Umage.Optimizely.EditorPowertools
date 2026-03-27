@@ -292,6 +292,9 @@
         var cols = state.columns.map(function (c) { return c.name; });
         var html = '';
 
+        var customProps = ct.properties.filter(function (p) { return !p.isBuiltIn; });
+        var builtInProps = ct.properties.filter(function (p) { return p.isBuiltIn; });
+
         // Name mapping
         html += '<div class="ept-importer-mapping-row">';
         html += '<div class="ept-importer-mapping-label"><strong>Content Name</strong> <span class="ept-badge ept-badge--danger">required</span></div>';
@@ -301,52 +304,20 @@
             var sel = state.nameSourceColumn === cols[c] ? ' selected' : '';
             html += '<option value="' + escHtml(cols[c]) + '"' + sel + '>' + escHtml(cols[c]) + '</option>';
         }
-        html += '</select></div>';
+        html += '</select>';
+        html += '<div class="ept-importer-hint">Or use template: <code>{Column1} - {Column2}</code></div>';
+        html += '</div>';
 
         html += '<hr style="margin:12px 0;border:none;border-top:1px solid var(--ept-border-light)">';
 
-        // Property mappings
-        for (var p = 0; p < ct.properties.length; p++) {
-            var prop = ct.properties[p];
-            var existing = state.mappings.find(function (m) { return m.targetProperty === prop.name; });
+        // Custom property mappings
+        html += renderPropertyMappings(customProps, cols);
 
-            html += '<div class="ept-importer-mapping-row" data-prop="' + escHtml(prop.name) + '">';
-            html += '<div class="ept-importer-mapping-label">';
-            html += escHtml(prop.displayName);
-            html += ' <span class="ept-badge ept-badge--default">' + escHtml(prop.typeName) + '</span>';
-            if (prop.isRequired) html += ' <span class="ept-badge ept-badge--danger">required</span>';
-            html += '</div>';
-
-            // Mapping type selector
-            html += '<select class="ept-select mapping-type" data-prop="' + escHtml(prop.name) + '">';
-            html += '<option value="skip"' + (!existing || existing.mappingType === 'skip' ? ' selected' : '') + '>Skip</option>';
-            html += '<option value="column"' + (existing && existing.mappingType === 'column' ? ' selected' : '') + '>Map to column</option>';
-            html += '<option value="hardcoded"' + (existing && existing.mappingType === 'hardcoded' ? ' selected' : '') + '>Set value</option>';
-            if (prop.isContentArea) {
-                html += '<option value="inline-block"' + (existing && existing.mappingType === 'inline-block' ? ' selected' : '') + '>Create inline block</option>';
-            }
-            html += '</select>';
-
-            // Column selector (hidden by default)
-            html += '<select class="ept-select mapping-col" data-prop="' + escHtml(prop.name) + '" style="display:none">';
-            html += '<option value="">-- Column --</option>';
-            for (var c2 = 0; c2 < cols.length; c2++) {
-                var sel2 = existing && existing.sourceColumn === cols[c2] ? ' selected' : '';
-                html += '<option value="' + escHtml(cols[c2]) + '"' + sel2 + '>' + escHtml(cols[c2]) + '</option>';
-            }
-            html += '</select>';
-
-            // Hardcoded value input (hidden by default)
-            html += '<input class="ept-importer-input mapping-val" data-prop="' + escHtml(prop.name) + '" placeholder="Value" style="display:none" value="' + escHtml((existing && existing.hardcodedValue) || '') + '">';
-
-            // Inline block section (hidden)
-            html += '<div class="mapping-block" data-prop="' + escHtml(prop.name) + '" style="display:none">';
-            html += '<select class="ept-select mapping-block-type" data-prop="' + escHtml(prop.name) + '">';
-            html += '<option value="">Loading block types...</option></select>';
-            html += '<div class="mapping-block-props" data-prop="' + escHtml(prop.name) + '"></div>';
-            html += '</div>';
-
-            html += '</div>';
+        // Built-in properties section
+        if (builtInProps.length > 0) {
+            html += '<details style="margin-top:12px"><summary style="cursor:pointer;font-size:13px;font-weight:600;color:var(--ept-text-secondary);padding:6px 0">Built-in Properties</summary>';
+            html += renderPropertyMappings(builtInProps, cols);
+            html += '</details>';
         }
 
         body.innerHTML = html;
@@ -360,6 +331,51 @@
         }
     }
 
+    function renderPropertyMappings(props, cols) {
+        var html = '';
+        for (var p = 0; p < props.length; p++) {
+            var prop = props[p];
+            var existing = state.mappings.find(function (m) { return m.targetProperty === prop.name; });
+
+            html += '<div class="ept-importer-mapping-row" data-prop="' + escHtml(prop.name) + '">';
+            html += '<div class="ept-importer-mapping-label">';
+            html += escHtml(prop.displayName);
+            html += ' <span class="ept-badge ept-badge--default">' + escHtml(prop.typeName) + '</span>';
+            if (prop.isRequired) html += ' <span class="ept-badge ept-badge--danger">required</span>';
+            if (prop.isBuiltIn) html += ' <span class="ept-badge ept-badge--warning">built-in</span>';
+            html += '</div>';
+
+            html += '<select class="ept-select mapping-type" data-prop="' + escHtml(prop.name) + '">';
+            html += '<option value="skip"' + (!existing || existing.mappingType === 'skip' ? ' selected' : '') + '>Skip</option>';
+            html += '<option value="column"' + (existing && existing.mappingType === 'column' ? ' selected' : '') + '>Map to column</option>';
+            html += '<option value="hardcoded"' + (existing && existing.mappingType === 'hardcoded' ? ' selected' : '') + '>Set value</option>';
+            if (prop.isContentArea) {
+                html += '<option value="inline-block"' + (existing && existing.mappingType === 'inline-block' ? ' selected' : '') + '>Create inline blocks</option>';
+            }
+            html += '</select>';
+
+            html += '<select class="ept-select mapping-col" data-prop="' + escHtml(prop.name) + '" style="display:none">';
+            html += '<option value="">-- Column --</option>';
+            for (var c2 = 0; c2 < cols.length; c2++) {
+                var sel2 = existing && existing.sourceColumn === cols[c2] ? ' selected' : '';
+                html += '<option value="' + escHtml(cols[c2]) + '"' + sel2 + '>' + escHtml(cols[c2]) + '</option>';
+            }
+            html += '</select>';
+
+            html += '<input class="ept-importer-input mapping-val" data-prop="' + escHtml(prop.name) + '" placeholder="Value or {Column} template" style="display:none" value="' + escHtml((existing && existing.hardcodedValue) || '') + '">';
+            html += '<div class="ept-importer-hint mapping-val-hint" data-prop="' + escHtml(prop.name) + '" style="display:none">Use <code>{ColumnName}</code> to insert column values</div>';
+
+            // Inline block section with add button
+            html += '<div class="mapping-blocks-container" data-prop="' + escHtml(prop.name) + '" style="display:none">';
+            html += '<div class="mapping-blocks-list" data-prop="' + escHtml(prop.name) + '"></div>';
+            html += '<button class="ept-btn ept-btn--sm mapping-add-block" data-prop="' + escHtml(prop.name) + '">+ Add block</button>';
+            html += '</div>';
+
+            html += '</div>';
+        }
+        return html;
+    }
+
     function onMappingTypeChange() {
         var prop = this.getAttribute('data-prop');
         var type = this.value;
@@ -367,22 +383,63 @@
 
         var colSel = row.querySelector('.mapping-col');
         var valInput = row.querySelector('.mapping-val');
-        var blockDiv = row.querySelector('.mapping-block');
+        var valHint = row.querySelector('.mapping-val-hint');
+        var blocksContainer = row.querySelector('.mapping-blocks-container');
 
         colSel.style.display = type === 'column' ? '' : 'none';
         valInput.style.display = type === 'hardcoded' ? '' : 'none';
-        blockDiv.style.display = type === 'inline-block' ? '' : 'none';
+        if (valHint) valHint.style.display = type === 'hardcoded' ? '' : 'none';
+        if (blocksContainer) blocksContainer.style.display = type === 'inline-block' ? '' : 'none';
 
-        if (type === 'inline-block') {
-            loadBlockTypes(prop);
+        if (type === 'inline-block' && blocksContainer) {
+            // Bind add block button
+            var addBtn = blocksContainer.querySelector('.mapping-add-block');
+            if (addBtn && !addBtn._bound) {
+                addBtn._bound = true;
+                addBtn.onclick = function () { addInlineBlock(prop); };
+            }
+            // Add first block if empty
+            var list = blocksContainer.querySelector('.mapping-blocks-list');
+            if (list && list.children.length === 0) {
+                addInlineBlock(prop);
+            }
         }
     }
 
-    function loadBlockTypes(propName) {
-        fetchJson(API + '/block-types').then(function (types) {
-            state.blockTypes = types;
-            var select = document.querySelector('.mapping-block-type[data-prop="' + propName + '"]');
-            if (!select) return;
+    var _blockTypesCache = null;
+
+    function addInlineBlock(propName) {
+        var list = document.querySelector('.mapping-blocks-list[data-prop="' + propName + '"]');
+        if (!list) return;
+
+        var blockIndex = list.children.length;
+        var wrapper = document.createElement('div');
+        wrapper.className = 'ept-importer-block-entry';
+        wrapper.setAttribute('data-block-index', blockIndex);
+        wrapper.innerHTML = '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">' +
+            '<strong style="font-size:11px">Block ' + (blockIndex + 1) + '</strong>' +
+            '<select class="ept-select mapping-block-type" style="font-size:12px"></select>' +
+            '<button class="ept-btn ept-btn--sm remove-block-btn" style="color:var(--ept-danger)">&times;</button>' +
+            '</div>' +
+            '<div class="mapping-block-props"></div>';
+        list.appendChild(wrapper);
+
+        // Remove button
+        wrapper.querySelector('.remove-block-btn').onclick = function () {
+            list.removeChild(wrapper);
+        };
+
+        // Load block types
+        var select = wrapper.querySelector('.mapping-block-type');
+        loadBlockTypesIntoSelect(select, propName, blockIndex);
+    }
+
+    function loadBlockTypesIntoSelect(select, propName, blockIndex) {
+        var loadTypes = _blockTypesCache
+            ? Promise.resolve(_blockTypesCache)
+            : fetchJson(API + '/block-types').then(function (types) { _blockTypesCache = types; return types; });
+
+        loadTypes.then(function (types) {
             var html = '<option value="">-- Select block type --</option>';
             for (var i = 0; i < types.length; i++) {
                 html += '<option value="' + types[i].id + '">' + escHtml(types[i].displayName) + '</option>';
@@ -392,52 +449,45 @@
             select.onchange = function () {
                 var blockTypeId = parseInt(this.value);
                 if (!blockTypeId) return;
-                loadBlockTypeProperties(propName, blockTypeId);
+                var propsContainer = select.closest('.ept-importer-block-entry').querySelector('.mapping-block-props');
+                loadBlockTypePropertiesInto(propsContainer, propName, blockIndex, blockTypeId);
             };
         });
     }
 
-    function loadBlockTypeProperties(propName, blockTypeId) {
+    function loadBlockTypePropertiesInto(container, propName, blockIndex, blockTypeId) {
         fetchJson(API + '/content-types/' + blockTypeId).then(function (bt) {
-            var container = document.querySelector('.mapping-block-props[data-prop="' + propName + '"]');
-            if (!container) return;
-
             var cols = state.columns.map(function (c) { return c.name; });
-            var html = '<div style="margin-top:8px;padding:8px;background:var(--ept-bg);border-radius:4px">';
-            html += '<div style="font-size:11px;font-weight:600;margin-bottom:6px">Block properties:</div>';
+            var bid = propName + '-' + blockIndex;
+            var html = '<div style="margin-top:4px;padding:8px;background:var(--ept-bg);border-radius:4px;font-size:11px">';
 
             for (var p = 0; p < bt.properties.length; p++) {
                 var prop = bt.properties[p];
                 html += '<div class="ept-importer-mapping-row" style="margin-bottom:4px">';
-                html += '<span style="font-size:11px">' + escHtml(prop.displayName) + '</span> ';
-                html += '<select class="ept-select block-mapping-type" data-parent="' + escHtml(propName) + '" data-prop="' + escHtml(prop.name) + '" style="font-size:11px;padding:2px 4px">';
+                html += '<span>' + escHtml(prop.displayName) + '</span> ';
+                html += '<select class="ept-select block-mapping-type" data-bid="' + escHtml(bid) + '" data-prop="' + escHtml(prop.name) + '" style="font-size:11px;padding:2px 4px">';
                 html += '<option value="skip">Skip</option>';
                 html += '<option value="column">Column</option>';
-                html += '<option value="hardcoded">Value</option>';
+                html += '<option value="hardcoded">Value / {template}</option>';
                 html += '</select> ';
-                html += '<select class="ept-select block-mapping-col" data-parent="' + escHtml(propName) + '" data-prop="' + escHtml(prop.name) + '" style="display:none;font-size:11px;padding:2px 4px">';
+                html += '<select class="ept-select block-mapping-col" data-bid="' + escHtml(bid) + '" data-prop="' + escHtml(prop.name) + '" style="display:none;font-size:11px;padding:2px 4px">';
                 html += '<option value="">--</option>';
                 for (var c = 0; c < cols.length; c++) {
                     html += '<option value="' + escHtml(cols[c]) + '">' + escHtml(cols[c]) + '</option>';
                 }
                 html += '</select>';
-                html += '<input class="ept-importer-input block-mapping-val" data-parent="' + escHtml(propName) + '" data-prop="' + escHtml(prop.name) + '" style="display:none;font-size:11px;padding:2px 4px" placeholder="Value">';
+                html += '<input class="ept-importer-input block-mapping-val" data-bid="' + escHtml(bid) + '" data-prop="' + escHtml(prop.name) + '" style="display:none;font-size:11px;padding:2px 4px" placeholder="Value or {Column}">';
                 html += '</div>';
             }
             html += '</div>';
             container.innerHTML = html;
 
-            // Bind block mapping type changes
             var selects = container.querySelectorAll('.block-mapping-type');
             for (var s = 0; s < selects.length; s++) {
                 selects[s].onchange = function () {
-                    var parent = this.getAttribute('data-parent');
-                    var bprop = this.getAttribute('data-prop');
                     var brow = this.closest('.ept-importer-mapping-row');
-                    var bcolSel = brow.querySelector('.block-mapping-col');
-                    var bvalInput = brow.querySelector('.block-mapping-val');
-                    bcolSel.style.display = this.value === 'column' ? '' : 'none';
-                    bvalInput.style.display = this.value === 'hardcoded' ? '' : 'none';
+                    brow.querySelector('.block-mapping-col').style.display = this.value === 'column' ? '' : 'none';
+                    brow.querySelector('.block-mapping-val').style.display = this.value === 'hardcoded' ? '' : 'none';
                 };
             }
         });
@@ -460,26 +510,35 @@
                 var valInput = document.querySelector('.mapping-val[data-prop="' + propName + '"]');
                 mapping.hardcodedValue = valInput ? valInput.value : '';
             } else if (type === 'inline-block') {
-                var blockTypeSel = document.querySelector('.mapping-block-type[data-prop="' + propName + '"]');
-                var blockTypeId = blockTypeSel ? parseInt(blockTypeSel.value) : 0;
+                // Collect all block entries for this property
+                var blockEntries = document.querySelectorAll('.mapping-blocks-list[data-prop="' + propName + '"] .ept-importer-block-entry');
+                var inlineBlocks = [];
+                for (var be = 0; be < blockEntries.length; be++) {
+                    var entry = blockEntries[be];
+                    var blockTypeSel = entry.querySelector('.mapping-block-type');
+                    var blockTypeId = blockTypeSel ? parseInt(blockTypeSel.value) : 0;
+                    if (!blockTypeId) continue;
 
-                var blockMappings = [];
-                var blockRows = document.querySelectorAll('.block-mapping-type[data-parent="' + propName + '"]');
-                for (var b = 0; b < blockRows.length; b++) {
-                    var bprop = blockRows[b].getAttribute('data-prop');
-                    var btype = blockRows[b].value;
-                    if (btype === 'skip') continue;
-                    var bm = { targetProperty: bprop, mappingType: btype };
-                    if (btype === 'column') {
-                        var bcolSel = document.querySelector('.block-mapping-col[data-parent="' + propName + '"][data-prop="' + bprop + '"]');
-                        bm.sourceColumn = bcolSel ? bcolSel.value : '';
-                    } else if (btype === 'hardcoded') {
-                        var bvalInput = document.querySelector('.block-mapping-val[data-parent="' + propName + '"][data-prop="' + bprop + '"]');
-                        bm.hardcodedValue = bvalInput ? bvalInput.value : '';
+                    var bid = propName + '-' + be;
+                    var blockMappings = [];
+                    var blockRows = entry.querySelectorAll('.block-mapping-type');
+                    for (var b = 0; b < blockRows.length; b++) {
+                        var bprop = blockRows[b].getAttribute('data-prop');
+                        var btype = blockRows[b].value;
+                        if (btype === 'skip') continue;
+                        var bm = { targetProperty: bprop, mappingType: btype };
+                        if (btype === 'column') {
+                            var bcolSel = entry.querySelector('.block-mapping-col[data-prop="' + bprop + '"]');
+                            bm.sourceColumn = bcolSel ? bcolSel.value : '';
+                        } else if (btype === 'hardcoded') {
+                            var bvalInput = entry.querySelector('.block-mapping-val[data-prop="' + bprop + '"]');
+                            bm.hardcodedValue = bvalInput ? bvalInput.value : '';
+                        }
+                        blockMappings.push(bm);
                     }
-                    blockMappings.push(bm);
+                    inlineBlocks.push({ blockTypeId: blockTypeId, mappings: blockMappings });
                 }
-                mapping.inlineBlock = { blockTypeId: blockTypeId, mappings: blockMappings };
+                mapping.inlineBlocks = inlineBlocks;
             }
             mappings.push(mapping);
         }
@@ -686,6 +745,9 @@
         '.ept-importer-mapping-row { display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid var(--ept-border-light); flex-wrap:wrap; }',
         '.ept-importer-mapping-label { min-width:200px; font-size:13px; }',
         '.ept-importer-nav { display:flex; align-items:center; margin-top:16px; gap:8px; }',
+        '.ept-importer-hint { font-size:11px; color:var(--ept-text-muted); margin-top:2px; width:100%; }',
+        '.ept-importer-hint code { background:var(--ept-surface-active); padding:1px 4px; border-radius:3px; font-size:10px; }',
+        '.ept-importer-block-entry { padding:8px; margin-bottom:8px; border:1px solid var(--ept-border-light); border-radius:4px; }',
         '.ept-importer-progress-bar { height:8px; background:var(--ept-surface-active); border-radius:4px; overflow:hidden; }',
         '.ept-importer-progress-fill { height:100%; background:var(--ept-primary); border-radius:4px; transition:width .3s; }'
     ].join('\n');

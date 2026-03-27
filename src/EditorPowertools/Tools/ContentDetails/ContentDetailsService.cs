@@ -324,7 +324,22 @@ public class ContentDetailsService
                             PropertyName = prop.TranslateDisplayName() ?? prop.Name,
                             PropertyType = "ContentReference"
                         };
-                        propNode.Children.Add(BuildContentTree(child, depth + 1, visited));
+                        // Don't recurse into parent link — just show as leaf
+                        var isLeafOnly = prop.Name.Equals("PageParentLink", StringComparison.OrdinalIgnoreCase);
+                        if (isLeafOnly)
+                        {
+                            var childType = _contentTypeRepository.Load(child.ContentTypeID);
+                            propNode.Children.Add(new ContentTreeNodeDto
+                            {
+                                ContentId = child.ContentLink.ID,
+                                Name = child.Name,
+                                ContentTypeName = childType?.DisplayName ?? childType?.Name ?? "Unknown"
+                            });
+                        }
+                        else
+                        {
+                            propNode.Children.Add(BuildContentTree(child, depth + 1, visited));
+                        }
                         node.Properties.Add(propNode);
                     }
                 }

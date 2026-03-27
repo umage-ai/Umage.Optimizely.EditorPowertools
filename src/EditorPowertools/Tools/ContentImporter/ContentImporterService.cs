@@ -26,14 +26,20 @@ public class ContentImporterService
         "PageName", "PageLink", "PageParentLink", "PageGuid",
         "PageTypeID", "PageTypeName", "PageCreated", "PageChanged",
         "PageSaved", "PageLanguageBranch", "PageMasterLanguageBranch",
-        "PageWorkStatus", "PageStartPublish", "PageStopPublish",
-        "PageDeleted", "PageCreatedBy", "PageChangedBy",
+        "PageWorkStatus", "PageDeleted",
         "PageDeletedBy", "PageDeletedDate", "PageShortcutType",
-        "PageShortcutLink", "PageTargetFrame", "PageURLSegment",
+        "PageShortcutLink", "PageTargetFrame",
         "PageExternalURL", "PagePendingPublish", "PageChangedOnPublish",
         "PageCategory", "PageArchiveLink", "PageFolderID",
-        "PagePeerOrder", "PageChildOrderRule", "PageVisibleInMenu",
+        "PagePeerOrder", "PageChildOrderRule",
         "icontent_providerdefinitionid"
+    };
+
+    // Built-in properties that are useful for import and should be shown
+    private static readonly HashSet<string> ImportableBuiltInProperties = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "PageURLSegment", "PageStartPublish", "PageStopPublish",
+        "PageCreatedBy", "PageChangedBy", "PageVisibleInMenu"
     };
 
     public ContentImporterService(
@@ -134,7 +140,8 @@ public class ContentImporterService
 
         foreach (var propDef in ct.PropertyDefinitions)
         {
-            if (SystemPropertyNames.Contains(propDef.Name)) continue;
+            var isBuiltIn = ImportableBuiltInProperties.Contains(propDef.Name);
+            if (SystemPropertyNames.Contains(propDef.Name) && !isBuiltIn) continue;
 
             var typeName = propDef.Type?.DataType.ToString() ?? "String";
             var propTypeName = propDef.Type?.Name ?? typeName;
@@ -148,7 +155,8 @@ public class ContentImporterService
                 IsContentArea = propTypeName.Contains("ContentArea", StringComparison.OrdinalIgnoreCase),
                 IsXhtmlString = propTypeName.Contains("XhtmlString", StringComparison.OrdinalIgnoreCase),
                 IsContentReference = propTypeName.Contains("ContentReference", StringComparison.OrdinalIgnoreCase)
-                    || propTypeName.Contains("PageReference", StringComparison.OrdinalIgnoreCase)
+                    || propTypeName.Contains("PageReference", StringComparison.OrdinalIgnoreCase),
+                IsBuiltIn = isBuiltIn
             });
         }
 
@@ -183,10 +191,10 @@ public class ContentImporterService
             var preview = new PreviewItem { RowIndex = i + 1, Warnings = new() };
 
             // Resolve name
-            if (!string.IsNullOrEmpty(request.NameSourceColumn) &&
-                row.TryGetValue(request.NameSourceColumn, out var name))
+            if (!string.IsNullOrEmpty(request.NameSourceColumn))
             {
-                preview.Name = name;
+                var resolvedName = ResolveTemplate(request.NameSourceColumn, row);
+                preview.Name = string.IsNullOrWhiteSpace(resolvedName) ? $"Import-{i + 1}" : resolvedName;
             }
             else
             {
@@ -197,11 +205,12 @@ public class ContentImporterService
             // Preview mapped properties
             foreach (var mapping in request.Mappings.Where(m => m.MappingType != "skip"))
             {
+                var blockCount = mapping.InlineBlocks?.Count ?? (mapping.InlineBlock != null ? 1 : 0);
                 var value = mapping.MappingType switch
                 {
                     "column" => row.TryGetValue(mapping.SourceColumn ?? "", out var v) ? v : "[missing]",
-                    "hardcoded" => mapping.HardcodedValue ?? "",
-                    "inline-block" => "[inline block]",
+                    "hardcoded" => ResolveTemplate(mapping.HardcodedValue, row) ?? "",
+                    "inline-block" => $"[{blockCount} inline block(s)]",
                     _ => ""
                 };
                 preview.Properties[mapping.TargetProperty] = value;
@@ -301,12 +310,11 @@ public class ContentImporterService
     {
         var content = _contentRepository.GetDefault<IContent>(parentRef, contentType.ID, culture);
 
-        // Set name
-        if (!string.IsNullOrEmpty(mapping.NameSourceColumn) &&
-            row.TryGetValue(mapping.NameSourceColumn, out var name) &&
-            !string.IsNullOrWhiteSpace(name))
+        // Set name (supports {Column} templates)
+        if (!string.IsNullOrEmpty(mapping.NameSourceColumn))
         {
-            content.Name = name;
+            var resolvedName = ResolveTemplate(mapping.NameSourceColumn, row);
+            content.Name = string.IsNullOrWhiteSpace(resolvedName) ? $"Import-{rowIndex + 1}" : resolvedName;
         }
         else
         {
@@ -328,11 +336,15 @@ public class ContentImporterService
                             SetPropertyValue(prop, value);
                         break;
                     case "hardcoded":
-                        SetPropertyValue(prop, propMapping.HardcodedValue);
+                        var resolved = ResolveTemplate(propMapping.HardcodedValue, row);
+                        SetPropertyValue(prop, resolved);
                         break;
                     case "inline-block":
-                        if (propMapping.InlineBlock != null)
-                            SetContentAreaFromInlineBlock(content, prop, propMapping.InlineBlock, row);
+                        var blocks = propMapping.InlineBlocks ?? (propMapping.InlineBlock != null
+                            ? new List<InlineBlockMapping> { propMapping.InlineBlock }
+                            : null);
+                        if (blocks != null)
+                            SetContentAreaFromInlineBlocks(content, prop, blocks, row);
                         break;
                 }
             }
@@ -393,44 +405,68 @@ public class ContentImporterService
         return value;
     }
 
-    private void SetContentAreaFromInlineBlock(
+    private void SetContentAreaFromInlineBlocks(
         IContent parentContent,
         PropertyData prop,
-        InlineBlockMapping blockMapping,
+        List<InlineBlockMapping> blockMappings,
         Dictionary<string, string> row)
     {
-        var blockType = _contentTypeRepository.Load(blockMapping.BlockTypeId);
-        if (blockType == null) return;
+        var contentArea = prop.Value as ContentArea ?? new ContentArea();
 
-        // Create the block as a shared block under the parent
-        var block = _contentRepository.GetDefault<IContent>(
-            ContentReference.GlobalBlockFolder, blockType.ID);
-
-        block.Name = $"{parentContent.Name} - {prop.Name}";
-
-        // Map block properties
-        foreach (var bm in blockMapping.Mappings.Where(m => m.MappingType != "skip"))
+        foreach (var blockMapping in blockMappings)
         {
-            var blockProp = block.Property[bm.TargetProperty];
-            if (blockProp == null) continue;
+            var blockType = _contentTypeRepository.Load(blockMapping.BlockTypeId);
+            if (blockType == null) continue;
 
-            switch (bm.MappingType)
+            var block = _contentRepository.GetDefault<IContent>(
+                ContentReference.GlobalBlockFolder, blockType.ID);
+
+            block.Name = $"{parentContent.Name} - {prop.Name} - {blockType.DisplayName ?? blockType.Name}";
+
+            foreach (var bm in blockMapping.Mappings.Where(m => m.MappingType != "skip"))
             {
-                case "column":
-                    if (row.TryGetValue(bm.SourceColumn ?? "", out var val))
-                        SetPropertyValue(blockProp, val);
-                    break;
-                case "hardcoded":
-                    SetPropertyValue(blockProp, bm.HardcodedValue);
-                    break;
+                var blockProp = block.Property[bm.TargetProperty];
+                if (blockProp == null) continue;
+
+                switch (bm.MappingType)
+                {
+                    case "column":
+                        if (row.TryGetValue(bm.SourceColumn ?? "", out var val))
+                            SetPropertyValue(blockProp, val);
+                        break;
+                    case "hardcoded":
+                        var resolved = ResolveTemplate(bm.HardcodedValue, row);
+                        SetPropertyValue(blockProp, resolved);
+                        break;
+                }
             }
+
+            var savedBlock = _contentRepository.Save(block, SaveAction.Publish, AccessLevel.NoAccess);
+            contentArea.Items.Add(new ContentAreaItem { ContentLink = savedBlock });
         }
 
-        var savedBlock = _contentRepository.Save(block, SaveAction.Publish, AccessLevel.NoAccess);
-
-        // Add to content area
-        var contentArea = prop.Value as ContentArea ?? new ContentArea();
-        contentArea.Items.Add(new ContentAreaItem { ContentLink = savedBlock });
         prop.Value = contentArea;
+    }
+
+    /// <summary>
+    /// Resolves {ColumnName} placeholders in a template string using row data.
+    /// If the value has no braces, it's returned as-is (plain column name lookup for name field).
+    /// </summary>
+    private static string? ResolveTemplate(string? template, Dictionary<string, string> row)
+    {
+        if (string.IsNullOrEmpty(template)) return template;
+
+        // If no braces, try as a direct column lookup (for backwards compat with name field)
+        if (!template.Contains('{'))
+        {
+            return row.TryGetValue(template, out var direct) ? direct : template;
+        }
+
+        // Replace {ColumnName} placeholders
+        return System.Text.RegularExpressions.Regex.Replace(template, @"\{([^}]+)\}", match =>
+        {
+            var colName = match.Groups[1].Value;
+            return row.TryGetValue(colName, out var val) ? val : match.Value;
+        });
     }
 }

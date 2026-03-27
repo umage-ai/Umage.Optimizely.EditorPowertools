@@ -36,6 +36,7 @@ public class ImportPropertyInfo
     public bool IsContentArea { get; set; }
     public bool IsXhtmlString { get; set; }
     public bool IsContentReference { get; set; }
+    public bool IsBuiltIn { get; set; }
 }
 
 public class ImportMappingRequest
@@ -56,8 +57,12 @@ public class PropertyMapping
     /// <summary>"column", "hardcoded", "inline-block", "skip"</summary>
     public string MappingType { get; set; } = "skip";
     public string? SourceColumn { get; set; }
+    /// <summary>Supports {ColumnName} template placeholders.</summary>
     public string? HardcodedValue { get; set; }
+    /// <summary>Single inline block (legacy).</summary>
     public InlineBlockMapping? InlineBlock { get; set; }
+    /// <summary>Multiple inline blocks for a ContentArea.</summary>
+    public List<InlineBlockMapping>? InlineBlocks { get; set; }
 }
 
 public class InlineBlockMapping
