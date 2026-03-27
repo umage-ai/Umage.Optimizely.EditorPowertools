@@ -49,7 +49,9 @@ public class ComponentsApiController : Controller
     public IActionResult GetChildren(int id)
     {
         var contentRef = id == 0 ? ContentReference.RootPage : new ContentReference(id);
-        var children = _contentLoader.GetChildren<IContent>(contentRef)
+        var children = _contentLoader.GetChildren<IContent>(
+                contentRef,
+                new LoaderOptions { LanguageLoaderOption.FallbackWithMaster() })
             .Select(MapContent)
             .ToList();
 
@@ -123,7 +125,19 @@ public class ComponentsApiController : Controller
 
     private object MapContent(IContent content)
     {
-        var hasChildren = _contentLoader.GetChildren<IContent>(content.ContentLink).Any();
+        bool hasChildren;
+        try
+        {
+            hasChildren = _contentLoader.GetChildren<IContent>(
+                content.ContentLink,
+                new LoaderOptions { LanguageLoaderOption.FallbackWithMaster() })
+                .Any();
+        }
+        catch
+        {
+            hasChildren = false;
+        }
+
         var contentType = _contentTypeRepository.Load(content.ContentTypeID);
 
         return new
