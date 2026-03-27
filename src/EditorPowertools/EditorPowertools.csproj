@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <PackageReference Include="EPiServer.CMS" Version="12.29.0" />
+    <PackageReference Include="EPPlusFree" Version="4.5.3.8" />
   </ItemGroup>
 
 </Project>

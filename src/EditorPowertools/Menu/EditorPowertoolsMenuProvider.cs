@@ -76,6 +76,13 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ActivityTimeline))
         };
 
+        yield return new UrlMenuItem("Content Importer", BaseMenuPath + "/contentimporter",
+            GetResourcePath("EditorPowertools/ContentImporter"))
+        {
+            SortIndex = 850,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentImporter))
+        };
+
         yield return new UrlMenuItem("Link Checker", BaseMenuPath + "/linkchecker",
             GetResourcePath("EditorPowertools/LinkChecker"))
         {

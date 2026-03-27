@@ -6,6 +6,8 @@ using EditorPowertools.Tools.BulkPropertyEditor;
 using EditorPowertools.Tools.ActivityTimeline;
 using EditorPowertools.Tools.ContentDetails;
 using EditorPowertools.Tools.ContentTypeAudit;
+using EditorPowertools.Tools.ContentImporter;
+using EditorPowertools.Tools.ContentImporter.Parsers;
 using EditorPowertools.Tools.LinkChecker;
 using EditorPowertools.Tools.ScheduledJobsGantt;
 using EditorPowertools.Tools.ContentTypeRecommendations;
@@ -80,6 +82,13 @@ public static class ServiceCollectionExtensions
 
         // Content Details (assets panel widget)
         services.AddTransient<ContentDetailsService>();
+
+        // Content Importer
+        services.AddSingleton<ImportSessionStore>();
+        services.AddTransient<ContentImporterService>();
+        services.AddTransient<IFileParser, CsvFileParser>();
+        services.AddTransient<IFileParser, JsonFileParser>();
+        services.AddTransient<IFileParser, ExcelFileParser>();
 
         // Link Checker
         services.AddSingleton<LinkCheckerRepository>();

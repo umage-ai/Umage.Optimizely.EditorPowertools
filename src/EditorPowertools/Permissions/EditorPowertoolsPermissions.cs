@@ -47,4 +47,7 @@ public static class EditorPowertoolsPermissions
 
     public static PermissionType ActivityTimeline { get; } =
         new("EditorPowertools", "ActivityTimeline");
+
+    public static PermissionType ContentImporter { get; } =
+        new("EditorPowertools", "ContentImporter");
 }

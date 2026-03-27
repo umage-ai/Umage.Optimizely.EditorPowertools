@@ -5,23 +5,23 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 ## Carried Over (from old Blazor project - re-implement)
 
 - [x] **Content Type Audit** - Audit all content types, usage counts, properties (inherited/defined/orphaned), inheritance tree, CSV export. Includes drill-down dialogs for content of type and soft link references.
-- [ ] **Personalization Usage Audit** - Report where visitor groups are used (access rights, content areas, XHTML). Requires scheduled job to analyze.
-- [ ] **Content Type Recommendations** - Rules engine suggesting content types when creating content under specific parents. Rules stored in DynamicDataStore.
-- [ ] **Audience Manager** - Enhanced visitor group management with usage statistics and criteria counts.
-- [ ] **Power Content Details** - Assets panel widget showing detailed info about the currently selected content item (soft links, references, language versions).
+- [x] **Personalization Usage Audit** - Report where visitor groups are used (access rights, content areas, XHTML). Requires scheduled job to analyze.
+- [x] **Content Type Recommendations** - Rules engine suggesting content types when creating content under specific parents. Rules stored in DynamicDataStore.
+- [x] **Audience Manager** - Enhanced visitor group management with usage statistics and criteria counts.
+- [x] **Power Content Details** - Assets panel widget showing detailed info about the currently selected content item (soft links, references, language versions).
 
 ## Activity & Timeline
 
-- [ ] **Site Activity Timeline** - Full timeline of all activities on the site using ActivityLog. Show details about specific changes/versions. Filterable by date range, user, content type.
+- [x] **Site Activity Timeline** - Full timeline of all activities on the site using ActivityLog. Show details about specific changes/versions. Filterable by date range, user, content type.
 - [ ] **Content Item Timeline** - Per-item timeline showing the full history of a single content item. Based on ActivityLog + IContentVersionRepository. Shows who did what, when, and what changed.
 
 ## Scheduled Jobs
 
-- [ ] **Scheduled Jobs Gantt Diagram** - Interactive Gantt chart showing scheduled job execution history and planned execution. Uses job log/history to show when jobs ran, duration, success/failure status. Visual overview of job scheduling and overlaps.
+- [x] **Scheduled Jobs Gantt Diagram** - Interactive Gantt chart showing scheduled job execution history and planned execution. Uses job log/history to show when jobs ran, duration, success/failure status. Visual overview of job scheduling and overlaps.
 
 ## Bulk Operations
 
-- [ ] **Bulk Property Editor** - Edit a property value across multiple content items at once. (Details TBD - existing implementation to be provided.)
+- [x] **Bulk Property Editor** - Edit a property value across multiple content items at once. (Details TBD - existing implementation to be provided.)
 - [ ] **Content Importer** - Upload Excel, CSV, or JSON files, then map fields to properties on a chosen content type. Pick a target location in the content tree and import. Supports preview before import, validation, and dry-run mode.
 
 ## Editor Collaboration
@@ -104,7 +104,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Orphaned Content Finder** - Find content not linked from anywhere
 - [ ] **Content Tree Exporter** - Export content tree structure to CSV
 - [ ] **Missing Alt Text Report** - Find images missing alt text
-- [ ] **Link Checker** - Comprehensive link health monitoring. Scheduled job crawls all content to catalog internal and external (outbound) links. Checks link status (200/301/404/timeout/etc.), tracks history over time. UI shows broken links with filters by status code, content type, internal/external. Links to affected content items for easy fixing. Uses the shared aggregation scheduled job for link discovery, with a separate background check for outbound URL validation.
+- [x] **Link Checker** - Comprehensive link health monitoring. Scheduled job crawls all content to catalog internal and external (outbound) links. Checks link status (200/301/404/timeout/etc.), tracks history over time. UI shows broken links with filters by status code, content type, internal/external. Links to affected content items for easy fixing. Uses the shared aggregation scheduled job for link discovery, with a separate background check for outbound URL validation.
 - [ ] **Content Cleanup Tool** - Overview of stale drafts, never-published content, expired content, and old versions. Helps editors and admins identify content that can be cleaned up. Supports bulk delete/publish/archive actions. (Existing implementation in another project to reference.)
 - [ ] **Content Lifecycle Manager** - Define review intervals for content to ensure it stays relevant. Editors set review cadence per content item via an assets panel widget (e.g. "review every 6 months"). A full-page overview shows all content due for review, overdue items, and review history. Supports bulk actions (mark as reviewed, snooze, reassign). Data stored in DDS.
 
@@ -174,7 +174,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 
 ## Shared Infrastructure
 
-- [ ] **Unified Scheduled Job** - Merge the three current jobs (Content Type Statistics, Personalization Analysis, Link Checker) into a single pluggable job that traverses content once. Each "analyzer" plugin registers via DI and receives each content item during traversal. This avoids scanning all content 3+ times. Architecture: `IContentAnalyzer` interface with `Analyze(IContent, ContentReference)` method, registered as `IEnumerable<IContentAnalyzer>`. The job iterates all content once and calls each analyzer. Each analyzer stores its own results in its own DDS store.
+- [x] **Unified Scheduled Job** - Merge the three current jobs (Content Type Statistics, Personalization Analysis, Link Checker) into a single pluggable job that traverses content once. Each "analyzer" plugin registers via DI and receives each content item during traversal. This avoids scanning all content 3+ times. Architecture: `IContentAnalyzer` interface with `Analyze(IContent, ContentReference)` method, registered as `IEnumerable<IContentAnalyzer>`. The job iterates all content once and calls each analyzer. Each analyzer stores its own results in its own DDS store.
 - [x] **Aggregation Scheduled Job** (legacy) - Single scheduled job that traverses all content once and collects statistics for all tools (content type counts, personalization usage, etc.). Results stored in DDS.
 - [x] **Shared UI Design System** - CSS design system with cards, tables, dialogs, badges, buttons, tree views. Defined in `wwwroot/css/editorpowertools.css`.
 - [x] **Overview Page** - Dashboard showing all available tools with cards. Will later include content statistics graphs.
