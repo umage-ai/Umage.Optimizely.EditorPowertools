@@ -186,9 +186,11 @@
         html += '</div>';
 
         // Parent content
-        html += '<div class="ept-importer-field"><label>Parent Content ID</label>';
-        html += '<input class="ept-importer-input" id="parent-id" type="number" placeholder="Content ID (e.g. 5 for Start page)" value="' + (state.parentContentId || '') + '">';
-        html += '</div>';
+        html += '<div class="ept-importer-field"><label>Parent Content</label>';
+        html += '<div style="display:flex;gap:8px;align-items:center">';
+        html += '<span id="parent-name" style="font-size:13px">' + (state.parentContentName ? escHtml(state.parentContentName) + ' (ID: ' + state.parentContentId + ')' : '<em style="color:var(--ept-text-muted)">No parent selected</em>') + '</span>';
+        html += '<button class="ept-btn ept-btn--sm" id="pick-parent-btn">Browse...</button>';
+        html += '</div></div>';
 
         // Language
         html += '<div class="ept-importer-field"><label>Language</label>';
@@ -214,6 +216,18 @@
         for (var i = 0; i < filterBtns.length; i++) {
             filterBtns[i].onclick = function () { loadContentTypes(this.getAttribute('data-filter')); };
         }
+
+        // Parent content picker
+        document.getElementById('pick-parent-btn').onclick = function () {
+            EPT.contentPicker({ title: 'Select Parent Content' }).then(function (selected) {
+                if (selected) {
+                    state.parentContentId = selected.id;
+                    state.parentContentName = selected.name;
+                    document.getElementById('parent-name').innerHTML =
+                        escHtml(selected.name) + ' (ID: ' + selected.id + ')';
+                }
+            });
+        };
     }
 
     function loadContentTypes(filter) {
@@ -249,12 +263,11 @@
 
     function saveTargetState() {
         var ctSelect = document.getElementById('ct-select');
-        var parentId = document.getElementById('parent-id');
         var langSelect = document.getElementById('lang-select');
         var publishCheck = document.getElementById('publish-check');
 
         state.targetContentTypeId = ctSelect ? parseInt(ctSelect.value) || null : null;
-        state.parentContentId = parentId ? parseInt(parentId.value) || null : null;
+        // parentContentId is set by the content picker
         state.language = langSelect ? langSelect.value : '';
         state.publishAfterImport = publishCheck ? publishCheck.checked : false;
     }

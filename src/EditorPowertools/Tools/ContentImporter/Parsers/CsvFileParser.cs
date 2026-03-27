@@ -1,4 +1,7 @@
+using System.Globalization;
 using System.Text;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace EditorPowertools.Tools.ContentImporter.Parsers;
 
@@ -11,31 +14,32 @@ public class CsvFileParser : IFileParser
     public ParseResult Parse(Stream stream, string fileName)
     {
         var isTsv = Path.GetExtension(fileName).Equals(".tsv", StringComparison.OrdinalIgnoreCase);
-        var delimiter = isTsv ? '\t' : DetectDelimiter(stream);
+        var delimiter = isTsv ? "\t" : DetectDelimiter(stream);
         stream.Position = 0;
 
-        using var reader = new StreamReader(stream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true);
-        var lines = new List<string[]>();
-
-        string? line;
-        while ((line = reader.ReadLine()) != null)
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
-            if (string.IsNullOrWhiteSpace(line)) continue;
-            lines.Add(ParseLine(line, delimiter));
-        }
+            Delimiter = delimiter,
+            HasHeaderRecord = true,
+            BadDataFound = null,
+            MissingFieldFound = null,
+            TrimOptions = TrimOptions.Trim
+        };
 
-        if (lines.Count == 0)
-            return new ParseResult(new List<string>(), new List<Dictionary<string, string>>());
+        using var reader = new StreamReader(stream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true);
+        using var csv = new CsvReader(reader, config);
 
-        var columns = lines[0].Select(c => c.Trim()).ToList();
+        csv.Read();
+        csv.ReadHeader();
+        var columns = csv.HeaderRecord?.ToList() ?? new List<string>();
+
         var rows = new List<Dictionary<string, string>>();
-
-        for (var i = 1; i < lines.Count; i++)
+        while (csv.Read())
         {
             var row = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            for (var j = 0; j < columns.Count; j++)
+            for (var i = 0; i < columns.Count; i++)
             {
-                row[columns[j]] = j < lines[i].Length ? lines[i][j] : "";
+                row[columns[i]] = csv.GetField(i) ?? "";
             }
             rows.Add(row);
         }
@@ -43,68 +47,17 @@ public class CsvFileParser : IFileParser
         return new ParseResult(columns, rows);
     }
 
-    private static char DetectDelimiter(Stream stream)
+    private static string DetectDelimiter(Stream stream)
     {
         using var reader = new StreamReader(stream, leaveOpen: true);
         var firstLine = reader.ReadLine() ?? "";
 
-        // Check common delimiters by count
         var semicolons = firstLine.Count(c => c == ';');
         var commas = firstLine.Count(c => c == ',');
         var tabs = firstLine.Count(c => c == '\t');
 
-        if (tabs > commas && tabs > semicolons) return '\t';
-        if (semicolons > commas) return ';';
-        return ',';
-    }
-
-    private static string[] ParseLine(string line, char delimiter)
-    {
-        var fields = new List<string>();
-        var current = new StringBuilder();
-        var inQuotes = false;
-
-        for (var i = 0; i < line.Length; i++)
-        {
-            var c = line[i];
-            if (inQuotes)
-            {
-                if (c == '"')
-                {
-                    if (i + 1 < line.Length && line[i + 1] == '"')
-                    {
-                        current.Append('"');
-                        i++; // skip escaped quote
-                    }
-                    else
-                    {
-                        inQuotes = false;
-                    }
-                }
-                else
-                {
-                    current.Append(c);
-                }
-            }
-            else
-            {
-                if (c == '"')
-                {
-                    inQuotes = true;
-                }
-                else if (c == delimiter)
-                {
-                    fields.Add(current.ToString());
-                    current.Clear();
-                }
-                else
-                {
-                    current.Append(c);
-                }
-            }
-        }
-
-        fields.Add(current.ToString());
-        return fields.ToArray();
+        if (tabs > commas && tabs > semicolons) return "\t";
+        if (semicolons > commas) return ";";
+        return ",";
     }
 }
