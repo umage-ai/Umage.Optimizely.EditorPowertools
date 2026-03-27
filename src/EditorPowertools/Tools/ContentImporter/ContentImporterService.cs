@@ -334,10 +334,11 @@ public class ContentImporterService
             content.Name = $"Import-{rowIndex + 1}";
         }
 
-        // Separate image URL mappings (need content saved first for asset folder)
+        // Collect deferred mappings that need the content saved first (for asset folder)
         var deferredImageMappings = new List<(PropertyMapping mapping, string value)>();
+        var deferredBlockMappings = new List<(PropertyMapping mapping, List<InlineBlockMapping> blocks)>();
 
-        // Apply property mappings
+        // Apply simple property mappings
         foreach (var propMapping in mapping.Mappings.Where(m => m.MappingType != "skip"))
         {
             var prop = content.Property[propMapping.TargetProperty];
@@ -350,34 +351,25 @@ public class ContentImporterService
                     case "column":
                         if (row.TryGetValue(propMapping.SourceColumn ?? "", out var value))
                         {
-                            // Check if this is an image/media reference with a URL value
                             if (IsImageProperty(prop) && IsUrl(value))
-                            {
                                 deferredImageMappings.Add((propMapping, value));
-                            }
                             else
-                            {
                                 SetPropertyValue(prop, value);
-                            }
                         }
                         break;
                     case "hardcoded":
                         var resolved = ResolveTemplate(propMapping.HardcodedValue, row);
                         if (IsImageProperty(prop) && IsUrl(resolved))
-                        {
                             deferredImageMappings.Add((propMapping, resolved!));
-                        }
                         else
-                        {
                             SetPropertyValue(prop, resolved);
-                        }
                         break;
                     case "inline-block":
                         var blocks = propMapping.InlineBlocks ?? (propMapping.InlineBlock != null
                             ? new List<InlineBlockMapping> { propMapping.InlineBlock }
                             : null);
                         if (blocks != null)
-                            SetContentAreaFromInlineBlocks(content, prop, blocks, row);
+                            deferredBlockMappings.Add((propMapping, blocks));
                         break;
                 }
             }
@@ -388,16 +380,34 @@ public class ContentImporterService
             }
         }
 
-        // Save content first (as draft if we have deferred images, otherwise final save)
-        var hasDeferredImages = deferredImageMappings.Count > 0;
-        var initialSaveAction = hasDeferredImages ? SaveAction.Save : (mapping.PublishAfterImport ? SaveAction.Publish : SaveAction.Save);
+        // Save content first as draft to get a content link for the asset folder
+        var hasDeferred = deferredImageMappings.Count > 0 || deferredBlockMappings.Count > 0;
+        var initialSaveAction = hasDeferred ? SaveAction.Save : (mapping.PublishAfterImport ? SaveAction.Publish : SaveAction.Save);
         var saved = _contentRepository.Save(content, initialSaveAction, AccessLevel.NoAccess);
 
-        // Now handle deferred image downloads — content exists, so we can create assets
-        if (hasDeferredImages)
+        // Handle deferred mappings (images + inline blocks) — content exists now
+        if (hasDeferred)
         {
             var loaded = _contentRepository.Get<IContent>(saved);
             var writableContent = (IContent)((ContentData)loaded).CreateWritableClone();
+
+            // Create inline blocks in the "for this content" asset folder
+            foreach (var (blockMapping, blocks) in deferredBlockMappings)
+            {
+                try
+                {
+                    var prop = writableContent.Property[blockMapping.TargetProperty];
+                    if (prop != null)
+                        SetContentAreaFromInlineBlocks(saved, prop, blocks, row);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to create inline blocks for {Property} on row {Row}",
+                        blockMapping.TargetProperty, rowIndex + 1);
+                }
+            }
+
+            // Download images into asset folder
             foreach (var (imgMapping, imgUrl) in deferredImageMappings)
             {
                 try
@@ -526,22 +536,26 @@ public class ContentImporterService
     }
 
     private void SetContentAreaFromInlineBlocks(
-        IContent parentContent,
+        ContentReference ownerContentLink,
         PropertyData prop,
         List<InlineBlockMapping> blockMappings,
         Dictionary<string, string> row)
     {
         var contentArea = prop.Value as ContentArea ?? new ContentArea();
 
+        // Get or create the "for this content" asset folder
+        var assetFolder = _contentAssetHelper.GetOrCreateAssetFolder(ownerContentLink);
+
         foreach (var blockMapping in blockMappings)
         {
             var blockType = _contentTypeRepository.Load(blockMapping.BlockTypeId);
             if (blockType == null) continue;
 
+            // Create block in the content's asset folder (inline/local block)
             var block = _contentRepository.GetDefault<IContent>(
-                ContentReference.GlobalBlockFolder, blockType.ID);
+                assetFolder.ContentLink, blockType.ID);
 
-            block.Name = $"{parentContent.Name} - {prop.Name} - {blockType.DisplayName ?? blockType.Name}";
+            block.Name = $"{blockType.DisplayName ?? blockType.Name}";
 
             foreach (var bm in blockMapping.Mappings.Where(m => m.MappingType != "skip"))
             {
@@ -561,7 +575,7 @@ public class ContentImporterService
                 }
             }
 
-            var savedBlock = _contentRepository.Save(block, SaveAction.Publish, AccessLevel.NoAccess);
+            var savedBlock = _contentRepository.Save(block, SaveAction.Save, AccessLevel.NoAccess);
             contentArea.Items.Add(new ContentAreaItem { ContentLink = savedBlock });
         }
 
