@@ -334,13 +334,19 @@ public class ContentImporterService
             content.Name = $"Import-{rowIndex + 1}";
         }
 
+        // Apply built-in properties via interfaces (not PropertyData)
+        ApplyBuiltInProperties(content, mapping.Mappings, row);
+
         // Collect deferred mappings that need the content saved first (for asset folder)
         var deferredImageMappings = new List<(PropertyMapping mapping, string value)>();
         var deferredBlockMappings = new List<(PropertyMapping mapping, List<InlineBlockMapping> blocks)>();
 
-        // Apply simple property mappings
+        // Apply regular property mappings
         foreach (var propMapping in mapping.Mappings.Where(m => m.MappingType != "skip"))
         {
+            // Skip built-in properties handled above
+            if (ImportableBuiltInProperties.Contains(propMapping.TargetProperty)) continue;
+
             var prop = content.Property[propMapping.TargetProperty];
             if (prop == null) continue;
 
@@ -488,6 +494,63 @@ public class ContentImporterService
         imageMedia.BinaryData = blob;
 
         return _contentRepository.Save(imageMedia, SaveAction.Publish, AccessLevel.NoAccess);
+    }
+
+    private void ApplyBuiltInProperties(IContent content, List<PropertyMapping> mappings, Dictionary<string, string> row)
+    {
+        foreach (var m in mappings.Where(m => m.MappingType != "skip" && ImportableBuiltInProperties.Contains(m.TargetProperty)))
+        {
+            var rawValue = m.MappingType switch
+            {
+                "column" => row.TryGetValue(m.SourceColumn ?? "", out var v) ? v : null,
+                "hardcoded" => ResolveTemplate(m.HardcodedValue, row),
+                _ => null
+            };
+            if (string.IsNullOrWhiteSpace(rawValue)) continue;
+
+            try
+            {
+                switch (m.TargetProperty)
+                {
+                    case "PageURLSegment":
+                        if (content is PageData page)
+                            page.URLSegment = rawValue;
+                        break;
+
+                    case "PageStartPublish":
+                        if (content is IVersionable versionableStart &&
+                            DateTime.TryParse(rawValue, CultureInfo.InvariantCulture, DateTimeStyles.None, out var startDate))
+                            versionableStart.StartPublish = startDate;
+                        break;
+
+                    case "PageStopPublish":
+                        if (content is IVersionable versionableStop &&
+                            DateTime.TryParse(rawValue, CultureInfo.InvariantCulture, DateTimeStyles.None, out var stopDate))
+                            versionableStop.StopPublish = stopDate;
+                        break;
+
+                    case "PageCreatedBy":
+                        if (content is IChangeTrackable trackableCreated)
+                            trackableCreated.CreatedBy = rawValue;
+                        break;
+
+                    case "PageChangedBy":
+                        if (content is IChangeTrackable trackableChanged)
+                            trackableChanged.ChangedBy = rawValue;
+                        break;
+
+                    case "PageVisibleInMenu":
+                        if (content is PageData menuPage &&
+                            bool.TryParse(rawValue, out var visible))
+                            menuPage.VisibleInMenu = visible;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to set built-in property {Property}", m.TargetProperty);
+            }
+        }
     }
 
     private void SetPropertyValue(PropertyData prop, string? value)
