@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
+using EPiServer.Shell;
 using EPiServer.Web.Routing;
 using EditorPowertools.Helpers;
 using EditorPowertools.Tools.LinkChecker;
@@ -58,7 +59,7 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
         var contentTypeName = contentType?.DisplayName ?? contentType?.Name;
         var language = (content as ILocalizable)?.Language?.Name;
         var breadcrumb = content.GetBreadcrumb();
-        var editUrl = $"/EPiServer/CMS/#/content/{contentRef.ID}/language/{language}";
+        var editUrl = $"{Paths.ToResource("CMS", "")}#/content/{contentRef.ID}/language/{language}";
 
         ExtractLinksFromContent(content, contentRef, contentTypeName, breadcrumb, editUrl);
     }
@@ -224,7 +225,7 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
                         {
                             pageNames.Add(owner.Name);
                             var friendlyUrl = _urlResolver.GetUrl(owner.ContentLink);
-                            var ownerEditUrl = $"/EPiServer/CMS/#/content/{owner.ContentLink.ID}";
+                            var ownerEditUrl = $"{Paths.ToResource("CMS", "")}#/content/{owner.ContentLink.ID}";
                             pageUrls.Add($"{owner.Name}|{friendlyUrl ?? ""}|{ownerEditUrl}");
                         }
                     }

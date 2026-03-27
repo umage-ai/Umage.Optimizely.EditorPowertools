@@ -2,6 +2,7 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAbstraction.Activities;
+using EPiServer.Shell;
 using EditorPowertools.Tools.ActivityTimeline.Models;
 using Microsoft.Extensions.Logging;
 
@@ -146,7 +147,7 @@ public class ActivityTimelineService
                     User = version.SavedBy ?? string.Empty,
                     TimestampUtc = version.Saved,
                     Language = lang,
-                    EditUrl = $"/episerver/cms#context=epi.cms.contentdata:///{contentRef.ID}&viewsetting=viewlanguage:///{lang}",
+                    EditUrl = $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{contentRef.ID}&viewsetting=viewlanguage:///{lang}",
                     HasPreviousVersion = hasPrevious
                 });
             }
@@ -394,7 +395,7 @@ public class ActivityTimelineService
                     User = changedBy,
                     TimestampUtc = changed,
                     Language = null,
-                    EditUrl = contentId > 0 ? $"/episerver/cms#context=epi.cms.contentdata:///{contentId}" : null,
+                    EditUrl = contentId > 0 ? $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{contentId}" : null,
                     HasPreviousVersion = false,
                     Message = messageText
                 });

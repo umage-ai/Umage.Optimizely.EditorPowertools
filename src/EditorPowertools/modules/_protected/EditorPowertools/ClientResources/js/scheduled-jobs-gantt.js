@@ -244,7 +244,7 @@
             row.appendChild(nameEl);
 
             row.addEventListener('click', function () {
-                window.open('/EPiServer/EPiServer.Cms.UI.Admin/default#/ScheduledJobs', '_blank');
+                window.open((window.EPT_ADMIN_URL || '/EPiServer/EPiServer.Cms.UI.Admin/default') + '#/ScheduledJobs', '_blank');
             });
 
             jobCol.appendChild(row);
@@ -487,7 +487,7 @@
 
             // Click to open job admin
             bar.addEventListener('click', function () {
-                window.open('/EPiServer/EPiServer.Cms.UI.Admin/default#/ScheduledJobs', '_blank');
+                window.open((window.EPT_ADMIN_URL || '/EPiServer/EPiServer.Cms.UI.Admin/default') + '#/ScheduledJobs', '_blank');
             });
 
             barsArea.appendChild(bar);

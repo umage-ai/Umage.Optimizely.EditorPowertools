@@ -2,6 +2,7 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Personalization.VisitorGroups;
+using EPiServer.Shell;
 using EditorPowertools.Tools.ContentDetails.Models;
 using Microsoft.Extensions.Logging;
 
@@ -260,8 +261,11 @@ public class ContentDetailsService
     /// Builds a recursive tree of content structure:
     /// content areas → blocks → nested content areas → nested blocks, etc.
     /// </summary>
-    private ContentTreeNodeDto BuildContentTree(IContent content, int depth)
+    private ContentTreeNodeDto BuildContentTree(IContent content, int depth, HashSet<int>? visited = null)
     {
+        visited ??= new HashSet<int>();
+        visited.Add(content.ContentLink.ID);
+
         var contentType = _contentTypeRepository.Load(content.ContentTypeID);
         var node = new ContentTreeNodeDto
         {
@@ -273,7 +277,7 @@ public class ContentDetailsService
         if (depth >= MaxTreeDepth)
             return node;
 
-        // Scan properties for content areas and content references
+        // Scan properties for content areas and content references, grouped by property
         foreach (var prop in content.Property)
         {
             if (prop?.Value == null || string.IsNullOrEmpty(prop.Name))
@@ -281,39 +285,47 @@ public class ContentDetailsService
 
             if (prop.Value is ContentArea contentArea)
             {
-                foreach (var item in contentArea.FilteredItems ?? Enumerable.Empty<ContentAreaItem>())
-                {
-                    if (ContentReference.IsNullOrEmpty(item.ContentLink))
-                        continue;
+                var items = (contentArea.FilteredItems ?? Enumerable.Empty<ContentAreaItem>()).ToList();
+                if (items.Count == 0) continue;
 
+                var propNode = new TreePropertyNodeDto
+                {
+                    PropertyName = prop.TranslateDisplayName() ?? prop.Name,
+                    PropertyType = "ContentArea"
+                };
+
+                foreach (var item in items)
+                {
+                    if (ContentReference.IsNullOrEmpty(item.ContentLink) || visited.Contains(item.ContentLink.ID))
+                        continue;
                     try
                     {
                         if (_contentLoader.TryGet<IContent>(item.ContentLink, out var child))
                         {
-                            var childNode = BuildContentTree(child, depth + 1);
-                            childNode.PropertyName = prop.TranslateDisplayName() ?? prop.Name;
-                            childNode.NodeType = "ContentArea";
-                            node.Children.Add(childNode);
+                            propNode.Children.Add(BuildContentTree(child, depth + 1, visited));
                         }
                     }
                     catch { }
                 }
+
+                if (propNode.Children.Count > 0)
+                    node.Properties.Add(propNode);
             }
-            else if (prop.Value is ContentReference refValue && !ContentReference.IsNullOrEmpty(refValue))
+            else if (prop.Value is ContentReference refValue &&
+                     !ContentReference.IsNullOrEmpty(refValue) &&
+                     !visited.Contains(refValue.ID))
             {
                 try
                 {
                     if (_contentLoader.TryGet<IContent>(refValue, out var child))
                     {
-                        var childType = _contentTypeRepository.Load(child.ContentTypeID);
-                        node.Children.Add(new ContentTreeNodeDto
+                        var propNode = new TreePropertyNodeDto
                         {
-                            ContentId = child.ContentLink.ID,
-                            Name = child.Name,
-                            ContentTypeName = childType?.DisplayName ?? childType?.Name ?? "Unknown",
                             PropertyName = prop.TranslateDisplayName() ?? prop.Name,
-                            NodeType = "ContentReference"
-                        });
+                            PropertyType = "ContentReference"
+                        };
+                        propNode.Children.Add(BuildContentTree(child, depth + 1, visited));
+                        node.Properties.Add(propNode);
                     }
                 }
                 catch { }
@@ -346,9 +358,10 @@ public class ContentDetailsService
         CollectPersonalizations(content, allGroups, result);
 
         // Also scan sub-content from the tree
-        if (tree?.Children != null)
+        if (tree?.Properties != null)
         {
-            ScanTreeForPersonalizations(tree.Children, allGroups, result);
+            foreach (var prop in tree.Properties)
+                ScanTreeForPersonalizations(prop.Children, allGroups, result);
         }
 
         return result;
@@ -400,8 +413,11 @@ public class ContentDetailsService
             }
             catch { }
 
-            if (node.Children?.Count > 0)
-                ScanTreeForPersonalizations(node.Children, allGroups, result);
+            if (node.Properties?.Count > 0)
+            {
+                foreach (var prop in node.Properties)
+                    ScanTreeForPersonalizations(prop.Children, allGroups, result);
+            }
         }
     }
 
@@ -525,7 +541,7 @@ public class ContentDetailsService
                 if (i + 1 < allVersions.Count && versionContents[i] != null && versionContents[i + 1] != null)
                 {
                     dto.ChangedProperties = DiffProperties(versionContents[i + 1]!, versionContents[i]!);
-                    dto.CompareUrl = $"/EPiServer/CMS/#context=epi.cms.contentdata:///{contentRef.ID}" +
+                    dto.CompareUrl = $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{contentRef.ID}" +
                         $"&viewsetting=epi.cms.contentediting///compare/{allVersions[i + 1].ContentLink.WorkID}/{ver.ContentLink.WorkID}";
                 }
 

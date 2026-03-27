@@ -142,7 +142,7 @@
                 if (r.linkType === 'External') {
                     html += `<a href="${escHtml(r.url)}" target="_blank" title="${escHtml(r.url)}">${escHtml(truncated)}</a>`;
                 } else if (r.targetContentId) {
-                    html += `<a href="/EPiServer/CMS/#/content/${r.targetContentId}" target="_blank" title="${escHtml(displayUrl)}">${escHtml(truncated)}</a>`;
+                    html += `<a href="${window.EPT_CMS_URL || '/EPiServer/CMS/'}#/content/${r.targetContentId}" target="_blank" title="${escHtml(displayUrl)}">${escHtml(truncated)}</a>`;
                 } else {
                     html += `<span title="${escHtml(r.url)}">${escHtml(truncated)}</span>`;
                 }

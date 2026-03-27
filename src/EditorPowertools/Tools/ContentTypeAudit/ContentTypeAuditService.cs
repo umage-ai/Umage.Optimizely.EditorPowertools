@@ -2,6 +2,7 @@ using System.Reflection;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
+using EPiServer.Shell;
 using EPiServer.Web.Routing;
 using EditorPowertools.Helpers;
 using EditorPowertools.Services;
@@ -143,7 +144,7 @@ public class ContentTypeAuditService
                     Name = usage.Name ?? "[No name]",
                     Language = lang,
                     Breadcrumb = contentRef.GetBreadcrumb(),
-                    EditUrl = $"/episerver/cms#context=epi.cms.contentdata:///{contentRef.ID}&viewsetting=viewlanguage:///{lang}",
+                    EditUrl = $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{contentRef.ID}&viewsetting=viewlanguage:///{lang}",
                     IsPublished = isPublished,
                     ReferenceCount = referenceCount
                 });
@@ -204,7 +205,7 @@ public class ContentTypeAuditService
                 OwnerTypeName = ownerTypeName,
                 Language = ownerLang,
                 PropertyName = link.OwnerPropertyDefinition?.Name,
-                EditUrl = $"/episerver/cms#context=epi.cms.contentdata:///{link.OwnerContentLink.ID}&viewsetting=viewlanguage:///{ownerLang}"
+                EditUrl = $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{link.OwnerContentLink.ID}&viewsetting=viewlanguage:///{ownerLang}"
             });
         }
 
@@ -271,7 +272,7 @@ public class ContentTypeAuditService
             ModelType = ct.ModelTypeString,
             ParentTypeName = ct.ModelType?.BaseType?.Name,
             DefaultController = ct.DefaultMvcController?.Name,
-            EditUrl = $"/EPiServer/EPiServer.Cms.UI.Admin/default#/ContentType/{ct.GUID}",
+            EditUrl = $"{Paths.ToResource("EPiServer.Cms.UI.Admin", "default")}#/ContentType/{ct.GUID}",
             PropertyCount = ct.PropertyDefinitions.Count,
             IsSystemType = IsSystemType(ct),
             IsOrphaned = ct.ModelType == null,

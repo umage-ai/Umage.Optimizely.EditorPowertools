@@ -58,10 +58,16 @@ public class ContentTreeNodeDto
     public int ContentId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string ContentTypeName { get; set; } = string.Empty;
-    /// <summary>The property name this content was found in (null for root).</summary>
-    public string? PropertyName { get; set; }
-    /// <summary>"ContentArea", "ContentReference", "Page" (child page)</summary>
-    public string? NodeType { get; set; }
+    /// <summary>Properties on this content that contain references, grouped with their children.</summary>
+    public List<TreePropertyNodeDto> Properties { get; set; } = new();
+}
+
+public class TreePropertyNodeDto
+{
+    public string PropertyName { get; set; } = string.Empty;
+    /// <summary>"ContentArea", "ContentReference"</summary>
+    public string PropertyType { get; set; } = string.Empty;
+    /// <summary>Content items referenced by this property.</summary>
     public List<ContentTreeNodeDto> Children { get; set; } = new();
 }
 

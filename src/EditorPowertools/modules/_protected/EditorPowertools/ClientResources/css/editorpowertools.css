@@ -58,8 +58,8 @@
     --ept-shadow-xl: 0 10px 25px rgba(0,0,0,.12), 0 4px 10px rgba(0,0,0,.08);
 }
 
-/* ── Reset ──────────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── Reset (scoped to EPT views only) ──────────────────────────── */
+.ept-shell *, .ept-shell *::before, .ept-shell *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* ── Shell ──────────────────────────────────────────────────────── */
 .ept-shell {
@@ -893,6 +893,7 @@ td.bpe-editing select {
 /* Content Details Widget - Panels */
 .ept-cd-panel { display: none; padding: 0 8px; }
 .ept-cd-panel--active { display: block; }
+.ept-cd-panel--scroll { max-height: 400px; overflow-y: auto; }
 
 /* Content Details Widget - Info rows */
 .ept-cd-row { display: flex; padding: 3px 0; border-bottom: 1px solid #f0f0f0; line-height: 1.4; }
@@ -906,13 +907,16 @@ td.bpe-editing select {
 .ept-cd-ref-type { color: #999; font-size: 10px; }
 .ept-cd-ref-prop { color: #1976d2; font-size: 10px; }
 .ept-cd-ref-kind { display: inline-block; padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 600; background: #e3f2fd; color: #1565c0; margin-left: 4px; }
+.ept-cd-link { color: #1976d2; text-decoration: none; cursor: pointer; }
+.ept-cd-link:hover { text-decoration: underline; color: #0d47a1; }
 
 /* Content Details Widget - Tree */
 .ept-cd-tree { list-style: none; padding: 0; margin: 0; }
 .ept-cd-tree .ept-cd-tree { margin-left: 14px; padding-left: 10px; border-left: 1px solid #e0e0e0; }
 .ept-cd-tree-item { padding: 3px 0; font-size: 11px; }
-.ept-cd-tree-toggle { background: none; border: none; cursor: pointer; font-size: 10px; color: #999; width: 14px; display: inline-block; text-align: center; }
+.ept-cd-tree-toggle { background: none; border: none; cursor: pointer; font-size: 9px; color: #999; width: 16px; display: inline-block; text-align: center; padding: 0; line-height: 1; vertical-align: middle; }
 .ept-cd-tree-toggle:hover { color: #333; }
+.ept-cd-tree-children { /* collapsible container */ }
 .ept-cd-tree-name { font-weight: 600; }
 .ept-cd-tree-type { color: #999; font-size: 10px; margin-left: 4px; }
 .ept-cd-tree-prop { color: #1976d2; font-size: 10px; }

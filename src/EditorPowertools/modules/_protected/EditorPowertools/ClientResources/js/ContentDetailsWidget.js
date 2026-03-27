@@ -72,7 +72,7 @@ define([
             // Tabs
             var usesCount = data.uses ? data.uses.length : 0;
             var usedByCount = data.usedBy ? data.usedBy.length : 0;
-            var treeChildren = data.contentTree && data.contentTree.children ? data.contentTree.children.length : 0;
+            var treeChildren = data.contentTree && data.contentTree.properties ? data.contentTree.properties.length : 0;
             var verCount = data.versions ? data.versions.length : 0;
             var persCount = data.personalizations ? data.personalizations.length : 0;
             var langCount = data.languageSync ? data.languageSync.length : 0;
@@ -109,7 +109,7 @@ define([
                 for (var i = 0; i < data.uses.length; i++) {
                     var u = data.uses[i];
                     html += '<div class="ept-cd-ref">';
-                    html += '<span class="ept-cd-ref-name">' + this._esc(u.name) + '</span>';
+                    html += '<a class="ept-cd-ref-name ept-cd-link" href="' + this._editUrl(u.contentId) + '">' + this._esc(u.name) + '</a>';
                     html += ' <span class="ept-cd-ref-type">' + this._esc(u.contentTypeName) + '</span>';
                     if (u.propertyName) html += ' <span class="ept-cd-ref-prop">via ' + this._esc(u.propertyName) + '</span>';
                     html += '<span class="ept-cd-ref-kind">' + this._esc(u.referenceType) + '</span>';
@@ -126,7 +126,7 @@ define([
                 for (var j = 0; j < data.usedBy.length; j++) {
                     var ref = data.usedBy[j];
                     html += '<div class="ept-cd-ref">';
-                    html += '<span class="ept-cd-ref-name">' + this._esc(ref.name) + '</span>';
+                    html += '<a class="ept-cd-ref-name ept-cd-link" href="' + this._editUrl(ref.contentId) + '">' + this._esc(ref.name) + '</a>';
                     html += ' <span class="ept-cd-ref-type">' + this._esc(ref.contentTypeName) + '</span>';
                     if (ref.propertyName) html += ' <span class="ept-cd-ref-prop">via ' + this._esc(ref.propertyName) + '</span>';
                     html += '</div>';
@@ -136,10 +136,9 @@ define([
             }
             html += '</div>';
 
-            // Tree panel
-            html += '<div class="ept-cd-panel" data-panel="tree">';
-            if (data.contentTree && data.contentTree.children && data.contentTree.children.length > 0) {
-                html += '<button class="ept-cd-expand" data-action="timeline">Timeline</button>';
+            // Tree panel (property-grouped, scrollable)
+            html += '<div class="ept-cd-panel ept-cd-panel--scroll" data-panel="tree">';
+            if (data.contentTree && data.contentTree.properties && data.contentTree.properties.length > 0) {
                 html += this._renderTreeNode(data.contentTree, true);
             } else {
                 html += '<div class="ept-cd-empty">No nested content found.</div>';
@@ -191,22 +190,49 @@ define([
             container.innerHTML = html;
             this._bindTabs(container);
             this._bindExpand(container);
+            this._bindTreeToggles(container);
         },
 
         _renderTreeNode: function (node, isRoot) {
+            var hasProps = node.properties && node.properties.length > 0;
             var html = '<ul class="ept-cd-tree">';
-            if (!isRoot) {
-                html += '<li class="ept-cd-tree-item">';
+            html += '<li class="ept-cd-tree-item">';
+
+            // Content node with toggle
+            if (hasProps) {
+                html += '<button class="ept-cd-tree-toggle" data-expanded="true">&#9660;</button>';
+            }
+            if (isRoot) {
                 html += '<span class="ept-cd-tree-name">' + this._esc(node.name) + '</span>';
-                html += '<span class="ept-cd-tree-type">' + this._esc(node.contentTypeName) + '</span>';
-                if (node.propertyName) html += ' <span class="ept-cd-tree-prop">' + this._esc(node.propertyName) + '</span>';
+            } else {
+                html += '<a class="ept-cd-tree-name ept-cd-link" href="' + this._editUrl(node.contentId) + '">' + this._esc(node.name) + '</a>';
             }
-            if (node.children && node.children.length > 0) {
-                for (var i = 0; i < node.children.length; i++) {
-                    html += this._renderTreeNode(node.children[i], false);
+            html += ' <span class="ept-cd-tree-type">' + this._esc(node.contentTypeName) + '</span>';
+
+            // Property nodes under this content
+            if (hasProps) {
+                html += '<ul class="ept-cd-tree ept-cd-tree-children">';
+                for (var p = 0; p < node.properties.length; p++) {
+                    var prop = node.properties[p];
+                    var hasChildren = prop.children && prop.children.length > 0;
+                    html += '<li class="ept-cd-tree-item">';
+                    if (hasChildren) {
+                        html += '<button class="ept-cd-tree-toggle" data-expanded="true">&#9660;</button>';
+                    }
+                    html += '<span class="ept-cd-tree-prop">' + this._esc(prop.propertyName) + '</span>';
+                    html += ' <span class="ept-cd-ref-kind">' + this._esc(prop.propertyType) + '</span>';
+                    if (hasChildren) {
+                        html += '<div class="ept-cd-tree-children">';
+                        for (var c = 0; c < prop.children.length; c++) {
+                            html += this._renderTreeNode(prop.children[c], false);
+                        }
+                        html += '</div>';
+                    }
+                    html += '</li>';
                 }
+                html += '</ul>';
             }
-            if (!isRoot) html += '</li>';
+            html += '</li>';
             html += '</ul>';
             return html;
         },
@@ -218,9 +244,11 @@ define([
             html += '<span class="ept-cd-ver-status ' + statusClass + '">' + this._esc(v.status) + '</span>';
             html += ' <span class="ept-cd-muted">v' + v.versionId + '</span>';
             if (v.language) html += ' <span class="ept-cd-ver-lang">' + this._esc(v.language) + '</span>';
-            html += ' <span class="ept-cd-muted">' + this._fmtDate(v.saved) + '</span>';
-            if (v.savedBy) html += ' <span class="ept-cd-muted">' + this._esc(v.savedBy) + '</span>';
-            if (v.compareUrl) html += ' <a class="ept-cd-ver-compare" href="' + this._esc(v.compareUrl) + '">compare</a>';
+            html += '</div>';
+            html += '<div style="font-size:10px;color:#555;margin-top:2px">';
+            if (v.savedBy) html += '<strong>' + this._esc(v.savedBy) + '</strong> &middot; ';
+            html += this._fmtDate(v.saved);
+            if (v.compareUrl) html += ' &middot; <a class="ept-cd-ver-compare" href="' + this._esc(v.compareUrl) + '">compare</a>';
             html += '</div>';
 
             if (v.changedProperties && v.changedProperties.length > 0) {
@@ -274,6 +302,24 @@ define([
                         }
                     });
                 })(btns[i]);
+            }
+        },
+
+        _bindTreeToggles: function (container) {
+            var toggles = container.querySelectorAll(".ept-cd-tree-toggle");
+            for (var i = 0; i < toggles.length; i++) {
+                (function (btn) {
+                    on(btn, "click", function (e) {
+                        e.stopPropagation();
+                        var expanded = btn.getAttribute("data-expanded") === "true";
+                        var sibling = btn.parentNode.querySelector(".ept-cd-tree-children");
+                        if (sibling) {
+                            sibling.style.display = expanded ? "none" : "";
+                            btn.setAttribute("data-expanded", expanded ? "false" : "true");
+                            btn.innerHTML = expanded ? "&#9654;" : "&#9660;";
+                        }
+                    });
+                })(toggles[i]);
             }
         },
 
@@ -337,7 +383,7 @@ define([
             }
 
             // Content tree section
-            if (data.contentTree && data.contentTree.children && data.contentTree.children.length > 0) {
+            if (data.contentTree && data.contentTree.properties && data.contentTree.properties.length > 0) {
                 html += '<h3 style="margin:20px 0 10px;font-size:14px;font-weight:600;">Content Structure</h3>';
                 html += this._renderTreeNode(data.contentTree, true);
             }
@@ -370,6 +416,12 @@ define([
             var d = new Date(s);
             if (isNaN(d.getTime())) return s;
             return d.toLocaleDateString() + " " + d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        },
+
+        _editUrl: function (contentId) {
+            // Build edit URL relative to the current CMS shell path
+            var shellPath = location.pathname.replace(/\/[^\/]*$/, "/");
+            return shellPath + "#context=epi.cms.contentdata:///" + contentId;
         },
 
         resize: function () {

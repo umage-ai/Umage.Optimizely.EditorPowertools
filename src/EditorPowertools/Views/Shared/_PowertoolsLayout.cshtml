@@ -45,7 +45,12 @@
     </div>
 
     <div id="ept-dialog-container"></div>
-    <script>window.EPT_BASE_URL = '@Html.Raw(Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), ""))';</script>
+    <script>
+        window.EPT_BASE_URL = '@Html.Raw(Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), ""))';
+        window.EPT_CMS_URL = '@Html.Raw(Paths.ToResource("CMS", ""))';
+        window.EPT_ADMIN_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.Admin", "default"))';
+        window.EPT_VG_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.VisitorGroups", "ManageVisitorGroups"))';
+    </script>
     <script src="@ClientResource("ClientResources/js/editorpowertools.js")"></script>
     <script src="@ClientResource("ClientResources/js/components.js")"></script>
     @RenderSection("Scripts", required: false)

@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using EPiServer.Personalization.VisitorGroups;
+using EPiServer.Shell;
 using EditorPowertools.Tools.AudienceManager.Models;
 using Microsoft.Extensions.Logging;
 
@@ -81,7 +82,7 @@ public class AudienceManagerService
                             PropertyName = (string?)item.PropertyName,
                             UsageType = (string?)item.UsageType,
                             EditUrl = item.ContentId != null
-                                ? $"/episerver/cms#context=epi.cms.contentdata:///{item.ContentId}"
+                                ? $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{item.ContentId}"
                                 : null
                         });
                     }
