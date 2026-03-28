@@ -203,6 +203,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [x] **Shared UI Design System** - CSS design system with cards, tables, dialogs, badges, buttons, tree views. Defined in `wwwroot/css/editorpowertools.css`.
 - [x] **Overview Page** - Dashboard showing all available tools with cards. Will later include content statistics graphs.
 - [ ] **Tool Sorting & Grouping** - Organize tools in the menu and overview page by category (Content, Admin, Diagnostics, etc.) with configurable sort order. Allow users to reorder or hide tools via preferences.
+- [ ] **Localization** - Translate all UI texts, labels, descriptions, and messages across all tools to all languages supported by Optimizely CMS. Use Optimizely's built-in localization system (XML language files or `LocalizationService`) so texts adapt to the editor's UI language. Includes: tool names, menu items, button labels, status messages, health check descriptions, column headers, validation messages, empty states, etc.
 - [ ] **No Hardcoded Paths** - Audit all API route attributes and JS fetch URLs to ensure nothing uses hardcoded paths. All routing should go through the protected module path resolution.
 - [ ] **Module Packaging** - Wrap everything in the modules/_protected folder in a zip file (like Optimizely's own modules), for proper deployment packaging in the NuGet.
 - [ ] **Protected Module API Routes** - All API routes and JS fetch URLs should go through the proper protected module path resolution instead of hardcoded `/editorpowertools/api/` paths.
