@@ -152,6 +152,17 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Editor Bookmarks** - Bookmark frequently edited pages
 - [ ] **Content Version Diff** - Side-by-side diff of content versions
 
+## Editor Insights
+
+- [ ] **Editor Details View** - Detailed view for an individual editor/user, callable from multiple places (activity timeline, content audit, version history, etc.). Shows:
+  - Editor profile summary (username, roles, last active)
+  - Activity statistics: total edits, publishes, content created, most active days/hours
+  - Content breakdown: which content types they work with most, which site areas
+  - Activity timeline: chronological feed of everything they've done (create, edit, publish, delete) with links to affected content
+  - Active drafts: content they have checked out / in draft state
+  - Comparison: activity trend over time (graph)
+  - Callable via URL param (`?editor=username`) and as a popup/dialog from any username link across all tools
+
 ## Automation
 
 - [ ] **Content Rules Engine** - Rule-based automation system with Recipe/Trigger/Action/Filter pattern. Define rules like "When a page is published, if it has no meta description, notify the author" or "When content is created under Marketing, auto-set category and visibility." Extensible trigger system (content events, scheduled), configurable filters (content type, property values), and pluggable actions (set property, send notification, move content). Rules stored in DDS, managed via a UI.
