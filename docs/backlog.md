@@ -199,6 +199,8 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [x] **Aggregation Scheduled Job** (legacy) - Single scheduled job that traverses all content once and collects statistics for all tools (content type counts, personalization usage, etc.). Results stored in DDS.
 - [x] **Shared UI Design System** - CSS design system with cards, tables, dialogs, badges, buttons, tree views. Defined in `wwwroot/css/editorpowertools.css`.
 - [x] **Overview Page** - Dashboard showing all available tools with cards. Will later include content statistics graphs.
+- [ ] **Tool Sorting & Grouping** - Organize tools in the menu and overview page by category (Content, Admin, Diagnostics, etc.) with configurable sort order. Allow users to reorder or hide tools via preferences.
+- [ ] **No Hardcoded Paths** - Audit all API route attributes and JS fetch URLs to ensure nothing uses hardcoded paths. All routing should go through the protected module path resolution.
 - [ ] **Module Packaging** - Wrap everything in the modules/_protected folder in a zip file (like Optimizely's own modules), for proper deployment packaging in the NuGet.
 - [ ] **Protected Module API Routes** - All API routes and JS fetch URLs should go through the proper protected module path resolution instead of hardcoded `/editorpowertools/api/` paths.
 

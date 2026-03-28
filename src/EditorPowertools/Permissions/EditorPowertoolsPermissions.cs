@@ -56,4 +56,7 @@ public static class EditorPowertoolsPermissions
 
     public static PermissionType ContentAudit { get; } =
         new("EditorPowertools", "ContentAudit");
+
+    public static PermissionType CmsDoctor { get; } =
+        new("EditorPowertools", "CmsDoctor");
 }

@@ -83,6 +83,13 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentImporter))
         };
 
+        yield return new UrlMenuItem("CMS Doctor", BaseMenuPath + "/cmsdoctor",
+            GetResourcePath("EditorPowertools/CmsDoctor"))
+        {
+            SortIndex = 940,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.CmsDoctor))
+        };
+
         yield return new UrlMenuItem("Content Audit", BaseMenuPath + "/contentaudit",
             GetResourcePath("EditorPowertools/ContentAudit"))
         {

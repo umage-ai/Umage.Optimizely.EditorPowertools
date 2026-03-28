@@ -13,6 +13,9 @@ using EditorPowertools.Tools.LinkChecker;
 using EditorPowertools.Tools.ScheduledJobsGantt;
 using EditorPowertools.Tools.ContentTypeRecommendations;
 using EditorPowertools.Services.Analyzers;
+using EditorPowertools.Tools.CmsDoctor;
+using EditorPowertools.Tools.CmsDoctor.Checks;
+using EditorPowertools.Tools.CmsDoctor.Models;
 using EditorPowertools.Tools.ContentAudit;
 using EditorPowertools.Tools.PersonalizationAudit;
 using EPiServer.Shell.Modules;
@@ -94,6 +97,17 @@ public static class ServiceCollectionExtensions
 
         // Manage Children
         services.AddTransient<ManageChildrenService>();
+
+        // CMS Doctor - built-in health checks (third-party can add more via IHealthCheck)
+        services.AddSingleton<CmsDoctorService>();
+        services.AddTransient<IHealthCheck, ContentTypeCheck>();
+        services.AddTransient<IHealthCheck, OrphanedPropertyCheck>();
+        services.AddTransient<IHealthCheck, ScheduledJobsCheck>();
+        services.AddTransient<IHealthCheck, UnusedContentCheck>();
+        services.AddTransient<IHealthCheck, DraftContentCheck>();
+        services.AddTransient<IHealthCheck, VersionInfoCheck>();
+        services.AddTransient<IHealthCheck, MemoryCheck>();
+        services.AddTransient<IHealthCheck, MissingAltTextCheck>();
 
         // Content Audit
         services.AddTransient<ContentAuditService>();

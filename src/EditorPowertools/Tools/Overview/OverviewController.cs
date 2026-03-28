@@ -130,6 +130,17 @@ public class EditorPowertoolsController : Controller
     }
 
     [HttpGet]
+    public IActionResult CmsDoctor()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.CmsDoctor),
+            EditorPowertoolsPermissions.CmsDoctor))
+            return Forbid();
+
+        return View("/Views/CmsDoctor/Index.cshtml");
+    }
+
+    [HttpGet]
     public IActionResult ContentAudit()
     {
         if (!_accessChecker.HasAccess(HttpContext,

@@ -21,4 +21,5 @@ public class FeatureToggles
     public bool ContentImporter { get; set; } = true;
     public bool ManageChildren { get; set; } = true;
     public bool ContentAudit { get; set; } = true;
+    public bool CmsDoctor { get; set; } = true;
 }
