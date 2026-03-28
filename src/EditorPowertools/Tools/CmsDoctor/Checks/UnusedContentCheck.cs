@@ -1,59 +1,66 @@
 using EPiServer;
 using EPiServer.Core;
-using EPiServer.DataAbstraction;
 
 namespace EditorPowertools.Tools.CmsDoctor.Checks;
 
-public class UnusedContentCheck : HealthCheckBase
+/// <summary>
+/// Checks for content not referenced by anything. Hooks into the scheduled job
+/// to count references efficiently during traversal.
+/// </summary>
+public class UnusedContentCheck : AnalyzerHealthCheckBase
 {
     private readonly IContentRepository _contentRepository;
-    private readonly IContentLoader _contentLoader;
+    private int _totalBlocks;
+    private int _unreferencedBlocks;
 
-    public UnusedContentCheck(IContentRepository contentRepository, IContentLoader contentLoader)
+    public UnusedContentCheck(IContentRepository contentRepository)
     {
         _contentRepository = contentRepository;
-        _contentLoader = contentLoader;
     }
 
     public override string Name => "Unused Content";
-    public override string Description => "Checks for content not referenced by anything (potential orphans).";
+    public override string Description => "Checks for blocks and media not referenced by anything (potential orphans).";
     public override string Group => "Content";
     public override int SortOrder => 30;
     public override string[] Tags => new[] { "Maintenance", "Performance" };
 
-    public override Models.HealthCheckResult PerformCheck()
+    protected override void OnInitialize()
     {
-        var allContent = _contentRepository.GetDescendents(ContentReference.RootPage).ToList();
-        var unreferenced = 0;
-        var sampled = 0;
+        _totalBlocks = 0;
+        _unreferencedBlocks = 0;
+    }
 
-        // Sample up to 500 items to keep check fast
-        foreach (var contentRef in allContent.Take(500))
+    protected override void OnAnalyze(IContent content, ContentReference contentRef)
+    {
+        // Only check blocks and media, not pages (pages can be top-level)
+        if (content is PageData) return;
+
+        _totalBlocks++;
+
+        try
         {
-            sampled++;
-            try
+            var refs = _contentRepository.GetReferencesToContent(contentRef, false);
+            if (!refs.Any())
             {
-                var refs = _contentRepository.GetReferencesToContent(contentRef, false);
-                if (!refs.Any())
-                {
-                    if (_contentLoader.TryGet<IContent>(contentRef, out var content) &&
-                        content is not PageData) // Pages can be top-level
-                    {
-                        unreferenced++;
-                    }
-                }
+                _unreferencedBlocks++;
             }
-            catch { }
         }
+        catch { }
+    }
 
-        var details = $"Sampled {sampled} of {allContent.Count} items.";
-        if (unreferenced == 0)
-            return Ok("No unreferenced blocks/media found in sample.", details);
+    protected override Models.HealthCheckResult EvaluateResults()
+    {
+        if (_totalBlocks == 0)
+            return Ok("No blocks or media found.");
 
-        var pct = sampled > 0 ? (unreferenced * 100 / sampled) : 0;
+        var pct = _totalBlocks > 0 ? (_unreferencedBlocks * 100 / _totalBlocks) : 0;
+        var details = $"{_unreferencedBlocks} of {_totalBlocks} blocks/media ({pct}%) are unreferenced. Last analyzed: {LastAnalyzed:g}";
+
         if (pct > 20)
-            return Warning($"{unreferenced} unreferenced items ({pct}% of sample). Consider cleanup.", details);
+            return Warning($"{_unreferencedBlocks} unreferenced items ({pct}%). Consider cleanup.", details);
+        if (_unreferencedBlocks > 0)
+            return Ok($"{_unreferencedBlocks} unreferenced items ({pct}%, minor).", details);
 
-        return Ok($"{unreferenced} unreferenced items ({pct}% of sample).", details);
+        return Ok("All blocks and media are referenced.", details);
     }
 }

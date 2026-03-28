@@ -4,19 +4,18 @@ using EPiServer.DataAbstraction;
 
 namespace EditorPowertools.Tools.CmsDoctor.Checks;
 
-public class MissingAltTextCheck : HealthCheckBase
+/// <summary>
+/// Checks for images missing alt text. Hooks into the scheduled job to
+/// traverse all content efficiently rather than scanning on-demand.
+/// </summary>
+public class MissingAltTextCheck : AnalyzerHealthCheckBase
 {
-    private readonly IContentRepository _contentRepository;
-    private readonly IContentLoader _contentLoader;
     private readonly IContentTypeRepository _contentTypeRepository;
+    private int _imageCount;
+    private int _missingAlt;
 
-    public MissingAltTextCheck(
-        IContentRepository contentRepository,
-        IContentLoader contentLoader,
-        IContentTypeRepository contentTypeRepository)
+    public MissingAltTextCheck(IContentTypeRepository contentTypeRepository)
     {
-        _contentRepository = contentRepository;
-        _contentLoader = contentLoader;
         _contentTypeRepository = contentTypeRepository;
     }
 
@@ -26,45 +25,41 @@ public class MissingAltTextCheck : HealthCheckBase
     public override int SortOrder => 50;
     public override string[] Tags => new[] { "SEO", "Accessibility" };
 
-    public override Models.HealthCheckResult PerformCheck()
+    protected override void OnInitialize()
     {
-        var allContent = _contentRepository.GetDescendents(ContentReference.RootPage).ToList();
-        var imageCount = 0;
-        var missingAlt = 0;
+        _imageCount = 0;
+        _missingAlt = 0;
+    }
 
-        foreach (var contentRef in allContent)
+    protected override void OnAnalyze(IContent content, ContentReference contentRef)
+    {
+        if (content is not MediaData) return;
+
+        var ct = _contentTypeRepository.Load(content.ContentTypeID);
+        if (ct?.ModelType == null || !typeof(ImageData).IsAssignableFrom(ct.ModelType)) return;
+
+        _imageCount++;
+
+        var altProp = content.Property["AltText"] ?? content.Property["Description"] ??
+                      content.Property["AlternativeText"] ?? content.Property["Alt"];
+        if (altProp == null || altProp.Value == null || string.IsNullOrWhiteSpace(altProp.Value.ToString()))
         {
-            try
-            {
-                if (!_contentLoader.TryGet<IContent>(contentRef, out var content)) continue;
-                if (content is not MediaData media) continue;
-
-                var ct = _contentTypeRepository.Load(content.ContentTypeID);
-                if (ct?.ModelType == null || !typeof(ImageData).IsAssignableFrom(ct.ModelType)) continue;
-
-                imageCount++;
-
-                // Check for common alt text property names
-                var altProp = content.Property["AltText"] ?? content.Property["Description"] ??
-                              content.Property["AlternativeText"] ?? content.Property["Alt"];
-                if (altProp == null || altProp.Value == null || string.IsNullOrWhiteSpace(altProp.Value.ToString()))
-                {
-                    missingAlt++;
-                }
-            }
-            catch { }
+            _missingAlt++;
         }
+    }
 
-        if (imageCount == 0)
+    protected override Models.HealthCheckResult EvaluateResults()
+    {
+        if (_imageCount == 0)
             return Ok("No images found.");
 
-        var pct = imageCount > 0 ? (missingAlt * 100 / imageCount) : 0;
-        var details = $"{missingAlt} of {imageCount} images ({pct}%) have no alt text.";
+        var pct = _imageCount > 0 ? (_missingAlt * 100 / _imageCount) : 0;
+        var details = $"{_missingAlt} of {_imageCount} images ({pct}%) have no alt text. Last analyzed: {LastAnalyzed:g}";
 
         if (pct > 50)
-            return BadPractice($"{missingAlt} images missing alt text ({pct}%).", details);
-        if (missingAlt > 0)
-            return Warning($"{missingAlt} images missing alt text.", details);
+            return BadPractice($"{_missingAlt} images missing alt text ({pct}%).", details);
+        if (_missingAlt > 0)
+            return Warning($"{_missingAlt} images missing alt text.", details);
 
         return Ok("All images have alt text.", details);
     }

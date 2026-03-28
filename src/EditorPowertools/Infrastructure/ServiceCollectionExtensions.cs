@@ -103,11 +103,18 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IHealthCheck, ContentTypeCheck>();
         services.AddTransient<IHealthCheck, OrphanedPropertyCheck>();
         services.AddTransient<IHealthCheck, ScheduledJobsCheck>();
-        services.AddTransient<IHealthCheck, UnusedContentCheck>();
         services.AddTransient<IHealthCheck, DraftContentCheck>();
         services.AddTransient<IHealthCheck, VersionInfoCheck>();
         services.AddTransient<IHealthCheck, MemoryCheck>();
-        services.AddTransient<IHealthCheck, MissingAltTextCheck>();
+
+        // Analyzer health checks — registered as both IHealthCheck and IContentAnalyzer
+        // so they collect data during the scheduled job and report on the dashboard
+        services.AddSingleton<MissingAltTextCheck>();
+        services.AddSingleton<IHealthCheck>(sp => sp.GetRequiredService<MissingAltTextCheck>());
+        services.AddSingleton<IContentAnalyzer>(sp => sp.GetRequiredService<MissingAltTextCheck>());
+        services.AddSingleton<UnusedContentCheck>();
+        services.AddSingleton<IHealthCheck>(sp => sp.GetRequiredService<UnusedContentCheck>());
+        services.AddSingleton<IContentAnalyzer>(sp => sp.GetRequiredService<UnusedContentCheck>());
 
         // Content Audit
         services.AddTransient<ContentAuditService>();
