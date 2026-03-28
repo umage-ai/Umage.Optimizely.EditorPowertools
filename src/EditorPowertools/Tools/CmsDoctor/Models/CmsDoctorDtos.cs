@@ -1,5 +1,8 @@
+using System.Text.Json.Serialization;
+
 namespace EditorPowertools.Tools.CmsDoctor.Models;
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum HealthStatus
 {
     NotChecked,
