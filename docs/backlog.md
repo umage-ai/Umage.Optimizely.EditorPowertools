@@ -152,6 +152,16 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Editor Bookmarks** - Bookmark frequently edited pages
 - [ ] **Content Version Diff** - Side-by-side diff of content versions
 
+## Automation
+
+- [ ] **Content Rules Engine** - Rule-based automation system with Recipe/Trigger/Action/Filter pattern. Define rules like "When a page is published, if it has no meta description, notify the author" or "When content is created under Marketing, auto-set category and visibility." Extensible trigger system (content events, scheduled), configurable filters (content type, property values), and pluggable actions (set property, send notification, move content). Rules stored in DDS, managed via a UI.
+
+## Content Migration
+
+- [ ] **Content Type Converter** - Convert content items from one content type to another with property mapping. Useful for CMS migrations and content type refactoring. Select source type, target type, map properties between them, preview changes, execute in bulk.
+- [ ] **Content Exporter/Packager** - Package selected content tree structures for export/transfer between environments. Drag-and-drop builder for selecting what to include, export as a portable format that can be imported on another instance.
+- [ ] **Environment Synchronizer** - Sync content and configuration between environments (e.g. dev → staging → production). Compare environments, show diffs, selective sync.
+
 ## SEO Tools
 
 - [ ] **SEO Checklist** - Per-page checklist for SEO best practices
