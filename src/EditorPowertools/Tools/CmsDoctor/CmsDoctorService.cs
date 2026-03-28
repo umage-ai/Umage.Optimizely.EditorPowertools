@@ -6,25 +6,48 @@ namespace EditorPowertools.Tools.CmsDoctor;
 public class CmsDoctorService
 {
     private readonly IEnumerable<IDoctorCheck> _checks;
+    private readonly DoctorCheckResultStore _store;
     private readonly ILogger<CmsDoctorService> _logger;
 
-    // Cache results in memory (per-instance, singleton service)
-    private readonly Dictionary<string, DoctorCheckResult> _lastResults = new();
-    private readonly HashSet<string> _dismissed = new(StringComparer.OrdinalIgnoreCase);
+    // In-memory cache loaded from DDS on first access
+    private Dictionary<string, DoctorCheckResult>? _cachedResults;
     private DateTime? _lastFullCheck;
 
-    public CmsDoctorService(IEnumerable<IDoctorCheck> checks, ILogger<CmsDoctorService> logger)
+    public CmsDoctorService(
+        IEnumerable<IDoctorCheck> checks,
+        DoctorCheckResultStore store,
+        ILogger<CmsDoctorService> logger)
     {
         _checks = checks;
+        _store = store;
         _logger = logger;
+    }
+
+    private Dictionary<string, DoctorCheckResult> GetCachedResults()
+    {
+        if (_cachedResults == null)
+        {
+            try { _cachedResults = _store.LoadAll(); }
+            catch { _cachedResults = new Dictionary<string, DoctorCheckResult>(StringComparer.OrdinalIgnoreCase); }
+        }
+        return _cachedResults;
     }
 
     public CmsDoctorDashboard GetDashboard()
     {
+        var cached = GetCachedResults();
+
         var results = _checks.Select(c =>
         {
             var key = c.GetType().FullName ?? c.GetType().Name;
-            var result = _lastResults.TryGetValue(key, out var cached) ? cached : new DoctorCheckResult
+            if (cached.TryGetValue(key, out var stored))
+            {
+                // Merge stored result with live check metadata
+                stored.CanFix = c.CanFix;
+                stored.Tags = c.Tags;
+                return stored;
+            }
+            return new DoctorCheckResult
             {
                 CheckName = c.Name,
                 CheckType = key,
@@ -34,8 +57,6 @@ public class CmsDoctorService
                 Tags = c.Tags,
                 CanFix = c.CanFix
             };
-            result.IsDismissed = _dismissed.Contains(key);
-            return result;
         }).ToList();
 
         return new CmsDoctorDashboard
@@ -88,15 +109,14 @@ public class CmsDoctorService
             var result = check.Fix();
             if (result != null)
             {
-                var key = check.GetType().FullName ?? check.GetType().Name;
-                _lastResults[key] = result;
+                SaveResult(result);
             }
             return result;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to fix check {CheckType}", checkType);
-            return new DoctorCheckResult
+            var result = new DoctorCheckResult
             {
                 CheckName = check.Name,
                 CheckType = checkType,
@@ -105,6 +125,8 @@ public class CmsDoctorService
                 StatusText = $"Fix failed: {ex.Message}",
                 Tags = check.Tags
             };
+            SaveResult(result);
+            return result;
         }
     }
 
@@ -115,12 +137,16 @@ public class CmsDoctorService
 
     public void DismissCheck(string checkType)
     {
-        _dismissed.Add(checkType);
+        try { _store.SetDismissed(checkType, true); }
+        catch (Exception ex) { _logger.LogWarning(ex, "Failed to dismiss check {CheckType}", checkType); }
+        _cachedResults = null; // Invalidate cache
     }
 
     public void RestoreCheck(string checkType)
     {
-        _dismissed.Remove(checkType);
+        try { _store.SetDismissed(checkType, false); }
+        catch (Exception ex) { _logger.LogWarning(ex, "Failed to restore check {CheckType}", checkType); }
+        _cachedResults = null; // Invalidate cache
     }
 
     private DoctorCheckResult RunSingle(IDoctorCheck check)
@@ -129,12 +155,17 @@ public class CmsDoctorService
         try
         {
             var result = check.PerformCheck();
-            _lastResults[key] = result;
+            // Preserve dismissed state
+            var cached = GetCachedResults();
+            if (cached.TryGetValue(key, out var prev))
+                result.IsDismissed = prev.IsDismissed;
+
+            SaveResult(result);
             return result;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Health check {Check} failed", check.Name);
+            _logger.LogError(ex, "Doctor check {Check} failed", check.Name);
             var result = new DoctorCheckResult
             {
                 CheckName = check.Name,
@@ -145,8 +176,16 @@ public class CmsDoctorService
                 Tags = check.Tags,
                 CanFix = check.CanFix
             };
-            _lastResults[key] = result;
+            SaveResult(result);
             return result;
         }
+    }
+
+    private void SaveResult(DoctorCheckResult result)
+    {
+        var cached = GetCachedResults();
+        cached[result.CheckType] = result;
+        try { _store.Save(result); }
+        catch (Exception ex) { _logger.LogWarning(ex, "Failed to save check result to DDS"); }
     }
 }

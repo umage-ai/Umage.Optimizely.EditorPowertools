@@ -124,14 +124,17 @@
 
         html += '<div class="doc-card-text">' + escHtml(check.statusText) + '</div>';
 
-        // Tags
+        // Tags + timestamp
+        html += '<div class="doc-card-meta">';
         if (check.tags && check.tags.length > 0) {
-            html += '<div class="doc-card-tags">';
             for (var i = 0; i < check.tags.length; i++) {
                 html += '<span class="doc-card-tag">' + escHtml(check.tags[i]) + '</span>';
             }
-            html += '</div>';
         }
+        if (check.checkTime && check.status !== 'NotChecked') {
+            html += '<span class="doc-card-time">' + new Date(check.checkTime).toLocaleString() + '</span>';
+        }
+        html += '</div>';
 
         // Actions
         html += '<div class="doc-card-actions">';
@@ -348,8 +351,9 @@
         '.doc-card-title { flex:1; font-weight:600; font-size:14px; }',
         '.doc-card-badge { color:#fff; font-size:10px; font-weight:600; padding:2px 8px; border-radius:10px; text-transform:uppercase; letter-spacing:.3px; }',
         '.doc-card-text { font-size:12px; color:#555; line-height:1.4; margin-bottom:8px; }',
-        '.doc-card-tags { display:flex; gap:4px; margin-bottom:8px; flex-wrap:wrap; }',
+        '.doc-card-meta { display:flex; gap:4px; margin-bottom:8px; flex-wrap:wrap; align-items:center; }',
         '.doc-card-tag { font-size:10px; padding:1px 6px; border-radius:8px; background:rgba(0,0,0,.06); color:#666; }',
+        '.doc-card-time { font-size:10px; color:#999; margin-left:auto; }',
         '.doc-card-actions { display:flex; gap:4px; }',
         '.doc-card-btn { padding:3px 10px; border:1px solid #ddd; border-radius:4px; font-size:11px; cursor:pointer; background:#fff; color:#555; transition:all .15s; }',
         '.doc-card-btn:hover { border-color:#999; color:#333; }',

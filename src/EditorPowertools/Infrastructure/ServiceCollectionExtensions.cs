@@ -99,6 +99,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ManageChildrenService>();
 
         // CMS Doctor - built-in health checks (third-party can add more via IDoctorCheck)
+        services.AddSingleton<DoctorCheckResultStore>();
         services.AddSingleton<CmsDoctorService>();
         services.AddTransient<IDoctorCheck, ContentTypeCheck>();
         services.AddTransient<IDoctorCheck, OrphanedPropertyCheck>();
