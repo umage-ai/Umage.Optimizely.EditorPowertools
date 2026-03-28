@@ -177,6 +177,10 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Content Exporter/Packager** - Package selected content tree structures for export/transfer between environments. Drag-and-drop builder for selecting what to include, export as a portable format that can be imported on another instance.
 - [ ] **Environment Synchronizer** - Sync content and configuration between environments (e.g. dev → staging → production). Compare environments, show diffs, selective sync.
 
+## Security
+
+- [ ] **Security Audit** - Comprehensive security analysis of content access rights. Shows who can access which content, identifies overly permissive ACLs (e.g. "Everyone" with publish rights), content with no access restrictions, roles with excessive privileges, and content trees with inconsistent permissions (child more permissive than parent). Includes CMS Doctor checks for common security issues: default admin passwords still active, anonymous access to protected content, sensitive content types without access restrictions. Filterable by role, user, content tree, and permission level.
+
 ## SEO Tools
 
 - [ ] **SEO Checklist** - Per-page checklist for SEO best practices
