@@ -185,5 +185,6 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 
 - [ ] **Security Review** - Full security review of all components: auth checks, input validation, XSS prevention, CSRF protection, access control on all API endpoints, safe file upload handling, SQL/command injection prevention. Verify three-layer permission model is consistently applied across all tools.
 - [ ] **Documentation with Screenshots** - Comprehensive documentation of every component with screenshots: installation guide, configuration options, each tool's UI and features, API reference, permission setup. Suitable for the NuGet package README and a docs site.
+- [ ] **Unit Tests** - Unit test project covering all services, parsers, and API controllers. Mock EPiServer dependencies (IContentRepository, IContentLoader, etc.) using a test framework. Cover edge cases: empty content, missing permissions, malformed input, large datasets, concurrent access. Include integration tests for file parsers (CSV, JSON, Excel) with sample data files.
 
 *Priority: Carried-over tools first, then Activity Timeline, Scheduled Jobs Gantt, Bulk Edit, Active Editors, Health Check.*
