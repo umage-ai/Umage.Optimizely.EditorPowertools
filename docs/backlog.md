@@ -181,4 +181,9 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Module Packaging** - Wrap everything in the modules/_protected folder in a zip file (like Optimizely's own modules), for proper deployment packaging in the NuGet.
 - [ ] **Protected Module API Routes** - All API routes and JS fetch URLs should go through the proper protected module path resolution instead of hardcoded `/editorpowertools/api/` paths.
 
+## Quality & Documentation
+
+- [ ] **Security Review** - Full security review of all components: auth checks, input validation, XSS prevention, CSRF protection, access control on all API endpoints, safe file upload handling, SQL/command injection prevention. Verify three-layer permission model is consistently applied across all tools.
+- [ ] **Documentation with Screenshots** - Comprehensive documentation of every component with screenshots: installation guide, configuration options, each tool's UI and features, API reference, permission setup. Suitable for the NuGet package README and a docs site.
+
 *Priority: Carried-over tools first, then Activity Timeline, Scheduled Jobs Gantt, Bulk Edit, Active Editors, Health Check.*
