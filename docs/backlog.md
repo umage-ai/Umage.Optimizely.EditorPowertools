@@ -22,7 +22,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 ## Bulk Operations
 
 - [x] **Bulk Property Editor** - Edit a property value across multiple content items at once. (Details TBD - existing implementation to be provided.)
-- [ ] **Content Importer** - Upload Excel, CSV, or JSON files, then map fields to properties on a chosen content type. Pick a target location in the content tree and import. Supports preview before import, validation, and dry-run mode.
+- [x] **Content Importer** - Upload Excel, CSV, or JSON files, then map fields to properties on a chosen content type. Pick a target location in the content tree and import. Supports preview before import, validation, and dry-run mode.
 
 ## Editor Collaboration
 
