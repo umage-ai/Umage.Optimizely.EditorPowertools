@@ -106,6 +106,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IHealthCheck, DraftContentCheck>();
         services.AddTransient<IHealthCheck, VersionInfoCheck>();
         services.AddTransient<IHealthCheck, MemoryCheck>();
+        services.AddTransient<IHealthCheck, BrokenLinksCheck>();
 
         // Analyzer health checks — registered as both IHealthCheck and IContentAnalyzer
         // so they collect data during the scheduled job and report on the dashboard
