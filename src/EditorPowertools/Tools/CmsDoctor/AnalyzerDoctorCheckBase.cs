@@ -6,14 +6,14 @@ namespace EditorPowertools.Tools.CmsDoctor;
 
 /// <summary>
 /// Base class for health checks that need to traverse all content via the unified scheduled job.
-/// Implements both IHealthCheck (for the CMS Doctor dashboard) and IContentAnalyzer
+/// Implements both IDoctorCheck (for the CMS Doctor dashboard) and IContentAnalyzer
 /// (for the scheduled job). Data is collected during job traversal and used when
 /// PerformCheck() is called on the dashboard.
 ///
 /// Third-party packages can inherit from this to create checks that hook into the job.
-/// Register as both IHealthCheck and IContentAnalyzer in DI.
+/// Register as both IDoctorCheck and IContentAnalyzer in DI.
 /// </summary>
-public abstract class AnalyzerHealthCheckBase : HealthCheckBase, IContentAnalyzer
+public abstract class AnalyzerDoctorCheckBase : DoctorCheckBase, IContentAnalyzer
 {
     /// <summary>Whether the analyzer has run at least once.</summary>
     protected bool HasAnalyzed { get; private set; }
@@ -44,12 +44,12 @@ public abstract class AnalyzerHealthCheckBase : HealthCheckBase, IContentAnalyze
         OnComplete();
     }
 
-    // ── IHealthCheck ──
+    // ── IDoctorCheck ──
 
-    public override HealthCheckResult PerformCheck()
+    public override DoctorCheckResult PerformCheck()
     {
         if (!HasAnalyzed)
-            return new HealthCheckResult
+            return new DoctorCheckResult
             {
                 CheckName = Name,
                 CheckType = GetType().FullName ?? GetType().Name,
@@ -75,5 +75,5 @@ public abstract class AnalyzerHealthCheckBase : HealthCheckBase, IContentAnalyze
     protected virtual void OnComplete() { }
 
     /// <summary>Evaluate the accumulated data and return a health check result.</summary>
-    protected abstract HealthCheckResult EvaluateResults();
+    protected abstract DoctorCheckResult EvaluateResults();
 }

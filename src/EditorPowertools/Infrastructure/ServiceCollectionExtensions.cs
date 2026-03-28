@@ -98,23 +98,23 @@ public static class ServiceCollectionExtensions
         // Manage Children
         services.AddTransient<ManageChildrenService>();
 
-        // CMS Doctor - built-in health checks (third-party can add more via IHealthCheck)
+        // CMS Doctor - built-in health checks (third-party can add more via IDoctorCheck)
         services.AddSingleton<CmsDoctorService>();
-        services.AddTransient<IHealthCheck, ContentTypeCheck>();
-        services.AddTransient<IHealthCheck, OrphanedPropertyCheck>();
-        services.AddTransient<IHealthCheck, ScheduledJobsCheck>();
-        services.AddTransient<IHealthCheck, DraftContentCheck>();
-        services.AddTransient<IHealthCheck, VersionInfoCheck>();
-        services.AddTransient<IHealthCheck, MemoryCheck>();
-        services.AddTransient<IHealthCheck, BrokenLinksCheck>();
+        services.AddTransient<IDoctorCheck, ContentTypeCheck>();
+        services.AddTransient<IDoctorCheck, OrphanedPropertyCheck>();
+        services.AddTransient<IDoctorCheck, ScheduledJobsCheck>();
+        services.AddTransient<IDoctorCheck, DraftContentCheck>();
+        services.AddTransient<IDoctorCheck, VersionInfoCheck>();
+        services.AddTransient<IDoctorCheck, MemoryCheck>();
+        services.AddTransient<IDoctorCheck, BrokenLinksCheck>();
 
-        // Analyzer health checks — registered as both IHealthCheck and IContentAnalyzer
+        // Analyzer health checks — registered as both IDoctorCheck and IContentAnalyzer
         // so they collect data during the scheduled job and report on the dashboard
         services.AddSingleton<MissingAltTextCheck>();
-        services.AddSingleton<IHealthCheck>(sp => sp.GetRequiredService<MissingAltTextCheck>());
+        services.AddSingleton<IDoctorCheck>(sp => sp.GetRequiredService<MissingAltTextCheck>());
         services.AddSingleton<IContentAnalyzer>(sp => sp.GetRequiredService<MissingAltTextCheck>());
         services.AddSingleton<UnusedContentCheck>();
-        services.AddSingleton<IHealthCheck>(sp => sp.GetRequiredService<UnusedContentCheck>());
+        services.AddSingleton<IDoctorCheck>(sp => sp.GetRequiredService<UnusedContentCheck>());
         services.AddSingleton<IContentAnalyzer>(sp => sp.GetRequiredService<UnusedContentCheck>());
 
         // Content Audit

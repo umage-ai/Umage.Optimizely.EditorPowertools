@@ -7,7 +7,7 @@ namespace EditorPowertools.Tools.CmsDoctor.Checks;
 /// Checks for content not referenced by anything. Hooks into the scheduled job
 /// to count references efficiently during traversal.
 /// </summary>
-public class UnusedContentCheck : AnalyzerHealthCheckBase
+public class UnusedContentCheck : AnalyzerDoctorCheckBase
 {
     private readonly IContentRepository _contentRepository;
     private int _totalBlocks;
@@ -48,7 +48,7 @@ public class UnusedContentCheck : AnalyzerHealthCheckBase
         catch { }
     }
 
-    protected override Models.HealthCheckResult EvaluateResults()
+    protected override Models.DoctorCheckResult EvaluateResults()
     {
         if (_totalBlocks == 0)
             return Ok("No blocks or media found.");

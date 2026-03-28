@@ -2,7 +2,7 @@ using EPiServer.DataAbstraction;
 
 namespace EditorPowertools.Tools.CmsDoctor.Checks;
 
-public class ScheduledJobsCheck : HealthCheckBase
+public class ScheduledJobsCheck : DoctorCheckBase
 {
     private readonly IScheduledJobRepository _jobRepository;
 
@@ -17,7 +17,7 @@ public class ScheduledJobsCheck : HealthCheckBase
     public override int SortOrder => 10;
     public override string[] Tags => new[] { "Performance", "Maintenance" };
 
-    public override Models.HealthCheckResult PerformCheck()
+    public override Models.DoctorCheckResult PerformCheck()
     {
         var jobs = _jobRepository.List().ToList();
         var failedJobs = new List<string>();

@@ -2,7 +2,7 @@ using EPiServer.DataAbstraction;
 
 namespace EditorPowertools.Tools.CmsDoctor.Checks;
 
-public class OrphanedPropertyCheck : HealthCheckBase
+public class OrphanedPropertyCheck : DoctorCheckBase
 {
     private readonly IContentTypeRepository _contentTypeRepository;
 
@@ -17,7 +17,7 @@ public class OrphanedPropertyCheck : HealthCheckBase
     public override int SortOrder => 20;
     public override string[] Tags => new[] { "Maintenance" };
 
-    public override Models.HealthCheckResult PerformCheck()
+    public override Models.DoctorCheckResult PerformCheck()
     {
         var orphanedCount = 0;
         var examples = new List<string>();

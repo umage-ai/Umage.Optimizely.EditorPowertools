@@ -6,7 +6,7 @@ namespace EditorPowertools.Tools.CmsDoctor.Checks;
 /// Health check that reads from the Link Checker's DDS data.
 /// Demonstrates how checks can leverage data collected by other tools.
 /// </summary>
-public class BrokenLinksCheck : HealthCheckBase
+public class BrokenLinksCheck : DoctorCheckBase
 {
     private readonly LinkCheckerRepository _linkRepo;
 
@@ -21,7 +21,7 @@ public class BrokenLinksCheck : HealthCheckBase
     public override int SortOrder => 60;
     public override string[] Tags => new[] { "SEO", "EditorUX" };
 
-    public override Models.HealthCheckResult PerformCheck()
+    public override Models.DoctorCheckResult PerformCheck()
     {
         try
         {

@@ -5,14 +5,15 @@ namespace EditorPowertools.Tools.CmsDoctor;
 
 public class CmsDoctorService
 {
-    private readonly IEnumerable<IHealthCheck> _checks;
+    private readonly IEnumerable<IDoctorCheck> _checks;
     private readonly ILogger<CmsDoctorService> _logger;
 
     // Cache results in memory (per-instance, singleton service)
-    private readonly Dictionary<string, HealthCheckResult> _lastResults = new();
+    private readonly Dictionary<string, DoctorCheckResult> _lastResults = new();
+    private readonly HashSet<string> _dismissed = new(StringComparer.OrdinalIgnoreCase);
     private DateTime? _lastFullCheck;
 
-    public CmsDoctorService(IEnumerable<IHealthCheck> checks, ILogger<CmsDoctorService> logger)
+    public CmsDoctorService(IEnumerable<IDoctorCheck> checks, ILogger<CmsDoctorService> logger)
     {
         _checks = checks;
         _logger = logger;
@@ -23,7 +24,7 @@ public class CmsDoctorService
         var results = _checks.Select(c =>
         {
             var key = c.GetType().FullName ?? c.GetType().Name;
-            return _lastResults.TryGetValue(key, out var cached) ? cached : new HealthCheckResult
+            var result = _lastResults.TryGetValue(key, out var cached) ? cached : new DoctorCheckResult
             {
                 CheckName = c.Name,
                 CheckType = key,
@@ -33,6 +34,8 @@ public class CmsDoctorService
                 Tags = c.Tags,
                 CanFix = c.CanFix
             };
+            result.IsDismissed = _dismissed.Contains(key);
+            return result;
         }).ToList();
 
         return new CmsDoctorDashboard
@@ -46,7 +49,7 @@ public class CmsDoctorService
             Groups = results
                 .GroupBy(r => r.Group)
                 .OrderBy(g => g.Key)
-                .Select(g => new HealthCheckGroupDto
+                .Select(g => new DoctorCheckGroupDto
                 {
                     Name = g.Key,
                     Checks = g.OrderBy(c => c.CheckName).ToList()
@@ -55,9 +58,9 @@ public class CmsDoctorService
         };
     }
 
-    public List<HealthCheckResult> RunAll()
+    public List<DoctorCheckResult> RunAll()
     {
-        var results = new List<HealthCheckResult>();
+        var results = new List<DoctorCheckResult>();
         foreach (var check in _checks)
         {
             results.Add(RunSingle(check));
@@ -66,7 +69,7 @@ public class CmsDoctorService
         return results;
     }
 
-    public HealthCheckResult? RunCheck(string checkType)
+    public DoctorCheckResult? RunCheck(string checkType)
     {
         var check = _checks.FirstOrDefault(c =>
             (c.GetType().FullName ?? c.GetType().Name).Equals(checkType, StringComparison.OrdinalIgnoreCase));
@@ -74,7 +77,7 @@ public class CmsDoctorService
         return RunSingle(check);
     }
 
-    public HealthCheckResult? FixCheck(string checkType)
+    public DoctorCheckResult? FixCheck(string checkType)
     {
         var check = _checks.FirstOrDefault(c =>
             (c.GetType().FullName ?? c.GetType().Name).Equals(checkType, StringComparison.OrdinalIgnoreCase));
@@ -93,7 +96,7 @@ public class CmsDoctorService
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to fix check {CheckType}", checkType);
-            return new HealthCheckResult
+            return new DoctorCheckResult
             {
                 CheckName = check.Name,
                 CheckType = checkType,
@@ -110,7 +113,17 @@ public class CmsDoctorService
         return _checks.SelectMany(c => c.Tags).Distinct().OrderBy(t => t).ToArray();
     }
 
-    private HealthCheckResult RunSingle(IHealthCheck check)
+    public void DismissCheck(string checkType)
+    {
+        _dismissed.Add(checkType);
+    }
+
+    public void RestoreCheck(string checkType)
+    {
+        _dismissed.Remove(checkType);
+    }
+
+    private DoctorCheckResult RunSingle(IDoctorCheck check)
     {
         var key = check.GetType().FullName ?? check.GetType().Name;
         try
@@ -122,7 +135,7 @@ public class CmsDoctorService
         catch (Exception ex)
         {
             _logger.LogError(ex, "Health check {Check} failed", check.Name);
-            var result = new HealthCheckResult
+            var result = new DoctorCheckResult
             {
                 CheckName = check.Name,
                 CheckType = key,

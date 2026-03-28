@@ -113,7 +113,8 @@
 
     function renderCard(check) {
         var sc = statusConfig[check.status] || statusConfig['NotChecked'];
-        var html = '<div class="doc-card" style="border-left:4px solid ' + sc.border + ';background:' + sc.bg + '" data-type="' + escHtml(check.checkType) + '">';
+        var dismissed = check.isDismissed ? ' doc-card--dismissed' : '';
+        var html = '<div class="doc-card' + dismissed + '" style="border-left:4px solid ' + sc.border + ';background:' + sc.bg + '" data-type="' + escHtml(check.checkType) + '">';
 
         html += '<div class="doc-card-header">';
         html += '<span class="doc-card-icon" style="color:' + sc.color + '">' + sc.icon + '</span>';
@@ -139,6 +140,11 @@
             html += '<button class="doc-card-btn doc-card-btn--fix fix-check" data-type="' + escHtml(check.checkType) + '">Fix</button>';
         }
         html += '<button class="doc-card-btn doc-card-btn--detail detail-check" data-type="' + escHtml(check.checkType) + '">Details</button>';
+        if (check.isDismissed) {
+            html += '<button class="doc-card-btn restore-check" data-type="' + escHtml(check.checkType) + '">Restore</button>';
+        } else if (check.status !== 'OK' && check.status !== 'NotChecked') {
+            html += '<button class="doc-card-btn dismiss-check" data-type="' + escHtml(check.checkType) + '">Dismiss</button>';
+        }
         html += '</div>';
 
         html += '</div>';
@@ -287,6 +293,22 @@
             };
         }
 
+        var dismissBtns = document.querySelectorAll('.dismiss-check');
+        for (var d = 0; d < dismissBtns.length; d++) {
+            dismissBtns[d].onclick = function (e) {
+                e.stopPropagation();
+                postJson(API + '/dismiss/' + encodeURIComponent(this.getAttribute('data-type'))).then(function () { loadDashboard(); });
+            };
+        }
+
+        var restoreBtns = document.querySelectorAll('.restore-check');
+        for (var r = 0; r < restoreBtns.length; r++) {
+            restoreBtns[r].onclick = function (e) {
+                e.stopPropagation();
+                postJson(API + '/restore/' + encodeURIComponent(this.getAttribute('data-type'))).then(function () { loadDashboard(); });
+            };
+        }
+
         var tagBtns = document.querySelectorAll('.doc-tag');
         for (var t = 0; t < tagBtns.length; t++) {
             tagBtns[t].onclick = function () {
@@ -334,7 +356,8 @@
         '.doc-card-btn--fix { color:var(--ept-success); border-color:var(--ept-success); }',
         '.doc-card-btn--fix:hover { background:var(--ept-success); color:#fff; }',
         '.doc-card-btn--detail { color:var(--ept-primary); border-color:var(--ept-primary); }',
-        '.doc-card-btn--detail:hover { background:var(--ept-primary); color:#fff; }'
+        '.doc-card-btn--detail:hover { background:var(--ept-primary); color:#fff; }',
+        '.doc-card--dismissed { opacity:.45; }'
     ].join('\n');
     document.head.appendChild(style);
 

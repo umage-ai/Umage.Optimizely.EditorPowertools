@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 namespace EditorPowertools.Tools.CmsDoctor.Checks;
 
-public class MemoryCheck : HealthCheckBase
+public class MemoryCheck : DoctorCheckBase
 {
     public override string Name => "Memory Usage";
     public override string Description => "Reports current memory usage of the application.";
@@ -10,7 +10,7 @@ public class MemoryCheck : HealthCheckBase
     public override int SortOrder => 5;
     public override string[] Tags => new[] { "Performance" };
 
-    public override Models.HealthCheckResult PerformCheck()
+    public override Models.DoctorCheckResult PerformCheck()
     {
         var process = Process.GetCurrentProcess();
         var workingSetMb = process.WorkingSet64 / 1024 / 1024;

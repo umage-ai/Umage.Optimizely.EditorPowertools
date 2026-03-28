@@ -52,6 +52,22 @@ public class CmsDoctorApiController : Controller
         return result == null ? NotFound() : Ok(result);
     }
 
+    [HttpPost("dismiss/{checkType}")]
+    public IActionResult DismissCheck(string checkType)
+    {
+        if (!HasAccess()) return Forbid();
+        _service.DismissCheck(Uri.UnescapeDataString(checkType));
+        return Ok(new { dismissed = true });
+    }
+
+    [HttpPost("restore/{checkType}")]
+    public IActionResult RestoreCheck(string checkType)
+    {
+        if (!HasAccess()) return Forbid();
+        _service.RestoreCheck(Uri.UnescapeDataString(checkType));
+        return Ok(new { restored = true });
+    }
+
     [HttpGet("tags")]
     public IActionResult GetTags()
     {

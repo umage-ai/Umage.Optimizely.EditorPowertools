@@ -2,7 +2,7 @@ using EPiServer.DataAbstraction;
 
 namespace EditorPowertools.Tools.CmsDoctor.Checks;
 
-public class ContentTypeCheck : HealthCheckBase
+public class ContentTypeCheck : DoctorCheckBase
 {
     private readonly IContentTypeRepository _contentTypeRepository;
 
@@ -17,7 +17,7 @@ public class ContentTypeCheck : HealthCheckBase
     public override int SortOrder => 10;
     public override string[] Tags => new[] { "EditorUX" };
 
-    public override Models.HealthCheckResult PerformCheck()
+    public override Models.DoctorCheckResult PerformCheck()
     {
         var types = _contentTypeRepository.List().Where(ct => ct.ModelType != null).ToList();
         var pageTypes = types.Count(ct => typeof(EPiServer.Core.PageData).IsAssignableFrom(ct.ModelType));

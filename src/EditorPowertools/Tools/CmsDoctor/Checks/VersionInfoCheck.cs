@@ -2,7 +2,7 @@ using System.Reflection;
 
 namespace EditorPowertools.Tools.CmsDoctor.Checks;
 
-public class VersionInfoCheck : HealthCheckBase
+public class VersionInfoCheck : DoctorCheckBase
 {
     public override string Name => "CMS Version";
     public override string Description => "Reports the current Optimizely CMS version.";
@@ -10,7 +10,7 @@ public class VersionInfoCheck : HealthCheckBase
     public override int SortOrder => 1;
     public override string[] Tags => new[] { "Security" };
 
-    public override Models.HealthCheckResult PerformCheck()
+    public override Models.DoctorCheckResult PerformCheck()
     {
         try
         {

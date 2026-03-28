@@ -8,7 +8,7 @@ namespace EditorPowertools.Tools.CmsDoctor.Checks;
 /// Checks for images missing alt text. Hooks into the scheduled job to
 /// traverse all content efficiently rather than scanning on-demand.
 /// </summary>
-public class MissingAltTextCheck : AnalyzerHealthCheckBase
+public class MissingAltTextCheck : AnalyzerDoctorCheckBase
 {
     private readonly IContentTypeRepository _contentTypeRepository;
     private int _imageCount;
@@ -48,7 +48,7 @@ public class MissingAltTextCheck : AnalyzerHealthCheckBase
         }
     }
 
-    protected override Models.HealthCheckResult EvaluateResults()
+    protected override Models.DoctorCheckResult EvaluateResults()
     {
         if (_imageCount == 0)
             return Ok("No images found.");

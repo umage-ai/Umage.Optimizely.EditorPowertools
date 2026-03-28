@@ -4,7 +4,7 @@ using EPiServer.DataAbstraction;
 
 namespace EditorPowertools.Tools.CmsDoctor.Checks;
 
-public class DraftContentCheck : HealthCheckBase
+public class DraftContentCheck : DoctorCheckBase
 {
     private readonly IContentRepository _contentRepository;
     private readonly IContentLoader _contentLoader;
@@ -26,7 +26,7 @@ public class DraftContentCheck : HealthCheckBase
     public override int SortOrder => 40;
     public override string[] Tags => new[] { "EditorUX", "Maintenance" };
 
-    public override Models.HealthCheckResult PerformCheck()
+    public override Models.DoctorCheckResult PerformCheck()
     {
         var allContent = _contentRepository.GetDescendents(ContentReference.RootPage).Take(1000).ToList();
         var neverPublished = 0;
