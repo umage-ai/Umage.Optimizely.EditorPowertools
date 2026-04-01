@@ -8,7 +8,7 @@
 
     <!-- NuGet package properties -->
     <PackageId>CodeArt.Optimizely.EditorPowertools</PackageId>
-    <Version>0.1.0-preview.1</Version>
+    <Version>0.1.0-local</Version>
     <Authors>CodeArt</Authors>
     <Company>CodeArt.dk</Company>
     <Description>A collection of power tools for Optimizely CMS 12 editors and admins. Includes Content Type Audit, Activity Timeline, Bulk Property Editor, Scheduled Jobs Gantt, Link Checker, Active Editors with real-time chat, and more.</Description>
