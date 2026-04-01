@@ -25,7 +25,7 @@ public class DoctorCheckResultStore
     private DynamicDataStore GetStore() =>
         DynamicDataStoreFactory.Instance.CreateStore(typeof(DoctorCheckResultEntry));
 
-    public void Save(DoctorCheckResult result)
+    public virtual void Save(DoctorCheckResult result)
     {
         var store = GetStore();
         var existing = store.Items<DoctorCheckResultEntry>()
@@ -62,7 +62,7 @@ public class DoctorCheckResultStore
         }
     }
 
-    public DoctorCheckResult? Load(string checkType)
+    public virtual DoctorCheckResult? Load(string checkType)
     {
         var store = GetStore();
         var entry = store.Items<DoctorCheckResultEntry>()
@@ -70,7 +70,7 @@ public class DoctorCheckResultStore
         return entry == null ? null : ToResult(entry);
     }
 
-    public Dictionary<string, DoctorCheckResult> LoadAll()
+    public virtual Dictionary<string, DoctorCheckResult> LoadAll()
     {
         var store = GetStore();
         return store.Items<DoctorCheckResultEntry>()
@@ -80,7 +80,7 @@ public class DoctorCheckResultStore
                 StringComparer.OrdinalIgnoreCase);
     }
 
-    public void SetDismissed(string checkType, bool dismissed)
+    public virtual void SetDismissed(string checkType, bool dismissed)
     {
         var store = GetStore();
         var existing = store.Items<DoctorCheckResultEntry>()

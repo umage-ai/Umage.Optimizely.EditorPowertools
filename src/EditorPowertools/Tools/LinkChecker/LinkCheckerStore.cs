@@ -38,13 +38,13 @@ public class LinkCheckRecord : IDynamicData
 /// </summary>
 public class LinkCheckerRepository
 {
-    public IEnumerable<LinkCheckRecord> GetAll()
+    public virtual IEnumerable<LinkCheckRecord> GetAll()
     {
         var store = GetStore();
         return store.Items<LinkCheckRecord>().ToList();
     }
 
-    public IEnumerable<LinkCheckRecord> GetByStatus(bool isValid)
+    public virtual IEnumerable<LinkCheckRecord> GetByStatus(bool isValid)
     {
         var store = GetStore();
         return store.Items<LinkCheckRecord>()
@@ -52,25 +52,25 @@ public class LinkCheckerRepository
             .ToList();
     }
 
-    public void Clear()
+    public virtual void Clear()
     {
         var store = GetStore();
         store.DeleteAll();
     }
 
-    public void Save(LinkCheckRecord record)
+    public virtual void Save(LinkCheckRecord record)
     {
         var store = GetStore();
         store.Save(record);
     }
 
-    public int GetBrokenCount()
+    public virtual int GetBrokenCount()
     {
         var store = GetStore();
         return store.Items<LinkCheckRecord>().Count(r => !r.IsValid);
     }
 
-    public int GetTotalCount()
+    public virtual int GetTotalCount()
     {
         var store = GetStore();
         return store.Items<LinkCheckRecord>().Count();
