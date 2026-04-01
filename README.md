@@ -15,6 +15,11 @@ A collection of power tools for Optimizely CMS 12 editors and admins. Distribute
 | **Activity Timeline** | Dual-column timeline of editorial activities with comments, version comparison, and infinite scroll. |
 | **Link Checker** | Scan content for broken internal and external links. Friendly URLs, status codes, easy edit-mode access. |
 | **Power Content Details** | Assets panel widget showing detailed info about the currently selected content item. |
+| **Active Editors** | Real-time editor presence, see who's editing what, team chat, and CMS notifications via SignalR. |
+| **Content Importer** | Import content from CSV, Excel, or JSON with field mapping, preview, and validation. |
+| **CMS Doctor** | Pluggable health check dashboard with auto-fix capabilities. |
+| **Content Audit** | Comprehensive content inventory with configurable columns, filters, and export. |
+| **Manage Children** | Bulk operations on child content items from the navigation tree. |
 
 ## Installation
 
@@ -49,6 +54,12 @@ public void Configure(IApplicationBuilder app)
     // ... other middleware
 
     app.UseEditorPowertools();
+
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapContent();
+        endpoints.MapEditorPowertools(); // Required for Active Editors (SignalR)
+    });
 }
 ```
 

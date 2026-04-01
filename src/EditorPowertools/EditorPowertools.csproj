@@ -8,11 +8,20 @@
 
     <!-- NuGet package properties -->
     <PackageId>CodeArt.Optimizely.EditorPowertools</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.0-preview.1</Version>
     <Authors>CodeArt</Authors>
-    <Description>A collection of power tools for Optimizely CMS editors and admins.</Description>
-    <PackageTags>Optimizely;CMS;EPiServer;Editor;Tools</PackageTags>
+    <Company>CodeArt.dk</Company>
+    <Description>A collection of power tools for Optimizely CMS 12 editors and admins. Includes Content Type Audit, Activity Timeline, Bulk Property Editor, Scheduled Jobs Gantt, Link Checker, Active Editors with real-time chat, and more.</Description>
+    <PackageTags>Optimizely;CMS;EPiServer;Editor;Tools;Admin;Audit;PowerTools</PackageTags>
+    <PackageProjectUrl>https://github.com/CodeArtDK/EditorPowertools</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CodeArtDK/EditorPowertools</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+
+    <!-- Module zip output path (used during pack) -->
+    <_ModuleZipDir>$(IntermediateOutputPath)module-zip\</_ModuleZipDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,6 +39,49 @@
     <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="EPiServer.CMS" Version="12.29.0" />
     <PackageReference Include="EPPlusFree" Version="4.5.3.8" />
+  </ItemGroup>
+
+  <!-- Include README in the NuGet package -->
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <!-- Include the .targets file in the NuGet package (for consuming projects) -->
+  <ItemGroup>
+    <None Include="build\net8.0\CodeArt.Optimizely.EditorPowertools.targets" Pack="true" PackagePath="build\net8.0\" />
+  </ItemGroup>
+
+  <!--
+    Create a zip of the protected module content during pack,
+    then include it as contentFiles so the .targets file can copy it.
+  -->
+  <Target Name="CreateModuleZip" BeforeTargets="GenerateNuspec" Condition="'$(IsPackable)' != 'false'">
+    <ItemGroup>
+      <_ModuleFiles Include="modules\_protected\EditorPowertools\**\*" />
+    </ItemGroup>
+    <MakeDir Directories="$(_ModuleZipDir)modules\_protected\EditorPowertools" />
+    <ZipDirectory
+      SourceDirectory="modules\_protected\EditorPowertools"
+      DestinationFile="$(_ModuleZipDir)modules\_protected\EditorPowertools\EditorPowertools.zip"
+      Overwrite="true" />
+    <ItemGroup>
+      <_PackageFiles Include="$(_ModuleZipDir)modules\_protected\EditorPowertools\EditorPowertools.zip"
+                     PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools\" />
+      <Content Include="$(_ModuleZipDir)modules\_protected\EditorPowertools\EditorPowertools.zip"
+               Pack="true"
+               PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools\" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Exclude the modules/_protected folder from regular build output (it's for NuGet packaging only via zip) -->
+  <ItemGroup>
+    <Content Remove="modules\_protected\**" />
+    <None Remove="modules\_protected\**" />
+  </ItemGroup>
+
+  <!-- But keep them as None so they show in the IDE and are tracked -->
+  <ItemGroup>
+    <None Include="modules\_protected\EditorPowertools\**\*" />
   </ItemGroup>
 
 </Project>
