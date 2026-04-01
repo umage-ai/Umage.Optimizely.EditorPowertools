@@ -3,19 +3,20 @@ define([
     "epi/_Module",
     "epi/locator",
     "editorpowertools/commands/ContentTimelineCommand",
-    "editorpowertools/commands/ManageChildrenCommand"
+    "editorpowertools/commands/ManageChildrenCommand",
+    "editorpowertools/active-editors-tracker"
 ], function (
     declare,
     _Module,
     locator,
     ContentTimelineCommand,
-    ManageChildrenCommand
+    ManageChildrenCommand,
+    ActiveEditorsTracker
 ) {
     return declare([_Module], {
         initialize: function () {
             this.inherited(arguments);
 
-            // Check which features are enabled before adding commands
             var self = this;
             try {
                 var xhr = new XMLHttpRequest();
@@ -39,6 +40,12 @@ define([
 
             if (features.manageChildren !== false) {
                 locator.add("epi-cms/navigation-tree/commands[]", new ManageChildrenCommand({ order: 510 }));
+            }
+
+            if (features.activeEditors !== false) {
+                ActiveEditorsTracker.start({
+                    chatEnabled: features.activeEditorsChat !== false
+                });
             }
         }
     });
