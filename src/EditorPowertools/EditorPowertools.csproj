@@ -69,9 +69,6 @@
     <ItemGroup>
       <_PackageFiles Include="$(_ModuleZipDir)modules\_protected\EditorPowertools\EditorPowertools.zip"
                      PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools\" />
-      <Content Include="$(_ModuleZipDir)modules\_protected\EditorPowertools\EditorPowertools.zip"
-               Pack="true"
-               PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools\" />
     </ItemGroup>
   </Target>
 
