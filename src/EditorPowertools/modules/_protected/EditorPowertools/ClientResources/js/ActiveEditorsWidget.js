@@ -23,6 +23,7 @@ define([
 
         postCreate: function () {
             this.inherited(arguments);
+            this._injectStyles();
             var self = this;
 
             this._eventHandler = function (e) {
@@ -173,6 +174,32 @@ define([
                     dialog.body.innerHTML = '<p style="text-align:center;color:#ef4444;padding:16px 0">Error: ' + self._esc(err.message) + '</p>';
                 });
             });
+        },
+
+        _injectStyles: function () {
+            if (document.getElementById("ept-ae-widget-styles")) return;
+            var style = document.createElement("style");
+            style.id = "ept-ae-widget-styles";
+            style.textContent =
+                '.ept-ae-root { font-size: 12px; line-height: 1.4; }' +
+                '.ept-ae-container { padding: 6px 10px; }' +
+                '.ept-ae-empty { color: #999; font-style: italic; padding: 8px 0; font-size: 11px; }' +
+                '.ept-ae-section { margin-bottom: 10px; }' +
+                '.ept-ae-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 6px; padding-bottom: 3px; border-bottom: 1px solid #eee; }' +
+                '.ept-ae-editor { display: flex; align-items: center; gap: 8px; padding: 5px 4px; border-radius: 6px; transition: background 0.15s; }' +
+                '.ept-ae-editor:hover { background: #f5f7fa; }' +
+                '.ept-ae-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }' +
+                '.ept-ae-dot--editing { background: #22c55e; box-shadow: 0 0 5px rgba(34,197,94,0.4); }' +
+                '.ept-ae-dot--viewing { background: #3b82f6; }' +
+                '.ept-ae-dot--idle { background: #d1d5db; }' +
+                '.ept-ae-editor-info { flex: 1; min-width: 0; }' +
+                '.ept-ae-name { font-weight: 600; font-size: 12px; color: #333; }' +
+                '.ept-ae-action { font-size: 10px; color: #999; margin-left: 4px; }' +
+                '.ept-ae-content-detail { font-size: 10px; color: #888; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 1px; }' +
+                '.ept-ae-notify-btn { background: none; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 12px; padding: 2px 6px; color: #666; opacity: 0; transition: opacity 0.15s; }' +
+                '.ept-ae-editor:hover .ept-ae-notify-btn { opacity: 1; }' +
+                '.ept-ae-notify-btn:hover { background: #f0f0f0; color: #333; }';
+            document.head.appendChild(style);
         },
 
         _esc: function (s) {
