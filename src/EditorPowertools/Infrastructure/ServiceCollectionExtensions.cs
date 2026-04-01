@@ -13,6 +13,7 @@ using EditorPowertools.Tools.LinkChecker;
 using EditorPowertools.Tools.ScheduledJobsGantt;
 using EditorPowertools.Tools.ContentTypeRecommendations;
 using EditorPowertools.Services.Analyzers;
+using EditorPowertools.Tools.ActiveEditors;
 using EditorPowertools.Tools.CmsDoctor;
 using EditorPowertools.Tools.CmsDoctor.Checks;
 using EditorPowertools.Tools.CmsDoctor.Models;
@@ -131,6 +132,10 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IContentAnalyzer, ContentTypeStatisticsAnalyzer>();
         services.AddTransient<IContentAnalyzer, PersonalizationAnalyzer>();
         services.AddTransient<IContentAnalyzer, LinkCheckerAnalyzer>();
+
+        // Active Editors (real-time presence + chat)
+        services.AddSingleton<ActiveEditorsService>();
+        services.AddSignalR();
 
         // Register as a protected module
         services.Configure<ProtectedModuleOptions>(options =>

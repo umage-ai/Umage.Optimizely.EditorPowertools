@@ -1,15 +1,19 @@
+using EditorPowertools.Tools.ActiveEditors;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 
 namespace EditorPowertools.Infrastructure;
 
 public static class ApplicationBuilderExtensions
 {
-    /// <summary>
-    /// Adds Editor Powertools middleware to the request pipeline.
-    /// </summary>
     public static IApplicationBuilder UseEditorPowertools(this IApplicationBuilder app)
     {
-        // Future: add middleware for static file serving, etc.
         return app;
+    }
+
+    public static IEndpointRouteBuilder MapEditorPowertools(this IEndpointRouteBuilder endpoints)
+    {
+        endpoints.MapHub<ActiveEditorsHub>("/editorpowertools/hubs/active-editors");
+        return endpoints;
     }
 }
