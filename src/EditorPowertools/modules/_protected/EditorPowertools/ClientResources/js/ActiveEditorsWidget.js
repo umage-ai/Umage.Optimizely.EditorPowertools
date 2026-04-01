@@ -78,7 +78,7 @@ define([
 
             for (var i = 0; i < allEditors.length; i++) {
                 var e = allEditors[i];
-                if (e.username.toLowerCase() === currentUser) continue;
+                if (currentUser && e.username.toLowerCase() === currentUser) continue;
                 if (e.contentId === this._currentContentId) {
                     onContent.push(e);
                 } else {
@@ -111,20 +111,44 @@ define([
             }
 
             container.innerHTML = html;
+            this._bindNotifyButtons(container);
         },
 
         _renderEditor: function (editor, showAction) {
             var actionClass = "ept-ae-dot--" + (editor.action || "idle");
             var html = '<div class="ept-ae-editor">';
             html += '<span class="ept-ae-dot ' + actionClass + '"></span>';
+            html += '<div class="ept-ae-editor-info">';
             html += '<span class="ept-ae-name">' + this._esc(editor.displayName) + '</span>';
             if (showAction) {
                 html += ' <span class="ept-ae-action">' + this._esc(editor.action) + '</span>';
-            } else if (editor.contentName) {
-                html += ' <span class="ept-ae-content">' + this._esc(editor.contentName) + '</span>';
+            }
+            if (editor.contentName) {
+                html += '<div class="ept-ae-content-detail">' + this._esc(editor.contentName) + '</div>';
             }
             html += '</div>';
+            html += '<button class="ept-ae-notify-btn" data-username="' + this._esc(editor.username) + '" data-displayname="' + this._esc(editor.displayName) + '" title="Send notification">&#9993;</button>';
+            html += '</div>';
             return html;
+        },
+
+        _bindNotifyButtons: function (container) {
+            var self = this;
+            var btns = container.querySelectorAll(".ept-ae-notify-btn");
+            for (var i = 0; i < btns.length; i++) {
+                (function (btn) {
+                    btn.addEventListener("click", function () {
+                        var username = btn.getAttribute("data-username");
+                        var displayName = btn.getAttribute("data-displayname");
+                        var message = prompt("Send notification to " + displayName + ":");
+                        if (message && window.__eptHubConnection && window.__eptHubConnection.state === "Connected") {
+                            window.__eptHubConnection.invoke("SendNotification", username, message).catch(function (err) {
+                                alert("Failed to send: " + err.message);
+                            });
+                        }
+                    });
+                })(btns[i]);
+            }
         },
 
         _esc: function (s) {

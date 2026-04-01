@@ -100,11 +100,15 @@
             html += '</div>';
             if (e.contentName) {
                 html += '<div class="ae-editor-detail">';
-                html += '<span class="ae-content-name">' + escHtml(e.contentName) + '</span>';
+                html += 'Working on: <strong>' + escHtml(e.contentName) + '</strong>';
+                if (e.contentId) html += ' <span class="ae-content-id">(ID: ' + e.contentId + ')</span>';
                 html += '</div>';
             }
             var connTime = formatRelativeTime(e.connectedAt);
             html += '<div class="ae-editor-meta">Connected ' + connTime + '</div>';
+            html += '<div class="ae-editor-actions">';
+            html += '<button class="ept-btn ept-btn--sm ae-notify-btn" data-username="' + escHtml(e.username) + '" data-displayname="' + escHtml(e.displayName) + '">Send Notification</button>';
+            html += '</div>';
             html += '</div>';
         }
         html += '</div>';
@@ -128,6 +132,23 @@
         }
 
         panel.innerHTML = html;
+
+        // Bind notification buttons
+        var notifyBtns = panel.querySelectorAll('.ae-notify-btn');
+        for (var n = 0; n < notifyBtns.length; n++) {
+            (function (btn) {
+                btn.addEventListener('click', function () {
+                    var username = btn.getAttribute('data-username');
+                    var displayName = btn.getAttribute('data-displayname');
+                    var message = prompt('Send notification to ' + displayName + ':');
+                    if (message && connection) {
+                        connection.invoke('SendNotification', username, message).catch(function (err) {
+                            alert('Failed to send: ' + err.message);
+                        });
+                    }
+                });
+            })(notifyBtns[n]);
+        }
     }
 
     function renderChatPanel() {
@@ -216,6 +237,8 @@
             '.ae-editor-header { display: flex; align-items: center; gap: 8px; }' +
             '.ae-editor-detail { font-size: 13px; color: var(--ept-text, #333); padding-left: 20px; }' +
             '.ae-editor-meta { font-size: 11px; color: var(--ept-text-muted, #999); padding-left: 20px; }' +
+            '.ae-editor-actions { padding-left: 20px; margin-top: 4px; }' +
+            '.ae-content-id { font-size: 11px; color: var(--ept-text-muted, #999); }' +
 
             '.ae-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }' +
             '.ae-dot--editing { background: #22c55e; box-shadow: 0 0 6px rgba(34,197,94,0.4); }' +
@@ -254,7 +277,11 @@
             '.ept-ae-dot--idle { background: #9ca3af; }' +
             '.ept-ae-name { font-weight: 600; }' +
             '.ept-ae-action { font-size: 10px; color: var(--ept-text-muted, #999); }' +
-            '.ept-ae-content { font-size: 10px; color: var(--ept-text-muted, #999); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 120px; }';
+            '.ept-ae-content { font-size: 10px; color: var(--ept-text-muted, #999); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 120px; }' +
+            '.ept-ae-editor-info { flex: 1; min-width: 0; }' +
+            '.ept-ae-content-detail { font-size: 10px; color: var(--ept-text-muted, #999); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }' +
+            '.ept-ae-notify-btn { background: none; border: 1px solid var(--ept-border, #e0e0e0); border-radius: 4px; cursor: pointer; font-size: 14px; padding: 2px 6px; opacity: 0.5; transition: opacity 0.2s; }' +
+            '.ept-ae-notify-btn:hover { opacity: 1; background: #f0f0f0; }';
 
         document.head.appendChild(style);
     }

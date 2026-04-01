@@ -44,6 +44,10 @@ define([
                 document.dispatchEvent(new CustomEvent("ept-chat-message", { detail: msg }));
             });
 
+            this._connection.on("CurrentUser", function (username) {
+                window.__eptCurrentUser = username;
+            });
+
             this._connection.start().then(function () {
                 when(self.getCurrentContext(), function (context) {
                     self._sendContext(context);
