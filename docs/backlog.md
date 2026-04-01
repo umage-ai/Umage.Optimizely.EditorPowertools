@@ -13,7 +13,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 ## Activity & Timeline
 
 - [x] **Site Activity Timeline** - Full timeline of all activities on the site using ActivityLog. Show details about specific changes/versions. Filterable by date range, user, content type.
-- [ ] **Content Item Timeline** - Per-item timeline showing the full history of a single content item. Based on ActivityLog + IContentVersionRepository. Shows who did what, when, and what changed.
+- [x] **Content Item Timeline** - Per-item timeline showing the full history of a single content item. Based on ActivityLog + IContentVersionRepository. Shows who did what, when, and what changed.
 
 ## Scheduled Jobs
 
