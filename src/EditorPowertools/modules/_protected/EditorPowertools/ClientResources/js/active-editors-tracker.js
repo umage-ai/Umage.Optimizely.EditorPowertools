@@ -83,7 +83,19 @@ define([
         },
 
         _sendContext: function (ctx) {
-            if (!ctx || !ctx.id || !this._connection || this._connection.state !== "Connected") return;
+            if (!this._connection || this._connection.state !== "Connected") return;
+
+            // Handle non-content contexts (admin mode, settings, dashboard, etc.)
+            if (!ctx || !ctx.id) {
+                if (this._currentContentId !== -1) {
+                    this._currentContentId = -1;
+                    var pageTitle = document.title || "CMS";
+                    // Extract a short label from the page title
+                    var label = pageTitle.replace(/\s*[-|]\s*Optimizely.*$/i, "").trim() || "Admin mode";
+                    this._connection.invoke("UpdateContext", null, label, "browsing").catch(function () {});
+                }
+                return;
+            }
 
             var contentId = ctx.id;
             if (typeof contentId === "string") {
