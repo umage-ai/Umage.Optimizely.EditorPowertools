@@ -32,7 +32,8 @@ public class ActivityTimelineApiController : Controller
         [FromQuery] string? action = null,
         [FromQuery] string? contentType = null,
         [FromQuery] DateTime? from = null,
-        [FromQuery] DateTime? to = null)
+        [FromQuery] DateTime? to = null,
+        [FromQuery] int? contentId = null)
     {
         if (!_accessChecker.HasAccess(HttpContext,
             nameof(Configuration.FeatureToggles.ActivityTimeline),
@@ -47,7 +48,8 @@ public class ActivityTimelineApiController : Controller
             Action = action,
             ContentTypeName = contentType,
             FromUtc = from,
-            ToUtc = to
+            ToUtc = to,
+            ContentId = contentId
         };
 
         var result = _service.GetActivities(request);

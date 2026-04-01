@@ -34,20 +34,38 @@ public class ActivityTimelineService
     {
         var statusFilters = GetStatusFilters(request.Action);
 
-        // Get all content descendants from root, then gather versions
-        var allDescendants = _contentRepository.GetDescendents(ContentReference.RootPage).ToList();
+        // When filtering by a single content item, skip the full tree scan
+        List<ContentReference> allDescendants;
         var allVersions = new List<ContentVersion>();
 
-        foreach (var contentRef in allDescendants)
+        if (request.ContentId.HasValue)
         {
+            var singleRef = new ContentReference(request.ContentId.Value);
+            allDescendants = new List<ContentReference> { singleRef };
             try
             {
-                var versions = _versionRepository.List(contentRef);
+                var versions = _versionRepository.List(singleRef);
                 allVersions.AddRange(versions);
             }
             catch (Exception ex)
             {
-                _logger.LogDebug(ex, "Could not list versions for {ContentRef}", contentRef);
+                _logger.LogDebug(ex, "Could not list versions for content {ContentId}", request.ContentId.Value);
+            }
+        }
+        else
+        {
+            allDescendants = _contentRepository.GetDescendents(ContentReference.RootPage).ToList();
+            foreach (var contentRef in allDescendants)
+            {
+                try
+                {
+                    var versions = _versionRepository.List(contentRef);
+                    allVersions.AddRange(versions);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogDebug(ex, "Could not list versions for {ContentRef}", contentRef);
+                }
             }
         }
 
@@ -168,11 +186,24 @@ public class ActivityTimelineService
         var totalCount = activities.Count;
         var paged = activities.Skip(request.Skip).Take(request.Take).ToList();
 
+        // Resolve content name when filtering by a single item
+        string? filteredContentName = null;
+        if (request.ContentId.HasValue)
+        {
+            try
+            {
+                if (_contentRepository.TryGet<IContent>(new ContentReference(request.ContentId.Value), out var filteredContent))
+                    filteredContentName = filteredContent.Name;
+            }
+            catch { /* Ignore */ }
+        }
+
         return new ActivityTimelineResponse
         {
             Activities = paged,
             TotalCount = totalCount,
-            HasMore = request.Skip + request.Take < totalCount
+            HasMore = request.Skip + request.Take < totalCount,
+            ContentName = filteredContentName
         };
     }
 
@@ -351,6 +382,24 @@ public class ActivityTimelineService
 
                 if (!string.IsNullOrWhiteSpace(request.Action) && request.Action != "Comment")
                     continue;
+
+                // Filter by content ID if specified
+                if (request.ContentId.HasValue)
+                {
+                    int activityContentId = 0;
+                    if (activity.ExtendedData?.TryGetValue("contentLink", out var clCheck) == true)
+                    {
+                        var clCheckStr = clCheck?.ToString();
+                        if (!string.IsNullOrEmpty(clCheckStr))
+                        {
+                            var checkRef = ContentReference.Parse(clCheckStr);
+                            if (!ContentReference.IsNullOrEmpty(checkRef))
+                                activityContentId = checkRef.ID;
+                        }
+                    }
+                    if (activityContentId != request.ContentId.Value)
+                        continue;
+                }
 
                 // Extract message text from ExtendedData
                 var messageText = string.Empty;

@@ -3,6 +3,7 @@
  */
 (function () {
     var API = '/editorpowertools/api/activity';
+    var urlParams = new URLSearchParams(window.location.search);
     var state = {
         activities: [],
         totalCount: 0,
@@ -16,6 +17,8 @@
         contentType: '',
         fromDate: '',
         toDate: '',
+        contentId: urlParams.get('contentId') || '',
+        contentName: '',
         // Filter options
         users: [],
         contentTypes: []
@@ -115,7 +118,46 @@
         state.contentType = '';
         state.fromDate = '';
         state.toDate = '';
+        state.contentId = '';
+        state.contentName = '';
+        var banner = document.getElementById('content-filter-banner');
+        if (banner) banner.remove();
+        // Clean URL
+        var url = new URL(window.location);
+        url.searchParams.delete('contentId');
+        window.history.replaceState({}, '', url);
         loadActivities(true);
+    }
+
+    // ── Content Item Banner ──────────────────────────────────────────
+    function renderContentBanner() {
+        var existing = document.getElementById('content-filter-banner');
+        if (!state.contentId) {
+            if (existing) existing.remove();
+            return;
+        }
+        if (existing) return; // already rendered
+
+        var banner = document.createElement('div');
+        banner.id = 'content-filter-banner';
+        banner.className = 'ept-banner';
+        banner.innerHTML =
+            '<span>Showing timeline for <strong>' + escHtml(state.contentName || 'Content #' + state.contentId) + '</strong></span> ' +
+            '<button id="content-filter-clear" class="ept-btn ept-btn--sm">Show all activity</button>';
+
+        var contentEl = document.getElementById('timeline-content');
+        contentEl.parentNode.insertBefore(banner, contentEl);
+
+        document.getElementById('content-filter-clear').addEventListener('click', function () {
+            state.contentId = '';
+            state.contentName = '';
+            // Update URL without the contentId param
+            var url = new URL(window.location);
+            url.searchParams.delete('contentId');
+            window.history.replaceState({}, '', url);
+            banner.remove();
+            loadActivities(true);
+        });
     }
 
     // ── Load Activities ────────────────────────────────────────────
@@ -134,6 +176,7 @@
         }
 
         var url = API + '/timeline?skip=' + state.skip + '&take=' + state.take;
+        if (state.contentId) url += '&contentId=' + encodeURIComponent(state.contentId);
         if (state.user) url += '&user=' + encodeURIComponent(state.user);
         if (state.action) url += '&action=' + encodeURIComponent(state.action);
         if (state.contentType) url += '&contentType=' + encodeURIComponent(state.contentType);
@@ -141,11 +184,13 @@
         if (state.toDate) url += '&to=' + encodeURIComponent(state.toDate + 'T23:59:59Z');
 
         EPT.fetchJson(url).then(function (result) {
+            if (result.contentName) state.contentName = result.contentName;
             state.activities = state.activities.concat(result.activities);
             state.totalCount = result.totalCount;
             state.hasMore = result.hasMore;
             state.skip += result.activities.length;
             state.isLoading = false;
+            renderContentBanner();
             renderTimeline(reset);
         }).catch(function (err) {
             state.isLoading = false;
@@ -537,7 +582,10 @@
             '.ept-select:focus, .ept-input:focus { outline: none; border-color: var(--ept-primary, #3b82f6); }' +
 
             '#timeline-sentinel { margin-top: 8px; }' +
-            '#timeline-loading-more { text-align: center; padding: 16px 0; }';
+            '#timeline-loading-more { text-align: center; padding: 16px 0; }' +
+
+            '.ept-banner { display: flex; align-items: center; gap: 12px; padding: 10px 16px; margin-bottom: 12px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; font-size: 14px; color: #1e40af; }' +
+            '.ept-banner .ept-btn { margin-left: auto; }';
 
         document.head.appendChild(style);
     }

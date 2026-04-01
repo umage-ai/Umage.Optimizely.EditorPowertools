@@ -25,6 +25,8 @@ public class ActivityFilterRequest
     public string? Action { get; set; }
     public DateTime? FromUtc { get; set; }
     public DateTime? ToUtc { get; set; }
+    /// <summary>When set, filters to a single content item's history.</summary>
+    public int? ContentId { get; set; }
 }
 
 public class ActivityTimelineResponse
@@ -32,6 +34,8 @@ public class ActivityTimelineResponse
     public List<ActivityDto> Activities { get; set; } = new();
     public int TotalCount { get; set; }
     public bool HasMore { get; set; }
+    /// <summary>When filtering by a single content item, the name of that item.</summary>
+    public string? ContentName { get; set; }
 }
 
 public class ActivityStatsDto
