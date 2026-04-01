@@ -102,7 +102,7 @@ public class ManageChildrenService
         {
             try
             {
-                _contentRepository.Delete(new ContentReference(id), true, AccessLevel.NoAccess);
+                _contentRepository.Delete(new ContentReference(id), true, AccessLevel.Delete);
                 result.Succeeded++;
             }
             catch (Exception ex)
@@ -144,7 +144,7 @@ public class ManageChildrenService
             {
                 var content = _contentRepository.Get<IContent>(new ContentReference(id));
                 var writable = (IContent)((ContentData)content).CreateWritableClone();
-                _contentRepository.Save(writable, SaveAction.Publish, AccessLevel.NoAccess);
+                _contentRepository.Save(writable, SaveAction.Publish, AccessLevel.Publish);
                 result.Succeeded++;
             }
             catch (Exception ex)
@@ -169,7 +169,7 @@ public class ManageChildrenService
                 {
                     var writable = (IContent)((ContentData)content).CreateWritableClone();
                     ((IVersionable)writable).StopPublish = DateTime.Now;
-                    _contentRepository.Save(writable, SaveAction.Save, AccessLevel.NoAccess);
+                    _contentRepository.Save(writable, SaveAction.Save, AccessLevel.Publish);
                     result.Succeeded++;
                 }
             }
@@ -191,7 +191,7 @@ public class ManageChildrenService
         {
             try
             {
-                _contentRepository.Move(new ContentReference(id), targetRef, AccessLevel.NoAccess, AccessLevel.NoAccess);
+                _contentRepository.Move(new ContentReference(id), targetRef, AccessLevel.Read, AccessLevel.Publish);
                 result.Succeeded++;
             }
             catch (Exception ex)
