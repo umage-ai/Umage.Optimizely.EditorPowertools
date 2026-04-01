@@ -26,7 +26,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 
 ## Editor Collaboration
 
-- [ ] **Active Editors Widget** - Shows who is currently logged in as editors, what content they're working on, and provides a way to message them. Real-time presence awareness for the editorial team.
+- [x] **Active Editors Widget** - Shows who is currently logged in as editors, what content they're working on, and provides a way to message them. Real-time presence awareness for the editorial team.
 
 ## Personalization Tools
 
