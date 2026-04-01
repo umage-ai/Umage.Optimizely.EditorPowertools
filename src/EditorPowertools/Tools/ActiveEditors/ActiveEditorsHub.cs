@@ -1,5 +1,6 @@
 using EditorPowertools.Configuration;
 using EditorPowertools.Tools.ActiveEditors.Models;
+using EPiServer.Notification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
@@ -11,11 +12,16 @@ public class ActiveEditorsHub : Hub
 {
     private readonly ActiveEditorsService _service;
     private readonly IOptions<EditorPowertoolsOptions> _options;
+    private readonly INotifier _notifier;
 
-    public ActiveEditorsHub(ActiveEditorsService service, IOptions<EditorPowertoolsOptions> options)
+    public ActiveEditorsHub(
+        ActiveEditorsService service,
+        IOptions<EditorPowertoolsOptions> options,
+        INotifier notifier)
     {
         _service = service;
         _options = options;
+        _notifier = notifier;
     }
 
     public override async Task OnConnectedAsync()
@@ -28,6 +34,10 @@ public class ActiveEditorsHub : Hub
 
         var username = Context.User?.Identity?.Name ?? "Unknown";
         _service.Connect(Context.ConnectionId, username, username);
+
+        // Tell the client who they are (for self-filtering in the widget)
+        await Clients.Caller.SendAsync("CurrentUser", username);
+
         await BroadcastPresence();
         await base.OnConnectedAsync();
     }
@@ -88,6 +98,29 @@ public class ActiveEditorsHub : Hub
     public List<string> GetEditorsToday()
     {
         return _service.GetEditorNamesToday();
+    }
+
+    /// <summary>
+    /// Send a CMS notification to another editor via Optimizely's notification system.
+    /// </summary>
+    public async Task SendNotification(string recipientUsername, string message)
+    {
+        if (string.IsNullOrWhiteSpace(recipientUsername) || string.IsNullOrWhiteSpace(message)) return;
+        if (message.Length > 500) message = message[..500];
+
+        var senderUsername = Context.User?.Identity?.Name ?? "Unknown";
+
+        var notification = new NotificationMessage
+        {
+            ChannelName = "epi.notifications.default",
+            TypeName = "EditorPowertools.ActiveEditors",
+            Subject = $"Message from {senderUsername}",
+            Content = message,
+            Sender = new NotificationUser(senderUsername),
+            Recipients = new[] { new NotificationUser(recipientUsername) }
+        };
+
+        await _notifier.PostNotificationAsync(notification);
     }
 
     private async Task BroadcastPresence()
