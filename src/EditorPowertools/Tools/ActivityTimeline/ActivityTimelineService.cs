@@ -59,6 +59,10 @@ public class ActivityTimelineService
             {
                 try
                 {
+                    // Only include content the current user can access
+                    if (!_contentRepository.TryGet<IContent>(contentRef, out _))
+                        continue;
+
                     var versions = _versionRepository.List(contentRef);
                     allVersions.AddRange(versions);
                 }
@@ -292,6 +296,10 @@ public class ActivityTimelineService
         {
             try
             {
+                // Only include content the current user can access
+                if (!_contentRepository.TryGet<IContent>(contentRef, out _))
+                    continue;
+
                 var versions = _versionRepository.List(contentRef)
                     .Where(v => v.Saved >= today && v.Saved < tomorrow);
                 todayVersions.AddRange(versions);
@@ -320,6 +328,10 @@ public class ActivityTimelineService
         {
             try
             {
+                // Only include content the current user can access
+                if (!_contentRepository.TryGet<IContent>(contentRef, out _))
+                    continue;
+
                 var versions = _versionRepository.List(contentRef);
                 foreach (var v in versions)
                 {
@@ -353,7 +365,9 @@ public class ActivityTimelineService
 
         try
         {
-            var allDescendants = _contentRepository.GetDescendents(ContentReference.RootPage).ToList();
+            var allDescendants = _contentRepository.GetDescendents(ContentReference.RootPage)
+                .Where(cr => _contentRepository.TryGet<IContent>(cr, out _))
+                .ToList();
             var contentTypeCache = _contentTypeRepository.List().ToDictionary(ct => ct.ID);
 
             // Use the batch overload: ListActivitiesAsync(IEnumerable<ContentReference>, startIndex, maxCount)

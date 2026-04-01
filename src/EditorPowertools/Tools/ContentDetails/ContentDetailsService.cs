@@ -181,13 +181,7 @@ public class ContentDetailsService
         try
         {
             if (!_contentLoader.TryGet<IContent>(contentRef, out var target))
-                return new ContentUsageDto
-                {
-                    ContentId = contentRef.ID,
-                    Name = $"[Content {contentRef.ID}]",
-                    PropertyName = propertyName,
-                    ReferenceType = referenceType
-                };
+                return null; // User can't access this referenced content
 
             var type = _contentTypeRepository.Load(target.ContentTypeID);
             return new ContentUsageDto
@@ -230,20 +224,16 @@ public class ContentDetailsService
 
                 try
                 {
-                    if (_contentLoader.TryGet<IContent>(link.OwnerContentLink, out var owner))
-                    {
-                        refDto.Name = owner.Name;
-                        var ownerType = _contentTypeRepository.Load(owner.ContentTypeID);
-                        refDto.ContentTypeName = ownerType?.DisplayName ?? ownerType?.Name ?? "Unknown";
-                    }
-                    else
-                    {
-                        refDto.Name = $"[Content {link.OwnerContentLink.ID}]";
-                    }
+                    if (!_contentLoader.TryGet<IContent>(link.OwnerContentLink, out var owner))
+                        continue; // User can't access this referencing content
+
+                    refDto.Name = owner.Name;
+                    var ownerType = _contentTypeRepository.Load(owner.ContentTypeID);
+                    refDto.ContentTypeName = ownerType?.DisplayName ?? ownerType?.Name ?? "Unknown";
                 }
                 catch
                 {
-                    refDto.Name = $"[Missing content {link.OwnerContentLink.ID}]";
+                    continue; // Skip inaccessible content
                 }
 
                 references.Add(refDto);
