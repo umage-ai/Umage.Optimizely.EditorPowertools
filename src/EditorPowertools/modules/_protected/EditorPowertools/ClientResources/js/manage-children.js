@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    var API = '/editorpowertools/api/manage-children';
+    var API = window.EPT_API_URL + '/manage-children';
     var root = document.getElementById('manage-children-root');
     if (!root) return;
 

@@ -2,7 +2,7 @@
  * Activity Timeline - Main UI
  */
 (function () {
-    var API = '/editorpowertools/api/activity';
+    var API = window.EPT_API_URL + '/activity';
     var urlParams = new URLSearchParams(window.location.search);
     var state = {
         activities: [],

@@ -50,7 +50,7 @@ define([
             var container = this.containerNode;
             container.innerHTML = '<div class="ept-cd-loading">Loading...</div>';
             var self = this;
-            fetch("/editorpowertools/api/content-details/" + contentId)
+            fetch(window.EPT_API_URL + "/content-details/" + contentId)
                 .then(function (r) {
                     if (!r.ok) throw new Error("HTTP " + r.status);
                     return r.json();

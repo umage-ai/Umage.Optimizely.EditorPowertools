@@ -208,7 +208,7 @@ const EPT = {
      */
     async loadPreferences(toolName) {
         try {
-            return await this.fetchJson(`/editorpowertools/api/preferences/${encodeURIComponent(toolName)}`);
+            return await this.fetchJson(`${window.EPT_API_URL}/preferences/${encodeURIComponent(toolName)}`);
         } catch { return {}; }
     },
 
@@ -221,7 +221,7 @@ const EPT = {
         }
         if (!this._prefTimers) this._prefTimers = {};
         this._prefTimers[toolName] = setTimeout(() => {
-            fetch(`/editorpowertools/api/preferences/${encodeURIComponent(toolName)}`, {
+            fetch(`${window.EPT_API_URL}/preferences/${encodeURIComponent(toolName)}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(prefs)

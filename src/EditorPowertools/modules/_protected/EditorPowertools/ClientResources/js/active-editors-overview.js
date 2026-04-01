@@ -12,7 +12,7 @@
     function init() {
         EPT.showLoading(document.getElementById('ae-editors-panel'));
 
-        EPT.fetchJson('/editorpowertools/api/features').then(function (features) {
+        EPT.fetchJson(window.EPT_API_URL + '/features').then(function (features) {
             chatEnabled = features.activeEditorsChat !== false;
             startConnection();
         }).catch(function () {
@@ -29,7 +29,7 @@
         }
 
         connection = new signalR.HubConnectionBuilder()
-            .withUrl('/editorpowertools/hubs/active-editors')
+            .withUrl(window.EPT_HUB_URL + '/active-editors')
             .withAutomaticReconnect()
             .build();
 

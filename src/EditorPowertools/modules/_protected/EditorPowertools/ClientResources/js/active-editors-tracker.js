@@ -31,7 +31,7 @@ define([
             }
 
             this._connection = new signalR.HubConnectionBuilder()
-                .withUrl("/editorpowertools/hubs/active-editors")
+                .withUrl(window.EPT_HUB_URL + "/active-editors")
                 .withAutomaticReconnect([0, 2000, 5000, 10000, 30000])
                 .build();
 

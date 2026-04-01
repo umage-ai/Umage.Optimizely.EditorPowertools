@@ -5,7 +5,7 @@
  * Content Type Picker: EPT.contentTypePicker(opts) → Promise<{id, name, displayName}>
  */
 (function () {
-    const API = '/editorpowertools/api/components';
+    const API = window.EPT_API_URL + '/components';
 
     // ── Content Picker ─────────────────────────────────────────────
     /**

@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    var API = '/editorpowertools/api/content-audit';
+    var API = window.EPT_API_URL + '/content-audit';
     var PREFS_KEY = 'ContentAudit';
 
     // ---- Column definitions ----
@@ -113,7 +113,7 @@
             sortDirection: state.sortDirection
         };
         try {
-            fetch('/editorpowertools/api/preferences/' + PREFS_KEY, {
+            fetch(window.EPT_API_URL + '/preferences/' + PREFS_KEY, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(prefs)
@@ -122,7 +122,7 @@
     }, 1000);
 
     function loadPreferences() {
-        return fetch('/editorpowertools/api/preferences/' + PREFS_KEY)
+        return fetch(window.EPT_API_URL + '/preferences/' + PREFS_KEY)
             .then(function (r) { return r.ok ? r.json() : null; })
             .then(function (prefs) {
                 if (prefs && prefs.visibleColumns && prefs.visibleColumns.length > 0) {

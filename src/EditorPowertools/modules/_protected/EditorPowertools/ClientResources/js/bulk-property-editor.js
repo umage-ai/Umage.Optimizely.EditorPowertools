@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    var API = '/editorpowertools/api/bulk-editor';
+    var API = window.EPT_API_URL + '/bulk-editor';
 
     var state = {
         contentTypeId: null,

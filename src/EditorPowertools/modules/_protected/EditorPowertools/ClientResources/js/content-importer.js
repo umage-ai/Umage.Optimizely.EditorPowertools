@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    var API = '/editorpowertools/api/content-importer';
+    var API = window.EPT_API_URL + '/content-importer';
     var root = document.getElementById('content-importer-root');
     if (!root) return;
 

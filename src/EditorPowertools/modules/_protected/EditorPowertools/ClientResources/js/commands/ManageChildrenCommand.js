@@ -36,7 +36,7 @@ define([
             var self = this;
 
             // Load children and show management dialog inline
-            fetch("/editorpowertools/api/manage-children/" + contentId)
+            fetch(window.EPT_API_URL + "/manage-children/" + contentId)
                 .then(function (r) { return r.json(); })
                 .then(function (items) {
                     self._showDialog(contentId, contentName, items);
@@ -152,7 +152,7 @@ define([
                               action.charAt(0).toUpperCase() + action.slice(1) + " " + selected.size + " items?";
                     if (!confirm(msg)) return;
 
-                    fetch("/editorpowertools/api/manage-children/" + action, {
+                    fetch(window.EPT_API_URL + "/manage-children/" + action, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ parentContentId: parseInt(parentId), contentIds: Array.from(selected) })

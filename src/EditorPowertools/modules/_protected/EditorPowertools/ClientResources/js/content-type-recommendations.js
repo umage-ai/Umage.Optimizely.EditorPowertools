@@ -2,7 +2,7 @@
  * Content Type Recommendations - Admin CRUD UI
  */
 (function () {
-    const API = '/editorpowertools/api/recommendations';
+    const API = window.EPT_API_URL + '/recommendations';
     let allRules = [];
     let allContentTypes = [];
 

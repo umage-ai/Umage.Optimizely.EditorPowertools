@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    var API = '/editorpowertools/api/cms-doctor';
+    var API = window.EPT_API_URL + '/cms-doctor';
     var root = document.getElementById('cms-doctor-root');
     if (!root) return;
 

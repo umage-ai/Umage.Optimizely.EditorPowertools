@@ -2,7 +2,7 @@
  * Link Checker - Main UI
  */
 (function () {
-    const API = '/editorpowertools/api/link-checker';
+    const API = window.EPT_API_URL + '/link-checker';
     let allLinks = [];
     let tableInstance = null;
     let jobStatus = null;

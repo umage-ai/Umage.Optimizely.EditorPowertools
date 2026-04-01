@@ -2,7 +2,7 @@
  * Content Type Audit - Main UI
  */
 (function () {
-    const API = '/editorpowertools/api';
+    const API = window.EPT_API_URL;
     let allTypes = [];
     let tableInstance = null;
     let currentView = 'table';

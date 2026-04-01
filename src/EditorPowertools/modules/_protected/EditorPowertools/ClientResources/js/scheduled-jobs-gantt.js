@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    var API_BASE = '/editorpowertools/api/jobs-gantt/';
+    var API_BASE = window.EPT_API_URL + '/jobs-gantt/';
 
     var ROW_HEIGHT = 36;
     var ROW_GAP = 2;

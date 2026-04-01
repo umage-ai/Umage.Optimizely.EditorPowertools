@@ -2,7 +2,7 @@
  * Audience Manager - Main UI
  */
 (function () {
-    const API = '/editorpowertools/api/audience';
+    const API = window.EPT_API_URL + '/audience';
     const EPT_BASE_URL = '/editorpowertools/';
     let allGroups = [];
     let tableInstance = null;

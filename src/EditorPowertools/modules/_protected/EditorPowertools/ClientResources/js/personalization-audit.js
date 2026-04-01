@@ -2,7 +2,7 @@
  * Personalization Audit - Main UI
  */
 (function () {
-    const API = '/editorpowertools/api/personalization';
+    const API = window.EPT_API_URL + '/personalization';
     let allUsages = [];
     let allVisitorGroups = [];
     let tableInstance = null;
