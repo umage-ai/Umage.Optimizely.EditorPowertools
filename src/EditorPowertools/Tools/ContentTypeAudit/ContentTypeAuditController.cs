@@ -95,6 +95,11 @@ public class ContentTypeAuditApiController : Controller
     [Route("editorpowertools/api/aggregation-status")]
     public IActionResult GetAggregationStatus()
     {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ContentTypeAudit),
+            EditorPowertoolsPermissions.ContentTypeAudit))
+            return Forbid();
+
         var status = _jobStatusService.GetStatus();
         return Ok(status);
     }
@@ -103,6 +108,11 @@ public class ContentTypeAuditApiController : Controller
     [Route("editorpowertools/api/aggregation-start")]
     public async Task<IActionResult> StartAggregationJob()
     {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ContentTypeAudit),
+            EditorPowertoolsPermissions.ContentTypeAudit))
+            return Forbid();
+
         var started = await _jobStatusService.StartJobAsync();
         return Ok(new { started });
     }

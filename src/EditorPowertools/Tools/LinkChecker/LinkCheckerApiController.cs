@@ -55,6 +55,11 @@ public class LinkCheckerApiController : Controller
     [Route("editorpowertools/api/link-checker/job-status")]
     public IActionResult GetJobStatus()
     {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.BrokenLinkChecker),
+            EditorPowertoolsPermissions.BrokenLinkChecker))
+            return Forbid();
+
         var status = _jobStatusService.GetStatus();
         return Ok(status);
     }
@@ -63,6 +68,11 @@ public class LinkCheckerApiController : Controller
     [Route("editorpowertools/api/link-checker/job-start")]
     public async Task<IActionResult> StartJob()
     {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.BrokenLinkChecker),
+            EditorPowertoolsPermissions.BrokenLinkChecker))
+            return Forbid();
+
         var started = await _jobStatusService.StartJobAsync();
         return Ok(new { started });
     }

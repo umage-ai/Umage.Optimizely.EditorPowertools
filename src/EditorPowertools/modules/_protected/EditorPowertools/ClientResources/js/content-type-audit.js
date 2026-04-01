@@ -233,7 +233,7 @@
                 const sel = document.createElement('select');
                 sel.className = 'ept-select';
                 sel.style.cssText = 'width:100%;font-size:11px;padding:2px 20px 2px 4px';
-                sel.innerHTML = `<option value="">All</option>${col.filterable.map(v => `<option value="${v}">${v}</option>`).join('')}`;
+                sel.innerHTML = `<option value="">All</option>${col.filterable.map(v => `<option value="${escAttr(v)}">${escHtml(v)}</option>`).join('')}`;
                 sel.addEventListener('change', () => {
                     colFilters[col.key] = sel.value || null;
                     applyColumnFilters();

@@ -55,6 +55,11 @@ public class PersonalizationAuditApiController : Controller
     [Route("editorpowertools/api/personalization/job-status")]
     public IActionResult GetJobStatus()
     {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.PersonalizationUsageAudit),
+            EditorPowertoolsPermissions.PersonalizationUsageAudit))
+            return Forbid();
+
         var status = _jobStatusService.GetStatus();
         return Ok(status);
     }
@@ -63,6 +68,11 @@ public class PersonalizationAuditApiController : Controller
     [Route("editorpowertools/api/personalization/job-start")]
     public async Task<IActionResult> StartJob()
     {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.PersonalizationUsageAudit),
+            EditorPowertoolsPermissions.PersonalizationUsageAudit))
+            return Forbid();
+
         var started = await _jobStatusService.StartJobAsync();
         return Ok(new { started });
     }

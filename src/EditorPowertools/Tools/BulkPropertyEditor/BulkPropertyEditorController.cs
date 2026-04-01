@@ -230,7 +230,7 @@ public class BulkPropertyEditorApiController : Controller
         {
             _logger.LogError(ex, "Failed to bulk save {ItemCount} items with action {Action}",
                 request.Items.Count, request.Action);
-            return StatusCode(500, new { success = false, message = ex.Message });
+            return StatusCode(500, new { success = false, message = "An error occurred while processing the request." });
         }
     }
 }

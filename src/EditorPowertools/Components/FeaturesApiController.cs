@@ -10,7 +10,7 @@ namespace EditorPowertools.Components;
 /// Returns which EditorPowertools features are enabled for the current user.
 /// Used by the client-side module initializer to conditionally register commands.
 /// </summary>
-[Authorize]
+[Authorize(Policy = "codeart:editorpowertools")]
 [Route("editorpowertools/api")]
 public class FeaturesApiController : Controller
 {

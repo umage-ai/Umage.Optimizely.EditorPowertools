@@ -84,9 +84,9 @@ public class ContentImporterApiController : Controller
             var result = _service.DryRun(request);
             return Ok(result);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            return BadRequest(new { error = ex.Message });
+            return BadRequest(new { error = "An error occurred while processing the request." });
         }
     }
 
@@ -100,9 +100,9 @@ public class ContentImporterApiController : Controller
             var sessionId = _service.StartImport(request.SessionId);
             return Ok(new { sessionId });
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            return BadRequest(new { error = ex.Message });
+            return BadRequest(new { error = "An error occurred while processing the request." });
         }
     }
 
