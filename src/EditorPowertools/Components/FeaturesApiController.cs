@@ -31,7 +31,13 @@ public class FeaturesApiController : Controller
                 EditorPowertoolsPermissions.ActivityTimeline),
             ManageChildren = _accessChecker.HasAccess(HttpContext,
                 nameof(FeatureToggles.ManageChildren),
-                EditorPowertoolsPermissions.ManageChildren)
+                EditorPowertoolsPermissions.ManageChildren),
+            ActiveEditors = _accessChecker.HasAccess(HttpContext,
+                nameof(FeatureToggles.ActiveEditors),
+                EditorPowertoolsPermissions.ActiveEditors),
+            ActiveEditorsChat = _accessChecker.HasAccess(HttpContext,
+                nameof(FeatureToggles.ActiveEditorsChat),
+                EditorPowertoolsPermissions.ActiveEditors)
         });
     }
 }

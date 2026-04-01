@@ -22,4 +22,6 @@ public class FeatureToggles
     public bool ManageChildren { get; set; } = true;
     public bool ContentAudit { get; set; } = true;
     public bool CmsDoctor { get; set; } = true;
+    public bool ActiveEditors { get; set; } = true;
+    public bool ActiveEditorsChat { get; set; } = true;
 }

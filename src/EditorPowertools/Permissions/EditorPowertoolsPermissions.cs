@@ -59,4 +59,7 @@ public static class EditorPowertoolsPermissions
 
     public static PermissionType CmsDoctor { get; } =
         new("EditorPowertools", "CmsDoctor");
+
+    public static PermissionType ActiveEditors { get; } =
+        new("EditorPowertools", "ActiveEditors");
 }
