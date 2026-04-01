@@ -1,3 +1,4 @@
+using System.Globalization;
 using OfficeOpenXml;
 
 namespace EditorPowertools.Tools.ContentImporter.Parsers;
@@ -38,7 +39,10 @@ public class ExcelFileParser : IFileParser
 
             for (var col = 1; col <= colCount; col++)
             {
-                var value = worksheet.Cells[row, col].Text ?? "";
+                var cellValue = worksheet.Cells[row, col].Value;
+                var value = cellValue is IFormattable f
+                    ? f.ToString(null, CultureInfo.InvariantCulture)
+                    : cellValue?.ToString() ?? "";
                 rowData[columns[col - 1]] = value;
                 if (!string.IsNullOrWhiteSpace(value)) hasData = true;
             }

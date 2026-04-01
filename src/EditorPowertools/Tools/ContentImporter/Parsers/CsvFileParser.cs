@@ -29,7 +29,8 @@ public class CsvFileParser : IFileParser
         using var reader = new StreamReader(stream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true);
         using var csv = new CsvReader(reader, config);
 
-        csv.Read();
+        if (!csv.Read())
+            return new ParseResult(new List<string>(), new List<Dictionary<string, string>>());
         csv.ReadHeader();
         var columns = csv.HeaderRecord?.ToList() ?? new List<string>();
 

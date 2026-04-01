@@ -36,7 +36,7 @@ public class ContentTypeStatisticsRecord : IDynamicData
 /// </summary>
 public class ContentTypeStatisticsRepository
 {
-    public IEnumerable<ContentTypeStatisticsRecord> GetAll()
+    public virtual IEnumerable<ContentTypeStatisticsRecord> GetAll()
     {
         var store = GetStore();
         return store.Items<ContentTypeStatisticsRecord>().ToList();
