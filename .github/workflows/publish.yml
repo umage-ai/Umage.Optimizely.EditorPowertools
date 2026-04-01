@@ -22,11 +22,14 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
 
+      - name: Restore
+        run: dotnet restore src/EditorPowertools/EditorPowertools.csproj && dotnet restore src/EditorPowertools.Tests/EditorPowertools.Tests.csproj
+
       - name: Build
-        run: dotnet build src/EditorPowertools/EditorPowertools.csproj -c Release -p:Version=${{ steps.version.outputs.VERSION }}
+        run: dotnet build src/EditorPowertools/EditorPowertools.csproj -c Release -p:Version=${{ steps.version.outputs.VERSION }} --no-restore
 
       - name: Test
-        run: dotnet test src/EditorPowertools.Tests/EditorPowertools.Tests.csproj -c Release --no-restore --logger "trx;LogFileName=test-results.trx"
+        run: dotnet test src/EditorPowertools.Tests/EditorPowertools.Tests.csproj -c Release --logger "trx;LogFileName=test-results.trx"
 
       - name: Pack
         run: dotnet pack src/EditorPowertools/EditorPowertools.csproj -c Release -p:Version=${{ steps.version.outputs.VERSION }} --no-build -o ./nupkg
