@@ -213,10 +213,14 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [x] **Module Packaging** - Wrap everything in the modules/_protected folder in a zip file (like Optimizely's own modules), for proper deployment packaging in the NuGet.
 - [ ] **Protected Module API Routes** - All API routes and JS fetch URLs should go through the proper protected module path resolution instead of hardcoded `/editorpowertools/api/` paths.
 
+## Branding & Design
+
+- [ ] **Branding Package** - Professional branding for the EditorPowertools product. Includes: proper logo/icon (current icon is a placeholder), consistent color scheme across all tools, branded overview page header, NuGet package icon, documentation site branding, loading screens, and about/credits dialog. Consider hiring a designer for the logo.
+
 ## Quality & Documentation
 
 - [ ] **Security Review** - Full security review of all components: auth checks, input validation, XSS prevention, CSRF protection, access control on all API endpoints, safe file upload handling, SQL/command injection prevention. Verify three-layer permission model is consistently applied across all tools.
 - [ ] **Documentation with Screenshots** - Comprehensive documentation of every component with screenshots: installation guide, configuration options, each tool's UI and features, API reference, permission setup. Suitable for the NuGet package README and a docs site.
-- [ ] **Unit Tests** - Unit test project covering all services, parsers, and API controllers. Mock EPiServer dependencies (IContentRepository, IContentLoader, etc.) using a test framework. Cover edge cases: empty content, missing permissions, malformed input, large datasets, concurrent access. Include integration tests for file parsers (CSV, JSON, Excel) with sample data files.
+- [x] **Unit Tests** - Unit test project covering all services, parsers, and API controllers. 162 tests with Moq and FluentAssertions covering ActiveEditors, file parsers, LinkChecker, CmsDoctor, ActivityTimeline, ScheduledJobsGantt, ContentTypeAudit, and AudienceManager.
 
 *Priority: Carried-over tools first, then Activity Timeline, Scheduled Jobs Gantt, Bulk Edit, Active Editors, Health Check.*

@@ -18,6 +18,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 
     <!-- Module zip output path (used during pack) -->
@@ -41,9 +42,10 @@
     <PackageReference Include="EPPlusFree" Version="4.5.3.8" />
   </ItemGroup>
 
-  <!-- Include README in the NuGet package -->
+  <!-- Include README and icon in the NuGet package -->
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    <None Include="icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <!-- Include the .targets file in the NuGet package (for consuming projects) -->
