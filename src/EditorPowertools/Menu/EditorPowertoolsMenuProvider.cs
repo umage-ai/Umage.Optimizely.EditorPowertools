@@ -103,6 +103,13 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
             SortIndex = 900,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.BrokenLinkChecker))
         };
+
+        yield return new UrlMenuItem("Active Editors", BaseMenuPath + "/activeeditors",
+            GetResourcePath("EditorPowertools/ActiveEditors"))
+        {
+            SortIndex = 750,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ActiveEditors))
+        };
     }
 
     private static string GetResourcePath(string resourcePath)

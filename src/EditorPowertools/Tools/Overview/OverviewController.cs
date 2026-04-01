@@ -161,4 +161,15 @@ public class EditorPowertoolsController : Controller
 
         return View("/Views/LinkChecker/Index.cshtml");
     }
+
+    [HttpGet]
+    public IActionResult ActiveEditors()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ActiveEditors),
+            EditorPowertoolsPermissions.ActiveEditors))
+            return Forbid();
+
+        return View("/Views/ActiveEditors/Index.cshtml");
+    }
 }

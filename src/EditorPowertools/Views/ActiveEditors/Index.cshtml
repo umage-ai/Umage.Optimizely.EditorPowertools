@@ -1,0 +1,26 @@
+@using EPiServer.Shell
+@{
+    Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
+    ViewData["Title"] = "Active Editors";
+    string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
+}
+
+@section NavItems {
+    <a href="@ActionPath("EditorPowertools/Overview")">Overview</a>
+}
+
+<div class="ept-page-header">
+    <h1>Active Editors</h1>
+    <p>See who's online and collaborate with your editorial team.</p>
+</div>
+
+<div id="ae-stats" class="ept-stats"></div>
+<div id="ae-content" class="ae-layout">
+    <div id="ae-editors-panel"></div>
+    <div id="ae-chat-panel"></div>
+</div>
+
+@section Scripts {
+    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/signalr.min.js"))"></script>
+    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/active-editors-overview.js"))"></script>
+}
