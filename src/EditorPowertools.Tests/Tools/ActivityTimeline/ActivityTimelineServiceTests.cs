@@ -65,6 +65,18 @@ public class ActivityTimelineServiceTests
         var refs = contentIds.Select(id => new ContentReference(id)).ToArray();
         _contentRepo.Setup(r => r.GetDescendents(ContentReference.RootPage))
             .Returns(refs);
+
+        // Default: TryGet succeeds for all descendants (user has access)
+        foreach (var id in contentIds)
+        {
+            var mockContent = new Mock<IContent>();
+            mockContent.Setup(c => c.ContentLink).Returns(new ContentReference(id));
+            _contentRepo.Setup(r => r.TryGet(
+                    It.Is<ContentReference>(cr => cr.ID == id),
+                    out It.Ref<IContent>.IsAny))
+                .Callback(new TryGetCallback((ContentReference cr, out IContent c) => c = mockContent.Object))
+                .Returns(true);
+        }
     }
 
     /// <summary>

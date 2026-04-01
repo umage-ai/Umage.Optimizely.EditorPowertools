@@ -219,7 +219,28 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 
 ## Quality & Documentation
 
-- [ ] **Security Review** - Full security review of all components: auth checks, input validation, XSS prevention, CSRF protection, access control on all API endpoints, safe file upload handling, SQL/command injection prevention. Verify three-layer permission model is consistently applied across all tools.
+- [x] **Security Review** - Completed 2026-04-01. Findings below.
+
+### Security Fixes (from audit)
+
+**Critical — Content ACL bypass:**
+- [x] **Fix ManageChildren ACL bypass** - Replace `AccessLevel.NoAccess` with proper per-content user permission checks in delete/publish/move/unpublish operations.
+- [x] **Fix ContentImporter ACL bypass** - Replace `AccessLevel.NoAccess` with proper user permission checks when saving imported content.
+- [x] **Fix ActivityTimeline content leakage** - Filter versions/activities to only content the current user has read access to.
+- [x] **Fix ContentDetails reference leakage** - Filter "Used By" and "Uses" references to only show content the user can access.
+- [x] **Fix BulkPropertyEditor ACL** - Check actual user permissions on each content item instead of using fixed `AccessLevel.Edit`.
+
+**High — Auth & XSS:**
+- [x] **Add missing feature access checks** - Add `_accessChecker.HasAccess()` to job status/start endpoints in ContentTypeAuditController, LinkCheckerApiController, PersonalizationAuditApiController.
+- [x] **Fix FeaturesApiController auth policy** - Change from `[Authorize]` to `[Authorize(Policy = "codeart:editorpowertools")]`.
+- [x] **Fix XSS in filter dropdowns** - Escape attribute values in `<option>` elements in audience-manager.js and content-type-audit.js.
+
+**Medium — Data exposure & hardening:**
+- [ ] **Add CSRF protection** - Add `[ValidateAntiForgeryToken]` or verify Optimizely's global CSRF middleware covers all POST/DELETE endpoints.
+- [x] **Fix exception message exposure** - Return generic error messages in BulkPropertyEditorController and ContentImporterApiController instead of `ex.Message`.
+- [ ] **Add SignalR rate limiting** - Implement per-connection rate limiting on chat, heartbeat, and notification hub methods.
+- [ ] **Fix iframe sandbox** - Change empty `sandbox=""` to `sandbox="allow-same-origin"` in activity-timeline.js version comparison.
+- [ ] **Add PreferencesApiController feature checks** - Inject FeatureAccessChecker and validate tool access.
 - [ ] **Documentation with Screenshots** - Comprehensive documentation of every component with screenshots: installation guide, configuration options, each tool's UI and features, API reference, permission setup. Suitable for the NuGet package README and a docs site.
 - [x] **Unit Tests** - Unit test project covering all services, parsers, and API controllers. 162 tests with Moq and FluentAssertions covering ActiveEditors, file parsers, LinkChecker, CmsDoctor, ActivityTimeline, ScheduledJobsGantt, ContentTypeAudit, and AudienceManager.
 
