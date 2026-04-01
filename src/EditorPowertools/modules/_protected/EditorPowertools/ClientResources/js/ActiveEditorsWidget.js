@@ -140,15 +140,39 @@ define([
                     btn.addEventListener("click", function () {
                         var username = btn.getAttribute("data-username");
                         var displayName = btn.getAttribute("data-displayname");
-                        var message = prompt("Send notification to " + displayName + ":");
-                        if (message && window.__eptHubConnection && window.__eptHubConnection.state === "Connected") {
-                            window.__eptHubConnection.invoke("SendNotification", username, message).catch(function (err) {
-                                alert("Failed to send: " + err.message);
-                            });
-                        }
+                        self._showNotifyDialog(username, displayName);
                     });
                 })(btns[i]);
             }
+        },
+
+        _showNotifyDialog: function (username, displayName) {
+            var self = this;
+            var conn = window.__eptHubConnection;
+            if (!conn || conn.state !== "Connected") return;
+
+            var dialog = EPT.openDialog("Message " + displayName, { wide: false });
+            dialog.body.innerHTML =
+                '<div style="padding:4px 0">' +
+                    '<textarea id="ept-ae-msg" rows="3" placeholder="Type your message..." maxlength="500" style="width:100%;border:1px solid #e0e0e0;border-radius:8px;padding:10px;font-size:13px;font-family:inherit;resize:vertical;outline:none;box-sizing:border-box"></textarea>' +
+                    '<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:10px">' +
+                        '<button id="ept-ae-cancel" class="ept-btn">Cancel</button>' +
+                        '<button id="ept-ae-send" class="ept-btn ept-btn--primary">Send</button>' +
+                    '</div>' +
+                '</div>';
+
+            document.getElementById("ept-ae-msg").focus();
+            document.getElementById("ept-ae-cancel").addEventListener("click", function () { dialog.close(); });
+            document.getElementById("ept-ae-send").addEventListener("click", function () {
+                var text = document.getElementById("ept-ae-msg").value.trim();
+                if (!text) return;
+                conn.invoke("SendNotification", username, text).then(function () {
+                    dialog.body.innerHTML = '<p style="text-align:center;color:#166534;padding:16px 0">Message sent!</p>';
+                    setTimeout(function () { dialog.close(); }, 1200);
+                }).catch(function (err) {
+                    dialog.body.innerHTML = '<p style="text-align:center;color:#ef4444;padding:16px 0">Error: ' + self._esc(err.message) + '</p>';
+                });
+            });
         },
 
         _esc: function (s) {

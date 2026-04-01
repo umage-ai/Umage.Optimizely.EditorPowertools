@@ -2,8 +2,15 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/when",
-    "epi/shell/_ContextMixin"
-], function (declare, lang, when, _ContextMixin) {
+    "epi/shell/_ContextMixin",
+    "editorpowertools/signalr.min"
+], function (declare, lang, when, _ContextMixin, signalRModule) {
+
+    // signalr.min.js is UMD — when Dojo's define is present it registers as AMD
+    // rather than setting window.signalR. We receive it as signalRModule here.
+    var signalR = signalRModule;
+    // Also set on window so the overview page and widget can use it
+    if (signalR && !window.signalR) window.signalR = signalR;
 
     var Tracker = declare([_ContextMixin], {
         _connection: null,
@@ -18,7 +25,7 @@ define([
         start: function () {
             var self = this;
 
-            if (typeof signalR === "undefined") {
+            if (!signalR || !signalR.HubConnectionBuilder) {
                 console.warn("[EditorPowertools] SignalR client not loaded, active editors tracking disabled.");
                 return;
             }
