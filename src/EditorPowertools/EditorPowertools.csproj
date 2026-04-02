@@ -62,7 +62,7 @@
   <ItemGroup>
     <Content Include="$(IntermediateOutputPath)module-zip\EditorPowertools.zip"
              Pack="true"
-             PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools\"
+             PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools"
              BuildAction="None"
              CopyToPublishDirectory="Never"
              CopyToOutputDirectory="Never">
