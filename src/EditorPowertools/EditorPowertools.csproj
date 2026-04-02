@@ -20,9 +20,6 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-
-    <!-- Module zip output path (used during pack) -->
-    <_ModuleZipDir>$(IntermediateOutputPath)module-zip\</_ModuleZipDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,43 +39,44 @@
     <PackageReference Include="EPPlusFree" Version="4.5.3.8" />
   </ItemGroup>
 
-  <!-- Include README and icon in the NuGet package -->
+  <!-- Include README, icon, and .targets in the NuGet package -->
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="" />
     <None Include="icon.png" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <!-- Include the .targets file in the NuGet package (for consuming projects) -->
-  <ItemGroup>
     <None Include="build\net8.0\CodeArt.Optimizely.EditorPowertools.targets" Pack="true" PackagePath="build\net8.0\" />
   </ItemGroup>
 
   <!--
-    Create a zip of the protected module content during pack,
-    then include it as contentFiles so the .targets file can copy it.
+    Module zip: created during build, packed as contentFiles with BuildAction=None.
+    The .targets file in build/net8.0/ copies it to the consuming project's
+    modules/_protected/ folder on first build after NuGet install.
   -->
-  <Target Name="CreateModuleZip" BeforeTargets="GenerateNuspec" Condition="'$(IsPackable)' != 'false'">
-    <ItemGroup>
-      <_ModuleFiles Include="modules\_protected\EditorPowertools\**\*" />
-    </ItemGroup>
-    <MakeDir Directories="$(_ModuleZipDir)modules\_protected\EditorPowertools" />
+  <Target Name="CreateModuleZip" BeforeTargets="Build">
+    <MakeDir Directories="$(IntermediateOutputPath)module-zip" />
     <ZipDirectory
       SourceDirectory="modules\_protected\EditorPowertools"
-      DestinationFile="$(_ModuleZipDir)modules\_protected\EditorPowertools\EditorPowertools.zip"
+      DestinationFile="$(IntermediateOutputPath)module-zip\EditorPowertools.zip"
       Overwrite="true" />
-    <ItemGroup>
-      <_PackageFiles Include="$(_ModuleZipDir)modules\_protected\EditorPowertools\EditorPowertools.zip"
-                     PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools\" />
-    </ItemGroup>
   </Target>
 
-  <!-- Exclude the modules/_protected folder from regular build output (it's for NuGet packaging only via zip) -->
+  <ItemGroup>
+    <Content Include="$(IntermediateOutputPath)module-zip\EditorPowertools.zip"
+             Pack="true"
+             PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools\"
+             BuildAction="None"
+             CopyToPublishDirectory="Never"
+             CopyToOutputDirectory="Never">
+      <Link>EditorPowertools.zip</Link>
+    </Content>
+  </ItemGroup>
+
+  <!-- Exclude the source modules/_protected folder from build output -->
   <ItemGroup>
     <Content Remove="modules\_protected\**" />
     <None Remove="modules\_protected\**" />
   </ItemGroup>
 
-  <!-- But keep them as None so they show in the IDE and are tracked -->
+  <!-- Keep source files visible in IDE -->
   <ItemGroup>
     <None Include="modules\_protected\EditorPowertools\**\*" />
   </ItemGroup>
