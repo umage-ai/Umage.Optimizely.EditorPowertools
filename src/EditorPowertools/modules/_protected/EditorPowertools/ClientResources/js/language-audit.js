@@ -12,14 +12,40 @@
         EPT.showLoading(document.getElementById('lang-audit-content'));
         try {
             overview = await EPT.fetchJson(`${API}/language-audit/overview`);
-            if (overview.enabledLanguages.length > 0) {
+            if (!overview || (overview.totalContent === 0 && (!overview.enabledLanguages || overview.enabledLanguages.length === 0))) {
+                renderNoDataBanner();
+                return;
+            }
+            if (overview.enabledLanguages && overview.enabledLanguages.length > 0) {
                 selectedLanguage = overview.enabledLanguages[0];
             }
             renderTabs();
             renderOverview();
         } catch (err) {
-            document.getElementById('lang-audit-content').innerHTML =
-                `<div class="ept-empty"><p>Error loading language audit data: ${err.message}</p></div>`;
+            renderNoDataBanner(err.message);
+        }
+    }
+
+    function renderNoDataBanner(errorMsg) {
+        const content = document.getElementById('lang-audit-content');
+        content.innerHTML = `<div class="ept-banner" style="padding:24px;background:var(--ept-bg,#f8f9fa);border:1px solid var(--ept-border,#dee2e6);border-radius:6px;text-align:center;">
+            ${errorMsg ? `<p style="margin:0 0 12px 0;color:var(--ept-danger,#dc3545);">Error: ${escHtml(errorMsg)}</p>` : ''}
+            <p style="margin:0 0 12px 0;font-size:15px;">Run the <strong>[EditorPowertools] Content Analysis</strong> scheduled job to populate data.</p>
+            <button id="ept-lang-run-job-btn" class="ept-btn ept-btn--primary">Run now</button>
+        </div>`;
+        const btn = document.getElementById('ept-lang-run-job-btn');
+        if (btn) {
+            btn.addEventListener('click', async () => {
+                btn.disabled = true;
+                btn.textContent = 'Starting...';
+                try {
+                    await EPT.postJson(window.EPT_API_URL + '/aggregation-start');
+                    btn.textContent = 'Job started, please refresh in a few minutes.';
+                    btn.className = 'ept-btn';
+                } catch (e) {
+                    btn.textContent = 'Failed to start job';
+                }
+            });
         }
     }
 

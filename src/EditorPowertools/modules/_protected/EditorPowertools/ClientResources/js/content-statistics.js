@@ -28,14 +28,48 @@
             render(data);
         } catch (err) {
             root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
-                '<p style="color:var(--ept-danger)">Failed to load statistics: ' + err.message + '</p>' +
-                '<p>Make sure the <strong>[EditorPowertools] Content Analysis</strong> scheduled job has been run at least once.</p>' +
+                '<p style="color:var(--ept-danger)">Failed to load statistics: ' + (err.message || 'Unknown error') + '</p>' +
+                renderRunJobBanner() +
                 '</div></div>';
+            wireRunJobButton();
         }
+    }
+
+    function renderRunJobBanner() {
+        return '<div class="ept-banner" style="margin-top:16px;padding:16px;background:var(--ept-bg,#f8f9fa);border:1px solid var(--ept-border,#dee2e6);border-radius:6px;text-align:center;">' +
+            'Run the <strong>[EditorPowertools] Content Analysis</strong> scheduled job to populate data. ' +
+            '<button id="ept-run-job-btn" class="ept-btn ept-btn--primary" style="margin-left:8px;">Run now</button>' +
+            '</div>';
+    }
+
+    function wireRunJobButton() {
+        var btn = document.getElementById('ept-run-job-btn');
+        if (!btn) return;
+        btn.addEventListener('click', async function () {
+            btn.disabled = true;
+            btn.textContent = 'Starting...';
+            try {
+                await EPT.postJson(window.EPT_API_URL + '/aggregation-start');
+                btn.textContent = 'Job started, please refresh in a few minutes.';
+                btn.className = 'ept-btn';
+            } catch (e) {
+                btn.textContent = 'Failed to start job';
+            }
+        });
     }
 
     function render(data) {
         root.innerHTML = '';
+
+        // If no data at all, show empty state with run-job prompt
+        if (!data || !data.summary) {
+            root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
+                '<p style="text-align:center;color:var(--ept-muted,#888);">No statistics data available yet.</p>' +
+                renderRunJobBanner() +
+                '</div></div>';
+            wireRunJobButton();
+            return;
+        }
 
         // Summary stat cards
         renderSummary(data.summary);

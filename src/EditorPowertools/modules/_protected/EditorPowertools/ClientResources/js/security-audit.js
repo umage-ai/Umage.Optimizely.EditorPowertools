@@ -194,10 +194,12 @@
         var el = document.getElementById('sa-status-alert');
         if (!el) return;
 
-        if (!state.status) {
-            el.innerHTML = '<div class="ept-alert ept-alert--warning">' +
-                '<strong>Security audit data has not been collected yet.</strong> Run the aggregation job to analyze content permissions. ' +
-                '<button class="ept-btn ept-btn--sm" id="sa-run-job-btn" style="margin-left:8px">Run now</button></div>';
+        if (!state.status || !state.status.hasData) {
+            el.innerHTML = '<div class="ept-banner" style="padding:24px;background:var(--ept-bg,#f8f9fa);border:1px solid var(--ept-border,#dee2e6);border-radius:6px;text-align:center;margin-bottom:16px;">' +
+                '<p style="margin:0 0 12px 0;font-size:15px;"><strong>Security audit data not available.</strong></p>' +
+                '<p style="margin:0 0 12px 0;">Run the <strong>[EditorPowertools] Content Analysis</strong> scheduled job to analyze content permissions.</p>' +
+                '<button class="ept-btn ept-btn--primary" id="sa-run-job-btn">Run now</button>' +
+                '</div>';
             wireRunJobButton();
             return;
         }
@@ -264,9 +266,18 @@
         }
 
         var content = document.getElementById('sa-tab-content');
-        EPT.showLoading(content);
 
         savePrefs();
+
+        // If no data, show empty state in tab content
+        if (!state.status || !state.status.hasData) {
+            content.innerHTML = '<div class="ept-card"><div class="ept-card__body" style="text-align:center;padding:32px;">' +
+                '<p style="color:var(--ept-muted,#888);">No data available. Run the scheduled job using the button above to populate security audit data.</p>' +
+                '</div></div>';
+            return;
+        }
+
+        EPT.showLoading(content);
 
         if (tab === 'tree') {
             renderTreeTab();
