@@ -351,8 +351,8 @@ define([
             var style = document.createElement("style");
             style.id = "ept-ae-widget-styles";
             style.textContent =
-                '.ept-ae-root { font-size: 12px; line-height: 1.4; }' +
-                '.ept-ae-container { padding: 0; }' +
+                '.ept-ae-root { font-size: 12px; line-height: 1.4; overflow: hidden; max-width: 100%; box-sizing: border-box; }' +
+                '.ept-ae-container { padding: 0; overflow: hidden; }' +
                 '.ept-ae-empty { color: #999; font-style: italic; padding: 8px 10px; font-size: 11px; }' +
 
                 /* Tabs */
