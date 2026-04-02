@@ -1,3 +1,4 @@
+using EditorPowertools.Permissions;
 using EditorPowertools.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +13,20 @@ namespace EditorPowertools.Components;
 public class PreferencesApiController : Controller
 {
     private readonly UserPreferencesService _preferencesService;
+    private readonly FeatureAccessChecker _accessChecker;
 
-    public PreferencesApiController(UserPreferencesService preferencesService)
+    public PreferencesApiController(UserPreferencesService preferencesService, FeatureAccessChecker accessChecker)
     {
         _preferencesService = preferencesService;
+        _accessChecker = accessChecker;
     }
 
     [HttpGet("{toolName}")]
     public IActionResult Get(string toolName)
     {
+        if (!_accessChecker.IsFeatureEnabled(toolName))
+            return Forbid();
+
         var username = HttpContext.User.Identity?.Name;
         if (string.IsNullOrEmpty(username))
             return Unauthorized();
@@ -35,6 +41,9 @@ public class PreferencesApiController : Controller
     [HttpPost("{toolName}")]
     public async Task<IActionResult> Save(string toolName)
     {
+        if (!_accessChecker.IsFeatureEnabled(toolName))
+            return Forbid();
+
         var username = HttpContext.User.Identity?.Name;
         if (string.IsNullOrEmpty(username))
             return Unauthorized();
