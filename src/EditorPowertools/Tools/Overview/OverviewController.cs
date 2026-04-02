@@ -172,4 +172,15 @@ public class EditorPowertoolsController : Controller
 
         return View("/Views/ActiveEditors/Index.cshtml");
     }
+
+    [HttpGet]
+    public IActionResult SecurityAudit()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.SecurityAudit),
+            EditorPowertoolsPermissions.SecurityAudit))
+            return Forbid();
+
+        return View("/Views/SecurityAudit/Index.cshtml");
+    }
 }

@@ -24,4 +24,5 @@ public class FeatureToggles
     public bool CmsDoctor { get; set; } = true;
     public bool ActiveEditors { get; set; } = true;
     public bool ActiveEditorsChat { get; set; } = true;
+    public bool SecurityAudit { get; set; } = true;
 }

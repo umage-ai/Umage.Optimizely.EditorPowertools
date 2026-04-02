@@ -110,6 +110,13 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
             SortIndex = 750,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ActiveEditors))
         };
+
+        yield return new UrlMenuItem("Security Audit", BaseMenuPath + "/securityaudit",
+            GetResourcePath("EditorPowertools/SecurityAudit"))
+        {
+            SortIndex = 960,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.SecurityAudit))
+        };
     }
 
     private static string GetResourcePath(string resourcePath)

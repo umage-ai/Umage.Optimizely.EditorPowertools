@@ -37,7 +37,10 @@ public class FeaturesApiController : Controller
                 EditorPowertoolsPermissions.ActiveEditors),
             ActiveEditorsChat = _accessChecker.HasAccess(HttpContext,
                 nameof(FeatureToggles.ActiveEditorsChat),
-                EditorPowertoolsPermissions.ActiveEditors)
+                EditorPowertoolsPermissions.ActiveEditors),
+            SecurityAudit = _accessChecker.HasAccess(HttpContext,
+                nameof(FeatureToggles.SecurityAudit),
+                EditorPowertoolsPermissions.SecurityAudit)
         });
     }
 }

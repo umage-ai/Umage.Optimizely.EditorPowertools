@@ -19,6 +19,7 @@ using EditorPowertools.Tools.CmsDoctor.Checks;
 using EditorPowertools.Tools.CmsDoctor.Models;
 using EditorPowertools.Tools.ContentAudit;
 using EditorPowertools.Tools.PersonalizationAudit;
+using EditorPowertools.Tools.SecurityAudit;
 using EPiServer.Shell.Modules;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -128,10 +129,18 @@ public static class ServiceCollectionExtensions
         services.AddTransient<LinkCheckerJobStatusService>();
         services.AddHttpClient();
 
+        // Security Audit
+        services.AddSingleton<SecurityAuditRepository>();
+        services.AddTransient<SecurityAuditService>();
+        services.AddTransient<IDoctorCheck, EveryonePublishRightsCheck>();
+        services.AddTransient<IDoctorCheck, UnrestrictedContentCheck>();
+        services.AddTransient<IDoctorCheck, InconsistentInheritanceCheck>();
+
         // Unified content analysis (pluggable analyzers)
         services.AddTransient<IContentAnalyzer, ContentTypeStatisticsAnalyzer>();
         services.AddTransient<IContentAnalyzer, PersonalizationAnalyzer>();
         services.AddTransient<IContentAnalyzer, LinkCheckerAnalyzer>();
+        services.AddTransient<IContentAnalyzer, SecurityAuditAnalyzer>();
 
         // Active Editors (real-time presence + chat)
         services.AddSingleton<ActiveEditorsService>();
