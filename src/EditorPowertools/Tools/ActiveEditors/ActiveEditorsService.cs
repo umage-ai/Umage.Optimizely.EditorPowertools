@@ -8,6 +8,9 @@ public class ActiveEditorsService
     private readonly ConcurrentDictionary<string, EditorPresence> _editors = new();
     private readonly ConcurrentQueue<ChatMessage> _chatHistory = new();
     private readonly ConcurrentDictionary<string, byte> _editorsToday = new();
+    private readonly ConcurrentDictionary<string, DateTime> _lastChatTime = new();
+    private readonly ConcurrentDictionary<string, DateTime> _lastNotifyTime = new();
+    private readonly ConcurrentDictionary<string, DateTime> _lastHeartbeatTime = new();
     private DateTime _todayDate = DateTime.UtcNow.Date;
     private const int MaxChatHistory = 100;
     private static readonly TimeSpan StaleTimeout = TimeSpan.FromSeconds(90);
@@ -30,7 +33,28 @@ public class ActiveEditorsService
     public void Disconnect(string connectionId)
     {
         _editors.TryRemove(connectionId, out _);
+        _lastChatTime.TryRemove(connectionId, out _);
+        _lastNotifyTime.TryRemove(connectionId, out _);
+        _lastHeartbeatTime.TryRemove(connectionId, out _);
     }
+
+    public bool IsRateLimited(ConcurrentDictionary<string, DateTime> tracker, string connectionId, TimeSpan cooldown)
+    {
+        var now = DateTime.UtcNow;
+        if (tracker.TryGetValue(connectionId, out var lastTime) && (now - lastTime) < cooldown)
+            return true;
+        tracker[connectionId] = now;
+        return false;
+    }
+
+    public bool IsChatRateLimited(string connectionId) =>
+        IsRateLimited(_lastChatTime, connectionId, TimeSpan.FromSeconds(2));
+
+    public bool IsNotifyRateLimited(string connectionId) =>
+        IsRateLimited(_lastNotifyTime, connectionId, TimeSpan.FromSeconds(5));
+
+    public bool IsHeartbeatRateLimited(string connectionId) =>
+        IsRateLimited(_lastHeartbeatTime, connectionId, TimeSpan.FromSeconds(10));
 
     public void UpdateContext(string connectionId, int? contentId, string? contentName, string action)
     {

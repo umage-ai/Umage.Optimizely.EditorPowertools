@@ -67,12 +67,14 @@ public class ActiveEditorsHub : Hub
 
     public void Heartbeat()
     {
+        if (_service.IsHeartbeatRateLimited(Context.ConnectionId)) return;
         _service.Heartbeat(Context.ConnectionId);
     }
 
     public async Task SendChat(string text)
     {
         if (!_options.Value.Features.ActiveEditorsChat) return;
+        if (_service.IsChatRateLimited(Context.ConnectionId)) return;
         if (string.IsNullOrWhiteSpace(text)) return;
         if (text.Length > 500) text = text[..500];
 
@@ -106,6 +108,7 @@ public class ActiveEditorsHub : Hub
     public async Task SendNotification(string recipientUsername, string message)
     {
         if (string.IsNullOrWhiteSpace(recipientUsername) || string.IsNullOrWhiteSpace(message)) return;
+        if (_service.IsNotifyRateLimited(Context.ConnectionId)) return;
         if (message.Length > 500) message = message[..500];
 
         var senderUsername = Context.User?.Identity?.Name ?? "Unknown";
