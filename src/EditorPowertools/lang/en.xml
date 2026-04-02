@@ -91,6 +91,10 @@
           <title>Overview</title>
           <description>Dashboard overview of all Editor Powertools features.</description>
         </overview>
+        <visitorgrouptester>
+          <title>Visitor Group Tester</title>
+          <description>Floating toolbar to simulate visitor group membership and inspect editable content elements.</description>
+        </visitorgrouptester>
       </tools>
 
       <!-- Scheduled job -->

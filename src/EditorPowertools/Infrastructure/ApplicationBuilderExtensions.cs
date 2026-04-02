@@ -1,4 +1,5 @@
 using EditorPowertools.Tools.ActiveEditors;
+using EditorPowertools.Tools.VisitorGroupTester;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 
@@ -8,6 +9,7 @@ public static class ApplicationBuilderExtensions
 {
     public static IApplicationBuilder UseEditorPowertools(this IApplicationBuilder app)
     {
+        app.UseMiddleware<VisitorGroupTesterMiddleware>();
         return app;
     }
 

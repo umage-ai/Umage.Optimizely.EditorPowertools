@@ -25,4 +25,6 @@ public class FeatureToggles
     public bool ActiveEditors { get; set; } = true;
     public bool ActiveEditorsChat { get; set; } = true;
     public bool SecurityAudit { get; set; } = true;
+    public bool VisitorGroupTester { get; set; } = true;
+    public bool ContentStatistics { get; set; } = true;
 }

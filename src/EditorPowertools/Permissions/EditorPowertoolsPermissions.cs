@@ -65,4 +65,10 @@ public static class EditorPowertoolsPermissions
 
     public static PermissionType SecurityAudit { get; } =
         new("EditorPowertools", "SecurityAudit");
+
+    public static PermissionType VisitorGroupTester { get; } =
+        new("EditorPowertools", "VisitorGroupTester");
+
+    public static PermissionType ContentStatistics { get; } =
+        new("EditorPowertools", "ContentStatistics");
 }
