@@ -121,7 +121,7 @@
             try {
                 var results = await Promise.all([
                     EPT.loadPreferences('SecurityAudit'),
-                    EPT.fetchJson(API + '/api/status').catch(function () { return null; })
+                    EPT.fetchJson(API + '/status').catch(function () { return null; })
                 ]);
                 prefs = results[0];
                 statusData = results[1];
@@ -345,7 +345,7 @@
     async function loadRolesForDropdown() {
         try {
             if (state.roles.length === 0) {
-                state.roles = await EPT.fetchJson(API + '/api/roles');
+                state.roles = await EPT.fetchJson(API + '/roles');
             }
             var select = document.getElementById('sa-tree-role-highlight');
             if (!select) return;
@@ -365,7 +365,7 @@
 
     async function loadChildren(parentId) {
         if (state.treeNodes[parentId]) return state.treeNodes[parentId];
-        var children = await EPT.fetchJson(API + '/api/tree/children?parentId=' + parentId);
+        var children = await EPT.fetchJson(API + '/tree/children?parentId=' + parentId);
         state.treeNodes[parentId] = children;
         return children;
     }
@@ -555,7 +555,7 @@
         li.appendChild(panel);
 
         try {
-            var detail = await EPT.fetchJson(API + '/api/tree/node/' + node.contentId);
+            var detail = await EPT.fetchJson(API + '/tree/node/' + node.contentId);
 
             var html = '<div class="sa-detail-header">';
             html += '<strong>' + escHtml(detail.name) + '</strong>';
@@ -674,7 +674,7 @@
 
         try {
             // Fetch the ancestor path
-            var path = await EPT.fetchJson(API + '/api/tree/path/' + contentId);
+            var path = await EPT.fetchJson(API + '/tree/path/' + contentId);
 
             // Expand each ancestor in sequence
             for (var i = 0; i < path.length; i++) {
@@ -743,7 +743,7 @@
         // Load roles
         try {
             if (state.roles.length === 0) {
-                state.roles = await EPT.fetchJson(API + '/api/roles');
+                state.roles = await EPT.fetchJson(API + '/roles');
             }
 
             var select = document.getElementById('sa-role-select');
@@ -798,7 +798,7 @@
         EPT.showLoading(tableContainer);
 
         try {
-            var url = API + '/api/roles/' + encodeURIComponent(r.roleOrUser) + '/content?entityType=' + encodeURIComponent(r.entityType) +
+            var url = API + '/roles/' + encodeURIComponent(r.roleOrUser) + '/content?entityType=' + encodeURIComponent(r.entityType) +
                 '&page=' + state.rolePage + '&pageSize=' + PAGE_SIZE;
             if (state.roleAccessFilter) url += '&access=' + encodeURIComponent(state.roleAccessFilter);
 
@@ -891,7 +891,7 @@
 
         // Load summary
         try {
-            state.issuesSummary = await EPT.fetchJson(API + '/api/issues/summary');
+            state.issuesSummary = await EPT.fetchJson(API + '/issues/summary');
         } catch (e) {
             state.issuesSummary = null;
         }
@@ -958,7 +958,7 @@
         EPT.showLoading(tableContainer);
 
         try {
-            var url = API + '/api/issues?page=' + state.issuesPage + '&pageSize=' + PAGE_SIZE;
+            var url = API + '/issues?page=' + state.issuesPage + '&pageSize=' + PAGE_SIZE;
             if (state.issueTypeFilter) url += '&type=' + encodeURIComponent(state.issueTypeFilter);
             if (state.issueSeverityFilter) url += '&severity=' + encodeURIComponent(state.issueSeverityFilter);
 
