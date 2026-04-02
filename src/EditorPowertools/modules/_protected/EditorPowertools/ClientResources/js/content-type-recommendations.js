@@ -321,7 +321,11 @@
         if (!confirm('Are you sure you want to delete this rule?')) return;
 
         try {
-            await fetch(`${API}/rules/${ruleId}`, { method: 'DELETE' });
+            const resp = await fetch(`${API}/rules/${ruleId}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
             await reload();
         } catch (err) {
             alert('Error deleting rule: ' + err.message);

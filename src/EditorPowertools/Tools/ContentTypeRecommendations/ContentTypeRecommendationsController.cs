@@ -1,5 +1,6 @@
 using EditorPowertools.Permissions;
 using EditorPowertools.Tools.ContentTypeRecommendations.Models;
+using EPiServer;
 using EPiServer.Core;
 using EPiServer.Data;
 using EPiServer.DataAbstraction;
@@ -18,15 +19,18 @@ public class ContentTypeRecommendationsApiController : Controller
     private readonly ContentTypeRecommendationService _service;
     private readonly FeatureAccessChecker _accessChecker;
     private readonly IContentTypeRepository _contentTypeRepository;
+    private readonly IContentRepository _contentRepository;
 
     public ContentTypeRecommendationsApiController(
         ContentTypeRecommendationService service,
         FeatureAccessChecker accessChecker,
-        IContentTypeRepository contentTypeRepository)
+        IContentTypeRepository contentTypeRepository,
+        IContentRepository contentRepository)
     {
         _service = service;
         _accessChecker = accessChecker;
         _contentTypeRepository = contentTypeRepository;
+        _contentRepository = contentRepository;
     }
 
     [HttpGet]
@@ -76,6 +80,28 @@ public class ContentTypeRecommendationsApiController : Controller
 
         _service.DeleteRule(id);
         return Ok(new { success = true });
+    }
+
+    /// <summary>
+    /// Evaluates recommendation rules for a given parent content item and returns suggested content type IDs.
+    /// TODO: Register an IContentTypeAdvisor implementation when EPiServer.Cms.Shell.UI.Rest is available
+    /// to integrate directly with the CMS "create content" dialog.
+    /// </summary>
+    [HttpGet]
+    [Route("editorpowertools/api/recommendations/evaluate")]
+    public IActionResult EvaluateRules([FromQuery] int parentId)
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ContentTypeRecommendations),
+            EditorPowertoolsPermissions.ContentTypeRecommendations))
+            return Forbid();
+
+        var parentRef = new ContentReference(parentId);
+        if (!_contentRepository.TryGet<IContent>(parentRef, out var parent))
+            return NotFound(new { error = $"Content with ID {parentId} not found." });
+
+        var suggestedTypeIds = _service.EvaluateRules(parent, contentFolder: false, requestedTypes: Enumerable.Empty<string>());
+        return Ok(suggestedTypeIds);
     }
 
     [HttpGet]

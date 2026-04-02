@@ -43,13 +43,18 @@ public class ContentTypeRecommendationService
             if (rule.ParentContentType != -1 && rule.ParentContentType != parentType)
                 continue;
 
-            if (rule.ParentContent != null && rule.ParentContent.CompareToIgnoreWorkID(parentContent) && !rule.IncludeDescendants)
-                continue;
-
-            if (rule.ParentContent != null && !rule.ParentContent.CompareToIgnoreWorkID(parentContent) && rule.IncludeDescendants && !rule.ForThisContentFolder)
+            if (rule.ParentContent != null)
             {
-                if (!ancestors.Any(x => x.ContentLink.CompareToIgnoreWorkID(rule.ParentContent)))
+                bool isExactMatch = rule.ParentContent.CompareToIgnoreWorkID(parentContent);
+
+                if (!isExactMatch && !rule.IncludeDescendants)
                     continue;
+
+                if (!isExactMatch && rule.IncludeDescendants)
+                {
+                    if (!ancestors.Any(x => x.ContentLink.CompareToIgnoreWorkID(rule.ParentContent)))
+                        continue;
+                }
             }
 
             suggestions.AddRange(rule.ContentTypesToSuggest);
