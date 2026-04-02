@@ -320,12 +320,11 @@ public class VisitorGroupTesterMiddleware
     var inspectActive = false;
     var tooltip = null;
 
-    // Parse current visitor groups from URL
+    // Parse current visitor groups from cookie (persists across navigation)
     function getActiveGroupIds() {
-        var params = new URLSearchParams(window.location.search);
-        var val = params.get('visitorgroupsByID');
-        if (!val) return [];
-        return val.split(',').filter(function(s) { return s.trim(); });
+        var match = document.cookie.match(/ImpersonatedVisitorGroupsById=([^;]*)/);
+        if (!match || !match[1]) return [];
+        return match[1].split(',').filter(function(s) { return s.trim(); });
     }
 
     var activeGroupIds = new Set(getActiveGroupIds());
@@ -430,29 +429,34 @@ public class VisitorGroupTesterMiddleware
     }
 
     // Apply button
-    function buildUrlWithGroups(ids) {
-        // Build URL manually to avoid URLSearchParams encoding commas as %2C
-        // Optimizely expects raw commas: ?visitorgroupsByID=guid1,guid2
-        var url = new URL(window.location.href);
-        url.searchParams.delete('visitorgroupsByID');
-        var base = url.toString();
+    function setVgCookie(ids) {
+        // Optimizely reads impersonated visitor groups from cookie
+        // Cookie name: ImpersonatedVisitorGroupsById
+        // Value: comma-separated GUIDs
         if (ids.length > 0) {
-            var sep = base.indexOf('?') >= 0 ? '&' : '?';
-            return base + sep + 'visitorgroupsByID=' + ids.join(',');
+            document.cookie = 'ImpersonatedVisitorGroupsById=' + ids.join(',') + ';path=/';
+        } else {
+            document.cookie = 'ImpersonatedVisitorGroupsById=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT';
         }
-        return base;
+    }
+
+    function getVgCookie() {
+        var match = document.cookie.match(/ImpersonatedVisitorGroupsById=([^;]*)/);
+        return match ? match[1].split(',').filter(function(s) { return s.length > 0; }) : [];
     }
 
     document.getElementById('ept-vgt-apply').addEventListener('click', function() {
         var ids = [];
         activeGroupIds.forEach(function(id) { ids.push(id); });
-        window.location.href = buildUrlWithGroups(ids);
+        setVgCookie(ids);
+        window.location.reload();
     });
 
     // Clear button
     document.getElementById('ept-vgt-clear').addEventListener('click', function() {
         activeGroupIds.clear();
-        window.location.href = buildUrlWithGroups([]);
+        setVgCookie([]);
+        window.location.reload();
     });
 
     // Inspector tab
