@@ -451,14 +451,17 @@ public class VisitorGroupTesterMiddleware
     }
 
     function buildUrlWithGroups(ids) {
-        var url = new URL(window.location.href);
-        url.searchParams.delete('visitorgroupsByID');
-        var base = url.toString();
+        // Pure string manipulation — avoid URL/URLSearchParams which encode commas
+        var href = window.location.href;
+        // Remove existing visitorgroupsByID param
+        href = href.replace(/([?&])visitorgroupsByID=[^&#]*/g, '$1');
+        // Clean up leftover ? or &&
+        href = href.replace(/[?&]$/, '').replace(/[?]&/, '?').replace(/&&+/g, '&');
         if (ids.length > 0) {
-            var sep = base.indexOf('?') >= 0 ? '&' : '?';
-            return base + sep + 'visitorgroupsByID=' + ids.join(',');
+            var sep = href.indexOf('?') >= 0 ? '&' : '?';
+            return href + sep + 'visitorgroupsByID=' + ids.join(',');
         }
-        return base;
+        return href;
     }
 
     document.getElementById('ept-vgt-apply').addEventListener('click', function() {
@@ -505,9 +508,15 @@ public class VisitorGroupTesterMiddleware
         tooltip.style.display = 'none';
         document.body.appendChild(tooltip);
 
-        // Find all editable elements
-        var selectors = '[data-epi-block-id], [data-epi-content-link], [data-epi-property-name]';
-        document.querySelectorAll(selectors).forEach(function(el) {
+        // Find editable elements — try multiple attribute patterns
+        // Edit mode uses data-epi-*, but public site may use data-contentlink or oedit attributes
+        var selectors = '[data-epi-block-id], [data-epi-content-link], [data-epi-property-name], [data-contentlink], [data-epi-edit]';
+        var elements = document.querySelectorAll(selectors);
+        if (elements.length === 0) {
+            // Fallback: look for Optimizely content area divs and block wrappers
+            elements = document.querySelectorAll('[class*="block-"], [class*="content-area"], [data-displayoption]');
+        }
+        elements.forEach(function(el) {
             el.addEventListener('mouseenter', onInspectEnter);
             el.addEventListener('mouseleave', onInspectLeave);
             el.addEventListener('mousemove', onInspectMove);
@@ -535,8 +544,9 @@ public class VisitorGroupTesterMiddleware
         this.classList.add('ept-inspect-highlight');
 
         var blockId = this.getAttribute('data-epi-block-id');
-        var contentLink = this.getAttribute('data-epi-content-link');
-        var propertyName = this.getAttribute('data-epi-property-name');
+        var contentLink = this.getAttribute('data-epi-content-link') || this.getAttribute('data-contentlink');
+        var propertyName = this.getAttribute('data-epi-property-name') || this.getAttribute('data-epi-edit');
+        var displayOption = this.getAttribute('data-displayoption');
 
         var contentId = blockId || contentLink;
         var lines = [];
@@ -548,6 +558,15 @@ public class VisitorGroupTesterMiddleware
         }
         if (propertyName) {
             lines.push('<strong>Property:</strong> ' + escapeHtml(propertyName));
+        }
+        if (displayOption) {
+            lines.push('<strong>Display:</strong> ' + escapeHtml(displayOption));
+        }
+        if (lines.length === 0) {
+            // Show element info as fallback
+            var tag = this.tagName.toLowerCase();
+            var cls = this.className ? '.' + this.className.split(' ')[0] : '';
+            lines.push('<strong>Element:</strong> ' + escapeHtml(tag + cls));
         }
 
         if (tooltip && lines.length > 0) {
