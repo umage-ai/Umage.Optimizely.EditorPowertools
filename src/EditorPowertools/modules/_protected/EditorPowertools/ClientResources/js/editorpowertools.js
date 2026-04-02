@@ -14,7 +14,7 @@ const EPT = {
     async postJson(url, body) {
         const resp = await fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
             body: body ? JSON.stringify(body) : undefined
         });
         if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
@@ -223,7 +223,7 @@ const EPT = {
         this._prefTimers[toolName] = setTimeout(() => {
             fetch(`${window.EPT_API_URL}/preferences/${encodeURIComponent(toolName)}`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
                 body: JSON.stringify(prefs)
             }).catch(() => {});
         }, 1000);

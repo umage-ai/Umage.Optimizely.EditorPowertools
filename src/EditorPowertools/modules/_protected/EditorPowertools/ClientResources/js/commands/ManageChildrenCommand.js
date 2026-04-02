@@ -154,7 +154,7 @@ define([
 
                     fetch(window.EPT_API_URL + "/manage-children/" + action, {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: { "Content-Type": "application/json", "X-Requested-With": "XMLHttpRequest" },
                         body: JSON.stringify({ parentContentId: parseInt(parentId), contentIds: Array.from(selected) })
                     })
                     .then(function (r) { return r.json(); })

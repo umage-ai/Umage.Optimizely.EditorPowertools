@@ -1,3 +1,4 @@
+using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
 using EditorPowertools.Tools.ManageChildren.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EditorPowertools.Tools.ManageChildren;
 
 [Authorize(Policy = "codeart:editorpowertools")]
+[RequireAjax]
 [Route("editorpowertools/api/manage-children")]
 public class ManageChildrenApiController : Controller
 {

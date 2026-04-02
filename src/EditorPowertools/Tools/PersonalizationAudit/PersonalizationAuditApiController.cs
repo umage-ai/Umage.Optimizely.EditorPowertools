@@ -1,3 +1,4 @@
+using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ namespace EditorPowertools.Tools.PersonalizationAudit;
 /// The page view is served by EditorPowertoolsController.PersonalizationAudit().
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
+[RequireAjax]
 public class PersonalizationAuditApiController : Controller
 {
     private readonly PersonalizationAuditService _service;

@@ -1,3 +1,4 @@
+using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
 using EditorPowertools.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -10,6 +11,7 @@ namespace EditorPowertools.Tools.ContentTypeAudit;
 /// The page view is served by EditorPowertoolsController.ContentTypeAudit().
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
+[RequireAjax]
 public class ContentTypeAuditApiController : Controller
 {
     private readonly ContentTypeAuditService _service;

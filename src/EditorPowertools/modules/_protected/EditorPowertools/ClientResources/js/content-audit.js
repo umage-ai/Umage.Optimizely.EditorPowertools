@@ -115,7 +115,7 @@
         try {
             fetch(window.EPT_API_URL + '/preferences/' + PREFS_KEY, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
                 body: JSON.stringify(prefs)
             });
         } catch (e) { /* ignore */ }

@@ -21,7 +21,7 @@
     }
 
     function postJson(url) {
-        return fetch(url, { method: 'POST' }).then(function (r) {
+        return fetch(url, { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' } }).then(function (r) {
             if (!r.ok) throw new Error('HTTP ' + r.status);
             return r.json();
         });

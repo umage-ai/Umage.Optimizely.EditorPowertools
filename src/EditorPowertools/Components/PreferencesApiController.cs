@@ -1,3 +1,4 @@
+using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
 using EditorPowertools.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +10,7 @@ namespace EditorPowertools.Components;
 /// API endpoints for per-user tool preferences. Shared across all tools.
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
+[RequireAjax]
 [Route("editorpowertools/api/preferences")]
 public class PreferencesApiController : Controller
 {

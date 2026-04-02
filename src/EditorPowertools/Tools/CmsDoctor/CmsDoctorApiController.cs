@@ -1,3 +1,4 @@
+using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EditorPowertools.Tools.CmsDoctor;
 
 [Authorize(Policy = "codeart:editorpowertools")]
+[RequireAjax]
 [Route("editorpowertools/api/cms-doctor")]
 public class CmsDoctorApiController : Controller
 {

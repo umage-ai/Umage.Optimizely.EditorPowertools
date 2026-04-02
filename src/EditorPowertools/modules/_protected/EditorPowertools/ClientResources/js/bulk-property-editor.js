@@ -89,6 +89,8 @@
     // ---- API calls ----
 
     function apiFetch(url, options) {
+        options = options || {};
+        options.headers = Object.assign({ 'X-Requested-With': 'XMLHttpRequest' }, options.headers);
         return fetch(url, options)
             .then(function (resp) {
                 if (!resp.ok) {

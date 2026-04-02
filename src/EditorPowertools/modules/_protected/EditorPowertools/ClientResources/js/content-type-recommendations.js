@@ -323,7 +323,7 @@
         try {
             const resp = await fetch(`${API}/rules/${ruleId}`, {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
             });
             if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
             await reload();

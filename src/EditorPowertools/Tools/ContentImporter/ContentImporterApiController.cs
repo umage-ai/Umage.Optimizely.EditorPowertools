@@ -1,3 +1,4 @@
+using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
 using EditorPowertools.Tools.ContentImporter.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EditorPowertools.Tools.ContentImporter;
 
 [Authorize(Policy = "codeart:editorpowertools")]
+[RequireAjax]
 public class ContentImporterApiController : Controller
 {
     private readonly ContentImporterService _service;

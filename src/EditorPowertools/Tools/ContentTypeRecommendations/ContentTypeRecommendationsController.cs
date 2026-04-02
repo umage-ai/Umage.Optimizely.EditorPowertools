@@ -1,3 +1,4 @@
+using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
 using EditorPowertools.Tools.ContentTypeRecommendations.Models;
 using EPiServer;
@@ -14,6 +15,7 @@ namespace EditorPowertools.Tools.ContentTypeRecommendations;
 /// The page view is served by EditorPowertoolsController.ContentTypeRecommendations().
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
+[RequireAjax]
 public class ContentTypeRecommendationsApiController : Controller
 {
     private readonly ContentTypeRecommendationService _service;

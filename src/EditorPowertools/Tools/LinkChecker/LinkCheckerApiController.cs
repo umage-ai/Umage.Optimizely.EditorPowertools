@@ -1,3 +1,4 @@
+using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ namespace EditorPowertools.Tools.LinkChecker;
 /// The page view is served by EditorPowertoolsController.LinkChecker().
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
+[RequireAjax]
 public class LinkCheckerApiController : Controller
 {
     private readonly LinkCheckerService _service;

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
 using EditorPowertools.Tools.BulkPropertyEditor.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +13,7 @@ namespace EditorPowertools.Tools.BulkPropertyEditor;
 /// The page view is served by EditorPowertoolsController.BulkPropertyEditor().
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
+[RequireAjax]
 [Route("editorpowertools/api/bulk-editor")]
 public class BulkPropertyEditorApiController : Controller
 {
