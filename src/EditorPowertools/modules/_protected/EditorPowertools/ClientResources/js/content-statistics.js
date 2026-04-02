@@ -23,15 +23,25 @@
     }
 
     async function loadDashboard() {
+        var data;
         try {
-            var data = await EPT.fetchJson(API_URL);
-            render(data);
+            data = await EPT.fetchJson(API_URL);
         } catch (err) {
             root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
-                '<p style="color:var(--ept-danger)">Failed to load statistics: ' + (err.message || 'Unknown error') + '</p>' +
+                '<p style="color:var(--ept-danger)">Failed to load statistics from API.</p>' +
                 renderRunJobBanner() +
                 '</div></div>';
             wireRunJobButton();
+            return;
+        }
+        try {
+            render(data);
+        } catch (err) {
+            console.error('[EditorPowertools] Content Statistics render error:', err);
+            root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
+                '<p style="color:var(--ept-danger)">Error rendering statistics dashboard.</p>' +
+                '<pre style="font-size:11px;color:#999;margin-top:8px">' + (err.stack || err.message) + '</pre>' +
+                '</div></div>';
         }
     }
 
