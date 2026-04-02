@@ -36,6 +36,7 @@
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="EPiServer.CMS" Version="12.29.0" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.29.0" />
     <PackageReference Include="EPPlusFree" Version="4.5.3.8" />
   </ItemGroup>
 
@@ -58,19 +59,11 @@
   -->
   <Target Name="CreateModuleZip" BeforeTargets="Build">
     <MakeDir Directories="$(IntermediateOutputPath)module-zip" />
-    <ZipDirectory
-      SourceDirectory="modules\_protected\EditorPowertools"
-      DestinationFile="$(IntermediateOutputPath)module-zip\EditorPowertools.zip"
-      Overwrite="true" />
+    <ZipDirectory SourceDirectory="modules\_protected\EditorPowertools" DestinationFile="$(IntermediateOutputPath)module-zip\EditorPowertools.zip" Overwrite="true" />
   </Target>
 
   <ItemGroup>
-    <Content Include="$(IntermediateOutputPath)module-zip\EditorPowertools.zip"
-             Pack="true"
-             PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools"
-             BuildAction="None"
-             CopyToPublishDirectory="Never"
-             CopyToOutputDirectory="Never">
+    <Content Include="$(IntermediateOutputPath)module-zip\EditorPowertools.zip" Pack="true" PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools" BuildAction="None" CopyToPublishDirectory="Never" CopyToOutputDirectory="Never">
       <Link>EditorPowertools.zip</Link>
     </Content>
   </ItemGroup>

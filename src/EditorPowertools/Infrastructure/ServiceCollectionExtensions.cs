@@ -79,6 +79,7 @@ public static class ServiceCollectionExtensions
         // Content Type Recommendations
         services.AddSingleton<ContentTypeRecommendationRepository>();
         services.AddTransient<ContentTypeRecommendationService>();
+        services.AddTransient<EPiServer.Cms.Shell.UI.Rest.IContentTypeAdvisor, ContentTypeRecommendationAdvisor>();
 
         // Bulk Property Editor
         services.AddTransient<BulkPropertyEditorService>();
