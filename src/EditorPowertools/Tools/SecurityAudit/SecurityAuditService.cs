@@ -35,7 +35,13 @@ public class SecurityAuditService
     /// </summary>
     public List<ContentPermissionNodeDto> GetChildren(int parentContentId)
     {
+        // parentContentId=0 means "root" — in Optimizely, RootPage is typically ID 1
+        // Try the requested ID first, if empty and ID is 0, try common root IDs
         var children = _repository.GetByParent(parentContentId).ToList();
+        if (children.Count == 0 && parentContentId == 0)
+        {
+            children = _repository.GetByParent(1).ToList(); // ContentReference.RootPage
+        }
         var allRecords = _repository.GetAll().ToList();
         var childLookup = allRecords.GroupBy(r => r.ParentContentId)
             .ToDictionary(g => g.Key, g => true);
