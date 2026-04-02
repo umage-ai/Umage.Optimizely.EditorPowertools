@@ -117,6 +117,20 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
             SortIndex = 960,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.SecurityAudit))
         };
+
+        yield return new UrlMenuItem("Content Statistics", BaseMenuPath + "/contentstatistics",
+            GetResourcePath("EditorPowertools/ContentStatistics"))
+        {
+            SortIndex = 150,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentStatistics))
+        };
+
+        yield return new UrlMenuItem("Language Audit", BaseMenuPath + "/languageaudit",
+            GetResourcePath("EditorPowertools/LanguageAudit"))
+        {
+            SortIndex = 970,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.LanguageAudit))
+        };
     }
 
     private static string GetResourcePath(string resourcePath)

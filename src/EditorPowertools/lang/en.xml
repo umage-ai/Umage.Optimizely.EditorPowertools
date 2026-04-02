@@ -19,6 +19,7 @@
         <linkchecker>Link Checker</linkchecker>
         <activeeditors>Active Editors</activeeditors>
         <managechildren>Manage Children</managechildren>
+        <contentstatistics>Content Statistics</contentstatistics>
       </menu>
 
       <!-- Components (CMS assets panel widgets) -->
@@ -95,6 +96,10 @@
           <title>Visitor Group Tester</title>
           <description>Floating toolbar to simulate visitor group membership and inspect editable content elements.</description>
         </visitorgrouptester>
+        <contentstatistics>
+          <title>Content Statistics</title>
+          <description>Visual dashboard with charts showing content distribution, creation trends, staleness, and editor activity.</description>
+        </contentstatistics>
       </tools>
 
       <!-- Scheduled job -->

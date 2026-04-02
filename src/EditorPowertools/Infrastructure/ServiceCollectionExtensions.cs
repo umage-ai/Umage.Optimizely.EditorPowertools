@@ -19,6 +19,8 @@ using EditorPowertools.Tools.CmsDoctor.Checks;
 using EditorPowertools.Tools.CmsDoctor.Models;
 using EditorPowertools.Tools.ContentAudit;
 using EditorPowertools.Tools.PersonalizationAudit;
+using EditorPowertools.Tools.ContentStatistics;
+using EditorPowertools.Tools.LanguageAudit;
 using EditorPowertools.Tools.SecurityAudit;
 using EPiServer.Shell.Modules;
 using Microsoft.AspNetCore.Authorization;
@@ -136,11 +138,19 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IDoctorCheck, UnrestrictedContentCheck>();
         services.AddTransient<IDoctorCheck, InconsistentInheritanceCheck>();
 
+        // Content Statistics
+        services.AddTransient<ContentStatisticsService>();
+
+        // Language Audit
+        services.AddSingleton<LanguageAuditRepository>();
+        services.AddTransient<LanguageAuditService>();
+
         // Unified content analysis (pluggable analyzers)
         services.AddTransient<IContentAnalyzer, ContentTypeStatisticsAnalyzer>();
         services.AddTransient<IContentAnalyzer, PersonalizationAnalyzer>();
         services.AddTransient<IContentAnalyzer, LinkCheckerAnalyzer>();
         services.AddTransient<IContentAnalyzer, SecurityAuditAnalyzer>();
+        services.AddTransient<IContentAnalyzer, LanguageAuditAnalyzer>();
 
         // Active Editors (real-time presence + chat)
         services.AddSingleton<ActiveEditorsService>();

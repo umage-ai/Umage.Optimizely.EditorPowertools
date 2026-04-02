@@ -71,4 +71,7 @@ public static class EditorPowertoolsPermissions
 
     public static PermissionType ContentStatistics { get; } =
         new("EditorPowertools", "ContentStatistics");
+
+    public static PermissionType LanguageAudit { get; } =
+        new("EditorPowertools", "LanguageAudit");
 }

@@ -27,4 +27,5 @@ public class FeatureToggles
     public bool SecurityAudit { get; set; } = true;
     public bool VisitorGroupTester { get; set; } = true;
     public bool ContentStatistics { get; set; } = true;
+    public bool LanguageAudit { get; set; } = true;
 }

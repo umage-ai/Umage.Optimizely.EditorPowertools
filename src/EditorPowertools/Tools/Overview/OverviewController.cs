@@ -183,4 +183,26 @@ public class EditorPowertoolsController : Controller
 
         return View("/Views/SecurityAudit/Index.cshtml");
     }
+
+    [HttpGet]
+    public IActionResult ContentStatistics()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ContentStatistics),
+            EditorPowertoolsPermissions.ContentStatistics))
+            return Forbid();
+
+        return View("/Views/ContentStatistics/Index.cshtml");
+    }
+
+    [HttpGet]
+    public IActionResult LanguageAudit()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.LanguageAudit),
+            EditorPowertoolsPermissions.LanguageAudit))
+            return Forbid();
+
+        return View("/Views/LanguageAudit/Index.cshtml");
+    }
 }

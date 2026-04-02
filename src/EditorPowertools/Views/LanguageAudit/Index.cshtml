@@ -1,0 +1,24 @@
+@using EPiServer.Shell
+@{
+    Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
+    ViewData["Title"] = "Language Audit";
+    string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
+}
+
+@section NavItems {
+    <a href="@ActionPath("EditorPowertools/Overview")">Overview</a>
+}
+
+<div class="ept-page-header">
+    <h1>Language Audit</h1>
+    <p>Analyze language coverage, find missing translations, and manage translation priorities.</p>
+</div>
+
+<div id="lang-audit-tabs" class="ept-tabs"></div>
+<div id="lang-audit-stats" class="ept-stats"></div>
+<div id="lang-audit-toolbar" class="ept-toolbar"></div>
+<div id="lang-audit-content"></div>
+
+@section Scripts {
+    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/language-audit.js"))"></script>
+}
