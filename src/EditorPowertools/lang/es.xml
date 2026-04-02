@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Español" id="es">
+    <editorpowertools>
+      <!-- Menú principal -->
+      <menu>
+        <title>Editor Powertools</title>
+        <overview>Vista general</overview>
+        <contenttypeaudit>Auditoría de tipos de contenido</contenttypeaudit>
+        <personalizationaudit>Auditoría de personalización</personalizationaudit>
+        <audiencemanager>Gestor de audiencias</audiencemanager>
+        <contenttyperecommendations>Recomendaciones de tipos de contenido</contenttyperecommendations>
+        <bulkpropertyeditor>Editor masivo de propiedades</bulkpropertyeditor>
+        <scheduledjobsgantt>Tareas programadas Gantt</scheduledjobsgantt>
+        <activitytimeline>Línea de tiempo de actividad</activitytimeline>
+        <contentimporter>Importador de contenido</contentimporter>
+        <cmsdoctor>Doctor CMS</cmsdoctor>
+        <contentaudit>Auditoría de contenido</contentaudit>
+        <linkchecker>Verificador de enlaces</linkchecker>
+        <activeeditors>Editores activos</activeeditors>
+        <managechildren>Gestionar subpáginas</managechildren>
+      </menu>
+
+      <!-- Componentes (widgets del panel de activos CMS) -->
+      <components>
+        <contentdetails>
+          <title>Power Detalles de contenido</title>
+          <description>Información detallada sobre el elemento de contenido seleccionado - propiedades, referencias, versiones.</description>
+        </contentdetails>
+        <activeeditors>
+          <title>Editores activos</title>
+          <description>Vea quién más está editando este contenido y colabore con su equipo.</description>
+        </activeeditors>
+      </components>
+
+      <!-- Títulos y descripciones de herramientas -->
+      <tools>
+        <contenttypeaudit>
+          <title>Auditoría de tipos de contenido</title>
+          <description>Vista general de todos los tipos de contenido, su uso, propiedades y herencia.</description>
+        </contenttypeaudit>
+        <personalizationaudit>
+          <title>Auditoría de personalización</title>
+          <description>Buscar y auditar el uso de grupos de visitantes en contenido, derechos de acceso y propiedades.</description>
+        </personalizationaudit>
+        <audiencemanager>
+          <title>Gestor de audiencias</title>
+          <description>Gestionar y revisar grupos de visitantes y segmentos de audiencia.</description>
+        </audiencemanager>
+        <contenttyperecommendations>
+          <title>Recomendaciones de tipos de contenido</title>
+          <description>Obtener recomendaciones para mejorar y consolidar tipos de contenido.</description>
+        </contenttyperecommendations>
+        <bulkpropertyeditor>
+          <title>Editor masivo de propiedades</title>
+          <description>Editar propiedades en múltiples elementos de contenido a la vez.</description>
+        </bulkpropertyeditor>
+        <scheduledjobsgantt>
+          <title>Tareas programadas Gantt</title>
+          <description>Visualizar la ejecución de tareas programadas como un diagrama de Gantt.</description>
+        </scheduledjobsgantt>
+        <activitytimeline>
+          <title>Línea de tiempo de actividad</title>
+          <description>Ver una línea de tiempo de cambios de contenido y actividad editorial.</description>
+        </activitytimeline>
+        <contentimporter>
+          <title>Importador de contenido</title>
+          <description>Importar contenido desde archivos CSV, JSON o Excel.</description>
+        </contentimporter>
+        <cmsdoctor>
+          <title>Doctor CMS</title>
+          <description>Comprobaciones de salud y diagnósticos para su instalación CMS.</description>
+        </cmsdoctor>
+        <contentaudit>
+          <title>Auditoría de contenido</title>
+          <description>Auditar contenido por calidad, completitud y mejores prácticas.</description>
+        </contentaudit>
+        <linkchecker>
+          <title>Verificador de enlaces</title>
+          <description>Encontrar y reportar enlaces rotos en su sitio.</description>
+        </linkchecker>
+        <activeeditors>
+          <title>Editores activos</title>
+          <description>Vea quién está editando contenido en este momento y colabore en tiempo real.</description>
+        </activeeditors>
+        <managechildren>
+          <title>Gestionar subpáginas</title>
+          <description>Gestión masiva de subpáginas: ordenar, publicar, despublicar, mover y eliminar.</description>
+        </managechildren>
+        <overview>
+          <title>Vista general</title>
+          <description>Panel de control con vista general de todas las funciones de Editor Powertools.</description>
+        </overview>
+      </tools>
+
+      <!-- Tarea programada -->
+      <jobs>
+        <contentanalysis>
+          <displayname>[EditorPowertools] Análisis de contenido</displayname>
+          <description>Tarea unificada que recorre todo el contenido una vez y ejecuta todos los analizadores registrados (estadísticas de tipos de contenido, personalización, verificación de enlaces, etc.).</description>
+          <noanalyzers>No hay analizadores registrados.</noanalyzers>
+          <initializing>Inicializando {0} analizadores...</initializing>
+          <analyzing>Analizando {0} elementos de contenido con {1} analizadores...</analyzing>
+          <stopped>Detenido después de {0}/{1} elementos.</stopped>
+          <processing>{0}/{1} elementos de contenido procesados...</processing>
+          <completing>Finalizando analizadores...</completing>
+          <completed>Completado. {0} elementos de contenido analizados con {1} analizadores ({2}).</completed>
+        </contentanalysis>
+      </jobs>
+
+      <!-- Doctor CMS comprobaciones de salud -->
+      <cmsdoctor>
+        <runjobfirst>Ejecute primero la tarea programada '[EditorPowertools] Análisis de contenido'.</runjobfirst>
+        <checks>
+          <memorycheck>
+            <name>Uso de memoria</name>
+            <description>Informa sobre el uso actual de memoria de la aplicación.</description>
+            <group>Entorno</group>
+            <biton64>Ejecutándose como 32 bits en SO de 64 bits. Memoria: {0} MB.</biton64>
+            <highmemory>Alto uso de memoria: {0} MB.</highmemory>
+            <ok>Memoria: {0} MB working set.</ok>
+            <details>Working set: {0} MB, GC heap: {1} MB, proceso 64 bits: {2}, SO 64 bits: {3}</details>
+          </memorycheck>
+          <versioninfocheck>
+            <name>Versión CMS</name>
+            <description>Informa sobre la versión actual de Optimizely CMS.</description>
+            <group>Entorno</group>
+            <ok>Optimizely CMS {0}</ok>
+            <details>Versión del ensamblado EPiServer: {0}. .NET {1}</details>
+            <unknown>Desconocido</unknown>
+            <couldnotdetermine>No se pudo determinar la versión del CMS.</couldnotdetermine>
+          </versioninfocheck>
+          <contenttypecheck>
+            <name>Cantidad de tipos de contenido</name>
+            <description>Comprueba si el número de tipos de contenido está dentro de límites razonables.</description>
+            <group>Contenido</group>
+            <toomanypagetypes>Demasiados tipos de página ({0}). Los editores pueden tener dificultades para encontrar el correcto.</toomanypagetypes>
+            <toomanyblocktypes>Demasiados tipos de bloque ({0}). Considere consolidar.</toomanyblocktypes>
+            <toofewpagetypes>Solo {0} tipo(s) de página. El contenido puede carecer de estructura.</toofewpagetypes>
+            <ok>{0} tipos de contenido ({1} páginas, {2} bloques, {3} medios)</ok>
+            <details>Tipos de página: {0}, Tipos de bloque: {1}, Tipos de medio: {2}, Total: {3}</details>
+          </contenttypecheck>
+          <orphanedpropertycheck>
+            <name>Propiedades huérfanas</name>
+            <description>Encuentra propiedades definidas en la base de datos pero no en el código.</description>
+            <group>Contenido</group>
+            <found>{0} propiedades huérfanas encontradas en la base de datos que no están definidas en el código.</found>
+            <ok>No se encontraron propiedades huérfanas.</ok>
+            <examples>Ejemplos: {0}</examples>
+            <andmore>(y {0} más)</andmore>
+          </orphanedpropertycheck>
+          <scheduledjobscheck>
+            <name>Salud de tareas programadas</name>
+            <description>Comprueba tareas programadas fallidas o de larga duración.</description>
+            <group>Entorno</group>
+            <failed>{0} tarea(s) programada(s) tienen errores.</failed>
+            <neverrun>{0} tarea(s) habilitada(s) nunca se han ejecutado.</neverrun>
+            <ok>Todas las {0} tareas habilitadas están en buen estado.</ok>
+            <failedlabel>Fallidas: {0}</failedlabel>
+            <neverrunlabel>Nunca ejecutadas: {0}</neverrunlabel>
+          </scheduledjobscheck>
+          <draftcontentcheck>
+            <name>Borradores obsoletos</name>
+            <description>Comprueba contenido en borrador que nunca se ha publicado o tiene cambios antiguos sin publicar.</description>
+            <group>Contenido</group>
+            <ok>No se encontraron borradores obsoletos.</ok>
+            <warning>{0} elementos de contenido obsoletos encontrados. Considere revisarlos y limpiarlos.</warning>
+            <minor>{0} elementos obsoletos encontrados (menor).</minor>
+            <details>Nunca publicados: {0}, Borradores obsoletos (>3 meses): {1}</details>
+          </draftcontentcheck>
+          <brokenlinkscheck>
+            <name>Enlaces rotos</name>
+            <description>Informa sobre enlaces rotos encontrados por la herramienta Verificador de enlaces.</description>
+            <group>Contenido</group>
+            <nodata>No hay datos de enlaces disponibles. Ejecute primero la tarea programada Análisis de contenido.</nodata>
+            <nodatadetails>El analizador del verificador de enlaces completa estos datos durante la tarea programada.</nodatadetails>
+            <allhealthy>Todos los {0} enlaces están en buen estado.</allhealthy>
+            <fault>{0} enlaces rotos encontrados entre {1} enlaces totales.</fault>
+            <warning>{0} enlaces rotos encontrados.</warning>
+            <details>Enlaces totales: {0}, Rotos: {1}. 404: {2}, 5xx: {3}, Tiempos agotados: {4}</details>
+            <notavailable>Los datos del verificador de enlaces aún no están disponibles.</notavailable>
+          </brokenlinkscheck>
+          <missingalttextcheck>
+            <name>Texto alternativo faltante</name>
+            <description>Comprueba imágenes sin texto alternativo (problema de accesibilidad y SEO).</description>
+            <group>Contenido</group>
+            <noimages>No se encontraron imágenes.</noimages>
+            <badpractice>{0} imágenes sin texto alternativo ({1}%).</badpractice>
+            <warning>{0} imágenes sin texto alternativo.</warning>
+            <ok>Todas las imágenes tienen texto alternativo.</ok>
+            <details>{0} de {1} imágenes ({2}%) no tienen texto alternativo. Último análisis: {3}</details>
+          </missingalttextcheck>
+          <unusedcontentcheck>
+            <name>Contenido no utilizado</name>
+            <description>Comprueba bloques y medios no referenciados por nada (posibles huérfanos).</description>
+            <group>Contenido</group>
+            <noblocks>No se encontraron bloques ni medios.</noblocks>
+            <warning>{0} elementos no referenciados ({1}%). Considere limpiar.</warning>
+            <minor>{0} elementos no referenciados ({1}%, menor).</minor>
+            <ok>Todos los bloques y medios están referenciados.</ok>
+            <details>{0} de {1} bloques/medios ({2}%) no están referenciados. Último análisis: {3}</details>
+          </unusedcontentcheck>
+        </checks>
+        <groups>
+          <environment>Entorno</environment>
+          <content>Contenido</content>
+        </groups>
+        <tags>
+          <performance>Rendimiento</performance>
+          <security>Seguridad</security>
+          <editorux>Experiencia del editor</editorux>
+          <maintenance>Mantenimiento</maintenance>
+          <seo>SEO</seo>
+          <accessibility>Accesibilidad</accessibility>
+        </tags>
+      </cmsdoctor>
+
+      <!-- Mensajes de importación de contenido -->
+      <contentimporter>
+        <errors>
+          <nofile>No se ha subido ningún archivo</nofile>
+          <toolarge>Archivo demasiado grande (máx. 50 MB)</toolarge>
+          <unsupportedfiletype>Tipo de archivo no compatible: {0}</unsupportedfiletype>
+          <sessionnotfound>Sesión no encontrada</sessionnotfound>
+          <contenttypenotfound>Tipo de contenido no encontrado</contenttypenotfound>
+          <nomapping>No hay mapeo configurado. Ejecute primero una prueba en seco.</nomapping>
+          <processingerror>Se produjo un error al procesar la solicitud.</processingerror>
+        </errors>
+        <warnings>
+          <nonamecolumn>No se ha mapeado columna de nombre</nonamecolumn>
+        </warnings>
+        <status>
+          <running>en ejecución</running>
+          <completed>completado</completed>
+          <failed>fallido</failed>
+        </status>
+      </contentimporter>
+
+      <!-- Analizadores -->
+      <analyzers>
+        <contenttypestatistics>Estadísticas de tipos de contenido</contenttypestatistics>
+        <personalization>Personalización</personalization>
+        <linkchecker>Verificador de enlaces</linkchecker>
+      </analyzers>
+
+      <!-- Cadenas comunes -->
+      <common>
+        <unknown>Desconocido</unknown>
+        <error>Error</error>
+        <ok>OK</ok>
+        <timeout>Tiempo agotado</timeout>
+        <notfound>No encontrado</notfound>
+        <contentnotfound>Contenido no encontrado</contentnotfound>
+        <connectionerror>Error de conexión: {0}</connectionerror>
+      </common>
+    </editorpowertools>
+  </language>
+</languages>

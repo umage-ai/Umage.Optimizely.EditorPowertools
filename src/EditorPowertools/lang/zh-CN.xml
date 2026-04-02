@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="简体中文" id="zh-CN">
+    <editorpowertools>
+      <!-- 主菜单 -->
+      <menu>
+        <title>Editor Powertools</title>
+        <overview>概览</overview>
+        <contenttypeaudit>内容类型审计</contenttypeaudit>
+        <personalizationaudit>个性化审计</personalizationaudit>
+        <audiencemanager>受众管理</audiencemanager>
+        <contenttyperecommendations>内容类型建议</contenttyperecommendations>
+        <bulkpropertyeditor>批量属性编辑器</bulkpropertyeditor>
+        <scheduledjobsgantt>计划任务甘特图</scheduledjobsgantt>
+        <activitytimeline>活动时间线</activitytimeline>
+        <contentimporter>内容导入器</contentimporter>
+        <cmsdoctor>CMS医生</cmsdoctor>
+        <contentaudit>内容审计</contentaudit>
+        <linkchecker>链接检查器</linkchecker>
+        <activeeditors>活跃编辑者</activeeditors>
+        <managechildren>管理子页面</managechildren>
+      </menu>
+
+      <!-- 组件（CMS资产面板小部件） -->
+      <components>
+        <contentdetails>
+          <title>Power 内容详情</title>
+          <description>所选内容项的详细信息 - 属性、引用、版本。</description>
+        </contentdetails>
+        <activeeditors>
+          <title>活跃编辑者</title>
+          <description>查看还有谁在编辑此内容，并与您的团队协作。</description>
+        </activeeditors>
+      </components>
+
+      <!-- 工具标题和描述 -->
+      <tools>
+        <contenttypeaudit>
+          <title>内容类型审计</title>
+          <description>所有内容类型的概览，包括用法、属性和继承关系。</description>
+        </contenttypeaudit>
+        <personalizationaudit>
+          <title>个性化审计</title>
+          <description>查找和审计内容、访问权限和属性中的访客组使用情况。</description>
+        </personalizationaudit>
+        <audiencemanager>
+          <title>受众管理</title>
+          <description>管理和查看访客组和受众细分。</description>
+        </audiencemanager>
+        <contenttyperecommendations>
+          <title>内容类型建议</title>
+          <description>获取内容类型改进和整合的建议。</description>
+        </contenttyperecommendations>
+        <bulkpropertyeditor>
+          <title>批量属性编辑器</title>
+          <description>一次性编辑多个内容项的属性。</description>
+        </bulkpropertyeditor>
+        <scheduledjobsgantt>
+          <title>计划任务甘特图</title>
+          <description>将计划任务的执行可视化为甘特图。</description>
+        </scheduledjobsgantt>
+        <activitytimeline>
+          <title>活动时间线</title>
+          <description>查看内容变更和编辑活动的时间线。</description>
+        </activitytimeline>
+        <contentimporter>
+          <title>内容导入器</title>
+          <description>从CSV、JSON或Excel文件导入内容。</description>
+        </contentimporter>
+        <cmsdoctor>
+          <title>CMS医生</title>
+          <description>CMS安装的健康检查和诊断。</description>
+        </cmsdoctor>
+        <contentaudit>
+          <title>内容审计</title>
+          <description>审计内容的质量、完整性和最佳实践。</description>
+        </contentaudit>
+        <linkchecker>
+          <title>链接检查器</title>
+          <description>查找和报告网站上的失效链接。</description>
+        </linkchecker>
+        <activeeditors>
+          <title>活跃编辑者</title>
+          <description>查看谁正在编辑内容并实时协作。</description>
+        </activeeditors>
+        <managechildren>
+          <title>管理子页面</title>
+          <description>批量管理子页面：排序、发布、取消发布、移动和删除。</description>
+        </managechildren>
+        <overview>
+          <title>概览</title>
+          <description>Editor Powertools所有功能的仪表板概览。</description>
+        </overview>
+      </tools>
+
+      <!-- 计划任务 -->
+      <jobs>
+        <contentanalysis>
+          <displayname>[EditorPowertools] 内容分析</displayname>
+          <description>统一任务，遍历所有内容一次并运行所有已注册的分析器（内容类型统计、个性化、链接检查等）。</description>
+          <noanalyzers>没有注册分析器。</noanalyzers>
+          <initializing>正在初始化{0}个分析器...</initializing>
+          <analyzing>正在使用{1}个分析器分析{0}个内容项...</analyzing>
+          <stopped>在{0}/{1}个项目后停止。</stopped>
+          <processing>已处理{0}/{1}个内容项...</processing>
+          <completing>正在完成分析器...</completing>
+          <completed>完成。使用{1}个分析器（{2}）分析了{0}个内容项。</completed>
+        </contentanalysis>
+      </jobs>
+
+      <!-- CMS医生健康检查 -->
+      <cmsdoctor>
+        <runjobfirst>请先运行计划任务 '[EditorPowertools] 内容分析'。</runjobfirst>
+        <checks>
+          <memorycheck>
+            <name>内存使用情况</name>
+            <description>报告应用程序当前的内存使用情况。</description>
+            <group>环境</group>
+            <biton64>在64位操作系统上以32位运行。内存：{0} MB。</biton64>
+            <highmemory>内存使用量高：{0} MB。</highmemory>
+            <ok>内存：{0} MB工作集。</ok>
+            <details>工作集：{0} MB，GC堆：{1} MB，64位进程：{2}，64位操作系统：{3}</details>
+          </memorycheck>
+          <versioninfocheck>
+            <name>CMS版本</name>
+            <description>报告当前Optimizely CMS版本。</description>
+            <group>环境</group>
+            <ok>Optimizely CMS {0}</ok>
+            <details>EPiServer程序集版本：{0}。.NET {1}</details>
+            <unknown>未知</unknown>
+            <couldnotdetermine>无法确定CMS版本。</couldnotdetermine>
+          </versioninfocheck>
+          <contenttypecheck>
+            <name>内容类型数量</name>
+            <description>检查内容类型数量是否在合理范围内。</description>
+            <group>内容</group>
+            <toomanypagetypes>页面类型过多（{0}个）。编辑者可能难以找到正确的类型。</toomanypagetypes>
+            <toomanyblocktypes>块类型过多（{0}个）。请考虑整合。</toomanyblocktypes>
+            <toofewpagetypes>仅有{0}个页面类型。内容可能缺乏结构。</toofewpagetypes>
+            <ok>{0}个内容类型（{1}个页面、{2}个块、{3}个媒体）</ok>
+            <details>页面类型：{0}，块类型：{1}，媒体类型：{2}，总计：{3}</details>
+          </contenttypecheck>
+          <orphanedpropertycheck>
+            <name>孤立属性</name>
+            <description>查找在数据库中定义但未在代码中定义的属性。</description>
+            <group>内容</group>
+            <found>在数据库中找到{0}个未在代码中定义的孤立属性。</found>
+            <ok>未找到孤立属性。</ok>
+            <examples>示例：{0}</examples>
+            <andmore>（还有{0}个）</andmore>
+          </orphanedpropertycheck>
+          <scheduledjobscheck>
+            <name>计划任务健康状况</name>
+            <description>检查失败或长时间运行的计划任务。</description>
+            <group>环境</group>
+            <failed>{0}个计划任务出现错误。</failed>
+            <neverrun>{0}个已启用的任务从未运行过。</neverrun>
+            <ok>所有{0}个已启用的任务运行正常。</ok>
+            <failedlabel>失败：{0}</failedlabel>
+            <neverrunlabel>从未运行：{0}</neverrunlabel>
+          </scheduledjobscheck>
+          <draftcontentcheck>
+            <name>陈旧草稿</name>
+            <description>检查从未发布或有旧的未发布更改的草稿内容。</description>
+            <group>内容</group>
+            <ok>未找到陈旧草稿。</ok>
+            <warning>找到{0}个陈旧内容项。请考虑检查和清理。</warning>
+            <minor>找到{0}个陈旧项目（轻微）。</minor>
+            <details>从未发布：{0}，陈旧草稿（超过3个月）：{1}</details>
+          </draftcontentcheck>
+          <brokenlinkscheck>
+            <name>失效链接</name>
+            <description>报告链接检查器工具发现的失效链接。</description>
+            <group>内容</group>
+            <nodata>没有链接数据可用。请先运行内容分析计划任务。</nodata>
+            <nodatadetails>链接检查器分析器在计划任务期间填充此数据。</nodatadetails>
+            <allhealthy>所有{0}个链接均正常。</allhealthy>
+            <fault>在{1}个总链接中发现{0}个失效链接。</fault>
+            <warning>发现{0}个失效链接。</warning>
+            <details>总链接数：{0}，失效：{1}。404：{2}，5xx：{3}，超时：{4}</details>
+            <notavailable>链接检查器数据尚不可用。</notavailable>
+          </brokenlinkscheck>
+          <missingalttextcheck>
+            <name>缺失alt文本</name>
+            <description>检查缺少alt文本的图片（无障碍和SEO问题）。</description>
+            <group>内容</group>
+            <noimages>未找到图片。</noimages>
+            <badpractice>{0}张图片缺少alt文本（{1}%）。</badpractice>
+            <warning>{0}张图片缺少alt文本。</warning>
+            <ok>所有图片都有alt文本。</ok>
+            <details>{1}张图片中有{0}张（{2}%）没有alt文本。最后分析时间：{3}</details>
+          </missingalttextcheck>
+          <unusedcontentcheck>
+            <name>未使用内容</name>
+            <description>检查未被任何内容引用的块和媒体（可能的孤立项）。</description>
+            <group>内容</group>
+            <noblocks>未找到块或媒体。</noblocks>
+            <warning>{0}个未引用项目（{1}%）。请考虑清理。</warning>
+            <minor>{0}个未引用项目（{1}%，轻微）。</minor>
+            <ok>所有块和媒体均被引用。</ok>
+            <details>{1}个块/媒体中有{0}个（{2}%）未被引用。最后分析时间：{3}</details>
+          </unusedcontentcheck>
+        </checks>
+        <groups>
+          <environment>环境</environment>
+          <content>内容</content>
+        </groups>
+        <tags>
+          <performance>性能</performance>
+          <security>安全</security>
+          <editorux>编辑者体验</editorux>
+          <maintenance>维护</maintenance>
+          <seo>SEO</seo>
+          <accessibility>无障碍</accessibility>
+        </tags>
+      </cmsdoctor>
+
+      <!-- 内容导入消息 -->
+      <contentimporter>
+        <errors>
+          <nofile>未上传文件</nofile>
+          <toolarge>文件太大（最大50 MB）</toolarge>
+          <unsupportedfiletype>不支持的文件类型：{0}</unsupportedfiletype>
+          <sessionnotfound>未找到会话</sessionnotfound>
+          <contenttypenotfound>未找到内容类型</contenttypenotfound>
+          <nomapping>未配置映射。请先运行试运行。</nomapping>
+          <processingerror>处理请求时发生错误。</processingerror>
+        </errors>
+        <warnings>
+          <nonamecolumn>未映射名称列</nonamecolumn>
+        </warnings>
+        <status>
+          <running>运行中</running>
+          <completed>已完成</completed>
+          <failed>失败</failed>
+        </status>
+      </contentimporter>
+
+      <!-- 分析器 -->
+      <analyzers>
+        <contenttypestatistics>内容类型统计</contenttypestatistics>
+        <personalization>个性化</personalization>
+        <linkchecker>链接检查器</linkchecker>
+      </analyzers>
+
+      <!-- 通用字符串 -->
+      <common>
+        <unknown>未知</unknown>
+        <error>错误</error>
+        <ok>正常</ok>
+        <timeout>超时</timeout>
+        <notfound>未找到</notfound>
+        <contentnotfound>内容未找到</contentnotfound>
+        <connectionerror>连接错误：{0}</connectionerror>
+      </common>
+    </editorpowertools>
+  </language>
+</languages>

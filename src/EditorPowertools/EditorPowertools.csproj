@@ -39,6 +39,11 @@
     <PackageReference Include="EPPlusFree" Version="4.5.3.8" />
   </ItemGroup>
 
+  <!-- Localization language files (Optimizely XML format) -->
+  <ItemGroup>
+    <EmbeddedResource Include="lang\*.xml" />
+  </ItemGroup>
+
   <!-- Include README, icon, and .targets in the NuGet package -->
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="" />

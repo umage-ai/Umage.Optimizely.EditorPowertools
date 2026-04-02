@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Nederlands" id="nl">
+    <editorpowertools>
+      <!-- Hoofdmenu -->
+      <menu>
+        <title>Editor Powertools</title>
+        <overview>Overzicht</overview>
+        <contenttypeaudit>Inhoudstype-audit</contenttypeaudit>
+        <personalizationaudit>Personalisatie-audit</personalizationaudit>
+        <audiencemanager>Doelgroepbeheer</audiencemanager>
+        <contenttyperecommendations>Inhoudstype-aanbevelingen</contenttyperecommendations>
+        <bulkpropertyeditor>Bulkbewerking van eigenschappen</bulkpropertyeditor>
+        <scheduledjobsgantt>Geplande taken Gantt</scheduledjobsgantt>
+        <activitytimeline>Activiteitstijdlijn</activitytimeline>
+        <contentimporter>Inhoud importeren</contentimporter>
+        <cmsdoctor>CMS-dokter</cmsdoctor>
+        <contentaudit>Inhoudsaudit</contentaudit>
+        <linkchecker>Linkcontrole</linkchecker>
+        <activeeditors>Actieve redacteuren</activeeditors>
+        <managechildren>Subpagina's beheren</managechildren>
+      </menu>
+
+      <!-- Componenten (CMS-activapaneel-widgets) -->
+      <components>
+        <contentdetails>
+          <title>Power Inhoudsdetails</title>
+          <description>Gedetailleerde informatie over het geselecteerde inhoudselement - eigenschappen, referenties, versies.</description>
+        </contentdetails>
+        <activeeditors>
+          <title>Actieve redacteuren</title>
+          <description>Zie wie er nog meer deze inhoud bewerkt en werk samen met uw team.</description>
+        </activeeditors>
+      </components>
+
+      <!-- Gereedschapstitels en -beschrijvingen -->
+      <tools>
+        <contenttypeaudit>
+          <title>Inhoudstype-audit</title>
+          <description>Overzicht van alle inhoudstypen, hun gebruik, eigenschappen en overerving.</description>
+        </contenttypeaudit>
+        <personalizationaudit>
+          <title>Personalisatie-audit</title>
+          <description>Zoek en audit het gebruik van bezoekersgroepen in inhoud, toegangsrechten en eigenschappen.</description>
+        </personalizationaudit>
+        <audiencemanager>
+          <title>Doelgroepbeheer</title>
+          <description>Beheer en bekijk bezoekersgroepen en doelgroepsegmenten.</description>
+        </audiencemanager>
+        <contenttyperecommendations>
+          <title>Inhoudstype-aanbevelingen</title>
+          <description>Ontvang aanbevelingen voor verbetering en consolidatie van inhoudstypen.</description>
+        </contenttyperecommendations>
+        <bulkpropertyeditor>
+          <title>Bulkbewerking van eigenschappen</title>
+          <description>Bewerk eigenschappen van meerdere inhoudselementen tegelijk.</description>
+        </bulkpropertyeditor>
+        <scheduledjobsgantt>
+          <title>Geplande taken Gantt</title>
+          <description>Visualiseer de uitvoering van geplande taken als een Gantt-diagram.</description>
+        </scheduledjobsgantt>
+        <activitytimeline>
+          <title>Activiteitstijdlijn</title>
+          <description>Bekijk een tijdlijn van inhoudswijzigingen en redactionele activiteit.</description>
+        </activitytimeline>
+        <contentimporter>
+          <title>Inhoud importeren</title>
+          <description>Importeer inhoud uit CSV-, JSON- of Excel-bestanden.</description>
+        </contentimporter>
+        <cmsdoctor>
+          <title>CMS-dokter</title>
+          <description>Gezondheidscontroles en diagnostiek voor uw CMS-installatie.</description>
+        </cmsdoctor>
+        <contentaudit>
+          <title>Inhoudsaudit</title>
+          <description>Audit inhoud op kwaliteit, volledigheid en best practices.</description>
+        </contentaudit>
+        <linkchecker>
+          <title>Linkcontrole</title>
+          <description>Vind en rapporteer gebroken links op uw website.</description>
+        </linkchecker>
+        <activeeditors>
+          <title>Actieve redacteuren</title>
+          <description>Zie wie er momenteel inhoud bewerkt en werk samen in realtime.</description>
+        </activeeditors>
+        <managechildren>
+          <title>Subpagina's beheren</title>
+          <description>Bulk subpagina's beheren: sorteren, publiceren, depubliceren, verplaatsen en verwijderen.</description>
+        </managechildren>
+        <overview>
+          <title>Overzicht</title>
+          <description>Dashboardoverzicht van alle Editor Powertools-functies.</description>
+        </overview>
+      </tools>
+
+      <!-- Geplande taak -->
+      <jobs>
+        <contentanalysis>
+          <displayname>[EditorPowertools] Inhoudsanalyse</displayname>
+          <description>Geünificeerde taak die alle inhoud eenmaal doorloopt en alle geregistreerde analysatoren uitvoert (inhoudstype-statistieken, personalisatie, linkcontrole, enz.).</description>
+          <noanalyzers>Geen analysatoren geregistreerd.</noanalyzers>
+          <initializing>{0} analysatoren worden geïnitialiseerd...</initializing>
+          <analyzing>{0} inhoudselementen worden geanalyseerd met {1} analysatoren...</analyzing>
+          <stopped>Gestopt na {0}/{1} elementen.</stopped>
+          <processing>{0}/{1} inhoudselementen verwerkt...</processing>
+          <completing>Analysatoren worden afgerond...</completing>
+          <completed>Voltooid. {0} inhoudselementen geanalyseerd met {1} analysatoren ({2}).</completed>
+        </contentanalysis>
+      </jobs>
+
+      <!-- CMS-dokter gezondheidscontroles -->
+      <cmsdoctor>
+        <runjobfirst>Voer eerst de geplande taak '[EditorPowertools] Inhoudsanalyse' uit.</runjobfirst>
+        <checks>
+          <memorycheck>
+            <name>Geheugengebruik</name>
+            <description>Rapporteert het huidige geheugengebruik van de applicatie.</description>
+            <group>Omgeving</group>
+            <biton64>Draait als 32-bit op 64-bit OS. Geheugen: {0} MB.</biton64>
+            <highmemory>Hoog geheugengebruik: {0} MB.</highmemory>
+            <ok>Geheugen: {0} MB working set.</ok>
+            <details>Working set: {0} MB, GC heap: {1} MB, 64-bit proces: {2}, 64-bit OS: {3}</details>
+          </memorycheck>
+          <versioninfocheck>
+            <name>CMS-versie</name>
+            <description>Rapporteert de huidige Optimizely CMS-versie.</description>
+            <group>Omgeving</group>
+            <ok>Optimizely CMS {0}</ok>
+            <details>EPiServer assembly-versie: {0}. .NET {1}</details>
+            <unknown>Onbekend</unknown>
+            <couldnotdetermine>Kon de CMS-versie niet bepalen.</couldnotdetermine>
+          </versioninfocheck>
+          <contenttypecheck>
+            <name>Aantal inhoudstypen</name>
+            <description>Controleert of het aantal inhoudstypen binnen redelijke grenzen ligt.</description>
+            <group>Inhoud</group>
+            <toomanypagetypes>Te veel paginatypen ({0}). Redacteuren kunnen moeite hebben de juiste te vinden.</toomanypagetypes>
+            <toomanyblocktypes>Te veel bloktypen ({0}). Overweeg consolidatie.</toomanyblocktypes>
+            <toofewpagetypes>Slechts {0} paginatype(n). Inhoud mist mogelijk structuur.</toofewpagetypes>
+            <ok>{0} inhoudstypen ({1} pagina's, {2} blokken, {3} media)</ok>
+            <details>Paginatypen: {0}, Bloktypen: {1}, Mediatypen: {2}, Totaal: {3}</details>
+          </contenttypecheck>
+          <orphanedpropertycheck>
+            <name>Verweesde eigenschappen</name>
+            <description>Vindt eigenschappen die in de database zijn gedefinieerd maar niet in de code.</description>
+            <group>Inhoud</group>
+            <found>{0} verweesde eigenschappen gevonden in de database die niet in de code zijn gedefinieerd.</found>
+            <ok>Geen verweesde eigenschappen gevonden.</ok>
+            <examples>Voorbeelden: {0}</examples>
+            <andmore>(en {0} meer)</andmore>
+          </orphanedpropertycheck>
+          <scheduledjobscheck>
+            <name>Gezondheid geplande taken</name>
+            <description>Controleert op mislukte of langlopende geplande taken.</description>
+            <group>Omgeving</group>
+            <failed>{0} geplande ta(a)k(en) hebben fouten.</failed>
+            <neverrun>{0} ingeschakelde ta(a)k(en) zijn nooit uitgevoerd.</neverrun>
+            <ok>Alle {0} ingeschakelde taken zijn gezond.</ok>
+            <failedlabel>Mislukt: {0}</failedlabel>
+            <neverrunlabel>Nooit uitgevoerd: {0}</neverrunlabel>
+          </scheduledjobscheck>
+          <draftcontentcheck>
+            <name>Verouderde concepten</name>
+            <description>Controleert op conceptinhoud dat nooit is gepubliceerd of oude ongepubliceerde wijzigingen heeft.</description>
+            <group>Inhoud</group>
+            <ok>Geen verouderde concepten gevonden.</ok>
+            <warning>{0} verouderde inhoudselementen gevonden. Overweeg controle en opschoning.</warning>
+            <minor>{0} verouderde elementen gevonden (klein).</minor>
+            <details>Nooit gepubliceerd: {0}, Verouderde concepten (>3 maanden): {1}</details>
+          </draftcontentcheck>
+          <brokenlinkscheck>
+            <name>Gebroken links</name>
+            <description>Rapporteert gebroken links gevonden door het Linkcontrole-gereedschap.</description>
+            <group>Inhoud</group>
+            <nodata>Geen linkgegevens beschikbaar. Voer eerst de geplande taak Inhoudsanalyse uit.</nodata>
+            <nodatadetails>De linkcontrole-analysator vult deze gegevens in tijdens de geplande taak.</nodatadetails>
+            <allhealthy>Alle {0} links zijn gezond.</allhealthy>
+            <fault>{0} gebroken links gevonden van {1} totale links.</fault>
+            <warning>{0} gebroken links gevonden.</warning>
+            <details>Totale links: {0}, Gebroken: {1}. 404's: {2}, 5xx: {3}, Time-outs: {4}</details>
+            <notavailable>Linkcontrolegegevens zijn nog niet beschikbaar.</notavailable>
+          </brokenlinkscheck>
+          <missingalttextcheck>
+            <name>Ontbrekende alt-tekst</name>
+            <description>Controleert afbeeldingen zonder alt-tekst (toegankelijkheids- en SEO-probleem).</description>
+            <group>Inhoud</group>
+            <noimages>Geen afbeeldingen gevonden.</noimages>
+            <badpractice>{0} afbeeldingen zonder alt-tekst ({1}%).</badpractice>
+            <warning>{0} afbeeldingen zonder alt-tekst.</warning>
+            <ok>Alle afbeeldingen hebben alt-tekst.</ok>
+            <details>{0} van {1} afbeeldingen ({2}%) hebben geen alt-tekst. Laatst geanalyseerd: {3}</details>
+          </missingalttextcheck>
+          <unusedcontentcheck>
+            <name>Ongebruikte inhoud</name>
+            <description>Controleert blokken en media waarnaar door niets wordt verwezen (mogelijke wezen).</description>
+            <group>Inhoud</group>
+            <noblocks>Geen blokken of media gevonden.</noblocks>
+            <warning>{0} niet-gerefereerde elementen ({1}%). Overweeg opschoning.</warning>
+            <minor>{0} niet-gerefereerde elementen ({1}%, klein).</minor>
+            <ok>Alle blokken en media zijn gerefereerd.</ok>
+            <details>{0} van {1} blokken/media ({2}%) zijn niet gerefereerd. Laatst geanalyseerd: {3}</details>
+          </unusedcontentcheck>
+        </checks>
+        <groups>
+          <environment>Omgeving</environment>
+          <content>Inhoud</content>
+        </groups>
+        <tags>
+          <performance>Prestatie</performance>
+          <security>Beveiliging</security>
+          <editorux>Redacteurservaring</editorux>
+          <maintenance>Onderhoud</maintenance>
+          <seo>SEO</seo>
+          <accessibility>Toegankelijkheid</accessibility>
+        </tags>
+      </cmsdoctor>
+
+      <!-- Inhoudsimportberichten -->
+      <contentimporter>
+        <errors>
+          <nofile>Geen bestand geüpload</nofile>
+          <toolarge>Bestand te groot (max 50 MB)</toolarge>
+          <unsupportedfiletype>Niet-ondersteund bestandstype: {0}</unsupportedfiletype>
+          <sessionnotfound>Sessie niet gevonden</sessionnotfound>
+          <contenttypenotfound>Inhoudstype niet gevonden</contenttypenotfound>
+          <nomapping>Geen mapping geconfigureerd. Voer eerst een testrun uit.</nomapping>
+          <processingerror>Er is een fout opgetreden bij het verwerken van het verzoek.</processingerror>
+        </errors>
+        <warnings>
+          <nonamecolumn>Geen naamkolom toegewezen</nonamecolumn>
+        </warnings>
+        <status>
+          <running>actief</running>
+          <completed>voltooid</completed>
+          <failed>mislukt</failed>
+        </status>
+      </contentimporter>
+
+      <!-- Analysatoren -->
+      <analyzers>
+        <contenttypestatistics>Inhoudstype-statistieken</contenttypestatistics>
+        <personalization>Personalisatie</personalization>
+        <linkchecker>Linkcontrole</linkchecker>
+      </analyzers>
+
+      <!-- Gemeenschappelijke tekenreeksen -->
+      <common>
+        <unknown>Onbekend</unknown>
+        <error>Fout</error>
+        <ok>OK</ok>
+        <timeout>Time-out</timeout>
+        <notfound>Niet gevonden</notfound>
+        <contentnotfound>Inhoud niet gevonden</contentnotfound>
+        <connectionerror>Verbindingsfout: {0}</connectionerror>
+      </common>
+    </editorpowertools>
+  </language>
+</languages>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="日本語" id="ja">
+    <editorpowertools>
+      <!-- メインメニュー -->
+      <menu>
+        <title>Editor Powertools</title>
+        <overview>概要</overview>
+        <contenttypeaudit>コンテンツタイプ監査</contenttypeaudit>
+        <personalizationaudit>パーソナライゼーション監査</personalizationaudit>
+        <audiencemanager>オーディエンスマネージャー</audiencemanager>
+        <contenttyperecommendations>コンテンツタイプ推奨</contenttyperecommendations>
+        <bulkpropertyeditor>一括プロパティエディター</bulkpropertyeditor>
+        <scheduledjobsgantt>スケジュールジョブ ガント</scheduledjobsgantt>
+        <activitytimeline>アクティビティタイムライン</activitytimeline>
+        <contentimporter>コンテンツインポーター</contentimporter>
+        <cmsdoctor>CMSドクター</cmsdoctor>
+        <contentaudit>コンテンツ監査</contentaudit>
+        <linkchecker>リンクチェッカー</linkchecker>
+        <activeeditors>アクティブエディター</activeeditors>
+        <managechildren>子ページ管理</managechildren>
+      </menu>
+
+      <!-- コンポーネント（CMSアセットパネルウィジェット） -->
+      <components>
+        <contentdetails>
+          <title>Power コンテンツ詳細</title>
+          <description>選択されたコンテンツアイテムの詳細情報 - プロパティ、参照、バージョン。</description>
+        </contentdetails>
+        <activeeditors>
+          <title>アクティブエディター</title>
+          <description>このコンテンツを編集している他のユーザーを確認し、チームとコラボレーションできます。</description>
+        </activeeditors>
+      </components>
+
+      <!-- ツールのタイトルと説明 -->
+      <tools>
+        <contenttypeaudit>
+          <title>コンテンツタイプ監査</title>
+          <description>すべてのコンテンツタイプ、その使用状況、プロパティ、継承の概要。</description>
+        </contenttypeaudit>
+        <personalizationaudit>
+          <title>パーソナライゼーション監査</title>
+          <description>コンテンツ、アクセス権、プロパティ全体のビジターグループ使用状況を検索・監査します。</description>
+        </personalizationaudit>
+        <audiencemanager>
+          <title>オーディエンスマネージャー</title>
+          <description>ビジターグループとオーディエンスセグメントを管理・確認します。</description>
+        </audiencemanager>
+        <contenttyperecommendations>
+          <title>コンテンツタイプ推奨</title>
+          <description>コンテンツタイプの改善と統合に関する推奨を取得します。</description>
+        </contenttyperecommendations>
+        <bulkpropertyeditor>
+          <title>一括プロパティエディター</title>
+          <description>複数のコンテンツアイテムのプロパティを一度に編集します。</description>
+        </bulkpropertyeditor>
+        <scheduledjobsgantt>
+          <title>スケジュールジョブ ガント</title>
+          <description>スケジュールジョブの実行をガントチャートとして表示します。</description>
+        </scheduledjobsgantt>
+        <activitytimeline>
+          <title>アクティビティタイムライン</title>
+          <description>コンテンツの変更と編集活動のタイムラインを表示します。</description>
+        </activitytimeline>
+        <contentimporter>
+          <title>コンテンツインポーター</title>
+          <description>CSV、JSON、またはExcelファイルからコンテンツをインポートします。</description>
+        </contentimporter>
+        <cmsdoctor>
+          <title>CMSドクター</title>
+          <description>CMS環境のヘルスチェックと診断を行います。</description>
+        </cmsdoctor>
+        <contentaudit>
+          <title>コンテンツ監査</title>
+          <description>品質、完全性、ベストプラクティスについてコンテンツを監査します。</description>
+        </contentaudit>
+        <linkchecker>
+          <title>リンクチェッカー</title>
+          <description>サイト全体のリンク切れを検出・報告します。</description>
+        </linkchecker>
+        <activeeditors>
+          <title>アクティブエディター</title>
+          <description>現在コンテンツを編集しているユーザーを確認し、リアルタイムでコラボレーションします。</description>
+        </activeeditors>
+        <managechildren>
+          <title>子ページ管理</title>
+          <description>子ページの一括管理：並び替え、公開、非公開、移動、削除。</description>
+        </managechildren>
+        <overview>
+          <title>概要</title>
+          <description>Editor Powertoolsの全機能のダッシュボード概要。</description>
+        </overview>
+      </tools>
+
+      <!-- スケジュールジョブ -->
+      <jobs>
+        <contentanalysis>
+          <displayname>[EditorPowertools] コンテンツ分析</displayname>
+          <description>すべてのコンテンツを一度走査し、登録されたすべてのアナライザー（コンテンツタイプ統計、パーソナライゼーション、リンクチェックなど）を実行する統合ジョブ。</description>
+          <noanalyzers>アナライザーが登録されていません。</noanalyzers>
+          <initializing>{0}個のアナライザーを初期化中...</initializing>
+          <analyzing>{1}個のアナライザーで{0}個のコンテンツアイテムを分析中...</analyzing>
+          <stopped>{0}/{1}アイテム後に停止しました。</stopped>
+          <processing>{0}/{1}個のコンテンツアイテムを処理済み...</processing>
+          <completing>アナライザーを完了中...</completing>
+          <completed>完了。{1}個のアナライザー（{2}）で{0}個のコンテンツアイテムを分析しました。</completed>
+        </contentanalysis>
+      </jobs>
+
+      <!-- CMSドクター ヘルスチェック -->
+      <cmsdoctor>
+        <runjobfirst>最初にスケジュールジョブ '[EditorPowertools] コンテンツ分析' を実行してください。</runjobfirst>
+        <checks>
+          <memorycheck>
+            <name>メモリ使用量</name>
+            <description>アプリケーションの現在のメモリ使用量を報告します。</description>
+            <group>環境</group>
+            <biton64>64ビットOSで32ビットとして実行中。メモリ：{0} MB。</biton64>
+            <highmemory>メモリ使用量が高い：{0} MB。</highmemory>
+            <ok>メモリ：{0} MB ワーキングセット。</ok>
+            <details>ワーキングセット：{0} MB、GCヒープ：{1} MB、64ビットプロセス：{2}、64ビットOS：{3}</details>
+          </memorycheck>
+          <versioninfocheck>
+            <name>CMSバージョン</name>
+            <description>現在のOptimizely CMSバージョンを報告します。</description>
+            <group>環境</group>
+            <ok>Optimizely CMS {0}</ok>
+            <details>EPiServerアセンブリバージョン：{0}。.NET {1}</details>
+            <unknown>不明</unknown>
+            <couldnotdetermine>CMSバージョンを特定できませんでした。</couldnotdetermine>
+          </versioninfocheck>
+          <contenttypecheck>
+            <name>コンテンツタイプ数</name>
+            <description>コンテンツタイプの数が妥当な範囲内かチェックします。</description>
+            <group>コンテンツ</group>
+            <toomanypagetypes>ページタイプが多すぎます（{0}）。エディターが正しいものを見つけるのが困難になる可能性があります。</toomanypagetypes>
+            <toomanyblocktypes>ブロックタイプが多すぎます（{0}）。統合を検討してください。</toomanyblocktypes>
+            <toofewpagetypes>ページタイプが{0}個のみです。コンテンツの構造が不足している可能性があります。</toofewpagetypes>
+            <ok>{0}個のコンテンツタイプ（{1}ページ、{2}ブロック、{3}メディア）</ok>
+            <details>ページタイプ：{0}、ブロックタイプ：{1}、メディアタイプ：{2}、合計：{3}</details>
+          </contenttypecheck>
+          <orphanedpropertycheck>
+            <name>孤立プロパティ</name>
+            <description>データベースに定義されているがコードに定義されていないプロパティを検出します。</description>
+            <group>コンテンツ</group>
+            <found>コードに定義されていないデータベース内の孤立プロパティが{0}個見つかりました。</found>
+            <ok>孤立プロパティは見つかりませんでした。</ok>
+            <examples>例：{0}</examples>
+            <andmore>（他{0}件）</andmore>
+          </orphanedpropertycheck>
+          <scheduledjobscheck>
+            <name>スケジュールジョブの健全性</name>
+            <description>失敗または長時間実行中のスケジュールジョブをチェックします。</description>
+            <group>環境</group>
+            <failed>{0}個のスケジュールジョブにエラーがあります。</failed>
+            <neverrun>{0}個の有効なジョブが一度も実行されていません。</neverrun>
+            <ok>すべての{0}個の有効なジョブは正常です。</ok>
+            <failedlabel>失敗：{0}</failedlabel>
+            <neverrunlabel>未実行：{0}</neverrunlabel>
+          </scheduledjobscheck>
+          <draftcontentcheck>
+            <name>古い下書き</name>
+            <description>未公開のままのコンテンツや古い未公開の変更をチェックします。</description>
+            <group>コンテンツ</group>
+            <ok>古い下書きは見つかりませんでした。</ok>
+            <warning>{0}個の古いコンテンツアイテムが見つかりました。確認とクリーンアップを検討してください。</warning>
+            <minor>{0}個の古いアイテムが見つかりました（軽微）。</minor>
+            <details>未公開：{0}、古い下書き（3ヶ月以上）：{1}</details>
+          </draftcontentcheck>
+          <brokenlinkscheck>
+            <name>リンク切れ</name>
+            <description>リンクチェッカーツールで見つかったリンク切れを報告します。</description>
+            <group>コンテンツ</group>
+            <nodata>リンクデータがありません。最初にコンテンツ分析スケジュールジョブを実行してください。</nodata>
+            <nodatadetails>リンクチェッカーアナライザーがスケジュールジョブ中にこのデータを生成します。</nodatadetails>
+            <allhealthy>すべての{0}個のリンクは正常です。</allhealthy>
+            <fault>合計{1}個のリンク中、{0}個のリンク切れが見つかりました。</fault>
+            <warning>{0}個のリンク切れが見つかりました。</warning>
+            <details>リンク合計：{0}、リンク切れ：{1}。404：{2}、5xx：{3}、タイムアウト：{4}</details>
+            <notavailable>リンクチェッカーのデータはまだ利用できません。</notavailable>
+          </brokenlinkscheck>
+          <missingalttextcheck>
+            <name>alt テキスト欠落</name>
+            <description>altテキストがない画像をチェックします（アクセシビリティおよびSEOの問題）。</description>
+            <group>コンテンツ</group>
+            <noimages>画像が見つかりませんでした。</noimages>
+            <badpractice>{0}個の画像にaltテキストがありません（{1}%）。</badpractice>
+            <warning>{0}個の画像にaltテキストがありません。</warning>
+            <ok>すべての画像にaltテキストがあります。</ok>
+            <details>{1}個中{0}個の画像（{2}%）にaltテキストがありません。最終分析：{3}</details>
+          </missingalttextcheck>
+          <unusedcontentcheck>
+            <name>未使用コンテンツ</name>
+            <description>何からも参照されていないブロックとメディアをチェックします（孤立の可能性）。</description>
+            <group>コンテンツ</group>
+            <noblocks>ブロックまたはメディアが見つかりませんでした。</noblocks>
+            <warning>{0}個の未参照アイテム（{1}%）。クリーンアップを検討してください。</warning>
+            <minor>{0}個の未参照アイテム（{1}%、軽微）。</minor>
+            <ok>すべてのブロックとメディアが参照されています。</ok>
+            <details>{1}個中{0}個のブロック/メディア（{2}%）が未参照です。最終分析：{3}</details>
+          </unusedcontentcheck>
+        </checks>
+        <groups>
+          <environment>環境</environment>
+          <content>コンテンツ</content>
+        </groups>
+        <tags>
+          <performance>パフォーマンス</performance>
+          <security>セキュリティ</security>
+          <editorux>エディター体験</editorux>
+          <maintenance>メンテナンス</maintenance>
+          <seo>SEO</seo>
+          <accessibility>アクセシビリティ</accessibility>
+        </tags>
+      </cmsdoctor>
+
+      <!-- コンテンツインポートメッセージ -->
+      <contentimporter>
+        <errors>
+          <nofile>ファイルがアップロードされていません</nofile>
+          <toolarge>ファイルが大きすぎます（最大50 MB）</toolarge>
+          <unsupportedfiletype>サポートされていないファイル形式：{0}</unsupportedfiletype>
+          <sessionnotfound>セッションが見つかりません</sessionnotfound>
+          <contenttypenotfound>コンテンツタイプが見つかりません</contenttypenotfound>
+          <nomapping>マッピングが設定されていません。最初にドライランを実行してください。</nomapping>
+          <processingerror>リクエストの処理中にエラーが発生しました。</processingerror>
+        </errors>
+        <warnings>
+          <nonamecolumn>名前列がマッピングされていません</nonamecolumn>
+        </warnings>
+        <status>
+          <running>実行中</running>
+          <completed>完了</completed>
+          <failed>失敗</failed>
+        </status>
+      </contentimporter>
+
+      <!-- アナライザー -->
+      <analyzers>
+        <contenttypestatistics>コンテンツタイプ統計</contenttypestatistics>
+        <personalization>パーソナライゼーション</personalization>
+        <linkchecker>リンクチェッカー</linkchecker>
+      </analyzers>
+
+      <!-- 共通文字列 -->
+      <common>
+        <unknown>不明</unknown>
+        <error>エラー</error>
+        <ok>OK</ok>
+        <timeout>タイムアウト</timeout>
+        <notfound>見つかりません</notfound>
+        <contentnotfound>コンテンツが見つかりません</contentnotfound>
+        <connectionerror>接続エラー：{0}</connectionerror>
+      </common>
+    </editorpowertools>
+  </language>
+</languages>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Français" id="fr">
+    <editorpowertools>
+      <!-- Menu principal -->
+      <menu>
+        <title>Editor Powertools</title>
+        <overview>Vue d'ensemble</overview>
+        <contenttypeaudit>Audit des types de contenu</contenttypeaudit>
+        <personalizationaudit>Audit de personnalisation</personalizationaudit>
+        <audiencemanager>Gestion des audiences</audiencemanager>
+        <contenttyperecommendations>Recommandations de types de contenu</contenttyperecommendations>
+        <bulkpropertyeditor>Éditeur de propriétés en masse</bulkpropertyeditor>
+        <scheduledjobsgantt>Tâches planifiées Gantt</scheduledjobsgantt>
+        <activitytimeline>Chronologie des activités</activitytimeline>
+        <contentimporter>Importation de contenu</contentimporter>
+        <cmsdoctor>Docteur CMS</cmsdoctor>
+        <contentaudit>Audit de contenu</contentaudit>
+        <linkchecker>Vérificateur de liens</linkchecker>
+        <activeeditors>Éditeurs actifs</activeeditors>
+        <managechildren>Gérer les sous-pages</managechildren>
+      </menu>
+
+      <!-- Composants (widgets du panneau d'actifs CMS) -->
+      <components>
+        <contentdetails>
+          <title>Power Détails du contenu</title>
+          <description>Informations détaillées sur l'élément de contenu sélectionné - propriétés, références, versions.</description>
+        </contentdetails>
+        <activeeditors>
+          <title>Éditeurs actifs</title>
+          <description>Voyez qui d'autre modifie ce contenu et collaborez avec votre équipe.</description>
+        </activeeditors>
+      </components>
+
+      <!-- Titres et descriptions des outils -->
+      <tools>
+        <contenttypeaudit>
+          <title>Audit des types de contenu</title>
+          <description>Vue d'ensemble de tous les types de contenu, leur utilisation, propriétés et héritage.</description>
+        </contenttypeaudit>
+        <personalizationaudit>
+          <title>Audit de personnalisation</title>
+          <description>Rechercher et auditer l'utilisation des groupes de visiteurs dans le contenu, les droits d'accès et les propriétés.</description>
+        </personalizationaudit>
+        <audiencemanager>
+          <title>Gestion des audiences</title>
+          <description>Gérer et examiner les groupes de visiteurs et les segments d'audience.</description>
+        </audiencemanager>
+        <contenttyperecommendations>
+          <title>Recommandations de types de contenu</title>
+          <description>Obtenir des recommandations pour l'amélioration et la consolidation des types de contenu.</description>
+        </contenttyperecommendations>
+        <bulkpropertyeditor>
+          <title>Éditeur de propriétés en masse</title>
+          <description>Modifier les propriétés de plusieurs éléments de contenu en même temps.</description>
+        </bulkpropertyeditor>
+        <scheduledjobsgantt>
+          <title>Tâches planifiées Gantt</title>
+          <description>Visualiser l'exécution des tâches planifiées sous forme de diagramme de Gantt.</description>
+        </scheduledjobsgantt>
+        <activitytimeline>
+          <title>Chronologie des activités</title>
+          <description>Afficher une chronologie des modifications de contenu et de l'activité éditoriale.</description>
+        </activitytimeline>
+        <contentimporter>
+          <title>Importation de contenu</title>
+          <description>Importer du contenu depuis des fichiers CSV, JSON ou Excel.</description>
+        </contentimporter>
+        <cmsdoctor>
+          <title>Docteur CMS</title>
+          <description>Bilans de santé et diagnostics pour votre installation CMS.</description>
+        </cmsdoctor>
+        <contentaudit>
+          <title>Audit de contenu</title>
+          <description>Auditer le contenu pour la qualité, la complétude et les bonnes pratiques.</description>
+        </contentaudit>
+        <linkchecker>
+          <title>Vérificateur de liens</title>
+          <description>Trouver et signaler les liens cassés sur votre site.</description>
+        </linkchecker>
+        <activeeditors>
+          <title>Éditeurs actifs</title>
+          <description>Voyez qui modifie actuellement du contenu et collaborez en temps réel.</description>
+        </activeeditors>
+        <managechildren>
+          <title>Gérer les sous-pages</title>
+          <description>Gestion en masse des sous-pages : trier, publier, dépublier, déplacer et supprimer.</description>
+        </managechildren>
+        <overview>
+          <title>Vue d'ensemble</title>
+          <description>Tableau de bord de toutes les fonctionnalités Editor Powertools.</description>
+        </overview>
+      </tools>
+
+      <!-- Tâche planifiée -->
+      <jobs>
+        <contentanalysis>
+          <displayname>[EditorPowertools] Analyse de contenu</displayname>
+          <description>Tâche unifiée qui parcourt tout le contenu une fois et exécute tous les analyseurs enregistrés (statistiques de types de contenu, personnalisation, vérification de liens, etc.).</description>
+          <noanalyzers>Aucun analyseur enregistré.</noanalyzers>
+          <initializing>Initialisation de {0} analyseurs...</initializing>
+          <analyzing>Analyse de {0} éléments de contenu avec {1} analyseurs...</analyzing>
+          <stopped>Arrêté après {0}/{1} éléments.</stopped>
+          <processing>{0}/{1} éléments de contenu traités...</processing>
+          <completing>Finalisation des analyseurs...</completing>
+          <completed>Terminé. {0} éléments de contenu analysés avec {1} analyseurs ({2}).</completed>
+        </contentanalysis>
+      </jobs>
+
+      <!-- Docteur CMS bilans de santé -->
+      <cmsdoctor>
+        <runjobfirst>Exécutez d'abord la tâche planifiée '[EditorPowertools] Analyse de contenu'.</runjobfirst>
+        <checks>
+          <memorycheck>
+            <name>Utilisation de la mémoire</name>
+            <description>Rapporte l'utilisation actuelle de la mémoire de l'application.</description>
+            <group>Environnement</group>
+            <biton64>Exécution en 32 bits sur un OS 64 bits. Mémoire : {0} Mo.</biton64>
+            <highmemory>Utilisation élevée de la mémoire : {0} Mo.</highmemory>
+            <ok>Mémoire : {0} Mo working set.</ok>
+            <details>Working set : {0} Mo, GC heap : {1} Mo, processus 64 bits : {2}, OS 64 bits : {3}</details>
+          </memorycheck>
+          <versioninfocheck>
+            <name>Version CMS</name>
+            <description>Rapporte la version actuelle d'Optimizely CMS.</description>
+            <group>Environnement</group>
+            <ok>Optimizely CMS {0}</ok>
+            <details>Version de l'assembly EPiServer : {0}. .NET {1}</details>
+            <unknown>Inconnu</unknown>
+            <couldnotdetermine>Impossible de déterminer la version CMS.</couldnotdetermine>
+          </versioninfocheck>
+          <contenttypecheck>
+            <name>Nombre de types de contenu</name>
+            <description>Vérifie si le nombre de types de contenu est dans des limites raisonnables.</description>
+            <group>Contenu</group>
+            <toomanypagetypes>Trop de types de pages ({0}). Les éditeurs pourraient avoir du mal à trouver le bon.</toomanypagetypes>
+            <toomanyblocktypes>Trop de types de blocs ({0}). Envisagez une consolidation.</toomanyblocktypes>
+            <toofewpagetypes>Seulement {0} type(s) de page. Le contenu pourrait manquer de structure.</toofewpagetypes>
+            <ok>{0} types de contenu ({1} pages, {2} blocs, {3} médias)</ok>
+            <details>Types de pages : {0}, Types de blocs : {1}, Types de médias : {2}, Total : {3}</details>
+          </contenttypecheck>
+          <orphanedpropertycheck>
+            <name>Propriétés orphelines</name>
+            <description>Trouve les propriétés définies dans la base de données mais pas dans le code.</description>
+            <group>Contenu</group>
+            <found>{0} propriétés orphelines trouvées dans la base de données qui ne sont pas définies dans le code.</found>
+            <ok>Aucune propriété orpheline trouvée.</ok>
+            <examples>Exemples : {0}</examples>
+            <andmore>(et {0} de plus)</andmore>
+          </orphanedpropertycheck>
+          <scheduledjobscheck>
+            <name>Santé des tâches planifiées</name>
+            <description>Vérifie les tâches planifiées échouées ou de longue durée.</description>
+            <group>Environnement</group>
+            <failed>{0} tâche(s) planifiée(s) ont des erreurs.</failed>
+            <neverrun>{0} tâche(s) activée(s) n'ont jamais été exécutées.</neverrun>
+            <ok>Toutes les {0} tâches activées sont en bonne santé.</ok>
+            <failedlabel>Échouées : {0}</failedlabel>
+            <neverrunlabel>Jamais exécutées : {0}</neverrunlabel>
+          </scheduledjobscheck>
+          <draftcontentcheck>
+            <name>Brouillons obsolètes</name>
+            <description>Vérifie le contenu en brouillon jamais publié ou avec d'anciennes modifications non publiées.</description>
+            <group>Contenu</group>
+            <ok>Aucun brouillon obsolète trouvé.</ok>
+            <warning>{0} éléments de contenu obsolètes trouvés. Envisagez une révision et un nettoyage.</warning>
+            <minor>{0} éléments obsolètes trouvés (mineur).</minor>
+            <details>Jamais publié : {0}, Brouillons obsolètes (>3 mois) : {1}</details>
+          </draftcontentcheck>
+          <brokenlinkscheck>
+            <name>Liens cassés</name>
+            <description>Rapporte les liens cassés trouvés par l'outil Vérificateur de liens.</description>
+            <group>Contenu</group>
+            <nodata>Aucune donnée de liens disponible. Exécutez d'abord la tâche planifiée Analyse de contenu.</nodata>
+            <nodatadetails>L'analyseur du vérificateur de liens remplit ces données pendant la tâche planifiée.</nodatadetails>
+            <allhealthy>Tous les {0} liens sont en bonne santé.</allhealthy>
+            <fault>{0} liens cassés trouvés parmi {1} liens au total.</fault>
+            <warning>{0} liens cassés trouvés.</warning>
+            <details>Liens totaux : {0}, Cassés : {1}. 404 : {2}, 5xx : {3}, Délais dépassés : {4}</details>
+            <notavailable>Les données du vérificateur de liens ne sont pas encore disponibles.</notavailable>
+          </brokenlinkscheck>
+          <missingalttextcheck>
+            <name>Texte alternatif manquant</name>
+            <description>Vérifie les images sans texte alternatif (problème d'accessibilité et de SEO).</description>
+            <group>Contenu</group>
+            <noimages>Aucune image trouvée.</noimages>
+            <badpractice>{0} images sans texte alternatif ({1}%).</badpractice>
+            <warning>{0} images sans texte alternatif.</warning>
+            <ok>Toutes les images ont un texte alternatif.</ok>
+            <details>{0} sur {1} images ({2}%) n'ont pas de texte alternatif. Dernière analyse : {3}</details>
+          </missingalttextcheck>
+          <unusedcontentcheck>
+            <name>Contenu inutilisé</name>
+            <description>Vérifie les blocs et médias non référencés par quoi que ce soit (orphelins potentiels).</description>
+            <group>Contenu</group>
+            <noblocks>Aucun bloc ou média trouvé.</noblocks>
+            <warning>{0} éléments non référencés ({1}%). Envisagez un nettoyage.</warning>
+            <minor>{0} éléments non référencés ({1}%, mineur).</minor>
+            <ok>Tous les blocs et médias sont référencés.</ok>
+            <details>{0} sur {1} blocs/médias ({2}%) ne sont pas référencés. Dernière analyse : {3}</details>
+          </unusedcontentcheck>
+        </checks>
+        <groups>
+          <environment>Environnement</environment>
+          <content>Contenu</content>
+        </groups>
+        <tags>
+          <performance>Performance</performance>
+          <security>Sécurité</security>
+          <editorux>Expérience éditeur</editorux>
+          <maintenance>Maintenance</maintenance>
+          <seo>SEO</seo>
+          <accessibility>Accessibilité</accessibility>
+        </tags>
+      </cmsdoctor>
+
+      <!-- Messages d'importation de contenu -->
+      <contentimporter>
+        <errors>
+          <nofile>Aucun fichier téléchargé</nofile>
+          <toolarge>Fichier trop volumineux (max 50 Mo)</toolarge>
+          <unsupportedfiletype>Type de fichier non pris en charge : {0}</unsupportedfiletype>
+          <sessionnotfound>Session introuvable</sessionnotfound>
+          <contenttypenotfound>Type de contenu introuvable</contenttypenotfound>
+          <nomapping>Aucun mappage configuré. Exécutez d'abord un essai à blanc.</nomapping>
+          <processingerror>Une erreur est survenue lors du traitement de la demande.</processingerror>
+        </errors>
+        <warnings>
+          <nonamecolumn>Aucune colonne de nom mappée</nonamecolumn>
+        </warnings>
+        <status>
+          <running>en cours</running>
+          <completed>terminé</completed>
+          <failed>échoué</failed>
+        </status>
+      </contentimporter>
+
+      <!-- Analyseurs -->
+      <analyzers>
+        <contenttypestatistics>Statistiques des types de contenu</contenttypestatistics>
+        <personalization>Personnalisation</personalization>
+        <linkchecker>Vérificateur de liens</linkchecker>
+      </analyzers>
+
+      <!-- Chaînes communes -->
+      <common>
+        <unknown>Inconnu</unknown>
+        <error>Erreur</error>
+        <ok>OK</ok>
+        <timeout>Délai dépassé</timeout>
+        <notfound>Introuvable</notfound>
+        <contentnotfound>Contenu introuvable</contentnotfound>
+        <connectionerror>Erreur de connexion : {0}</connectionerror>
+      </common>
+    </editorpowertools>
+  </language>
+</languages>
