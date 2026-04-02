@@ -351,8 +351,8 @@ define([
             var style = document.createElement("style");
             style.id = "ept-ae-widget-styles";
             style.textContent =
-                '.ept-ae-root { font-size: 12px; line-height: 1.4; display: flex; flex-direction: column; height: 100%; }' +
-                '.ept-ae-container { padding: 0; display: flex; flex-direction: column; height: 100%; }' +
+                '.ept-ae-root { font-size: 12px; line-height: 1.4; }' +
+                '.ept-ae-container { padding: 0; }' +
                 '.ept-ae-empty { color: #999; font-style: italic; padding: 8px 10px; font-size: 11px; }' +
 
                 /* Tabs */
