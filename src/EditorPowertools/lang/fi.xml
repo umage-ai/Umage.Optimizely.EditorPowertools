@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Suomi" id="fi">
+    <editorpowertools>
+      <!-- Päävalikko -->
+      <menu>
+        <title>Editor Powertools</title>
+        <overview>Yleiskatsaus</overview>
+        <contenttypeaudit>Sisältötyyppien tarkastus</contenttypeaudit>
+        <personalizationaudit>Personoinnin tarkastus</personalizationaudit>
+        <audiencemanager>Kohderyhmien hallinta</audiencemanager>
+        <contenttyperecommendations>Sisältötyyppien suositukset</contenttyperecommendations>
+        <bulkpropertyeditor>Joukko-ominaisuusmuokkain</bulkpropertyeditor>
+        <scheduledjobsgantt>Ajastetut tehtävät Gantt</scheduledjobsgantt>
+        <activitytimeline>Toiminnan aikajana</activitytimeline>
+        <contentimporter>Sisällön tuonti</contentimporter>
+        <cmsdoctor>CMS-tohtori</cmsdoctor>
+        <contentaudit>Sisällön auditointi</contentaudit>
+        <linkchecker>Linkkien tarkistus</linkchecker>
+        <activeeditors>Aktiiviset muokkaajat</activeeditors>
+        <managechildren>Hallitse alasivuja</managechildren>
+      </menu>
+
+      <!-- Komponentit (CMS-resurssipaneelin widgetit) -->
+      <components>
+        <contentdetails>
+          <title>Power Sisältötiedot</title>
+          <description>Yksityiskohtaiset tiedot valitusta sisältökohteesta - ominaisuudet, viittaukset, versiot.</description>
+        </contentdetails>
+        <activeeditors>
+          <title>Aktiiviset muokkaajat</title>
+          <description>Näe kuka muu muokkaa tätä sisältöä ja tee yhteistyötä tiimisi kanssa.</description>
+        </activeeditors>
+      </components>
+
+      <!-- Työkalujen otsikot ja kuvaukset -->
+      <tools>
+        <contenttypeaudit>
+          <title>Sisältötyyppien tarkastus</title>
+          <description>Yleiskatsaus kaikkiin sisältötyyppeihin, niiden käyttöön, ominaisuuksiin ja periytymiseen.</description>
+        </contenttypeaudit>
+        <personalizationaudit>
+          <title>Personoinnin tarkastus</title>
+          <description>Etsi ja tarkasta vierailijaryhmien käyttö sisällössä, käyttöoikeuksissa ja ominaisuuksissa.</description>
+        </personalizationaudit>
+        <audiencemanager>
+          <title>Kohderyhmien hallinta</title>
+          <description>Hallitse ja tarkista vierailijaryhmiä ja kohderyhmäsegmenttejä.</description>
+        </audiencemanager>
+        <contenttyperecommendations>
+          <title>Sisältötyyppien suositukset</title>
+          <description>Saa suosituksia sisältötyyppien parantamiseen ja yhdistämiseen.</description>
+        </contenttyperecommendations>
+        <bulkpropertyeditor>
+          <title>Joukko-ominaisuusmuokkain</title>
+          <description>Muokkaa ominaisuuksia useissa sisältökohteissa kerralla.</description>
+        </bulkpropertyeditor>
+        <scheduledjobsgantt>
+          <title>Ajastetut tehtävät Gantt</title>
+          <description>Visualisoi ajastettujen tehtävien suoritus Gantt-kaaviona.</description>
+        </scheduledjobsgantt>
+        <activitytimeline>
+          <title>Toiminnan aikajana</title>
+          <description>Näytä aikajana sisältömuutoksista ja toimituksellisesta toiminnasta.</description>
+        </activitytimeline>
+        <contentimporter>
+          <title>Sisällön tuonti</title>
+          <description>Tuo sisältöä CSV-, JSON- tai Excel-tiedostoista.</description>
+        </contentimporter>
+        <cmsdoctor>
+          <title>CMS-tohtori</title>
+          <description>Terveystarkastukset ja diagnostiikka CMS-asennuksellesi.</description>
+        </cmsdoctor>
+        <contentaudit>
+          <title>Sisällön auditointi</title>
+          <description>Tarkista sisällön laatu, kattavuus ja parhaat käytännöt.</description>
+        </contentaudit>
+        <linkchecker>
+          <title>Linkkien tarkistus</title>
+          <description>Etsi ja raportoi rikkinäiset linkit sivustollasi.</description>
+        </linkchecker>
+        <activeeditors>
+          <title>Aktiiviset muokkaajat</title>
+          <description>Näe kuka muokkaa sisältöä juuri nyt ja tee yhteistyötä reaaliajassa.</description>
+        </activeeditors>
+        <managechildren>
+          <title>Hallitse alasivuja</title>
+          <description>Joukkohallitse alasivuja: lajittele, julkaise, peru julkaisu, siirrä ja poista.</description>
+        </managechildren>
+        <overview>
+          <title>Yleiskatsaus</title>
+          <description>Kojelaudan yleiskatsaus kaikista Editor Powertools -ominaisuuksista.</description>
+        </overview>
+      </tools>
+
+      <!-- Ajastettu tehtävä -->
+      <jobs>
+        <contentanalysis>
+          <displayname>[EditorPowertools] Sisältöanalyysi</displayname>
+          <description>Yhdistetty tehtävä, joka käy läpi kaiken sisällön kerran ja suorittaa kaikki rekisteröidyt analysaattorit (sisältötyyppistatistiikka, personointi, linkkien tarkistus jne.).</description>
+          <noanalyzers>Analysaattoreita ei ole rekisteröity.</noanalyzers>
+          <initializing>Alustetaan {0} analysaattoria...</initializing>
+          <analyzing>Analysoidaan {0} sisältökohdetta {1} analysaattorilla...</analyzing>
+          <stopped>Pysäytetty kohdan {0}/{1} jälkeen.</stopped>
+          <processing>Käsitelty {0}/{1} sisältökohdetta...</processing>
+          <completing>Viimeistellään analysaattoreita...</completing>
+          <completed>Valmis. Analysoitu {0} sisältökohdetta {1} analysaattorilla ({2}).</completed>
+        </contentanalysis>
+      </jobs>
+
+      <!-- CMS-tohtori terveystarkastukset -->
+      <cmsdoctor>
+        <runjobfirst>Suorita ajastettu tehtävä '[EditorPowertools] Sisältöanalyysi' ensin.</runjobfirst>
+        <checks>
+          <memorycheck>
+            <name>Muistin käyttö</name>
+            <description>Raportoi sovelluksen nykyisen muistinkäytön.</description>
+            <group>Ympäristö</group>
+            <biton64>Toimii 32-bittisenä 64-bittisessä käyttöjärjestelmässä. Muisti: {0} MB.</biton64>
+            <highmemory>Korkea muistinkäyttö: {0} MB.</highmemory>
+            <ok>Muisti: {0} MB working set.</ok>
+            <details>Working set: {0} MB, GC heap: {1} MB, 64-bittinen prosessi: {2}, 64-bittinen OS: {3}</details>
+          </memorycheck>
+          <versioninfocheck>
+            <name>CMS-versio</name>
+            <description>Raportoi nykyisen Optimizely CMS -version.</description>
+            <group>Ympäristö</group>
+            <ok>Optimizely CMS {0}</ok>
+            <details>EPiServer assembly-versio: {0}. .NET {1}</details>
+            <unknown>Tuntematon</unknown>
+            <couldnotdetermine>CMS-versiota ei voitu määrittää.</couldnotdetermine>
+          </versioninfocheck>
+          <contenttypecheck>
+            <name>Sisältötyyppien määrä</name>
+            <description>Tarkistaa, onko sisältötyyppien määrä kohtuullisissa rajoissa.</description>
+            <group>Sisältö</group>
+            <toomanypagetypes>Liian monta sivutyyppiä ({0}). Muokkaajien voi olla vaikea löytää oikeaa.</toomanypagetypes>
+            <toomanyblocktypes>Liian monta lohkotyyppiä ({0}). Harkitse yhdistämistä.</toomanyblocktypes>
+            <toofewpagetypes>Vain {0} sivutyyppi(ä). Sisällöstä voi puuttua rakenne.</toofewpagetypes>
+            <ok>{0} sisältötyyppiä ({1} sivua, {2} lohkoa, {3} mediaa)</ok>
+            <details>Sivutyypit: {0}, Lohkotyypit: {1}, Mediatyypit: {2}, Yhteensä: {3}</details>
+          </contenttypecheck>
+          <orphanedpropertycheck>
+            <name>Orvot ominaisuudet</name>
+            <description>Etsii ominaisuuksia, jotka on määritelty tietokannassa mutta ei koodissa.</description>
+            <group>Sisältö</group>
+            <found>{0} orvoksi jäänyttä ominaisuutta löydetty tietokannasta, joita ei ole määritelty koodissa.</found>
+            <ok>Orvoksi jääneitä ominaisuuksia ei löytynyt.</ok>
+            <examples>Esimerkit: {0}</examples>
+            <andmore>(ja {0} lisää)</andmore>
+          </orphanedpropertycheck>
+          <scheduledjobscheck>
+            <name>Ajastettujen tehtävien terveys</name>
+            <description>Tarkistaa epäonnistuneet tai pitkäkestoiset ajastetut tehtävät.</description>
+            <group>Ympäristö</group>
+            <failed>{0} ajastettu(a) tehtävä(ä) sisältää virheitä.</failed>
+            <neverrun>{0} käytössä olevaa tehtävää ei ole koskaan suoritettu.</neverrun>
+            <ok>Kaikki {0} käytössä olevaa tehtävää ovat kunnossa.</ok>
+            <failedlabel>Epäonnistuneet: {0}</failedlabel>
+            <neverrunlabel>Ei koskaan suoritettu: {0}</neverrunlabel>
+          </scheduledjobscheck>
+          <draftcontentcheck>
+            <name>Vanhentuneet luonnokset</name>
+            <description>Tarkistaa luonnossisältöä, jota ei ole koskaan julkaistu tai jossa on vanhoja julkaisemattomia muutoksia.</description>
+            <group>Sisältö</group>
+            <ok>Vanhentuneita luonnoksia ei löytynyt.</ok>
+            <warning>{0} vanhentunutta sisältökohdetta löydetty. Harkitse tarkistamista ja siivoamista.</warning>
+            <minor>{0} vanhentunutta kohdetta löydetty (vähäinen).</minor>
+            <details>Ei koskaan julkaistu: {0}, Vanhentuneet luonnokset (>3 kuukautta): {1}</details>
+          </draftcontentcheck>
+          <brokenlinkscheck>
+            <name>Rikkinäiset linkit</name>
+            <description>Raportoi Linkkien tarkistus -työkalun löytämät rikkinäiset linkit.</description>
+            <group>Sisältö</group>
+            <nodata>Linkkitietoja ei saatavilla. Suorita ajastettu tehtävä Sisältöanalyysi ensin.</nodata>
+            <nodatadetails>Linkkien tarkistuksen analysaattori täyttää nämä tiedot ajastetun tehtävän aikana.</nodatadetails>
+            <allhealthy>Kaikki {0} linkkiä ovat kunnossa.</allhealthy>
+            <fault>{0} rikkinäistä linkkiä löydetty {1} linkistä yhteensä.</fault>
+            <warning>{0} rikkinäistä linkkiä löydetty.</warning>
+            <details>Linkkejä yhteensä: {0}, Rikkinäisiä: {1}. 404:t: {2}, 5xx: {3}, Aikakatkaisut: {4}</details>
+            <notavailable>Linkkien tarkistuksen tiedot eivät ole vielä saatavilla.</notavailable>
+          </brokenlinkscheck>
+          <missingalttextcheck>
+            <name>Puuttuva alt-teksti</name>
+            <description>Tarkistaa kuvat, joista puuttuu alt-teksti (saavutettavuus- ja SEO-ongelma).</description>
+            <group>Sisältö</group>
+            <noimages>Kuvia ei löytynyt.</noimages>
+            <badpractice>{0} kuvaa ilman alt-tekstiä ({1}%).</badpractice>
+            <warning>{0} kuvaa ilman alt-tekstiä.</warning>
+            <ok>Kaikissa kuvissa on alt-teksti.</ok>
+            <details>{0}/{1} kuvasta ({2}%) puuttuu alt-teksti. Viimeksi analysoitu: {3}</details>
+          </missingalttextcheck>
+          <unusedcontentcheck>
+            <name>Käyttämätön sisältö</name>
+            <description>Tarkistaa lohkot ja mediat, joihin ei viitata mistään (mahdollisia orpoja).</description>
+            <group>Sisältö</group>
+            <noblocks>Lohkoja tai mediaa ei löytynyt.</noblocks>
+            <warning>{0} viittaamatonta kohdetta ({1}%). Harkitse siivoamista.</warning>
+            <minor>{0} viittaamatonta kohdetta ({1}%, vähäinen).</minor>
+            <ok>Kaikkiin lohkoihin ja medioihin viitataan.</ok>
+            <details>{0}/{1} lohkosta/mediasta ({2}%) on viittaamattomia. Viimeksi analysoitu: {3}</details>
+          </unusedcontentcheck>
+        </checks>
+        <groups>
+          <environment>Ympäristö</environment>
+          <content>Sisältö</content>
+        </groups>
+        <tags>
+          <performance>Suorituskyky</performance>
+          <security>Tietoturva</security>
+          <editorux>Muokkaajan käyttökokemus</editorux>
+          <maintenance>Ylläpito</maintenance>
+          <seo>SEO</seo>
+          <accessibility>Saavutettavuus</accessibility>
+        </tags>
+      </cmsdoctor>
+
+      <!-- Sisällön tuontiviestit -->
+      <contentimporter>
+        <errors>
+          <nofile>Tiedostoa ei ladattu</nofile>
+          <toolarge>Tiedosto on liian suuri (enintään 50 MB)</toolarge>
+          <unsupportedfiletype>Ei-tuettu tiedostotyyppi: {0}</unsupportedfiletype>
+          <sessionnotfound>Istuntoa ei löytynyt</sessionnotfound>
+          <contenttypenotfound>Sisältötyyppiä ei löytynyt</contenttypenotfound>
+          <nomapping>Kartoitusta ei ole määritetty. Suorita testajo ensin.</nomapping>
+          <processingerror>Pyynnön käsittelyssä tapahtui virhe.</processingerror>
+        </errors>
+        <warnings>
+          <nonamecolumn>Nimisaraketta ei ole kartoitettu</nonamecolumn>
+        </warnings>
+        <status>
+          <running>käynnissä</running>
+          <completed>valmis</completed>
+          <failed>epäonnistui</failed>
+        </status>
+      </contentimporter>
+
+      <!-- Analysaattorit -->
+      <analyzers>
+        <contenttypestatistics>Sisältötyyppistatistiikka</contenttypestatistics>
+        <personalization>Personointi</personalization>
+        <linkchecker>Linkkien tarkistus</linkchecker>
+      </analyzers>
+
+      <!-- Yhteiset merkkijonot -->
+      <common>
+        <unknown>Tuntematon</unknown>
+        <error>Virhe</error>
+        <ok>OK</ok>
+        <timeout>Aikakatkaisu</timeout>
+        <notfound>Ei löytynyt</notfound>
+        <contentnotfound>Sisältöä ei löytynyt</contentnotfound>
+        <connectionerror>Yhteysvirhe: {0}</connectionerror>
+      </common>
+    </editorpowertools>
+  </language>
+</languages>

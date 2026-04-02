@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Deutsch" id="de">
+    <editorpowertools>
+      <!-- Hauptmenü -->
+      <menu>
+        <title>Editor Powertools</title>
+        <overview>Übersicht</overview>
+        <contenttypeaudit>Inhaltstyp-Audit</contenttypeaudit>
+        <personalizationaudit>Personalisierungs-Audit</personalizationaudit>
+        <audiencemanager>Zielgruppenverwaltung</audiencemanager>
+        <contenttyperecommendations>Inhaltstyp-Empfehlungen</contenttyperecommendations>
+        <bulkpropertyeditor>Masseneigenschaftseditor</bulkpropertyeditor>
+        <scheduledjobsgantt>Geplante Aufgaben Gantt</scheduledjobsgantt>
+        <activitytimeline>Aktivitätszeitachse</activitytimeline>
+        <contentimporter>Inhaltsimport</contentimporter>
+        <cmsdoctor>CMS-Doktor</cmsdoctor>
+        <contentaudit>Inhalts-Audit</contentaudit>
+        <linkchecker>Linkprüfung</linkchecker>
+        <activeeditors>Aktive Redakteure</activeeditors>
+        <managechildren>Unterseiten verwalten</managechildren>
+      </menu>
+
+      <!-- Komponenten (CMS-Asset-Panel-Widgets) -->
+      <components>
+        <contentdetails>
+          <title>Power Inhaltsdetails</title>
+          <description>Detaillierte Informationen zum ausgewählten Inhaltselement - Eigenschaften, Referenzen, Versionen.</description>
+        </contentdetails>
+        <activeeditors>
+          <title>Aktive Redakteure</title>
+          <description>Sehen Sie, wer sonst diesen Inhalt bearbeitet, und arbeiten Sie mit Ihrem Team zusammen.</description>
+        </activeeditors>
+      </components>
+
+      <!-- Werkzeugtitel und -beschreibungen -->
+      <tools>
+        <contenttypeaudit>
+          <title>Inhaltstyp-Audit</title>
+          <description>Übersicht aller Inhaltstypen, ihrer Nutzung, Eigenschaften und Vererbung.</description>
+        </contenttypeaudit>
+        <personalizationaudit>
+          <title>Personalisierungs-Audit</title>
+          <description>Besuchergruppennutzung in Inhalten, Zugriffsrechten und Eigenschaften finden und prüfen.</description>
+        </personalizationaudit>
+        <audiencemanager>
+          <title>Zielgruppenverwaltung</title>
+          <description>Besuchergruppen und Zielgruppensegmente verwalten und überprüfen.</description>
+        </audiencemanager>
+        <contenttyperecommendations>
+          <title>Inhaltstyp-Empfehlungen</title>
+          <description>Empfehlungen zur Verbesserung und Konsolidierung von Inhaltstypen erhalten.</description>
+        </contenttyperecommendations>
+        <bulkpropertyeditor>
+          <title>Masseneigenschaftseditor</title>
+          <description>Eigenschaften mehrerer Inhaltselemente gleichzeitig bearbeiten.</description>
+        </bulkpropertyeditor>
+        <scheduledjobsgantt>
+          <title>Geplante Aufgaben Gantt</title>
+          <description>Ausführung geplanter Aufgaben als Gantt-Diagramm visualisieren.</description>
+        </scheduledjobsgantt>
+        <activitytimeline>
+          <title>Aktivitätszeitachse</title>
+          <description>Zeitachse der Inhaltsänderungen und redaktionellen Aktivitäten anzeigen.</description>
+        </activitytimeline>
+        <contentimporter>
+          <title>Inhaltsimport</title>
+          <description>Inhalte aus CSV-, JSON- oder Excel-Dateien importieren.</description>
+        </contentimporter>
+        <cmsdoctor>
+          <title>CMS-Doktor</title>
+          <description>Gesundheitsprüfungen und Diagnose für Ihre CMS-Installation.</description>
+        </cmsdoctor>
+        <contentaudit>
+          <title>Inhalts-Audit</title>
+          <description>Inhalte auf Qualität, Vollständigkeit und Best Practices prüfen.</description>
+        </contentaudit>
+        <linkchecker>
+          <title>Linkprüfung</title>
+          <description>Defekte Links auf Ihrer Website finden und melden.</description>
+        </linkchecker>
+        <activeeditors>
+          <title>Aktive Redakteure</title>
+          <description>Sehen Sie, wer gerade Inhalte bearbeitet, und arbeiten Sie in Echtzeit zusammen.</description>
+        </activeeditors>
+        <managechildren>
+          <title>Unterseiten verwalten</title>
+          <description>Unterseiten in Masse verwalten: sortieren, veröffentlichen, zurückziehen, verschieben und löschen.</description>
+        </managechildren>
+        <overview>
+          <title>Übersicht</title>
+          <description>Dashboard-Übersicht aller Editor Powertools-Funktionen.</description>
+        </overview>
+      </tools>
+
+      <!-- Geplante Aufgabe -->
+      <jobs>
+        <contentanalysis>
+          <displayname>[EditorPowertools] Inhaltsanalyse</displayname>
+          <description>Vereinheitlichte Aufgabe, die alle Inhalte einmal durchläuft und alle registrierten Analysatoren ausführt (Inhaltstyp-Statistiken, Personalisierung, Linkprüfung usw.).</description>
+          <noanalyzers>Keine Analysatoren registriert.</noanalyzers>
+          <initializing>{0} Analysatoren werden initialisiert...</initializing>
+          <analyzing>{0} Inhaltselemente mit {1} Analysatoren werden analysiert...</analyzing>
+          <stopped>Gestoppt nach {0}/{1} Elementen.</stopped>
+          <processing>{0}/{1} Inhaltselemente verarbeitet...</processing>
+          <completing>Analysatoren werden abgeschlossen...</completing>
+          <completed>Abgeschlossen. {0} Inhaltselemente mit {1} Analysatoren analysiert ({2}).</completed>
+        </contentanalysis>
+      </jobs>
+
+      <!-- CMS-Doktor Gesundheitsprüfungen -->
+      <cmsdoctor>
+        <runjobfirst>Führen Sie zuerst die geplante Aufgabe '[EditorPowertools] Inhaltsanalyse' aus.</runjobfirst>
+        <checks>
+          <memorycheck>
+            <name>Speichernutzung</name>
+            <description>Meldet die aktuelle Speichernutzung der Anwendung.</description>
+            <group>Umgebung</group>
+            <biton64>Läuft als 32-Bit auf 64-Bit-OS. Speicher: {0} MB.</biton64>
+            <highmemory>Hohe Speichernutzung: {0} MB.</highmemory>
+            <ok>Speicher: {0} MB Working Set.</ok>
+            <details>Working Set: {0} MB, GC Heap: {1} MB, 64-Bit-Prozess: {2}, 64-Bit-OS: {3}</details>
+          </memorycheck>
+          <versioninfocheck>
+            <name>CMS-Version</name>
+            <description>Meldet die aktuelle Optimizely CMS-Version.</description>
+            <group>Umgebung</group>
+            <ok>Optimizely CMS {0}</ok>
+            <details>EPiServer Assembly-Version: {0}. .NET {1}</details>
+            <unknown>Unbekannt</unknown>
+            <couldnotdetermine>CMS-Version konnte nicht ermittelt werden.</couldnotdetermine>
+          </versioninfocheck>
+          <contenttypecheck>
+            <name>Anzahl der Inhaltstypen</name>
+            <description>Prüft, ob die Anzahl der Inhaltstypen im angemessenen Rahmen liegt.</description>
+            <group>Inhalt</group>
+            <toomanypagetypes>Zu viele Seitentypen ({0}). Redakteure könnten Schwierigkeiten haben, den richtigen zu finden.</toomanypagetypes>
+            <toomanyblocktypes>Zu viele Blocktypen ({0}). Erwägen Sie eine Konsolidierung.</toomanyblocktypes>
+            <toofewpagetypes>Nur {0} Seitentyp(en). Dem Inhalt könnte es an Struktur fehlen.</toofewpagetypes>
+            <ok>{0} Inhaltstypen ({1} Seiten, {2} Blöcke, {3} Medien)</ok>
+            <details>Seitentypen: {0}, Blocktypen: {1}, Medientypen: {2}, Gesamt: {3}</details>
+          </contenttypecheck>
+          <orphanedpropertycheck>
+            <name>Verwaiste Eigenschaften</name>
+            <description>Findet Eigenschaften, die in der Datenbank, aber nicht im Code definiert sind.</description>
+            <group>Inhalt</group>
+            <found>{0} verwaiste Eigenschaften in der Datenbank gefunden, die nicht im Code definiert sind.</found>
+            <ok>Keine verwaisten Eigenschaften gefunden.</ok>
+            <examples>Beispiele: {0}</examples>
+            <andmore>(und {0} weitere)</andmore>
+          </orphanedpropertycheck>
+          <scheduledjobscheck>
+            <name>Gesundheit geplanter Aufgaben</name>
+            <description>Prüft auf fehlgeschlagene oder lange laufende geplante Aufgaben.</description>
+            <group>Umgebung</group>
+            <failed>{0} geplante Aufgabe(n) haben Fehler.</failed>
+            <neverrun>{0} aktivierte Aufgabe(n) wurden nie ausgeführt.</neverrun>
+            <ok>Alle {0} aktivierten Aufgaben sind gesund.</ok>
+            <failedlabel>Fehlgeschlagen: {0}</failedlabel>
+            <neverrunlabel>Nie ausgeführt: {0}</neverrunlabel>
+          </scheduledjobscheck>
+          <draftcontentcheck>
+            <name>Veraltete Entwürfe</name>
+            <description>Prüft auf Entwurfsinhalte, die nie veröffentlicht wurden oder alte unveröffentlichte Änderungen haben.</description>
+            <group>Inhalt</group>
+            <ok>Keine veralteten Entwürfe gefunden.</ok>
+            <warning>{0} veraltete Inhaltselemente gefunden. Erwägen Sie eine Überprüfung und Bereinigung.</warning>
+            <minor>{0} veraltete Elemente gefunden (geringfügig).</minor>
+            <details>Nie veröffentlicht: {0}, Veraltete Entwürfe (>3 Monate): {1}</details>
+          </draftcontentcheck>
+          <brokenlinkscheck>
+            <name>Defekte Links</name>
+            <description>Meldet defekte Links, die vom Linkprüfungs-Werkzeug gefunden wurden.</description>
+            <group>Inhalt</group>
+            <nodata>Keine Linkdaten verfügbar. Führen Sie zuerst die geplante Aufgabe Inhaltsanalyse aus.</nodata>
+            <nodatadetails>Der Linkprüfungs-Analysator füllt diese Daten während der geplanten Aufgabe.</nodatadetails>
+            <allhealthy>Alle {0} Links sind gesund.</allhealthy>
+            <fault>{0} defekte Links unter {1} Gesamtlinks gefunden.</fault>
+            <warning>{0} defekte Links gefunden.</warning>
+            <details>Gesamtlinks: {0}, Defekt: {1}. 404er: {2}, 5xx: {3}, Zeitüberschreitungen: {4}</details>
+            <notavailable>Linkprüfungsdaten sind noch nicht verfügbar.</notavailable>
+          </brokenlinkscheck>
+          <missingalttextcheck>
+            <name>Fehlender Alt-Text</name>
+            <description>Prüft Bilder ohne Alt-Text (Barrierefreiheits- und SEO-Problem).</description>
+            <group>Inhalt</group>
+            <noimages>Keine Bilder gefunden.</noimages>
+            <badpractice>{0} Bilder ohne Alt-Text ({1}%).</badpractice>
+            <warning>{0} Bilder ohne Alt-Text.</warning>
+            <ok>Alle Bilder haben Alt-Text.</ok>
+            <details>{0} von {1} Bildern ({2}%) haben keinen Alt-Text. Zuletzt analysiert: {3}</details>
+          </missingalttextcheck>
+          <unusedcontentcheck>
+            <name>Ungenutzter Inhalt</name>
+            <description>Prüft auf Blöcke und Medien, die von nichts referenziert werden (potenzielle Waisen).</description>
+            <group>Inhalt</group>
+            <noblocks>Keine Blöcke oder Medien gefunden.</noblocks>
+            <warning>{0} nicht referenzierte Elemente ({1}%). Erwägen Sie eine Bereinigung.</warning>
+            <minor>{0} nicht referenzierte Elemente ({1}%, geringfügig).</minor>
+            <ok>Alle Blöcke und Medien sind referenziert.</ok>
+            <details>{0} von {1} Blöcken/Medien ({2}%) sind nicht referenziert. Zuletzt analysiert: {3}</details>
+          </unusedcontentcheck>
+        </checks>
+        <groups>
+          <environment>Umgebung</environment>
+          <content>Inhalt</content>
+        </groups>
+        <tags>
+          <performance>Leistung</performance>
+          <security>Sicherheit</security>
+          <editorux>Redakteurserfahrung</editorux>
+          <maintenance>Wartung</maintenance>
+          <seo>SEO</seo>
+          <accessibility>Barrierefreiheit</accessibility>
+        </tags>
+      </cmsdoctor>
+
+      <!-- Inhaltsimport-Nachrichten -->
+      <contentimporter>
+        <errors>
+          <nofile>Keine Datei hochgeladen</nofile>
+          <toolarge>Datei zu groß (max. 50 MB)</toolarge>
+          <unsupportedfiletype>Nicht unterstützter Dateityp: {0}</unsupportedfiletype>
+          <sessionnotfound>Sitzung nicht gefunden</sessionnotfound>
+          <contenttypenotfound>Inhaltstyp nicht gefunden</contenttypenotfound>
+          <nomapping>Keine Zuordnung konfiguriert. Führen Sie zuerst einen Testlauf durch.</nomapping>
+          <processingerror>Bei der Verarbeitung der Anfrage ist ein Fehler aufgetreten.</processingerror>
+        </errors>
+        <warnings>
+          <nonamecolumn>Keine Namensspalte zugeordnet</nonamecolumn>
+        </warnings>
+        <status>
+          <running>läuft</running>
+          <completed>abgeschlossen</completed>
+          <failed>fehlgeschlagen</failed>
+        </status>
+      </contentimporter>
+
+      <!-- Analysatoren -->
+      <analyzers>
+        <contenttypestatistics>Inhaltstyp-Statistiken</contenttypestatistics>
+        <personalization>Personalisierung</personalization>
+        <linkchecker>Linkprüfung</linkchecker>
+      </analyzers>
+
+      <!-- Gemeinsame Zeichenfolgen -->
+      <common>
+        <unknown>Unbekannt</unknown>
+        <error>Fehler</error>
+        <ok>OK</ok>
+        <timeout>Zeitüberschreitung</timeout>
+        <notfound>Nicht gefunden</notfound>
+        <contentnotfound>Inhalt nicht gefunden</contentnotfound>
+        <connectionerror>Verbindungsfehler: {0}</connectionerror>
+      </common>
+    </editorpowertools>
+  </language>
+</languages>

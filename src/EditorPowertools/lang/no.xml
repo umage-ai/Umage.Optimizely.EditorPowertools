@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Norsk" id="no">
+    <editorpowertools>
+      <!-- Hovedmeny -->
+      <menu>
+        <title>Editor Powertools</title>
+        <overview>Oversikt</overview>
+        <contenttypeaudit>Innholdstype-revisjon</contenttypeaudit>
+        <personalizationaudit>Personaliseringsrevisjon</personalizationaudit>
+        <audiencemanager>Målgruppeadministrasjon</audiencemanager>
+        <contenttyperecommendations>Innholdstype-anbefalinger</contenttyperecommendations>
+        <bulkpropertyeditor>Masseredigering av egenskaper</bulkpropertyeditor>
+        <scheduledjobsgantt>Planlagte jobber Gantt</scheduledjobsgantt>
+        <activitytimeline>Aktivitetstidslinje</activitytimeline>
+        <contentimporter>Innholdsimport</contentimporter>
+        <cmsdoctor>CMS-doktor</cmsdoctor>
+        <contentaudit>Innholdsrevisjon</contentaudit>
+        <linkchecker>Lenkesjekk</linkchecker>
+        <activeeditors>Aktive redaktører</activeeditors>
+        <managechildren>Administrer undersider</managechildren>
+      </menu>
+
+      <!-- Komponenter (CMS-aktivapanel-widgets) -->
+      <components>
+        <contentdetails>
+          <title>Power Innholdsdetaljer</title>
+          <description>Detaljert informasjon om det valgte innholdselementet - egenskaper, referanser, versjoner.</description>
+        </contentdetails>
+        <activeeditors>
+          <title>Aktive redaktører</title>
+          <description>Se hvem andre som redigerer dette innholdet og samarbeid med teamet ditt.</description>
+        </activeeditors>
+      </components>
+
+      <!-- Verktøytitler og -beskrivelser -->
+      <tools>
+        <contenttypeaudit>
+          <title>Innholdstype-revisjon</title>
+          <description>Oversikt over alle innholdstyper, deres bruk, egenskaper og arv.</description>
+        </contenttypeaudit>
+        <personalizationaudit>
+          <title>Personaliseringsrevisjon</title>
+          <description>Finn og revider bruk av besøksgrupper på tvers av innhold, tilgangsrettigheter og egenskaper.</description>
+        </personalizationaudit>
+        <audiencemanager>
+          <title>Målgruppeadministrasjon</title>
+          <description>Administrer og gjennomgå besøksgrupper og målgruppesegmenter.</description>
+        </audiencemanager>
+        <contenttyperecommendations>
+          <title>Innholdstype-anbefalinger</title>
+          <description>Få anbefalinger for forbedring og konsolidering av innholdstyper.</description>
+        </contenttyperecommendations>
+        <bulkpropertyeditor>
+          <title>Masseredigering av egenskaper</title>
+          <description>Rediger egenskaper på tvers av flere innholdselementer samtidig.</description>
+        </bulkpropertyeditor>
+        <scheduledjobsgantt>
+          <title>Planlagte jobber Gantt</title>
+          <description>Visualiser kjøring av planlagte jobber som et Gantt-diagram.</description>
+        </scheduledjobsgantt>
+        <activitytimeline>
+          <title>Aktivitetstidslinje</title>
+          <description>Se en tidslinje over innholdsendringer og redaksjonell aktivitet.</description>
+        </activitytimeline>
+        <contentimporter>
+          <title>Innholdsimport</title>
+          <description>Importer innhold fra CSV-, JSON- eller Excel-filer.</description>
+        </contentimporter>
+        <cmsdoctor>
+          <title>CMS-doktor</title>
+          <description>Helsesjekker og diagnostikk for din CMS-installasjon.</description>
+        </cmsdoctor>
+        <contentaudit>
+          <title>Innholdsrevisjon</title>
+          <description>Revider innhold for kvalitet, fullstendighet og beste praksis.</description>
+        </contentaudit>
+        <linkchecker>
+          <title>Lenkesjekk</title>
+          <description>Finn og rapporter ødelagte lenker på nettstedet ditt.</description>
+        </linkchecker>
+        <activeeditors>
+          <title>Aktive redaktører</title>
+          <description>Se hvem som redigerer innhold akkurat nå og samarbeid i sanntid.</description>
+        </activeeditors>
+        <managechildren>
+          <title>Administrer undersider</title>
+          <description>Masseadministrer undersider: sorter, publiser, avpubliser, flytt og slett.</description>
+        </managechildren>
+        <overview>
+          <title>Oversikt</title>
+          <description>Dashboardoversikt over alle Editor Powertools-funksjoner.</description>
+        </overview>
+      </tools>
+
+      <!-- Planlagt jobb -->
+      <jobs>
+        <contentanalysis>
+          <displayname>[EditorPowertools] Innholdsanalyse</displayname>
+          <description>Samlet jobb som traverserer alt innhold en gang og kjører alle registrerte analysatorer (innholdstype-statistikk, personalisering, lenkesjekk osv.).</description>
+          <noanalyzers>Ingen analysatorer registrert.</noanalyzers>
+          <initializing>Initialiserer {0} analysatorer...</initializing>
+          <analyzing>Analyserer {0} innholdselementer med {1} analysatorer...</analyzing>
+          <stopped>Stoppet etter {0}/{1} elementer.</stopped>
+          <processing>Behandlet {0}/{1} innholdselementer...</processing>
+          <completing>Fullfører analysatorer...</completing>
+          <completed>Fullført. Analyserte {0} innholdselementer med {1} analysatorer ({2}).</completed>
+        </contentanalysis>
+      </jobs>
+
+      <!-- CMS-doktor helsesjekker -->
+      <cmsdoctor>
+        <runjobfirst>Kjør det planlagte jobbet '[EditorPowertools] Innholdsanalyse' først.</runjobfirst>
+        <checks>
+          <memorycheck>
+            <name>Minnebruk</name>
+            <description>Rapporterer gjeldende minnebruk for applikasjonen.</description>
+            <group>Miljø</group>
+            <biton64>Kjører som 32-bit på 64-bit OS. Minne: {0} MB.</biton64>
+            <highmemory>Høyt minnebruk: {0} MB.</highmemory>
+            <ok>Minne: {0} MB working set.</ok>
+            <details>Working set: {0} MB, GC heap: {1} MB, 64-bit prosess: {2}, 64-bit OS: {3}</details>
+          </memorycheck>
+          <versioninfocheck>
+            <name>CMS-versjon</name>
+            <description>Rapporterer gjeldende Optimizely CMS-versjon.</description>
+            <group>Miljø</group>
+            <ok>Optimizely CMS {0}</ok>
+            <details>EPiServer assembly-versjon: {0}. .NET {1}</details>
+            <unknown>Ukjent</unknown>
+            <couldnotdetermine>Kunne ikke fastslå CMS-versjonen.</couldnotdetermine>
+          </versioninfocheck>
+          <contenttypecheck>
+            <name>Antall innholdstyper</name>
+            <description>Sjekker om antallet innholdstyper er innenfor rimelige grenser.</description>
+            <group>Innhold</group>
+            <toomanypagetypes>For mange sidetyper ({0}). Redaktører kan ha vansker med å finne riktig type.</toomanypagetypes>
+            <toomanyblocktypes>For mange blokktyper ({0}). Vurder å konsolidere.</toomanyblocktypes>
+            <toofewpagetypes>Bare {0} sidetype(r). Innholdet kan mangle struktur.</toofewpagetypes>
+            <ok>{0} innholdstyper ({1} sider, {2} blokker, {3} media)</ok>
+            <details>Sidetyper: {0}, Blokktyper: {1}, Mediatyper: {2}, Totalt: {3}</details>
+          </contenttypecheck>
+          <orphanedpropertycheck>
+            <name>Foreldreløse egenskaper</name>
+            <description>Finner egenskaper definert i databasen men ikke i koden.</description>
+            <group>Innhold</group>
+            <found>{0} foreldreløse egenskaper funnet i databasen som ikke er definert i koden.</found>
+            <ok>Ingen foreldreløse egenskaper funnet.</ok>
+            <examples>Eksempler: {0}</examples>
+            <andmore>(og {0} til)</andmore>
+          </orphanedpropertycheck>
+          <scheduledjobscheck>
+            <name>Planlagte jobbers helse</name>
+            <description>Sjekker for feilede eller langvarige planlagte jobber.</description>
+            <group>Miljø</group>
+            <failed>{0} planlagte jobb(er) har feil.</failed>
+            <neverrun>{0} aktiverte jobb(er) har aldri blitt kjørt.</neverrun>
+            <ok>Alle {0} aktiverte jobber er friske.</ok>
+            <failedlabel>Feilet: {0}</failedlabel>
+            <neverrunlabel>Aldri kjørt: {0}</neverrunlabel>
+          </scheduledjobscheck>
+          <draftcontentcheck>
+            <name>Foreldede utkast</name>
+            <description>Sjekker for utkastinnhold som aldri er publisert eller har gamle upubliserte endringer.</description>
+            <group>Innhold</group>
+            <ok>Ingen foreldede utkast funnet.</ok>
+            <warning>{0} foreldede innholdselementer funnet. Vurder å gjennomgå og rydde opp.</warning>
+            <minor>{0} foreldede elementer funnet (mindre).</minor>
+            <details>Aldri publisert: {0}, Foreldede utkast (>3 måneder): {1}</details>
+          </draftcontentcheck>
+          <brokenlinkscheck>
+            <name>Ødelagte lenker</name>
+            <description>Rapporterer ødelagte lenker funnet av Lenkesjekk-verktøyet.</description>
+            <group>Innhold</group>
+            <nodata>Ingen lenkedata tilgjengelig. Kjør det planlagte jobbet Innholdsanalyse først.</nodata>
+            <nodatadetails>Lenkesjekk-analysatoren fyller inn disse dataene under det planlagte jobbet.</nodatadetails>
+            <allhealthy>Alle {0} lenker er friske.</allhealthy>
+            <fault>{0} ødelagte lenker funnet blant {1} totale lenker.</fault>
+            <warning>{0} ødelagte lenker funnet.</warning>
+            <details>Totale lenker: {0}, Ødelagte: {1}. 404-er: {2}, 5xx: {3}, Tidsavbrudd: {4}</details>
+            <notavailable>Lenkesjekk-data er ikke tilgjengelige ennå.</notavailable>
+          </brokenlinkscheck>
+          <missingalttextcheck>
+            <name>Manglende alt-tekst</name>
+            <description>Sjekker for bilder som mangler alt-tekst (tilgjengelighets- og SEO-problem).</description>
+            <group>Innhold</group>
+            <noimages>Ingen bilder funnet.</noimages>
+            <badpractice>{0} bilder mangler alt-tekst ({1}%).</badpractice>
+            <warning>{0} bilder mangler alt-tekst.</warning>
+            <ok>Alle bilder har alt-tekst.</ok>
+            <details>{0} av {1} bilder ({2}%) mangler alt-tekst. Sist analysert: {3}</details>
+          </missingalttextcheck>
+          <unusedcontentcheck>
+            <name>Ubrukt innhold</name>
+            <description>Sjekker for blokker og media som ikke er referert av noe (potensielle foreldreløse).</description>
+            <group>Innhold</group>
+            <noblocks>Ingen blokker eller media funnet.</noblocks>
+            <warning>{0} urefererte elementer ({1}%). Vurder opprydding.</warning>
+            <minor>{0} urefererte elementer ({1}%, mindre).</minor>
+            <ok>Alle blokker og media er referert.</ok>
+            <details>{0} av {1} blokker/media ({2}%) er urefererte. Sist analysert: {3}</details>
+          </unusedcontentcheck>
+        </checks>
+        <groups>
+          <environment>Miljø</environment>
+          <content>Innhold</content>
+        </groups>
+        <tags>
+          <performance>Ytelse</performance>
+          <security>Sikkerhet</security>
+          <editorux>Redaktøropplevelse</editorux>
+          <maintenance>Vedlikehold</maintenance>
+          <seo>SEO</seo>
+          <accessibility>Tilgjengelighet</accessibility>
+        </tags>
+      </cmsdoctor>
+
+      <!-- Innholdsimport-meldinger -->
+      <contentimporter>
+        <errors>
+          <nofile>Ingen fil lastet opp</nofile>
+          <toolarge>Filen er for stor (maks 50 MB)</toolarge>
+          <unsupportedfiletype>Filtype som ikke støttes: {0}</unsupportedfiletype>
+          <sessionnotfound>Sesjon ikke funnet</sessionnotfound>
+          <contenttypenotfound>Innholdstype ikke funnet</contenttypenotfound>
+          <nomapping>Ingen kartlegging konfigurert. Kjør dry-run først.</nomapping>
+          <processingerror>Det oppstod en feil under behandling av forespørselen.</processingerror>
+        </errors>
+        <warnings>
+          <nonamecolumn>Ingen navnekolonne kartlagt</nonamecolumn>
+        </warnings>
+        <status>
+          <running>kjører</running>
+          <completed>fullført</completed>
+          <failed>feilet</failed>
+        </status>
+      </contentimporter>
+
+      <!-- Analysatorer -->
+      <analyzers>
+        <contenttypestatistics>Innholdstype-statistikk</contenttypestatistics>
+        <personalization>Personalisering</personalization>
+        <linkchecker>Lenkesjekk</linkchecker>
+      </analyzers>
+
+      <!-- Felles strenger -->
+      <common>
+        <unknown>Ukjent</unknown>
+        <error>Feil</error>
+        <ok>OK</ok>
+        <timeout>Tidsavbrudd</timeout>
+        <notfound>Ikke funnet</notfound>
+        <contentnotfound>Innhold ikke funnet</contentnotfound>
+        <connectionerror>Tilkoblingsfeil: {0}</connectionerror>
+      </common>
+    </editorpowertools>
+  </language>
+</languages>

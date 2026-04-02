@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="English" id="en">
+    <editorpowertools>
+      <!-- Main menu -->
+      <menu>
+        <title>Editor Powertools</title>
+        <overview>Overview</overview>
+        <contenttypeaudit>Content Type Audit</contenttypeaudit>
+        <personalizationaudit>Personalization Audit</personalizationaudit>
+        <audiencemanager>Audience Manager</audiencemanager>
+        <contenttyperecommendations>Content Type Recommendations</contenttyperecommendations>
+        <bulkpropertyeditor>Bulk Property Editor</bulkpropertyeditor>
+        <scheduledjobsgantt>Scheduled Jobs Gantt</scheduledjobsgantt>
+        <activitytimeline>Activity Timeline</activitytimeline>
+        <contentimporter>Content Importer</contentimporter>
+        <cmsdoctor>CMS Doctor</cmsdoctor>
+        <contentaudit>Content Audit</contentaudit>
+        <linkchecker>Link Checker</linkchecker>
+        <activeeditors>Active Editors</activeeditors>
+        <managechildren>Manage Children</managechildren>
+      </menu>
+
+      <!-- Components (CMS assets panel widgets) -->
+      <components>
+        <contentdetails>
+          <title>Power Content Details</title>
+          <description>Detailed information about the selected content item - properties, references, versions.</description>
+        </contentdetails>
+        <activeeditors>
+          <title>Active Editors</title>
+          <description>See who else is editing this content and collaborate with your team.</description>
+        </activeeditors>
+      </components>
+
+      <!-- Tool titles and descriptions -->
+      <tools>
+        <contenttypeaudit>
+          <title>Content Type Audit</title>
+          <description>Overview of all content types, their usage, properties, and inheritance.</description>
+        </contenttypeaudit>
+        <personalizationaudit>
+          <title>Personalization Audit</title>
+          <description>Find and audit visitor group usage across content, access rights, and properties.</description>
+        </personalizationaudit>
+        <audiencemanager>
+          <title>Audience Manager</title>
+          <description>Manage and review visitor groups and audience segments.</description>
+        </audiencemanager>
+        <contenttyperecommendations>
+          <title>Content Type Recommendations</title>
+          <description>Get recommendations for content type improvements and consolidation.</description>
+        </contenttyperecommendations>
+        <bulkpropertyeditor>
+          <title>Bulk Property Editor</title>
+          <description>Edit properties across multiple content items at once.</description>
+        </bulkpropertyeditor>
+        <scheduledjobsgantt>
+          <title>Scheduled Jobs Gantt</title>
+          <description>Visualize scheduled job execution as a Gantt chart.</description>
+        </scheduledjobsgantt>
+        <activitytimeline>
+          <title>Activity Timeline</title>
+          <description>View a timeline of content changes and editorial activity.</description>
+        </activitytimeline>
+        <contentimporter>
+          <title>Content Importer</title>
+          <description>Import content from CSV, JSON, or Excel files.</description>
+        </contentimporter>
+        <cmsdoctor>
+          <title>CMS Doctor</title>
+          <description>Health checks and diagnostics for your CMS installation.</description>
+        </cmsdoctor>
+        <contentaudit>
+          <title>Content Audit</title>
+          <description>Audit content for quality, completeness, and best practices.</description>
+        </contentaudit>
+        <linkchecker>
+          <title>Link Checker</title>
+          <description>Find and report broken links across your site.</description>
+        </linkchecker>
+        <activeeditors>
+          <title>Active Editors</title>
+          <description>See who is currently editing content and collaborate in real time.</description>
+        </activeeditors>
+        <managechildren>
+          <title>Manage Children</title>
+          <description>Bulk manage child pages: sort, publish, unpublish, move, and delete.</description>
+        </managechildren>
+        <overview>
+          <title>Overview</title>
+          <description>Dashboard overview of all Editor Powertools features.</description>
+        </overview>
+      </tools>
+
+      <!-- Scheduled job -->
+      <jobs>
+        <contentanalysis>
+          <displayname>[EditorPowertools] Content Analysis</displayname>
+          <description>Unified job that traverses all content once and runs all registered analyzers (content type stats, personalization, link checking, etc.).</description>
+          <noanalyzers>No analyzers registered.</noanalyzers>
+          <initializing>Initializing {0} analyzers...</initializing>
+          <analyzing>Analyzing {0} content items with {1} analyzers...</analyzing>
+          <stopped>Stopped after {0}/{1} items.</stopped>
+          <processing>Processed {0}/{1} content items...</processing>
+          <completing>Completing analyzers...</completing>
+          <completed>Completed. Analyzed {0} content items with {1} analyzers ({2}).</completed>
+        </contentanalysis>
+      </jobs>
+
+      <!-- CMS Doctor health checks -->
+      <cmsdoctor>
+        <runjobfirst>Run the '[EditorPowertools] Content Analysis' scheduled job first.</runjobfirst>
+        <checks>
+          <memorycheck>
+            <name>Memory Usage</name>
+            <description>Reports current memory usage of the application.</description>
+            <group>Environment</group>
+            <biton64>Running as 32-bit on 64-bit OS. Memory: {0} MB.</biton64>
+            <highmemory>High memory usage: {0} MB.</highmemory>
+            <ok>Memory: {0} MB working set.</ok>
+            <details>Working set: {0} MB, GC heap: {1} MB, 64-bit process: {2}, 64-bit OS: {3}</details>
+          </memorycheck>
+          <versioninfocheck>
+            <name>CMS Version</name>
+            <description>Reports the current Optimizely CMS version.</description>
+            <group>Environment</group>
+            <ok>Optimizely CMS {0}</ok>
+            <details>EPiServer assembly version: {0}. .NET {1}</details>
+            <unknown>Unknown</unknown>
+            <couldnotdetermine>Could not determine CMS version.</couldnotdetermine>
+          </versioninfocheck>
+          <contenttypecheck>
+            <name>Content Type Count</name>
+            <description>Checks if the number of content types is within reasonable limits.</description>
+            <group>Content</group>
+            <toomanypagetypes>Too many page types ({0}). Editors may struggle to find the right one.</toomanypagetypes>
+            <toomanyblocktypes>Too many block types ({0}). Consider consolidating.</toomanyblocktypes>
+            <toofewpagetypes>Only {0} page type(s). Content may lack structure.</toofewpagetypes>
+            <ok>{0} content types ({1} pages, {2} blocks, {3} media)</ok>
+            <details>Page types: {0}, Block types: {1}, Media types: {2}, Total: {3}</details>
+          </contenttypecheck>
+          <orphanedpropertycheck>
+            <name>Orphaned Properties</name>
+            <description>Finds properties defined in the database but not in code.</description>
+            <group>Content</group>
+            <found>{0} orphaned properties found in the database that are not defined in code.</found>
+            <ok>No orphaned properties found.</ok>
+            <examples>Examples: {0}</examples>
+            <andmore>(and {0} more)</andmore>
+          </orphanedpropertycheck>
+          <scheduledjobscheck>
+            <name>Scheduled Jobs Health</name>
+            <description>Checks for failed or long-running scheduled jobs.</description>
+            <group>Environment</group>
+            <failed>{0} scheduled job(s) have errors.</failed>
+            <neverrun>{0} enabled job(s) have never run.</neverrun>
+            <ok>All {0} enabled jobs are healthy.</ok>
+            <failedlabel>Failed: {0}</failedlabel>
+            <neverrunlabel>Never run: {0}</neverrunlabel>
+          </scheduledjobscheck>
+          <draftcontentcheck>
+            <name>Stale Drafts</name>
+            <description>Checks for draft content that has never been published or has old unpublished changes.</description>
+            <group>Content</group>
+            <ok>No stale drafts found.</ok>
+            <warning>{0} stale content items found. Consider reviewing and cleaning up.</warning>
+            <minor>{0} stale items found (minor).</minor>
+            <details>Never published: {0}, Stale drafts (>3 months): {1}</details>
+          </draftcontentcheck>
+          <brokenlinkscheck>
+            <name>Broken Links</name>
+            <description>Reports broken links found by the Link Checker tool.</description>
+            <group>Content</group>
+            <nodata>No link data available. Run the Content Analysis scheduled job first.</nodata>
+            <nodatadetails>The Link Checker analyzer populates this data during the scheduled job.</nodatadetails>
+            <allhealthy>All {0} links are healthy.</allhealthy>
+            <fault>{0} broken links found across {1} total links.</fault>
+            <warning>{0} broken links found.</warning>
+            <details>Total links: {0}, Broken: {1}. 404s: {2}, 5xx: {3}, Timeouts: {4}</details>
+            <notavailable>Link checker data not available yet.</notavailable>
+          </brokenlinkscheck>
+          <missingalttextcheck>
+            <name>Missing Alt Text</name>
+            <description>Checks for images missing alt text (accessibility and SEO issue).</description>
+            <group>Content</group>
+            <noimages>No images found.</noimages>
+            <badpractice>{0} images missing alt text ({1}%).</badpractice>
+            <warning>{0} images missing alt text.</warning>
+            <ok>All images have alt text.</ok>
+            <details>{0} of {1} images ({2}%) have no alt text. Last analyzed: {3}</details>
+          </missingalttextcheck>
+          <unusedcontentcheck>
+            <name>Unused Content</name>
+            <description>Checks for blocks and media not referenced by anything (potential orphans).</description>
+            <group>Content</group>
+            <noblocks>No blocks or media found.</noblocks>
+            <warning>{0} unreferenced items ({1}%). Consider cleanup.</warning>
+            <minor>{0} unreferenced items ({1}%, minor).</minor>
+            <ok>All blocks and media are referenced.</ok>
+            <details>{0} of {1} blocks/media ({2}%) are unreferenced. Last analyzed: {3}</details>
+          </unusedcontentcheck>
+        </checks>
+        <groups>
+          <environment>Environment</environment>
+          <content>Content</content>
+        </groups>
+        <tags>
+          <performance>Performance</performance>
+          <security>Security</security>
+          <editorux>EditorUX</editorux>
+          <maintenance>Maintenance</maintenance>
+          <seo>SEO</seo>
+          <accessibility>Accessibility</accessibility>
+        </tags>
+      </cmsdoctor>
+
+      <!-- Content Importer messages -->
+      <contentimporter>
+        <errors>
+          <nofile>No file uploaded</nofile>
+          <toolarge>File too large (max 50 MB)</toolarge>
+          <unsupportedfiletype>Unsupported file type: {0}</unsupportedfiletype>
+          <sessionnotfound>Session not found</sessionnotfound>
+          <contenttypenotfound>Content type not found</contenttypenotfound>
+          <nomapping>No mapping configured. Run dry-run first.</nomapping>
+          <processingerror>An error occurred while processing the request.</processingerror>
+        </errors>
+        <warnings>
+          <nonamecolumn>No name column mapped</nonamecolumn>
+        </warnings>
+        <status>
+          <running>running</running>
+          <completed>completed</completed>
+          <failed>failed</failed>
+        </status>
+      </contentimporter>
+
+      <!-- Analyzers -->
+      <analyzers>
+        <contenttypestatistics>Content Type Statistics</contenttypestatistics>
+        <personalization>Personalization</personalization>
+        <linkchecker>Link Checker</linkchecker>
+      </analyzers>
+
+      <!-- Common / shared strings -->
+      <common>
+        <unknown>Unknown</unknown>
+        <error>Error</error>
+        <ok>OK</ok>
+        <timeout>Timeout</timeout>
+        <notfound>Not Found</notfound>
+        <contentnotfound>Content Not Found</contentnotfound>
+        <connectionerror>Connection Error: {0}</connectionerror>
+      </common>
+    </editorpowertools>
+  </language>
+</languages>

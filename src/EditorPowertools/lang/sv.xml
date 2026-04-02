@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Svenska" id="sv">
+    <editorpowertools>
+      <!-- Huvudmeny -->
+      <menu>
+        <title>Editor Powertools</title>
+        <overview>Översikt</overview>
+        <contenttypeaudit>Innehållstypsgranskning</contenttypeaudit>
+        <personalizationaudit>Personaliseringsgranskning</personalizationaudit>
+        <audiencemanager>Målgruppshantering</audiencemanager>
+        <contenttyperecommendations>Innehållstypsrekommendationer</contenttyperecommendations>
+        <bulkpropertyeditor>Massredigering av egenskaper</bulkpropertyeditor>
+        <scheduledjobsgantt>Schemalagda jobb Gantt</scheduledjobsgantt>
+        <activitytimeline>Aktivitetstidslinje</activitytimeline>
+        <contentimporter>Innehållsimport</contentimporter>
+        <cmsdoctor>CMS-doktor</cmsdoctor>
+        <contentaudit>Innehållsgranskning</contentaudit>
+        <linkchecker>Länkkontroll</linkchecker>
+        <activeeditors>Aktiva redaktörer</activeeditors>
+        <managechildren>Hantera undersidor</managechildren>
+      </menu>
+
+      <!-- Komponenter (CMS tillgångspanelwidgets) -->
+      <components>
+        <contentdetails>
+          <title>Power Innehållsdetaljer</title>
+          <description>Detaljerad information om det valda innehållsobjektet - egenskaper, referenser, versioner.</description>
+        </contentdetails>
+        <activeeditors>
+          <title>Aktiva redaktörer</title>
+          <description>Se vilka andra som redigerar detta innehåll och samarbeta med ditt team.</description>
+        </activeeditors>
+      </components>
+
+      <!-- Verktygstitlar och -beskrivningar -->
+      <tools>
+        <contenttypeaudit>
+          <title>Innehållstypsgranskning</title>
+          <description>Översikt över alla innehållstyper, deras användning, egenskaper och arv.</description>
+        </contenttypeaudit>
+        <personalizationaudit>
+          <title>Personaliseringsgranskning</title>
+          <description>Hitta och granska användning av besöksgrupper i innehåll, åtkomsträttigheter och egenskaper.</description>
+        </personalizationaudit>
+        <audiencemanager>
+          <title>Målgruppshantering</title>
+          <description>Hantera och granska besöksgrupper och målgruppssegment.</description>
+        </audiencemanager>
+        <contenttyperecommendations>
+          <title>Innehållstypsrekommendationer</title>
+          <description>Få rekommendationer för förbättring och konsolidering av innehållstyper.</description>
+        </contenttyperecommendations>
+        <bulkpropertyeditor>
+          <title>Massredigering av egenskaper</title>
+          <description>Redigera egenskaper på flera innehållsobjekt samtidigt.</description>
+        </bulkpropertyeditor>
+        <scheduledjobsgantt>
+          <title>Schemalagda jobb Gantt</title>
+          <description>Visualisera körning av schemalagda jobb som ett Gantt-diagram.</description>
+        </scheduledjobsgantt>
+        <activitytimeline>
+          <title>Aktivitetstidslinje</title>
+          <description>Visa en tidslinje över innehållsändringar och redaktionell aktivitet.</description>
+        </activitytimeline>
+        <contentimporter>
+          <title>Innehållsimport</title>
+          <description>Importera innehåll från CSV-, JSON- eller Excel-filer.</description>
+        </contentimporter>
+        <cmsdoctor>
+          <title>CMS-doktor</title>
+          <description>Hälsokontroller och diagnostik för din CMS-installation.</description>
+        </cmsdoctor>
+        <contentaudit>
+          <title>Innehållsgranskning</title>
+          <description>Granska innehåll för kvalitet, fullständighet och bästa praxis.</description>
+        </contentaudit>
+        <linkchecker>
+          <title>Länkkontroll</title>
+          <description>Hitta och rapportera trasiga länkar på din webbplats.</description>
+        </linkchecker>
+        <activeeditors>
+          <title>Aktiva redaktörer</title>
+          <description>Se vem som redigerar innehåll just nu och samarbeta i realtid.</description>
+        </activeeditors>
+        <managechildren>
+          <title>Hantera undersidor</title>
+          <description>Masshantera undersidor: sortera, publicera, avpublicera, flytta och ta bort.</description>
+        </managechildren>
+        <overview>
+          <title>Översikt</title>
+          <description>Instrumentpanelsöversikt över alla Editor Powertools-funktioner.</description>
+        </overview>
+      </tools>
+
+      <!-- Schemalagt jobb -->
+      <jobs>
+        <contentanalysis>
+          <displayname>[EditorPowertools] Innehållsanalys</displayname>
+          <description>Samlat jobb som traverserar allt innehåll en gång och kör alla registrerade analysatorer (innehållstypsstatistik, personalisering, länkkontroll osv.).</description>
+          <noanalyzers>Inga analysatorer registrerade.</noanalyzers>
+          <initializing>Initialiserar {0} analysatorer...</initializing>
+          <analyzing>Analyserar {0} innehållsobjekt med {1} analysatorer...</analyzing>
+          <stopped>Stoppades efter {0}/{1} objekt.</stopped>
+          <processing>Bearbetat {0}/{1} innehållsobjekt...</processing>
+          <completing>Slutför analysatorer...</completing>
+          <completed>Klart. Analyserade {0} innehållsobjekt med {1} analysatorer ({2}).</completed>
+        </contentanalysis>
+      </jobs>
+
+      <!-- CMS-doktor hälsokontroller -->
+      <cmsdoctor>
+        <runjobfirst>Kör det schemalagda jobbet '[EditorPowertools] Innehållsanalys' först.</runjobfirst>
+        <checks>
+          <memorycheck>
+            <name>Minnesanvändning</name>
+            <description>Rapporterar aktuell minnesanvändning för applikationen.</description>
+            <group>Miljö</group>
+            <biton64>Körs som 32-bitars på 64-bitars OS. Minne: {0} MB.</biton64>
+            <highmemory>Hög minnesanvändning: {0} MB.</highmemory>
+            <ok>Minne: {0} MB working set.</ok>
+            <details>Working set: {0} MB, GC heap: {1} MB, 64-bitars process: {2}, 64-bitars OS: {3}</details>
+          </memorycheck>
+          <versioninfocheck>
+            <name>CMS-version</name>
+            <description>Rapporterar den aktuella Optimizely CMS-versionen.</description>
+            <group>Miljö</group>
+            <ok>Optimizely CMS {0}</ok>
+            <details>EPiServer assembly-version: {0}. .NET {1}</details>
+            <unknown>Okänd</unknown>
+            <couldnotdetermine>Kunde inte fastställa CMS-versionen.</couldnotdetermine>
+          </versioninfocheck>
+          <contenttypecheck>
+            <name>Antal innehållstyper</name>
+            <description>Kontrollerar om antalet innehållstyper ligger inom rimliga gränser.</description>
+            <group>Innehåll</group>
+            <toomanypagetypes>För många sidtyper ({0}). Redaktörer kan ha svårt att hitta rätt.</toomanypagetypes>
+            <toomanyblocktypes>För många blocktyper ({0}). Överväg att konsolidera.</toomanyblocktypes>
+            <toofewpagetypes>Bara {0} sidtyp(er). Innehållet kan sakna struktur.</toofewpagetypes>
+            <ok>{0} innehållstyper ({1} sidor, {2} block, {3} media)</ok>
+            <details>Sidtyper: {0}, Blocktyper: {1}, Mediatyper: {2}, Totalt: {3}</details>
+          </contenttypecheck>
+          <orphanedpropertycheck>
+            <name>Föräldralösa egenskaper</name>
+            <description>Hittar egenskaper definierade i databasen men inte i koden.</description>
+            <group>Innehåll</group>
+            <found>{0} föräldralösa egenskaper hittades i databasen som inte är definierade i koden.</found>
+            <ok>Inga föräldralösa egenskaper hittades.</ok>
+            <examples>Exempel: {0}</examples>
+            <andmore>(och {0} till)</andmore>
+          </orphanedpropertycheck>
+          <scheduledjobscheck>
+            <name>Schemalagda jobbs hälsa</name>
+            <description>Kontrollerar för misslyckade eller långvariga schemalagda jobb.</description>
+            <group>Miljö</group>
+            <failed>{0} schemalagda jobb har fel.</failed>
+            <neverrun>{0} aktiverade jobb har aldrig körts.</neverrun>
+            <ok>Alla {0} aktiverade jobb är friska.</ok>
+            <failedlabel>Misslyckade: {0}</failedlabel>
+            <neverrunlabel>Aldrig körda: {0}</neverrunlabel>
+          </scheduledjobscheck>
+          <draftcontentcheck>
+            <name>Inaktuella utkast</name>
+            <description>Kontrollerar utkastinnehåll som aldrig publicerats eller har gamla opublicerade ändringar.</description>
+            <group>Innehåll</group>
+            <ok>Inga inaktuella utkast hittades.</ok>
+            <warning>{0} inaktuella innehållsobjekt hittades. Överväg att granska och städa.</warning>
+            <minor>{0} inaktuella objekt hittades (mindre).</minor>
+            <details>Aldrig publicerade: {0}, Inaktuella utkast (>3 månader): {1}</details>
+          </draftcontentcheck>
+          <brokenlinkscheck>
+            <name>Trasiga länkar</name>
+            <description>Rapporterar trasiga länkar funna av Länkkontroll-verktyget.</description>
+            <group>Innehåll</group>
+            <nodata>Ingen länkdata tillgänglig. Kör det schemalagda jobbet Innehållsanalys först.</nodata>
+            <nodatadetails>Länkkontrollanalysatorn fyller i dessa data under det schemalagda jobbet.</nodatadetails>
+            <allhealthy>Alla {0} länkar är friska.</allhealthy>
+            <fault>{0} trasiga länkar hittades bland {1} totala länkar.</fault>
+            <warning>{0} trasiga länkar hittades.</warning>
+            <details>Totala länkar: {0}, Trasiga: {1}. 404:or: {2}, 5xx: {3}, Timeout: {4}</details>
+            <notavailable>Länkkontrolldata är inte tillgängliga ännu.</notavailable>
+          </brokenlinkscheck>
+          <missingalttextcheck>
+            <name>Saknad alt-text</name>
+            <description>Kontrollerar bilder som saknar alt-text (tillgänglighets- och SEO-problem).</description>
+            <group>Innehåll</group>
+            <noimages>Inga bilder hittades.</noimages>
+            <badpractice>{0} bilder saknar alt-text ({1}%).</badpractice>
+            <warning>{0} bilder saknar alt-text.</warning>
+            <ok>Alla bilder har alt-text.</ok>
+            <details>{0} av {1} bilder ({2}%) saknar alt-text. Senast analyserade: {3}</details>
+          </missingalttextcheck>
+          <unusedcontentcheck>
+            <name>Oanvänt innehåll</name>
+            <description>Kontrollerar block och media som inte refereras av något (potentiella föräldralösa).</description>
+            <group>Innehåll</group>
+            <noblocks>Inga block eller media hittades.</noblocks>
+            <warning>{0} orefererade objekt ({1}%). Överväg städning.</warning>
+            <minor>{0} orefererade objekt ({1}%, mindre).</minor>
+            <ok>Alla block och media är refererade.</ok>
+            <details>{0} av {1} block/media ({2}%) är orefererade. Senast analyserade: {3}</details>
+          </unusedcontentcheck>
+        </checks>
+        <groups>
+          <environment>Miljö</environment>
+          <content>Innehåll</content>
+        </groups>
+        <tags>
+          <performance>Prestanda</performance>
+          <security>Säkerhet</security>
+          <editorux>Redaktörsupplevelse</editorux>
+          <maintenance>Underhåll</maintenance>
+          <seo>SEO</seo>
+          <accessibility>Tillgänglighet</accessibility>
+        </tags>
+      </cmsdoctor>
+
+      <!-- Innehållsimportmeddelanden -->
+      <contentimporter>
+        <errors>
+          <nofile>Ingen fil uppladdad</nofile>
+          <toolarge>Filen är för stor (max 50 MB)</toolarge>
+          <unsupportedfiletype>Filtyp som inte stöds: {0}</unsupportedfiletype>
+          <sessionnotfound>Session hittades inte</sessionnotfound>
+          <contenttypenotfound>Innehållstyp hittades inte</contenttypenotfound>
+          <nomapping>Ingen mappning konfigurerad. Kör dry-run först.</nomapping>
+          <processingerror>Ett fel uppstod vid behandling av begäran.</processingerror>
+        </errors>
+        <warnings>
+          <nonamecolumn>Ingen namnkolumn mappad</nonamecolumn>
+        </warnings>
+        <status>
+          <running>körs</running>
+          <completed>slutförd</completed>
+          <failed>misslyckades</failed>
+        </status>
+      </contentimporter>
+
+      <!-- Analysatorer -->
+      <analyzers>
+        <contenttypestatistics>Innehållstypsstatistik</contenttypestatistics>
+        <personalization>Personalisering</personalization>
+        <linkchecker>Länkkontroll</linkchecker>
+      </analyzers>
+
+      <!-- Gemensamma strängar -->
+      <common>
+        <unknown>Okänd</unknown>
+        <error>Fel</error>
+        <ok>OK</ok>
+        <timeout>Timeout</timeout>
+        <notfound>Hittades inte</notfound>
+        <contentnotfound>Innehåll hittades inte</contentnotfound>
+        <connectionerror>Anslutningsfel: {0}</connectionerror>
+      </common>
+    </editorpowertools>
+  </language>
+</languages>
