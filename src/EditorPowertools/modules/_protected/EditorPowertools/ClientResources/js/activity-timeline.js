@@ -382,8 +382,8 @@
                     if (change.isHtml) {
                         html += '<tr>' +
                             '<td><strong>' + escHtml(change.propertyName) + '</strong> <span class="ept-badge ept-badge--default">HTML</span></td>' +
-                            '<td class="timeline-diff-old"><iframe sandbox="" srcdoc="' + escAttr(change.oldValue || '(empty)') + '" style="width:100%;min-height:80px;border:1px solid var(--ept-border,#e0e0e0);border-radius:4px;"></iframe></td>' +
-                            '<td class="timeline-diff-new"><iframe sandbox="" srcdoc="' + escAttr(change.newValue || '(empty)') + '" style="width:100%;min-height:80px;border:1px solid var(--ept-border,#e0e0e0);border-radius:4px;"></iframe></td>' +
+                            '<td class="timeline-diff-old"><iframe sandbox="allow-same-origin" srcdoc="' + escAttr(change.oldValue || '(empty)') + '" style="width:100%;min-height:80px;border:1px solid var(--ept-border,#e0e0e0);border-radius:4px;"></iframe></td>' +
+                            '<td class="timeline-diff-new"><iframe sandbox="allow-same-origin" srcdoc="' + escAttr(change.newValue || '(empty)') + '" style="width:100%;min-height:80px;border:1px solid var(--ept-border,#e0e0e0);border-radius:4px;"></iframe></td>' +
                             '</tr>';
                     } else {
                         html += '<tr>' +
