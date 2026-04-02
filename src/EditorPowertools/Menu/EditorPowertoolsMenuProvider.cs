@@ -27,109 +27,115 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
             IsAvailable = _ => true
         };
 
+        // ── Content & Editorial ──────────────────────────────────
+
+        yield return new UrlMenuItem("Content Statistics", BaseMenuPath + "/contentstatistics",
+            GetResourcePath("EditorPowertools/ContentStatistics"))
+        {
+            SortIndex = 200,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentStatistics))
+        };
+
+        yield return new UrlMenuItem("Activity Timeline", BaseMenuPath + "/activitytimeline",
+            GetResourcePath("EditorPowertools/ActivityTimeline"))
+        {
+            SortIndex = 210,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ActivityTimeline))
+        };
+
+        yield return new UrlMenuItem("Bulk Property Editor", BaseMenuPath + "/bulkpropertyeditor",
+            GetResourcePath("EditorPowertools/BulkPropertyEditor"))
+        {
+            SortIndex = 220,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.BulkPropertyEditor))
+        };
+
+        yield return new UrlMenuItem("Content Importer", BaseMenuPath + "/contentimporter",
+            GetResourcePath("EditorPowertools/ContentImporter"))
+        {
+            SortIndex = 230,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentImporter))
+        };
+
+        // ── Audits & Analysis ────────────────────────────────────
+
+        yield return new UrlMenuItem("Content Audit", BaseMenuPath + "/contentaudit",
+            GetResourcePath("EditorPowertools/ContentAudit"))
+        {
+            SortIndex = 300,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentAudit))
+        };
+
         yield return new UrlMenuItem("Content Type Audit", BaseMenuPath + "/contenttypeaudit",
             GetResourcePath("EditorPowertools/ContentTypeAudit"))
         {
-            SortIndex = 200,
+            SortIndex = 310,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentTypeAudit))
         };
 
         yield return new UrlMenuItem("Personalization Audit", BaseMenuPath + "/personalizationaudit",
             GetResourcePath("EditorPowertools/PersonalizationAudit"))
         {
-            SortIndex = 300,
+            SortIndex = 320,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.PersonalizationUsageAudit))
-        };
-
-        yield return new UrlMenuItem("Audience Manager", BaseMenuPath + "/audiencemanager",
-            GetResourcePath("EditorPowertools/AudienceManager"))
-        {
-            SortIndex = 400,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.AudienceManager))
-        };
-
-        yield return new UrlMenuItem("Content Type Recommendations", BaseMenuPath + "/contenttyperecommendations",
-            GetResourcePath("EditorPowertools/ContentTypeRecommendations"))
-        {
-            SortIndex = 500,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentTypeRecommendations))
-        };
-
-        yield return new UrlMenuItem("Bulk Property Editor", BaseMenuPath + "/bulkpropertyeditor",
-            GetResourcePath("EditorPowertools/BulkPropertyEditor"))
-        {
-            SortIndex = 600,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.BulkPropertyEditor))
-        };
-
-        yield return new UrlMenuItem("Scheduled Jobs Gantt", BaseMenuPath + "/scheduledjobsgantt",
-            GetResourcePath("EditorPowertools/ScheduledJobsGantt"))
-        {
-            SortIndex = 700,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ScheduledJobsGantt))
-        };
-
-        yield return new UrlMenuItem("Activity Timeline", BaseMenuPath + "/activitytimeline",
-            GetResourcePath("EditorPowertools/ActivityTimeline"))
-        {
-            SortIndex = 800,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ActivityTimeline))
-        };
-
-        yield return new UrlMenuItem("Content Importer", BaseMenuPath + "/contentimporter",
-            GetResourcePath("EditorPowertools/ContentImporter"))
-        {
-            SortIndex = 850,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentImporter))
-        };
-
-        yield return new UrlMenuItem("CMS Doctor", BaseMenuPath + "/cmsdoctor",
-            GetResourcePath("EditorPowertools/CmsDoctor"))
-        {
-            SortIndex = 940,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.CmsDoctor))
-        };
-
-        yield return new UrlMenuItem("Content Audit", BaseMenuPath + "/contentaudit",
-            GetResourcePath("EditorPowertools/ContentAudit"))
-        {
-            SortIndex = 950,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentAudit))
-        };
-
-        yield return new UrlMenuItem("Link Checker", BaseMenuPath + "/linkchecker",
-            GetResourcePath("EditorPowertools/LinkChecker"))
-        {
-            SortIndex = 900,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.BrokenLinkChecker))
-        };
-
-        yield return new UrlMenuItem("Active Editors", BaseMenuPath + "/activeeditors",
-            GetResourcePath("EditorPowertools/ActiveEditors"))
-        {
-            SortIndex = 750,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ActiveEditors))
-        };
-
-        yield return new UrlMenuItem("Security Audit", BaseMenuPath + "/securityaudit",
-            GetResourcePath("EditorPowertools/SecurityAudit"))
-        {
-            SortIndex = 960,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.SecurityAudit))
-        };
-
-        yield return new UrlMenuItem("Content Statistics", BaseMenuPath + "/contentstatistics",
-            GetResourcePath("EditorPowertools/ContentStatistics"))
-        {
-            SortIndex = 150,
-            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentStatistics))
         };
 
         yield return new UrlMenuItem("Language Audit", BaseMenuPath + "/languageaudit",
             GetResourcePath("EditorPowertools/LanguageAudit"))
         {
-            SortIndex = 970,
+            SortIndex = 330,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.LanguageAudit))
+        };
+
+        yield return new UrlMenuItem("Security Audit", BaseMenuPath + "/securityaudit",
+            GetResourcePath("EditorPowertools/SecurityAudit"))
+        {
+            SortIndex = 340,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.SecurityAudit))
+        };
+
+        yield return new UrlMenuItem("Link Audit", BaseMenuPath + "/linkchecker",
+            GetResourcePath("EditorPowertools/LinkChecker"))
+        {
+            SortIndex = 350,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.BrokenLinkChecker))
+        };
+
+        // ── Configuration & Admin ────────────────────────────────
+
+        yield return new UrlMenuItem("Content Type Recommendations", BaseMenuPath + "/contenttyperecommendations",
+            GetResourcePath("EditorPowertools/ContentTypeRecommendations"))
+        {
+            SortIndex = 400,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentTypeRecommendations))
+        };
+
+        yield return new UrlMenuItem("Audience Manager", BaseMenuPath + "/audiencemanager",
+            GetResourcePath("EditorPowertools/AudienceManager"))
+        {
+            SortIndex = 410,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.AudienceManager))
+        };
+
+        yield return new UrlMenuItem("CMS Doctor", BaseMenuPath + "/cmsdoctor",
+            GetResourcePath("EditorPowertools/CmsDoctor"))
+        {
+            SortIndex = 420,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.CmsDoctor))
+        };
+
+        yield return new UrlMenuItem("Active Editors", BaseMenuPath + "/activeeditors",
+            GetResourcePath("EditorPowertools/ActiveEditors"))
+        {
+            SortIndex = 430,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ActiveEditors))
+        };
+
+        yield return new UrlMenuItem("Scheduled Jobs Gantt", BaseMenuPath + "/scheduledjobsgantt",
+            GetResourcePath("EditorPowertools/ScheduledJobsGantt"))
+        {
+            SortIndex = 440,
+            IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ScheduledJobsGantt))
         };
     }
 
