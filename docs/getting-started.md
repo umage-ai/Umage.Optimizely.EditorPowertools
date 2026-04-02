@@ -2,6 +2,18 @@
 
 This guide walks you through installing and configuring the EditorPowertools plugin for Optimizely CMS 12.
 
+## Local Development (Sample Site)
+
+The sample site comes with a pre-configured admin user:
+- **Username:** `Admin`
+- **Password:** `EP!Z3rver`
+
+```bash
+dotnet run --project src/EditorPowertools.SampleSite
+```
+
+Then navigate to `https://localhost:5000/EPiServer/CMS` and log in.
+
 ## Prerequisites
 
 - **.NET 8 SDK** or later
