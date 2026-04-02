@@ -109,6 +109,10 @@ Instead of (or in addition to) code-based configuration, you can use `appsetting
         "audienceManager": true,
         "contentDetails": true,
         "brokenLinkChecker": true,
+        "contentStatistics": true,
+        "languageAudit": true,
+        "securityAudit": true,
+        "visitorGroupTester": true,
         "bulkPropertyEditor": true,
         "scheduledJobsGantt": true,
         "activityTimeline": true,
@@ -131,7 +135,7 @@ Code-based options (from `AddEditorPowertools(options => ...)`) take precedence 
 Several tools depend on pre-computed data that is gathered by scheduled jobs. After installation, navigate to the CMS admin area and run these jobs:
 
 1. Go to **Admin** > **Scheduled Jobs**
-2. Find and run **[EditorPowertools] Content Analysis** -- this is the unified job that collects data for Content Type Audit, Personalization Audit, Link Checker, and CMS Doctor checks that require content traversal
+2. Find and run **[EditorPowertools] Content Analysis** -- this is the unified job that collects data for Content Type Audit, Personalization Audit, Link Audit, and CMS Doctor checks that require content traversal
 3. Optionally schedule it to run periodically (e.g., nightly) to keep data fresh
 
 You can also trigger the job from each tool's UI using the "Run now" button, if one is provided.
@@ -142,7 +146,7 @@ You can also trigger the job from each tool's UI using the "Run now" button, if 
 |------|----------------------|
 | Content Type Audit | Yes -- content type usage counts |
 | Personalization Audit | Yes -- scans for visitor group usage |
-| Link Checker | Yes -- discovers and validates links |
+| Link Audit | Yes -- discovers and validates links |
 | CMS Doctor | Partially -- some checks use analyzer data |
 | All other tools | No -- work in real-time |
 
@@ -165,6 +169,7 @@ Some tools integrate directly into the CMS edit mode:
 - **Power Content Details** -- appears as a widget in the assets panel, showing detailed info about the currently selected content item
 - **Manage Children** -- available from the content tree context menu to perform bulk operations on child items
 - **Active Editors** -- shows real-time editor presence in a sidebar widget
+- **Visitor Group Tester** -- floating toolbar on the public site for testing personalization rules and inspecting personalized content
 
 ![CMS Edit Mode Integration](screenshots/14-cms-edit-mode.png)
 

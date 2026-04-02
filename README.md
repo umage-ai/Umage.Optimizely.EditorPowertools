@@ -6,22 +6,45 @@ A collection of power tools for Optimizely CMS 12 editors and admins. Distribute
 
 ## Tools
 
+Tools are grouped in the navigation menu for easy access.
+
+### Content & Editorial
+
 | Tool | Description |
 |------|-------------|
+| **Content Statistics** | Dashboard with content counts, type distribution, publishing trends, and storage metrics. |
+| **Activity Timeline** | Dual-column timeline of editorial activities with comments, version comparison, and infinite scroll. |
+| **Bulk Property Editor** | Inline-edit property values across multiple content items. Filter, sort, paginate, bulk save/publish. |
+| **Content Importer** | Import content from CSV, Excel, or JSON with field mapping, preview, and validation. |
+
+### Audits & Analysis
+
+| Tool | Description |
+|------|-------------|
+| **Content Audit** | Comprehensive content inventory with configurable columns, filters, and export. |
 | **Content Type Audit** | Audit all content types, usage counts, properties (inherited/defined/orphaned), inheritance tree. CSV export. |
 | **Personalization Audit** | Find where audiences are used across the site - access rights, content areas, XHTML fields. Scheduled job. |
+| **Language Audit** | Analyze translation coverage across languages, find missing translations, and identify stale content. |
+| **Security Audit** | Review access rights across the content tree, find overly permissive settings, and audit role assignments. |
+| **Link Audit** | Scan content for broken internal and external links. Friendly URLs, status codes, easy edit-mode access. |
+
+### Configuration & Admin
+
+| Tool | Description |
+|------|-------------|
+| **Content Type Recommendations** | Define rules for which content types are suggested when creating content under specific parents. Hooks into the CMS create dialog via `IContentTypeAdvisor`. |
 | **Audience Manager** | Manage audiences with search, category filtering, criteria details, and usage statistics. |
-| **Content Type Recommendations** | Define rules for which content types are suggested when creating content under specific parents. |
-| **Bulk Property Editor** | Inline-edit property values across multiple content items. Filter, sort, paginate, bulk save/publish. |
-| **Scheduled Jobs Gantt** | Interactive Gantt chart of scheduled job execution history with zoom, scroll, and planned future runs. |
-| **Activity Timeline** | Dual-column timeline of editorial activities with comments, version comparison, and infinite scroll. |
-| **Link Checker** | Scan content for broken internal and external links. Friendly URLs, status codes, easy edit-mode access. |
-| **Power Content Details** | Assets panel widget showing detailed info about the currently selected content item. |
-| **Active Editors** | Real-time editor presence, see who's editing what, team chat, and CMS notifications via SignalR. |
-| **Content Importer** | Import content from CSV, Excel, or JSON with field mapping, preview, and validation. |
 | **CMS Doctor** | Pluggable health check dashboard with auto-fix capabilities. |
-| **Content Audit** | Comprehensive content inventory with configurable columns, filters, and export. |
+| **Active Editors** | Real-time editor presence, see who's editing what, team chat, and CMS notifications via SignalR. |
+| **Scheduled Jobs Gantt** | Interactive Gantt chart of scheduled job execution history with zoom, scroll, and planned future runs. |
+
+### CMS Edit Mode Integrations
+
+| Tool | Description |
+|------|-------------|
+| **Power Content Details** | Assets panel widget showing detailed info about the currently selected content item. |
 | **Manage Children** | Bulk operations on child content items from the navigation tree. |
+| **Visitor Group Tester** | Floating toolbar on the public site for testing personalization rules and inspecting personalized content. |
 
 ## Screenshot Gallery
 
@@ -65,10 +88,10 @@ Pluggable health check dashboard with grouped checks, status indicators, and aut
 
 ![CMS Doctor](docs/screenshots/08-cms-doctor.png)
 
-### Link Checker
+### Link Audit
 Scan content for broken internal and external links with status codes, friendly URLs, and easy navigation to edit mode.
 
-![Link Checker](docs/screenshots/09-link-checker.png)
+![Link Audit](docs/screenshots/09-link-checker.png)
 
 ### Active Editors
 Real-time editor presence awareness showing who is editing what, with team chat and CMS notifications via SignalR.
@@ -86,12 +109,24 @@ Comprehensive content inventory with configurable columns, multi-column filterin
 ![Content Audit](docs/screenshots/12-content-audit.png)
 
 ### Content Type Recommendations
-Define rules for which content types are suggested when creating content under specific parent pages.
+Define rules for which content types are suggested when creating content under specific parent pages. Hooks into the CMS create dialog via `IContentTypeAdvisor`.
 
 ![Content Type Recommendations](docs/screenshots/13-content-type-recommendations.png)
 
+### Content Statistics
+Dashboard with content counts, type distribution, publishing trends, and storage metrics.
+
+### Language Audit
+Analyze translation coverage across languages, find missing translations, and identify stale content.
+
+### Security Audit
+Review access rights across the content tree, find overly permissive settings, and audit role assignments.
+
+### Visitor Group Tester
+Floating toolbar on the public site for testing personalization rules and inspecting personalized content.
+
 ### CMS Edit Mode Integration
-Power Content Details widget and Manage Children dialog integrated directly into the CMS edit mode interface.
+Power Content Details widget, Manage Children dialog, and Visitor Group Tester integrated directly into the CMS edit mode interface.
 
 ![CMS Edit Mode](docs/screenshots/14-cms-edit-mode.png)
 
@@ -132,7 +167,7 @@ public void Configure(IApplicationBuilder app)
     app.UseEndpoints(endpoints =>
     {
         endpoints.MapContent();
-        endpoints.MapEditorPowertools(); // Required for Active Editors (SignalR)
+        endpoints.MapEditorPowertools(); // Required: maps SignalR hubs and tool endpoints
     });
 }
 ```
@@ -148,7 +183,11 @@ Or configure via `appsettings.json`:
       "features": {
         "contentTypeAudit": true,
         "personalizationUsageAudit": true,
-        "bulkPropertyEditor": true
+        "bulkPropertyEditor": true,
+        "contentStatistics": true,
+        "languageAudit": true,
+        "securityAudit": true,
+        "visitorGroupTester": true
       }
     }
   }
@@ -171,7 +210,7 @@ Several tools require a scheduled job to collect data:
 |-----|-------|
 | **Aggregate Content Type Statistics** | Content Type Audit |
 | **Analyze Personalization Usage** | Personalization Audit, Audience Manager |
-| **Link Checker** | Link Checker |
+| **Link Audit** | Link Audit |
 
 Run these from the CMS admin Scheduled Jobs page, or trigger them from each tool's "Run now" button.
 
@@ -185,11 +224,12 @@ Run these from the CMS admin Scheduled Jobs page, or trigger them from each tool
 
 ## Tech Stack
 
-- .NET 8 / C# / Optimizely CMS 12 (EPiServer.CMS 12.29.0)
+- .NET 8 / C# / Optimizely CMS 12 (EPiServer.CMS 12.29.0, EPiServer.CMS.UI.Core)
 - Vanilla JavaScript (no framework dependencies)
 - Razor SDK class library with embedded views and static assets
 - DynamicDataStore (DDS) for persistence
 - Protected module integration with CMS shell
+- 11 language files included for localization
 
 ## Contributing
 

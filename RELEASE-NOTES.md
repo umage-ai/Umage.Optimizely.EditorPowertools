@@ -1,5 +1,33 @@
 # Release Notes
 
+## v0.2.0-preview.1
+
+### New Tools
+
+- **Content Statistics** — Dashboard with content counts, type distribution, publishing trends, and storage metrics.
+
+- **Language Audit** — Analyze translation coverage across languages, find missing translations, and identify stale content.
+
+- **Security Audit** — Review access rights across the content tree, find overly permissive settings, and audit role assignments.
+
+- **Visitor Group Tester** — Floating toolbar on the public site for testing personalization rules and inspecting personalized content.
+
+### Improvements
+
+- **Link Checker renamed to Link Audit** — The tool formerly known as "Link Checker" is now "Link Audit" for consistency with other audit tools.
+
+- **Content Type Recommendations** — Now hooks into the CMS create dialog via `IContentTypeAdvisor`, providing type suggestions directly in the editor workflow.
+
+- **Menu reordering** — Tools are now grouped by category: Content & Editorial, Audits & Analysis, and Configuration & Admin.
+
+- **EPiServer.CMS.UI.Core** — Added as a package dependency for deeper CMS shell integration.
+
+- **Localization** — 11 language files now included for multilingual admin UI support.
+
+- **New feature toggles** — `ContentStatistics`, `LanguageAudit`, `SecurityAudit`, and `VisitorGroupTester` can be individually enabled/disabled.
+
+---
+
 ## v0.1.0-preview.1
 
 First public preview of Editor Powertools for Optimizely CMS 12.
@@ -22,7 +50,7 @@ First public preview of Editor Powertools for Optimizely CMS 12.
 
 - **Scheduled Jobs Gantt** — Interactive Gantt chart showing scheduled job execution history and planned future runs. Zoom, scroll, and visual overlap detection.
 
-- **Link Checker** — Comprehensive link health monitoring. Scheduled job crawls all content for internal and external links, checks status codes, and tracks history. UI with filters and direct edit-mode links.
+- **Link Audit** (originally "Link Checker") — Comprehensive link health monitoring. Scheduled job crawls all content for internal and external links, checks status codes, and tracks history. UI with filters and direct edit-mode links.
 
 - **CMS Doctor** — Pluggable health check dashboard. Built-in checks for content types, orphaned properties, scheduled jobs, draft content, version bloat, memory usage, broken links, missing alt text, and unused content. Extensible via `IDoctorCheck`.
 

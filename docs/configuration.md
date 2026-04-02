@@ -37,6 +37,10 @@ Settings are read from the `CodeArt:EditorPowertools` section:
         "audienceManager": true,
         "contentDetails": true,
         "brokenLinkChecker": true,
+        "contentStatistics": true,
+        "languageAudit": true,
+        "securityAudit": true,
+        "visitorGroupTester": true,
         "orphanedContentFinder": true,
         "unusedMediaCleaner": true,
         "contentExporter": true,
@@ -74,7 +78,11 @@ All features are **enabled by default** (`true`). Set a feature to `false` to di
 | `ContentTypeRecommendations` | `contentTypeRecommendations` | Content Type Recommendations | Define rules for suggested content types under specific parents. |
 | `AudienceManager` | `audienceManager` | Audience Manager | Enhanced visitor group management with usage statistics. |
 | `ContentDetails` | `contentDetails` | Power Content Details | Assets panel widget with detailed content information. |
-| `BrokenLinkChecker` | `brokenLinkChecker` | Link Checker | Scan for broken internal and external links. |
+| `BrokenLinkChecker` | `brokenLinkChecker` | Link Audit | Scan for broken internal and external links. |
+| `ContentStatistics` | `contentStatistics` | Content Statistics | Dashboard with content counts, type distribution, and publishing trends. |
+| `LanguageAudit` | `languageAudit` | Language Audit | Analyze translation coverage, find missing translations, and identify stale content. |
+| `SecurityAudit` | `securityAudit` | Security Audit | Review access rights, find overly permissive settings, and audit role assignments. |
+| `VisitorGroupTester` | `visitorGroupTester` | Visitor Group Tester | Floating toolbar on public site for testing personalization and inspecting content. |
 | `OrphanedContentFinder` | `orphanedContentFinder` | Orphaned Content Finder | Find content not linked from anywhere. |
 | `UnusedMediaCleaner` | `unusedMediaCleaner` | Unused Media Cleaner | Find unused media files. |
 | `ContentExporter` | `contentExporter` | Content Exporter | Export content tree structures. |
@@ -175,6 +183,10 @@ This is useful when you want most editors to see only a subset of tools. For exa
         "audienceManager": false,
         "contentDetails": false,
         "brokenLinkChecker": false,
+        "contentStatistics": false,
+        "languageAudit": false,
+        "securityAudit": false,
+        "visitorGroupTester": false,
         "orphanedContentFinder": false,
         "unusedMediaCleaner": false,
         "contentExporter": false,

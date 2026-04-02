@@ -119,7 +119,7 @@ Several tools require scheduled jobs to collect data. In the CMS admin:
 2. Find and run:
    - **[EditorPowertools] Aggregate Content Type Statistics** - for Content Type Audit
    - **[EditorPowertools] Analyze Personalization Usage** - for Personalization Audit and Audience Manager
-   - **[EditorPowertools] Link Checker** - for Link Checker
+   - **[EditorPowertools] Link Audit** - for Link Audit
 
 Or use the "Run now" button on each tool's page.
 
