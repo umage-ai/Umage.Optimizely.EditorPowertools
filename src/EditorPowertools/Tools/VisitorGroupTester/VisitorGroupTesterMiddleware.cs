@@ -320,11 +320,16 @@ public class VisitorGroupTesterMiddleware
     var inspectActive = false;
     var tooltip = null;
 
-    // Parse current visitor groups from cookie (persists across navigation)
+    // Parse current visitor groups from query param or cookie
     function getActiveGroupIds() {
+        // Check query param first (takes precedence)
+        var params = new URLSearchParams(window.location.search);
+        var val = params.get('visitorgroupsByID');
+        if (val) return val.split(',').filter(function(s) { return s.trim(); });
+        // Fall back to cookie
         var match = document.cookie.match(/ImpersonatedVisitorGroupsById=([^;]*)/);
-        if (!match || !match[1]) return [];
-        return match[1].split(',').filter(function(s) { return s.trim(); });
+        if (match && match[1]) return match[1].split(',').filter(function(s) { return s.trim(); });
+        return [];
     }
 
     var activeGroupIds = new Set(getActiveGroupIds());
@@ -445,18 +450,30 @@ public class VisitorGroupTesterMiddleware
         return match ? match[1].split(',').filter(function(s) { return s.length > 0; }) : [];
     }
 
+    function buildUrlWithGroups(ids) {
+        var url = new URL(window.location.href);
+        url.searchParams.delete('visitorgroupsByID');
+        var base = url.toString();
+        if (ids.length > 0) {
+            var sep = base.indexOf('?') >= 0 ? '&' : '?';
+            return base + sep + 'visitorgroupsByID=' + ids.join(',');
+        }
+        return base;
+    }
+
     document.getElementById('ept-vgt-apply').addEventListener('click', function() {
         var ids = [];
         activeGroupIds.forEach(function(id) { ids.push(id); });
         setVgCookie(ids);
-        window.location.reload();
+        // Also use query param as fallback (works for single groups in some CMS versions)
+        window.location.href = buildUrlWithGroups(ids);
     });
 
     // Clear button
     document.getElementById('ept-vgt-clear').addEventListener('click', function() {
         activeGroupIds.clear();
         setVgCookie([]);
-        window.location.reload();
+        window.location.href = buildUrlWithGroups([]);
     });
 
     // Inspector tab
