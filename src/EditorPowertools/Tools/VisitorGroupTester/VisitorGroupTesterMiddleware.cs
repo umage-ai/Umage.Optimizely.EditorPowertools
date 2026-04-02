@@ -30,9 +30,10 @@ public class VisitorGroupTesterMiddleware
             return;
         }
 
-        // Skip API, static assets, and module requests (but allow CMS preview)
+        // Skip API, CMS shell, and static asset requests — only inject on public site
         var path = context.Request.Path.Value ?? "";
-        if (path.StartsWith("/editorpowertools", StringComparison.OrdinalIgnoreCase) ||
+        if (path.StartsWith("/episerver", StringComparison.OrdinalIgnoreCase) ||
+            path.StartsWith("/editorpowertools", StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/api/", StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/util/", StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/globalassets", StringComparison.OrdinalIgnoreCase) ||
@@ -41,14 +42,6 @@ public class VisitorGroupTesterMiddleware
             path.Contains("/ClientResources/", StringComparison.OrdinalIgnoreCase) ||
             path.Contains("/_content/", StringComparison.OrdinalIgnoreCase) ||
             path.Contains("/modules/", StringComparison.OrdinalIgnoreCase))
-        {
-            await _next(context);
-            return;
-        }
-
-        // Skip CMS shell pages (admin, settings, etc.) but NOT preview/content pages
-        if (path.StartsWith("/episerver", StringComparison.OrdinalIgnoreCase) &&
-            !path.Contains("/CMS/Content/", StringComparison.OrdinalIgnoreCase))
         {
             await _next(context);
             return;
