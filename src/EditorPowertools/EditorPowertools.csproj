@@ -68,7 +68,8 @@
       Overwrite="true" />
     <ItemGroup>
       <_PackageFiles Include="$(_ModuleZipDir)modules\_protected\EditorPowertools\EditorPowertools.zip"
-                     PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools\" />
+                     PackagePath="contentFiles\any\any\modules\_protected\EditorPowertools\"
+                     BuildAction="None" />
     </ItemGroup>
   </Target>
 
