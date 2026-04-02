@@ -409,8 +409,8 @@
             }
         ];
 
-        var table = EPT.createTable(columns, editors, { sortKey: 'editCount', sortDir: 'desc' });
-        container.appendChild(table);
+        var result = EPT.createTable(columns, editors, { defaultSort: 'editCount', defaultSortDir: 'desc' });
+        container.appendChild(result.table);
     }
 
     // ── SVG / DOM Helpers ────────────────────────────────────────

@@ -204,8 +204,8 @@
             return;
         }
 
-        if (state.status.lastAnalysisUtc) {
-            var lastDate = new Date(state.status.lastAnalysisUtc);
+        if (state.status.lastAnalysis) {
+            var lastDate = new Date(state.status.lastAnalysis);
             var isOld = (Date.now() - lastDate.getTime()) > 24 * 60 * 60 * 1000;
             if (isOld) {
                 el.innerHTML = '<div class="ept-alert ept-alert--warning">' +
