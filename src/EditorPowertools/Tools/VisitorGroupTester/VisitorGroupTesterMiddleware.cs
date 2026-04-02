@@ -430,24 +430,29 @@ public class VisitorGroupTesterMiddleware
     }
 
     // Apply button
-    document.getElementById('ept-vgt-apply').addEventListener('click', function() {
+    function buildUrlWithGroups(ids) {
+        // Build URL manually to avoid URLSearchParams encoding commas as %2C
+        // Optimizely expects raw commas: ?visitorgroupsByID=guid1,guid2
         var url = new URL(window.location.href);
+        url.searchParams.delete('visitorgroupsByID');
+        var base = url.toString();
+        if (ids.length > 0) {
+            var sep = base.indexOf('?') >= 0 ? '&' : '?';
+            return base + sep + 'visitorgroupsByID=' + ids.join(',');
+        }
+        return base;
+    }
+
+    document.getElementById('ept-vgt-apply').addEventListener('click', function() {
         var ids = [];
         activeGroupIds.forEach(function(id) { ids.push(id); });
-        if (ids.length > 0) {
-            url.searchParams.set('visitorgroupsByID', ids.join(','));
-        } else {
-            url.searchParams.delete('visitorgroupsByID');
-        }
-        window.location.href = url.toString();
+        window.location.href = buildUrlWithGroups(ids);
     });
 
     // Clear button
     document.getElementById('ept-vgt-clear').addEventListener('click', function() {
         activeGroupIds.clear();
-        var url = new URL(window.location.href);
-        url.searchParams.delete('visitorgroupsByID');
-        window.location.href = url.toString();
+        window.location.href = buildUrlWithGroups([]);
     });
 
     // Inspector tab
