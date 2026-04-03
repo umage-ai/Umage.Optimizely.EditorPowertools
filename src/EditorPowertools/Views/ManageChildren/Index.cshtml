@@ -1,7 +1,8 @@
 @using EPiServer.Shell
+@inject LocalizationService Loc
 @{
     Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
-    ViewData["Title"] = "Manage Children";
+    ViewData["Title"] = Loc.GetString("/editorpowertools/tools/managechildren/title");
     string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
 }
 @section NavItems {

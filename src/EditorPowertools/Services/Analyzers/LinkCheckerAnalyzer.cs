@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
+using EPiServer.Framework.Localization;
 using EPiServer.Shell;
 using EPiServer.Web.Routing;
 using EditorPowertools.Helpers;
@@ -23,11 +24,12 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
     private readonly IUrlResolver _urlResolver;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly LinkCheckerRepository _linkCheckerRepository;
+    private readonly LocalizationService _localizationService;
     private readonly ILogger<LinkCheckerAnalyzer> _logger;
 
     private readonly List<LinkEntry> _linkEntries = new();
 
-    public string Name => "Link Checker";
+    public string Name => _localizationService.GetString("/editorpowertools/analyzers/linkchecker");
 
     public LinkCheckerAnalyzer(
         IContentLoader contentLoader,
@@ -36,6 +38,7 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
         IUrlResolver urlResolver,
         IHttpClientFactory httpClientFactory,
         LinkCheckerRepository linkCheckerRepository,
+        LocalizationService localizationService,
         ILogger<LinkCheckerAnalyzer> logger)
     {
         _contentLoader = contentLoader;
@@ -44,6 +47,7 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
         _urlResolver = urlResolver;
         _httpClientFactory = httpClientFactory;
         _linkCheckerRepository = linkCheckerRepository;
+        _localizationService = localizationService;
         _logger = logger;
     }
 

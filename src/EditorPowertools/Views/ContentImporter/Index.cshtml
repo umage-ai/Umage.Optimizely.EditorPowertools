@@ -1,7 +1,8 @@
 @using EPiServer.Shell
+@inject LocalizationService Loc
 @{
     Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
-    ViewData["Title"] = "Content Importer";
+    ViewData["Title"] = Loc.GetString("/editorpowertools/tools/contentimporter/title");
     string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
 }
 @section NavItems {
@@ -9,8 +10,8 @@
     <a href="@ActionPath("EditorPowertools/ContentImporter")" class="active">Content Importer</a>
 }
 <div class="ept-page-header">
-    <h1>Content Importer</h1>
-    <p>Import content from CSV, Excel, or JSON files into the content tree.</p>
+    <h1>@Loc.GetString("/editorpowertools/tools/contentimporter/title")</h1>
+    <p>@Loc.GetString("/editorpowertools/tools/contentimporter/description")</p>
 </div>
 <div id="content-importer-root"></div>
 @section Scripts {

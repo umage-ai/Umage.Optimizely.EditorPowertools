@@ -1,7 +1,8 @@
 @using EPiServer.Shell
+@inject LocalizationService Loc
 @{
     Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
-    ViewData["Title"] = "Overview";
+    ViewData["Title"] = Loc.GetString("/editorpowertools/tools/overview/title");
     string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
 }
 
@@ -9,8 +10,8 @@
 }
 
 <div class="ept-page-header">
-    <h1>Editor Powertools</h1>
-    <p>A collection of power tools for Optimizely CMS editors and admins.</p>
+    <h1>@Loc.GetString("/editorpowertools/menu/title")</h1>
+    <p>@Loc.GetString("/editorpowertools/tools/overview/description")</p>
 </div>
 
 <div class="ept-tool-grid">
@@ -19,8 +20,8 @@
             <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
             <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
         </svg>
-        <div class="ept-tool-card__title">Content Type Audit</div>
-        <div class="ept-tool-card__desc">Audit content types, usage counts, properties, and inheritance. Find orphaned types and unused content.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/contenttypeaudit/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/contenttypeaudit/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/PersonalizationAudit")" class="ept-tool-card">
@@ -28,8 +29,8 @@
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
             <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
         </svg>
-        <div class="ept-tool-card__title">Personalization Audit</div>
-        <div class="ept-tool-card__desc">Find where audiences and personalization are used across your content.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/personalizationaudit/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/personalizationaudit/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/AudienceManager")" class="ept-tool-card">
@@ -37,24 +38,24 @@
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
             <circle cx="19" cy="11" r="2"/><path d="M19 8v6m-3-3h6"/>
         </svg>
-        <div class="ept-tool-card__title">Audience Manager</div>
-        <div class="ept-tool-card__desc">Manage audiences, view criteria, usage statistics, and interlinks to personalization audit.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/audiencemanager/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/audiencemanager/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/ActivityTimeline")" class="ept-tool-card">
         <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
         </svg>
-        <div class="ept-tool-card__title">Activity Timeline</div>
-        <div class="ept-tool-card__desc">Full timeline of all site activities. See who changed what and when.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/activitytimeline/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/activitytimeline/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/ScheduledJobsGantt")" class="ept-tool-card">
         <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
         </svg>
-        <div class="ept-tool-card__title">Scheduled Jobs Gantt</div>
-        <div class="ept-tool-card__desc">Interactive Gantt chart of scheduled job execution and planned runs.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/scheduledjobsgantt/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/scheduledjobsgantt/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/BulkPropertyEditor")" class="ept-tool-card">
@@ -62,8 +63,8 @@
             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
             <path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
         </svg>
-        <div class="ept-tool-card__title">Bulk Property Editor</div>
-        <div class="ept-tool-card__desc">Edit a property value across multiple content items at once.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/bulkpropertyeditor/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/bulkpropertyeditor/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/ContentAudit")" class="ept-tool-card">
@@ -71,16 +72,16 @@
             <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
             <rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6"/><path d="M9 16h6"/>
         </svg>
-        <div class="ept-tool-card__title">Content Audit</div>
-        <div class="ept-tool-card__desc">Comprehensive content inventory with configurable columns, filters, sorting, and Excel/CSV/JSON export.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/contentaudit/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/contentaudit/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/CmsDoctor")" class="ept-tool-card">
         <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
         </svg>
-        <div class="ept-tool-card__title">CMS Doctor</div>
-        <div class="ept-tool-card__desc">Pluggable health check dashboard with auto-fix capabilities. Extensible by third-party packages.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/cmsdoctor/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/cmsdoctor/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/ActiveEditors")" class="ept-tool-card">
@@ -88,8 +89,8 @@
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
             <circle cx="19" cy="11" r="2"/>
         </svg>
-        <div class="ept-tool-card__title">Active Editors</div>
-        <div class="ept-tool-card__desc">See who is currently editing and what they are working on. Message editors directly.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/activeeditors/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/activeeditors/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/LinkChecker")" class="ept-tool-card">
@@ -97,40 +98,40 @@
             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
         </svg>
-        <div class="ept-tool-card__title">Link Audit</div>
-        <div class="ept-tool-card__desc">Find and fix broken internal and external links across your content.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/linkaudit/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/linkaudit/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/ContentTypeRecommendations")" class="ept-tool-card">
         <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"/>
         </svg>
-        <div class="ept-tool-card__title">Content Type Recommendations</div>
-        <div class="ept-tool-card__desc">Configure rules to suggest content types when creating content under specific parents.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/contenttyperecommendations/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/contenttyperecommendations/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/ContentImporter")" class="ept-tool-card">
         <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
         </svg>
-        <div class="ept-tool-card__title">Content Importer</div>
-        <div class="ept-tool-card__desc">Import content from CSV, Excel, or JSON files into the content tree with property mapping.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/contentimporter/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/contentimporter/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/SecurityAudit")" class="ept-tool-card">
         <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
         </svg>
-        <div class="ept-tool-card__title">Security Audit</div>
-        <div class="ept-tool-card__desc">Analyze content permissions, find overly permissive access rights, and explore who can access what.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/securityaudit/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/securityaudit/description")</div>
     </a>
 
     <a href="@ActionPath("EditorPowertools/ContentStatistics")" class="ept-tool-card">
         <svg class="ept-tool-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/>
         </svg>
-        <div class="ept-tool-card__title">Content Statistics</div>
-        <div class="ept-tool-card__desc">Visual dashboard with charts showing content distribution, creation trends, staleness, and editor activity.</div>
+        <div class="ept-tool-card__title">@Loc.GetString("/editorpowertools/tools/contentstatistics/title")</div>
+        <div class="ept-tool-card__desc">@Loc.GetString("/editorpowertools/tools/contentstatistics/description")</div>
     </a>
 
 </div>

@@ -1,7 +1,8 @@
 @using EPiServer.Shell
+@inject LocalizationService Loc
 @{
     Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
-    ViewData["Title"] = "Personalization Audit";
+    ViewData["Title"] = Loc.GetString("/editorpowertools/tools/personalizationaudit/title");
     string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
 }
 
@@ -10,8 +11,8 @@
 }
 
 <div class="ept-page-header">
-    <h1>Personalization Audit</h1>
-    <p>Overview of where audiences and personalization are used across the site.</p>
+    <h1>@Loc.GetString("/editorpowertools/tools/personalizationaudit/title")</h1>
+    <p>@Loc.GetString("/editorpowertools/tools/personalizationaudit/description")</p>
 </div>
 
 <div id="personalization-stats" class="ept-stats"></div>

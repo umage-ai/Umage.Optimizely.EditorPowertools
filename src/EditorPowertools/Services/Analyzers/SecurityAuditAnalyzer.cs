@@ -1,6 +1,7 @@
 using System.Text.Json;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
+using EPiServer.Framework.Localization;
 using EPiServer.Security;
 using EditorPowertools.Helpers;
 using EditorPowertools.Tools.SecurityAudit;
@@ -36,17 +37,21 @@ public class SecurityAuditAnalyzer : IContentAnalyzer
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
 
-    public string Name => "Security Audit";
+    private readonly LocalizationService _localizationService;
+
+    public string Name => _localizationService.GetString("/editorpowertools/analyzers/securityaudit");
 
     public SecurityAuditAnalyzer(
         IContentSecurityRepository contentSecurityRepository,
         IContentTypeRepository contentTypeRepository,
         SecurityAuditRepository repository,
+        LocalizationService localizationService,
         ILogger<SecurityAuditAnalyzer> logger)
     {
         _contentSecurityRepository = contentSecurityRepository;
         _contentTypeRepository = contentTypeRepository;
         _repository = repository;
+        _localizationService = localizationService;
         _logger = logger;
     }
 

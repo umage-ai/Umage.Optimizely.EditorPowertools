@@ -95,6 +95,14 @@
           <title>Overview</title>
           <description>Dashboard overview of all Editor Powertools features.</description>
         </overview>
+        <languageaudit>
+          <title>Language Audit</title>
+          <description>Analyze language coverage, find missing translations, and manage translation priorities.</description>
+        </languageaudit>
+        <linkaudit>
+          <title>Link Audit</title>
+          <description>Find and fix broken internal and external links across your content.</description>
+        </linkaudit>
         <visitorgrouptester>
           <title>Visitor Group Tester</title>
           <description>Floating toolbar to simulate visitor group membership and inspect editable content elements.</description>
@@ -103,6 +111,10 @@
           <title>Content Statistics</title>
           <description>Visual dashboard with charts showing content distribution, creation trends, staleness, and editor activity.</description>
         </contentstatistics>
+        <securityaudit>
+          <title>Security Audit</title>
+          <description>Analyze content permissions, find overly permissive access rights, and explore who can access what.</description>
+        </securityaudit>
       </tools>
 
       <!-- Scheduled job -->
@@ -284,6 +296,8 @@
         <contenttypestatistics>Content Type Statistics</contenttypestatistics>
         <personalization>Personalization</personalization>
         <linkchecker>Link Checker</linkchecker>
+        <languageaudit>Language Audit</languageaudit>
+        <securityaudit>Security Audit</securityaudit>
       </analyzers>
 
       <!-- Common / shared strings -->

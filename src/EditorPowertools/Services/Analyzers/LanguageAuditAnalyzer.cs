@@ -2,6 +2,7 @@ using System.Text.Json;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
+using EPiServer.Framework.Localization;
 using EPiServer.Shell;
 using EditorPowertools.Helpers;
 using EditorPowertools.Tools.LanguageAudit;
@@ -20,11 +21,12 @@ public class LanguageAuditAnalyzer : IContentAnalyzer
     private readonly IContentVersionRepository _contentVersionRepository;
     private readonly ILanguageBranchRepository _languageBranchRepository;
     private readonly LanguageAuditRepository _repository;
+    private readonly LocalizationService _localizationService;
     private readonly ILogger<LanguageAuditAnalyzer> _logger;
 
     private HashSet<string> _enabledLanguages = new(StringComparer.OrdinalIgnoreCase);
 
-    public string Name => "Language Audit";
+    public string Name => _localizationService.GetString("/editorpowertools/analyzers/languageaudit");
 
     public LanguageAuditAnalyzer(
         IContentLoader contentLoader,
@@ -32,6 +34,7 @@ public class LanguageAuditAnalyzer : IContentAnalyzer
         IContentVersionRepository contentVersionRepository,
         ILanguageBranchRepository languageBranchRepository,
         LanguageAuditRepository repository,
+        LocalizationService localizationService,
         ILogger<LanguageAuditAnalyzer> logger)
     {
         _contentLoader = contentLoader;
@@ -39,6 +42,7 @@ public class LanguageAuditAnalyzer : IContentAnalyzer
         _contentVersionRepository = contentVersionRepository;
         _languageBranchRepository = languageBranchRepository;
         _repository = repository;
+        _localizationService = localizationService;
         _logger = logger;
     }
 

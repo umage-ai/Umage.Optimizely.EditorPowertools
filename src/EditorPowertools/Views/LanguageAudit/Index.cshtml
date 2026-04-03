@@ -1,7 +1,8 @@
 @using EPiServer.Shell
+@inject LocalizationService Loc
 @{
     Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
-    ViewData["Title"] = "Language Audit";
+    ViewData["Title"] = Loc.GetString("/editorpowertools/tools/languageaudit/title");
     string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
 }
 
@@ -10,8 +11,8 @@
 }
 
 <div class="ept-page-header">
-    <h1>Language Audit</h1>
-    <p>Analyze language coverage, find missing translations, and manage translation priorities.</p>
+    <h1>@Loc.GetString("/editorpowertools/tools/languageaudit/title")</h1>
+    <p>@Loc.GetString("/editorpowertools/tools/languageaudit/description")</p>
 </div>
 
 <div id="lang-audit-tabs" class="ept-tabs"></div>
