@@ -49,3 +49,17 @@ dotnet run --project src/EditorPowertools.SampleSite   # Run sample site
 - Nullable reference types enabled
 - Controllers return JSON APIs; UI is vanilla JS or React, not server-rendered
 - Each tool has a corresponding PermissionType and FeatureToggle
+- **JS paths**: Never hardcode API paths. Use `window.EPT_API_URL + '/endpoint'` and `window.EPT_HUB_URL + '/hub'`
+- **Security**: All controllers must have `[Authorize(Policy = "codeart:editorpowertools")]`, all actions must call `_accessChecker.HasAccess()`, POST/DELETE endpoints must have `[RequireAjax]`, content operations must use proper `AccessLevel` (never `NoAccess`), error responses must not expose `ex.Message`
+
+## Localization
+
+All user-facing strings MUST go through Optimizely's localization system — never hardcode display text in C#.
+
+- **Language files**: `src/EditorPowertools/lang/*.xml` (11 languages: en, da, sv, no, de, fi, fr, es, nl, ja, zh-CN)
+- **String path convention**: `/editorpowertools/{area}/{key}` — e.g. `/editorpowertools/menu/contenttypeaudit`, `/editorpowertools/cmsdoctor/checks/memorycheck/name`
+- **In services/controllers**: Inject `LocalizationService` and call `_localization.GetString("/editorpowertools/path/key")`
+- **In components**: Set `LanguagePath = "/editorpowertools/components/yourcomponent"` — Optimizely auto-resolves `/title` and `/description`
+- **In menu items**: Use `_localization.GetString()` for menu item names
+- **Adding new strings**: Add to ALL 11 language files under the appropriate path. English in `en.xml` is the base; translate others accordingly.
+- **Fallback**: If a key is missing, `GetString()` returns the key path — always provide English as the base language
