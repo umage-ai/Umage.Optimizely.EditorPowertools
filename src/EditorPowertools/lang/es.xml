@@ -103,6 +103,18 @@
           <title>Estadísticas de contenido</title>
           <description>Panel visual con gráficos que muestran la distribución del contenido, tendencias de creación, obsolescencia y actividad de los editores.</description>
         </contentstatistics>
+        <languageaudit>
+          <title>Auditoría de idiomas</title>
+          <description>Analizar la cobertura de idiomas, encontrar traducciones faltantes y gestionar las prioridades de traducción.</description>
+        </languageaudit>
+        <linkaudit>
+          <title>Auditoría de enlaces</title>
+          <description>Encontrar y corregir enlaces internos y externos rotos en su contenido.</description>
+        </linkaudit>
+        <securityaudit>
+          <title>Auditoría de seguridad</title>
+          <description>Analizar los permisos de contenido, encontrar derechos de acceso excesivamente permisivos y explorar quién tiene acceso a qué.</description>
+        </securityaudit>
       </tools>
 
       <!-- Tarea programada -->
@@ -284,6 +296,8 @@
         <contenttypestatistics>Estadísticas de tipos de contenido</contenttypestatistics>
         <personalization>Personalización</personalization>
         <linkchecker>Verificador de enlaces</linkchecker>
+        <languageaudit>Auditoría de idiomas</languageaudit>
+        <securityaudit>Auditoría de seguridad</securityaudit>
       </analyzers>
 
       <!-- Cadenas comunes -->

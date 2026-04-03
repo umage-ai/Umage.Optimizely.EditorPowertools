@@ -103,6 +103,18 @@
           <title>Inhoudsstatistieken</title>
           <description>Visueel dashboard met grafieken over inhoudsverdeling, aanmaaktrends, veroudering en redacteursactiviteit.</description>
         </contentstatistics>
+        <languageaudit>
+          <title>Taalaudit</title>
+          <description>Analyseer taaldekking, vind ontbrekende vertalingen en beheer vertaalprioriteiten.</description>
+        </languageaudit>
+        <linkaudit>
+          <title>Linkaudit</title>
+          <description>Vind en herstel gebroken interne en externe links in uw inhoud.</description>
+        </linkaudit>
+        <securityaudit>
+          <title>Beveiligingsaudit</title>
+          <description>Analyseer inhoudsmachtigingen, vind te ruime toegangsrechten en verken wie toegang heeft tot wat.</description>
+        </securityaudit>
       </tools>
 
       <!-- Geplande taak -->
@@ -284,6 +296,8 @@
         <contenttypestatistics>Inhoudstype-statistieken</contenttypestatistics>
         <personalization>Personalisatie</personalization>
         <linkchecker>Linkcontrole</linkchecker>
+        <languageaudit>Taalaudit</languageaudit>
+        <securityaudit>Beveiligingsaudit</securityaudit>
       </analyzers>
 
       <!-- Gemeenschappelijke tekenreeksen -->

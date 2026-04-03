@@ -103,6 +103,18 @@
           <title>内容统计</title>
           <description>包含图表的可视化仪表板，展示内容分布、创建趋势、陈旧程度和编辑者活动。</description>
         </contentstatistics>
+        <languageaudit>
+          <title>语言审计</title>
+          <description>分析语言覆盖率，查找缺失的翻译，并管理翻译优先级。</description>
+        </languageaudit>
+        <linkaudit>
+          <title>链接审计</title>
+          <description>查找并修复内容中损坏的内部和外部链接。</description>
+        </linkaudit>
+        <securityaudit>
+          <title>安全审计</title>
+          <description>分析内容权限，查找过于宽松的访问权限，并探索谁可以访问什么。</description>
+        </securityaudit>
       </tools>
 
       <!-- 计划任务 -->
@@ -284,6 +296,8 @@
         <contenttypestatistics>内容类型统计</contenttypestatistics>
         <personalization>个性化</personalization>
         <linkchecker>链接检查器</linkchecker>
+        <languageaudit>语言审计</languageaudit>
+        <securityaudit>安全审计</securityaudit>
       </analyzers>
 
       <!-- 通用字符串 -->

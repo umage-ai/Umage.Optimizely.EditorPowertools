@@ -103,6 +103,18 @@
           <title>コンテンツ統計</title>
           <description>コンテンツの分布、作成傾向、陳腐化、エディター活動を示すチャート付きのビジュアルダッシュボード。</description>
         </contentstatistics>
+        <languageaudit>
+          <title>言語監査</title>
+          <description>言語カバレッジを分析し、不足している翻訳を見つけ、翻訳の優先順位を管理します。</description>
+        </languageaudit>
+        <linkaudit>
+          <title>リンク監査</title>
+          <description>コンテンツ内の壊れた内部リンクと外部リンクを検出・修正します。</description>
+        </linkaudit>
+        <securityaudit>
+          <title>セキュリティ監査</title>
+          <description>コンテンツの権限を分析し、過度に緩いアクセス権を見つけ、誰が何にアクセスできるかを調査します。</description>
+        </securityaudit>
       </tools>
 
       <!-- スケジュールジョブ -->
@@ -284,6 +296,8 @@
         <contenttypestatistics>コンテンツタイプ統計</contenttypestatistics>
         <personalization>パーソナライゼーション</personalization>
         <linkchecker>リンクチェッカー</linkchecker>
+        <languageaudit>言語監査</languageaudit>
+        <securityaudit>セキュリティ監査</securityaudit>
       </analyzers>
 
       <!-- 共通文字列 -->

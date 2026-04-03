@@ -103,6 +103,18 @@
           <title>Sisältötilastot</title>
           <description>Visuaalinen kojelauta kaavioilla, jotka näyttävät sisällön jakautumisen, luontitrendit, vanhentumisen ja muokkaajien aktiivisuuden.</description>
         </contentstatistics>
+        <languageaudit>
+          <title>Kielitarkastus</title>
+          <description>Analysoi kielikattavuus, etsi puuttuvat käännökset ja hallitse käännösprioriteetit.</description>
+        </languageaudit>
+        <linkaudit>
+          <title>Linkkitarkastus</title>
+          <description>Etsi ja korjaa rikkinäiset sisäiset ja ulkoiset linkit sisällössäsi.</description>
+        </linkaudit>
+        <securityaudit>
+          <title>Tietoturvatarkastus</title>
+          <description>Analysoi sisällön käyttöoikeudet, etsi liian väljät käyttöoikeudet ja selvitä kuka pääsee mihinkin.</description>
+        </securityaudit>
       </tools>
 
       <!-- Ajastettu tehtävä -->
@@ -284,6 +296,8 @@
         <contenttypestatistics>Sisältötyyppistatistiikka</contenttypestatistics>
         <personalization>Personointi</personalization>
         <linkchecker>Linkkien tarkistus</linkchecker>
+        <languageaudit>Kielitarkastus</languageaudit>
+        <securityaudit>Tietoturvatarkastus</securityaudit>
       </analyzers>
 
       <!-- Yhteiset merkkijonot -->

@@ -103,6 +103,18 @@
           <title>Inhaltsstatistiken</title>
           <description>Visuelles Dashboard mit Diagrammen zur Inhaltsverteilung, Erstellungstrends, Veralterung und Redakteursaktivität.</description>
         </contentstatistics>
+        <languageaudit>
+          <title>Sprach-Audit</title>
+          <description>Sprachabdeckung analysieren, fehlende Übersetzungen finden und Übersetzungsprioritäten verwalten.</description>
+        </languageaudit>
+        <linkaudit>
+          <title>Link-Audit</title>
+          <description>Defekte interne und externe Links in Ihren Inhalten finden und beheben.</description>
+        </linkaudit>
+        <securityaudit>
+          <title>Sicherheits-Audit</title>
+          <description>Inhaltsberechtigungen analysieren, zu großzügige Zugriffsrechte finden und erkunden, wer auf was zugreifen kann.</description>
+        </securityaudit>
       </tools>
 
       <!-- Geplante Aufgabe -->
@@ -284,6 +296,8 @@
         <contenttypestatistics>Inhaltstyp-Statistiken</contenttypestatistics>
         <personalization>Personalisierung</personalization>
         <linkchecker>Linkprüfung</linkchecker>
+        <languageaudit>Sprach-Audit</languageaudit>
+        <securityaudit>Sicherheits-Audit</securityaudit>
       </analyzers>
 
       <!-- Gemeinsame Zeichenfolgen -->

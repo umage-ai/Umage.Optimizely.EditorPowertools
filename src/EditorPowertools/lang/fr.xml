@@ -103,6 +103,18 @@
           <title>Statistiques de contenu</title>
           <description>Tableau de bord visuel avec des graphiques montrant la répartition du contenu, les tendances de création, l'obsolescence et l'activité des éditeurs.</description>
         </contentstatistics>
+        <languageaudit>
+          <title>Audit linguistique</title>
+          <description>Analyser la couverture linguistique, trouver les traductions manquantes et gérer les priorités de traduction.</description>
+        </languageaudit>
+        <linkaudit>
+          <title>Audit des liens</title>
+          <description>Trouver et corriger les liens internes et externes cassés dans votre contenu.</description>
+        </linkaudit>
+        <securityaudit>
+          <title>Audit de sécurité</title>
+          <description>Analyser les permissions de contenu, trouver les droits d'accès trop permissifs et explorer qui a accès à quoi.</description>
+        </securityaudit>
       </tools>
 
       <!-- Tâche planifiée -->
@@ -284,6 +296,8 @@
         <contenttypestatistics>Statistiques des types de contenu</contenttypestatistics>
         <personalization>Personnalisation</personalization>
         <linkchecker>Vérificateur de liens</linkchecker>
+        <languageaudit>Audit linguistique</languageaudit>
+        <securityaudit>Audit de sécurité</securityaudit>
       </analyzers>
 
       <!-- Chaînes communes -->
