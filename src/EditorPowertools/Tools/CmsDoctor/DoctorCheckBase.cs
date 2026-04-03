@@ -1,4 +1,6 @@
 using EditorPowertools.Tools.CmsDoctor.Models;
+using EPiServer.Framework.Localization;
+using EPiServer.ServiceLocation;
 
 namespace EditorPowertools.Tools.CmsDoctor;
 
@@ -15,6 +17,18 @@ public abstract class DoctorCheckBase : IDoctorCheck
     public virtual int SortOrder => 100;
     public virtual string[] Tags => Array.Empty<string>();
     public virtual bool CanFix => false;
+
+    /// <summary>
+    /// Resolves a localized string with fallback to the provided default.
+    /// Uses the lazy-loaded LocalizationService from ServiceLocator since
+    /// doctor checks are instantiated via DI and not all have constructor injection support.
+    /// </summary>
+    private LocalizationService? _localization;
+    protected LocalizationService Localization =>
+        _localization ??= ServiceLocator.Current.GetInstance<LocalizationService>();
+
+    protected string L(string path, string fallback) =>
+        Localization.GetStringByCulture(path, fallback, System.Globalization.CultureInfo.CurrentUICulture);
 
     public abstract DoctorCheckResult PerformCheck();
 

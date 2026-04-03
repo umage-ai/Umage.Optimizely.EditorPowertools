@@ -20,6 +20,9 @@
         <activeeditors>Active Editors</activeeditors>
         <managechildren>Manage Children</managechildren>
         <contentstatistics>Content Statistics</contentstatistics>
+        <languageaudit>Language Audit</languageaudit>
+        <securityaudit>Security Audit</securityaudit>
+        <linkaudit>Link Audit</linkaudit>
       </menu>
 
       <!-- Components (CMS assets panel widgets) -->
@@ -209,10 +212,41 @@
             <ok>All blocks and media are referenced.</ok>
             <details>{0} of {1} blocks/media ({2}%) are unreferenced. Last analyzed: {3}</details>
           </unusedcontentcheck>
+          <everyonepublishrightscheck>
+            <name>Everyone Publish Rights</name>
+            <description>Reports content where the "Everyone" role has Publish or higher access.</description>
+            <group>Security</group>
+            <nodata>No security audit data available. Run the Content Analysis scheduled job first.</nodata>
+            <nodatadetails>The Security Audit analyzer populates this data during the scheduled job.</nodatadetails>
+            <ok>No content grants Publish to the "Everyone" role.</ok>
+            <warning>{0} content item(s) grant Publish or higher to the "Everyone" role.</warning>
+            <notavailable>Security audit data not available yet.</notavailable>
+          </everyonepublishrightscheck>
+          <unrestrictedcontentcheck>
+            <name>Unrestricted Content</name>
+            <description>Reports pages with no access restrictions set.</description>
+            <group>Security</group>
+            <nodata>No security audit data available. Run the Content Analysis scheduled job first.</nodata>
+            <nodatadetails>The Security Audit analyzer populates this data during the scheduled job.</nodatadetails>
+            <ok>All pages have access restrictions.</ok>
+            <badpractice>{0} page(s) have no access restrictions (wide open).</badpractice>
+            <notavailable>Security audit data not available yet.</notavailable>
+          </unrestrictedcontentcheck>
+          <inconsistentinheritancecheck>
+            <name>Inconsistent Permission Inheritance</name>
+            <description>Reports content that is more permissive than its parent, which may indicate accidental ACL changes.</description>
+            <group>Security</group>
+            <nodata>No security audit data available. Run the Content Analysis scheduled job first.</nodata>
+            <nodatadetails>The Security Audit analyzer populates this data during the scheduled job.</nodatadetails>
+            <ok>No permission inheritance inconsistencies found.</ok>
+            <warning>{0} content item(s) are more permissive than their parent.</warning>
+            <notavailable>Security audit data not available yet.</notavailable>
+          </inconsistentinheritancecheck>
         </checks>
         <groups>
           <environment>Environment</environment>
           <content>Content</content>
+          <security>Security</security>
         </groups>
         <tags>
           <performance>Performance</performance>

@@ -1,5 +1,6 @@
 using EPiServer;
 using EPiServer.Core;
+using EPiServer.Framework.Localization;
 using EPiServer.PlugIn;
 using EPiServer.Scheduler;
 using Microsoft.Extensions.Logging;
@@ -9,6 +10,7 @@ namespace EditorPowertools.Services;
 [ScheduledPlugIn(
     DisplayName = "[EditorPowertools] Content Analysis",
     Description = "Unified job that traverses all content once and runs all registered analyzers (content type stats, personalization, link checking, etc.).",
+    LanguagePath = "/editorpowertools/jobs/contentanalysis",
     SortIndex = 10000)]
 public class UnifiedContentAnalysisJob : ScheduledJobBase
 {
@@ -16,20 +18,28 @@ public class UnifiedContentAnalysisJob : ScheduledJobBase
     private readonly IContentLoader _contentLoader;
     private readonly IEnumerable<IContentAnalyzer> _analyzers;
     private readonly ILogger<UnifiedContentAnalysisJob> _logger;
+    private readonly LocalizationService _localization;
     private bool _stopSignaled;
 
     public UnifiedContentAnalysisJob(
         IContentRepository contentRepository,
         IContentLoader contentLoader,
         IEnumerable<IContentAnalyzer> analyzers,
-        ILogger<UnifiedContentAnalysisJob> logger)
+        ILogger<UnifiedContentAnalysisJob> logger,
+        LocalizationService localization)
     {
         _contentRepository = contentRepository;
         _contentLoader = contentLoader;
         _analyzers = analyzers;
         _logger = logger;
+        _localization = localization;
         IsStoppable = true;
     }
+
+    private string L(string path, string fallback) =>
+        _localization.GetStringByCulture(path, fallback, System.Globalization.CultureInfo.CurrentUICulture);
+
+    private const string Prefix = "/editorpowertools/jobs/contentanalysis/";
 
     public override string Execute()
     {
@@ -37,9 +47,9 @@ public class UnifiedContentAnalysisJob : ScheduledJobBase
         var analyzerList = _analyzers.ToList();
 
         if (analyzerList.Count == 0)
-            return "No analyzers registered.";
+            return L(Prefix + "noanalyzers", "No analyzers registered.");
 
-        OnStatusChanged($"Initializing {analyzerList.Count} analyzers...");
+        OnStatusChanged(string.Format(L(Prefix + "initializing", "Initializing {0} analyzers..."), analyzerList.Count));
         foreach (var analyzer in analyzerList)
         {
             try { analyzer.Initialize(); }
@@ -50,13 +60,13 @@ public class UnifiedContentAnalysisJob : ScheduledJobBase
         var total = descendants.Count;
         var processed = 0;
 
-        OnStatusChanged($"Analyzing {total} content items with {analyzerList.Count} analyzers...");
+        OnStatusChanged(string.Format(L(Prefix + "analyzing", "Analyzing {0} content items with {1} analyzers..."), total, analyzerList.Count));
 
         foreach (var contentRef in descendants)
         {
             if (_stopSignaled)
             {
-                return $"Stopped after {processed}/{total} items.";
+                return string.Format(L(Prefix + "stopped", "Stopped after {0}/{1} items."), processed, total);
             }
 
             try
@@ -77,17 +87,18 @@ public class UnifiedContentAnalysisJob : ScheduledJobBase
 
             processed++;
             if (processed % 100 == 0)
-                OnStatusChanged($"Processed {processed}/{total} content items...");
+                OnStatusChanged(string.Format(L(Prefix + "processing", "Processed {0}/{1} content items..."), processed, total));
         }
 
-        OnStatusChanged("Completing analyzers...");
+        OnStatusChanged(L(Prefix + "completing", "Completing analyzers..."));
         foreach (var analyzer in analyzerList)
         {
             try { analyzer.Complete(); }
             catch (Exception ex) { _logger.LogError(ex, "Error completing {Analyzer}", analyzer.Name); }
         }
 
-        return $"Completed. Analyzed {processed} content items with {analyzerList.Count} analyzers ({string.Join(", ", analyzerList.Select(a => a.Name))}).";
+        return string.Format(L(Prefix + "completed", "Completed. Analyzed {0} content items with {1} analyzers ({2})."),
+            processed, analyzerList.Count, string.Join(", ", analyzerList.Select(a => a.Name)));
     }
 
     public override void Stop()

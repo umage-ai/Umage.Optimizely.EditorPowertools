@@ -9,6 +9,7 @@ public class DraftContentCheck : DoctorCheckBase
     private readonly IContentRepository _contentRepository;
     private readonly IContentLoader _contentLoader;
     private readonly IContentVersionRepository _versionRepository;
+    private const string Prefix = "/editorpowertools/cmsdoctor/checks/draftcontentcheck/";
 
     public DraftContentCheck(
         IContentRepository contentRepository,
@@ -20,9 +21,9 @@ public class DraftContentCheck : DoctorCheckBase
         _versionRepository = versionRepository;
     }
 
-    public override string Name => "Stale Drafts";
-    public override string Description => "Checks for draft content that has never been published or has old unpublished changes.";
-    public override string Group => "Content";
+    public override string Name => L(Prefix + "name", "Stale Drafts");
+    public override string Description => L(Prefix + "description", "Checks for draft content that has never been published or has old unpublished changes.");
+    public override string Group => L("/editorpowertools/cmsdoctor/groups/content", "Content");
     public override int SortOrder => 40;
     public override string[] Tags => new[] { "EditorUX", "Maintenance" };
 
@@ -57,12 +58,15 @@ public class DraftContentCheck : DoctorCheckBase
 
         var total = neverPublished + staleDrafts;
         if (total == 0)
-            return Ok("No stale drafts found.");
+            return Ok(L(Prefix + "ok", "No stale drafts found."));
 
-        var details = $"Never published: {neverPublished}, Stale drafts (>3 months): {staleDrafts}";
+        var details = string.Format(L(Prefix + "details", "Never published: {0}, Stale drafts (>3 months): {1}"),
+            neverPublished, staleDrafts);
         if (total > 50)
-            return Warning($"{total} stale content items found. Consider reviewing and cleaning up.", details);
+            return Warning(
+                string.Format(L(Prefix + "warning", "{0} stale content items found. Consider reviewing and cleaning up."), total),
+                details);
 
-        return Ok($"{total} stale items found (minor).", details);
+        return Ok(string.Format(L(Prefix + "minor", "{0} stale items found (minor)."), total), details);
     }
 }

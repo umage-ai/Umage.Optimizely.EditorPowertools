@@ -5,15 +5,16 @@ namespace EditorPowertools.Tools.CmsDoctor.Checks;
 public class OrphanedPropertyCheck : DoctorCheckBase
 {
     private readonly IContentTypeRepository _contentTypeRepository;
+    private const string Prefix = "/editorpowertools/cmsdoctor/checks/orphanedpropertycheck/";
 
     public OrphanedPropertyCheck(IContentTypeRepository contentTypeRepository)
     {
         _contentTypeRepository = contentTypeRepository;
     }
 
-    public override string Name => "Orphaned Properties";
-    public override string Description => "Finds properties defined in the database but not in code.";
-    public override string Group => "Content";
+    public override string Name => L(Prefix + "name", "Orphaned Properties");
+    public override string Description => L(Prefix + "description", "Finds properties defined in the database but not in code.");
+    public override string Group => L("/editorpowertools/cmsdoctor/groups/content", "Content");
     public override int SortOrder => 20;
     public override string[] Tags => new[] { "Maintenance" };
 
@@ -35,11 +36,14 @@ public class OrphanedPropertyCheck : DoctorCheckBase
         }
 
         if (orphanedCount == 0)
-            return Ok("No orphaned properties found.");
+            return Ok(L(Prefix + "ok", "No orphaned properties found."));
 
-        var details = "Examples: " + string.Join(", ", examples);
-        if (orphanedCount > 5) details += $" (and {orphanedCount - 5} more)";
+        var details = string.Format(L(Prefix + "examples", "Examples: {0}"), string.Join(", ", examples));
+        if (orphanedCount > 5)
+            details += " " + string.Format(L(Prefix + "andmore", "(and {0} more)"), orphanedCount - 5);
 
-        return BadPractice($"{orphanedCount} orphaned properties found in the database that are not defined in code.", details);
+        return BadPractice(
+            string.Format(L(Prefix + "found", "{0} orphaned properties found in the database that are not defined in code."), orphanedCount),
+            details);
     }
 }

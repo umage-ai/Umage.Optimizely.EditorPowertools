@@ -13,15 +13,16 @@ public class MissingAltTextCheck : AnalyzerDoctorCheckBase
     private readonly IContentTypeRepository _contentTypeRepository;
     private int _imageCount;
     private int _missingAlt;
+    private const string Prefix = "/editorpowertools/cmsdoctor/checks/missingalttextcheck/";
 
     public MissingAltTextCheck(IContentTypeRepository contentTypeRepository)
     {
         _contentTypeRepository = contentTypeRepository;
     }
 
-    public override string Name => "Missing Alt Text";
-    public override string Description => "Checks for images missing alt text (accessibility and SEO issue).";
-    public override string Group => "Content";
+    public override string Name => L(Prefix + "name", "Missing Alt Text");
+    public override string Description => L(Prefix + "description", "Checks for images missing alt text (accessibility and SEO issue).");
+    public override string Group => L("/editorpowertools/cmsdoctor/groups/content", "Content");
     public override int SortOrder => 50;
     public override string[] Tags => new[] { "SEO", "Accessibility" };
 
@@ -51,16 +52,22 @@ public class MissingAltTextCheck : AnalyzerDoctorCheckBase
     protected override Models.DoctorCheckResult EvaluateResults()
     {
         if (_imageCount == 0)
-            return Ok("No images found.");
+            return Ok(L(Prefix + "noimages", "No images found."));
 
         var pct = _imageCount > 0 ? (_missingAlt * 100 / _imageCount) : 0;
-        var details = $"{_missingAlt} of {_imageCount} images ({pct}%) have no alt text. Last analyzed: {LastAnalyzed:g}";
+        var details = string.Format(
+            L(Prefix + "details", "{0} of {1} images ({2}%) have no alt text. Last analyzed: {3}"),
+            _missingAlt, _imageCount, pct, LastAnalyzed?.ToString("g") ?? "N/A");
 
         if (pct > 50)
-            return BadPractice($"{_missingAlt} images missing alt text ({pct}%).", details);
+            return BadPractice(
+                string.Format(L(Prefix + "badpractice", "{0} images missing alt text ({1}%)."), _missingAlt, pct),
+                details);
         if (_missingAlt > 0)
-            return Warning($"{_missingAlt} images missing alt text.", details);
+            return Warning(
+                string.Format(L(Prefix + "warning", "{0} images missing alt text."), _missingAlt),
+                details);
 
-        return Ok("All images have alt text.", details);
+        return Ok(L(Prefix + "ok", "All images have alt text."), details);
     }
 }

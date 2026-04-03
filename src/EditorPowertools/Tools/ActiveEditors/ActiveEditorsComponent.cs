@@ -10,8 +10,7 @@ public class ActiveEditorsComponent : ComponentDefinitionBase
     {
         Categories = new[] { "content" };
         PlugInAreas = new[] { "/episerver/cms/assets" };
-        Title = "Active Editors";
-        Description = "See who else is editing this content and collaborate with your team.";
+        LanguagePath = "/editorpowertools/components/activeeditors";
         SortOrder = 190;
     }
 }

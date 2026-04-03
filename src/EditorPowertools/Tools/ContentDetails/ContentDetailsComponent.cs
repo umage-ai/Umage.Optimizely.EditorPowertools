@@ -13,8 +13,7 @@ public class ContentDetailsComponent : ComponentDefinitionBase
     {
         Categories = new[] { "content" };
         PlugInAreas = new[] { "/episerver/cms/assets" };
-        Title = "Power Content Details";
-        Description = "Detailed information about the selected content item - properties, references, versions.";
+        LanguagePath = "/editorpowertools/components/contentdetails";
         SortOrder = 200;
     }
 }

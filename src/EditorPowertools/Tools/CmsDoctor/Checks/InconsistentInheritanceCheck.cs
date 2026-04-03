@@ -9,15 +9,16 @@ namespace EditorPowertools.Tools.CmsDoctor.Checks;
 public class InconsistentInheritanceCheck : DoctorCheckBase
 {
     private readonly SecurityAuditRepository _repository;
+    private const string Prefix = "/editorpowertools/cmsdoctor/checks/inconsistentinheritancecheck/";
 
     public InconsistentInheritanceCheck(SecurityAuditRepository repository)
     {
         _repository = repository;
     }
 
-    public override string Name => "Inconsistent Permission Inheritance";
-    public override string Description => "Reports content that is more permissive than its parent, which may indicate accidental ACL changes.";
-    public override string Group => "Security";
+    public override string Name => L(Prefix + "name", "Inconsistent Permission Inheritance");
+    public override string Description => L(Prefix + "description", "Reports content that is more permissive than its parent, which may indicate accidental ACL changes.");
+    public override string Group => L("/editorpowertools/cmsdoctor/groups/security", "Security");
     public override int SortOrder => 72;
     public override string[] Tags => new[] { "security", "permissions" };
 
@@ -27,15 +28,16 @@ public class InconsistentInheritanceCheck : DoctorCheckBase
         {
             var allRecords = _repository.GetAll();
             if (!allRecords.Any())
-                return Ok("No security audit data available. Run the Content Analysis scheduled job first.",
-                    "The Security Audit analyzer populates this data during the scheduled job.");
+                return Ok(
+                    L(Prefix + "nodata", "No security audit data available. Run the Content Analysis scheduled job first."),
+                    L(Prefix + "nodatadetails", "The Security Audit analyzer populates this data during the scheduled job."));
 
             var inconsistent = _repository.GetAll()
                 .Where(r => r.ChildMorePermissive)
                 .ToList();
 
             if (inconsistent.Count == 0)
-                return Ok("No permission inheritance inconsistencies found.");
+                return Ok(L(Prefix + "ok", "No permission inheritance inconsistencies found."));
 
             var details = string.Join("\n",
                 inconsistent.Take(10).Select(r => $"- {r.ContentName} ({r.Breadcrumb})"));
@@ -44,12 +46,12 @@ public class InconsistentInheritanceCheck : DoctorCheckBase
                 details += $"\n... and {inconsistent.Count - 10} more.";
 
             return Warning(
-                $"{inconsistent.Count} content item(s) are more permissive than their parent.",
+                string.Format(L(Prefix + "warning", "{0} content item(s) are more permissive than their parent."), inconsistent.Count),
                 details);
         }
         catch
         {
-            return Ok("Security audit data not available yet.");
+            return Ok(L(Prefix + "notavailable", "Security audit data not available yet."));
         }
     }
 }
