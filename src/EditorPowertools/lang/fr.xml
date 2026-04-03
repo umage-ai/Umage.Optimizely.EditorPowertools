@@ -19,6 +19,10 @@
         <linkchecker>Vérificateur de liens</linkchecker>
         <activeeditors>Éditeurs actifs</activeeditors>
         <managechildren>Gérer les sous-pages</managechildren>
+        <contentstatistics>Statistiques de contenu</contentstatistics>
+        <languageaudit>Audit linguistique</languageaudit>
+        <securityaudit>Audit de sécurité</securityaudit>
+        <linkaudit>Audit des liens</linkaudit>
       </menu>
 
       <!-- Composants (widgets du panneau d'actifs CMS) -->
@@ -91,6 +95,14 @@
           <title>Vue d'ensemble</title>
           <description>Tableau de bord de toutes les fonctionnalités Editor Powertools.</description>
         </overview>
+        <visitorgrouptester>
+          <title>Testeur de groupes de visiteurs</title>
+          <description>Barre d'outils flottante pour simuler l'appartenance à un groupe de visiteurs et inspecter les éléments de contenu modifiables.</description>
+        </visitorgrouptester>
+        <contentstatistics>
+          <title>Statistiques de contenu</title>
+          <description>Tableau de bord visuel avec des graphiques montrant la répartition du contenu, les tendances de création, l'obsolescence et l'activité des éditeurs.</description>
+        </contentstatistics>
       </tools>
 
       <!-- Tâche planifiée -->
@@ -200,10 +212,41 @@
             <ok>Tous les blocs et médias sont référencés.</ok>
             <details>{0} sur {1} blocs/médias ({2}%) ne sont pas référencés. Dernière analyse : {3}</details>
           </unusedcontentcheck>
+          <everyonepublishrightscheck>
+            <name>Droits de publication pour tous</name>
+            <description>Signale le contenu où le rôle "Tout le monde" dispose de droits de publication ou supérieurs.</description>
+            <group>Sécurité</group>
+            <nodata>Aucune donnée d'audit de sécurité disponible. Exécutez d'abord la tâche planifiée Analyse de contenu.</nodata>
+            <nodatadetails>L'analyseur d'audit de sécurité remplit ces données pendant la tâche planifiée.</nodatadetails>
+            <ok>Aucun contenu n'accorde le droit de publication au rôle "Tout le monde".</ok>
+            <warning>{0} élément(s) de contenu accordent le droit de publication ou supérieur au rôle "Tout le monde".</warning>
+            <notavailable>Les données d'audit de sécurité ne sont pas encore disponibles.</notavailable>
+          </everyonepublishrightscheck>
+          <unrestrictedcontentcheck>
+            <name>Contenu sans restrictions</name>
+            <description>Signale les pages sans restrictions d'accès.</description>
+            <group>Sécurité</group>
+            <nodata>Aucune donnée d'audit de sécurité disponible. Exécutez d'abord la tâche planifiée Analyse de contenu.</nodata>
+            <nodatadetails>L'analyseur d'audit de sécurité remplit ces données pendant la tâche planifiée.</nodatadetails>
+            <ok>Toutes les pages ont des restrictions d'accès.</ok>
+            <badpractice>{0} page(s) n'ont aucune restriction d'accès (entièrement ouvertes).</badpractice>
+            <notavailable>Les données d'audit de sécurité ne sont pas encore disponibles.</notavailable>
+          </unrestrictedcontentcheck>
+          <inconsistentinheritancecheck>
+            <name>Héritage de permissions incohérent</name>
+            <description>Signale le contenu plus permissif que son parent, ce qui peut indiquer des modifications ACL accidentelles.</description>
+            <group>Sécurité</group>
+            <nodata>Aucune donnée d'audit de sécurité disponible. Exécutez d'abord la tâche planifiée Analyse de contenu.</nodata>
+            <nodatadetails>L'analyseur d'audit de sécurité remplit ces données pendant la tâche planifiée.</nodatadetails>
+            <ok>Aucune incohérence d'héritage de permissions trouvée.</ok>
+            <warning>{0} élément(s) de contenu sont plus permissifs que leur parent.</warning>
+            <notavailable>Les données d'audit de sécurité ne sont pas encore disponibles.</notavailable>
+          </inconsistentinheritancecheck>
         </checks>
         <groups>
           <environment>Environnement</environment>
           <content>Contenu</content>
+          <security>Sécurité</security>
         </groups>
         <tags>
           <performance>Performance</performance>

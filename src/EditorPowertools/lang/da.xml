@@ -19,6 +19,10 @@
         <linkchecker>Linkkontrol</linkchecker>
         <activeeditors>Aktive redaktører</activeeditors>
         <managechildren>Administrer undersider</managechildren>
+        <contentstatistics>Indholdsstatistik</contentstatistics>
+        <languageaudit>Sprogrevision</languageaudit>
+        <securityaudit>Sikkerhedsrevision</securityaudit>
+        <linkaudit>Linkrevision</linkaudit>
       </menu>
 
       <!-- Komponenter (CMS-aktivpanel-widgets) -->
@@ -91,6 +95,14 @@
           <title>Oversigt</title>
           <description>Dashboard-oversigt over alle Editor Powertools-funktioner.</description>
         </overview>
+        <visitorgrouptester>
+          <title>Besøgsgruppe-tester</title>
+          <description>Flydende værktøjslinje til at simulere besøgsgruppemedlemskab og inspicere redigerbare indholdselementer.</description>
+        </visitorgrouptester>
+        <contentstatistics>
+          <title>Indholdsstatistik</title>
+          <description>Visuelt dashboard med diagrammer over indholdsfordeling, oprettelsestendenser, forældelse og redaktøraktivitet.</description>
+        </contentstatistics>
       </tools>
 
       <!-- Planlagt job -->
@@ -200,10 +212,41 @@
             <ok>Alle blokke og medier er refereret.</ok>
             <details>{0} af {1} blokke/medier ({2}%) er ikke-refererede. Sidst analyseret: {3}</details>
           </unusedcontentcheck>
+          <everyonepublishrightscheck>
+            <name>Alle har publiceringsrettigheder</name>
+            <description>Rapporterer indhold hvor rollen "Alle" har Publicér eller højere adgang.</description>
+            <group>Sikkerhed</group>
+            <nodata>Ingen sikkerhedsrevisionsdata tilgængelige. Kør det planlagte job Indholdsanalyse først.</nodata>
+            <nodatadetails>Sikkerhedsrevisions-analysatoren udfylder disse data under det planlagte job.</nodatadetails>
+            <ok>Intet indhold giver Publicér til rollen "Alle".</ok>
+            <warning>{0} indholdselement(er) giver Publicér eller højere til rollen "Alle".</warning>
+            <notavailable>Sikkerhedsrevisionsdata er ikke tilgængelige endnu.</notavailable>
+          </everyonepublishrightscheck>
+          <unrestrictedcontentcheck>
+            <name>Ubegrænset indhold</name>
+            <description>Rapporterer sider uden adgangsbegrænsninger.</description>
+            <group>Sikkerhed</group>
+            <nodata>Ingen sikkerhedsrevisionsdata tilgængelige. Kør det planlagte job Indholdsanalyse først.</nodata>
+            <nodatadetails>Sikkerhedsrevisions-analysatoren udfylder disse data under det planlagte job.</nodatadetails>
+            <ok>Alle sider har adgangsbegrænsninger.</ok>
+            <badpractice>{0} side(r) har ingen adgangsbegrænsninger (helt åbne).</badpractice>
+            <notavailable>Sikkerhedsrevisionsdata er ikke tilgængelige endnu.</notavailable>
+          </unrestrictedcontentcheck>
+          <inconsistentinheritancecheck>
+            <name>Inkonsistent rettighedsnedarvning</name>
+            <description>Rapporterer indhold der er mere tilladende end dets overordnede, hvilket kan indikere utilsigtede ACL-ændringer.</description>
+            <group>Sikkerhed</group>
+            <nodata>Ingen sikkerhedsrevisionsdata tilgængelige. Kør det planlagte job Indholdsanalyse først.</nodata>
+            <nodatadetails>Sikkerhedsrevisions-analysatoren udfylder disse data under det planlagte job.</nodatadetails>
+            <ok>Ingen inkonsistenser i rettighedsnedarvning fundet.</ok>
+            <warning>{0} indholdselement(er) er mere tilladende end deres overordnede.</warning>
+            <notavailable>Sikkerhedsrevisionsdata er ikke tilgængelige endnu.</notavailable>
+          </inconsistentinheritancecheck>
         </checks>
         <groups>
           <environment>Miljø</environment>
           <content>Indhold</content>
+          <security>Sikkerhed</security>
         </groups>
         <tags>
           <performance>Ydeevne</performance>

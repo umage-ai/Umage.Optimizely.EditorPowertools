@@ -19,6 +19,10 @@
         <linkchecker>リンクチェッカー</linkchecker>
         <activeeditors>アクティブエディター</activeeditors>
         <managechildren>子ページ管理</managechildren>
+        <contentstatistics>コンテンツ統計</contentstatistics>
+        <languageaudit>言語監査</languageaudit>
+        <securityaudit>セキュリティ監査</securityaudit>
+        <linkaudit>リンク監査</linkaudit>
       </menu>
 
       <!-- コンポーネント（CMSアセットパネルウィジェット） -->
@@ -91,6 +95,14 @@
           <title>概要</title>
           <description>Editor Powertoolsの全機能のダッシュボード概要。</description>
         </overview>
+        <visitorgrouptester>
+          <title>ビジターグループテスター</title>
+          <description>ビジターグループメンバーシップのシミュレーションと編集可能なコンテンツ要素の検査を行うフローティングツールバー。</description>
+        </visitorgrouptester>
+        <contentstatistics>
+          <title>コンテンツ統計</title>
+          <description>コンテンツの分布、作成傾向、陳腐化、エディター活動を示すチャート付きのビジュアルダッシュボード。</description>
+        </contentstatistics>
       </tools>
 
       <!-- スケジュールジョブ -->
@@ -200,10 +212,41 @@
             <ok>すべてのブロックとメディアが参照されています。</ok>
             <details>{1}個中{0}個のブロック/メディア（{2}%）が未参照です。最終分析：{3}</details>
           </unusedcontentcheck>
+          <everyonepublishrightscheck>
+            <name>全員の公開権限</name>
+            <description>「全員」ロールに公開以上のアクセス権が付与されているコンテンツを報告します。</description>
+            <group>セキュリティ</group>
+            <nodata>セキュリティ監査データがありません。最初にコンテンツ分析スケジュールジョブを実行してください。</nodata>
+            <nodatadetails>セキュリティ監査アナライザーがスケジュールジョブ中にこのデータを生成します。</nodatadetails>
+            <ok>「全員」ロールに公開権限を付与しているコンテンツはありません。</ok>
+            <warning>{0}個のコンテンツアイテムが「全員」ロールに公開以上の権限を付与しています。</warning>
+            <notavailable>セキュリティ監査データはまだ利用できません。</notavailable>
+          </everyonepublishrightscheck>
+          <unrestrictedcontentcheck>
+            <name>制限なしコンテンツ</name>
+            <description>アクセス制限が設定されていないページを報告します。</description>
+            <group>セキュリティ</group>
+            <nodata>セキュリティ監査データがありません。最初にコンテンツ分析スケジュールジョブを実行してください。</nodata>
+            <nodatadetails>セキュリティ監査アナライザーがスケジュールジョブ中にこのデータを生成します。</nodatadetails>
+            <ok>すべてのページにアクセス制限が設定されています。</ok>
+            <badpractice>{0}ページにアクセス制限が設定されていません（完全にオープン）。</badpractice>
+            <notavailable>セキュリティ監査データはまだ利用できません。</notavailable>
+          </unrestrictedcontentcheck>
+          <inconsistentinheritancecheck>
+            <name>権限継承の不整合</name>
+            <description>親よりも権限が緩いコンテンツを報告します。意図しないACL変更の可能性があります。</description>
+            <group>セキュリティ</group>
+            <nodata>セキュリティ監査データがありません。最初にコンテンツ分析スケジュールジョブを実行してください。</nodata>
+            <nodatadetails>セキュリティ監査アナライザーがスケジュールジョブ中にこのデータを生成します。</nodatadetails>
+            <ok>権限継承の不整合は見つかりませんでした。</ok>
+            <warning>{0}個のコンテンツアイテムが親よりも権限が緩くなっています。</warning>
+            <notavailable>セキュリティ監査データはまだ利用できません。</notavailable>
+          </inconsistentinheritancecheck>
         </checks>
         <groups>
           <environment>環境</environment>
           <content>コンテンツ</content>
+          <security>セキュリティ</security>
         </groups>
         <tags>
           <performance>パフォーマンス</performance>

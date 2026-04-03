@@ -19,6 +19,10 @@
         <linkchecker>Linkprüfung</linkchecker>
         <activeeditors>Aktive Redakteure</activeeditors>
         <managechildren>Unterseiten verwalten</managechildren>
+        <contentstatistics>Inhaltsstatistiken</contentstatistics>
+        <languageaudit>Sprach-Audit</languageaudit>
+        <securityaudit>Sicherheits-Audit</securityaudit>
+        <linkaudit>Link-Audit</linkaudit>
       </menu>
 
       <!-- Komponenten (CMS-Asset-Panel-Widgets) -->
@@ -91,6 +95,14 @@
           <title>Übersicht</title>
           <description>Dashboard-Übersicht aller Editor Powertools-Funktionen.</description>
         </overview>
+        <visitorgrouptester>
+          <title>Besuchergruppen-Tester</title>
+          <description>Schwebende Werkzeugleiste zur Simulation von Besuchergruppenszugehörigkeit und Inspektion bearbeitbarer Inhaltselemente.</description>
+        </visitorgrouptester>
+        <contentstatistics>
+          <title>Inhaltsstatistiken</title>
+          <description>Visuelles Dashboard mit Diagrammen zur Inhaltsverteilung, Erstellungstrends, Veralterung und Redakteursaktivität.</description>
+        </contentstatistics>
       </tools>
 
       <!-- Geplante Aufgabe -->
@@ -200,10 +212,41 @@
             <ok>Alle Blöcke und Medien sind referenziert.</ok>
             <details>{0} von {1} Blöcken/Medien ({2}%) sind nicht referenziert. Zuletzt analysiert: {3}</details>
           </unusedcontentcheck>
+          <everyonepublishrightscheck>
+            <name>Jeder hat Veröffentlichungsrechte</name>
+            <description>Meldet Inhalte, bei denen die Rolle "Jeder" Veröffentlichen oder höhere Zugriffsrechte hat.</description>
+            <group>Sicherheit</group>
+            <nodata>Keine Sicherheits-Audit-Daten verfügbar. Führen Sie zuerst die geplante Aufgabe Inhaltsanalyse aus.</nodata>
+            <nodatadetails>Der Sicherheits-Audit-Analysator füllt diese Daten während der geplanten Aufgabe.</nodatadetails>
+            <ok>Kein Inhalt gewährt der Rolle "Jeder" Veröffentlichungsrechte.</ok>
+            <warning>{0} Inhaltselement(e) gewähren der Rolle "Jeder" Veröffentlichen oder höhere Rechte.</warning>
+            <notavailable>Sicherheits-Audit-Daten sind noch nicht verfügbar.</notavailable>
+          </everyonepublishrightscheck>
+          <unrestrictedcontentcheck>
+            <name>Uneingeschränkter Inhalt</name>
+            <description>Meldet Seiten ohne Zugriffsbeschränkungen.</description>
+            <group>Sicherheit</group>
+            <nodata>Keine Sicherheits-Audit-Daten verfügbar. Führen Sie zuerst die geplante Aufgabe Inhaltsanalyse aus.</nodata>
+            <nodatadetails>Der Sicherheits-Audit-Analysator füllt diese Daten während der geplanten Aufgabe.</nodatadetails>
+            <ok>Alle Seiten haben Zugriffsbeschränkungen.</ok>
+            <badpractice>{0} Seite(n) haben keine Zugriffsbeschränkungen (vollständig offen).</badpractice>
+            <notavailable>Sicherheits-Audit-Daten sind noch nicht verfügbar.</notavailable>
+          </unrestrictedcontentcheck>
+          <inconsistentinheritancecheck>
+            <name>Inkonsistente Rechte-Vererbung</name>
+            <description>Meldet Inhalte, die freizügiger als ihr übergeordnetes Element sind, was auf unbeabsichtigte ACL-Änderungen hinweisen kann.</description>
+            <group>Sicherheit</group>
+            <nodata>Keine Sicherheits-Audit-Daten verfügbar. Führen Sie zuerst die geplante Aufgabe Inhaltsanalyse aus.</nodata>
+            <nodatadetails>Der Sicherheits-Audit-Analysator füllt diese Daten während der geplanten Aufgabe.</nodatadetails>
+            <ok>Keine Inkonsistenzen in der Rechte-Vererbung gefunden.</ok>
+            <warning>{0} Inhaltselement(e) sind freizügiger als ihr übergeordnetes Element.</warning>
+            <notavailable>Sicherheits-Audit-Daten sind noch nicht verfügbar.</notavailable>
+          </inconsistentinheritancecheck>
         </checks>
         <groups>
           <environment>Umgebung</environment>
           <content>Inhalt</content>
+          <security>Sicherheit</security>
         </groups>
         <tags>
           <performance>Leistung</performance>

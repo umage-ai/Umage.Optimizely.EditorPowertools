@@ -19,6 +19,10 @@
         <linkchecker>链接检查器</linkchecker>
         <activeeditors>活跃编辑者</activeeditors>
         <managechildren>管理子页面</managechildren>
+        <contentstatistics>内容统计</contentstatistics>
+        <languageaudit>语言审计</languageaudit>
+        <securityaudit>安全审计</securityaudit>
+        <linkaudit>链接审计</linkaudit>
       </menu>
 
       <!-- 组件（CMS资产面板小部件） -->
@@ -91,6 +95,14 @@
           <title>概览</title>
           <description>Editor Powertools所有功能的仪表板概览。</description>
         </overview>
+        <visitorgrouptester>
+          <title>访客组测试器</title>
+          <description>浮动工具栏，用于模拟访客组成员身份并检查可编辑的内容元素。</description>
+        </visitorgrouptester>
+        <contentstatistics>
+          <title>内容统计</title>
+          <description>包含图表的可视化仪表板，展示内容分布、创建趋势、陈旧程度和编辑者活动。</description>
+        </contentstatistics>
       </tools>
 
       <!-- 计划任务 -->
@@ -200,10 +212,41 @@
             <ok>所有块和媒体均被引用。</ok>
             <details>{1}个块/媒体中有{0}个（{2}%）未被引用。最后分析时间：{3}</details>
           </unusedcontentcheck>
+          <everyonepublishrightscheck>
+            <name>所有人发布权限</name>
+            <description>报告"所有人"角色拥有发布或更高访问权限的内容。</description>
+            <group>安全</group>
+            <nodata>没有安全审计数据可用。请先运行内容分析计划任务。</nodata>
+            <nodatadetails>安全审计分析器在计划任务期间填充此数据。</nodatadetails>
+            <ok>没有内容向"所有人"角色授予发布权限。</ok>
+            <warning>{0}个内容项向"所有人"角色授予了发布或更高权限。</warning>
+            <notavailable>安全审计数据尚不可用。</notavailable>
+          </everyonepublishrightscheck>
+          <unrestrictedcontentcheck>
+            <name>无限制内容</name>
+            <description>报告未设置访问限制的页面。</description>
+            <group>安全</group>
+            <nodata>没有安全审计数据可用。请先运行内容分析计划任务。</nodata>
+            <nodatadetails>安全审计分析器在计划任务期间填充此数据。</nodatadetails>
+            <ok>所有页面都已设置访问限制。</ok>
+            <badpractice>{0}个页面未设置访问限制（完全开放）。</badpractice>
+            <notavailable>安全审计数据尚不可用。</notavailable>
+          </unrestrictedcontentcheck>
+          <inconsistentinheritancecheck>
+            <name>权限继承不一致</name>
+            <description>报告比父级权限更宽松的内容，这可能表示意外的ACL更改。</description>
+            <group>安全</group>
+            <nodata>没有安全审计数据可用。请先运行内容分析计划任务。</nodata>
+            <nodatadetails>安全审计分析器在计划任务期间填充此数据。</nodatadetails>
+            <ok>未发现权限继承不一致。</ok>
+            <warning>{0}个内容项的权限比其父级更宽松。</warning>
+            <notavailable>安全审计数据尚不可用。</notavailable>
+          </inconsistentinheritancecheck>
         </checks>
         <groups>
           <environment>环境</environment>
           <content>内容</content>
+          <security>安全</security>
         </groups>
         <tags>
           <performance>性能</performance>

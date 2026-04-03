@@ -19,6 +19,10 @@
         <linkchecker>Verificador de enlaces</linkchecker>
         <activeeditors>Editores activos</activeeditors>
         <managechildren>Gestionar subpáginas</managechildren>
+        <contentstatistics>Estadísticas de contenido</contentstatistics>
+        <languageaudit>Auditoría de idiomas</languageaudit>
+        <securityaudit>Auditoría de seguridad</securityaudit>
+        <linkaudit>Auditoría de enlaces</linkaudit>
       </menu>
 
       <!-- Componentes (widgets del panel de activos CMS) -->
@@ -91,6 +95,14 @@
           <title>Vista general</title>
           <description>Panel de control con vista general de todas las funciones de Editor Powertools.</description>
         </overview>
+        <visitorgrouptester>
+          <title>Probador de grupos de visitantes</title>
+          <description>Barra de herramientas flotante para simular la pertenencia a grupos de visitantes e inspeccionar elementos de contenido editables.</description>
+        </visitorgrouptester>
+        <contentstatistics>
+          <title>Estadísticas de contenido</title>
+          <description>Panel visual con gráficos que muestran la distribución del contenido, tendencias de creación, obsolescencia y actividad de los editores.</description>
+        </contentstatistics>
       </tools>
 
       <!-- Tarea programada -->
@@ -200,10 +212,41 @@
             <ok>Todos los bloques y medios están referenciados.</ok>
             <details>{0} de {1} bloques/medios ({2}%) no están referenciados. Último análisis: {3}</details>
           </unusedcontentcheck>
+          <everyonepublishrightscheck>
+            <name>Derechos de publicación para todos</name>
+            <description>Informa sobre contenido donde el rol "Todos" tiene derechos de publicación o superiores.</description>
+            <group>Seguridad</group>
+            <nodata>No hay datos de auditoría de seguridad disponibles. Ejecute primero la tarea programada Análisis de contenido.</nodata>
+            <nodatadetails>El analizador de auditoría de seguridad completa estos datos durante la tarea programada.</nodatadetails>
+            <ok>Ningún contenido otorga derechos de publicación al rol "Todos".</ok>
+            <warning>{0} elemento(s) de contenido otorgan derechos de publicación o superiores al rol "Todos".</warning>
+            <notavailable>Los datos de auditoría de seguridad aún no están disponibles.</notavailable>
+          </everyonepublishrightscheck>
+          <unrestrictedcontentcheck>
+            <name>Contenido sin restricciones</name>
+            <description>Informa sobre páginas sin restricciones de acceso.</description>
+            <group>Seguridad</group>
+            <nodata>No hay datos de auditoría de seguridad disponibles. Ejecute primero la tarea programada Análisis de contenido.</nodata>
+            <nodatadetails>El analizador de auditoría de seguridad completa estos datos durante la tarea programada.</nodatadetails>
+            <ok>Todas las páginas tienen restricciones de acceso.</ok>
+            <badpractice>{0} página(s) no tienen restricciones de acceso (completamente abiertas).</badpractice>
+            <notavailable>Los datos de auditoría de seguridad aún no están disponibles.</notavailable>
+          </unrestrictedcontentcheck>
+          <inconsistentinheritancecheck>
+            <name>Herencia de permisos inconsistente</name>
+            <description>Informa sobre contenido más permisivo que su elemento padre, lo que puede indicar cambios ACL accidentales.</description>
+            <group>Seguridad</group>
+            <nodata>No hay datos de auditoría de seguridad disponibles. Ejecute primero la tarea programada Análisis de contenido.</nodata>
+            <nodatadetails>El analizador de auditoría de seguridad completa estos datos durante la tarea programada.</nodatadetails>
+            <ok>No se encontraron inconsistencias en la herencia de permisos.</ok>
+            <warning>{0} elemento(s) de contenido son más permisivos que su elemento padre.</warning>
+            <notavailable>Los datos de auditoría de seguridad aún no están disponibles.</notavailable>
+          </inconsistentinheritancecheck>
         </checks>
         <groups>
           <environment>Entorno</environment>
           <content>Contenido</content>
+          <security>Seguridad</security>
         </groups>
         <tags>
           <performance>Rendimiento</performance>

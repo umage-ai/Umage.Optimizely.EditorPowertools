@@ -19,6 +19,10 @@
         <linkchecker>Lenkesjekk</linkchecker>
         <activeeditors>Aktive redaktører</activeeditors>
         <managechildren>Administrer undersider</managechildren>
+        <contentstatistics>Innholdsstatistikk</contentstatistics>
+        <languageaudit>Språkrevisjon</languageaudit>
+        <securityaudit>Sikkerhetsrevisjon</securityaudit>
+        <linkaudit>Lenkerevisjon</linkaudit>
       </menu>
 
       <!-- Komponenter (CMS-aktivapanel-widgets) -->
@@ -91,6 +95,14 @@
           <title>Oversikt</title>
           <description>Dashboardoversikt over alle Editor Powertools-funksjoner.</description>
         </overview>
+        <visitorgrouptester>
+          <title>Besøksgruppetester</title>
+          <description>Flytende verktøylinje for å simulere besøksgruppemedlemskap og inspisere redigerbare innholdselementer.</description>
+        </visitorgrouptester>
+        <contentstatistics>
+          <title>Innholdsstatistikk</title>
+          <description>Visuelt dashbord med diagrammer som viser innholdsfordeling, opprettelsestrender, foreldelse og redaktøraktivitet.</description>
+        </contentstatistics>
       </tools>
 
       <!-- Planlagt jobb -->
@@ -200,10 +212,41 @@
             <ok>Alle blokker og media er referert.</ok>
             <details>{0} av {1} blokker/media ({2}%) er urefererte. Sist analysert: {3}</details>
           </unusedcontentcheck>
+          <everyonepublishrightscheck>
+            <name>Alle har publiseringsrettigheter</name>
+            <description>Rapporterer innhold der rollen "Alle" har Publiser eller høyere tilgang.</description>
+            <group>Sikkerhet</group>
+            <nodata>Ingen sikkerhetsrevisjonsdata tilgjengelig. Kjør det planlagte jobbet Innholdsanalyse først.</nodata>
+            <nodatadetails>Sikkerhetsrevisjons-analysatoren fyller inn disse dataene under det planlagte jobbet.</nodatadetails>
+            <ok>Ingen innhold gir Publiser til rollen "Alle".</ok>
+            <warning>{0} innholdselement(er) gir Publiser eller høyere til rollen "Alle".</warning>
+            <notavailable>Sikkerhetsrevisjonsdata er ikke tilgjengelige ennå.</notavailable>
+          </everyonepublishrightscheck>
+          <unrestrictedcontentcheck>
+            <name>Ubegrenset innhold</name>
+            <description>Rapporterer sider uten tilgangsbegrensninger.</description>
+            <group>Sikkerhet</group>
+            <nodata>Ingen sikkerhetsrevisjonsdata tilgjengelig. Kjør det planlagte jobbet Innholdsanalyse først.</nodata>
+            <nodatadetails>Sikkerhetsrevisjons-analysatoren fyller inn disse dataene under det planlagte jobbet.</nodatadetails>
+            <ok>Alle sider har tilgangsbegrensninger.</ok>
+            <badpractice>{0} side(r) har ingen tilgangsbegrensninger (helt åpne).</badpractice>
+            <notavailable>Sikkerhetsrevisjonsdata er ikke tilgjengelige ennå.</notavailable>
+          </unrestrictedcontentcheck>
+          <inconsistentinheritancecheck>
+            <name>Inkonsistent rettighetarv</name>
+            <description>Rapporterer innhold som er mer tillatende enn sin overordnede, noe som kan indikere utilsiktede ACL-endringer.</description>
+            <group>Sikkerhet</group>
+            <nodata>Ingen sikkerhetsrevisjonsdata tilgjengelig. Kjør det planlagte jobbet Innholdsanalyse først.</nodata>
+            <nodatadetails>Sikkerhetsrevisjons-analysatoren fyller inn disse dataene under det planlagte jobbet.</nodatadetails>
+            <ok>Ingen inkonsekvenser i rettighetsarv funnet.</ok>
+            <warning>{0} innholdselement(er) er mer tillatende enn sin overordnede.</warning>
+            <notavailable>Sikkerhetsrevisjonsdata er ikke tilgjengelige ennå.</notavailable>
+          </inconsistentinheritancecheck>
         </checks>
         <groups>
           <environment>Miljø</environment>
           <content>Innhold</content>
+          <security>Sikkerhet</security>
         </groups>
         <tags>
           <performance>Ytelse</performance>

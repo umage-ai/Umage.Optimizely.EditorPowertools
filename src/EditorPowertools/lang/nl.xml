@@ -19,6 +19,10 @@
         <linkchecker>Linkcontrole</linkchecker>
         <activeeditors>Actieve redacteuren</activeeditors>
         <managechildren>Subpagina's beheren</managechildren>
+        <contentstatistics>Inhoudsstatistieken</contentstatistics>
+        <languageaudit>Taalaudit</languageaudit>
+        <securityaudit>Beveiligingsaudit</securityaudit>
+        <linkaudit>Linkaudit</linkaudit>
       </menu>
 
       <!-- Componenten (CMS-activapaneel-widgets) -->
@@ -91,6 +95,14 @@
           <title>Overzicht</title>
           <description>Dashboardoverzicht van alle Editor Powertools-functies.</description>
         </overview>
+        <visitorgrouptester>
+          <title>Bezoekersgroeptester</title>
+          <description>Zwevende werkbalk om lidmaatschap van bezoekersgroepen te simuleren en bewerkbare inhoudselementen te inspecteren.</description>
+        </visitorgrouptester>
+        <contentstatistics>
+          <title>Inhoudsstatistieken</title>
+          <description>Visueel dashboard met grafieken over inhoudsverdeling, aanmaaktrends, veroudering en redacteursactiviteit.</description>
+        </contentstatistics>
       </tools>
 
       <!-- Geplande taak -->
@@ -200,10 +212,41 @@
             <ok>Alle blokken en media zijn gerefereerd.</ok>
             <details>{0} van {1} blokken/media ({2}%) zijn niet gerefereerd. Laatst geanalyseerd: {3}</details>
           </unusedcontentcheck>
+          <everyonepublishrightscheck>
+            <name>Publicatierechten voor iedereen</name>
+            <description>Rapporteert inhoud waar de rol "Iedereen" publicatie- of hogere rechten heeft.</description>
+            <group>Beveiliging</group>
+            <nodata>Geen beveiligingsauditgegevens beschikbaar. Voer eerst de geplande taak Inhoudsanalyse uit.</nodata>
+            <nodatadetails>De beveiligingsaudit-analysator vult deze gegevens in tijdens de geplande taak.</nodatadetails>
+            <ok>Geen inhoud verleent publicatierechten aan de rol "Iedereen".</ok>
+            <warning>{0} inhoudselement(en) verlenen publicatie- of hogere rechten aan de rol "Iedereen".</warning>
+            <notavailable>Beveiligingsauditgegevens zijn nog niet beschikbaar.</notavailable>
+          </everyonepublishrightscheck>
+          <unrestrictedcontentcheck>
+            <name>Onbeperkte inhoud</name>
+            <description>Rapporteert pagina's zonder toegangsbeperkingen.</description>
+            <group>Beveiliging</group>
+            <nodata>Geen beveiligingsauditgegevens beschikbaar. Voer eerst de geplande taak Inhoudsanalyse uit.</nodata>
+            <nodatadetails>De beveiligingsaudit-analysator vult deze gegevens in tijdens de geplande taak.</nodatadetails>
+            <ok>Alle pagina's hebben toegangsbeperkingen.</ok>
+            <badpractice>{0} pagina('s) hebben geen toegangsbeperkingen (volledig open).</badpractice>
+            <notavailable>Beveiligingsauditgegevens zijn nog niet beschikbaar.</notavailable>
+          </unrestrictedcontentcheck>
+          <inconsistentinheritancecheck>
+            <name>Inconsistente rechtenovererving</name>
+            <description>Rapporteert inhoud die meer permissief is dan het bovenliggende element, wat kan duiden op onbedoelde ACL-wijzigingen.</description>
+            <group>Beveiliging</group>
+            <nodata>Geen beveiligingsauditgegevens beschikbaar. Voer eerst de geplande taak Inhoudsanalyse uit.</nodata>
+            <nodatadetails>De beveiligingsaudit-analysator vult deze gegevens in tijdens de geplande taak.</nodatadetails>
+            <ok>Geen inconsistenties in rechtenovererving gevonden.</ok>
+            <warning>{0} inhoudselement(en) zijn meer permissief dan het bovenliggende element.</warning>
+            <notavailable>Beveiligingsauditgegevens zijn nog niet beschikbaar.</notavailable>
+          </inconsistentinheritancecheck>
         </checks>
         <groups>
           <environment>Omgeving</environment>
           <content>Inhoud</content>
+          <security>Beveiliging</security>
         </groups>
         <tags>
           <performance>Prestatie</performance>

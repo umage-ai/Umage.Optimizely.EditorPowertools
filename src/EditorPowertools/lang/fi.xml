@@ -19,6 +19,10 @@
         <linkchecker>Linkkien tarkistus</linkchecker>
         <activeeditors>Aktiiviset muokkaajat</activeeditors>
         <managechildren>Hallitse alasivuja</managechildren>
+        <contentstatistics>Sisältötilastot</contentstatistics>
+        <languageaudit>Kielitarkastus</languageaudit>
+        <securityaudit>Tietoturvatarkastus</securityaudit>
+        <linkaudit>Linkkitarkastus</linkaudit>
       </menu>
 
       <!-- Komponentit (CMS-resurssipaneelin widgetit) -->
@@ -91,6 +95,14 @@
           <title>Yleiskatsaus</title>
           <description>Kojelaudan yleiskatsaus kaikista Editor Powertools -ominaisuuksista.</description>
         </overview>
+        <visitorgrouptester>
+          <title>Vierailijaryhmätestaus</title>
+          <description>Kelluva työkalupalkki vierailijaryhmäjäsenyyden simulointiin ja muokattavien sisältöelementtien tarkasteluun.</description>
+        </visitorgrouptester>
+        <contentstatistics>
+          <title>Sisältötilastot</title>
+          <description>Visuaalinen kojelauta kaavioilla, jotka näyttävät sisällön jakautumisen, luontitrendit, vanhentumisen ja muokkaajien aktiivisuuden.</description>
+        </contentstatistics>
       </tools>
 
       <!-- Ajastettu tehtävä -->
@@ -200,10 +212,41 @@
             <ok>Kaikkiin lohkoihin ja medioihin viitataan.</ok>
             <details>{0}/{1} lohkosta/mediasta ({2}%) on viittaamattomia. Viimeksi analysoitu: {3}</details>
           </unusedcontentcheck>
+          <everyonepublishrightscheck>
+            <name>Kaikilla on julkaisuoikeudet</name>
+            <description>Raportoi sisällön, jossa "Kaikki"-roolilla on julkaisu- tai korkeammat oikeudet.</description>
+            <group>Tietoturva</group>
+            <nodata>Tietoturvatarkastuksen tietoja ei saatavilla. Suorita ajastettu tehtävä Sisältöanalyysi ensin.</nodata>
+            <nodatadetails>Tietoturvatarkastuksen analysaattori täyttää nämä tiedot ajastetun tehtävän aikana.</nodatadetails>
+            <ok>Mikään sisältö ei anna "Kaikki"-roolille julkaisuoikeuksia.</ok>
+            <warning>{0} sisältökohdetta antaa "Kaikki"-roolille julkaisu- tai korkeammat oikeudet.</warning>
+            <notavailable>Tietoturvatarkastuksen tiedot eivät ole vielä saatavilla.</notavailable>
+          </everyonepublishrightscheck>
+          <unrestrictedcontentcheck>
+            <name>Rajoittamaton sisältö</name>
+            <description>Raportoi sivut, joilla ei ole käyttöoikeusrajoituksia.</description>
+            <group>Tietoturva</group>
+            <nodata>Tietoturvatarkastuksen tietoja ei saatavilla. Suorita ajastettu tehtävä Sisältöanalyysi ensin.</nodata>
+            <nodatadetails>Tietoturvatarkastuksen analysaattori täyttää nämä tiedot ajastetun tehtävän aikana.</nodatadetails>
+            <ok>Kaikilla sivuilla on käyttöoikeusrajoitukset.</ok>
+            <badpractice>{0} sivulla ei ole käyttöoikeusrajoituksia (täysin avoimia).</badpractice>
+            <notavailable>Tietoturvatarkastuksen tiedot eivät ole vielä saatavilla.</notavailable>
+          </unrestrictedcontentcheck>
+          <inconsistentinheritancecheck>
+            <name>Epäjohdonmukainen oikeuksien periytyminen</name>
+            <description>Raportoi sisällön, joka on sallivampi kuin sen yläkohde, mikä voi viitata tahattomiin ACL-muutoksiin.</description>
+            <group>Tietoturva</group>
+            <nodata>Tietoturvatarkastuksen tietoja ei saatavilla. Suorita ajastettu tehtävä Sisältöanalyysi ensin.</nodata>
+            <nodatadetails>Tietoturvatarkastuksen analysaattori täyttää nämä tiedot ajastetun tehtävän aikana.</nodatadetails>
+            <ok>Oikeuksien periytymisessä ei löytynyt epäjohdonmukaisuuksia.</ok>
+            <warning>{0} sisältökohdetta on sallivampi kuin sen yläkohde.</warning>
+            <notavailable>Tietoturvatarkastuksen tiedot eivät ole vielä saatavilla.</notavailable>
+          </inconsistentinheritancecheck>
         </checks>
         <groups>
           <environment>Ympäristö</environment>
           <content>Sisältö</content>
+          <security>Tietoturva</security>
         </groups>
         <tags>
           <performance>Suorituskyky</performance>

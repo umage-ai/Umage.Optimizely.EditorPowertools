@@ -19,6 +19,10 @@
         <linkchecker>Länkkontroll</linkchecker>
         <activeeditors>Aktiva redaktörer</activeeditors>
         <managechildren>Hantera undersidor</managechildren>
+        <contentstatistics>Innehållsstatistik</contentstatistics>
+        <languageaudit>Språkgranskning</languageaudit>
+        <securityaudit>Säkerhetsgranskning</securityaudit>
+        <linkaudit>Länkgranskning</linkaudit>
       </menu>
 
       <!-- Komponenter (CMS tillgångspanelwidgets) -->
@@ -91,6 +95,14 @@
           <title>Översikt</title>
           <description>Instrumentpanelsöversikt över alla Editor Powertools-funktioner.</description>
         </overview>
+        <visitorgrouptester>
+          <title>Besöksgrupptestare</title>
+          <description>Flytande verktygsfält för att simulera besöksgruppsmedlemskap och inspektera redigerbara innehållselement.</description>
+        </visitorgrouptester>
+        <contentstatistics>
+          <title>Innehållsstatistik</title>
+          <description>Visuell instrumentpanel med diagram som visar innehållsfördelning, skapandetrender, inaktualitet och redaktörsaktivitet.</description>
+        </contentstatistics>
       </tools>
 
       <!-- Schemalagt jobb -->
@@ -200,10 +212,41 @@
             <ok>Alla block och media är refererade.</ok>
             <details>{0} av {1} block/media ({2}%) är orefererade. Senast analyserade: {3}</details>
           </unusedcontentcheck>
+          <everyonepublishrightscheck>
+            <name>Alla har publiceringsrättigheter</name>
+            <description>Rapporterar innehåll där rollen "Alla" har Publicera eller högre åtkomst.</description>
+            <group>Säkerhet</group>
+            <nodata>Ingen säkerhetsgranskningsdata tillgänglig. Kör det schemalagda jobbet Innehållsanalys först.</nodata>
+            <nodatadetails>Säkerhetsgranskningens analysator fyller i dessa data under det schemalagda jobbet.</nodatadetails>
+            <ok>Inget innehåll ger Publicera till rollen "Alla".</ok>
+            <warning>{0} innehållsobjekt ger Publicera eller högre till rollen "Alla".</warning>
+            <notavailable>Säkerhetsgranskningsdata är inte tillgängliga ännu.</notavailable>
+          </everyonepublishrightscheck>
+          <unrestrictedcontentcheck>
+            <name>Obegränsat innehåll</name>
+            <description>Rapporterar sidor utan åtkomstbegränsningar.</description>
+            <group>Säkerhet</group>
+            <nodata>Ingen säkerhetsgranskningsdata tillgänglig. Kör det schemalagda jobbet Innehållsanalys först.</nodata>
+            <nodatadetails>Säkerhetsgranskningens analysator fyller i dessa data under det schemalagda jobbet.</nodatadetails>
+            <ok>Alla sidor har åtkomstbegränsningar.</ok>
+            <badpractice>{0} sida/sidor har inga åtkomstbegränsningar (helt öppna).</badpractice>
+            <notavailable>Säkerhetsgranskningsdata är inte tillgängliga ännu.</notavailable>
+          </unrestrictedcontentcheck>
+          <inconsistentinheritancecheck>
+            <name>Inkonsekvent rättighetsarv</name>
+            <description>Rapporterar innehåll som är mer tillåtande än sin förälder, vilket kan indikera oavsiktliga ACL-ändringar.</description>
+            <group>Säkerhet</group>
+            <nodata>Ingen säkerhetsgranskningsdata tillgänglig. Kör det schemalagda jobbet Innehållsanalys först.</nodata>
+            <nodatadetails>Säkerhetsgranskningens analysator fyller i dessa data under det schemalagda jobbet.</nodatadetails>
+            <ok>Inga inkonsekvenser i rättighetsarv hittades.</ok>
+            <warning>{0} innehållsobjekt är mer tillåtande än sin förälder.</warning>
+            <notavailable>Säkerhetsgranskningsdata är inte tillgängliga ännu.</notavailable>
+          </inconsistentinheritancecheck>
         </checks>
         <groups>
           <environment>Miljö</environment>
           <content>Innehåll</content>
+          <security>Säkerhet</security>
         </groups>
         <tags>
           <performance>Prestanda</performance>
