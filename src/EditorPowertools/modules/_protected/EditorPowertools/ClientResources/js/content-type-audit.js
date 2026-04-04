@@ -42,20 +42,20 @@
         const el = document.createElement('div');
         el.id = 'audit-job-alert';
 
-        const runBtn = `<button class="ept-btn ept-btn--sm" id="ept-run-job-btn" style="margin-left:8px">Run now</button>`;
+        const runBtn = `<button class="ept-btn ept-btn--sm" id="ept-run-job-btn" style="margin-left:8px">${EPT.s('contenttypeaudit.btn_runnow', 'Run now')}</button>`;
 
         if (jobStatus.isRunning) {
             el.className = 'ept-alert ept-alert--info';
-            el.innerHTML = `⏳ <strong>Aggregation job is currently running.</strong> Content counts will be updated when it completes. <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">Refresh</button>`;
+            el.innerHTML = `⏳ <strong>${EPT.s('contenttypeaudit.alert_running', 'Aggregation job is currently running. Content counts will be updated when it completes.')}</strong> <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('contenttypeaudit.btn_refresh', 'Refresh')}</button>`;
         } else if (!jobStatus.hasRun) {
             el.className = 'ept-alert ept-alert--warning';
-            el.innerHTML = `<strong>Content statistics have not been collected yet.</strong> The "Content" column will show data after the aggregation job has been run. ${runBtn}`;
+            el.innerHTML = `<strong>${EPT.s('contenttypeaudit.alert_notrun', 'Content statistics have not been collected yet. The "Content" column will show data after the aggregation job has been run.')}</strong> ${runBtn}`;
         } else {
             const ago = timeAgo(new Date(jobStatus.lastRunUtc));
             const isOld = (Date.now() - new Date(jobStatus.lastRunUtc).getTime()) > 24 * 60 * 60 * 1000;
             if (isOld) {
                 el.className = 'ept-alert ept-alert--warning';
-                el.innerHTML = `Statistics were last updated <strong>${ago}</strong>. Consider running the aggregation job for fresh data. ${runBtn}`;
+                el.innerHTML = EPT.s('contenttypeaudit.alert_old', 'Statistics were last updated {0}. Consider running the aggregation job for fresh data.').replace('{0}', '<strong>' + ago + '</strong>') + ' ' + runBtn;
             } else {
                 return;
             }
@@ -69,13 +69,13 @@
         if (btn) {
             btn.addEventListener('click', async () => {
                 btn.disabled = true;
-                btn.textContent = 'Starting...';
+                btn.textContent = EPT.s('contenttypeaudit.btn_starting', 'Starting...');
                 try {
                     await EPT.postJson(`${API}/aggregation-start`);
                     el.className = 'ept-alert ept-alert--info';
-                    el.innerHTML = `⏳ <strong>Aggregation job has been started.</strong> Content counts will be updated when it completes. <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">Refresh</button>`;
+                    el.innerHTML = `⏳ <strong>${EPT.s('contenttypeaudit.alert_started', 'Aggregation job has been started. Content counts will be updated when it completes.')}</strong> <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('contenttypeaudit.btn_refresh', 'Refresh')}</button>`;
                 } catch (err) {
-                    btn.textContent = 'Failed';
+                    btn.textContent = EPT.s('contenttypeaudit.btn_failed', 'Failed');
                     console.error('Failed to start job:', err);
                 }
             });
@@ -120,11 +120,11 @@
 
         const el = document.getElementById('audit-stats');
         el.innerHTML = `
-            <div class="ept-stat"><div class="ept-stat__value">${total}</div><div class="ept-stat__label">Content Types</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${system}</div><div class="ept-stat__label">System Types</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${orphaned}</div><div class="ept-stat__label">Orphaned</div></div>
-            ${unused != null ? `<div class="ept-stat"><div class="ept-stat__value">${unused}</div><div class="ept-stat__label">Unused (0 content)</div></div>` : ''}
-            <div class="ept-stat"><div class="ept-stat__value">${filtered.length}</div><div class="ept-stat__label">Showing</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${total}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_contenttypes', 'Content Types')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${system}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_systemtypes', 'System Types')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${orphaned}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_orphaned', 'Orphaned')}</div></div>
+            ${unused != null ? `<div class="ept-stat"><div class="ept-stat__value">${unused}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_unused', 'Unused (0 content)')}</div></div>` : ''}
+            <div class="ept-stat"><div class="ept-stat__value">${filtered.length}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_showing', 'Showing')}</div></div>
         `;
     }
 
@@ -135,20 +135,20 @@
         toolbar.innerHTML = `
             <div class="ept-search">
                 <span class="ept-search__icon">${EPT.icons.search}</span>
-                <input type="text" id="audit-search" placeholder="Search types... (or property:name)" />
+                <input type="text" id="audit-search" placeholder="${EPT.s('contenttypeaudit.lbl_search', 'Search types... (or property:name)')}" />
             </div>
             <select id="audit-base-filter" class="ept-select">
-                <option value="">All base types</option>
+                <option value="">${EPT.s('contenttypeaudit.opt_allbases', 'All base types')}</option>
                 ${bases.map(b => `<option value="${b}">${b} (${allTypes.filter(t => t.base === b).length})</option>`).join('')}
             </select>
             <label class="ept-toggle">
                 <input type="checkbox" id="audit-show-system" ${showSystem ? 'checked' : ''} />
-                Show system types
+                ${EPT.s('contenttypeaudit.chk_showsystem', 'Show system types')}
             </label>
             <div class="ept-toolbar__spacer"></div>
-            <button class="ept-btn" id="audit-view-table" title="Table view">${EPT.icons.list} Table</button>
-            <button class="ept-btn" id="audit-view-tree" title="Inheritance tree">${EPT.icons.tree} Tree</button>
-            <button class="ept-btn" id="audit-export" title="Export to CSV">${EPT.icons.download} Export</button>
+            <button class="ept-btn" id="audit-view-table" title="Table view">${EPT.icons.list} ${EPT.s('contenttypeaudit.btn_table', 'Table')}</button>
+            <button class="ept-btn" id="audit-view-tree" title="Inheritance tree">${EPT.icons.tree} ${EPT.s('contenttypeaudit.btn_tree', 'Tree')}</button>
+            <button class="ept-btn" id="audit-export" title="Export to CSV">${EPT.icons.download} ${EPT.s('contenttypeaudit.btn_export', 'Export')}</button>
         `;
 
         document.getElementById('audit-search').addEventListener('input', (e) => {
@@ -196,11 +196,11 @@
 
         const columns = [
             { key: 'iconUrl', label: '', sortable: false, render: (r) => r.iconUrl ? `<img src="${escHtml(r.iconUrl)}" alt="" style="height:36px;width:36px;object-fit:contain;">` : '' },
-            { key: 'name', label: 'Name', render: (r) => renderTypeName(r) },
-            { key: 'base', label: 'Base', filterable: distinctBases },
-            { key: 'groupName', label: 'Group', filterable: distinctGroups },
-            { key: 'propertyCount', label: 'Properties', align: 'right' },
-            { key: 'contentCount', label: 'Content', align: 'right', render: (r) => renderCount(r.contentCount) },
+            { key: 'name', label: EPT.s('contenttypeaudit.col_name', 'Name'), render: (r) => renderTypeName(r) },
+            { key: 'base', label: EPT.s('contenttypeaudit.col_base', 'Base'), filterable: distinctBases },
+            { key: 'groupName', label: EPT.s('contenttypeaudit.col_group', 'Group'), filterable: distinctGroups },
+            { key: 'propertyCount', label: EPT.s('contenttypeaudit.col_properties', 'Properties'), align: 'right' },
+            { key: 'contentCount', label: EPT.s('contenttypeaudit.col_content', 'Content'), align: 'right', render: (r) => renderCount(r.contentCount) },
             { key: 'actions', label: '', sortable: false, render: (r) => renderActions(r) }
         ];
 
@@ -233,7 +233,7 @@
                 const sel = document.createElement('select');
                 sel.className = 'ept-select';
                 sel.style.cssText = 'width:100%;font-size:11px;padding:2px 20px 2px 4px';
-                sel.innerHTML = `<option value="">All</option>${col.filterable.map(v => `<option value="${escAttr(v)}">${escHtml(v)}</option>`).join('')}`;
+                sel.innerHTML = `<option value="">${EPT.s('contenttypeaudit.opt_all', 'All')}</option>${col.filterable.map(v => `<option value="${escAttr(v)}">${escHtml(v)}</option>`).join('')}`;
                 sel.addEventListener('change', () => {
                     colFilters[col.key] = sel.value || null;
                     applyColumnFilters();
@@ -263,8 +263,8 @@
     function renderTypeName(r) {
         const name = r.displayName || r.name;
         const badges = [];
-        if (r.isSystemType) badges.push('<span class="ept-badge ept-badge--default">System</span>');
-        else if (r.isOrphaned) badges.push('<span class="ept-badge ept-badge--danger">Orphaned</span>');
+        if (r.isSystemType) badges.push(`<span class="ept-badge ept-badge--default">${EPT.s('contenttypeaudit.badge_system', 'System')}</span>`);
+        else if (r.isOrphaned) badges.push(`<span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.badge_orphaned', 'Orphaned')}</span>`);
         return `<div>
             <strong>${escHtml(name)}</strong>
             ${r.displayName && r.displayName !== r.name ? `<span class="ept-muted"> (${escHtml(r.name)})</span>` : ''}
@@ -543,7 +543,7 @@
             label.className = 'ept-tree__label';
             label.textContent = node.displayName || node.name;
             if (node.isOrphaned) {
-                label.innerHTML += ' <span class="ept-badge ept-badge--danger">Orphaned</span>';
+                label.innerHTML += ` <span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.badge_orphaned', 'Orphaned')}</span>`;
             }
             label.title = 'Click to view content of this type';
             label.addEventListener('click', () => {
