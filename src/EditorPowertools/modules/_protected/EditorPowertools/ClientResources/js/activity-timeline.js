@@ -55,32 +55,32 @@
             return;
         }
         el.innerHTML =
-            '<div class="ept-stat"><div class="ept-stat__value">' + stats.totalToday + '</div><div class="ept-stat__label">Activities Today</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + stats.activeEditorsToday + '</div><div class="ept-stat__label">Active Editors</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + stats.publishesToday + '</div><div class="ept-stat__label">Publishes Today</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + stats.draftsToday + '</div><div class="ept-stat__label">Drafts Today</div></div>';
+            '<div class="ept-stat"><div class="ept-stat__value">' + stats.totalToday + '</div><div class="ept-stat__label">' + EPT.s('activitytimeline.stat_today', 'Activities Today') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + stats.activeEditorsToday + '</div><div class="ept-stat__label">' + EPT.s('activitytimeline.stat_activeeditors', 'Active Editors') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + stats.publishesToday + '</div><div class="ept-stat__label">' + EPT.s('activitytimeline.stat_publishes', 'Publishes Today') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + stats.draftsToday + '</div><div class="ept-stat__label">' + EPT.s('activitytimeline.stat_drafts', 'Drafts Today') + '</div></div>';
     }
 
     // ── Toolbar ────────────────────────────────────────────────────
     function renderToolbar() {
         var el = document.getElementById('timeline-toolbar');
 
-        var userOpts = '<option value="">All users</option>';
+        var userOpts = '<option value="">' + EPT.s('activitytimeline.opt_allusers', 'All users') + '</option>';
         state.users.forEach(function (u) {
             userOpts += '<option value="' + escHtml(u) + '">' + escHtml(u) + '</option>';
         });
 
         var actionOpts =
             '<option value="">All actions</option>' +
-            '<option value="Published">Published</option>' +
-            '<option value="Draft">Draft saved</option>' +
-            '<option value="ReadyToPublish">Ready to publish</option>' +
-            '<option value="Scheduled">Scheduled</option>' +
-            '<option value="Rejected">Rejected</option>' +
-            '<option value="PreviouslyPublished">Previously published</option>' +
-            '<option value="Comment">Comments</option>';
+            '<option value="Published">' + EPT.s('activitytimeline.opt_published', 'Published') + '</option>' +
+            '<option value="Draft">' + EPT.s('activitytimeline.opt_draft', 'Draft saved') + '</option>' +
+            '<option value="ReadyToPublish">' + EPT.s('activitytimeline.opt_readytopublish', 'Ready to publish') + '</option>' +
+            '<option value="Scheduled">' + EPT.s('activitytimeline.opt_scheduled', 'Scheduled') + '</option>' +
+            '<option value="Rejected">' + EPT.s('activitytimeline.opt_rejected', 'Rejected') + '</option>' +
+            '<option value="PreviouslyPublished">' + EPT.s('activitytimeline.opt_previouslypublished', 'Previously published') + '</option>' +
+            '<option value="Comment">' + EPT.s('activitytimeline.opt_comment', 'Comments') + '</option>';
 
-        var typeOpts = '<option value="">All content types</option>';
+        var typeOpts = '<option value="">' + EPT.s('activitytimeline.opt_allcontenttypes', 'All content types') + '</option>';
         state.contentTypes.forEach(function (t) {
             typeOpts += '<option value="' + escHtml(t) + '">' + escHtml(t) + '</option>';
         });
@@ -91,8 +91,8 @@
             '<select id="tl-filter-type" class="ept-select">' + typeOpts + '</select>' +
             '<input type="date" id="tl-filter-from" class="ept-input" placeholder="From" title="From date" />' +
             '<input type="date" id="tl-filter-to" class="ept-input" placeholder="To" title="To date" />' +
-            '<button id="tl-filter-apply" class="ept-btn ept-btn--primary">Filter</button>' +
-            '<button id="tl-filter-clear" class="ept-btn">Clear</button>';
+            '<button id="tl-filter-apply" class="ept-btn ept-btn--primary">' + EPT.s('activitytimeline.btn_filter', 'Filter') + '</button>' +
+            '<button id="tl-filter-clear" class="ept-btn">' + EPT.s('activitytimeline.btn_clear', 'Clear') + '</button>';
 
         document.getElementById('tl-filter-apply').addEventListener('click', applyFilters);
         document.getElementById('tl-filter-clear').addEventListener('click', clearFilters);
@@ -142,8 +142,8 @@
         banner.id = 'content-filter-banner';
         banner.className = 'ept-banner';
         banner.innerHTML =
-            '<span>Showing timeline for <strong>' + escHtml(state.contentName || 'Content #' + state.contentId) + '</strong></span> ' +
-            '<button id="content-filter-clear" class="ept-btn ept-btn--sm">Show all activity</button>';
+            '<span>' + EPT.s('activitytimeline.banner_showingfor', 'Showing timeline for {0}').replace('{0}', '<strong>' + escHtml(state.contentName || 'Content #' + state.contentId) + '</strong>') + '</span> ' +
+            '<button id="content-filter-clear" class="ept-btn ept-btn--sm">' + EPT.s('activitytimeline.btn_showall', 'Show all activity') + '</button>';
 
         var contentEl = document.getElementById('timeline-content');
         contentEl.parentNode.insertBefore(banner, contentEl);
