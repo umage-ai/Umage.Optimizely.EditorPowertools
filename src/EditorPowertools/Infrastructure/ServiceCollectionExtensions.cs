@@ -1,4 +1,5 @@
 using EditorPowertools.Configuration;
+using EditorPowertools.Localization;
 using EditorPowertools.Permissions;
 using EditorPowertools.Services;
 using EditorPowertools.Tools.AudienceManager;
@@ -156,6 +157,9 @@ public static class ServiceCollectionExtensions
         // Active Editors (real-time presence + chat)
         services.AddSingleton<ActiveEditorsService>();
         services.AddSignalR();
+
+        // UI strings provider for JS localization
+        services.AddScoped<UiStringsProvider>();
 
         // Register as a protected module
         services.Configure<ProtectedModuleOptions>(options =>
