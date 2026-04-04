@@ -25,7 +25,9 @@ const EPT = {
      * Show a loading indicator inside an element.
      */
     showLoading(el) {
-        el.innerHTML = '<div class="ept-loading"><div class="ept-spinner"></div><p>Loading...</p></div>';
+        var msg = (window.EPT_STRINGS && window.EPT_STRINGS.editorpowertools && window.EPT_STRINGS.editorpowertools.loading)
+            ? window.EPT_STRINGS.editorpowertools.loading : 'Loading...';
+        el.innerHTML = '<div class="ept-loading"><div class="ept-spinner"></div><p>' + msg + '</p></div>';
     },
 
     /**
@@ -143,7 +145,9 @@ const EPT = {
             tbody.innerHTML = '';
             if (rows.length === 0) {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td colspan="${columns.length}" class="ept-empty"><p>No results found</p></td>`;
+                var noResultsMsg = (window.EPT_STRINGS && window.EPT_STRINGS.editorpowertools && window.EPT_STRINGS.editorpowertools.noresults)
+                    ? window.EPT_STRINGS.editorpowertools.noresults : 'No results found';
+                tr.innerHTML = '<td colspan="' + columns.length + '" class="ept-empty"><p>' + noResultsMsg + '</p></td>';
                 tbody.appendChild(tr);
                 return;
             }
@@ -240,5 +244,24 @@ const EPT = {
         props: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M14 3v4a1 1 0 0 0 1 1h4"/></svg>',
         chevronRight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>',
         chevronDown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>',
-    }
+    },
+
+    /**
+     * Safe accessor for window.EPT_STRINGS.
+     * path: dot-separated key e.g. 'contentaudit.col_name'
+     * fallback: English string returned if key is missing
+     */
+    s: function(path, fallback) {
+        try {
+            var parts = path.split('.');
+            var obj = window.EPT_STRINGS;
+            for (var i = 0; i < parts.length; i++) {
+                if (obj === undefined || obj === null) return fallback || path;
+                obj = obj[parts[i]];
+            }
+            return (obj && typeof obj === 'string') ? obj : (fallback || path);
+        } catch (e) {
+            return fallback || path;
+        }
+    },
 };
