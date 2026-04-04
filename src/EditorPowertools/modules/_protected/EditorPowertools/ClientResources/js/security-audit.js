@@ -91,19 +91,19 @@
 
         var prevBtn = document.createElement('button');
         prevBtn.className = 'ept-btn ept-btn--sm';
-        prevBtn.textContent = 'Previous';
+        prevBtn.textContent = EPT.s('securityaudit.pager_previous', 'Previous');
         prevBtn.disabled = page <= 1;
         prevBtn.addEventListener('click', function () { onPageChange(page - 1); });
         container.appendChild(prevBtn);
 
         var info = document.createElement('span');
         info.className = 'sa-pagination__info';
-        info.textContent = 'Page ' + page + ' of ' + totalPages;
+        info.textContent = EPT.s('securityaudit.pager_info', 'Page {0} of {1}').replace('{0}', page).replace('{1}', totalPages);
         container.appendChild(info);
 
         var nextBtn = document.createElement('button');
         nextBtn.className = 'ept-btn ept-btn--sm';
-        nextBtn.textContent = 'Next';
+        nextBtn.textContent = EPT.s('securityaudit.pager_next', 'Next');
         nextBtn.disabled = page >= totalPages;
         nextBtn.addEventListener('click', function () { onPageChange(page + 1); });
         container.appendChild(nextBtn);
@@ -168,9 +168,9 @@
 
         // Tabs
         html += '<div class="sa-tabs">';
-        html += '<button class="sa-tab" data-tab="tree">Content Tree</button>';
-        html += '<button class="sa-tab" data-tab="roles">Role/User Explorer</button>';
-        html += '<button class="sa-tab" data-tab="issues">Issues <span id="sa-issues-count-badge" class="sa-tab-badge" style="display:none"></span></button>';
+        html += '<button class="sa-tab" data-tab="tree">' + EPT.s('securityaudit.tab_tree', 'Content Tree') + '</button>';
+        html += '<button class="sa-tab" data-tab="roles">' + EPT.s('securityaudit.tab_roles', 'Role/User Explorer') + '</button>';
+        html += '<button class="sa-tab" data-tab="issues">' + EPT.s('securityaudit.tab_issues', 'Issues') + ' <span id="sa-issues-count-badge" class="sa-tab-badge" style="display:none"></span></button>';
         html += '</div>';
 
         // Content
@@ -196,9 +196,9 @@
 
         if (!state.status || !state.status.hasData) {
             el.innerHTML = '<div class="ept-banner" style="padding:24px;background:var(--ept-bg,#f8f9fa);border:1px solid var(--ept-border,#dee2e6);border-radius:6px;text-align:center;margin-bottom:16px;">' +
-                '<p style="margin:0 0 12px 0;font-size:15px;"><strong>Security audit data not available.</strong></p>' +
-                '<p style="margin:0 0 12px 0;">Run the <strong>[EditorPowertools] Content Analysis</strong> scheduled job to analyze content permissions.</p>' +
-                '<button class="ept-btn ept-btn--primary" id="sa-run-job-btn">Run now</button>' +
+                '<p style="margin:0 0 12px 0;font-size:15px;"><strong>' + EPT.s('securityaudit.banner_nodata', 'Security audit data not available.') + '</strong></p>' +
+                '<p style="margin:0 0 12px 0;">' + EPT.s('securityaudit.banner_runjob', 'Run the [EditorPowertools] Content Analysis scheduled job to analyze content permissions.') + '</p>' +
+                '<button class="ept-btn ept-btn--primary" id="sa-run-job-btn">' + EPT.s('securityaudit.btn_runnow', 'Run now') + '</button>' +
                 '</div>';
             wireRunJobButton();
             return;
@@ -209,8 +209,8 @@
             var isOld = (Date.now() - lastDate.getTime()) > 24 * 60 * 60 * 1000;
             if (isOld) {
                 el.innerHTML = '<div class="ept-alert ept-alert--warning">' +
-                    'Security data was last analyzed <strong>' + timeAgo(lastDate) + '</strong>. Consider running the aggregation job for fresh data. ' +
-                    '<button class="ept-btn ept-btn--sm" id="sa-run-job-btn" style="margin-left:8px">Run now</button></div>';
+                    EPT.s('securityaudit.alert_old', 'Security data was last analyzed {0}. Consider running the aggregation job for fresh data.').replace('{0}', '<strong>' + timeAgo(lastDate) + '</strong>') + ' ' +
+                    '<button class="ept-btn ept-btn--sm" id="sa-run-job-btn" style="margin-left:8px">' + EPT.s('securityaudit.btn_runnow', 'Run now') + '</button></div>';
                 wireRunJobButton();
             } else {
                 el.innerHTML = '';
@@ -223,14 +223,14 @@
         if (!btn) return;
         btn.addEventListener('click', async function () {
             btn.disabled = true;
-            btn.textContent = 'Starting...';
+            btn.textContent = EPT.s('securityaudit.btn_starting', 'Starting...');
             try {
                 await EPT.postJson(window.EPT_API_URL + '/aggregation-start');
                 btn.parentElement.className = 'ept-alert ept-alert--info';
-                btn.parentElement.innerHTML = '<strong>Aggregation job has been started.</strong> Data will update when it completes. ' +
-                    '<button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">Refresh</button>';
+                btn.parentElement.innerHTML = '<strong>' + EPT.s('securityaudit.banner_started', 'Aggregation job has been started. Data will update when it completes.') + '</strong> ' +
+                    '<button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">' + EPT.s('securityaudit.btn_refresh', 'Refresh') + '</button>';
             } catch (err) {
-                btn.textContent = 'Failed';
+                btn.textContent = EPT.s('securityaudit.btn_failed', 'Failed');
             }
         });
     }
@@ -244,10 +244,10 @@
         var s = state.status;
         var lastRun = s.lastAnalysisUtc ? timeAgo(new Date(s.lastAnalysisUtc)) : 'Never';
         el.innerHTML =
-            '<div class="ept-stat"><div class="ept-stat__value">' + (s.totalContentAnalyzed || 0) + '</div><div class="ept-stat__label">Content Analyzed</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + (s.uniqueRolesAndUsers || 0) + '</div><div class="ept-stat__label">Roles/Users</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + (s.totalIssues || 0) + '</div><div class="ept-stat__label">Issues Found</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value sa-stat--muted">' + escHtml(lastRun) + '</div><div class="ept-stat__label">Last Analysis</div></div>';
+            '<div class="ept-stat"><div class="ept-stat__value">' + (s.totalContentAnalyzed || 0) + '</div><div class="ept-stat__label">' + EPT.s('securityaudit.stat_analyzed', 'Content Analyzed') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + (s.uniqueRolesAndUsers || 0) + '</div><div class="ept-stat__label">' + EPT.s('securityaudit.stat_roles', 'Roles/Users') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + (s.totalIssues || 0) + '</div><div class="ept-stat__label">' + EPT.s('securityaudit.stat_issues', 'Issues Found') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value sa-stat--muted">' + escHtml(lastRun) + '</div><div class="ept-stat__label">' + EPT.s('securityaudit.stat_lastanalysis', 'Last Analysis') + '</div></div>';
 
         // Update issues badge on tab
         var badge = document.getElementById('sa-issues-count-badge');
