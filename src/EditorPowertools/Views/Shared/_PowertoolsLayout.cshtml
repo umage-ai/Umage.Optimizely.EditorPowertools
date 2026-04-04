@@ -1,6 +1,8 @@
 @using EPiServer.Framework.Web.Resources
 @using EPiServer.Shell
 @using EPiServer.Shell.Navigation
+@using System.Text.Json
+@inject EditorPowertools.Localization.UiStringsProvider UiStrings
 @{
     var title = ViewData["Title"]?.ToString() ?? "Editor Powertools";
     // For controller routes (menu links, page navigation)
@@ -52,6 +54,7 @@
         window.EPT_CMS_URL = '@Html.Raw(Paths.ToResource("CMS", ""))';
         window.EPT_ADMIN_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.Admin", "default"))';
         window.EPT_VG_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.VisitorGroups", "ManageVisitorGroups"))';
+        window.EPT_STRINGS = @Html.Raw(JsonSerializer.Serialize(UiStrings.GetAll()));
     </script>
     <script src="@ClientResource("ClientResources/js/editorpowertools.js")"></script>
     <script src="@ClientResource("ClientResources/js/components.js")"></script>
