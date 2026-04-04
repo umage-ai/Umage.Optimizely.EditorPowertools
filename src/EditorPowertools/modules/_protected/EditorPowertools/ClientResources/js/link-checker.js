@@ -38,18 +38,18 @@
         const el = document.createElement('div');
         el.id = 'lc-job-alert';
 
-        const runBtn = `<button class="ept-btn ept-btn--sm" id="lc-run-job-btn" style="margin-left:8px">Run now</button>`;
+        const runBtn = `<button class="ept-btn ept-btn--sm" id="lc-run-job-btn" style="margin-left:8px">${EPT.s('linkchecker.btn_runnow', 'Run now')}</button>`;
 
         if (jobStatus.isRunning) {
             el.className = 'ept-alert ept-alert--info';
-            el.innerHTML = `<strong>Link checker job is currently running.</strong> Results will be updated when it completes. <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">Refresh</button>`;
+            el.innerHTML = `<strong>${EPT.s('linkchecker.alert_running', 'Link checker job is currently running...')}</strong> Results will be updated when it completes. <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('linkchecker.btn_refresh', 'Refresh')}</button>`;
         } else if (!jobStatus.hasRun) {
             el.className = 'ept-alert ept-alert--warning';
-            el.innerHTML = `<strong>Link checker has not been run yet.</strong> Run the scheduled job to scan content for links. ${runBtn}`;
+            el.innerHTML = `<strong>${EPT.s('linkchecker.alert_notrun', 'Link checker has not been run yet...')}</strong> Run the scheduled job to scan content for links. ${runBtn}`;
         } else {
             const ago = timeAgo(jobStatus.lastRunUtc);
             el.className = 'ept-alert ept-alert--info';
-            el.innerHTML = `Link check last ran <strong>${ago}</strong>. ${runBtn}`;
+            el.innerHTML = EPT.s('linkchecker.alert_lastran', 'Link check last ran {0}.').replace('{0}', `<strong>${ago}</strong>`) + ` ${runBtn}`;
         }
 
         const container = document.getElementById('linkchecker-stats');
@@ -59,12 +59,12 @@
         if (btn) {
             btn.addEventListener('click', async () => {
                 btn.disabled = true;
-                btn.textContent = 'Starting...';
+                btn.textContent = EPT.s('linkchecker.btn_starting', 'Starting...');
                 try {
                     await EPT.postJson(`${API}/job-start`);
                     el.className = 'ept-alert ept-alert--info';
-                    el.innerHTML = `<strong>Job started.</strong> <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">Refresh</button>`;
-                } catch { btn.textContent = 'Failed'; }
+                    el.innerHTML = `<strong>${EPT.s('linkchecker.alert_started', 'Job started.')}</strong> <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('linkchecker.btn_refresh', 'Refresh')}</button>`;
+                } catch { btn.textContent = EPT.s('linkchecker.btn_failed', 'Failed'); }
             });
         }
     }
@@ -92,11 +92,11 @@
         const external = allLinks.filter(l => l.linkType === 'External').length;
 
         document.getElementById('linkchecker-stats').innerHTML = `
-            <div class="ept-stat"><div class="ept-stat__value">${total}</div><div class="ept-stat__label">Total Links</div></div>
-            <div class="ept-stat"><div class="ept-stat__value" style="color:var(--ept-danger,#dc2626)">${broken}</div><div class="ept-stat__label">Broken</div></div>
-            <div class="ept-stat"><div class="ept-stat__value" style="color:var(--ept-success,#16a34a)">${valid}</div><div class="ept-stat__label">Valid</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${internal}</div><div class="ept-stat__label">Internal</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${external}</div><div class="ept-stat__label">External</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${total}</div><div class="ept-stat__label">${EPT.s('linkchecker.stat_total', 'Total Links')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value" style="color:var(--ept-danger,#dc2626)">${broken}</div><div class="ept-stat__label">${EPT.s('linkchecker.stat_broken', 'Broken')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value" style="color:var(--ept-success,#16a34a)">${valid}</div><div class="ept-stat__label">${EPT.s('linkchecker.stat_valid', 'Valid')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${internal}</div><div class="ept-stat__label">${EPT.s('linkchecker.stat_internal', 'Internal')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${external}</div><div class="ept-stat__label">${EPT.s('linkchecker.stat_external', 'External')}</div></div>
         `;
     }
 
@@ -105,20 +105,20 @@
         toolbar.innerHTML = `
             <div class="ept-search">
                 <span class="ept-search__icon">${EPT.icons.search}</span>
-                <input type="text" id="lc-search" placeholder="Search URLs, content, properties..." />
+                <input type="text" id="lc-search" placeholder="${EPT.s('linkchecker.lbl_search', 'Search URLs, content, properties...')}" />
             </div>
             <select id="lc-type-filter" class="ept-select">
-                <option value="">All types</option>
-                <option value="Internal">Internal</option>
-                <option value="External">External</option>
+                <option value="">${EPT.s('linkchecker.opt_alltypes', 'All types')}</option>
+                <option value="Internal">${EPT.s('linkchecker.opt_internal', 'Internal')}</option>
+                <option value="External">${EPT.s('linkchecker.opt_external', 'External')}</option>
             </select>
             <select id="lc-status-filter" class="ept-select">
-                <option value="">All status</option>
-                <option value="broken">Broken only</option>
-                <option value="valid">Valid only</option>
+                <option value="">${EPT.s('linkchecker.opt_allstatus', 'All status')}</option>
+                <option value="broken">${EPT.s('linkchecker.opt_brokenonly', 'Broken only')}</option>
+                <option value="valid">${EPT.s('linkchecker.opt_validonly', 'Valid only')}</option>
             </select>
             <div class="ept-toolbar__spacer"></div>
-            <button class="ept-btn" id="lc-export">${EPT.icons.download} Export</button>
+            <button class="ept-btn" id="lc-export">${EPT.icons.download} ${EPT.s('linkchecker.btn_export', 'Export')}</button>
         `;
 
         document.getElementById('lc-search').addEventListener('input', e => { searchQuery = e.target.value; renderTable(); });
@@ -131,11 +131,11 @@
         const data = getFiltered();
 
         const columns = [
-            { key: 'isValid', label: 'Status', render: r => {
+            { key: 'isValid', label: EPT.s('linkchecker.col_status', 'Status'), render: r => {
                 if (r.isValid) return `<span style="color:var(--ept-success,#16a34a)" title="OK">&#10003; ${r.statusCode}</span>`;
                 return `<span class="ept-badge ept-badge--danger" title="${escHtml(r.statusText)}">${r.statusCode} ${escHtml(r.statusText)}</span>`;
             }},
-            { key: 'friendlyUrl', label: 'URL', render: r => {
+            { key: 'friendlyUrl', label: EPT.s('linkchecker.col_url', 'URL'), render: r => {
                 const displayUrl = r.friendlyUrl || r.url;
                 const truncated = displayUrl.length > 60 ? displayUrl.substring(0, 60) + '...' : displayUrl;
                 let html = '';
@@ -148,11 +148,11 @@
                 }
                 return html;
             }},
-            { key: 'linkType', label: 'Type', render: r => {
+            { key: 'linkType', label: EPT.s('linkchecker.col_type', 'Type'), render: r => {
                 const cls = r.linkType === 'Internal' ? 'primary' : 'default';
                 return `<span class="ept-badge ept-badge--${cls}">${escHtml(r.linkType)}</span>`;
             }},
-            { key: 'contentName', label: 'Found In', render: r => {
+            { key: 'contentName', label: EPT.s('linkchecker.col_foundin', 'Found In'), render: r => {
                 let html = '';
                 if (r.editUrl) {
                     html += `<a href="${escHtml(r.editUrl)}" target="_blank" style="color:inherit"><strong>${escHtml(r.contentName)}</strong></a>`;
@@ -162,7 +162,7 @@
                 html += ` <span class="ept-muted" style="font-size:11px">via ${escHtml(r.propertyName)}</span>`;
                 if (r.breadcrumb) html += `<div class="ept-muted" style="font-size:11px">${escHtml(r.breadcrumb)}</div>`;
                 if (r.usedOn) {
-                    html += `<div style="font-size:11px;margin-top:2px">Used on: `;
+                    html += `<div style="font-size:11px;margin-top:2px">${EPT.s('linkchecker.cell_usedon', 'Used on: ')}`;
                     if (r.usedOnEditUrls) {
                         const pages = r.usedOnEditUrls.split(';;').map(p => {
                             const parts = p.split('|');
@@ -176,7 +176,7 @@
                 }
                 return html;
             }},
-            { key: 'lastChecked', label: 'Checked', render: r => `<span title="${r.lastChecked}">${timeAgo(r.lastChecked)}</span>` }
+            { key: 'lastChecked', label: EPT.s('linkchecker.col_checked', 'Checked'), render: r => `<span title="${r.lastChecked}">${timeAgo(r.lastChecked)}</span>` }
         ];
 
         tableInstance = EPT.createTable(columns, data, {
