@@ -149,30 +149,30 @@
 
             // Toolbar
             '<div class="ept-toolbar" id="bpeToolbar">' +
-            '<select class="ept-select" id="bpeContentType" style="min-width: 240px;"><option value="">-- Select content type --</option></select>' +
+            '<select class="ept-select" id="bpeContentType" style="min-width: 240px;"><option value="">' + EPT.s('bulkeditor.opt_selecttype', '-- Select content type --') + '</option></select>' +
             '<select class="ept-select" id="bpeLanguage" style="min-width: 120px;"></select>' +
             '<div class="ept-toolbar__spacer"></div>' +
             '<div style="position: relative;">' +
-            '<button type="button" class="ept-btn ept-btn--sm" id="bpeColumnsBtn">' + (EPT.icons.list || '') + ' Columns</button>' +
+            '<button type="button" class="ept-btn ept-btn--sm" id="bpeColumnsBtn">' + (EPT.icons.list || '') + ' ' + EPT.s('bulkeditor.btn_columns', 'Columns') + '</button>' +
             '<div class="bpe-col-picker" id="bpeColumnPicker"></div>' +
             '</div>' +
-            '<button type="button" class="ept-btn ept-btn--sm" id="bpeAddFilterBtn">' + (EPT.icons.search || '') + ' Add Filter</button>' +
+            '<button type="button" class="ept-btn ept-btn--sm" id="bpeAddFilterBtn">' + (EPT.icons.search || '') + ' ' + EPT.s('bulkeditor.btn_addfilter', 'Add Filter') + '</button>' +
             '<div class="bpe-toolbar-sep" id="bpeRefSep" style="display: none;"></div>' +
             '<label class="bpe-toolbar-check" id="bpeRefCheck" style="display: none;">' +
-            '<input type="checkbox" id="bpeIncludeRefs" /> Include references' +
+            '<input type="checkbox" id="bpeIncludeRefs" /> ' + EPT.s('bulkeditor.chk_includereferences', 'Include references') +
             '</label>' +
             '</div>' +
 
             // Filter bar
             '<div class="bpe-filter-bar" id="bpeFilterBar">' +
             '<div id="bpeFilters"></div>' +
-            '<button type="button" class="ept-btn ept-btn--primary ept-btn--sm" id="bpeApplyFilters" style="margin-top: 8px;">Apply Filters</button>' +
+            '<button type="button" class="ept-btn ept-btn--primary ept-btn--sm" id="bpeApplyFilters" style="margin-top: 8px;">' + EPT.s('bulkeditor.btn_applyfilters', 'Apply Filters') + '</button>' +
             '</div>' +
 
             // Table area
             '<div class="ept-card" id="bpeTableCard">' +
             '<div class="ept-card__body" id="bpeTableBody">' +
-            '<div class="ept-empty"><p>Select a content type above to start editing.</p></div>' +
+            '<div class="ept-empty"><p>' + EPT.s('bulkeditor.empty_selecttype', 'Select a content type above to start editing.') + '</p></div>' +
             '</div>' +
             '</div>' +
 
@@ -181,7 +181,7 @@
             '<div class="bpe-pagination-info" id="bpePaginationInfo"></div>' +
             '<div class="bpe-pagination-controls" id="bpePaginationControls"></div>' +
             '<div class="bpe-page-size">' +
-            '<label>Per page:</label>' +
+            '<label>' + EPT.s('bulkeditor.lbl_perpage', 'Per page:') + '</label>' +
             '<select class="ept-select" id="bpePageSize">' +
             '<option value="25">25</option>' +
             '<option value="50" selected>50</option>' +
@@ -192,11 +192,11 @@
 
             // Pending changes bar
             '<div class="bpe-pending-bar" id="bpePendingBar">' +
-            '<div class="bpe-pending-info"><span id="bpePendingCount">0</span> changes pending</div>' +
+            '<div class="bpe-pending-info">' + EPT.s('bulkeditor.pending_count', '{0} changes pending').replace('{0}', '<span id="bpePendingCount">0</span>') + '</div>' +
             '<div class="bpe-pending-actions">' +
-            '<button type="button" class="ept-btn bpe-btn-discard" id="bpeDiscardAll">Discard All</button>' +
-            '<button type="button" class="ept-btn ept-btn--primary" id="bpeSaveAll">Save All</button>' +
-            '<button type="button" class="ept-btn bpe-btn-success" id="bpePublishAll">Publish All</button>' +
+            '<button type="button" class="ept-btn bpe-btn-discard" id="bpeDiscardAll">' + EPT.s('bulkeditor.btn_discardall', 'Discard All') + '</button>' +
+            '<button type="button" class="ept-btn ept-btn--primary" id="bpeSaveAll">' + EPT.s('bulkeditor.btn_saveall', 'Save All') + '</button>' +
+            '<button type="button" class="ept-btn bpe-btn-success" id="bpePublishAll">' + EPT.s('bulkeditor.btn_publishall', 'Publish All') + '</button>' +
             '</div>' +
             '</div>';
 
@@ -267,7 +267,7 @@
 
     function renderContentTypeDropdown() {
         var sel = document.getElementById('bpeContentType');
-        var html = '<option value="">-- Select content type --</option>';
+        var html = '<option value="">' + EPT.s('bulkeditor.opt_selecttype', '-- Select content type --') + '</option>';
 
         // Group by base type
         var groups = {};
@@ -1088,7 +1088,7 @@
     }
 
     function discardAll() {
-        if (!confirm('Discard all pending changes?')) return;
+        if (!confirm(EPT.s('bulkeditor.confirm_discard', 'Discard all pending changes?'))) return;
         state.pendingChanges = {};
         renderPendingBar();
         if (state.data) renderTable(state.data);
