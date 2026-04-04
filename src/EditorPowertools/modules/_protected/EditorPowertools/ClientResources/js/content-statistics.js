@@ -28,7 +28,7 @@
             data = await EPT.fetchJson(API_URL);
         } catch (err) {
             root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
-                '<p style="color:var(--ept-danger)">Failed to load statistics from API.</p>' +
+                '<p style="color:var(--ept-danger)">' + EPT.s('contentstatistics.error_load', 'Failed to load statistics from API.') + '</p>' +
                 renderRunJobBanner() +
                 '</div></div>';
             wireRunJobButton();
@@ -39,7 +39,7 @@
         } catch (err) {
             console.error('[EditorPowertools] Content Statistics render error:', err);
             root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
-                '<p style="color:var(--ept-danger)">Error rendering statistics dashboard.</p>' +
+                '<p style="color:var(--ept-danger)">' + EPT.s('contentstatistics.error_render', 'Error rendering statistics dashboard.') + '</p>' +
                 '<pre style="font-size:11px;color:#999;margin-top:8px">' + (err.stack || err.message) + '</pre>' +
                 '</div></div>';
         }
@@ -47,8 +47,8 @@
 
     function renderRunJobBanner() {
         return '<div class="ept-banner" style="margin-top:16px;padding:16px;background:var(--ept-bg,#f8f9fa);border:1px solid var(--ept-border,#dee2e6);border-radius:6px;text-align:center;">' +
-            'Run the <strong>[EditorPowertools] Content Analysis</strong> scheduled job to populate data. ' +
-            '<button id="ept-run-job-btn" class="ept-btn ept-btn--primary" style="margin-left:8px;">Run now</button>' +
+            EPT.s('contentstatistics.banner_runjob', 'Run the [EditorPowertools] Content Analysis scheduled job to populate data.') + ' ' +
+            '<button id="ept-run-job-btn" class="ept-btn ept-btn--primary" style="margin-left:8px;">' + EPT.s('contentstatistics.btn_runnow', 'Run now') + '</button>' +
             '</div>';
     }
 
@@ -57,7 +57,7 @@
         if (!btn) return;
         btn.addEventListener('click', async function () {
             btn.disabled = true;
-            btn.textContent = 'Starting...';
+            btn.textContent = EPT.s('contentstatistics.btn_starting', 'Starting...');
             try {
                 await EPT.postJson(window.EPT_API_URL + '/aggregation-start');
                 btn.textContent = 'Job started, please refresh in a few minutes.';
@@ -89,7 +89,7 @@
         root.appendChild(chartsRow);
 
         // Type distribution (pie/donut)
-        var pieCard = createCard('Content Type Distribution');
+        var pieCard = createCard(EPT.s('contentstatistics.chart_byctype', 'Content Type Distribution'));
         chartsRow.appendChild(pieCard.card);
         if (data.typeDistribution && data.typeDistribution.length > 0) {
             renderDonutChart(pieCard.body, data.typeDistribution);
@@ -98,7 +98,7 @@
         }
 
         // Creation over time (bar chart)
-        var barCard = createCard('Content Created per Month');
+        var barCard = createCard(EPT.s('contentstatistics.chart_created', 'Content Created per Month'));
         chartsRow.appendChild(barCard.card);
         if (data.creationOverTime && data.creationOverTime.length > 0) {
             renderBarChart(barCard.body, data.creationOverTime);
@@ -107,7 +107,7 @@
         }
 
         // Stale content (horizontal bars)
-        var staleCard = createCard('Oldest Content (by Last Modified)');
+        var staleCard = createCard(EPT.s('contentstatistics.chart_staleness', 'Oldest Content (by Last Modified)'));
         root.appendChild(staleCard.card);
         if (data.staleContent && data.staleContent.length > 0) {
             renderStaleChart(staleCard.body, data.staleContent);
@@ -116,7 +116,7 @@
         }
 
         // Editor activity table
-        var editorCard = createCard('Top Editors by Activity');
+        var editorCard = createCard(EPT.s('contentstatistics.chart_editoractivity', 'Top Editors by Activity'));
         root.appendChild(editorCard.card);
         if (data.topEditors && data.topEditors.length > 0) {
             renderEditorTable(editorCard.body, data.topEditors);
@@ -131,10 +131,10 @@
 
     function renderSummary(s) {
         var stats = el('div', { className: 'ept-stats' });
-        stats.appendChild(statCard('Total Content', s.totalContent));
-        stats.appendChild(statCard('Pages', s.totalPages));
-        stats.appendChild(statCard('Blocks', s.totalBlocks));
-        stats.appendChild(statCard('Media', s.totalMedia));
+        stats.appendChild(statCard(EPT.s('contentstatistics.stat_totalcontent', 'Total Content'), s.totalContent));
+        stats.appendChild(statCard(EPT.s('contentstatistics.stat_pages', 'Pages'), s.totalPages));
+        stats.appendChild(statCard(EPT.s('contentstatistics.stat_blocks', 'Blocks'), s.totalBlocks));
+        stats.appendChild(statCard(EPT.s('contentstatistics.stat_media', 'Media'), s.totalMedia));
         stats.appendChild(statCard('Avg Versions', s.averageVersionsPerItem));
         root.appendChild(stats);
     }
