@@ -28,17 +28,17 @@
     }
 
     var statusConfig = {
-        'OK':          { color: '#2e7d32', bg: '#e8f5e9', border: '#a5d6a7', icon: '\u2713', label: 'Healthy' },
-        'Warning':     { color: '#ef6c00', bg: '#fff3e0', border: '#ffcc80', icon: '\u26A0', label: 'Warning' },
-        'BadPractice': { color: '#e65100', bg: '#fff3e0', border: '#ffcc80', icon: '\u26A0', label: 'Bad Practice' },
-        'Fault':       { color: '#c62828', bg: '#ffebee', border: '#ef9a9a', icon: '\u2717', label: 'Fault' },
-        'Performance': { color: '#1565c0', bg: '#e3f2fd', border: '#90caf9', icon: '\u26A1', label: 'Performance' },
-        'NotChecked':  { color: '#757575', bg: '#f5f5f5', border: '#e0e0e0', icon: '\u2026', label: 'Not Checked' }
+        'OK':          { color: '#2e7d32', bg: '#e8f5e9', border: '#a5d6a7', icon: '\u2713', label: EPT.s('cmsdoctor.status_ok', 'Healthy') },
+        'Warning':     { color: '#ef6c00', bg: '#fff3e0', border: '#ffcc80', icon: '\u26A0', label: EPT.s('cmsdoctor.status_warning', 'Warning') },
+        'BadPractice': { color: '#e65100', bg: '#fff3e0', border: '#ffcc80', icon: '\u26A0', label: EPT.s('cmsdoctor.status_badpractice', 'Bad Practice') },
+        'Fault':       { color: '#c62828', bg: '#ffebee', border: '#ef9a9a', icon: '\u2717', label: EPT.s('cmsdoctor.status_fault', 'Fault') },
+        'Performance': { color: '#1565c0', bg: '#e3f2fd', border: '#90caf9', icon: '\u26A1', label: EPT.s('cmsdoctor.status_performance', 'Performance') },
+        'NotChecked':  { color: '#757575', bg: '#f5f5f5', border: '#e0e0e0', icon: '\u2026', label: EPT.s('cmsdoctor.status_notchecked', 'Not Checked') }
     };
 
     function render() {
         if (!state.dashboard) {
-            root.innerHTML = '<div class="ept-loading"><div class="ept-spinner"></div><p>Loading...</p></div>';
+            root.innerHTML = '<div class="ept-loading"><div class="ept-spinner"></div><p>' + EPT.s('shared.loading', 'Loading...') + '</p></div>';
             return;
         }
 
@@ -47,19 +47,19 @@
 
         // Header
         html += '<div class="ept-page-header" style="display:flex;align-items:center;justify-content:space-between">';
-        html += '<div><h1>CMS Doctor</h1>';
-        html += '<p>Health checks for your Optimizely CMS. Extensible by third-party packages.</p></div>';
+        html += '<div><h1>' + EPT.s('cmsdoctor.header_title', 'CMS Doctor') + '</h1>';
+        html += '<p>' + EPT.s('cmsdoctor.header_desc', 'Health checks for your Optimizely CMS. Extensible by third-party packages.') + '</p></div>';
         html += '<div style="display:flex;gap:8px;align-items:center">';
-        if (d.lastFullCheck) html += '<span class="ept-muted" style="font-size:12px">Last run: ' + new Date(d.lastFullCheck).toLocaleString() + '</span>';
-        html += '<button class="ept-btn ept-btn--primary" id="run-all">' + (state.loading ? 'Running...' : 'Run All Checks') + '</button>';
+        if (d.lastFullCheck) html += '<span class="ept-muted" style="font-size:12px">' + EPT.s('cmsdoctor.lbl_lastrun', 'Last run: {0}').replace('{0}', new Date(d.lastFullCheck).toLocaleString()) + '</span>';
+        html += '<button class="ept-btn ept-btn--primary" id="run-all">' + (state.loading ? EPT.s('cmsdoctor.btn_running', 'Running...') : EPT.s('cmsdoctor.btn_runall', 'Run All Checks')) + '</button>';
         html += '</div></div>';
 
         // Summary bar
         html += '<div class="doc-summary">';
-        html += summaryPill(d.okCount, 'Healthy', 'OK');
-        html += summaryPill(d.warningCount, 'Warnings', 'Warning');
-        html += summaryPill(d.faultCount, 'Faults', 'Fault');
-        html += summaryPill(d.notCheckedCount, 'Not Checked', 'NotChecked');
+        html += summaryPill(d.okCount, EPT.s('cmsdoctor.sum_healthy', 'Healthy'), 'OK');
+        html += summaryPill(d.warningCount, EPT.s('cmsdoctor.sum_warnings', 'Warnings'), 'Warning');
+        html += summaryPill(d.faultCount, EPT.s('cmsdoctor.sum_faults', 'Faults'), 'Fault');
+        html += summaryPill(d.notCheckedCount, EPT.s('cmsdoctor.sum_notchecked', 'Not Checked'), 'NotChecked');
         html += '</div>';
 
         // Tag filter
@@ -71,7 +71,7 @@
         });
         if (allTags.length > 0) {
             html += '<div class="doc-tags">';
-            html += '<button class="doc-tag' + (!state.filterTag ? ' doc-tag--active' : '') + '" data-tag="">All</button>';
+            html += '<button class="doc-tag' + (!state.filterTag ? ' doc-tag--active' : '') + '" data-tag="">' + EPT.s('cmsdoctor.tag_all', 'All') + '</button>';
             for (var t = 0; t < allTags.length; t++) {
                 html += '<button class="doc-tag' + (state.filterTag === allTags[t] ? ' doc-tag--active' : '') + '" data-tag="' + escHtml(allTags[t]) + '">' + escHtml(allTags[t]) + '</button>';
             }
@@ -138,15 +138,15 @@
 
         // Actions
         html += '<div class="doc-card-actions">';
-        html += '<button class="doc-card-btn run-check" data-type="' + escHtml(check.checkType) + '">Run</button>';
+        html += '<button class="doc-card-btn run-check" data-type="' + escHtml(check.checkType) + '">' + EPT.s('cmsdoctor.btn_run', 'Run') + '</button>';
         if (check.canFix && check.status !== 'OK' && check.status !== 'NotChecked') {
-            html += '<button class="doc-card-btn doc-card-btn--fix fix-check" data-type="' + escHtml(check.checkType) + '">Fix</button>';
+            html += '<button class="doc-card-btn doc-card-btn--fix fix-check" data-type="' + escHtml(check.checkType) + '">' + EPT.s('cmsdoctor.btn_fix', 'Fix') + '</button>';
         }
-        html += '<button class="doc-card-btn doc-card-btn--detail detail-check" data-type="' + escHtml(check.checkType) + '">Details</button>';
+        html += '<button class="doc-card-btn doc-card-btn--detail detail-check" data-type="' + escHtml(check.checkType) + '">' + EPT.s('cmsdoctor.btn_details', 'Details') + '</button>';
         if (check.isDismissed) {
-            html += '<button class="doc-card-btn restore-check" data-type="' + escHtml(check.checkType) + '">Restore</button>';
+            html += '<button class="doc-card-btn restore-check" data-type="' + escHtml(check.checkType) + '">' + EPT.s('cmsdoctor.btn_restore', 'Restore') + '</button>';
         } else if (check.status !== 'OK' && check.status !== 'NotChecked') {
-            html += '<button class="doc-card-btn dismiss-check" data-type="' + escHtml(check.checkType) + '">Dismiss</button>';
+            html += '<button class="doc-card-btn dismiss-check" data-type="' + escHtml(check.checkType) + '">' + EPT.s('cmsdoctor.btn_dismiss', 'Dismiss') + '</button>';
         }
         html += '</div>';
 
@@ -173,17 +173,17 @@
         html += '</div>';
 
         // Message
-        html += '<div style="margin-bottom:12px"><strong>Result:</strong><br>' + escHtml(check.statusText) + '</div>';
+        html += '<div style="margin-bottom:12px"><strong>' + EPT.s('cmsdoctor.dlg_result', 'Result:') + '</strong><br>' + escHtml(check.statusText) + '</div>';
 
         // Details
         if (check.details) {
-            html += '<div style="margin-bottom:12px"><strong>Details:</strong><br>';
+            html += '<div style="margin-bottom:12px"><strong>' + EPT.s('cmsdoctor.dlg_details', 'Details:') + '</strong><br>';
             html += '<div style="font-family:var(--ept-font-mono);font-size:12px;background:#f5f5f5;padding:10px;border-radius:4px;white-space:pre-wrap">' + escHtml(check.details) + '</div></div>';
         }
 
         // Tags
         if (check.tags && check.tags.length > 0) {
-            html += '<div style="margin-bottom:12px"><strong>Categories:</strong> ';
+            html += '<div style="margin-bottom:12px"><strong>' + EPT.s('cmsdoctor.dlg_categories', 'Categories:') + '</strong> ';
             for (var i = 0; i < check.tags.length; i++) {
                 html += '<span class="doc-card-tag">' + escHtml(check.tags[i]) + '</span> ';
             }
@@ -192,16 +192,16 @@
 
         // Timestamp
         if (check.checkTime) {
-            html += '<div class="ept-muted" style="font-size:11px">Checked: ' + new Date(check.checkTime).toLocaleString() + '</div>';
+            html += '<div class="ept-muted" style="font-size:11px">' + EPT.s('cmsdoctor.dlg_checked', 'Checked: {0}').replace('{0}', new Date(check.checkTime).toLocaleString()) + '</div>';
         }
 
         // Actions
         html += '<div style="margin-top:16px;display:flex;gap:8px;justify-content:flex-end">';
         if (check.canFix && check.status !== 'OK' && check.status !== 'NotChecked') {
-            html += '<button class="ept-btn" id="dialog-fix" data-type="' + escHtml(check.checkType) + '" style="color:var(--ept-success)">Apply Fix</button>';
+            html += '<button class="ept-btn" id="dialog-fix" data-type="' + escHtml(check.checkType) + '" style="color:var(--ept-success)">' + EPT.s('cmsdoctor.btn_applyfix', 'Apply Fix') + '</button>';
         }
-        html += '<button class="ept-btn" id="dialog-run" data-type="' + escHtml(check.checkType) + '">Re-run Check</button>';
-        html += '<button class="ept-btn" id="dialog-close">Close</button>';
+        html += '<button class="ept-btn" id="dialog-run" data-type="' + escHtml(check.checkType) + '">' + EPT.s('cmsdoctor.btn_rerun', 'Re-run Check') + '</button>';
+        html += '<button class="ept-btn" id="dialog-close">' + EPT.s('cmsdoctor.btn_close', 'Close') + '</button>';
         html += '</div>';
 
         html += '</div></div>';
@@ -215,7 +215,7 @@
         var runBtn = overlay.querySelector('#dialog-run');
         if (runBtn) {
             runBtn.onclick = function () {
-                runBtn.textContent = 'Running...';
+                runBtn.textContent = EPT.s('cmsdoctor.btn_running', 'Running...');
                 runBtn.disabled = true;
                 postJson(API + '/run/' + encodeURIComponent(check.checkType)).then(function (result) {
                     document.body.removeChild(overlay);
@@ -232,7 +232,7 @@
         var fixBtn = overlay.querySelector('#dialog-fix');
         if (fixBtn) {
             fixBtn.onclick = function () {
-                if (!confirm('Apply fix for this check?')) return;
+                if (!confirm(EPT.s('cmsdoctor.confirm_applyfix', 'Apply fix for this check?'))) return;
                 fixBtn.textContent = 'Fixing...';
                 fixBtn.disabled = true;
                 postJson(API + '/fix/' + encodeURIComponent(check.checkType)).then(function () {
@@ -281,7 +281,7 @@
             fixBtns[j].onclick = function (e) {
                 e.stopPropagation();
                 var type = this.getAttribute('data-type');
-                if (!confirm('Apply fix?')) return;
+                if (!confirm(EPT.s('cmsdoctor.confirm_fix', 'Apply fix?'))) return;
                 this.disabled = true;
                 postJson(API + '/fix/' + encodeURIComponent(type)).then(function () { loadDashboard(); });
             };
