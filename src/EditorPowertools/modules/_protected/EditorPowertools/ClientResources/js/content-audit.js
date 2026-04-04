@@ -9,43 +9,43 @@
 
     // ---- Column definitions ----
     var ALL_COLUMNS = [
-        { key: 'contentId', label: 'Content ID', sortable: true, defaultVisible: true, align: 'right' },
-        { key: 'name', label: 'Name', sortable: true, defaultVisible: true },
-        { key: 'language', label: 'Language', sortable: true, defaultVisible: true },
-        { key: 'contentType', label: 'Content Type', sortable: true, defaultVisible: true },
-        { key: 'mainType', label: 'Main Type', sortable: true, defaultVisible: true },
-        { key: 'url', label: 'URL', sortable: true, defaultVisible: false },
-        { key: 'editUrl', label: 'Edit URL', sortable: false, defaultVisible: false },
-        { key: 'breadcrumb', label: 'Breadcrumb', sortable: true, defaultVisible: false },
-        { key: 'status', label: 'Status', sortable: true, defaultVisible: true },
-        { key: 'createdBy', label: 'Created By', sortable: true, defaultVisible: false },
-        { key: 'created', label: 'Created', sortable: true, defaultVisible: false, type: 'date' },
-        { key: 'changedBy', label: 'Changed By', sortable: true, defaultVisible: true },
-        { key: 'changed', label: 'Changed', sortable: true, defaultVisible: true, type: 'date' },
-        { key: 'published', label: 'Published', sortable: true, defaultVisible: true, type: 'date' },
-        { key: 'publishedUntil', label: 'Published Until', sortable: true, defaultVisible: false, type: 'date' },
-        { key: 'masterLanguage', label: 'Master Language', sortable: true, defaultVisible: false },
-        { key: 'allLanguages', label: 'All Languages', sortable: true, defaultVisible: false },
-        { key: 'referenceCount', label: 'Reference Count', sortable: true, defaultVisible: false, align: 'right' },
-        { key: 'versionCount', label: 'Version Count', sortable: true, defaultVisible: false, align: 'right' },
-        { key: 'hasPersonalizations', label: 'Has Personalizations', sortable: true, defaultVisible: false }
+        { key: 'contentId', label: EPT.s('contentaudit.col_contentid', 'Content ID'), sortable: true, defaultVisible: true, align: 'right' },
+        { key: 'name', label: EPT.s('contentaudit.col_name', 'Name'), sortable: true, defaultVisible: true },
+        { key: 'language', label: EPT.s('contentaudit.col_language', 'Language'), sortable: true, defaultVisible: true },
+        { key: 'contentType', label: EPT.s('contentaudit.col_contenttype', 'Content Type'), sortable: true, defaultVisible: true },
+        { key: 'mainType', label: EPT.s('contentaudit.col_maintype', 'Main Type'), sortable: true, defaultVisible: true },
+        { key: 'url', label: EPT.s('contentaudit.col_url', 'URL'), sortable: true, defaultVisible: false },
+        { key: 'editUrl', label: EPT.s('contentaudit.col_editurl', 'Edit URL'), sortable: false, defaultVisible: false },
+        { key: 'breadcrumb', label: EPT.s('contentaudit.col_breadcrumb', 'Breadcrumb'), sortable: true, defaultVisible: false },
+        { key: 'status', label: EPT.s('contentaudit.col_status', 'Status'), sortable: true, defaultVisible: true },
+        { key: 'createdBy', label: EPT.s('contentaudit.col_createdby', 'Created By'), sortable: true, defaultVisible: false },
+        { key: 'created', label: EPT.s('contentaudit.col_created', 'Created'), sortable: true, defaultVisible: false, type: 'date' },
+        { key: 'changedBy', label: EPT.s('contentaudit.col_changedby', 'Changed By'), sortable: true, defaultVisible: true },
+        { key: 'changed', label: EPT.s('contentaudit.col_changed', 'Changed'), sortable: true, defaultVisible: true, type: 'date' },
+        { key: 'published', label: EPT.s('contentaudit.col_published', 'Published'), sortable: true, defaultVisible: true, type: 'date' },
+        { key: 'publishedUntil', label: EPT.s('contentaudit.col_publisheduntil', 'Published Until'), sortable: true, defaultVisible: false, type: 'date' },
+        { key: 'masterLanguage', label: EPT.s('contentaudit.col_masterlanguage', 'Master Language'), sortable: true, defaultVisible: false },
+        { key: 'allLanguages', label: EPT.s('contentaudit.col_alllanguages', 'All Languages'), sortable: true, defaultVisible: false },
+        { key: 'referenceCount', label: EPT.s('contentaudit.col_referencecount', 'Reference Count'), sortable: true, defaultVisible: false, align: 'right' },
+        { key: 'versionCount', label: EPT.s('contentaudit.col_versioncount', 'Version Count'), sortable: true, defaultVisible: false, align: 'right' },
+        { key: 'hasPersonalizations', label: EPT.s('contentaudit.col_haspersonalizations', 'Has Personalizations'), sortable: true, defaultVisible: false }
     ];
 
     var QUICK_FILTERS = [
-        { key: '', label: 'All content' },
-        { key: 'pages', label: 'Pages only' },
-        { key: 'blocks', label: 'Blocks only' },
-        { key: 'media', label: 'Media only' },
-        { key: 'unpublished', label: 'Unpublished' },
-        { key: 'unused', label: 'Unused content' }
+        { key: '', label: EPT.s('contentaudit.filter_all', 'All content') },
+        { key: 'pages', label: EPT.s('contentaudit.filter_pages', 'Pages only') },
+        { key: 'blocks', label: EPT.s('contentaudit.filter_blocks', 'Blocks only') },
+        { key: 'media', label: EPT.s('contentaudit.filter_media', 'Media only') },
+        { key: 'unpublished', label: EPT.s('contentaudit.filter_unpublished', 'Unpublished') },
+        { key: 'unused', label: EPT.s('contentaudit.filter_unused', 'Unused content') }
     ];
 
     var FILTER_OPERATORS = [
-        { key: 'contains', label: 'Contains' },
-        { key: 'equals', label: 'Equals' },
-        { key: 'startsWith', label: 'Starts with' },
-        { key: 'isEmpty', label: 'Is empty' },
-        { key: 'isNotEmpty', label: 'Is not empty' }
+        { key: 'contains', label: EPT.s('contentaudit.op_contains', 'Contains') },
+        { key: 'equals', label: EPT.s('contentaudit.op_equals', 'Equals') },
+        { key: 'startsWith', label: EPT.s('contentaudit.op_startswith', 'Starts with') },
+        { key: 'isEmpty', label: EPT.s('contentaudit.op_isempty', 'Is empty') },
+        { key: 'isNotEmpty', label: EPT.s('contentaudit.op_isnotempty', 'Is not empty') }
     ];
 
     // ---- State ----
@@ -213,9 +213,9 @@
         var d = state.data;
         if (!d) return '';
         return '<div class="ept-stats">' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + d.totalCount.toLocaleString() + '</div><div class="ept-stat__label">Total items</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + d.totalPages + '</div><div class="ept-stat__label">Pages</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + d.page + '</div><div class="ept-stat__label">Current page</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + d.totalCount.toLocaleString() + '</div><div class="ept-stat__label">' + EPT.s('contentaudit.stat_totalitems', 'Total items') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + d.totalPages + '</div><div class="ept-stat__label">' + EPT.s('contentaudit.stat_pages', 'Pages') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + d.page + '</div><div class="ept-stat__label">' + EPT.s('contentaudit.stat_currentpage', 'Current page') + '</div></div>' +
             '</div>';
     }
 
@@ -225,7 +225,7 @@
         // Search
         html += '<div class="ept-search" style="min-width:200px;">';
         html += '<span class="ept-search__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>';
-        html += '<input type="text" id="ca-search" placeholder="Search by name..." value="' + escapeHtml(state.search) + '">';
+        html += '<input type="text" id="ca-search" placeholder="' + EPT.s('contentaudit.lbl_search', 'Search by name...') + '" value="' + escapeHtml(state.search) + '">';
         html += '</div>';
 
         // Quick filter
@@ -240,26 +240,26 @@
         html += '<select id="ca-page-size" class="ept-select" style="width:auto">';
         var sizes = [25, 50, 100, 200];
         for (var j = 0; j < sizes.length; j++) {
-            html += '<option value="' + sizes[j] + '"' + (state.pageSize === sizes[j] ? ' selected' : '') + '>' + sizes[j] + ' per page</option>';
+            html += '<option value="' + sizes[j] + '"' + (state.pageSize === sizes[j] ? ' selected' : '') + '>' + EPT.s('contentaudit.perpage', '{0} per page').replace('{0}', sizes[j]) + '</option>';
         }
         html += '</select>';
 
         html += '<div class="ept-toolbar__spacer"></div>';
 
         // Filter button
-        html += '<button class="ept-btn ept-btn--sm" id="ca-filter-btn" title="Add filter">Filter' +
+        html += '<button class="ept-btn ept-btn--sm" id="ca-filter-btn" title="Add filter">' + EPT.s('contentaudit.btn_filter', 'Filter') +
             (state.filters.length > 0 ? ' (' + state.filters.length + ')' : '') + '</button>';
 
         // Column picker
-        html += '<button class="ept-btn ept-btn--sm" id="ca-columns-btn" title="Choose columns">Columns</button>';
+        html += '<button class="ept-btn ept-btn--sm" id="ca-columns-btn" title="Choose columns">' + EPT.s('contentaudit.btn_columns', 'Columns') + '</button>';
 
         // Export dropdown
         html += '<div class="ept-dropdown" style="position:relative;display:inline-block">';
-        html += '<button class="ept-btn ept-btn--sm ept-btn--primary" id="ca-export-btn">Export</button>';
+        html += '<button class="ept-btn ept-btn--sm ept-btn--primary" id="ca-export-btn">' + EPT.s('shared.export', 'Export') + '</button>';
         html += '<div id="ca-export-menu" class="ept-dropdown-menu" style="display:none;position:absolute;right:0;top:100%;z-index:10;background:var(--ept-bg-card,#fff);border:1px solid var(--ept-border,#ddd);border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.15);min-width:140px">';
-        html += '<a href="#" class="ept-dropdown-item" data-format="xlsx" style="display:block;padding:8px 12px;text-decoration:none;color:inherit">Excel (.xlsx)</a>';
-        html += '<a href="#" class="ept-dropdown-item" data-format="csv" style="display:block;padding:8px 12px;text-decoration:none;color:inherit">CSV (.csv)</a>';
-        html += '<a href="#" class="ept-dropdown-item" data-format="json" style="display:block;padding:8px 12px;text-decoration:none;color:inherit">JSON (.json)</a>';
+        html += '<a href="#" class="ept-dropdown-item" data-format="xlsx" style="display:block;padding:8px 12px;text-decoration:none;color:inherit">' + EPT.s('contentaudit.fmt_excel', 'Excel (.xlsx)') + '</a>';
+        html += '<a href="#" class="ept-dropdown-item" data-format="csv" style="display:block;padding:8px 12px;text-decoration:none;color:inherit">' + EPT.s('contentaudit.fmt_csv', 'CSV (.csv)') + '</a>';
+        html += '<a href="#" class="ept-dropdown-item" data-format="json" style="display:block;padding:8px 12px;text-decoration:none;color:inherit">' + EPT.s('contentaudit.fmt_json', 'JSON (.json)') + '</a>';
         html += '</div></div>';
 
         html += '</div>';
@@ -277,7 +277,7 @@
                 if (showVal) html += ' "' + escapeHtml(filter.value) + '"';
                 html += ' &times;</span>';
             }
-            html += '<button class="ept-btn ept-btn--sm" id="ca-clear-filters">Clear all</button>';
+            html += '<button class="ept-btn ept-btn--sm" id="ca-clear-filters">' + EPT.s('contentaudit.btn_clearall', 'Clear all') + '</button>';
             html += '</div>';
         }
 
@@ -286,8 +286,8 @@
 
     function renderTable() {
         var d = state.data;
-        if (!d || !d.items) return '<div class="ept-empty"><p>No data loaded.</p></div>';
-        if (d.items.length === 0) return '<div class="ept-empty"><p>No content matches the current filters.</p></div>';
+        if (!d || !d.items) return '<div class="ept-empty"><p>' + EPT.s('contentaudit.empty_nodata', 'No data loaded.') + '</p></div>';
+        if (d.items.length === 0) return '<div class="ept-empty"><p>' + EPT.s('contentaudit.empty_nofilter', 'No content matches the current filters.') + '</p></div>';
 
         var cols = getVisibleColumnDefs();
         var html = '<div style="overflow-x:auto"><table class="ept-table"><thead><tr>';
@@ -326,7 +326,7 @@
         var alignClass = col.align === 'right' ? ' class="num"' : '';
 
         if (col.key === 'name') {
-            var editLink = row.editUrl ? ' <a href="' + escapeHtml(row.editUrl) + '" target="_blank" title="Open in edit mode" style="opacity:0.5;font-size:0.85em">&#9998;</a>' : '';
+            var editLink = row.editUrl ? ' <a href="' + escapeHtml(row.editUrl) + '" target="_blank" title="' + EPT.s('contentaudit.cell_openeditmode', 'Open in edit mode') + '" style="opacity:0.5;font-size:0.85em">&#9998;</a>' : '';
             return '<td>' + escapeHtml(val) + editLink + '</td>';
         }
 
@@ -342,12 +342,12 @@
 
         if (col.key === 'editUrl') {
             if (!val) return '<td></td>';
-            return '<td><a href="' + escapeHtml(val) + '" target="_blank">Open</a></td>';
+            return '<td><a href="' + escapeHtml(val) + '" target="_blank">' + EPT.s('shared.open', 'Open') + '</a></td>';
         }
 
         if (col.key === 'hasPersonalizations') {
-            if (val === true) return '<td><span class="ept-badge ept-badge--primary">Yes</span></td>';
-            if (val === false) return '<td>No</td>';
+            if (val === true) return '<td><span class="ept-badge ept-badge--primary">' + EPT.s('shared.yes', 'Yes') + '</span></td>';
+            if (val === false) return '<td>' + EPT.s('shared.no', 'No') + '</td>';
             return '<td></td>';
         }
 
@@ -364,15 +364,16 @@
         if (!d || d.totalPages <= 1) return '';
 
         var html = '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--ept-border,#e2e8f0)">';
-        html += '<span style="font-size:0.875em;color:var(--ept-text-muted,#64748b)">Showing ' +
-            (((d.page - 1) * d.pageSize) + 1) + '-' +
-            Math.min(d.page * d.pageSize, d.totalCount) + ' of ' +
-            d.totalCount.toLocaleString() + '</span>';
+        html += '<span style="font-size:0.875em;color:var(--ept-text-muted,#64748b)">' +
+            EPT.s('contentaudit.page_showing', 'Showing {0}-{1} of {2}')
+                .replace('{0}', (((d.page - 1) * d.pageSize) + 1))
+                .replace('{1}', Math.min(d.page * d.pageSize, d.totalCount))
+                .replace('{2}', d.totalCount.toLocaleString()) + '</span>';
 
         html += '<div style="display:flex;gap:4px">';
 
         // Previous
-        html += '<button class="ept-btn ept-btn--sm" data-page="' + (d.page - 1) + '"' + (d.page <= 1 ? ' disabled' : '') + '>&laquo; Prev</button>';
+        html += '<button class="ept-btn ept-btn--sm" data-page="' + (d.page - 1) + '"' + (d.page <= 1 ? ' disabled' : '') + '>&laquo; ' + EPT.s('shared.prev', 'Prev') + '</button>';
 
         // Page numbers (show max 7)
         var startPage = Math.max(1, d.page - 3);
@@ -395,7 +396,7 @@
         }
 
         // Next
-        html += '<button class="ept-btn ept-btn--sm" data-page="' + (d.page + 1) + '"' + (d.page >= d.totalPages ? ' disabled' : '') + '>Next &raquo;</button>';
+        html += '<button class="ept-btn ept-btn--sm" data-page="' + (d.page + 1) + '"' + (d.page >= d.totalPages ? ' disabled' : '') + '>' + EPT.s('shared.next', 'Next') + ' &raquo;</button>';
 
         html += '</div></div>';
         return html;
@@ -533,7 +534,7 @@
     // ---- Column Picker Dialog ----
 
     function openColumnPicker() {
-        var dlg = EPT.openDialog('Choose Columns');
+        var dlg = EPT.openDialog(EPT.s('contentaudit.dlg_choosecolumns', 'Choose Columns'));
         var body = dlg.body;
 
         var html = '<div style="max-height:400px;overflow-y:auto;padding:8px 0">';
@@ -545,9 +546,9 @@
         }
         html += '</div>';
         html += '<div style="display:flex;gap:8px;justify-content:flex-end;padding-top:12px;border-top:1px solid var(--ept-border,#e2e8f0)">';
-        html += '<button class="ept-btn ept-btn--sm" id="ca-col-select-all">Select all</button>';
-        html += '<button class="ept-btn ept-btn--sm" id="ca-col-reset">Reset</button>';
-        html += '<button class="ept-btn ept-btn--sm ept-btn--primary" id="ca-col-apply">Apply</button>';
+        html += '<button class="ept-btn ept-btn--sm" id="ca-col-select-all">' + EPT.s('contentaudit.btn_selectall', 'Select all') + '</button>';
+        html += '<button class="ept-btn ept-btn--sm" id="ca-col-reset">' + EPT.s('contentaudit.btn_reset', 'Reset') + '</button>';
+        html += '<button class="ept-btn ept-btn--sm ept-btn--primary" id="ca-col-apply">' + EPT.s('shared.apply', 'Apply') + '</button>';
         html += '</div>';
         body.innerHTML = html;
 
@@ -582,13 +583,13 @@
     // ---- Filter Dialog ----
 
     function openFilterDialog() {
-        var dlg = EPT.openDialog('Add Filter');
+        var dlg = EPT.openDialog(EPT.s('contentaudit.dlg_addfilter', 'Add Filter'));
         var body = dlg.body;
 
         var html = '<div style="display:flex;flex-direction:column;gap:12px">';
 
         // Column select
-        html += '<div><label style="display:block;margin-bottom:4px;font-weight:600">Column</label>';
+        html += '<div><label style="display:block;margin-bottom:4px;font-weight:600">' + EPT.s('contentaudit.lbl_column', 'Column') + '</label>';
         html += '<select id="ca-filter-col" class="ept-select" style="width:100%">';
         for (var i = 0; i < ALL_COLUMNS.length; i++) {
             html += '<option value="' + ALL_COLUMNS[i].key + '">' + escapeHtml(ALL_COLUMNS[i].label) + '</option>';
@@ -596,7 +597,7 @@
         html += '</select></div>';
 
         // Operator select
-        html += '<div><label style="display:block;margin-bottom:4px;font-weight:600">Operator</label>';
+        html += '<div><label style="display:block;margin-bottom:4px;font-weight:600">' + EPT.s('contentaudit.lbl_operator', 'Operator') + '</label>';
         html += '<select id="ca-filter-op" class="ept-select" style="width:100%">';
         for (var j = 0; j < FILTER_OPERATORS.length; j++) {
             html += '<option value="' + FILTER_OPERATORS[j].key + '">' + escapeHtml(FILTER_OPERATORS[j].label) + '</option>';
@@ -604,13 +605,13 @@
         html += '</select></div>';
 
         // Value
-        html += '<div id="ca-filter-value-wrap"><label style="display:block;margin-bottom:4px;font-weight:600">Value</label>';
-        html += '<input type="text" id="ca-filter-value" class="ept-input" style="width:100%" placeholder="Filter value...">';
+        html += '<div id="ca-filter-value-wrap"><label style="display:block;margin-bottom:4px;font-weight:600">' + EPT.s('contentaudit.lbl_value', 'Value') + '</label>';
+        html += '<input type="text" id="ca-filter-value" class="ept-input" style="width:100%" placeholder="' + EPT.s('contentaudit.lbl_filtervalue', 'Filter value...') + '">';
         html += '</div>';
 
         html += '<div style="display:flex;gap:8px;justify-content:flex-end">';
-        html += '<button class="ept-btn ept-btn--sm" id="ca-filter-cancel">Cancel</button>';
-        html += '<button class="ept-btn ept-btn--sm ept-btn--primary" id="ca-filter-add">Add filter</button>';
+        html += '<button class="ept-btn ept-btn--sm" id="ca-filter-cancel">' + EPT.s('shared.cancel', 'Cancel') + '</button>';
+        html += '<button class="ept-btn ept-btn--sm ept-btn--primary" id="ca-filter-add">' + EPT.s('contentaudit.btn_addfilter', 'Add filter') + '</button>';
         html += '</div></div>';
 
         body.innerHTML = html;
