@@ -31,7 +31,7 @@
         // Info banner
         const info = document.createElement('div');
         info.className = 'ept-alert ept-alert--info';
-        info.innerHTML = `When editors create new content, Optimizely can suggest which content types to use. Define rules below to control these suggestions based on where content is being created.`;
+        info.innerHTML = EPT.s('recommendations.banner_info', 'When editors create new content, Optimizely can suggest which content types to use. Define rules below to control these suggestions based on where content is being created.');
         container.appendChild(info);
 
         // Toolbar
@@ -41,7 +41,7 @@
 
         const addBtn = document.createElement('button');
         addBtn.className = 'ept-btn ept-btn--primary';
-        addBtn.textContent = 'Add Rule';
+        addBtn.textContent = EPT.s('recommendations.btn_addrule', 'Add Rule');
         addBtn.addEventListener('click', () => openRuleDialog(null));
         toolbar.appendChild(addBtn);
         container.appendChild(toolbar);
@@ -54,7 +54,7 @@
         if (allRules.length === 0) {
             const empty = document.createElement('div');
             empty.className = 'ept-card';
-            empty.innerHTML = '<div class="ept-card__body"><div class="ept-empty"><p>No recommendation rules defined yet. Click "Add Rule" to create one.</p></div></div>';
+            empty.innerHTML = '<div class="ept-card__body"><div class="ept-empty"><p>' + EPT.s('recommendations.empty_norules', 'No recommendation rules defined yet. Click "Add Rule" to create one.') + '</p></div></div>';
             container.appendChild(empty);
             return;
         }
@@ -92,14 +92,14 @@
 
                     const editBtn = document.createElement('button');
                     editBtn.className = 'ept-btn ept-btn--sm ept-btn--icon';
-                    editBtn.title = 'Edit rule';
+                    editBtn.title = EPT.s('recommendations.btn_edit', 'Edit');
                     editBtn.innerHTML = EPT.icons.edit;
                     editBtn.addEventListener('click', (e) => { e.stopPropagation(); openRuleDialog(r); });
                     div.appendChild(editBtn);
 
                     const delBtn = document.createElement('button');
                     delBtn.className = 'ept-btn ept-btn--sm ept-btn--icon';
-                    delBtn.title = 'Delete rule';
+                    delBtn.title = EPT.s('recommendations.btn_delete', 'Delete');
                     delBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
                     delBtn.addEventListener('click', (e) => { e.stopPropagation(); deleteRule(r.id); });
                     div.appendChild(delBtn);
@@ -124,7 +124,7 @@
 
     function openRuleDialog(existingRule) {
         const isEdit = !!existingRule;
-        const { body, close } = EPT.openDialog(isEdit ? 'Edit Rule' : 'Add Rule', { wide: true });
+        const { body, close } = EPT.openDialog(isEdit ? EPT.s('recommendations.dlg_editrule', 'Edit Rule') : EPT.s('recommendations.dlg_addrule', 'Add Rule'), { wide: true });
 
         // State
         let selectedParentContentType = existingRule ? existingRule.parentContentType : -1;
@@ -137,7 +137,7 @@
         body.innerHTML = `
             <div style="display:flex;flex-direction:column;gap:16px;padding:8px 0">
                 <div>
-                    <label style="font-weight:600;display:block;margin-bottom:4px">Parent Content Type</label>
+                    <label style="font-weight:600;display:block;margin-bottom:4px">${EPT.s('recommendations.lbl_parenttype', 'Parent Content Type:')}</label>
                     <select class="ept-select" id="dlg-parent-type" style="width:100%">
                         <option value="-1">Any</option>
                         ${allContentTypes.map(t => `<option value="${t.id}" ${t.id === selectedParentContentType ? 'selected' : ''}>${escHtml(t.displayName)}</option>`).join('')}
@@ -162,7 +162,7 @@
                     </label>
                 </div>
                 <div>
-                    <label style="font-weight:600;display:block;margin-bottom:4px">Content Types to Suggest</label>
+                    <label style="font-weight:600;display:block;margin-bottom:4px">${EPT.s('recommendations.lbl_allowedtypes', 'Allowed Child Types:')}</label>
                     <div class="ept-search ept-mb-md" style="margin-bottom:8px">
                         <span class="ept-search__icon">${EPT.icons.search}</span>
                         <input type="text" id="dlg-type-filter" placeholder="Filter types..." style="width:100%" />
@@ -170,8 +170,8 @@
                     <div id="dlg-type-list" style="max-height:250px;overflow-y:auto;border:1px solid var(--ept-border, #e0e0e0);border-radius:4px"></div>
                 </div>
                 <div class="ept-flex" style="justify-content:flex-end;gap:8px;margin-top:8px">
-                    <button class="ept-btn" id="dlg-cancel">Cancel</button>
-                    <button class="ept-btn ept-btn--primary" id="dlg-save">Save</button>
+                    <button class="ept-btn" id="dlg-cancel">${EPT.s('recommendations.btn_cancel', 'Cancel')}</button>
+                    <button class="ept-btn ept-btn--primary" id="dlg-save">${EPT.s('recommendations.btn_save', 'Save')}</button>
                 </div>
             </div>
         `;
@@ -309,7 +309,7 @@
                 await reload();
             } catch (err) {
                 saveBtn.disabled = false;
-                saveBtn.textContent = 'Save';
+                saveBtn.textContent = EPT.s('recommendations.btn_save', 'Save');
                 alert('Error saving rule: ' + err.message);
             }
         });
@@ -318,7 +318,7 @@
     // ── Delete ─────────────────────────────────────────────────────
 
     async function deleteRule(ruleId) {
-        if (!confirm('Are you sure you want to delete this rule?')) return;
+        if (!confirm(EPT.s('recommendations.confirm_delete', 'Delete this rule?'))) return;
 
         try {
             const resp = await fetch(`${API}/rules/${ruleId}`, {
