@@ -19,7 +19,7 @@
     EPT.contentPicker = function (opts = {}) {
         return new Promise((resolve) => {
             const rootId = opts.rootId || 0;
-            const { body, close } = EPT.openDialog(opts.title || 'Select Content', { wide: false });
+            const { body, close } = EPT.openDialog(opts.title || EPT.s('components.picker_title', 'Select Content'), { wide: false });
 
             let selectedItem = null;
             let mode = 'tree'; // 'tree' or 'search'
@@ -28,13 +28,13 @@
             body.innerHTML = `
                 <div class="ept-search ept-mb-md">
                     <span class="ept-search__icon">${EPT.icons.search}</span>
-                    <input type="text" class="ept-picker-search" placeholder="Search content by name..." style="width:100%" />
+                    <input type="text" class="ept-picker-search" placeholder="${EPT.s('components.picker_search', 'Search content by name...')}" style="width:100%" />
                 </div>
                 <div class="ept-picker-tree" style="max-height:400px;overflow-y:auto"></div>
                 <div class="ept-picker-results ept-hidden" style="max-height:400px;overflow-y:auto"></div>
                 <div class="ept-flex ept-mt-md" style="justify-content:flex-end;gap:8px">
-                    <button class="ept-btn ept-picker-cancel">Cancel</button>
-                    <button class="ept-btn ept-btn--primary ept-picker-select" disabled>Select</button>
+                    <button class="ept-btn ept-picker-cancel">${EPT.s('components.btn_cancel', 'Cancel')}</button>
+                    <button class="ept-btn ept-btn--primary ept-picker-select" disabled>${EPT.s('components.btn_select', 'Select')}</button>
                 </div>
             `;
 
@@ -73,7 +73,7 @@
                 try {
                     const items = await EPT.fetchJson(`${API}/content/search?q=${encodeURIComponent(q)}&rootId=${rootId}`);
                     if (items.length === 0) {
-                        EPT.showEmpty(resultsContainer, 'No results found');
+                        EPT.showEmpty(resultsContainer, EPT.s('components.picker_noresults', 'No results found'));
                         return;
                     }
                     renderSearchResults(items);
@@ -185,7 +185,7 @@
      */
     EPT.contentTypePicker = function (opts = {}) {
         return new Promise(async (resolve) => {
-            const { body, close } = EPT.openDialog(opts.title || 'Select Content Type');
+            const { body, close } = EPT.openDialog(opts.title || EPT.s('components.typepicker_title', 'Select Content Type'));
 
             let selectedType = null;
             let allTypes = [];
@@ -193,12 +193,12 @@
             body.innerHTML = `
                 <div class="ept-search ept-mb-md">
                     <span class="ept-search__icon">${EPT.icons.search}</span>
-                    <input type="text" class="ept-picker-search" placeholder="Filter content types..." style="width:100%" />
+                    <input type="text" class="ept-picker-search" placeholder="${EPT.s('components.typepicker_search', 'Search content types...')}" style="width:100%" />
                 </div>
                 <div class="ept-picker-list" style="max-height:400px;overflow-y:auto"></div>
                 <div class="ept-flex ept-mt-md" style="justify-content:flex-end;gap:8px">
-                    <button class="ept-btn ept-picker-cancel">Cancel</button>
-                    <button class="ept-btn ept-btn--primary ept-picker-select" disabled>Select</button>
+                    <button class="ept-btn ept-picker-cancel">${EPT.s('components.btn_cancel', 'Cancel')}</button>
+                    <button class="ept-btn ept-btn--primary ept-picker-select" disabled>${EPT.s('components.btn_select', 'Select')}</button>
                 </div>
             `;
 
@@ -234,7 +234,7 @@
             function renderTypes(types) {
                 listContainer.innerHTML = '';
                 if (types.length === 0) {
-                    EPT.showEmpty(listContainer, 'No content types found');
+                    EPT.showEmpty(listContainer, EPT.s('components.typepicker_noresults', 'No content types found'));
                     return;
                 }
 
