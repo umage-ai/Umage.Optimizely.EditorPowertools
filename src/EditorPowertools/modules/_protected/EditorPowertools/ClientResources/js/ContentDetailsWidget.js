@@ -13,6 +13,21 @@ define([
     _TemplatedMixin, _LayoutWidget,
     _ContextMixin
 ) {
+    function ensureStrings(callback) {
+        if (window.EPT_STRINGS) {
+            callback();
+            return;
+        }
+        var apiBase = window.EPT_API_URL || '/editorpowertools/api';
+        fetch(apiBase + '/ui-strings', { credentials: 'same-origin' })
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (data) {
+                if (data) window.EPT_STRINGS = data;
+                callback();
+            })
+            .catch(function () { callback(); });
+    }
+
     return declare("editorpowertools.ContentDetailsWidget", [_LayoutWidget, _TemplatedMixin, _ContextMixin], {
         templateString: '<div class="ept-cd-root">' +
             '<div data-dojo-attach-point="containerNode" class="ept-cd-container"></div>' +
@@ -22,11 +37,13 @@ define([
 
         postCreate: function () {
             this.inherited(arguments);
-            this.containerNode.innerHTML = '<div class="ept-cd-empty">' + EPT.s('contentdetails.empty_selectcontent', 'Select content to see details.') + '</div>';
-            // Load initial context
             var self = this;
-            when(this.getCurrentContext(), function (context) {
-                self._onContextChanged(context);
+            ensureStrings(function () {
+                self.containerNode.innerHTML = '<div class="ept-cd-empty">' + EPT.s('contentdetails.empty_selectcontent', 'Select content to see details.') + '</div>';
+                // Load initial context
+                when(self.getCurrentContext(), function (context) {
+                    self._onContextChanged(context);
+                });
             });
         },
 

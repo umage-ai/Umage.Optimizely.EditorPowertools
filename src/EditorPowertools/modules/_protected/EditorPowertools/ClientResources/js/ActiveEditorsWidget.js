@@ -11,6 +11,21 @@ define([
     _TemplatedMixin, _LayoutWidget,
     _ContextMixin
 ) {
+    function ensureStrings(callback) {
+        if (window.EPT_STRINGS) {
+            callback();
+            return;
+        }
+        var apiBase = window.EPT_API_URL || '/editorpowertools/api';
+        fetch(apiBase + '/ui-strings', { credentials: 'same-origin' })
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (data) {
+                if (data) window.EPT_STRINGS = data;
+                callback();
+            })
+            .catch(function () { callback(); });
+    }
+
     return declare("editorpowertools.ActiveEditorsWidget", [_LayoutWidget, _TemplatedMixin, _ContextMixin], {
         templateString: '<div class="ept-ae-root">' +
             '<div data-dojo-attach-point="containerNode" class="ept-ae-container">' +
@@ -27,35 +42,37 @@ define([
         postCreate: function () {
             this.inherited(arguments);
             this._injectStyles();
-            this.containerNode.innerHTML = '<div class="ept-ae-empty">' + EPT.s('activeeditors.lbl_connecting', 'Connecting...') + '</div>';
             var self = this;
+            ensureStrings(function () {
+                self.containerNode.innerHTML = '<div class="ept-ae-empty">' + EPT.s('activeeditors.lbl_connecting', 'Connecting...') + '</div>';
 
-            this._presenceHandler = function (e) {
-                self._onPresenceUpdate(e.detail);
-            };
-            this._chatHandler = function (e) {
-                self._chatMessages.push(e.detail);
-                if (self._activeTab !== "chat") {
-                    self._unreadCount++;
-                    self._updateTabBadge();
+                self._presenceHandler = function (e) {
+                    self._onPresenceUpdate(e.detail);
+                };
+                self._chatHandler = function (e) {
+                    self._chatMessages.push(e.detail);
+                    if (self._activeTab !== "chat") {
+                        self._unreadCount++;
+                        self._updateTabBadge();
+                    }
+                    if (self._activeTab === "chat") {
+                        self._renderChat();
+                    }
+                };
+                document.addEventListener("ept-presence-update", self._presenceHandler);
+                document.addEventListener("ept-chat-message", self._chatHandler);
+
+                // Load chat history if hub is connected
+                self._loadChatHistory();
+
+                when(self.getCurrentContext(), function (context) {
+                    self._onContextChanged(context);
+                });
+
+                if (window.__eptActiveEditors) {
+                    self._renderFull(window.__eptActiveEditors);
                 }
-                if (self._activeTab === "chat") {
-                    self._renderChat();
-                }
-            };
-            document.addEventListener("ept-presence-update", this._presenceHandler);
-            document.addEventListener("ept-chat-message", this._chatHandler);
-
-            // Load chat history if hub is connected
-            this._loadChatHistory();
-
-            when(this.getCurrentContext(), function (context) {
-                self._onContextChanged(context);
             });
-
-            if (window.__eptActiveEditors) {
-                this._renderFull(window.__eptActiveEditors);
-            }
         },
 
         destroy: function () {
