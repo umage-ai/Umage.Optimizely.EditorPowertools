@@ -333,6 +333,8 @@
           <delete>Poista</delete>
           <edit>Muokkaa</edit>
           <failed>Epäonnistui</failed>
+          <lbl_by>tekijä</lbl_by>
+          <lbl_na>E/S</lbl_na>
         </shared>
         <contentaudit>
           <col_contentid>Sisältö-ID</col_contentid>
@@ -778,7 +780,47 @@
           <btn_send>Lähetä ilmoitus</btn_send>
           <btn_sending>Lähetetään...</btn_sending>
           <msg_sent>Viesti lähetetty käyttäjälle {0}</msg_sent>
+          <tab_editors>Toimittajat</tab_editors>
+          <tab_chat>Chat</tab_chat>
+          <lbl_connecting>Yhdistetään...</lbl_connecting>
+          <empty_selectcontent>Valitse sisältö nähdäksesi aktiiviset toimittajat.</empty_selectcontent>
+          <section_oncontent>Tässä sisällössä</section_oncontent>
         </activeeditors>
+        <contentdetails>
+          <tab_info>Tiedot</tab_info>
+          <tab_uses>Käyttää</tab_uses>
+          <tab_usedby>Käytetty</tab_usedby>
+          <tab_tree>Puu</tab_tree>
+          <tab_versions>Versiot</tab_versions>
+          <tab_pers>Pers.</tab_pers>
+          <tab_lang>Kieli</tab_lang>
+          <lbl_behind>jäljessä</lbl_behind>
+          <lbl_behindmaster>jäljessä masterista</lbl_behindmaster>
+          <lbl_master>master</lbl_master>
+          <lbl_name>Nimi</lbl_name>
+          <lbl_type>Tyyppi</lbl_type>
+          <lbl_id>ID</lbl_id>
+          <lbl_status>Tila</lbl_status>
+          <lbl_created>Luotu</lbl_created>
+          <lbl_changed>muutettu</lbl_changed>
+          <lbl_published>Julkaistu</lbl_published>
+          <lbl_language>Kieli</lbl_language>
+          <lbl_versions>Versiot</lbl_versions>
+          <lbl_parent>Ylätaso</lbl_parent>
+          <lbl_guid>GUID</lbl_guid>
+          <lbl_compare>vertaa</lbl_compare>
+          <lbl_comparewithprevious>Vertaa edelliseen</lbl_comparewithprevious>
+          <lbl_timeline>Aikajana</lbl_timeline>
+          <lbl_contentstructure>Sisältörakenne</lbl_contentstructure>
+          <lbl_on>on</lbl_on>
+          <btn_fulltimeline>Koko aikajana</btn_fulltimeline>
+          <empty_selectcontent>Valitse sisältö nähdäksesi tiedot.</empty_selectcontent>
+          <empty_uses>Tämä sisältö ei viittaa muuhun sisältöön.</empty_uses>
+          <empty_usedby>Mikään sisältö ei viittaa tähän kohteeseen.</empty_usedby>
+          <empty_tree>Sisäkkäistä sisältöä ei löydy.</empty_tree>
+          <empty_versions>Versioita ei löydy.</empty_versions>
+          <empty_history>Versiohistoria ei ole saatavilla.</empty_history>
+        </contentdetails>
         <components>
           <picker_title>Valitse sisältö</picker_title>
           <picker_search>Hae sisältöä nimellä...</picker_search>

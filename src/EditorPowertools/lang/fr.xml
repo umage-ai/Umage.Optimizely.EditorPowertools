@@ -333,6 +333,8 @@
           <delete>Supprimer</delete>
           <edit>Modifier</edit>
           <failed>Échec</failed>
+          <lbl_by>par</lbl_by>
+          <lbl_na>N/A</lbl_na>
         </shared>
         <contentaudit>
           <col_contentid>ID contenu</col_contentid>
@@ -778,7 +780,47 @@
           <btn_send>Envoyer la notification</btn_send>
           <btn_sending>Envoi en cours...</btn_sending>
           <msg_sent>Message envoyé à {0}</msg_sent>
+          <tab_editors>Rédacteurs</tab_editors>
+          <tab_chat>Chat</tab_chat>
+          <lbl_connecting>Connexion...</lbl_connecting>
+          <empty_selectcontent>Sélectionnez un contenu pour voir les rédacteurs actifs.</empty_selectcontent>
+          <section_oncontent>Sur ce contenu</section_oncontent>
         </activeeditors>
+        <contentdetails>
+          <tab_info>Infos</tab_info>
+          <tab_uses>Utilise</tab_uses>
+          <tab_usedby>Utilisé par</tab_usedby>
+          <tab_tree>Arborescence</tab_tree>
+          <tab_versions>Versions</tab_versions>
+          <tab_pers>Pers.</tab_pers>
+          <tab_lang>Langue</tab_lang>
+          <lbl_behind>en retard</lbl_behind>
+          <lbl_behindmaster>en retard sur le maître</lbl_behindmaster>
+          <lbl_master>maître</lbl_master>
+          <lbl_name>Nom</lbl_name>
+          <lbl_type>Type</lbl_type>
+          <lbl_id>ID</lbl_id>
+          <lbl_status>Statut</lbl_status>
+          <lbl_created>Créé</lbl_created>
+          <lbl_changed>modifié</lbl_changed>
+          <lbl_published>Publié</lbl_published>
+          <lbl_language>Langue</lbl_language>
+          <lbl_versions>Versions</lbl_versions>
+          <lbl_parent>Parent</lbl_parent>
+          <lbl_guid>GUID</lbl_guid>
+          <lbl_compare>comparer</lbl_compare>
+          <lbl_comparewithprevious>Comparer avec la version précédente</lbl_comparewithprevious>
+          <lbl_timeline>Chronologie</lbl_timeline>
+          <lbl_contentstructure>Structure du contenu</lbl_contentstructure>
+          <lbl_on>sur</lbl_on>
+          <btn_fulltimeline>Chronologie complète</btn_fulltimeline>
+          <empty_selectcontent>Sélectionnez un contenu pour voir les détails.</empty_selectcontent>
+          <empty_uses>Ce contenu ne fait pas référence à d'autres contenus.</empty_uses>
+          <empty_usedby>Aucun contenu ne fait référence à cet élément.</empty_usedby>
+          <empty_tree>Aucun contenu imbriqué trouvé.</empty_tree>
+          <empty_versions>Aucune version trouvée.</empty_versions>
+          <empty_history>Aucun historique de version disponible.</empty_history>
+        </contentdetails>
         <components>
           <picker_title>Sélectionner du contenu</picker_title>
           <picker_search>Rechercher du contenu par nom...</picker_search>

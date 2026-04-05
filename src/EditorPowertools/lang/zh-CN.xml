@@ -333,6 +333,8 @@
           <delete>删除</delete>
           <edit>编辑</edit>
           <failed>失败</failed>
+          <lbl_by>由</lbl_by>
+          <lbl_na>不适用</lbl_na>
         </shared>
         <contentaudit>
           <col_contentid>内容ID</col_contentid>
@@ -778,7 +780,47 @@
           <btn_send>发送通知</btn_send>
           <btn_sending>发送中...</btn_sending>
           <msg_sent>消息已发送给 {0}</msg_sent>
+          <tab_editors>编辑者</tab_editors>
+          <tab_chat>聊天</tab_chat>
+          <lbl_connecting>正在连接...</lbl_connecting>
+          <empty_selectcontent>选择内容以查看活跃编辑者。</empty_selectcontent>
+          <section_oncontent>在此内容上</section_oncontent>
         </activeeditors>
+        <contentdetails>
+          <tab_info>信息</tab_info>
+          <tab_uses>使用</tab_uses>
+          <tab_usedby>被使用</tab_usedby>
+          <tab_tree>树形</tab_tree>
+          <tab_versions>版本</tab_versions>
+          <tab_pers>个性.</tab_pers>
+          <tab_lang>语言</tab_lang>
+          <lbl_behind>落后</lbl_behind>
+          <lbl_behindmaster>落后于主版本</lbl_behindmaster>
+          <lbl_master>主版本</lbl_master>
+          <lbl_name>名称</lbl_name>
+          <lbl_type>类型</lbl_type>
+          <lbl_id>ID</lbl_id>
+          <lbl_status>状态</lbl_status>
+          <lbl_created>创建时间</lbl_created>
+          <lbl_changed>已修改</lbl_changed>
+          <lbl_published>发布时间</lbl_published>
+          <lbl_language>语言</lbl_language>
+          <lbl_versions>版本</lbl_versions>
+          <lbl_parent>父级</lbl_parent>
+          <lbl_guid>GUID</lbl_guid>
+          <lbl_compare>比较</lbl_compare>
+          <lbl_comparewithprevious>与上一版本比较</lbl_comparewithprevious>
+          <lbl_timeline>时间线</lbl_timeline>
+          <lbl_contentstructure>内容结构</lbl_contentstructure>
+          <lbl_on>在</lbl_on>
+          <btn_fulltimeline>完整时间线</btn_fulltimeline>
+          <empty_selectcontent>选择内容以查看详情。</empty_selectcontent>
+          <empty_uses>此内容不引用其他内容。</empty_uses>
+          <empty_usedby>没有内容引用此项目。</empty_usedby>
+          <empty_tree>未找到嵌套内容。</empty_tree>
+          <empty_versions>未找到版本。</empty_versions>
+          <empty_history>没有可用的版本历史记录。</empty_history>
+        </contentdetails>
         <components>
           <picker_title>选择内容</picker_title>
           <picker_search>按名称搜索内容...</picker_search>

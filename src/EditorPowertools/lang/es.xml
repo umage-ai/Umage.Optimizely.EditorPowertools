@@ -333,6 +333,8 @@
           <delete>Eliminar</delete>
           <edit>Editar</edit>
           <failed>Error</failed>
+          <lbl_by>por</lbl_by>
+          <lbl_na>N/D</lbl_na>
         </shared>
         <contentaudit>
           <col_contentid>ID de contenido</col_contentid>
@@ -778,7 +780,47 @@
           <btn_send>Enviar notificación</btn_send>
           <btn_sending>Enviando...</btn_sending>
           <msg_sent>Mensaje enviado a {0}</msg_sent>
+          <tab_editors>Editores</tab_editors>
+          <tab_chat>Chat</tab_chat>
+          <lbl_connecting>Conectando...</lbl_connecting>
+          <empty_selectcontent>Seleccione contenido para ver los editores activos.</empty_selectcontent>
+          <section_oncontent>En este contenido</section_oncontent>
         </activeeditors>
+        <contentdetails>
+          <tab_info>Info</tab_info>
+          <tab_uses>Usa</tab_uses>
+          <tab_usedby>Usado por</tab_usedby>
+          <tab_tree>Árbol</tab_tree>
+          <tab_versions>Versiones</tab_versions>
+          <tab_pers>Pers.</tab_pers>
+          <tab_lang>Idioma</tab_lang>
+          <lbl_behind>detrás</lbl_behind>
+          <lbl_behindmaster>detrás del maestro</lbl_behindmaster>
+          <lbl_master>maestro</lbl_master>
+          <lbl_name>Nombre</lbl_name>
+          <lbl_type>Tipo</lbl_type>
+          <lbl_id>ID</lbl_id>
+          <lbl_status>Estado</lbl_status>
+          <lbl_created>Creado</lbl_created>
+          <lbl_changed>modificado</lbl_changed>
+          <lbl_published>Publicado</lbl_published>
+          <lbl_language>Idioma</lbl_language>
+          <lbl_versions>Versiones</lbl_versions>
+          <lbl_parent>Principal</lbl_parent>
+          <lbl_guid>GUID</lbl_guid>
+          <lbl_compare>comparar</lbl_compare>
+          <lbl_comparewithprevious>Comparar con anterior</lbl_comparewithprevious>
+          <lbl_timeline>Línea de tiempo</lbl_timeline>
+          <lbl_contentstructure>Estructura del contenido</lbl_contentstructure>
+          <lbl_on>en</lbl_on>
+          <btn_fulltimeline>Línea de tiempo completa</btn_fulltimeline>
+          <empty_selectcontent>Seleccione contenido para ver detalles.</empty_selectcontent>
+          <empty_uses>Este contenido no hace referencia a otro contenido.</empty_uses>
+          <empty_usedby>Ningún contenido hace referencia a este elemento.</empty_usedby>
+          <empty_tree>No se encontró contenido anidado.</empty_tree>
+          <empty_versions>No se encontraron versiones.</empty_versions>
+          <empty_history>No hay historial de versiones disponible.</empty_history>
+        </contentdetails>
         <components>
           <picker_title>Seleccionar contenido</picker_title>
           <picker_search>Buscar contenido por nombre...</picker_search>

@@ -333,6 +333,8 @@
           <delete>Slet</delete>
           <edit>Rediger</edit>
           <failed>Mislykkedes</failed>
+          <lbl_by>af</lbl_by>
+          <lbl_na>I/T</lbl_na>
         </shared>
         <contentaudit>
           <col_contentid>Indholds-ID</col_contentid>
@@ -778,7 +780,47 @@
           <btn_send>Send notifikation</btn_send>
           <btn_sending>Sender...</btn_sending>
           <msg_sent>Besked sendt til {0}</msg_sent>
+          <tab_editors>Redaktører</tab_editors>
+          <tab_chat>Chat</tab_chat>
+          <lbl_connecting>Forbinder...</lbl_connecting>
+          <empty_selectcontent>Vælg indhold for at se aktive redaktører.</empty_selectcontent>
+          <section_oncontent>På dette indhold</section_oncontent>
         </activeeditors>
+        <contentdetails>
+          <tab_info>Info</tab_info>
+          <tab_uses>Bruger</tab_uses>
+          <tab_usedby>Bruges af</tab_usedby>
+          <tab_tree>Træ</tab_tree>
+          <tab_versions>Versioner</tab_versions>
+          <tab_pers>Pers.</tab_pers>
+          <tab_lang>Sprog</tab_lang>
+          <lbl_behind>bagud</lbl_behind>
+          <lbl_behindmaster>bagud i forhold til master</lbl_behindmaster>
+          <lbl_master>master</lbl_master>
+          <lbl_name>Navn</lbl_name>
+          <lbl_type>Type</lbl_type>
+          <lbl_id>ID</lbl_id>
+          <lbl_status>Status</lbl_status>
+          <lbl_created>Oprettet</lbl_created>
+          <lbl_changed>ændret</lbl_changed>
+          <lbl_published>Udgivet</lbl_published>
+          <lbl_language>Sprog</lbl_language>
+          <lbl_versions>Versioner</lbl_versions>
+          <lbl_parent>Overordnet</lbl_parent>
+          <lbl_guid>GUID</lbl_guid>
+          <lbl_compare>sammenlign</lbl_compare>
+          <lbl_comparewithprevious>Sammenlign med tidligere</lbl_comparewithprevious>
+          <lbl_timeline>Tidslinje</lbl_timeline>
+          <lbl_contentstructure>Indholdsstruktur</lbl_contentstructure>
+          <lbl_on>på</lbl_on>
+          <btn_fulltimeline>Fuld tidslinje</btn_fulltimeline>
+          <empty_selectcontent>Vælg indhold for at se detaljer.</empty_selectcontent>
+          <empty_uses>Dette indhold refererer ikke til andet indhold.</empty_uses>
+          <empty_usedby>Intet indhold refererer til dette element.</empty_usedby>
+          <empty_tree>Intet indlejret indhold fundet.</empty_tree>
+          <empty_versions>Ingen versioner fundet.</empty_versions>
+          <empty_history>Ingen versionshistorik tilgængelig.</empty_history>
+        </contentdetails>
         <components>
           <picker_title>Vælg indhold</picker_title>
           <picker_search>Søg indhold efter navn...</picker_search>

@@ -333,6 +333,8 @@
           <delete>Verwijderen</delete>
           <edit>Bewerken</edit>
           <failed>Mislukt</failed>
+          <lbl_by>door</lbl_by>
+          <lbl_na>N/B</lbl_na>
         </shared>
         <contentaudit>
           <col_contentid>Inhouds-ID</col_contentid>
@@ -778,7 +780,47 @@
           <btn_send>Melding verzenden</btn_send>
           <btn_sending>Wordt verzonden...</btn_sending>
           <msg_sent>Bericht verzonden naar {0}</msg_sent>
+          <tab_editors>Redacteuren</tab_editors>
+          <tab_chat>Chat</tab_chat>
+          <lbl_connecting>Verbinden...</lbl_connecting>
+          <empty_selectcontent>Selecteer inhoud om actieve redacteuren te zien.</empty_selectcontent>
+          <section_oncontent>Op deze inhoud</section_oncontent>
         </activeeditors>
+        <contentdetails>
+          <tab_info>Info</tab_info>
+          <tab_uses>Gebruikt</tab_uses>
+          <tab_usedby>Gebruikt door</tab_usedby>
+          <tab_tree>Boom</tab_tree>
+          <tab_versions>Versies</tab_versions>
+          <tab_pers>Pers.</tab_pers>
+          <tab_lang>Taal</tab_lang>
+          <lbl_behind>achter</lbl_behind>
+          <lbl_behindmaster>achter master</lbl_behindmaster>
+          <lbl_master>master</lbl_master>
+          <lbl_name>Naam</lbl_name>
+          <lbl_type>Type</lbl_type>
+          <lbl_id>ID</lbl_id>
+          <lbl_status>Status</lbl_status>
+          <lbl_created>Gemaakt</lbl_created>
+          <lbl_changed>gewijzigd</lbl_changed>
+          <lbl_published>Gepubliceerd</lbl_published>
+          <lbl_language>Taal</lbl_language>
+          <lbl_versions>Versies</lbl_versions>
+          <lbl_parent>Bovenliggend</lbl_parent>
+          <lbl_guid>GUID</lbl_guid>
+          <lbl_compare>vergelijken</lbl_compare>
+          <lbl_comparewithprevious>Vergelijk met vorige</lbl_comparewithprevious>
+          <lbl_timeline>Tijdlijn</lbl_timeline>
+          <lbl_contentstructure>Inhoudsstructuur</lbl_contentstructure>
+          <lbl_on>op</lbl_on>
+          <btn_fulltimeline>Volledige tijdlijn</btn_fulltimeline>
+          <empty_selectcontent>Selecteer inhoud om details te zien.</empty_selectcontent>
+          <empty_uses>Deze inhoud verwijst niet naar andere inhoud.</empty_uses>
+          <empty_usedby>Geen inhoud verwijst naar dit item.</empty_usedby>
+          <empty_tree>Geen geneste inhoud gevonden.</empty_tree>
+          <empty_versions>Geen versies gevonden.</empty_versions>
+          <empty_history>Geen versiegeschiedenis beschikbaar.</empty_history>
+        </contentdetails>
         <components>
           <picker_title>Inhoud selecteren</picker_title>
           <picker_search>Inhoud zoeken op naam...</picker_search>

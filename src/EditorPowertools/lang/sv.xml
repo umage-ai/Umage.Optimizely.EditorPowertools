@@ -333,6 +333,8 @@
           <delete>Ta bort</delete>
           <edit>Redigera</edit>
           <failed>Misslyckades</failed>
+          <lbl_by>av</lbl_by>
+          <lbl_na>N/A</lbl_na>
         </shared>
         <contentaudit>
           <col_contentid>Innehålls-ID</col_contentid>
@@ -778,7 +780,47 @@
           <btn_send>Skicka avisering</btn_send>
           <btn_sending>Skickar...</btn_sending>
           <msg_sent>Meddelande skickat till {0}</msg_sent>
+          <tab_editors>Redaktörer</tab_editors>
+          <tab_chat>Chatt</tab_chat>
+          <lbl_connecting>Ansluter...</lbl_connecting>
+          <empty_selectcontent>Välj innehåll för att se aktiva redaktörer.</empty_selectcontent>
+          <section_oncontent>På det här innehållet</section_oncontent>
         </activeeditors>
+        <contentdetails>
+          <tab_info>Info</tab_info>
+          <tab_uses>Använder</tab_uses>
+          <tab_usedby>Används av</tab_usedby>
+          <tab_tree>Träd</tab_tree>
+          <tab_versions>Versioner</tab_versions>
+          <tab_pers>Pers.</tab_pers>
+          <tab_lang>Språk</tab_lang>
+          <lbl_behind>efter</lbl_behind>
+          <lbl_behindmaster>efter master</lbl_behindmaster>
+          <lbl_master>master</lbl_master>
+          <lbl_name>Namn</lbl_name>
+          <lbl_type>Typ</lbl_type>
+          <lbl_id>ID</lbl_id>
+          <lbl_status>Status</lbl_status>
+          <lbl_created>Skapad</lbl_created>
+          <lbl_changed>ändrad</lbl_changed>
+          <lbl_published>Publicerad</lbl_published>
+          <lbl_language>Språk</lbl_language>
+          <lbl_versions>Versioner</lbl_versions>
+          <lbl_parent>Förälder</lbl_parent>
+          <lbl_guid>GUID</lbl_guid>
+          <lbl_compare>jämför</lbl_compare>
+          <lbl_comparewithprevious>Jämför med föregående</lbl_comparewithprevious>
+          <lbl_timeline>Tidslinje</lbl_timeline>
+          <lbl_contentstructure>Innehållsstruktur</lbl_contentstructure>
+          <lbl_on>på</lbl_on>
+          <btn_fulltimeline>Fullständig tidslinje</btn_fulltimeline>
+          <empty_selectcontent>Välj innehåll för att se detaljer.</empty_selectcontent>
+          <empty_uses>Det här innehållet refererar inte till annat innehåll.</empty_uses>
+          <empty_usedby>Inget innehåll refererar till det här objektet.</empty_usedby>
+          <empty_tree>Inget kapslat innehåll hittades.</empty_tree>
+          <empty_versions>Inga versioner hittades.</empty_versions>
+          <empty_history>Ingen versionshistorik tillgänglig.</empty_history>
+        </contentdetails>
         <components>
           <picker_title>Välj innehåll</picker_title>
           <picker_search>Sök innehåll på namn...</picker_search>

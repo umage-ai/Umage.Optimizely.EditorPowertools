@@ -333,6 +333,8 @@
           <delete>削除</delete>
           <edit>編集</edit>
           <failed>失敗</failed>
+          <lbl_by>作成者</lbl_by>
+          <lbl_na>N/A</lbl_na>
         </shared>
         <contentaudit>
           <col_contentid>コンテンツID</col_contentid>
@@ -778,7 +780,47 @@
           <btn_send>通知を送信</btn_send>
           <btn_sending>送信中...</btn_sending>
           <msg_sent>{0} にメッセージを送信しました</msg_sent>
+          <tab_editors>編集者</tab_editors>
+          <tab_chat>チャット</tab_chat>
+          <lbl_connecting>接続中...</lbl_connecting>
+          <empty_selectcontent>コンテンツを選択してアクティブな編集者を表示します。</empty_selectcontent>
+          <section_oncontent>このコンテンツ上</section_oncontent>
         </activeeditors>
+        <contentdetails>
+          <tab_info>情報</tab_info>
+          <tab_uses>使用</tab_uses>
+          <tab_usedby>使用元</tab_usedby>
+          <tab_tree>ツリー</tab_tree>
+          <tab_versions>バージョン</tab_versions>
+          <tab_pers>個別.</tab_pers>
+          <tab_lang>言語</tab_lang>
+          <lbl_behind>遅れ</lbl_behind>
+          <lbl_behindmaster>マスターより遅れ</lbl_behindmaster>
+          <lbl_master>マスター</lbl_master>
+          <lbl_name>名前</lbl_name>
+          <lbl_type>タイプ</lbl_type>
+          <lbl_id>ID</lbl_id>
+          <lbl_status>ステータス</lbl_status>
+          <lbl_created>作成日</lbl_created>
+          <lbl_changed>変更済み</lbl_changed>
+          <lbl_published>公開日</lbl_published>
+          <lbl_language>言語</lbl_language>
+          <lbl_versions>バージョン</lbl_versions>
+          <lbl_parent>親</lbl_parent>
+          <lbl_guid>GUID</lbl_guid>
+          <lbl_compare>比較</lbl_compare>
+          <lbl_comparewithprevious>前のバージョンと比較</lbl_comparewithprevious>
+          <lbl_timeline>タイムライン</lbl_timeline>
+          <lbl_contentstructure>コンテンツ構造</lbl_contentstructure>
+          <lbl_on>の</lbl_on>
+          <btn_fulltimeline>全タイムライン</btn_fulltimeline>
+          <empty_selectcontent>コンテンツを選択して詳細を表示します。</empty_selectcontent>
+          <empty_uses>このコンテンツは他のコンテンツを参照していません。</empty_uses>
+          <empty_usedby>このアイテムを参照するコンテンツはありません。</empty_usedby>
+          <empty_tree>ネストされたコンテンツは見つかりません。</empty_tree>
+          <empty_versions>バージョンが見つかりません。</empty_versions>
+          <empty_history>バージョン履歴はありません。</empty_history>
+        </contentdetails>
         <components>
           <picker_title>コンテンツを選択</picker_title>
           <picker_search>名前でコンテンツを検索...</picker_search>

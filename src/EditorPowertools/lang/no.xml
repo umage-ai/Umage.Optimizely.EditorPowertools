@@ -333,6 +333,8 @@
           <delete>Slett</delete>
           <edit>Rediger</edit>
           <failed>Mislyktes</failed>
+          <lbl_by>av</lbl_by>
+          <lbl_na>I/T</lbl_na>
         </shared>
         <contentaudit>
           <col_contentid>Innholds-ID</col_contentid>
@@ -778,7 +780,47 @@
           <btn_send>Send varsel</btn_send>
           <btn_sending>Sender...</btn_sending>
           <msg_sent>Melding sendt til {0}</msg_sent>
+          <tab_editors>Redaktører</tab_editors>
+          <tab_chat>Chat</tab_chat>
+          <lbl_connecting>Kobler til...</lbl_connecting>
+          <empty_selectcontent>Velg innhold for å se aktive redaktører.</empty_selectcontent>
+          <section_oncontent>På dette innholdet</section_oncontent>
         </activeeditors>
+        <contentdetails>
+          <tab_info>Info</tab_info>
+          <tab_uses>Bruker</tab_uses>
+          <tab_usedby>Brukt av</tab_usedby>
+          <tab_tree>Tre</tab_tree>
+          <tab_versions>Versjoner</tab_versions>
+          <tab_pers>Pers.</tab_pers>
+          <tab_lang>Språk</tab_lang>
+          <lbl_behind>bak</lbl_behind>
+          <lbl_behindmaster>bak master</lbl_behindmaster>
+          <lbl_master>master</lbl_master>
+          <lbl_name>Navn</lbl_name>
+          <lbl_type>Type</lbl_type>
+          <lbl_id>ID</lbl_id>
+          <lbl_status>Status</lbl_status>
+          <lbl_created>Opprettet</lbl_created>
+          <lbl_changed>endret</lbl_changed>
+          <lbl_published>Publisert</lbl_published>
+          <lbl_language>Språk</lbl_language>
+          <lbl_versions>Versjoner</lbl_versions>
+          <lbl_parent>Overordnet</lbl_parent>
+          <lbl_guid>GUID</lbl_guid>
+          <lbl_compare>sammenlign</lbl_compare>
+          <lbl_comparewithprevious>Sammenlign med forrige</lbl_comparewithprevious>
+          <lbl_timeline>Tidslinje</lbl_timeline>
+          <lbl_contentstructure>Innholdsstruktur</lbl_contentstructure>
+          <lbl_on>på</lbl_on>
+          <btn_fulltimeline>Full tidslinje</btn_fulltimeline>
+          <empty_selectcontent>Velg innhold for å se detaljer.</empty_selectcontent>
+          <empty_uses>Dette innholdet refererer ikke til annet innhold.</empty_uses>
+          <empty_usedby>Ingen innhold refererer til dette elementet.</empty_usedby>
+          <empty_tree>Ingen nestet innhold funnet.</empty_tree>
+          <empty_versions>Ingen versjoner funnet.</empty_versions>
+          <empty_history>Ingen versjonshistorikk tilgjengelig.</empty_history>
+        </contentdetails>
         <components>
           <picker_title>Velg innhold</picker_title>
           <picker_search>Søk innhold etter navn...</picker_search>
