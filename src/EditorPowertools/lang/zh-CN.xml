@@ -314,444 +314,444 @@
       <!-- JavaScript UI strings (injected via window.EPT_STRINGS) -->
       <ui>
         <shared>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
-          <cancel>Cancel</cancel>
-          <apply>Apply</apply>
-          <close>Close</close>
-          <runnow>Run now</runnow>
-          <refresh>Refresh</refresh>
-          <starting>Starting...</starting>
-          <export>Export</export>
-          <prev>Prev</prev>
-          <next>Next</next>
-          <yes>Yes</yes>
-          <no>No</no>
-          <open>Open</open>
-          <all>All</all>
-          <save>Save</save>
-          <delete>Delete</delete>
-          <edit>Edit</edit>
-          <failed>Failed</failed>
+          <loading>加载中...</loading>
+          <noresults>未找到结果</noresults>
+          <cancel>取消</cancel>
+          <apply>应用</apply>
+          <close>关闭</close>
+          <runnow>立即运行</runnow>
+          <refresh>刷新</refresh>
+          <starting>启动中...</starting>
+          <export>导出</export>
+          <prev>上一页</prev>
+          <next>下一页</next>
+          <yes>是</yes>
+          <no>否</no>
+          <open>打开</open>
+          <all>全部</all>
+          <save>保存</save>
+          <delete>删除</delete>
+          <edit>编辑</edit>
+          <failed>失败</failed>
         </shared>
         <contentaudit>
-          <col_contentid>Content ID</col_contentid>
-          <col_name>Name</col_name>
-          <col_language>Language</col_language>
-          <col_contenttype>Content Type</col_contenttype>
-          <col_maintype>Main Type</col_maintype>
+          <col_contentid>内容ID</col_contentid>
+          <col_name>名称</col_name>
+          <col_language>语言</col_language>
+          <col_contenttype>内容类型</col_contenttype>
+          <col_maintype>主类型</col_maintype>
           <col_url>URL</col_url>
-          <col_editurl>Edit URL</col_editurl>
-          <col_breadcrumb>Breadcrumb</col_breadcrumb>
-          <col_status>Status</col_status>
-          <col_createdby>Created By</col_createdby>
-          <col_created>Created</col_created>
-          <col_changedby>Changed By</col_changedby>
-          <col_changed>Changed</col_changed>
-          <col_published>Published</col_published>
-          <col_publisheduntil>Published Until</col_publisheduntil>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_alllanguages>All Languages</col_alllanguages>
-          <col_referencecount>Reference Count</col_referencecount>
-          <col_versioncount>Version Count</col_versioncount>
-          <col_haspersonalizations>Has Personalizations</col_haspersonalizations>
-          <filter_all>All content</filter_all>
-          <filter_pages>Pages only</filter_pages>
-          <filter_blocks>Blocks only</filter_blocks>
-          <filter_media>Media only</filter_media>
-          <filter_unpublished>Unpublished</filter_unpublished>
-          <filter_unused>Unused content</filter_unused>
-          <op_contains>Contains</op_contains>
-          <op_equals>Equals</op_equals>
-          <op_startswith>Starts with</op_startswith>
-          <op_isempty>Is empty</op_isempty>
-          <op_isnotempty>Is not empty</op_isnotempty>
-          <btn_filter>Filter</btn_filter>
-          <btn_columns>Columns</btn_columns>
-          <btn_selectall>Select all</btn_selectall>
-          <btn_reset>Reset</btn_reset>
-          <btn_addfilter>Add filter</btn_addfilter>
-          <btn_clearall>Clear all</btn_clearall>
-          <dlg_choosecolumns>Choose Columns</dlg_choosecolumns>
-          <dlg_addfilter>Add Filter</dlg_addfilter>
-          <lbl_column>Column</lbl_column>
-          <lbl_operator>Operator</lbl_operator>
-          <lbl_value>Value</lbl_value>
-          <lbl_filtervalue>Filter value...</lbl_filtervalue>
-          <lbl_search>Search by name...</lbl_search>
-          <stat_totalitems>Total items</stat_totalitems>
-          <stat_pages>Pages</stat_pages>
-          <stat_currentpage>Current page</stat_currentpage>
-          <empty_nodata>No data loaded.</empty_nodata>
-          <empty_nofilter>No content matches the current filters.</empty_nofilter>
-          <page_showing>Showing {0}-{1} of {2}</page_showing>
-          <perpage>{0} per page</perpage>
+          <col_editurl>编辑URL</col_editurl>
+          <col_breadcrumb>面包屑导航</col_breadcrumb>
+          <col_status>状态</col_status>
+          <col_createdby>创建者</col_createdby>
+          <col_created>创建时间</col_created>
+          <col_changedby>修改者</col_changedby>
+          <col_changed>修改时间</col_changed>
+          <col_published>发布时间</col_published>
+          <col_publisheduntil>发布截止时间</col_publisheduntil>
+          <col_masterlanguage>主语言</col_masterlanguage>
+          <col_alllanguages>所有语言</col_alllanguages>
+          <col_referencecount>引用数</col_referencecount>
+          <col_versioncount>版本数</col_versioncount>
+          <col_haspersonalizations>包含个性化</col_haspersonalizations>
+          <filter_all>所有内容</filter_all>
+          <filter_pages>仅页面</filter_pages>
+          <filter_blocks>仅块</filter_blocks>
+          <filter_media>仅媒体</filter_media>
+          <filter_unpublished>未发布</filter_unpublished>
+          <filter_unused>未使用的内容</filter_unused>
+          <op_contains>包含</op_contains>
+          <op_equals>等于</op_equals>
+          <op_startswith>开头为</op_startswith>
+          <op_isempty>为空</op_isempty>
+          <op_isnotempty>不为空</op_isnotempty>
+          <btn_filter>筛选</btn_filter>
+          <btn_columns>列</btn_columns>
+          <btn_selectall>全选</btn_selectall>
+          <btn_reset>重置</btn_reset>
+          <btn_addfilter>添加筛选条件</btn_addfilter>
+          <btn_clearall>清除全部</btn_clearall>
+          <dlg_choosecolumns>选择列</dlg_choosecolumns>
+          <dlg_addfilter>添加筛选条件</dlg_addfilter>
+          <lbl_column>列</lbl_column>
+          <lbl_operator>运算符</lbl_operator>
+          <lbl_value>值</lbl_value>
+          <lbl_filtervalue>筛选值...</lbl_filtervalue>
+          <lbl_search>按名称搜索...</lbl_search>
+          <stat_totalitems>总条目数</stat_totalitems>
+          <stat_pages>页面</stat_pages>
+          <stat_currentpage>当前页</stat_currentpage>
+          <empty_nodata>暂无数据。</empty_nodata>
+          <empty_nofilter>没有内容符合当前筛选条件。</empty_nofilter>
+          <page_showing>显示第 {0}-{1} 条，共 {2} 条</page_showing>
+          <perpage>每页 {0} 条</perpage>
           <fmt_excel>Excel (.xlsx)</fmt_excel>
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
-          <cell_openeditmode>Open in edit mode</cell_openeditmode>
+          <cell_openeditmode>在编辑模式下打开</cell_openeditmode>
         </contentaudit>
         <languageaudit>
-          <tab_overview>Overview</tab_overview>
-          <tab_missing>Missing Translations</tab_missing>
-          <tab_stale>Stale Translations</tab_stale>
-          <tab_queue>Translation Queue</tab_queue>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_languages>Languages</stat_languages>
-          <stat_missing>Missing Translations</stat_missing>
-          <stat_stale>Stale (30+ days)</stat_stale>
-          <stat_itemstotranslate>Items to Translate</stat_itemstotranslate>
-          <stat_page>Page</stat_page>
-          <stat_missing_lang>Missing {0}</stat_missing_lang>
-          <stat_stale_count>Stale Translations</stat_stale_count>
-          <card_coverage>Language Coverage</card_coverage>
-          <card_contentitems>{0} content items</card_contentitems>
-          <card_published>{0} published</card_published>
-          <lbl_language>Language:</lbl_language>
-          <lbl_threshold>Threshold (days):</lbl_threshold>
-          <lbl_targetlang>Target Language:</lbl_targetlang>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_alllanguages>All languages</lbl_alllanguages>
-          <lbl_alltypes>All types</lbl_alltypes>
-          <btn_coveragetree>Coverage Tree</btn_coveragetree>
-          <btn_apply>Apply</btn_apply>
-          <btn_exportcsv>Export CSV</btn_exportcsv>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_started>Job started, please refresh in a few minutes.</btn_started>
-          <btn_failed>Failed to start job</btn_failed>
+          <tab_overview>概览</tab_overview>
+          <tab_missing>缺失翻译</tab_missing>
+          <tab_stale>过期翻译</tab_stale>
+          <tab_queue>翻译队列</tab_queue>
+          <stat_totalcontent>总内容数</stat_totalcontent>
+          <stat_languages>语言数</stat_languages>
+          <stat_missing>缺失翻译</stat_missing>
+          <stat_stale>过期（30天以上）</stat_stale>
+          <stat_itemstotranslate>待翻译条目</stat_itemstotranslate>
+          <stat_page>页面</stat_page>
+          <stat_missing_lang>缺失 {0}</stat_missing_lang>
+          <stat_stale_count>过期翻译</stat_stale_count>
+          <card_coverage>语言覆盖率</card_coverage>
+          <card_contentitems>{0} 个内容条目</card_contentitems>
+          <card_published>{0} 已发布</card_published>
+          <lbl_language>语言：</lbl_language>
+          <lbl_threshold>阈值（天）：</lbl_threshold>
+          <lbl_targetlang>目标语言：</lbl_targetlang>
+          <lbl_contenttype>内容类型：</lbl_contenttype>
+          <lbl_alllanguages>所有语言</lbl_alllanguages>
+          <lbl_alltypes>所有类型</lbl_alltypes>
+          <btn_coveragetree>覆盖率树</btn_coveragetree>
+          <btn_apply>应用</btn_apply>
+          <btn_exportcsv>导出 CSV</btn_exportcsv>
+          <btn_runnow>立即运行</btn_runnow>
+          <btn_started>任务已启动，请几分钟后刷新。</btn_started>
+          <btn_failed>启动任务失败</btn_failed>
           <col_id>ID</col_id>
-          <col_name>Name</col_name>
-          <col_type>Type</col_type>
-          <col_master>Master</col_master>
-          <col_available>Available Languages</col_available>
-          <col_location>Location</col_location>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_stalelanguage>Stale Language</col_stalelanguage>
-          <col_daysbehind>Days Behind</col_daysbehind>
-          <col_lastupdated>Last Updated</col_lastupdated>
-          <col_available_short>Available</col_available_short>
-          <empty_all_translated>All content has been translated to {0}</empty_all_translated>
-          <empty_no_stale>No stale translations found (threshold: {0} days)</empty_no_stale>
-          <empty_no_queue>No content needs translation to {0}</empty_no_queue>
-          <empty_no_tree>No coverage tree data available</empty_no_tree>
-          <empty_nodata>No language data available. Run the aggregation job to collect statistics.</empty_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <page_info>Page {0} of {1}</page_info>
-          <btn_previous>Previous</btn_previous>
-          <btn_next>Next</btn_next>
+          <col_name>名称</col_name>
+          <col_type>类型</col_type>
+          <col_master>主版本</col_master>
+          <col_available>可用语言</col_available>
+          <col_location>位置</col_location>
+          <col_masterlanguage>主语言</col_masterlanguage>
+          <col_stalelanguage>过期语言</col_stalelanguage>
+          <col_daysbehind>滞后天数</col_daysbehind>
+          <col_lastupdated>最后更新</col_lastupdated>
+          <col_available_short>可用</col_available_short>
+          <empty_all_translated>所有内容已翻译为 {0}</empty_all_translated>
+          <empty_no_stale>未找到过期翻译（阈值：{0} 天）</empty_no_stale>
+          <empty_no_queue>没有内容需要翻译为 {0}</empty_no_queue>
+          <empty_no_tree>没有可用的覆盖率树数据</empty_no_tree>
+          <empty_nodata>没有可用的语言数据。请运行聚合任务以收集统计信息。</empty_nodata>
+          <banner_runjob>请运行 [EditorPowertools] 内容分析计划任务以填充数据。</banner_runjob>
+          <page_info>第 {0} 页，共 {1} 页</page_info>
+          <btn_previous>上一页</btn_previous>
+          <btn_next>下一页</btn_next>
         </languageaudit>
         <cmsdoctor>
-          <header_title>CMS Doctor</header_title>
-          <header_desc>Health checks for your Optimizely CMS. Extensible by third-party packages.</header_desc>
-          <lbl_lastrun>Last run: {0}</lbl_lastrun>
-          <btn_runall>Run All Checks</btn_runall>
-          <btn_running>Running...</btn_running>
-          <sum_healthy>Healthy</sum_healthy>
-          <sum_warnings>Warnings</sum_warnings>
-          <sum_faults>Faults</sum_faults>
-          <sum_notchecked>Not Checked</sum_notchecked>
-          <tag_all>All</tag_all>
-          <status_ok>Healthy</status_ok>
-          <status_warning>Warning</status_warning>
-          <status_badpractice>Bad Practice</status_badpractice>
-          <status_fault>Fault</status_fault>
-          <status_performance>Performance</status_performance>
-          <status_notchecked>Not Checked</status_notchecked>
-          <btn_run>Run</btn_run>
-          <btn_fix>Fix</btn_fix>
-          <btn_details>Details</btn_details>
-          <btn_dismiss>Dismiss</btn_dismiss>
-          <btn_restore>Restore</btn_restore>
-          <dlg_result>Result:</dlg_result>
-          <dlg_details>Details:</dlg_details>
-          <dlg_categories>Categories:</dlg_categories>
-          <dlg_checked>Checked: {0}</dlg_checked>
-          <btn_applyfix>Apply Fix</btn_applyfix>
-          <btn_rerun>Re-run Check</btn_rerun>
-          <btn_close>Close</btn_close>
-          <confirm_applyfix>Apply fix for this check?</confirm_applyfix>
-          <confirm_fix>Apply fix?</confirm_fix>
+          <header_title>CMS医生</header_title>
+          <header_desc>Optimizely CMS的健康检查，支持第三方包扩展。</header_desc>
+          <lbl_lastrun>上次运行：{0}</lbl_lastrun>
+          <btn_runall>运行所有检查</btn_runall>
+          <btn_running>运行中...</btn_running>
+          <sum_healthy>健康</sum_healthy>
+          <sum_warnings>警告</sum_warnings>
+          <sum_faults>故障</sum_faults>
+          <sum_notchecked>未检查</sum_notchecked>
+          <tag_all>全部</tag_all>
+          <status_ok>健康</status_ok>
+          <status_warning>警告</status_warning>
+          <status_badpractice>不良实践</status_badpractice>
+          <status_fault>故障</status_fault>
+          <status_performance>性能</status_performance>
+          <status_notchecked>未检查</status_notchecked>
+          <btn_run>运行</btn_run>
+          <btn_fix>修复</btn_fix>
+          <btn_details>详情</btn_details>
+          <btn_dismiss>忽略</btn_dismiss>
+          <btn_restore>恢复</btn_restore>
+          <dlg_result>结果：</dlg_result>
+          <dlg_details>详情：</dlg_details>
+          <dlg_categories>类别：</dlg_categories>
+          <dlg_checked>已检查：{0}</dlg_checked>
+          <btn_applyfix>应用修复</btn_applyfix>
+          <btn_rerun>重新检查</btn_rerun>
+          <btn_close>关闭</btn_close>
+          <confirm_applyfix>是否为此检查应用修复？</confirm_applyfix>
+          <confirm_fix>是否应用修复？</confirm_fix>
         </cmsdoctor>
         <contenttypeaudit>
-          <alert_running>Aggregation job is currently running. Content counts will be updated when it completes.</alert_running>
-          <alert_notrun>Content statistics have not been collected yet. The "Content" column will show data after the aggregation job has been run.</alert_notrun>
-          <alert_old>Statistics were last updated {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <alert_started>Aggregation job has been started. Content counts will be updated when it completes.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <stat_contenttypes>Content Types</stat_contenttypes>
-          <stat_systemtypes>System Types</stat_systemtypes>
-          <stat_orphaned>Orphaned</stat_orphaned>
-          <stat_unused>Unused (0 content)</stat_unused>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search types... (or property:name)</lbl_search>
-          <opt_allbases>All base types</opt_allbases>
-          <chk_showsystem>Show system types</chk_showsystem>
-          <btn_table>Table</btn_table>
-          <btn_tree>Tree</btn_tree>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
-          <col_base>Base</col_base>
-          <col_group>Group</col_group>
-          <col_properties>Properties</col_properties>
-          <col_content>Content</col_content>
-          <opt_all>All</opt_all>
-          <badge_system>System</badge_system>
-          <badge_orphaned>Orphaned</badge_orphaned>
+          <alert_running>聚合任务正在运行。完成后将更新内容数量。</alert_running>
+          <alert_notrun>尚未收集内容统计信息。运行聚合任务后，"内容"列将显示数据。</alert_notrun>
+          <alert_old>统计信息上次更新于 {0}。建议运行聚合任务以获取最新数据。</alert_old>
+          <alert_started>聚合任务已启动。完成后将更新内容数量。</alert_started>
+          <btn_refresh>刷新</btn_refresh>
+          <btn_runnow>立即运行</btn_runnow>
+          <btn_starting>启动中...</btn_starting>
+          <btn_failed>失败</btn_failed>
+          <stat_contenttypes>内容类型</stat_contenttypes>
+          <stat_systemtypes>系统类型</stat_systemtypes>
+          <stat_orphaned>孤立</stat_orphaned>
+          <stat_unused>未使用（0个内容）</stat_unused>
+          <stat_showing>显示</stat_showing>
+          <lbl_search>搜索类型...（或 property:名称）</lbl_search>
+          <opt_allbases>所有基类型</opt_allbases>
+          <chk_showsystem>显示系统类型</chk_showsystem>
+          <btn_table>表格</btn_table>
+          <btn_tree>树形</btn_tree>
+          <btn_export>导出</btn_export>
+          <col_name>名称</col_name>
+          <col_base>基类</col_base>
+          <col_group>分组</col_group>
+          <col_properties>属性</col_properties>
+          <col_content>内容</col_content>
+          <opt_all>全部</opt_all>
+          <badge_system>系统</badge_system>
+          <badge_orphaned>孤立</badge_orphaned>
         </contenttypeaudit>
         <linkchecker>
-          <alert_running>Link checker job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Link checker has not been run yet. Run the scheduled job to scan content for links.</alert_notrun>
-          <alert_lastran>Link check last ran {0}.</alert_lastran>
-          <alert_started>Job started.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <btn_export>Export</btn_export>
-          <stat_total>Total Links</stat_total>
-          <stat_broken>Broken</stat_broken>
-          <stat_valid>Valid</stat_valid>
-          <stat_internal>Internal</stat_internal>
-          <stat_external>External</stat_external>
-          <lbl_search>Search URLs, content, properties...</lbl_search>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_internal>Internal</opt_internal>
-          <opt_external>External</opt_external>
-          <opt_allstatus>All status</opt_allstatus>
-          <opt_brokenonly>Broken only</opt_brokenonly>
-          <opt_validonly>Valid only</opt_validonly>
-          <col_status>Status</col_status>
+          <alert_running>链接检查任务正在运行。完成后将更新结果。</alert_running>
+          <alert_notrun>链接检查尚未运行。请运行计划任务以扫描内容中的链接。</alert_notrun>
+          <alert_lastran>链接检查上次运行于 {0}。</alert_lastran>
+          <alert_started>任务已启动。</alert_started>
+          <btn_refresh>刷新</btn_refresh>
+          <btn_runnow>立即运行</btn_runnow>
+          <btn_starting>启动中...</btn_starting>
+          <btn_failed>失败</btn_failed>
+          <btn_export>导出</btn_export>
+          <stat_total>链接总数</stat_total>
+          <stat_broken>失效</stat_broken>
+          <stat_valid>有效</stat_valid>
+          <stat_internal>内部</stat_internal>
+          <stat_external>外部</stat_external>
+          <lbl_search>搜索URL、内容、属性...</lbl_search>
+          <opt_alltypes>所有类型</opt_alltypes>
+          <opt_internal>内部</opt_internal>
+          <opt_external>外部</opt_external>
+          <opt_allstatus>所有状态</opt_allstatus>
+          <opt_brokenonly>仅失效</opt_brokenonly>
+          <opt_validonly>仅有效</opt_validonly>
+          <col_status>状态</col_status>
           <col_url>URL</col_url>
-          <col_type>Type</col_type>
-          <col_foundin>Found In</col_foundin>
-          <col_checked>Checked</col_checked>
-          <cell_usedon>Used on: </cell_usedon>
+          <col_type>类型</col_type>
+          <col_foundin>发现于</col_foundin>
+          <col_checked>检查时间</col_checked>
+          <cell_usedon>使用于：</cell_usedon>
         </linkchecker>
         <securityaudit>
-          <tab_tree>Content Tree</tab_tree>
-          <tab_roles>Role/User Explorer</tab_roles>
-          <tab_issues>Issues</tab_issues>
-          <banner_nodata>Security audit data not available.</banner_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to analyze content permissions.</banner_runjob>
-          <banner_started>Aggregation job has been started. Data will update when it completes.</banner_started>
-          <alert_old>Security data was last analyzed {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_failed>Failed</btn_failed>
-          <stat_analyzed>Content Analyzed</stat_analyzed>
-          <stat_roles>Roles/Users</stat_roles>
-          <stat_issues>Issues Found</stat_issues>
-          <stat_lastanalysis>Last Analysis</stat_lastanalysis>
-          <pager_previous>Previous</pager_previous>
-          <pager_info>Page {0} of {1}</pager_info>
-          <pager_next>Next</pager_next>
+          <tab_tree>内容树</tab_tree>
+          <tab_roles>角色/用户浏览器</tab_roles>
+          <tab_issues>问题</tab_issues>
+          <banner_nodata>安全审计数据不可用。</banner_nodata>
+          <banner_runjob>请运行 [EditorPowertools] 内容分析计划任务以分析内容权限。</banner_runjob>
+          <banner_started>聚合任务已启动。完成后数据将更新。</banner_started>
+          <alert_old>安全数据上次分析于 {0}。建议运行聚合任务以获取最新数据。</alert_old>
+          <btn_runnow>立即运行</btn_runnow>
+          <btn_starting>启动中...</btn_starting>
+          <btn_refresh>刷新</btn_refresh>
+          <btn_failed>失败</btn_failed>
+          <stat_analyzed>已分析内容</stat_analyzed>
+          <stat_roles>角色/用户</stat_roles>
+          <stat_issues>发现问题</stat_issues>
+          <stat_lastanalysis>上次分析</stat_lastanalysis>
+          <pager_previous>上一页</pager_previous>
+          <pager_info>第 {0} 页，共 {1} 页</pager_info>
+          <pager_next>下一页</pager_next>
         </securityaudit>
         <bulkeditor>
-          <opt_selecttype>-- Select content type --</opt_selecttype>
-          <btn_columns>Columns</btn_columns>
-          <btn_addfilter>Add Filter</btn_addfilter>
-          <chk_includereferences>Include references</chk_includereferences>
-          <btn_applyfilters>Apply Filters</btn_applyfilters>
-          <empty_selecttype>Select a content type above to start editing.</empty_selecttype>
-          <lbl_perpage>Per page:</lbl_perpage>
-          <pending_count>{0} changes pending</pending_count>
-          <btn_discardall>Discard All</btn_discardall>
-          <btn_saveall>Save All</btn_saveall>
-          <btn_publishall>Publish All</btn_publishall>
-          <confirm_discard>Discard all pending changes?</confirm_discard>
+          <opt_selecttype>-- 选择内容类型 --</opt_selecttype>
+          <btn_columns>列</btn_columns>
+          <btn_addfilter>添加筛选条件</btn_addfilter>
+          <chk_includereferences>包含引用</chk_includereferences>
+          <btn_applyfilters>应用筛选条件</btn_applyfilters>
+          <empty_selecttype>请在上方选择内容类型以开始编辑。</empty_selecttype>
+          <lbl_perpage>每页：</lbl_perpage>
+          <pending_count>{0} 处更改待保存</pending_count>
+          <btn_discardall>放弃全部</btn_discardall>
+          <btn_saveall>全部保存</btn_saveall>
+          <btn_publishall>全部发布</btn_publishall>
+          <confirm_discard>放弃所有待保存的更改？</confirm_discard>
         </bulkeditor>
         <contentstatistics>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <error_load>Failed to load statistics from API.</error_load>
-          <error_render>Error rendering statistics dashboard.</error_render>
-          <chart_byctype>Content by Type</chart_byctype>
-          <chart_bystatus>Content by Status</chart_bystatus>
-          <chart_created>Content Created (last 12 months)</chart_created>
-          <chart_staleness>Content Staleness</chart_staleness>
-          <chart_editoractivity>Editor Activity (last 30 days)</chart_editoractivity>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_published>Published</stat_published>
-          <stat_draft>Draft</stat_draft>
-          <stat_editors>Active Editors</stat_editors>
-          <stat_pages>Pages</stat_pages>
-          <stat_blocks>Blocks</stat_blocks>
-          <stat_media>Media</stat_media>
+          <banner_runjob>请运行 [EditorPowertools] 内容分析计划任务以填充数据。</banner_runjob>
+          <btn_runnow>立即运行</btn_runnow>
+          <btn_starting>启动中...</btn_starting>
+          <error_load>从API加载统计信息失败。</error_load>
+          <error_render>渲染统计仪表板时出错。</error_render>
+          <chart_byctype>按类型划分的内容</chart_byctype>
+          <chart_bystatus>按状态划分的内容</chart_bystatus>
+          <chart_created>内容创建量（近12个月）</chart_created>
+          <chart_staleness>内容陈旧程度</chart_staleness>
+          <chart_editoractivity>编辑者活动（近30天）</chart_editoractivity>
+          <stat_totalcontent>总内容数</stat_totalcontent>
+          <stat_published>已发布</stat_published>
+          <stat_draft>草稿</stat_draft>
+          <stat_editors>活跃编辑者</stat_editors>
+          <stat_pages>页面</stat_pages>
+          <stat_blocks>块</stat_blocks>
+          <stat_media>媒体</stat_media>
         </contentstatistics>
         <activitytimeline>
-          <stat_today>Activities Today</stat_today>
-          <stat_activeeditors>Active Editors</stat_activeeditors>
-          <stat_publishes>Publishes Today</stat_publishes>
-          <stat_drafts>Drafts Today</stat_drafts>
-          <opt_allusers>All users</opt_allusers>
-          <opt_published>Published</opt_published>
-          <opt_draft>Draft saved</opt_draft>
-          <opt_readytopublish>Ready to publish</opt_readytopublish>
-          <opt_scheduled>Scheduled</opt_scheduled>
-          <opt_rejected>Rejected</opt_rejected>
-          <opt_previouslypublished>Previously published</opt_previouslypublished>
-          <opt_comment>Comments</opt_comment>
-          <opt_allcontenttypes>All content types</opt_allcontenttypes>
-          <btn_filter>Filter</btn_filter>
-          <btn_clear>Clear</btn_clear>
-          <banner_showingfor>Showing timeline for {0}</banner_showingfor>
-          <btn_showall>Show all activity</btn_showall>
+          <stat_today>今日活动</stat_today>
+          <stat_activeeditors>活跃编辑者</stat_activeeditors>
+          <stat_publishes>今日发布</stat_publishes>
+          <stat_drafts>今日草稿</stat_drafts>
+          <opt_allusers>所有用户</opt_allusers>
+          <opt_published>已发布</opt_published>
+          <opt_draft>草稿已保存</opt_draft>
+          <opt_readytopublish>待发布</opt_readytopublish>
+          <opt_scheduled>已计划</opt_scheduled>
+          <opt_rejected>已拒绝</opt_rejected>
+          <opt_previouslypublished>曾经发布</opt_previouslypublished>
+          <opt_comment>评论</opt_comment>
+          <opt_allcontenttypes>所有内容类型</opt_allcontenttypes>
+          <btn_filter>筛选</btn_filter>
+          <btn_clear>清除</btn_clear>
+          <banner_showingfor>正在显示 {0} 的时间线</banner_showingfor>
+          <btn_showall>显示所有活动</btn_showall>
         </activitytimeline>
         <personalizationaudit>
-          <alert_running>Personalization analysis job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Personalization usage has not been analyzed yet. Run the analysis job to scan content for audience usage.</alert_notrun>
-          <alert_old>Analysis was last run {0}. Consider running the job again for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_starting>Starting...</btn_starting>
-          <stat_total>Total Usages</stat_total>
-          <stat_content>Content Items</stat_content>
-          <stat_groups>Visitor Groups Used</stat_groups>
-          <lbl_search>Search...</lbl_search>
-          <lbl_type>Usage Type:</lbl_type>
-          <lbl_group>Visitor Group:</lbl_group>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_allgroups>All groups</opt_allgroups>
-          <col_content>Content</col_content>
-          <col_type>Usage Type</col_type>
-          <col_groups>Visitor Groups</col_groups>
-          <col_location>Location</col_location>
+          <alert_running>个性化分析任务正在运行。完成后将更新结果。</alert_running>
+          <alert_notrun>尚未分析个性化使用情况。请运行分析任务以扫描内容中的受众使用情况。</alert_notrun>
+          <alert_old>分析上次运行于 {0}。建议再次运行任务以获取最新数据。</alert_old>
+          <btn_runnow>立即运行</btn_runnow>
+          <btn_refresh>刷新</btn_refresh>
+          <btn_starting>启动中...</btn_starting>
+          <stat_total>总使用次数</stat_total>
+          <stat_content>内容条目</stat_content>
+          <stat_groups>已使用的访客组</stat_groups>
+          <lbl_search>搜索...</lbl_search>
+          <lbl_type>使用类型：</lbl_type>
+          <lbl_group>访客组：</lbl_group>
+          <opt_alltypes>所有类型</opt_alltypes>
+          <opt_allgroups>所有组</opt_allgroups>
+          <col_content>内容</col_content>
+          <col_type>使用类型</col_type>
+          <col_groups>访客组</col_groups>
+          <col_location>位置</col_location>
         </personalizationaudit>
         <audiencemanager>
-          <stat_audiences>Audiences</stat_audiences>
-          <stat_withstats>With Statistics</stat_withstats>
-          <stat_categories>Categories</stat_categories>
-          <stat_totalcriteria>Total Criteria</stat_totalcriteria>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search audiences...</lbl_search>
-          <opt_allcategories>All categories</opt_allcategories>
-          <chk_hasstats>Has Statistics</chk_hasstats>
-          <lnk_personalizationaudit>Personalization Audit</lnk_personalizationaudit>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
-          <col_criteria>Criteria</col_criteria>
-          <col_operator>Operator</col_operator>
-          <col_statistics>Statistics</col_statistics>
-          <col_usage>Usage</col_usage>
-          <opt_all>All</opt_all>
-          <title_usagedetails>Show usage details</title_usagedetails>
-          <title_notused>Not used in any personalized content</title_notused>
-          <title_runjobfirst>Run the Personalization Analysis job first</title_runjobfirst>
+          <stat_audiences>受众数</stat_audiences>
+          <stat_withstats>含统计数据</stat_withstats>
+          <stat_categories>类别数</stat_categories>
+          <stat_totalcriteria>总条件数</stat_totalcriteria>
+          <stat_showing>显示</stat_showing>
+          <lbl_search>搜索受众...</lbl_search>
+          <opt_allcategories>所有类别</opt_allcategories>
+          <chk_hasstats>含统计数据</chk_hasstats>
+          <lnk_personalizationaudit>个性化审计</lnk_personalizationaudit>
+          <btn_export>导出</btn_export>
+          <col_name>名称</col_name>
+          <col_criteria>条件</col_criteria>
+          <col_operator>运算符</col_operator>
+          <col_statistics>统计</col_statistics>
+          <col_usage>使用情况</col_usage>
+          <opt_all>全部</opt_all>
+          <title_usagedetails>显示使用详情</title_usagedetails>
+          <title_notused>未在任何个性化内容中使用</title_notused>
+          <title_runjobfirst>请先运行个性化分析任务</title_runjobfirst>
         </audiencemanager>
         <contentimporter>
-          <step_upload>1. Upload File</step_upload>
-          <step_configure>2. Configure</step_configure>
-          <step_dryrun>3. Dry Run</step_dryrun>
-          <step_import>4. Import</step_import>
-          <lbl_dropfile>Drop a CSV, JSON, or Excel file here, or click to browse</lbl_dropfile>
-          <btn_browse>Browse...</btn_browse>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_language>Language:</lbl_language>
-          <lbl_parent>Parent Location:</lbl_parent>
-          <lbl_namecol>Name Column:</lbl_namecol>
-          <lbl_publishafter>Publish after import</lbl_publishafter>
-          <lbl_selectparent>Select parent...</lbl_selectparent>
-          <btn_next>Next</btn_next>
-          <btn_back>Back</btn_back>
-          <lbl_mapping>Field Mapping</lbl_mapping>
-          <lbl_sourcecol>Source Column</lbl_sourcecol>
-          <lbl_targetfield>Target Field</lbl_targetfield>
-          <opt_skip>-- Skip --</opt_skip>
-          <btn_dryrun>Run Dry Run</btn_dryrun>
-          <lbl_dryresult>Dry Run Results</lbl_dryresult>
-          <btn_import>Start Import</btn_import>
-          <btn_startover>Start Over</btn_startover>
-          <lbl_importing>Importing...</lbl_importing>
+          <step_upload>1. 上传文件</step_upload>
+          <step_configure>2. 配置</step_configure>
+          <step_dryrun>3. 试运行</step_dryrun>
+          <step_import>4. 导入</step_import>
+          <lbl_dropfile>将 CSV、JSON 或 Excel 文件拖放至此处，或点击浏览</lbl_dropfile>
+          <btn_browse>浏览...</btn_browse>
+          <lbl_contenttype>内容类型：</lbl_contenttype>
+          <lbl_language>语言：</lbl_language>
+          <lbl_parent>父级位置：</lbl_parent>
+          <lbl_namecol>名称列：</lbl_namecol>
+          <lbl_publishafter>导入后发布</lbl_publishafter>
+          <lbl_selectparent>选择父级...</lbl_selectparent>
+          <btn_next>下一步</btn_next>
+          <btn_back>上一步</btn_back>
+          <lbl_mapping>字段映射</lbl_mapping>
+          <lbl_sourcecol>源列</lbl_sourcecol>
+          <lbl_targetfield>目标字段</lbl_targetfield>
+          <opt_skip>-- 跳过 --</opt_skip>
+          <btn_dryrun>运行试运行</btn_dryrun>
+          <lbl_dryresult>试运行结果</lbl_dryresult>
+          <btn_import>开始导入</btn_import>
+          <btn_startover>重新开始</btn_startover>
+          <lbl_importing>导入中...</lbl_importing>
         </contentimporter>
         <managechildren>
-          <lbl_selectparent>Select a parent page to manage its children</lbl_selectparent>
-          <btn_selectparent>Select Parent Page</btn_selectparent>
-          <btn_sortaz>Sort A-Z</btn_sortaz>
-          <btn_sortza>Sort Z-A</btn_sortza>
-          <btn_sortbydate>Sort by Date</btn_sortbydate>
-          <btn_publishall>Publish All</btn_publishall>
-          <btn_unpublishall>Unpublish All</btn_unpublishall>
-          <btn_deleteselected>Delete Selected</btn_deleteselected>
-          <btn_saveorder>Save Order</btn_saveorder>
-          <col_name>Name</col_name>
-          <col_status>Status</col_status>
-          <col_changed>Changed</col_changed>
-          <col_type>Type</col_type>
-          <confirm_delete>Delete {0} selected item(s)? This cannot be undone.</confirm_delete>
-          <confirm_publishall>Publish all {0} children?</confirm_publishall>
-          <confirm_unpublishall>Unpublish all {0} children?</confirm_unpublishall>
+          <lbl_selectparent>选择父页面以管理其子页面</lbl_selectparent>
+          <btn_selectparent>选择父页面</btn_selectparent>
+          <btn_sortaz>按 A-Z 排序</btn_sortaz>
+          <btn_sortza>按 Z-A 排序</btn_sortza>
+          <btn_sortbydate>按日期排序</btn_sortbydate>
+          <btn_publishall>全部发布</btn_publishall>
+          <btn_unpublishall>全部取消发布</btn_unpublishall>
+          <btn_deleteselected>删除所选</btn_deleteselected>
+          <btn_saveorder>保存顺序</btn_saveorder>
+          <col_name>名称</col_name>
+          <col_status>状态</col_status>
+          <col_changed>修改时间</col_changed>
+          <col_type>类型</col_type>
+          <confirm_delete>删除所选的 {0} 个条目？此操作无法撤销。</confirm_delete>
+          <confirm_publishall>发布全部 {0} 个子页面？</confirm_publishall>
+          <confirm_unpublishall>取消发布全部 {0} 个子页面？</confirm_unpublishall>
         </managechildren>
         <recommendations>
-          <banner_info>When editors create new content, Optimizely can suggest which content types to use. Define rules below to control these suggestions based on where content is being created.</banner_info>
-          <btn_addrule>Add Rule</btn_addrule>
-          <col_parenttype>Parent Type</col_parenttype>
-          <col_allowedtypes>Allowed Types</col_allowedtypes>
-          <col_actions>Actions</col_actions>
-          <dlg_addrule>Add Rule</dlg_addrule>
-          <dlg_editrule>Edit Rule</dlg_editrule>
-          <lbl_parenttype>Parent Content Type:</lbl_parenttype>
-          <lbl_allowedtypes>Allowed Child Types:</lbl_allowedtypes>
-          <btn_save>Save</btn_save>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_edit>Edit</btn_edit>
-          <btn_delete>Delete</btn_delete>
-          <empty_norules>No recommendation rules defined yet. Click "Add Rule" to create one.</empty_norules>
-          <confirm_delete>Delete this rule?</confirm_delete>
+          <banner_info>编辑者创建新内容时，Optimizely 可以建议使用哪些内容类型。请在下方定义规则，根据内容创建位置控制这些建议。</banner_info>
+          <btn_addrule>添加规则</btn_addrule>
+          <col_parenttype>父类型</col_parenttype>
+          <col_allowedtypes>允许的类型</col_allowedtypes>
+          <col_actions>操作</col_actions>
+          <dlg_addrule>添加规则</dlg_addrule>
+          <dlg_editrule>编辑规则</dlg_editrule>
+          <lbl_parenttype>父内容类型：</lbl_parenttype>
+          <lbl_allowedtypes>允许的子类型：</lbl_allowedtypes>
+          <btn_save>保存</btn_save>
+          <btn_cancel>取消</btn_cancel>
+          <btn_edit>编辑</btn_edit>
+          <btn_delete>删除</btn_delete>
+          <empty_norules>尚未定义建议规则。点击"添加规则"创建一条。</empty_norules>
+          <confirm_delete>删除此规则？</confirm_delete>
         </recommendations>
         <gantt>
-          <error_load>Failed to load Gantt data: {0}</error_load>
-          <empty_nojobs>No scheduled jobs found.</empty_nojobs>
-          <stat_totaljobs>Total Jobs</stat_totaljobs>
-          <stat_enabled>Enabled</stat_enabled>
-          <stat_running>Running Now</stat_running>
-          <stat_executions>Executions in View</stat_executions>
-          <btn_previous>Previous</btn_previous>
-          <btn_today>Today</btn_today>
-          <btn_next>Next</btn_next>
-          <lbl_viewhours>{0}h view</lbl_viewhours>
-          <col_job>Job</col_job>
+          <error_load>加载 Gantt 数据失败：{0}</error_load>
+          <empty_nojobs>未找到计划任务。</empty_nojobs>
+          <stat_totaljobs>总任务数</stat_totaljobs>
+          <stat_enabled>已启用</stat_enabled>
+          <stat_running>正在运行</stat_running>
+          <stat_executions>视图中的执行次数</stat_executions>
+          <btn_previous>上一页</btn_previous>
+          <btn_today>今天</btn_today>
+          <btn_next>下一页</btn_next>
+          <lbl_viewhours>{0}h 视图</lbl_viewhours>
+          <col_job>任务</col_job>
         </gantt>
         <activeeditors>
-          <error_nosignalr>SignalR client not available. Check browser console for errors.</error_nosignalr>
-          <error_connect>Could not connect: {0}</error_connect>
-          <stat_online>Online Now</stat_online>
-          <stat_editing>Currently Editing</stat_editing>
-          <stat_today>Active Today</stat_today>
-          <section_online>Online Now</section_online>
-          <section_today>Also Active Today</section_today>
-          <lbl_connected>Connected {0}</lbl_connected>
-          <btn_sendmessage>Send Message</btn_sendmessage>
-          <badge_you>you</badge_you>
-          <badge_offline>offline</badge_offline>
-          <chat_title>Team Chat</chat_title>
-          <chat_empty>No messages yet. Say hello!</chat_empty>
-          <chat_placeholder>Type a message... (Enter to send)</chat_placeholder>
-          <dlg_sendmessage>Send Message to {0}</dlg_sendmessage>
-          <dlg_desc>This will send a CMS notification that {0} will see in their notification bell.</dlg_desc>
-          <dlg_placeholder>Type your message...</dlg_placeholder>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_send>Send Notification</btn_send>
-          <btn_sending>Sending...</btn_sending>
-          <msg_sent>Message sent to {0}</msg_sent>
+          <error_nosignalr>SignalR 客户端不可用。请检查浏览器控制台中的错误。</error_nosignalr>
+          <error_connect>无法连接：{0}</error_connect>
+          <stat_online>当前在线</stat_online>
+          <stat_editing>正在编辑</stat_editing>
+          <stat_today>今日活跃</stat_today>
+          <section_online>当前在线</section_online>
+          <section_today>今日也活跃</section_today>
+          <lbl_connected>已连接 {0}</lbl_connected>
+          <btn_sendmessage>发送消息</btn_sendmessage>
+          <badge_you>我</badge_you>
+          <badge_offline>离线</badge_offline>
+          <chat_title>团队聊天</chat_title>
+          <chat_empty>还没有消息。打个招呼吧！</chat_empty>
+          <chat_placeholder>输入消息...（按 Enter 发送）</chat_placeholder>
+          <dlg_sendmessage>向 {0} 发送消息</dlg_sendmessage>
+          <dlg_desc>这将发送一条 CMS 通知，{0} 将在其通知铃中看到。</dlg_desc>
+          <dlg_placeholder>输入您的消息...</dlg_placeholder>
+          <btn_cancel>取消</btn_cancel>
+          <btn_send>发送通知</btn_send>
+          <btn_sending>发送中...</btn_sending>
+          <msg_sent>消息已发送给 {0}</msg_sent>
         </activeeditors>
         <components>
-          <picker_title>Select Content</picker_title>
-          <picker_search>Search content by name...</picker_search>
-          <picker_noresults>No results found</picker_noresults>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_select>Select</btn_select>
-          <typepicker_title>Select Content Type</typepicker_title>
-          <typepicker_search>Search content types...</typepicker_search>
-          <typepicker_noresults>No content types found</typepicker_noresults>
+          <picker_title>选择内容</picker_title>
+          <picker_search>按名称搜索内容...</picker_search>
+          <picker_noresults>未找到结果</picker_noresults>
+          <btn_cancel>取消</btn_cancel>
+          <btn_select>选择</btn_select>
+          <typepicker_title>选择内容类型</typepicker_title>
+          <typepicker_search>搜索内容类型...</typepicker_search>
+          <typepicker_noresults>未找到内容类型</typepicker_noresults>
         </components>
         <editorpowertools>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
+          <loading>加载中...</loading>
+          <noresults>未找到结果</noresults>
         </editorpowertools>
       </ui>
     </editorpowertools>
