@@ -60,10 +60,10 @@
             btn.textContent = EPT.s('contentstatistics.btn_starting', 'Starting...');
             try {
                 await EPT.postJson(window.EPT_API_URL + '/aggregation-start');
-                btn.textContent = 'Job started, please refresh in a few minutes.';
+                btn.textContent = EPT.s('contentstatistics.btn_jobstarted', 'Job started, please refresh in a few minutes.');
                 btn.className = 'ept-btn';
             } catch (e) {
-                btn.textContent = 'Failed to start job';
+                btn.textContent = EPT.s('contentstatistics.btn_jobfailed', 'Failed to start job');
             }
         });
     }
@@ -74,7 +74,7 @@
         // If no data at all, show empty state with run-job prompt
         if (!data || !data.summary) {
             root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
-                '<p style="text-align:center;color:var(--ept-muted,#888);">No statistics data available yet.</p>' +
+                '<p style="text-align:center;color:var(--ept-muted,#888);">' + EPT.s('contentstatistics.empty_nodata', 'No statistics data available yet.') + '</p>' +
                 renderRunJobBanner() +
                 '</div></div>';
             wireRunJobButton();
@@ -94,7 +94,7 @@
         if (data.typeDistribution && data.typeDistribution.length > 0) {
             renderDonutChart(pieCard.body, data.typeDistribution);
         } else {
-            pieCard.body.innerHTML = '<p class="ept-empty-msg">No type statistics available. Run the scheduled job first.</p>';
+            pieCard.body.innerHTML = '<p class="ept-empty-msg">' + EPT.s('contentstatistics.empty_notype', 'No type statistics available. Run the scheduled job first.') + '</p>';
         }
 
         // Creation over time (bar chart)
@@ -103,7 +103,7 @@
         if (data.creationOverTime && data.creationOverTime.length > 0) {
             renderBarChart(barCard.body, data.creationOverTime);
         } else {
-            barCard.body.innerHTML = '<p class="ept-empty-msg">No creation data available.</p>';
+            barCard.body.innerHTML = '<p class="ept-empty-msg">' + EPT.s('contentstatistics.empty_nocreation', 'No creation data available.') + '</p>';
         }
 
         // Stale content (horizontal bars)
@@ -112,7 +112,7 @@
         if (data.staleContent && data.staleContent.length > 0) {
             renderStaleChart(staleCard.body, data.staleContent);
         } else {
-            staleCard.body.innerHTML = '<p class="ept-empty-msg">No page data available.</p>';
+            staleCard.body.innerHTML = '<p class="ept-empty-msg">' + EPT.s('contentstatistics.empty_nopage', 'No page data available.') + '</p>';
         }
 
         // Editor activity table
@@ -121,7 +121,7 @@
         if (data.topEditors && data.topEditors.length > 0) {
             renderEditorTable(editorCard.body, data.topEditors);
         } else {
-            editorCard.body.innerHTML = '<p class="ept-empty-msg">No editor activity data available.</p>';
+            editorCard.body.innerHTML = '<p class="ept-empty-msg">' + EPT.s('contentstatistics.empty_noeditor', 'No editor activity data available.') + '</p>';
         }
 
         injectStyles();
@@ -135,7 +135,7 @@
         stats.appendChild(statCard(EPT.s('contentstatistics.stat_pages', 'Pages'), s.totalPages));
         stats.appendChild(statCard(EPT.s('contentstatistics.stat_blocks', 'Blocks'), s.totalBlocks));
         stats.appendChild(statCard(EPT.s('contentstatistics.stat_media', 'Media'), s.totalMedia));
-        stats.appendChild(statCard('Avg Versions', s.averageVersionsPerItem));
+        stats.appendChild(statCard(EPT.s('contentstatistics.stat_avgversions', 'Avg Versions'), s.averageVersionsPerItem));
         root.appendChild(stats);
     }
 
@@ -219,7 +219,7 @@
         subText.setAttribute('text-anchor', 'middle');
         subText.setAttribute('font-size', '11');
         subText.setAttribute('fill', 'var(--ept-muted, #888)');
-        subText.textContent = 'total';
+        subText.textContent = EPT.s('contentstatistics.chart_label_total', 'total');
         svg.appendChild(subText);
 
         var chartWrap = el('div', { className: 'cst-chart-wrap' });
@@ -293,7 +293,7 @@
             rect.setAttribute('rx', '3');
 
             var titleEl = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-            titleEl.textContent = d.month + ': ' + d.count + ' items';
+            titleEl.textContent = d.month + ': ' + EPT.s('contentstatistics.chart_tooltip_items', '{0} items').replace('{0}', d.count);
             rect.appendChild(titleEl);
             svg.appendChild(rect);
 
@@ -379,7 +379,7 @@
             rect.onclick = (function (url) { return function () { if (url) window.location.href = url; }; })(d.editUrl);
 
             var barTitle = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-            barTitle.textContent = d.name + ' - ' + d.daysSinceModified + ' days since modified (' + formatDate(d.lastModified) + ')';
+            barTitle.textContent = EPT.s('contentstatistics.chart_tooltip_daymod', '{0} - {1} days since modified ({2})').replace('{0}', d.name).replace('{1}', d.daysSinceModified).replace('{2}', formatDate(d.lastModified));
             rect.appendChild(barTitle);
             svg.appendChild(rect);
 
@@ -389,7 +389,7 @@
             daysText.setAttribute('y', y + barH / 2 + 4);
             daysText.setAttribute('font-size', '10');
             daysText.setAttribute('fill', 'var(--ept-muted, #888)');
-            daysText.textContent = d.daysSinceModified + ' days';
+            daysText.textContent = EPT.s('contentstatistics.chart_label_days', '{0} days').replace('{0}', d.daysSinceModified);
             svg.appendChild(daysText);
         }
 
@@ -400,11 +400,11 @@
 
     function renderEditorTable(container, editors) {
         var columns = [
-            { key: 'username', label: 'Editor', sortable: true },
-            { key: 'editCount', label: 'Edits', sortable: true, align: 'right' },
-            { key: 'publishCount', label: 'Publishes', sortable: true, align: 'right' },
+            { key: 'username', label: EPT.s('contentstatistics.col_editor', 'Editor'), sortable: true },
+            { key: 'editCount', label: EPT.s('contentstatistics.col_edits', 'Edits'), sortable: true, align: 'right' },
+            { key: 'publishCount', label: EPT.s('contentstatistics.col_publishes', 'Publishes'), sortable: true, align: 'right' },
             {
-                key: 'lastActive', label: 'Last Active', sortable: true,
+                key: 'lastActive', label: EPT.s('contentstatistics.col_lastactive', 'Last Active'), sortable: true,
                 render: function (val) { return val ? formatDate(val) : '-'; }
             }
         ];

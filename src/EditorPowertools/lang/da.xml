@@ -685,6 +685,29 @@
           <confirm_delete>Slet {0} valgte element(er)? Dette kan ikke fortrydes.</confirm_delete>
           <confirm_publishall>Publicér alle {0} undersider?</confirm_publishall>
           <confirm_unpublishall>Afpublicér alle {0} undersider?</confirm_unpublishall>
+          <title_managechildren>Administrer undersider</title_managechildren>
+          <title_managechildren2>Administrer undersider</title_managechildren2>
+          <btn_changeparent>Skift overordnet</btn_changeparent>
+          <lbl_selectall>Vælg alle</lbl_selectall>
+          <lbl_selected>{0} valgt</lbl_selected>
+          <btn_publish>Publicér</btn_publish>
+          <btn_unpublish>Afpublicér</btn_unpublish>
+          <btn_move>Flyt</btn_move>
+          <btn_trash>Flyt til papirkurv</btn_trash>
+          <btn_delete>Slet permanent</btn_delete>
+          <empty_nochildren>Ingen undersider fundet</empty_nochildren>
+          <badge_haschildren>har undersider</badge_haschildren>
+          <col_changedby>Ændret af</col_changedby>
+          <lbl_childrenof>Undersider af {0} ({1}, ID: {2})</lbl_childrenof>
+          <confirm_movetotrash>Flyt {0} elementer til papirkurv?</confirm_movetotrash>
+          <result_msg>{0}: {1} lykkedes</result_msg>
+          <result_failed>, {0} mislykkedes</result_failed>
+          <dlg_selecttarget>Vælg målplacering</dlg_selecttarget>
+          <dlg_selectparent>Vælg overordnet indhold</dlg_selectparent>
+          <lbl_loading>Indlæser...</lbl_loading>
+          <btn_edit>Rediger</btn_edit>
+          <err_generic>Fejl: {0}</err_generic>
+          <result_succeeded>{0} lykkedes</result_succeeded>
         </managechildren>
         <recommendations>
           <banner_info>Når redaktører opretter nyt indhold, kan Optimizely foreslå hvilke indholdstyper der skal bruges. Definer regler nedenfor for at styre disse forslag baseret på, hvor indhold oprettes.</banner_info>
@@ -702,6 +725,23 @@
           <btn_delete>Slet</btn_delete>
           <empty_norules>Ingen anbefalingsregler defineret endnu. Klik på "Tilføj regel" for at oprette en.</empty_norules>
           <confirm_delete>Slet denne regel?</confirm_delete>
+          <col_parentcontent>Overordnet indhold</col_parentcontent>
+          <col_includedescendants>Inkluder underordnede</col_includedescendants>
+          <col_contentfolderonly>Kun indholdsmappe</col_contentfolderonly>
+          <col_suggestedtypes>Foreslåede typer</col_suggestedtypes>
+          <lbl_parentcontent>Overordnet indhold</lbl_parentcontent>
+          <lbl_includedescendants>Inkluder underordnede</lbl_includedescendants>
+          <lbl_contentfolderonly>Kun for denne indholdsmappe</lbl_contentfolderonly>
+          <lbl_filtertypes>Filtrer typer...</lbl_filtertypes>
+          <opt_any>Alle</opt_any>
+          <opt_anylocation>Alle placeringer</opt_anylocation>
+          <opt_nomatching>Ingen matchende typer</opt_nomatching>
+          <btn_browse>Gennemse...</btn_browse>
+          <btn_clear>Ryd</btn_clear>
+          <btn_saving>Gemmer...</btn_saving>
+          <err_selecttype>Vælg venligst mindst én indholdstype at foreslå.</err_selecttype>
+          <err_save>Fejl ved gemning af regel: {0}</err_save>
+          <err_delete>Fejl ved sletning af regel: {0}</err_delete>
         </recommendations>
         <gantt>
           <error_load>Kunne ikke indlæse Gantt-data: {0}</error_load>

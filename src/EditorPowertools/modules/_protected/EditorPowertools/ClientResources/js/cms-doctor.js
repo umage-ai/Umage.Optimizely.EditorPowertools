@@ -233,7 +233,7 @@
         if (fixBtn) {
             fixBtn.onclick = function () {
                 if (!confirm(EPT.s('cmsdoctor.confirm_applyfix', 'Apply fix for this check?'))) return;
-                fixBtn.textContent = 'Fixing...';
+                fixBtn.textContent = EPT.s('cmsdoctor.btn_fixing', 'Fixing...');
                 fixBtn.disabled = true;
                 postJson(API + '/fix/' + encodeURIComponent(check.checkType)).then(function () {
                     document.body.removeChild(overlay);

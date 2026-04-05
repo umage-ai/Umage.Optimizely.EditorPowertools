@@ -685,6 +685,29 @@
           <confirm_delete>Supprimer {0} élément(s) sélectionné(s) ? Cette action est irréversible.</confirm_delete>
           <confirm_publishall>Publier tous les {0} enfants ?</confirm_publishall>
           <confirm_unpublishall>Dépublier tous les {0} enfants ?</confirm_unpublishall>
+          <title_managechildren>Gérer les enfants</title_managechildren>
+          <title_managechildren2>Gérer les enfants</title_managechildren2>
+          <btn_changeparent>Changer le parent</btn_changeparent>
+          <lbl_selectall>Tout sélectionner</lbl_selectall>
+          <lbl_selected>{0} sélectionné(s)</lbl_selected>
+          <btn_publish>Publier</btn_publish>
+          <btn_unpublish>Dépublier</btn_unpublish>
+          <btn_move>Déplacer</btn_move>
+          <btn_trash>Mettre à la corbeille</btn_trash>
+          <btn_delete>Supprimer définitivement</btn_delete>
+          <empty_nochildren>Aucun enfant trouvé</empty_nochildren>
+          <badge_haschildren>a des enfants</badge_haschildren>
+          <col_changedby>Modifié par</col_changedby>
+          <lbl_childrenof>Enfants de {0} ({1}, ID : {2})</lbl_childrenof>
+          <confirm_movetotrash>Déplacer {0} éléments vers la corbeille ?</confirm_movetotrash>
+          <result_msg>{0} : {1} réussi(s)</result_msg>
+          <result_failed>, {0} échoué(s)</result_failed>
+          <dlg_selecttarget>Sélectionner l'emplacement cible</dlg_selecttarget>
+          <dlg_selectparent>Sélectionner le contenu parent</dlg_selectparent>
+          <lbl_loading>Chargement...</lbl_loading>
+          <btn_edit>Modifier</btn_edit>
+          <err_generic>Erreur : {0}</err_generic>
+          <result_succeeded>{0} réussi(s)</result_succeeded>
         </managechildren>
         <recommendations>
           <banner_info>Lorsque les éditeurs créent du nouveau contenu, Optimizely peut suggérer quels types de contenu utiliser. Définissez des règles ci-dessous pour contrôler ces suggestions en fonction de l'endroit où le contenu est créé.</banner_info>
@@ -702,6 +725,23 @@
           <btn_delete>Supprimer</btn_delete>
           <empty_norules>Aucune règle de recommandation définie. Cliquez sur "Ajouter une règle" pour en créer une.</empty_norules>
           <confirm_delete>Supprimer cette règle ?</confirm_delete>
+          <col_parentcontent>Contenu parent</col_parentcontent>
+          <col_includedescendants>Inclure les descendants</col_includedescendants>
+          <col_contentfolderonly>Dossier de contenu uniquement</col_contentfolderonly>
+          <col_suggestedtypes>Types suggérés</col_suggestedtypes>
+          <lbl_parentcontent>Contenu parent</lbl_parentcontent>
+          <lbl_includedescendants>Inclure les descendants</lbl_includedescendants>
+          <lbl_contentfolderonly>Uniquement pour ce dossier de contenu</lbl_contentfolderonly>
+          <lbl_filtertypes>Filtrer les types...</lbl_filtertypes>
+          <opt_any>Tous</opt_any>
+          <opt_anylocation>N'importe quel emplacement</opt_anylocation>
+          <opt_nomatching>Aucun type correspondant</opt_nomatching>
+          <btn_browse>Parcourir...</btn_browse>
+          <btn_clear>Effacer</btn_clear>
+          <btn_saving>Enregistrement...</btn_saving>
+          <err_selecttype>Veuillez sélectionner au moins un type de contenu à suggérer.</err_selecttype>
+          <err_save>Erreur lors de l'enregistrement de la règle : {0}</err_save>
+          <err_delete>Erreur lors de la suppression de la règle : {0}</err_delete>
         </recommendations>
         <gantt>
           <error_load>Échec du chargement des données Gantt : {0}</error_load>

@@ -685,6 +685,29 @@
           <confirm_delete>Ta bort {0} markerat/markerade objekt? Detta kan inte ångras.</confirm_delete>
           <confirm_publishall>Publicera alla {0} undersidor?</confirm_publishall>
           <confirm_unpublishall>Avpublicera alla {0} undersidor?</confirm_unpublishall>
+          <title_managechildren>Hantera undersidor</title_managechildren>
+          <title_managechildren2>Hantera undersidor</title_managechildren2>
+          <btn_changeparent>Ändra förälder</btn_changeparent>
+          <lbl_selectall>Markera alla</lbl_selectall>
+          <lbl_selected>{0} markerade</lbl_selected>
+          <btn_publish>Publicera</btn_publish>
+          <btn_unpublish>Avpublicera</btn_unpublish>
+          <btn_move>Flytta</btn_move>
+          <btn_trash>Flytta till papperskorg</btn_trash>
+          <btn_delete>Ta bort permanent</btn_delete>
+          <empty_nochildren>Inga undersidor hittades</empty_nochildren>
+          <badge_haschildren>har undersidor</badge_haschildren>
+          <col_changedby>Ändrad av</col_changedby>
+          <lbl_childrenof>Undersidor till {0} ({1}, ID: {2})</lbl_childrenof>
+          <confirm_movetotrash>Flytta {0} objekt till papperskorgen?</confirm_movetotrash>
+          <result_msg>{0}: {1} lyckades</result_msg>
+          <result_failed>, {0} misslyckades</result_failed>
+          <dlg_selecttarget>Välj målplats</dlg_selecttarget>
+          <dlg_selectparent>Välj föräldrainnehåll</dlg_selectparent>
+          <lbl_loading>Laddar...</lbl_loading>
+          <btn_edit>Redigera</btn_edit>
+          <err_generic>Fel: {0}</err_generic>
+          <result_succeeded>{0} lyckades</result_succeeded>
         </managechildren>
         <recommendations>
           <banner_info>När redaktörer skapar nytt innehåll kan Optimizely föreslå vilka innehållstyper som ska användas. Definiera regler nedan för att styra dessa förslag baserat på var innehållet skapas.</banner_info>
@@ -702,6 +725,23 @@
           <btn_delete>Ta bort</btn_delete>
           <empty_norules>Inga rekommendationsregler definierade ännu. Klicka på "Lägg till regel" för att skapa en.</empty_norules>
           <confirm_delete>Ta bort den här regeln?</confirm_delete>
+          <col_parentcontent>Föräldrainnehåll</col_parentcontent>
+          <col_includedescendants>Inkludera underordnade</col_includedescendants>
+          <col_contentfolderonly>Endast innehållsmapp</col_contentfolderonly>
+          <col_suggestedtypes>Föreslagna typer</col_suggestedtypes>
+          <lbl_parentcontent>Föräldrainnehåll</lbl_parentcontent>
+          <lbl_includedescendants>Inkludera underordnade</lbl_includedescendants>
+          <lbl_contentfolderonly>Endast för denna innehållsmapp</lbl_contentfolderonly>
+          <lbl_filtertypes>Filtrera typer...</lbl_filtertypes>
+          <opt_any>Alla</opt_any>
+          <opt_anylocation>Alla platser</opt_anylocation>
+          <opt_nomatching>Inga matchande typer</opt_nomatching>
+          <btn_browse>Bläddra...</btn_browse>
+          <btn_clear>Rensa</btn_clear>
+          <btn_saving>Sparar...</btn_saving>
+          <err_selecttype>Välj minst en innehållstyp att föreslå.</err_selecttype>
+          <err_save>Fel vid sparande av regel: {0}</err_save>
+          <err_delete>Fel vid borttagning av regel: {0}</err_delete>
         </recommendations>
         <gantt>
           <error_load>Kunde inte ladda Gantt-data: {0}</error_load>

@@ -312,7 +312,7 @@
             state.columns = [];
             state.filters = [];
             state.pendingChanges = {};
-            document.getElementById('bpeTableBody').innerHTML = '<div class="ept-empty"><p>Select a content type above to start editing.</p></div>';
+            document.getElementById('bpeTableBody').innerHTML = '<div class="ept-empty"><p>' + EPT.s('bulkeditor.empty_selecttype2', 'Select a content type above to start editing.') + '</p></div>';
             document.getElementById('bpePagination').style.display = 'none';
             renderFilterBar();
             renderColumnPicker();
@@ -427,7 +427,7 @@
         var tableBody = document.getElementById('bpeTableBody');
 
         if (!data || !data.items || data.items.length === 0) {
-            tableBody.innerHTML = '<div class="ept-empty"><p>No content items found matching your criteria.</p></div>';
+            tableBody.innerHTML = '<div class="ept-empty"><p>' + EPT.s('bulkeditor.empty_noitems', 'No content items found matching your criteria.') + '</p></div>';
             return;
         }
 
@@ -440,13 +440,13 @@
         // Header
         html += '<thead><tr>';
         html += '<th style="width: 36px;"><input type="checkbox" id="bpeSelectAll" ' + (state.selectAll ? 'checked' : '') + ' /></th>';
-        html += renderSortableHeader('Name', 'Name');
-        html += renderSortableHeader('Status', 'Status');
-        html += renderSortableHeader('Last Edited', 'LastEdited');
-        html += renderSortableHeader('Edited By', 'EditedBy');
+        html += renderSortableHeader(EPT.s('bulkeditor.col_name', 'Name'), 'Name');
+        html += renderSortableHeader(EPT.s('bulkeditor.col_status', 'Status'), 'Status');
+        html += renderSortableHeader(EPT.s('bulkeditor.col_lastedited', 'Last Edited'), 'LastEdited');
+        html += renderSortableHeader(EPT.s('bulkeditor.col_editedby', 'Edited By'), 'EditedBy');
 
         if (showParent) {
-            html += '<th>Owner</th>';
+            html += '<th>' + EPT.s('bulkeditor.col_owner', 'Owner') + '</th>';
         }
 
         state.columns.forEach(function (colName) {
@@ -456,10 +456,10 @@
         });
 
         if (state.includeReferences) {
-            html += '<th>References</th>';
+            html += '<th>' + EPT.s('bulkeditor.col_refs', 'References') + '</th>';
         }
 
-        html += '<th style="width: 140px;">Actions</th>';
+        html += '<th style="width: 140px;">' + EPT.s('bulkeditor.col_actions', 'Actions') + '</th>';
         html += '</tr></thead>';
 
         // Body
@@ -490,7 +490,7 @@
                 if (item.parentName) {
                     html += '<td><a href="' + escapeHtml(item.parentEditUrl) + '" target="_blank" style="color: var(--ept-primary); text-decoration: none;">' + escapeHtml(item.parentName) + '</a></td>';
                 } else {
-                    html += '<td><span style="color: var(--ept-text-muted); font-size: 12px;">global</span></td>';
+                    html += '<td><span style="color: var(--ept-text-muted); font-size: 12px;">' + EPT.s('bulkeditor.lbl_global', 'global') + '</span></td>';
                 }
             }
 
@@ -522,22 +522,22 @@
             if (state.includeReferences) {
                 var refCount = item.references ? item.references.length : 0;
                 if (refCount > 0) {
-                    html += '<td><span class="bpe-ref-count" data-content-id="' + item.contentId + '">' + refCount + ' ref' + (refCount !== 1 ? 's' : '') + '</span></td>';
+                    html += '<td><span class="bpe-ref-count" data-content-id="' + item.contentId + '">' + (refCount === 1 ? EPT.s('bulkeditor.lbl_ref', '{0} ref').replace('{0}', refCount) : EPT.s('bulkeditor.lbl_refs', '{0} refs').replace('{0}', refCount)) + '</span></td>';
                 } else {
-                    html += '<td><span style="color: var(--ept-text-muted); font-size: 12px;">none</span></td>';
+                    html += '<td><span style="color: var(--ept-text-muted); font-size: 12px;">' + EPT.s('bulkeditor.lbl_none', 'none') + '</span></td>';
                 }
             }
 
             // Actions
             var hasChanges = rowChanges && Object.keys(rowChanges).length > 0;
             html += '<td><div class="bpe-row-actions">';
-            html += '<a href="' + escapeHtml(item.editUrl) + '" target="_blank" class="ept-btn ept-btn--sm" style="text-decoration: none; font-size: 11px; padding: 2px 8px;">Edit</a>';
+            html += '<a href="' + escapeHtml(item.editUrl) + '" target="_blank" class="ept-btn ept-btn--sm" style="text-decoration: none; font-size: 11px; padding: 2px 8px;">' + EPT.s('bulkeditor.btn_edit', 'Edit') + '</a>';
             if (hasChanges) {
-                html += '<button type="button" class="ept-btn ept-btn--sm bpe-btn-row-save" data-id="' + item.contentId + '" style="font-size: 11px; padding: 2px 8px;">Save</button>';
+                html += '<button type="button" class="ept-btn ept-btn--sm bpe-btn-row-save" data-id="' + item.contentId + '" style="font-size: 11px; padding: 2px 8px;">' + EPT.s('bulkeditor.btn_save', 'Save') + '</button>';
                 if (item.canPublish) {
-                    html += '<button type="button" class="ept-btn ept-btn--sm bpe-btn-row-publish" data-id="' + item.contentId + '" style="font-size: 11px; padding: 2px 8px;">Publish</button>';
+                    html += '<button type="button" class="ept-btn ept-btn--sm bpe-btn-row-publish" data-id="' + item.contentId + '" style="font-size: 11px; padding: 2px 8px;">' + EPT.s('bulkeditor.btn_publish', 'Publish') + '</button>';
                 }
-                html += '<button type="button" class="ept-btn ept-btn--sm bpe-btn-row-undo" data-id="' + item.contentId + '" style="font-size: 11px; padding: 2px 8px; color: var(--ept-text-secondary);" title="Undo changes on this row">Undo</button>';
+                html += '<button type="button" class="ept-btn ept-btn--sm bpe-btn-row-undo" data-id="' + item.contentId + '" style="font-size: 11px; padding: 2px 8px; color: var(--ept-text-secondary);" title="' + EPT.s('bulkeditor.btn_undo', 'Undo') + '">' + EPT.s('bulkeditor.btn_undo', 'Undo') + '</button>';
             }
             html += '</div></td>';
 
@@ -779,7 +779,7 @@
             var currentId = idMatch ? idMatch[0] : '';
             cell.innerHTML = '<div style="display:flex;gap:4px;align-items:center">' +
                 '<input type="text" value="' + escapeHtml(currentId) + '" style="width:60px" placeholder="ID" readonly />' +
-                '<button type="button" class="ept-btn ept-btn--sm">Browse...</button>' +
+                '<button type="button" class="ept-btn ept-btn--sm">' + EPT.s('bulkeditor.btn_browse', 'Browse...') + '</button>' +
                 '<button type="button" class="ept-btn ept-btn--sm" title="Clear">&times;</button>' +
                 '</div>';
             var refInput = cell.querySelector('input');
@@ -787,7 +787,7 @@
             var clearBtn = cell.querySelectorAll('button')[1];
             browseBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
-                EPT.contentPicker({ title: 'Select Content' }).then(function (selected) {
+                EPT.contentPicker({ title: EPT.s('bulkeditor.dlg_selectcontent', 'Select Content') }).then(function (selected) {
                     if (selected) {
                         refInput.value = selected.id;
                         finishEditing(cell, contentId, propName, String(selected.id));

@@ -61,25 +61,25 @@
 
         const columns = [
             {
-                key: 'parentContentTypeName', label: 'Parent Content Type',
-                render: (r) => escHtml(r.parentContentTypeName || 'Any')
+                key: 'parentContentTypeName', label: EPT.s('recommendations.col_parenttype', 'Parent Content Type'),
+                render: (r) => escHtml(r.parentContentTypeName || EPT.s('recommendations.opt_any', 'Any'))
             },
             {
-                key: 'parentContentName', label: 'Parent Content',
+                key: 'parentContentName', label: EPT.s('recommendations.col_parentcontent', 'Parent Content'),
                 render: (r) => r.parentContentName
                     ? `${escHtml(r.parentContentName)} <span class="ept-muted">(ID: ${r.parentContentId})</span>`
-                    : '<span class="ept-muted">Any location</span>'
+                    : '<span class="ept-muted">' + EPT.s('recommendations.opt_anylocation', 'Any location') + '</span>'
             },
             {
-                key: 'includeDescendants', label: 'Include Descendants',
-                render: (r) => r.includeDescendants ? 'Yes' : 'No'
+                key: 'includeDescendants', label: EPT.s('recommendations.col_includedescendants', 'Include Descendants'),
+                render: (r) => r.includeDescendants ? EPT.s('shared.yes', 'Yes') : EPT.s('shared.no', 'No')
             },
             {
-                key: 'forThisContentFolder', label: 'Content Folder Only',
-                render: (r) => r.forThisContentFolder ? 'Yes' : 'No'
+                key: 'forThisContentFolder', label: EPT.s('recommendations.col_contentfolderonly', 'Content Folder Only'),
+                render: (r) => r.forThisContentFolder ? EPT.s('shared.yes', 'Yes') : EPT.s('shared.no', 'No')
             },
             {
-                key: 'suggestedTypes', label: 'Suggested Types', sortable: false,
+                key: 'suggestedTypes', label: EPT.s('recommendations.col_suggestedtypes', 'Suggested Types'), sortable: false,
                 render: (r) => r.suggestedTypes.map(t =>
                     `<span class="ept-badge ept-badge--primary">${escHtml(t.name)}</span>`
                 ).join(' ')
@@ -139,33 +139,33 @@
                 <div>
                     <label style="font-weight:600;display:block;margin-bottom:4px">${EPT.s('recommendations.lbl_parenttype', 'Parent Content Type:')}</label>
                     <select class="ept-select" id="dlg-parent-type" style="width:100%">
-                        <option value="-1">Any</option>
+                        <option value="-1">${EPT.s('recommendations.opt_any', 'Any')}</option>
                         ${allContentTypes.map(t => `<option value="${t.id}" ${t.id === selectedParentContentType ? 'selected' : ''}>${escHtml(t.displayName)}</option>`).join('')}
                     </select>
                 </div>
                 <div>
-                    <label style="font-weight:600;display:block;margin-bottom:4px">Parent Content</label>
+                    <label style="font-weight:600;display:block;margin-bottom:4px">${EPT.s('recommendations.lbl_parentcontent', 'Parent Content')}</label>
                     <div class="ept-flex" style="gap:8px;align-items:center">
-                        <span id="dlg-parent-content-name" class="ept-muted">${selectedParentContentName ? escHtml(selectedParentContentName) + ' (ID: ' + selectedParentContentId + ')' : 'Any location'}</span>
-                        <button class="ept-btn ept-btn--sm" id="dlg-browse-btn">Browse...</button>
-                        <button class="ept-btn ept-btn--sm" id="dlg-clear-btn">Clear</button>
+                        <span id="dlg-parent-content-name" class="ept-muted">${selectedParentContentName ? escHtml(selectedParentContentName) + ' (ID: ' + selectedParentContentId + ')' : EPT.s('recommendations.opt_anylocation', 'Any location')}</span>
+                        <button class="ept-btn ept-btn--sm" id="dlg-browse-btn">${EPT.s('recommendations.btn_browse', 'Browse...')}</button>
+                        <button class="ept-btn ept-btn--sm" id="dlg-clear-btn">${EPT.s('recommendations.btn_clear', 'Clear')}</button>
                     </div>
                 </div>
                 <div class="ept-flex" style="gap:24px">
                     <label class="ept-toggle">
                         <input type="checkbox" id="dlg-include-descendants" ${includeDescendants ? 'checked' : ''} />
-                        Include Descendants
+                        ${EPT.s('recommendations.lbl_includedescendants', 'Include Descendants')}
                     </label>
                     <label class="ept-toggle">
                         <input type="checkbox" id="dlg-content-folder" ${forThisContentFolder ? 'checked' : ''} />
-                        For This Content Folder Only
+                        ${EPT.s('recommendations.lbl_contentfolderonly', 'For This Content Folder Only')}
                     </label>
                 </div>
                 <div>
                     <label style="font-weight:600;display:block;margin-bottom:4px">${EPT.s('recommendations.lbl_allowedtypes', 'Allowed Child Types:')}</label>
                     <div class="ept-search ept-mb-md" style="margin-bottom:8px">
                         <span class="ept-search__icon">${EPT.icons.search}</span>
-                        <input type="text" id="dlg-type-filter" placeholder="Filter types..." style="width:100%" />
+                        <input type="text" id="dlg-type-filter" placeholder="${EPT.s('recommendations.lbl_filtertypes', 'Filter types...')}" style="width:100%" />
                     </div>
                     <div id="dlg-type-list" style="max-height:250px;overflow-y:auto;border:1px solid var(--ept-border, #e0e0e0);border-radius:4px"></div>
                 </div>
@@ -183,7 +183,7 @@
 
         // Wire up browse button
         body.querySelector('#dlg-browse-btn').addEventListener('click', async () => {
-            const selected = await EPT.contentPicker({ title: 'Select Parent Content' });
+            const selected = await EPT.contentPicker({ title: EPT.s('recommendations.lbl_parentcontent', 'Parent Content') });
             if (selected) {
                 selectedParentContentId = selected.id;
                 selectedParentContentName = selected.name;
@@ -197,7 +197,7 @@
             selectedParentContentId = null;
             selectedParentContentName = null;
             const nameEl = body.querySelector('#dlg-parent-content-name');
-            nameEl.textContent = 'Any location';
+            nameEl.textContent = EPT.s('recommendations.opt_anylocation', 'Any location');
             nameEl.className = 'ept-muted';
         });
 
@@ -224,7 +224,7 @@
             }
 
             if (types.length === 0) {
-                listEl.innerHTML = '<div class="ept-muted" style="padding:12px;text-align:center">No matching types</div>';
+                listEl.innerHTML = '<div class="ept-muted" style="padding:12px;text-align:center">' + EPT.s('recommendations.opt_nomatching', 'No matching types') + '</div>';
                 return;
             }
 
@@ -286,13 +286,13 @@
         // Save
         body.querySelector('#dlg-save').addEventListener('click', async () => {
             if (selectedTypeIds.size === 0) {
-                alert('Please select at least one content type to suggest.');
+                alert(EPT.s('recommendations.err_selecttype', 'Please select at least one content type to suggest.'));
                 return;
             }
 
             const saveBtn = body.querySelector('#dlg-save');
             saveBtn.disabled = true;
-            saveBtn.textContent = 'Saving...';
+            saveBtn.textContent = EPT.s('recommendations.btn_saving', 'Saving...');
 
             try {
                 const request = {
@@ -310,7 +310,7 @@
             } catch (err) {
                 saveBtn.disabled = false;
                 saveBtn.textContent = EPT.s('recommendations.btn_save', 'Save');
-                alert('Error saving rule: ' + err.message);
+                alert(EPT.s('recommendations.err_save', 'Error saving rule: {0}').replace('{0}', err.message));
             }
         });
     }
@@ -328,7 +328,7 @@
             if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
             await reload();
         } catch (err) {
-            alert('Error deleting rule: ' + err.message);
+            alert(EPT.s('recommendations.err_delete', 'Error deleting rule: {0}').replace('{0}', err.message));
         }
     }
 

@@ -213,14 +213,14 @@
     }
 
     function timeAgo(dateStr) {
-        if (!dateStr) return 'never';
+        if (!dateStr) return EPT.s('linkchecker.time_never', 'never');
         const d = new Date(dateStr);
         const now = new Date();
         const diff = Math.floor((now - d) / 1000);
-        if (diff < 60) return 'just now';
-        if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
-        if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
-        return Math.floor(diff / 86400) + 'd ago';
+        if (diff < 60) return EPT.s('linkchecker.time_justnow', 'just now');
+        if (diff < 3600) return EPT.s('linkchecker.time_mago', '{0}m ago').replace('{0}', Math.floor(diff / 60));
+        if (diff < 86400) return EPT.s('linkchecker.time_hago', '{0}h ago').replace('{0}', Math.floor(diff / 3600));
+        return EPT.s('linkchecker.time_dago', '{0}d ago').replace('{0}', Math.floor(diff / 86400));
     }
 
     function escHtml(s) {

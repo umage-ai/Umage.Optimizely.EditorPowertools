@@ -87,7 +87,7 @@
         var panel = document.getElementById('ae-editors-panel');
 
         if (editors.length === 0) {
-            panel.innerHTML = '<div class="ept-empty"><p>No editors currently online.</p></div>';
+            panel.innerHTML = '<div class="ept-empty"><p>' + EPT.s('activeeditors.empty_noeditors', 'No editors currently online.') + '</p></div>';
             return;
         }
 
@@ -291,10 +291,10 @@
         var date = new Date(utcStr);
         var now = new Date();
         var diffMin = Math.floor((now - date) / 60000);
-        if (diffMin < 1) return 'just now';
-        if (diffMin < 60) return diffMin + 'm ago';
+        if (diffMin < 1) return EPT.s('activeeditors.time_justnow', 'just now');
+        if (diffMin < 60) return EPT.s('activeeditors.time_mago', '{0}m ago').replace('{0}', diffMin);
         var diffHour = Math.floor(diffMin / 60);
-        if (diffHour < 24) return diffHour + 'h ago';
+        if (diffHour < 24) return EPT.s('activeeditors.time_hago', '{0}h ago').replace('{0}', diffHour);
         return date.toLocaleDateString();
     }
 

@@ -685,6 +685,29 @@
           <confirm_delete>{0} geselecteerd(e) item(s) verwijderen? Dit kan niet ongedaan worden gemaakt.</confirm_delete>
           <confirm_publishall>Alle {0} subpagina's publiceren?</confirm_publishall>
           <confirm_unpublishall>Alle {0} subpagina's depubliceren?</confirm_unpublishall>
+          <title_managechildren>Subpagina's beheren</title_managechildren>
+          <title_managechildren2>Subpagina's beheren</title_managechildren2>
+          <btn_changeparent>Bovenliggend wijzigen</btn_changeparent>
+          <lbl_selectall>Alles selecteren</lbl_selectall>
+          <lbl_selected>{0} geselecteerd</lbl_selected>
+          <btn_publish>Publiceren</btn_publish>
+          <btn_unpublish>Depubliceren</btn_unpublish>
+          <btn_move>Verplaatsen</btn_move>
+          <btn_trash>Naar prullenbak</btn_trash>
+          <btn_delete>Permanent verwijderen</btn_delete>
+          <empty_nochildren>Geen subpagina's gevonden</empty_nochildren>
+          <badge_haschildren>heeft subpagina's</badge_haschildren>
+          <col_changedby>Gewijzigd door</col_changedby>
+          <lbl_childrenof>Subpagina's van {0} ({1}, ID: {2})</lbl_childrenof>
+          <confirm_movetotrash>{0} items naar prullenbak verplaatsen?</confirm_movetotrash>
+          <result_msg>{0}: {1} geslaagd</result_msg>
+          <result_failed>, {0} mislukt</result_failed>
+          <dlg_selecttarget>Doellocatie selecteren</dlg_selecttarget>
+          <dlg_selectparent>Bovenliggende inhoud selecteren</dlg_selectparent>
+          <lbl_loading>Laden...</lbl_loading>
+          <btn_edit>Bewerken</btn_edit>
+          <err_generic>Fout: {0}</err_generic>
+          <result_succeeded>{0} geslaagd</result_succeeded>
         </managechildren>
         <recommendations>
           <banner_info>Wanneer redacteuren nieuwe inhoud aanmaken, kan Optimizely voorstellen welke inhoudstypen te gebruiken. Definieer hieronder regels om deze suggesties te beheren op basis van waar inhoud wordt aangemaakt.</banner_info>
@@ -702,6 +725,23 @@
           <btn_delete>Verwijderen</btn_delete>
           <empty_norules>Nog geen aanbevelingsregels gedefinieerd. Klik op "Regel toevoegen" om er een te maken.</empty_norules>
           <confirm_delete>Deze regel verwijderen?</confirm_delete>
+          <col_parentcontent>Bovenliggende inhoud</col_parentcontent>
+          <col_includedescendants>Inclusief onderliggende</col_includedescendants>
+          <col_contentfolderonly>Alleen inhoudsmap</col_contentfolderonly>
+          <col_suggestedtypes>Voorgestelde typen</col_suggestedtypes>
+          <lbl_parentcontent>Bovenliggende inhoud</lbl_parentcontent>
+          <lbl_includedescendants>Inclusief onderliggende</lbl_includedescendants>
+          <lbl_contentfolderonly>Alleen voor deze inhoudsmap</lbl_contentfolderonly>
+          <lbl_filtertypes>Typen filteren...</lbl_filtertypes>
+          <opt_any>Willekeurig</opt_any>
+          <opt_anylocation>Willekeurige locatie</opt_anylocation>
+          <opt_nomatching>Geen overeenkomende typen</opt_nomatching>
+          <btn_browse>Bladeren...</btn_browse>
+          <btn_clear>Wissen</btn_clear>
+          <btn_saving>Opslaan...</btn_saving>
+          <err_selecttype>Selecteer ten minste één inhoudstype om voor te stellen.</err_selecttype>
+          <err_save>Fout bij opslaan van regel: {0}</err_save>
+          <err_delete>Fout bij verwijderen van regel: {0}</err_delete>
         </recommendations>
         <gantt>
           <error_load>Gantt-gegevens konden niet worden geladen: {0}</error_load>

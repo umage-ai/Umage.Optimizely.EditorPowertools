@@ -685,6 +685,29 @@
           <confirm_delete>{0} ausgewählte(s) Element(e) löschen? Dies kann nicht rückgängig gemacht werden.</confirm_delete>
           <confirm_publishall>Alle {0} Unterseiten veröffentlichen?</confirm_publishall>
           <confirm_unpublishall>Alle {0} Unterseiten zurückziehen?</confirm_unpublishall>
+          <title_managechildren>Unterseiten verwalten</title_managechildren>
+          <title_managechildren2>Unterseiten verwalten</title_managechildren2>
+          <btn_changeparent>Übergeordnetes Element ändern</btn_changeparent>
+          <lbl_selectall>Alle auswählen</lbl_selectall>
+          <lbl_selected>{0} ausgewählt</lbl_selected>
+          <btn_publish>Veröffentlichen</btn_publish>
+          <btn_unpublish>Zurückziehen</btn_unpublish>
+          <btn_move>Verschieben</btn_move>
+          <btn_trash>In den Papierkorb</btn_trash>
+          <btn_delete>Endgültig löschen</btn_delete>
+          <empty_nochildren>Keine Unterseiten gefunden</empty_nochildren>
+          <badge_haschildren>hat Unterseiten</badge_haschildren>
+          <col_changedby>Geändert von</col_changedby>
+          <lbl_childrenof>Unterseiten von {0} ({1}, ID: {2})</lbl_childrenof>
+          <confirm_movetotrash>{0} Elemente in den Papierkorb verschieben?</confirm_movetotrash>
+          <result_msg>{0}: {1} erfolgreich</result_msg>
+          <result_failed>, {0} fehlgeschlagen</result_failed>
+          <dlg_selecttarget>Zielort auswählen</dlg_selecttarget>
+          <dlg_selectparent>Übergeordneten Inhalt auswählen</dlg_selectparent>
+          <lbl_loading>Wird geladen...</lbl_loading>
+          <btn_edit>Bearbeiten</btn_edit>
+          <err_generic>Fehler: {0}</err_generic>
+          <result_succeeded>{0} erfolgreich</result_succeeded>
         </managechildren>
         <recommendations>
           <banner_info>Wenn Redakteure neue Inhalte erstellen, kann Optimizely vorschlagen, welche Inhaltstypen verwendet werden sollen. Legen Sie unten Regeln fest, um diese Vorschläge basierend auf dem Erstellungsort zu steuern.</banner_info>
@@ -702,6 +725,23 @@
           <btn_delete>Löschen</btn_delete>
           <empty_norules>Noch keine Empfehlungsregeln definiert. Klicken Sie auf "Regel hinzufügen", um eine zu erstellen.</empty_norules>
           <confirm_delete>Diese Regel löschen?</confirm_delete>
+          <col_parentcontent>Übergeordneter Inhalt</col_parentcontent>
+          <col_includedescendants>Untergeordnete einschließen</col_includedescendants>
+          <col_contentfolderonly>Nur Inhaltsordner</col_contentfolderonly>
+          <col_suggestedtypes>Vorgeschlagene Typen</col_suggestedtypes>
+          <lbl_parentcontent>Übergeordneter Inhalt</lbl_parentcontent>
+          <lbl_includedescendants>Untergeordnete einschließen</lbl_includedescendants>
+          <lbl_contentfolderonly>Nur für diesen Inhaltsordner</lbl_contentfolderonly>
+          <lbl_filtertypes>Typen filtern...</lbl_filtertypes>
+          <opt_any>Beliebig</opt_any>
+          <opt_anylocation>Beliebiger Ort</opt_anylocation>
+          <opt_nomatching>Keine passenden Typen</opt_nomatching>
+          <btn_browse>Durchsuchen...</btn_browse>
+          <btn_clear>Leeren</btn_clear>
+          <btn_saving>Wird gespeichert...</btn_saving>
+          <err_selecttype>Bitte wählen Sie mindestens einen Inhaltstyp zum Vorschlagen aus.</err_selecttype>
+          <err_save>Fehler beim Speichern der Regel: {0}</err_save>
+          <err_delete>Fehler beim Löschen der Regel: {0}</err_delete>
         </recommendations>
         <gantt>
           <error_load>Gantt-Daten konnten nicht geladen werden: {0}</error_load>

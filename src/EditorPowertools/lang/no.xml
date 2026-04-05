@@ -685,6 +685,29 @@
           <confirm_delete>Slett {0} valgte element(er)? Dette kan ikke angres.</confirm_delete>
           <confirm_publishall>Publiser alle {0} undersider?</confirm_publishall>
           <confirm_unpublishall>Avpubliser alle {0} undersider?</confirm_unpublishall>
+          <title_managechildren>Administrer undersider</title_managechildren>
+          <title_managechildren2>Administrer undersider</title_managechildren2>
+          <btn_changeparent>Endre overordnet</btn_changeparent>
+          <lbl_selectall>Velg alle</lbl_selectall>
+          <lbl_selected>{0} valgt</lbl_selected>
+          <btn_publish>Publiser</btn_publish>
+          <btn_unpublish>Avpubliser</btn_unpublish>
+          <btn_move>Flytt</btn_move>
+          <btn_trash>Flytt til papirkurv</btn_trash>
+          <btn_delete>Slett permanent</btn_delete>
+          <empty_nochildren>Ingen undersider funnet</empty_nochildren>
+          <badge_haschildren>har undersider</badge_haschildren>
+          <col_changedby>Endret av</col_changedby>
+          <lbl_childrenof>Undersider av {0} ({1}, ID: {2})</lbl_childrenof>
+          <confirm_movetotrash>Flytt {0} elementer til papirkurv?</confirm_movetotrash>
+          <result_msg>{0}: {1} lyktes</result_msg>
+          <result_failed>, {0} mislyktes</result_failed>
+          <dlg_selecttarget>Velg målplassering</dlg_selecttarget>
+          <dlg_selectparent>Velg overordnet innhold</dlg_selectparent>
+          <lbl_loading>Laster...</lbl_loading>
+          <btn_edit>Rediger</btn_edit>
+          <err_generic>Feil: {0}</err_generic>
+          <result_succeeded>{0} lyktes</result_succeeded>
         </managechildren>
         <recommendations>
           <banner_info>Når redaktører oppretter nytt innhold, kan Optimizely foreslå hvilke innholdstyper som skal brukes. Definer regler nedenfor for å styre disse forslagene basert på hvor innhold opprettes.</banner_info>
@@ -702,6 +725,23 @@
           <btn_delete>Slett</btn_delete>
           <empty_norules>Ingen anbefalingsregler definert ennå. Klikk «Legg til regel» for å opprette en.</empty_norules>
           <confirm_delete>Slett denne regelen?</confirm_delete>
+          <col_parentcontent>Overordnet innhold</col_parentcontent>
+          <col_includedescendants>Inkluder underordnede</col_includedescendants>
+          <col_contentfolderonly>Kun innholdsmappe</col_contentfolderonly>
+          <col_suggestedtypes>Foreslåtte typer</col_suggestedtypes>
+          <lbl_parentcontent>Overordnet innhold</lbl_parentcontent>
+          <lbl_includedescendants>Inkluder underordnede</lbl_includedescendants>
+          <lbl_contentfolderonly>Kun for denne innholdsmappen</lbl_contentfolderonly>
+          <lbl_filtertypes>Filtrer typer...</lbl_filtertypes>
+          <opt_any>Alle</opt_any>
+          <opt_anylocation>Alle plasseringer</opt_anylocation>
+          <opt_nomatching>Ingen matchende typer</opt_nomatching>
+          <btn_browse>Bla gjennom...</btn_browse>
+          <btn_clear>Tøm</btn_clear>
+          <btn_saving>Lagrer...</btn_saving>
+          <err_selecttype>Velg minst én innholdstype å foreslå.</err_selecttype>
+          <err_save>Feil ved lagring av regel: {0}</err_save>
+          <err_delete>Feil ved sletting av regel: {0}</err_delete>
         </recommendations>
         <gantt>
           <error_load>Kunne ikke laste Gantt-data: {0}</error_load>

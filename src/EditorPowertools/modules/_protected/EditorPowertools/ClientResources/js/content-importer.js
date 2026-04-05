@@ -94,7 +94,7 @@
         html += '<div class="ept-importer-dropzone" id="dropzone">';
         html += '<div style="text-align:center;padding:40px">';
         html += '<p style="font-size:16px;font-weight:600;margin-bottom:8px">' + EPT.s('contentimporter.lbl_dropfile', 'Drop a CSV, JSON, or Excel file here, or click to browse') + '</p>';
-        html += '<p style="color:var(--ept-text-muted)">Supported formats: CSV, XLSX, JSON</p>';
+        html += '<p style="color:var(--ept-text-muted)">' + EPT.s('contentimporter.lbl_supportedformats', 'Supported formats: CSV, XLSX, JSON') + '</p>';
         html += '<input type="file" id="file-input" accept=".csv,.tsv,.xlsx,.xls,.json" style="display:none">';
         html += '<button class="ept-btn ept-btn--primary" id="browse-btn" style="margin-top:16px">' + EPT.s('contentimporter.btn_browse', 'Browse...') + '</button>';
         html += '</div></div>';
@@ -120,7 +120,7 @@
 
     function uploadFile(file) {
         var status = document.getElementById('upload-status');
-        status.innerHTML = '<div class="ept-loading"><div class="ept-spinner"></div><p>Uploading and parsing ' + escHtml(file.name) + '...</p></div>';
+        status.innerHTML = '<div class="ept-loading"><div class="ept-spinner"></div><p>' + EPT.s('contentimporter.lbl_uploading', 'Uploading and parsing {0}...').replace('{0}', escHtml(file.name)) + '</p></div>';
 
         var formData = new FormData();
         formData.append('file', file);
@@ -149,8 +149,8 @@
     function renderPreview() {
         var html = renderStepBar();
         html += '<div class="ept-card"><div class="ept-card__header"><div class="ept-card__title">' +
-            escHtml(state.fileName) + ' &middot; ' + state.totalRowCount + ' rows &middot; ' +
-            state.columns.length + ' columns</div></div>';
+            escHtml(state.fileName) + ' &middot; ' + EPT.s('contentimporter.lbl_rows', '{0} rows').replace('{0}', state.totalRowCount) + ' &middot; ' +
+            EPT.s('contentimporter.lbl_columns', '{0} columns').replace('{0}', state.columns.length) + '</div></div>';
         html += '<div class="ept-card__body ept-card__body--flush">';
 
         // Data table
@@ -179,24 +179,24 @@
     // ── Step 3: Target ──
     function renderTarget() {
         var html = renderStepBar();
-        html += '<div class="ept-card"><div class="ept-card__header"><div class="ept-card__title">Select Target</div></div>';
+        html += '<div class="ept-card"><div class="ept-card__header"><div class="ept-card__title">' + EPT.s('contentimporter.lbl_selecttarget', 'Select Target') + '</div></div>';
         html += '<div class="ept-card__body">';
 
         // Content type filter
         html += '<div class="ept-importer-field"><label>' + EPT.s('contentimporter.lbl_contenttype', 'Content Type:') + '</label>';
         html += '<div style="display:flex;gap:8px;margin-bottom:8px">';
-        html += '<button class="ept-btn ept-btn--sm ct-filter" data-filter="Page">Pages</button>';
-        html += '<button class="ept-btn ept-btn--sm ct-filter" data-filter="Block">Blocks</button>';
-        html += '<button class="ept-btn ept-btn--sm ct-filter" data-filter="">All</button>';
+        html += '<button class="ept-btn ept-btn--sm ct-filter" data-filter="Page">' + EPT.s('contentimporter.filter_pages', 'Pages') + '</button>';
+        html += '<button class="ept-btn ept-btn--sm ct-filter" data-filter="Block">' + EPT.s('contentimporter.filter_blocks', 'Blocks') + '</button>';
+        html += '<button class="ept-btn ept-btn--sm ct-filter" data-filter="">' + EPT.s('contentimporter.filter_all', 'All') + '</button>';
         html += '</div>';
-        html += '<select class="ept-select" id="ct-select" style="width:100%"><option value="">-- Select content type --</option></select>';
+        html += '<select class="ept-select" id="ct-select" style="width:100%"><option value="">' + EPT.s('contentimporter.opt_selectcontenttype', '-- Select content type --') + '</option></select>';
         html += '</div>';
 
         // Parent content
         html += '<div class="ept-importer-field"><label>' + EPT.s('contentimporter.lbl_parent', 'Parent Location:') + '</label>';
         html += '<div style="display:flex;gap:8px;align-items:center">';
-        html += '<span id="parent-name" style="font-size:13px">' + (state.parentContentName ? escHtml(state.parentContentName) + ' (ID: ' + state.parentContentId + ')' : '<em style="color:var(--ept-text-muted)">No parent selected</em>') + '</span>';
-        html += '<button class="ept-btn ept-btn--sm" id="pick-parent-btn">Browse...</button>';
+        html += '<span id="parent-name" style="font-size:13px">' + (state.parentContentName ? escHtml(state.parentContentName) + ' (ID: ' + state.parentContentId + ')' : '<em style="color:var(--ept-text-muted)">' + EPT.s('contentimporter.lbl_noparent', 'No parent selected') + '</em>') + '</span>';
+        html += '<button class="ept-btn ept-btn--sm" id="pick-parent-btn">' + EPT.s('contentimporter.btn_browse', 'Browse...') + '</button>';
         html += '</div></div>';
 
         // Language
@@ -242,7 +242,7 @@
         fetchJson(url).then(function (types) {
             state.contentTypes = types;
             var select = document.getElementById('ct-select');
-            var html = '<option value="">-- Select content type --</option>';
+            var html = '<option value="">' + EPT.s('contentimporter.opt_selectcontenttype', '-- Select content type --') + '</option>';
             for (var i = 0; i < types.length; i++) {
                 var sel = types[i].id === state.targetContentTypeId ? ' selected' : '';
                 html += '<option value="' + types[i].id + '"' + sel + '>' + escHtml(types[i].displayName) + ' (' + types[i].baseType + ')</option>';
@@ -282,8 +282,8 @@
     // ── Step 4: Mapping ──
     function renderMapping() {
         var html = renderStepBar();
-        html += '<div class="ept-card"><div class="ept-card__header"><div class="ept-card__title">Map Properties</div></div>';
-        html += '<div class="ept-card__body" id="mapping-body"><div class="ept-loading"><div class="ept-spinner"></div><p>Loading properties...</p></div></div></div>';
+        html += '<div class="ept-card"><div class="ept-card__header"><div class="ept-card__title">' + EPT.s('contentimporter.lbl_mapproperties', 'Map Properties') + '</div></div>';
+        html += '<div class="ept-card__body" id="mapping-body"><div class="ept-loading"><div class="ept-spinner"></div><p>' + EPT.s('contentimporter.lbl_loadingproperties', 'Loading properties...') + '</p></div></div></div>';
         html += renderNav(3, 5);
         root.innerHTML = html;
         bindNav();
@@ -304,9 +304,9 @@
 
         // Name mapping
         html += '<div class="ept-importer-mapping-row">';
-        html += '<div class="ept-importer-mapping-label"><strong>Content Name</strong> <span class="ept-badge ept-badge--danger">required</span></div>';
+        html += '<div class="ept-importer-mapping-label"><strong>' + EPT.s('contentimporter.lbl_contentname', 'Content Name') + '</strong> <span class="ept-badge ept-badge--danger">' + EPT.s('contentimporter.lbl_required', 'required') + '</span></div>';
         html += '<select class="ept-select" id="name-col">';
-        html += '<option value="">-- Select column --</option>';
+        html += '<option value="">' + EPT.s('contentimporter.opt_selectcolumn', '-- Select column --') + '</option>';
         for (var c = 0; c < cols.length; c++) {
             var sel = state.nameSourceColumn === cols[c] ? ' selected' : '';
             html += '<option value="' + escHtml(cols[c]) + '"' + sel + '>' + escHtml(cols[c]) + '</option>';
@@ -322,7 +322,7 @@
 
         // Built-in properties section
         if (builtInProps.length > 0) {
-            html += '<details style="margin-top:12px"><summary style="cursor:pointer;font-size:13px;font-weight:600;color:var(--ept-text-secondary);padding:6px 0">Built-in Properties</summary>';
+            html += '<details style="margin-top:12px"><summary style="cursor:pointer;font-size:13px;font-weight:600;color:var(--ept-text-secondary);padding:6px 0">' + EPT.s('contentimporter.lbl_builtinprops', 'Built-in Properties') + '</summary>';
             html += renderPropertyMappings(builtInProps, cols);
             html += '</details>';
         }
@@ -348,21 +348,21 @@
             html += '<div class="ept-importer-mapping-label">';
             html += escHtml(prop.displayName);
             html += ' <span class="ept-badge ept-badge--default">' + escHtml(prop.typeName) + '</span>';
-            if (prop.isRequired) html += ' <span class="ept-badge ept-badge--danger">required</span>';
-            if (prop.isBuiltIn) html += ' <span class="ept-badge ept-badge--warning">built-in</span>';
+            if (prop.isRequired) html += ' <span class="ept-badge ept-badge--danger">' + EPT.s('contentimporter.lbl_required', 'required') + '</span>';
+            if (prop.isBuiltIn) html += ' <span class="ept-badge ept-badge--warning">' + EPT.s('contentimporter.lbl_builtin', 'built-in') + '</span>';
             html += '</div>';
 
             html += '<select class="ept-select mapping-type" data-prop="' + escHtml(prop.name) + '">';
-            html += '<option value="skip"' + (!existing || existing.mappingType === 'skip' ? ' selected' : '') + '>Skip</option>';
-            html += '<option value="column"' + (existing && existing.mappingType === 'column' ? ' selected' : '') + '>Map to column</option>';
-            html += '<option value="hardcoded"' + (existing && existing.mappingType === 'hardcoded' ? ' selected' : '') + '>Set value</option>';
+            html += '<option value="skip"' + (!existing || existing.mappingType === 'skip' ? ' selected' : '') + '>' + EPT.s('contentimporter.opt_skip2', 'Skip') + '</option>';
+            html += '<option value="column"' + (existing && existing.mappingType === 'column' ? ' selected' : '') + '>' + EPT.s('contentimporter.opt_mapcolumn', 'Map to column') + '</option>';
+            html += '<option value="hardcoded"' + (existing && existing.mappingType === 'hardcoded' ? ' selected' : '') + '>' + EPT.s('contentimporter.opt_setvalue', 'Set value') + '</option>';
             if (prop.isContentArea) {
-                html += '<option value="inline-block"' + (existing && existing.mappingType === 'inline-block' ? ' selected' : '') + '>Create inline blocks</option>';
+                html += '<option value="inline-block"' + (existing && existing.mappingType === 'inline-block' ? ' selected' : '') + '>' + EPT.s('contentimporter.opt_inlineblocks', 'Create inline blocks') + '</option>';
             }
             html += '</select>';
 
             html += '<select class="ept-select mapping-col" data-prop="' + escHtml(prop.name) + '" style="display:none">';
-            html += '<option value="">-- Column --</option>';
+            html += '<option value="">' + EPT.s('contentimporter.opt_selectcolumn2', '-- Column --') + '</option>';
             for (var c2 = 0; c2 < cols.length; c2++) {
                 var sel2 = existing && existing.sourceColumn === cols[c2] ? ' selected' : '';
                 html += '<option value="' + escHtml(cols[c2]) + '"' + sel2 + '>' + escHtml(cols[c2]) + '</option>';
@@ -371,15 +371,15 @@
 
             if (prop.isBoolean) {
                 var isChecked = existing && existing.hardcodedValue === 'true' ? ' checked' : '';
-                html += '<label class="ept-toggle mapping-bool" data-prop="' + escHtml(prop.name) + '" style="display:none"><input type="checkbox" class="mapping-bool-check" data-prop="' + escHtml(prop.name) + '"' + isChecked + '> Set to true</label>';
+                html += '<label class="ept-toggle mapping-bool" data-prop="' + escHtml(prop.name) + '" style="display:none"><input type="checkbox" class="mapping-bool-check" data-prop="' + escHtml(prop.name) + '"' + isChecked + '> ' + EPT.s('contentimporter.lbl_settotrue', 'Set to true') + '</label>';
             }
-            html += '<input class="ept-importer-input mapping-val" data-prop="' + escHtml(prop.name) + '" placeholder="Value or {Column} template" style="display:none" value="' + escHtml((existing && existing.hardcodedValue) || '') + '">';
+            html += '<input class="ept-importer-input mapping-val" data-prop="' + escHtml(prop.name) + '" placeholder="' + EPT.s('contentimporter.lbl_valuetemplate', 'Value or {ColumnName} template') + '" style="display:none" value="' + escHtml((existing && existing.hardcodedValue) || '') + '">';
             html += '<div class="ept-importer-hint mapping-val-hint" data-prop="' + escHtml(prop.name) + '" style="display:none">Use <code>{ColumnName}</code> to insert column values</div>';
 
             // Inline block section with add button
             html += '<div class="mapping-blocks-container" data-prop="' + escHtml(prop.name) + '" style="display:none">';
             html += '<div class="mapping-blocks-list" data-prop="' + escHtml(prop.name) + '"></div>';
-            html += '<button class="ept-btn ept-btn--sm mapping-add-block" data-prop="' + escHtml(prop.name) + '">+ Add block</button>';
+            html += '<button class="ept-btn ept-btn--sm mapping-add-block" data-prop="' + escHtml(prop.name) + '">' + EPT.s('contentimporter.btn_addblock', '+ Add block') + '</button>';
             html += '</div>';
 
             html += '</div>';
@@ -437,7 +437,7 @@
         wrapper.className = 'ept-importer-block-entry';
         wrapper.setAttribute('data-block-index', blockIndex);
         wrapper.innerHTML = '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">' +
-            '<strong style="font-size:11px">Block ' + (blockIndex + 1) + '</strong>' +
+            '<strong style="font-size:11px">' + EPT.s('contentimporter.lbl_block', 'Block {0}').replace('{0}', blockIndex + 1) + '</strong>' +
             '<select class="ept-select mapping-block-type" style="font-size:12px"></select>' +
             '<button class="ept-btn ept-btn--sm remove-block-btn" style="color:var(--ept-danger)">&times;</button>' +
             '</div>' +
@@ -460,7 +460,7 @@
             : fetchJson(API + '/block-types').then(function (types) { _blockTypesCache = types; return types; });
 
         loadTypes.then(function (types) {
-            var html = '<option value="">-- Select block type --</option>';
+            var html = '<option value="">' + EPT.s('contentimporter.opt_selectblocktype', '-- Select block type --') + '</option>';
             for (var i = 0; i < types.length; i++) {
                 html += '<option value="' + types[i].id + '">' + escHtml(types[i].displayName) + '</option>';
             }

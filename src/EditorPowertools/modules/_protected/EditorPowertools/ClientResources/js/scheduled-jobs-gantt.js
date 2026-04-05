@@ -165,9 +165,9 @@
 
         // Zoom controls
         var zoomOutBtn = createButton('\u2212', function () { zoom(0.5); });
-        zoomOutBtn.title = 'Zoom out (show more time)';
+        zoomOutBtn.title = EPT.s('gantt.btn_zoomout', 'Zoom out (show more time)');
         var zoomInBtn = createButton('+', function () { zoom(2); });
-        zoomInBtn.title = 'Zoom in (show less time)';
+        zoomInBtn.title = EPT.s('gantt.btn_zoomin', 'Zoom in (show less time)');
         var zoomLabel = document.createElement('span');
         zoomLabel.style.cssText = 'font-size:12px;color:var(--ept-text-muted);';
         zoomLabel.textContent = EPT.s('gantt.lbl_viewhours', '{0}h view').replace('{0}', state.viewRangeHours);
@@ -225,13 +225,13 @@
             dot.style.cssText = 'width:8px;height:8px;border-radius:50%;flex-shrink:0;';
             if (job.isRunning) {
                 dot.style.background = 'var(--ept-primary)';
-                dot.title = 'Running';
+                dot.title = EPT.s('gantt.dot_running', 'Running');
             } else if (job.isEnabled) {
                 dot.style.background = 'var(--ept-success)';
-                dot.title = 'Enabled';
+                dot.title = EPT.s('gantt.dot_enabled', 'Enabled');
             } else {
                 dot.style.background = 'var(--ept-text-muted)';
-                dot.title = 'Disabled';
+                dot.title = EPT.s('gantt.dot_disabled', 'Disabled');
             }
             row.appendChild(dot);
 
@@ -509,7 +509,7 @@
         // Now marker at top
         var marker = document.createElement('div');
         marker.style.cssText = 'position:absolute;top:' + (HEADER_HEIGHT - 14) + 'px;left:-8px;width:18px;height:14px;background:#e65100;border-radius:2px;color:#fff;font-size:9px;font-weight:600;text-align:center;line-height:14px;';
-        marker.textContent = 'NOW';
+        marker.textContent = EPT.s('gantt.lbl_now', 'NOW');
         line.appendChild(marker);
 
         chartInner.appendChild(line);
@@ -541,18 +541,18 @@
         if (!tooltip) return;
 
         var statusIcon = exec.isPlanned ? '\u23F3' : exec.isRunning ? '\u25B6' : exec.succeeded ? '\u2713' : '\u2717';
-        var statusText = exec.isPlanned ? 'Planned' : exec.isRunning ? 'Running' : exec.succeeded ? 'Success' : 'Failed';
+        var statusText = exec.isPlanned ? EPT.s('gantt.status_planned', 'Planned') : exec.isRunning ? EPT.s('gantt.status_running', 'Running') : exec.succeeded ? EPT.s('gantt.status_success', 'Success') : EPT.s('gantt.status_failed', 'Failed');
         var statusColor = exec.isPlanned ? 'var(--ept-primary)' : exec.isRunning ? 'var(--ept-info)' : exec.succeeded ? 'var(--ept-success)' : 'var(--ept-danger)';
 
         var html = '<strong>' + escapeHtml(exec.jobName) + '</strong><br>';
-        html += 'Start: ' + formatDateTime(exec.startUtc) + '<br>';
+        html += EPT.s('gantt.tooltip_start', 'Start: {0}').replace('{0}', formatDateTime(exec.startUtc)) + '<br>';
 
         if (exec.endUtc) {
-            html += 'End: ' + formatDateTime(exec.endUtc) + '<br>';
+            html += EPT.s('gantt.tooltip_end', 'End: {0}').replace('{0}', formatDateTime(exec.endUtc)) + '<br>';
         }
 
-        html += 'Duration: ' + formatDuration(exec.durationSeconds) + '<br>';
-        html += 'Status: <span style="color:' + statusColor + ';font-weight:600;">' + statusIcon + ' ' + statusText + '</span>';
+        html += EPT.s('gantt.tooltip_duration', 'Duration: {0}').replace('{0}', formatDuration(exec.durationSeconds)) + '<br>';
+        html += EPT.s('gantt.tooltip_status', 'Status:') + ' <span style="color:' + statusColor + ';font-weight:600;">' + statusIcon + ' ' + statusText + '</span>';
 
         if (exec.message && !exec.isPlanned) {
             var msg = exec.message.length > 150 ? exec.message.substring(0, 150) + '...' : exec.message;

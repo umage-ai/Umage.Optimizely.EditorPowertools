@@ -51,12 +51,18 @@
     function timeAgo(date) {
         var diff = Date.now() - date.getTime();
         var mins = Math.floor(diff / 60000);
-        if (mins < 1) return 'just now';
-        if (mins < 60) return mins + ' minute' + (mins !== 1 ? 's' : '') + ' ago';
+        if (mins < 1) return EPT.s('securityaudit.time_justnow', 'just now');
+        if (mins < 60) return (mins === 1
+            ? EPT.s('securityaudit.time_minuteago', '{0} minute ago').replace('{0}', mins)
+            : EPT.s('securityaudit.time_minutesago', '{0} minutes ago').replace('{0}', mins));
         var hours = Math.floor(mins / 60);
-        if (hours < 24) return hours + ' hour' + (hours !== 1 ? 's' : '') + ' ago';
+        if (hours < 24) return (hours === 1
+            ? EPT.s('securityaudit.time_hourago', '{0} hour ago').replace('{0}', hours)
+            : EPT.s('securityaudit.time_hoursago', '{0} hours ago').replace('{0}', hours));
         var days = Math.floor(hours / 24);
-        return days + ' day' + (days !== 1 ? 's' : '') + ' ago';
+        return (days === 1
+            ? EPT.s('securityaudit.time_dayago', '{0} day ago').replace('{0}', days)
+            : EPT.s('securityaudit.time_daysago', '{0} days ago').replace('{0}', days));
     }
 
     function accessBadgeClass(access) {
@@ -242,7 +248,7 @@
             return;
         }
         var s = state.status;
-        var lastRun = s.lastAnalysisUtc ? timeAgo(new Date(s.lastAnalysisUtc)) : 'Never';
+        var lastRun = s.lastAnalysisUtc ? timeAgo(new Date(s.lastAnalysisUtc)) : EPT.s('securityaudit.stat_lastrun_never', 'Never');
         el.innerHTML =
             '<div class="ept-stat"><div class="ept-stat__value">' + (s.totalContentAnalyzed || 0) + '</div><div class="ept-stat__label">' + EPT.s('securityaudit.stat_analyzed', 'Content Analyzed') + '</div></div>' +
             '<div class="ept-stat"><div class="ept-stat__value">' + (s.uniqueRolesAndUsers || 0) + '</div><div class="ept-stat__label">' + EPT.s('securityaudit.stat_roles', 'Roles/Users') + '</div></div>' +
@@ -272,7 +278,7 @@
         // If no data, show empty state in tab content
         if (!state.status || !state.status.hasData) {
             content.innerHTML = '<div class="ept-card"><div class="ept-card__body" style="text-align:center;padding:32px;">' +
-                '<p style="color:var(--ept-muted,#888);">No data available. Run the scheduled job using the button above to populate security audit data.</p>' +
+                '<p style="color:var(--ept-muted,#888);">' + EPT.s('securityaudit.empty_nodatarun', 'No data available. Run the scheduled job using the button above to populate security audit data.') + '</p>' +
                 '</div></div>';
             return;
         }
@@ -302,14 +308,14 @@
         toolbar.innerHTML =
             '<div class="ept-search">' +
                 '<span class="ept-search__icon">' + EPT.icons.search + '</span>' +
-                '<input type="text" id="sa-tree-search" placeholder="Filter by content name..." value="' + escAttr(state.treeSearchQuery) + '" />' +
+                '<input type="text" id="sa-tree-search" placeholder="' + EPT.s('securityaudit.lbl_filtertree', 'Filter by content name...') + '" value="' + escAttr(state.treeSearchQuery) + '" />' +
             '</div>' +
             '<select id="sa-tree-role-highlight" class="ept-select">' +
-                '<option value="">Highlight role...</option>' +
+                '<option value="">' + EPT.s('securityaudit.opt_highlightrole', 'Highlight role...') + '</option>' +
             '</select>' +
             '<label class="ept-toggle">' +
                 '<input type="checkbox" id="sa-tree-issues-only" ' + (state.treeShowIssuesOnly ? 'checked' : '') + ' />' +
-                'Issues only' +
+                EPT.s('securityaudit.chk_issuesonly', 'Issues only') +
             '</label>';
         content.appendChild(toolbar);
 
@@ -360,7 +366,7 @@
             }
             var select = document.getElementById('sa-tree-role-highlight');
             if (!select) return;
-            var html = '<option value="">Highlight role...</option>';
+            var html = '<option value="">' + EPT.s('securityaudit.opt_highlightrole', 'Highlight role...') + '</option>';
             for (var i = 0; i < state.roles.length; i++) {
                 var r = state.roles[i];
                 var label = r.roleOrUser + ' (' + r.entityType + ')';
@@ -439,7 +445,7 @@
         if (node.isInheriting && !node.hasExplicitAcl) {
             var inheritLabel = document.createElement('span');
             inheritLabel.className = 'sa-tree__inherit';
-            inheritLabel.textContent = 'inherited';
+            inheritLabel.textContent = EPT.s('securityaudit.lbl_inherited', 'inherited');
             row.appendChild(inheritLabel);
         }
 
@@ -465,20 +471,22 @@
         var indicators = document.createElement('span');
         indicators.className = 'sa-tree__indicators';
         if (node.everyoneCanPublish || node.everyoneCanEdit) {
-            indicators.innerHTML += '<span class="sa-severity sa-severity--critical" title="Critical: Everyone has elevated access"></span>';
+            indicators.innerHTML += '<span class="sa-severity sa-severity--critical" title="' + EPT.s('securityaudit.title_criticalaccess', 'Critical: Everyone has elevated access') + '"></span>';
         }
         if (node.childMorePermissive) {
-            indicators.innerHTML += '<span class="sa-severity sa-severity--warning" title="Warning: More permissive than parent"></span>';
+            indicators.innerHTML += '<span class="sa-severity sa-severity--warning" title="' + EPT.s('securityaudit.title_morepermissive', 'Warning: More permissive than parent') + '"></span>';
         }
         if (node.hasNoRestrictions && node.isPage) {
-            indicators.innerHTML += '<span class="sa-severity sa-severity--info" title="Info: No restrictions set"></span>';
+            indicators.innerHTML += '<span class="sa-severity sa-severity--info" title="' + EPT.s('securityaudit.title_norestrictions', 'Info: No restrictions set') + '"></span>';
         }
         // Subtree issue count badge on collapsed nodes
         if (node.subtreeIssueCount > 0) {
             var subtreeBadge = document.createElement('span');
             subtreeBadge.className = 'sa-subtree-badge';
-            subtreeBadge.textContent = node.subtreeIssueCount + ' issue' + (node.subtreeIssueCount !== 1 ? 's' : '');
-            subtreeBadge.title = node.subtreeIssueCount + ' issues in subtree';
+            subtreeBadge.textContent = (node.subtreeIssueCount === 1
+                ? EPT.s('securityaudit.lbl_issue', '{0} issue').replace('{0}', node.subtreeIssueCount)
+                : EPT.s('securityaudit.lbl_issuescount', '{0} issues').replace('{0}', node.subtreeIssueCount));
+            subtreeBadge.title = EPT.s('securityaudit.lbl_issuesinsubtree', '{0} issues in subtree').replace('{0}', node.subtreeIssueCount);
             indicators.appendChild(subtreeBadge);
         }
         row.appendChild(indicators);
@@ -528,7 +536,7 @@
                     var children = await loadChildren(node.contentId);
                     childContainer.innerHTML = '';
                     if (children.length === 0) {
-                        childContainer.innerHTML = '<div class="sa-tree__empty">No child content</div>';
+                        childContainer.innerHTML = '<div class="sa-tree__empty">' + EPT.s('securityaudit.empty_nochildren', 'No child content') + '</div>';
                     } else {
                         renderTree(childContainer, children, 1);
                         applyRoleHighlight();
@@ -577,17 +585,17 @@
             // Inheritance status
             html += '<div class="sa-detail-section">';
             if (detail.isInheriting) {
-                html += '<span class="ept-badge ept-badge--default">Inheriting from parent</span> ';
+                html += '<span class="ept-badge ept-badge--default">' + EPT.s('securityaudit.badge_inheritingparent', 'Inheriting from parent') + '</span> ';
             }
             if (detail.hasExplicitAcl) {
-                html += '<span class="ept-badge ept-badge--primary">Has explicit ACL</span> ';
+                html += '<span class="ept-badge ept-badge--primary">' + EPT.s('securityaudit.badge_hasexplicitacl', 'Has explicit ACL') + '</span> ';
             }
             html += '</div>';
 
             // ACL table
             if (detail.entries && detail.entries.length > 0) {
                 html += '<table class="ept-table sa-acl-table">';
-                html += '<thead><tr><th>Role/User</th><th>Type</th><th>Access Level</th></tr></thead>';
+                html += '<thead><tr><th>' + EPT.s('securityaudit.col_roleuser', 'Role/User') + '</th><th>' + EPT.s('securityaudit.col_type', 'Type') + '</th><th>' + EPT.s('securityaudit.col_accesslevel', 'Access Level') + '</th></tr></thead>';
                 html += '<tbody>';
                 for (var e = 0; e < detail.entries.length; e++) {
                     var entry = detail.entries[e];
@@ -599,19 +607,19 @@
                 }
                 html += '</tbody></table>';
             } else {
-                html += '<p class="ept-muted">No ACL entries</p>';
+                html += '<p class="ept-muted">' + EPT.s('securityaudit.empty_noacl', 'No ACL entries') + '</p>';
             }
 
             // Issues on this node
             var issues = [];
-            if (detail.everyoneCanPublish) issues.push({ severity: 'Critical', text: '"Everyone" role has Publish or higher access' });
-            if (detail.everyoneCanEdit) issues.push({ severity: 'Critical', text: '"Everyone" role has Edit or higher access' });
-            if (detail.childMorePermissive) issues.push({ severity: 'Warning', text: 'This node is more permissive than its parent' });
-            if (detail.hasNoRestrictions && detail.isPage) issues.push({ severity: 'Info', text: 'No access restrictions set on this page' });
+            if (detail.everyoneCanPublish) issues.push({ severity: 'Critical', text: EPT.s('securityaudit.issue_everyonepublish', '"Everyone" role has Publish or higher access') });
+            if (detail.everyoneCanEdit) issues.push({ severity: 'Critical', text: EPT.s('securityaudit.issue_everyoneedit', '"Everyone" role has Edit or higher access') });
+            if (detail.childMorePermissive) issues.push({ severity: 'Warning', text: EPT.s('securityaudit.issue_morepermissive', 'This node is more permissive than its parent') });
+            if (detail.hasNoRestrictions && detail.isPage) issues.push({ severity: 'Info', text: EPT.s('securityaudit.issue_norestrictions', 'No access restrictions set on this page') });
 
             if (issues.length > 0) {
                 html += '<div class="sa-detail-issues">';
-                html += '<strong>Issues:</strong>';
+                html += '<strong>' + EPT.s('securityaudit.lbl_issues', 'Issues:') + '</strong>';
                 for (var iss = 0; iss < issues.length; iss++) {
                     html += '<div class="sa-detail-issue">' + severityLabel(issues[iss].severity) + ' ' + escHtml(issues[iss].text) + '</div>';
                 }
@@ -728,10 +736,10 @@
         toolbar.className = 'ept-toolbar';
         toolbar.innerHTML =
             '<select id="sa-role-select" class="ept-select">' +
-                '<option value="">Select role or user...</option>' +
+                '<option value="">' + EPT.s('securityaudit.opt_selectrole', 'Select role or user...') + '</option>' +
             '</select>' +
             '<select id="sa-role-access-filter" class="ept-select">' +
-                '<option value="">All access levels</option>' +
+                '<option value="">' + EPT.s('securityaudit.opt_allaccesslevels', 'All access levels') + '</option>' +
                 '<option value="FullAccess"' + (state.roleAccessFilter === 'FullAccess' ? ' selected' : '') + '>Full Access</option>' +
                 '<option value="Publish"' + (state.roleAccessFilter === 'Publish' ? ' selected' : '') + '>Publish</option>' +
                 '<option value="Edit"' + (state.roleAccessFilter === 'Edit' ? ' selected' : '') + '>Edit</option>' +
@@ -758,7 +766,7 @@
             }
 
             var select = document.getElementById('sa-role-select');
-            var html = '<option value="">Select role or user...</option>';
+            var html = '<option value="">' + EPT.s('securityaudit.opt_selectrole', 'Select role or user...') + '</option>';
             for (var i = 0; i < state.roles.length; i++) {
                 var r = state.roles[i];
                 var label = r.roleOrUser + ' (' + r.entityType + ') - ' + r.totalContentCount + ' items';

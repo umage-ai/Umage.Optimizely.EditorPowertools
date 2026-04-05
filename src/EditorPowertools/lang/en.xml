@@ -471,6 +471,7 @@
           <btn_close>Close</btn_close>
           <confirm_applyfix>Apply fix for this check?</confirm_applyfix>
           <confirm_fix>Apply fix?</confirm_fix>
+          <btn_fixing>Fixing...</btn_fixing>
         </cmsdoctor>
         <contenttypeaudit>
           <alert_running>Aggregation job is currently running. Content counts will be updated when it completes.</alert_running>
@@ -500,6 +501,53 @@
           <opt_all>All</opt_all>
           <badge_system>System</badge_system>
           <badge_orphaned>Orphaned</badge_orphaned>
+          <dlg_properties>Properties: {0}</dlg_properties>
+          <dlg_content>Content: {0}</dlg_content>
+          <dlg_references>References to: {0}</dlg_references>
+          <empty_noproperties>No properties defined</empty_noproperties>
+          <empty_nocontent>No content of this type</empty_nocontent>
+          <empty_norefs>No references found</empty_norefs>
+          <empty_notree>No inheritance data available</empty_notree>
+          <legend_inherited>Inherited</legend_inherited>
+          <legend_defined>Defined</legend_defined>
+          <legend_orphaneddesc>Orphaned (not in code)</legend_orphaneddesc>
+          <col_propname>Name</col_propname>
+          <col_proptype>Type</col_proptype>
+          <col_proptab>Tab</col_proptab>
+          <col_proporder>Order</col_proporder>
+          <col_proprequired>Required</col_proprequired>
+          <col_propsearchable>Searchable</col_propsearchable>
+          <col_proplanguage>Language</col_proplanguage>
+          <col_proporigin>Origin</col_proporigin>
+          <origin_defined>Defined</origin_defined>
+          <origin_inherited>Inherited</origin_inherited>
+          <origin_orphaned>Orphaned</origin_orphaned>
+          <col_contentid>ID</col_contentid>
+          <col_contentname>Name</col_contentname>
+          <col_contentlang>Lang</col_contentlang>
+          <col_contentlocation>Location</col_contentlocation>
+          <col_contentstatus>Status</col_contentstatus>
+          <badge_published>Published</badge_published>
+          <badge_draft>Draft</badge_draft>
+          <col_contentrefs>References</col_contentrefs>
+          <col_refid>ID</col_refid>
+          <col_refby>Referenced By</col_refby>
+          <col_reftype>Type</col_reftype>
+          <col_reflang>Lang</col_reflang>
+          <col_refprop>Property</col_refprop>
+          <title_edittype>Edit content type</title_edittype>
+          <title_properties>Properties</title_properties>
+          <title_contentoftype>Content of this type</title_contentoftype>
+          <title_showrefs>Show references</title_showrefs>
+          <title_viewcontent>Click to view content of this type</title_viewcontent>
+          <lbl_language>Language:</lbl_language>
+          <opt_alllang>All ({0})</opt_alllang>
+          <time_minuteago>{0} minute ago</time_minuteago>
+          <time_minutesago>{0} minutes ago</time_minutesago>
+          <time_hourago>{0} hour ago</time_hourago>
+          <time_hoursago>{0} hours ago</time_hoursago>
+          <time_dayago>{0} day ago</time_dayago>
+          <time_daysago>{0} days ago</time_daysago>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>Link checker job is currently running. Results will be updated when it completes.</alert_running>
@@ -529,6 +577,11 @@
           <col_foundin>Found In</col_foundin>
           <col_checked>Checked</col_checked>
           <cell_usedon>Used on: </cell_usedon>
+          <time_never>never</time_never>
+          <time_justnow>just now</time_justnow>
+          <time_mago>{0}m ago</time_mago>
+          <time_hago>{0}h ago</time_hago>
+          <time_dago>{0}d ago</time_dago>
         </linkchecker>
         <securityaudit>
           <tab_tree>Content Tree</tab_tree>
@@ -549,6 +602,39 @@
           <pager_previous>Previous</pager_previous>
           <pager_info>Page {0} of {1}</pager_info>
           <pager_next>Next</pager_next>
+          <lbl_filtertree>Filter by content name...</lbl_filtertree>
+          <opt_highlightrole>Highlight role...</opt_highlightrole>
+          <chk_issuesonly>Issues only</chk_issuesonly>
+          <empty_nochildren>No child content</empty_nochildren>
+          <lbl_inherited>inherited</lbl_inherited>
+          <badge_inheritingparent>Inheriting from parent</badge_inheritingparent>
+          <badge_hasexplicitacl>Has explicit ACL</badge_hasexplicitacl>
+          <col_roleuser>Role/User</col_roleuser>
+          <col_type>Type</col_type>
+          <col_accesslevel>Access Level</col_accesslevel>
+          <empty_noacl>No ACL entries</empty_noacl>
+          <lbl_issues>Issues:</lbl_issues>
+          <issue_everyonepublish>"Everyone" role has Publish or higher access</issue_everyonepublish>
+          <issue_everyoneedit>"Everyone" role has Edit or higher access</issue_everyoneedit>
+          <issue_morepermissive>This node is more permissive than its parent</issue_morepermissive>
+          <issue_norestrictions>No access restrictions set on this page</issue_norestrictions>
+          <lbl_issuesinsubtree>{0} issues in subtree</lbl_issuesinsubtree>
+          <lbl_issue>{0} issue</lbl_issue>
+          <lbl_issuescount>{0} issues</lbl_issuescount>
+          <empty_nodatarun>No data available. Run the scheduled job using the button above to populate security audit data.</empty_nodatarun>
+          <opt_selectrole>Select role or user...</opt_selectrole>
+          <opt_allaccesslevels>All access levels</opt_allaccesslevels>
+          <title_criticalaccess>Critical: Everyone has elevated access</title_criticalaccess>
+          <title_morepermissive>Warning: More permissive than parent</title_morepermissive>
+          <title_norestrictions>Info: No restrictions set</title_norestrictions>
+          <time_justnow>just now</time_justnow>
+          <time_minuteago>{0} minute ago</time_minuteago>
+          <time_minutesago>{0} minutes ago</time_minutesago>
+          <time_hourago>{0} hour ago</time_hourago>
+          <time_hoursago>{0} hours ago</time_hoursago>
+          <time_dayago>{0} day ago</time_dayago>
+          <time_daysago>{0} days ago</time_daysago>
+          <stat_lastrun_never>Never</stat_lastrun_never>
         </securityaudit>
         <bulkeditor>
           <opt_selecttype>-- Select content type --</opt_selecttype>
@@ -563,6 +649,25 @@
           <btn_saveall>Save All</btn_saveall>
           <btn_publishall>Publish All</btn_publishall>
           <confirm_discard>Discard all pending changes?</confirm_discard>
+          <empty_selecttype2>Select a content type above to start editing.</empty_selecttype2>
+          <empty_noitems>No content items found matching your criteria.</empty_noitems>
+          <col_name>Name</col_name>
+          <col_status>Status</col_status>
+          <col_lastedited>Last Edited</col_lastedited>
+          <col_editedby>Edited By</col_editedby>
+          <col_owner>Owner</col_owner>
+          <col_refs>References</col_refs>
+          <col_actions>Actions</col_actions>
+          <btn_edit>Edit</btn_edit>
+          <btn_save>Save</btn_save>
+          <btn_publish>Publish</btn_publish>
+          <btn_undo>Undo</btn_undo>
+          <lbl_global>global</lbl_global>
+          <lbl_none>none</lbl_none>
+          <lbl_ref>{0} ref</lbl_ref>
+          <lbl_refs>{0} refs</lbl_refs>
+          <btn_browse>Browse...</btn_browse>
+          <dlg_selectcontent>Select Content</dlg_selectcontent>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
@@ -582,6 +687,22 @@
           <stat_pages>Pages</stat_pages>
           <stat_blocks>Blocks</stat_blocks>
           <stat_media>Media</stat_media>
+          <stat_avgversions>Avg Versions</stat_avgversions>
+          <chart_label_total>total</chart_label_total>
+          <chart_tooltip_items>{0} items</chart_tooltip_items>
+          <chart_label_days>{0} days</chart_label_days>
+          <empty_notype>No type statistics available. Run the scheduled job first.</empty_notype>
+          <empty_nocreation>No creation data available.</empty_nocreation>
+          <empty_nopage>No page data available.</empty_nopage>
+          <empty_noeditor>No editor activity data available.</empty_noeditor>
+          <empty_nodata>No statistics data available yet.</empty_nodata>
+          <btn_jobstarted>Job started, please refresh in a few minutes.</btn_jobstarted>
+          <btn_jobfailed>Failed to start job</btn_jobfailed>
+          <col_editor>Editor</col_editor>
+          <col_edits>Edits</col_edits>
+          <col_publishes>Publishes</col_publishes>
+          <col_lastactive>Last Active</col_lastactive>
+          <chart_tooltip_daymod>{0} - {1} days since modified ({2})</chart_tooltip_daymod>
         </contentstatistics>
         <activitytimeline>
           <stat_today>Activities Today</stat_today>
@@ -601,6 +722,35 @@
           <btn_clear>Clear</btn_clear>
           <banner_showingfor>Showing timeline for {0}</banner_showingfor>
           <btn_showall>Show all activity</btn_showall>
+          <opt_allactions>All actions</opt_allactions>
+          <badge_published>Published</badge_published>
+          <badge_draftsaved>Draft saved</badge_draftsaved>
+          <badge_readytopublish>Ready to publish</badge_readytopublish>
+          <badge_scheduled>Scheduled</badge_scheduled>
+          <badge_rejected>Rejected</badge_rejected>
+          <badge_previouslypublished>Previously published</badge_previouslypublished>
+          <badge_comment>Comment</badge_comment>
+          <btn_compare>Compare</btn_compare>
+          <btn_edit>Edit</btn_edit>
+          <dlg_versioncomparison>Version Comparison</dlg_versioncomparison>
+          <dlg_noprevious>No previous version available for comparison.</dlg_noprevious>
+          <dlg_comparing>Comparing version {0} with version {1} of {2}</dlg_comparing>
+          <dlg_nochanges>No property changes detected between these versions.</dlg_nochanges>
+          <col_property>Property</col_property>
+          <col_previousvalue>Previous Value</col_previousvalue>
+          <col_newvalue>New Value</col_newvalue>
+          <lbl_empty>(empty)</lbl_empty>
+          <empty_noactivities>No activities found matching the current filters.</empty_noactivities>
+          <lbl_loadingmore>Loading more...</lbl_loadingmore>
+          <time_justnow>Just now</time_justnow>
+          <time_minuteago>{0} minute ago</time_minuteago>
+          <time_minutesago>{0} minutes ago</time_minutesago>
+          <time_hourago>{0} hour ago</time_hourago>
+          <time_hoursago>{0} hours ago</time_hoursago>
+          <time_yesterdayat>Yesterday at {0}</time_yesterdayat>
+          <time_at>at</time_at>
+          <label_today>Today</label_today>
+          <label_yesterday>Yesterday</label_yesterday>
         </activitytimeline>
         <personalizationaudit>
           <alert_running>Personalization analysis job is currently running. Results will be updated when it completes.</alert_running>
@@ -621,6 +771,17 @@
           <col_type>Usage Type</col_type>
           <col_groups>Visitor Groups</col_groups>
           <col_location>Location</col_location>
+          <stat_accessrights>Access Rights</stat_accessrights>
+          <stat_contentareas>Content Areas</stat_contentareas>
+          <stat_xhtmlstrings>XHTML Strings</stat_xhtmlstrings>
+          <stat_showing>Showing</stat_showing>
+          <opt_allusagetypes>All usage types</opt_allusagetypes>
+          <opt_allaudiences>All audiences</opt_allaudiences>
+          <btn_export>Export</btn_export>
+          <col_contenttype>Content Type</col_contenttype>
+          <empty_nousages>No personalization usage data available. Run the analysis job first.</empty_nousages>
+          <alert_jobstarted>Personalization analysis job has been started. Results will be updated when it completes.</alert_jobstarted>
+          <alert_lastrun>Analysis was last run {0}.</alert_lastrun>
         </personalizationaudit>
         <audiencemanager>
           <stat_audiences>Audiences</stat_audiences>
@@ -667,6 +828,37 @@
           <btn_import>Start Import</btn_import>
           <btn_startover>Start Over</btn_startover>
           <lbl_importing>Importing...</lbl_importing>
+          <step_preview>2. Preview</step_preview>
+          <step_target>3. Target</step_target>
+          <step_mapping>4. Mapping</step_mapping>
+          <lbl_supportedformats>Supported formats: CSV, XLSX, JSON</lbl_supportedformats>
+          <lbl_uploading>Uploading and parsing {0}...</lbl_uploading>
+          <lbl_selecttarget>Select Target</lbl_selecttarget>
+          <lbl_noparent>No parent selected</lbl_noparent>
+          <lbl_mapproperties>Map Properties</lbl_mapproperties>
+          <lbl_loadingproperties>Loading properties...</lbl_loadingproperties>
+          <lbl_contentname>Content Name</lbl_contentname>
+          <lbl_required>required</lbl_required>
+          <lbl_builtin>built-in</lbl_builtin>
+          <opt_selectcolumn>-- Select column --</opt_selectcolumn>
+          <opt_selectcontenttype>-- Select content type --</opt_selectcontenttype>
+          <lbl_templatehint>Or use template: {0}</lbl_templatehint>
+          <lbl_builtinprops>Built-in Properties</lbl_builtinprops>
+          <opt_skip2>Skip</opt_skip2>
+          <opt_mapcolumn>Map to column</opt_mapcolumn>
+          <opt_setvalue>Set value</opt_setvalue>
+          <opt_inlineblocks>Create inline blocks</opt_inlineblocks>
+          <opt_selectcolumn2>-- Column --</opt_selectcolumn2>
+          <lbl_settotrue>Set to true</lbl_settotrue>
+          <lbl_valuetemplate>Value or {ColumnName} template</lbl_valuetemplate>
+          <btn_addblock>+ Add block</btn_addblock>
+          <lbl_block>Block {0}</lbl_block>
+          <opt_selectblocktype>-- Select block type --</opt_selectblocktype>
+          <filter_pages>Pages</filter_pages>
+          <filter_blocks>Blocks</filter_blocks>
+          <filter_all>All</filter_all>
+          <lbl_rows>{0} rows</lbl_rows>
+          <lbl_columns>{0} columns</lbl_columns>
         </contentimporter>
         <managechildren>
           <lbl_selectparent>Select a parent page to manage its children</lbl_selectparent>
@@ -685,6 +877,29 @@
           <confirm_delete>Delete {0} selected item(s)? This cannot be undone.</confirm_delete>
           <confirm_publishall>Publish all {0} children?</confirm_publishall>
           <confirm_unpublishall>Unpublish all {0} children?</confirm_unpublishall>
+          <title_managechildren>Manage Child Items</title_managechildren>
+          <title_managechildren2>Manage Children</title_managechildren2>
+          <btn_changeparent>Change Parent</btn_changeparent>
+          <lbl_selectall>Select all</lbl_selectall>
+          <lbl_selected>{0} selected</lbl_selected>
+          <btn_publish>Publish</btn_publish>
+          <btn_unpublish>Unpublish</btn_unpublish>
+          <btn_move>Move</btn_move>
+          <btn_trash>Move to Trash</btn_trash>
+          <btn_delete>Delete Permanently</btn_delete>
+          <empty_nochildren>No children found</empty_nochildren>
+          <badge_haschildren>has children</badge_haschildren>
+          <col_changedby>Changed By</col_changedby>
+          <lbl_childrenof>Children of {0} ({1}, ID: {2})</lbl_childrenof>
+          <confirm_movetotrash>Move {0} items to trash?</confirm_movetotrash>
+          <result_msg>{0}: {1} succeeded</result_msg>
+          <result_failed>, {0} failed</result_failed>
+          <dlg_selecttarget>Select Target Location</dlg_selecttarget>
+          <dlg_selectparent>Select Parent Content</dlg_selectparent>
+          <lbl_loading>Loading...</lbl_loading>
+          <btn_edit>Edit</btn_edit>
+          <err_generic>Error: {0}</err_generic>
+          <result_succeeded>{0} succeeded</result_succeeded>
         </managechildren>
         <recommendations>
           <banner_info>When editors create new content, Optimizely can suggest which content types to use. Define rules below to control these suggestions based on where content is being created.</banner_info>
@@ -702,6 +917,23 @@
           <btn_delete>Delete</btn_delete>
           <empty_norules>No recommendation rules defined yet. Click "Add Rule" to create one.</empty_norules>
           <confirm_delete>Delete this rule?</confirm_delete>
+          <col_parentcontent>Parent Content</col_parentcontent>
+          <col_includedescendants>Include Descendants</col_includedescendants>
+          <col_contentfolderonly>Content Folder Only</col_contentfolderonly>
+          <col_suggestedtypes>Suggested Types</col_suggestedtypes>
+          <lbl_parentcontent>Parent Content</lbl_parentcontent>
+          <lbl_includedescendants>Include Descendants</lbl_includedescendants>
+          <lbl_contentfolderonly>For This Content Folder Only</lbl_contentfolderonly>
+          <lbl_filtertypes>Filter types...</lbl_filtertypes>
+          <opt_any>Any</opt_any>
+          <opt_anylocation>Any location</opt_anylocation>
+          <opt_nomatching>No matching types</opt_nomatching>
+          <btn_browse>Browse...</btn_browse>
+          <btn_clear>Clear</btn_clear>
+          <btn_saving>Saving...</btn_saving>
+          <err_selecttype>Please select at least one content type to suggest.</err_selecttype>
+          <err_save>Error saving rule: {0}</err_save>
+          <err_delete>Error deleting rule: {0}</err_delete>
         </recommendations>
         <gantt>
           <error_load>Failed to load Gantt data: {0}</error_load>
@@ -715,6 +947,20 @@
           <btn_next>Next</btn_next>
           <lbl_viewhours>{0}h view</lbl_viewhours>
           <col_job>Job</col_job>
+          <lbl_now>NOW</lbl_now>
+          <tooltip_start>Start: {0}</tooltip_start>
+          <tooltip_end>End: {0}</tooltip_end>
+          <tooltip_duration>Duration: {0}</tooltip_duration>
+          <tooltip_status>Status:</tooltip_status>
+          <status_planned>Planned</status_planned>
+          <status_running>Running</status_running>
+          <status_success>Success</status_success>
+          <status_failed>Failed</status_failed>
+          <dot_running>Running</dot_running>
+          <dot_enabled>Enabled</dot_enabled>
+          <dot_disabled>Disabled</dot_disabled>
+          <btn_zoomout>Zoom out (show more time)</btn_zoomout>
+          <btn_zoomin>Zoom in (show less time)</btn_zoomin>
         </gantt>
         <activeeditors>
           <error_nosignalr>SignalR client not available. Check browser console for errors.</error_nosignalr>
@@ -738,6 +984,10 @@
           <btn_send>Send Notification</btn_send>
           <btn_sending>Sending...</btn_sending>
           <msg_sent>Message sent to {0}</msg_sent>
+          <empty_noeditors>No editors currently online.</empty_noeditors>
+          <time_justnow>just now</time_justnow>
+          <time_mago>{0}m ago</time_mago>
+          <time_hago>{0}h ago</time_hago>
         </activeeditors>
         <components>
           <picker_title>Select Content</picker_title>

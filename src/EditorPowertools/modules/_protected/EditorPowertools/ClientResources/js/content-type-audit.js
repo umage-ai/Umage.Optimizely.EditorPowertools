@@ -85,11 +85,17 @@
     function timeAgo(date) {
         const diff = Date.now() - date.getTime();
         const mins = Math.floor(diff / 60000);
-        if (mins < 60) return `${mins} minute${mins !== 1 ? 's' : ''} ago`;
+        if (mins < 60) return (mins === 1
+            ? EPT.s('contenttypeaudit.time_minuteago', '{0} minute ago').replace('{0}', mins)
+            : EPT.s('contenttypeaudit.time_minutesago', '{0} minutes ago').replace('{0}', mins));
         const hours = Math.floor(mins / 60);
-        if (hours < 24) return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+        if (hours < 24) return (hours === 1
+            ? EPT.s('contenttypeaudit.time_hourago', '{0} hour ago').replace('{0}', hours)
+            : EPT.s('contenttypeaudit.time_hoursago', '{0} hours ago').replace('{0}', hours));
         const days = Math.floor(hours / 24);
-        return `${days} day${days !== 1 ? 's' : ''} ago`;
+        return (days === 1
+            ? EPT.s('contenttypeaudit.time_dayago', '{0} day ago').replace('{0}', days)
+            : EPT.s('contenttypeaudit.time_daysago', '{0} days ago').replace('{0}', days));
     }
 
     function getFiltered() {
@@ -284,14 +290,14 @@
         div.className = 'ept-flex';
 
         if (r.editUrl) {
-            const editBtn = createIconBtn(EPT.icons.edit, 'Edit content type', () => window.open(r.editUrl, '_blank'));
+            const editBtn = createIconBtn(EPT.icons.edit, EPT.s('contenttypeaudit.title_edittype', 'Edit content type'), () => window.open(r.editUrl, '_blank'));
             div.appendChild(editBtn);
         }
 
-        const propsBtn = createIconBtn(EPT.icons.props, 'Properties', () => showProperties(r));
+        const propsBtn = createIconBtn(EPT.icons.props, EPT.s('contenttypeaudit.title_properties', 'Properties'), () => showProperties(r));
         div.appendChild(propsBtn);
 
-        const contentBtn = createIconBtn(EPT.icons.list, 'Content of this type', () => showContentOfType(r));
+        const contentBtn = createIconBtn(EPT.icons.list, EPT.s('contenttypeaudit.title_contentoftype', 'Content of this type'), () => showContentOfType(r));
         div.appendChild(contentBtn);
 
         return div;
@@ -308,7 +314,7 @@
 
     // ── Properties Dialog ──────────────────────────────────────────
     async function showProperties(type) {
-        const { body, close } = EPT.openDialog(`Properties: ${type.displayName || type.name}`, { wide: true, flush: true });
+        const { body, close } = EPT.openDialog(EPT.s('contenttypeaudit.dlg_properties', 'Properties: {0}').replace('{0}', type.displayName || type.name), { wide: true, flush: true });
         EPT.showLoading(body);
 
         try {
@@ -316,30 +322,30 @@
             body.innerHTML = ''; // Clear loading spinner
 
             if (props.length === 0) {
-                EPT.showEmpty(body, 'No properties defined');
+                EPT.showEmpty(body, EPT.s('contenttypeaudit.empty_noproperties', 'No properties defined'));
                 return;
             }
 
             const legend = document.createElement('div');
             legend.style.padding = '12px 16px';
             legend.innerHTML = `
-                <span class="ept-badge ept-badge--success">Inherited</span>
-                <span class="ept-badge ept-badge--default">Defined</span>
-                <span class="ept-badge ept-badge--danger">Orphaned (not in code)</span>
+                <span class="ept-badge ept-badge--success">${EPT.s('contenttypeaudit.legend_inherited', 'Inherited')}</span>
+                <span class="ept-badge ept-badge--default">${EPT.s('contenttypeaudit.legend_defined', 'Defined')}</span>
+                <span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.legend_orphaneddesc', 'Orphaned (not in code)')}</span>
             `;
             body.appendChild(legend);
 
             const columns = [
-                { key: 'name', label: 'Name', render: (r) => `<strong>${escHtml(r.name)}</strong>` },
-                { key: 'typeName', label: 'Type' },
-                { key: 'tabName', label: 'Tab' },
-                { key: 'sortOrder', label: 'Order', align: 'right' },
-                { key: 'required', label: 'Required', render: (r) => r.required ? '✓' : '' },
-                { key: 'searchable', label: 'Searchable', render: (r) => r.searchable ? '✓' : '' },
-                { key: 'languageSpecific', label: 'Language', render: (r) => r.languageSpecific ? '✓' : '' },
+                { key: 'name', label: EPT.s('contenttypeaudit.col_propname', 'Name'), render: (r) => `<strong>${escHtml(r.name)}</strong>` },
+                { key: 'typeName', label: EPT.s('contenttypeaudit.col_proptype', 'Type') },
+                { key: 'tabName', label: EPT.s('contenttypeaudit.col_proptab', 'Tab') },
+                { key: 'sortOrder', label: EPT.s('contenttypeaudit.col_proporder', 'Order'), align: 'right' },
+                { key: 'required', label: EPT.s('contenttypeaudit.col_proprequired', 'Required'), render: (r) => r.required ? '✓' : '' },
+                { key: 'searchable', label: EPT.s('contenttypeaudit.col_propsearchable', 'Searchable'), render: (r) => r.searchable ? '✓' : '' },
+                { key: 'languageSpecific', label: EPT.s('contenttypeaudit.col_proplanguage', 'Language'), render: (r) => r.languageSpecific ? '✓' : '' },
                 {
-                    key: 'origin', label: 'Origin', render: (r) => {
-                        const label = r.origin === 0 ? 'Defined' : r.origin === 1 ? 'Inherited' : 'Orphaned';
+                    key: 'origin', label: EPT.s('contenttypeaudit.col_proporigin', 'Origin'), render: (r) => {
+                        const label = r.origin === 0 ? EPT.s('contenttypeaudit.origin_defined', 'Defined') : r.origin === 1 ? EPT.s('contenttypeaudit.origin_inherited', 'Inherited') : EPT.s('contenttypeaudit.origin_orphaned', 'Orphaned');
                         const cls = r.origin === 0 ? 'default' : r.origin === 1 ? 'success' : 'danger';
                         return `<span class="ept-badge ept-badge--${cls}">${label}</span>`;
                     }
@@ -362,7 +368,7 @@
 
     // ── Content of Type Dialog ─────────────────────────────────────
     async function showContentOfType(type) {
-        const { body, close } = EPT.openDialog(`Content: ${type.displayName || type.name}`, { wide: true, flush: true });
+        const { body, close } = EPT.openDialog(EPT.s('contenttypeaudit.dlg_content', 'Content: {0}').replace('{0}', type.displayName || type.name), { wide: true, flush: true });
         EPT.showLoading(body);
 
         try {
@@ -370,7 +376,7 @@
             body.innerHTML = ''; // Clear loading spinner
 
             if (items.length === 0) {
-                EPT.showEmpty(body, 'No content of this type');
+                EPT.showEmpty(body, EPT.s('contenttypeaudit.empty_nocontent', 'No content of this type'));
                 return;
             }
 
@@ -380,9 +386,9 @@
                 const filterBar = document.createElement('div');
                 filterBar.style.padding = '8px 16px';
                 filterBar.className = 'ept-flex';
-                filterBar.innerHTML = `<label class="ept-muted" style="font-size:12px">Language:</label>
+                filterBar.innerHTML = `<label class="ept-muted" style="font-size:12px">${EPT.s('contenttypeaudit.lbl_language', 'Language:')}</label>
                     <select class="ept-select ept-content-lang-filter">
-                        <option value="">All (${items.length})</option>
+                        <option value="">${EPT.s('contenttypeaudit.opt_alllang', 'All ({0})').replace('{0}', items.length)}</option>
                         ${languages.map(l => `<option value="${l}">${l} (${items.filter(i => i.language === l).length})</option>`).join('')}
                     </select>`;
                 body.appendChild(filterBar);
@@ -394,30 +400,30 @@
             }
 
             const columns = [
-                { key: 'contentId', label: 'ID', align: 'right' },
+                { key: 'contentId', label: EPT.s('contenttypeaudit.col_contentid', 'ID'), align: 'right' },
                 {
-                    key: 'name', label: 'Name', render: (r) => {
+                    key: 'name', label: EPT.s('contenttypeaudit.col_contentname', 'Name'), render: (r) => {
                         if (r.editUrl) return `<a href="${escAttr(r.editUrl)}" target="_blank" style="color:inherit;text-decoration:none"><strong>${escHtml(r.name)}</strong> <span style="opacity:.4">↗</span></a>`;
                         return `<strong>${escHtml(r.name)}</strong>`;
                     }
                 },
-                { key: 'language', label: 'Lang' },
+                { key: 'language', label: EPT.s('contenttypeaudit.col_contentlang', 'Lang') },
                 {
-                    key: 'breadcrumb', label: 'Location', render: (r) =>
+                    key: 'breadcrumb', label: EPT.s('contenttypeaudit.col_contentlocation', 'Location'), render: (r) =>
                         `<span class="ept-truncate" title="${escAttr(r.breadcrumb)}">${escHtml(r.breadcrumb || '')}</span>`
                 },
                 {
-                    key: 'isPublished', label: 'Status', render: (r) =>
+                    key: 'isPublished', label: EPT.s('contenttypeaudit.col_contentstatus', 'Status'), render: (r) =>
                         r.isPublished
-                            ? '<span class="ept-badge ept-badge--success">Published</span>'
-                            : '<span class="ept-badge ept-badge--default">Draft</span>'
+                            ? `<span class="ept-badge ept-badge--success">${EPT.s('contenttypeaudit.badge_published', 'Published')}</span>`
+                            : `<span class="ept-badge ept-badge--default">${EPT.s('contenttypeaudit.badge_draft', 'Draft')}</span>`
                 },
                 {
-                    key: 'referenceCount', label: 'References', align: 'right', render: (r) => {
+                    key: 'referenceCount', label: EPT.s('contenttypeaudit.col_contentrefs', 'References'), align: 'right', render: (r) => {
                         if (r.referenceCount === 0) return '<span class="ept-badge ept-badge--warning">0</span>';
                         const btn = createIconBtn(
                             `${r.referenceCount} ${EPT.icons.link}`,
-                            'Show references',
+                            EPT.s('contenttypeaudit.title_showrefs', 'Show references'),
                             () => showReferences(r)
                         );
                         return btn;
@@ -434,7 +440,7 @@
 
     // ── References Dialog ──────────────────────────────────────────
     async function showReferences(content) {
-        const { body, close } = EPT.openDialog(`References to: ${content.name}`, { flush: true });
+        const { body, close } = EPT.openDialog(EPT.s('contenttypeaudit.dlg_references', 'References to: {0}').replace('{0}', content.name), { flush: true });
         EPT.showLoading(body);
 
         try {
@@ -442,7 +448,7 @@
             body.innerHTML = ''; // Clear loading spinner
 
             if (refs.length === 0) {
-                EPT.showEmpty(body, 'No references found');
+                EPT.showEmpty(body, EPT.s('contenttypeaudit.empty_norefs', 'No references found'));
                 return;
             }
 
@@ -452,9 +458,9 @@
                 const filterBar = document.createElement('div');
                 filterBar.style.padding = '8px 16px';
                 filterBar.className = 'ept-flex';
-                filterBar.innerHTML = `<label class="ept-muted" style="font-size:12px">Language:</label>
+                filterBar.innerHTML = `<label class="ept-muted" style="font-size:12px">${EPT.s('contenttypeaudit.lbl_language', 'Language:')}</label>
                     <select class="ept-select ept-refs-lang-filter">
-                        <option value="">All (${refs.length})</option>
+                        <option value="">${EPT.s('contenttypeaudit.opt_alllang', 'All ({0})').replace('{0}', refs.length)}</option>
                         ${languages.map(l => `<option value="${l}">${l} (${refs.filter(r => r.language === l).length})</option>`).join('')}
                     </select>`;
                 body.appendChild(filterBar);
@@ -466,16 +472,16 @@
             }
 
             const columns = [
-                { key: 'ownerContentId', label: 'ID', align: 'right' },
+                { key: 'ownerContentId', label: EPT.s('contenttypeaudit.col_refid', 'ID'), align: 'right' },
                 {
-                    key: 'ownerName', label: 'Referenced By', render: (r) => {
+                    key: 'ownerName', label: EPT.s('contenttypeaudit.col_refby', 'Referenced By'), render: (r) => {
                         if (r.editUrl) return `<a href="${escAttr(r.editUrl)}" target="_blank" style="color:inherit;text-decoration:none"><strong>${escHtml(r.ownerName)}</strong> <span style="opacity:.4">↗</span></a>`;
                         return `<strong>${escHtml(r.ownerName)}</strong>`;
                     }
                 },
-                { key: 'ownerTypeName', label: 'Type' },
-                { key: 'language', label: 'Lang' },
-                { key: 'propertyName', label: 'Property' },
+                { key: 'ownerTypeName', label: EPT.s('contenttypeaudit.col_reftype', 'Type') },
+                { key: 'language', label: EPT.s('contenttypeaudit.col_reflang', 'Lang') },
+                { key: 'propertyName', label: EPT.s('contenttypeaudit.col_refprop', 'Property') },
             ];
 
             const tbl = EPT.createTable(columns, refs, { defaultSort: 'ownerName' });
@@ -497,7 +503,7 @@
             body.innerHTML = '';
 
             if (tree.length === 0) {
-                EPT.showEmpty(body, 'No inheritance data available');
+                EPT.showEmpty(body, EPT.s('contenttypeaudit.empty_notree', 'No inheritance data available'));
                 return;
             }
 
@@ -545,7 +551,7 @@
             if (node.isOrphaned) {
                 label.innerHTML += ` <span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.badge_orphaned', 'Orphaned')}</span>`;
             }
-            label.title = 'Click to view content of this type';
+            label.title = EPT.s('contenttypeaudit.title_viewcontent', 'Click to view content of this type');
             label.addEventListener('click', () => {
                 showContentOfType({ id: node.id, displayName: node.displayName, name: node.name });
             });
@@ -561,7 +567,7 @@
             // Edit content type link
             const editBtn = document.createElement('a');
             editBtn.className = 'ept-btn ept-btn--sm ept-btn--icon';
-            editBtn.title = 'Edit content type';
+            editBtn.title = EPT.s('contenttypeaudit.title_edittype', 'Edit content type');
             editBtn.href = `${window.EPT_ADMIN_URL}#/ContentType/${node.id}`;
             editBtn.target = '_blank';
             editBtn.innerHTML = EPT.icons.edit;

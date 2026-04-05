@@ -71,7 +71,7 @@
         });
 
         var actionOpts =
-            '<option value="">All actions</option>' +
+            '<option value="">' + EPT.s('activitytimeline.opt_allactions', 'All actions') + '</option>' +
             '<option value="Published">' + EPT.s('activitytimeline.opt_published', 'Published') + '</option>' +
             '<option value="Draft">' + EPT.s('activitytimeline.opt_draft', 'Draft saved') + '</option>' +
             '<option value="ReadyToPublish">' + EPT.s('activitytimeline.opt_readytopublish', 'Ready to publish') + '</option>' +
@@ -211,7 +211,7 @@
         var contentEl = document.getElementById('timeline-content');
 
         if (state.activities.length === 0) {
-            EPT.showEmpty(contentEl, 'No activities found matching the current filters.');
+            EPT.showEmpty(contentEl, EPT.s('activitytimeline.empty_noactivities', 'No activities found matching the current filters.'));
             return;
         }
 
@@ -237,7 +237,7 @@
             loadingMore.id = 'timeline-loading-more';
             loadingMore.className = 'ept-loading';
             loadingMore.style.display = 'none';
-            loadingMore.innerHTML = '<div class="ept-spinner"></div><p>Loading more...</p>';
+            loadingMore.innerHTML = '<div class="ept-spinner"></div><p>' + EPT.s('activitytimeline.lbl_loadingmore', 'Loading more...') + '</p>';
             contentEl.appendChild(loadingMore);
 
             setupInfiniteScroll(sentinel);
@@ -316,7 +316,7 @@
             compareBtn = '<button class="ept-btn ept-btn--sm timeline-compare-btn" ' +
                 'data-content-id="' + activity.contentId + '" ' +
                 'data-version-id="' + activity.versionId + '" ' +
-                'data-language="' + escHtml(activity.language || '') + '">Compare</button>';
+                'data-language="' + escHtml(activity.language || '') + '">' + EPT.s('activitytimeline.btn_compare', 'Compare') + '</button>';
         }
 
         entry.innerHTML =
@@ -334,7 +334,7 @@
                     '<span class="timeline-time" title="' + absTime + '">' + timeStr + '</span>' +
                 '</div>' +
                 '<div class="timeline-actions">' +
-                    (activity.editUrl ? '<a href="' + escHtml(activity.editUrl) + '" class="ept-btn ept-btn--sm" target="_blank">Edit</a> ' : '') +
+                    (activity.editUrl ? '<a href="' + escHtml(activity.editUrl) + '" class="ept-btn ept-btn--sm" target="_blank">' + EPT.s('activitytimeline.btn_edit', 'Edit') + '</a> ' : '') +
                     compareBtn +
                 '</div>' +
             '</div>';
@@ -355,7 +355,7 @@
 
     // ── Version Comparison ─────────────────────────────────────────
     function showComparison(contentId, versionId, language) {
-        var dialog = EPT.openDialog('Version Comparison', { wide: true });
+        var dialog = EPT.openDialog(EPT.s('activitytimeline.dlg_versioncomparison', 'Version Comparison'), { wide: true });
         EPT.showLoading(dialog.body);
 
         var url = API + '/compare/' + contentId + '/' + versionId;
@@ -363,33 +363,32 @@
 
         EPT.fetchJson(url).then(function (result) {
             if (!result.hasPrevious) {
-                dialog.body.innerHTML = '<div class="ept-empty"><p>No previous version available for comparison.</p></div>';
+                dialog.body.innerHTML = '<div class="ept-empty"><p>' + EPT.s('activitytimeline.dlg_noprevious', 'No previous version available for comparison.') + '</p></div>';
                 return;
             }
 
             var html = '<div class="timeline-comparison">' +
-                '<p class="ept-muted">Comparing version ' + result.currentVersion + ' with version ' + result.previousVersion +
-                ' of <strong>' + escHtml(result.contentName) + '</strong></p>';
+                '<p class="ept-muted">' + EPT.s('activitytimeline.dlg_comparing', 'Comparing version {0} with version {1} of {2}').replace('{0}', result.currentVersion).replace('{1}', result.previousVersion).replace('{2}', '<strong>' + escHtml(result.contentName) + '</strong>') + '</p>';
 
             if (result.changes.length === 0) {
-                html += '<div class="ept-empty"><p>No property changes detected between these versions.</p></div>';
+                html += '<div class="ept-empty"><p>' + EPT.s('activitytimeline.dlg_nochanges', 'No property changes detected between these versions.') + '</p></div>';
             } else {
                 html += '<table class="ept-table">' +
-                    '<thead><tr><th>Property</th><th>Previous Value</th><th>New Value</th></tr></thead>' +
+                    '<thead><tr><th>' + EPT.s('activitytimeline.col_property', 'Property') + '</th><th>' + EPT.s('activitytimeline.col_previousvalue', 'Previous Value') + '</th><th>' + EPT.s('activitytimeline.col_newvalue', 'New Value') + '</th></tr></thead>' +
                     '<tbody>';
 
                 result.changes.forEach(function (change) {
                     if (change.isHtml) {
                         html += '<tr>' +
                             '<td><strong>' + escHtml(change.propertyName) + '</strong> <span class="ept-badge ept-badge--default">HTML</span></td>' +
-                            '<td class="timeline-diff-old"><iframe sandbox="allow-same-origin" srcdoc="' + escAttr(change.oldValue || '(empty)') + '" style="width:100%;min-height:80px;border:1px solid var(--ept-border,#e0e0e0);border-radius:4px;"></iframe></td>' +
-                            '<td class="timeline-diff-new"><iframe sandbox="allow-same-origin" srcdoc="' + escAttr(change.newValue || '(empty)') + '" style="width:100%;min-height:80px;border:1px solid var(--ept-border,#e0e0e0);border-radius:4px;"></iframe></td>' +
+                            '<td class="timeline-diff-old"><iframe sandbox="allow-same-origin" srcdoc="' + escAttr(change.oldValue || EPT.s('activitytimeline.lbl_empty', '(empty)')) + '" style="width:100%;min-height:80px;border:1px solid var(--ept-border,#e0e0e0);border-radius:4px;"></iframe></td>' +
+                            '<td class="timeline-diff-new"><iframe sandbox="allow-same-origin" srcdoc="' + escAttr(change.newValue || EPT.s('activitytimeline.lbl_empty', '(empty)')) + '" style="width:100%;min-height:80px;border:1px solid var(--ept-border,#e0e0e0);border-radius:4px;"></iframe></td>' +
                             '</tr>';
                     } else {
                         html += '<tr>' +
                             '<td><strong>' + escHtml(change.propertyName) + '</strong></td>' +
-                            '<td class="timeline-diff-old">' + escHtml(change.oldValue || '(empty)') + '</td>' +
-                            '<td class="timeline-diff-new">' + escHtml(change.newValue || '(empty)') + '</td>' +
+                            '<td class="timeline-diff-old">' + escHtml(change.oldValue || EPT.s('activitytimeline.lbl_empty', '(empty)')) + '</td>' +
+                            '<td class="timeline-diff-new">' + escHtml(change.newValue || EPT.s('activitytimeline.lbl_empty', '(empty)')) + '</td>' +
                             '</tr>';
                     }
                 });
@@ -433,13 +432,13 @@
 
     function getActionLabel(action) {
         switch (action) {
-            case 'Published': return 'Published';
-            case 'Draft': return 'Draft saved';
-            case 'ReadyToPublish': return 'Ready to publish';
-            case 'Scheduled': return 'Scheduled';
-            case 'Rejected': return 'Rejected';
-            case 'PreviouslyPublished': return 'Previously published';
-            case 'Comment': return 'Comment';
+            case 'Published': return EPT.s('activitytimeline.badge_published', 'Published');
+            case 'Draft': return EPT.s('activitytimeline.badge_draftsaved', 'Draft saved');
+            case 'ReadyToPublish': return EPT.s('activitytimeline.badge_readytopublish', 'Ready to publish');
+            case 'Scheduled': return EPT.s('activitytimeline.badge_scheduled', 'Scheduled');
+            case 'Rejected': return EPT.s('activitytimeline.badge_rejected', 'Rejected');
+            case 'PreviouslyPublished': return EPT.s('activitytimeline.badge_previouslypublished', 'Previously published');
+            case 'Comment': return EPT.s('activitytimeline.badge_comment', 'Comment');
             default: return action;
         }
     }
@@ -453,24 +452,29 @@
         var diffHour = Math.floor(diffMin / 60);
         var diffDay = Math.floor(diffHour / 24);
 
-        if (diffSec < 60) return 'Just now';
-        if (diffMin < 60) return diffMin + ' minute' + (diffMin !== 1 ? 's' : '') + ' ago';
-        if (diffHour < 24) return diffHour + ' hour' + (diffHour !== 1 ? 's' : '') + ' ago';
+        if (diffSec < 60) return EPT.s('activitytimeline.time_justnow', 'Just now');
+        if (diffMin < 60) return (diffMin === 1
+            ? EPT.s('activitytimeline.time_minuteago', '{0} minute ago').replace('{0}', diffMin)
+            : EPT.s('activitytimeline.time_minutesago', '{0} minutes ago').replace('{0}', diffMin));
+        if (diffHour < 24) return (diffHour === 1
+            ? EPT.s('activitytimeline.time_hourago', '{0} hour ago').replace('{0}', diffHour)
+            : EPT.s('activitytimeline.time_hoursago', '{0} hours ago').replace('{0}', diffHour));
 
         var yesterday = new Date(now);
         yesterday.setDate(yesterday.getDate() - 1);
         if (date.toDateString() === yesterday.toDateString()) {
-            return 'Yesterday at ' + pad(date.getHours()) + ':' + pad(date.getMinutes());
+            return EPT.s('activitytimeline.time_yesterdayat', 'Yesterday at {0}').replace('{0}', pad(date.getHours()) + ':' + pad(date.getMinutes()));
         }
 
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         var timeStr = pad(date.getHours()) + ':' + pad(date.getMinutes());
+        var atStr = EPT.s('activitytimeline.time_at', 'at');
 
         if (date.getFullYear() === now.getFullYear()) {
-            return months[date.getMonth()] + ' ' + date.getDate() + ' at ' + timeStr;
+            return months[date.getMonth()] + ' ' + date.getDate() + ' ' + atStr + ' ' + timeStr;
         }
 
-        return months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() + ' at ' + timeStr;
+        return months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() + ' ' + atStr + ' ' + timeStr;
     }
 
     function formatAbsoluteTime(utcStr) {
@@ -494,9 +498,9 @@
             var label;
 
             if (dayStart.getTime() === today.getTime()) {
-                label = 'Today';
+                label = EPT.s('activitytimeline.label_today', 'Today');
             } else if (dayStart.getTime() === yesterday.getTime()) {
-                label = 'Yesterday';
+                label = EPT.s('activitytimeline.label_yesterday', 'Yesterday');
             } else if (date.getFullYear() === now.getFullYear()) {
                 label = months[date.getMonth()] + ' ' + date.getDate();
             } else {

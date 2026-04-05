@@ -685,6 +685,29 @@
           <confirm_delete>Poistetaanko {0} valittu kohde? Tätä ei voi kumota.</confirm_delete>
           <confirm_publishall>Julkaistaanko kaikki {0} alasivua?</confirm_publishall>
           <confirm_unpublishall>Peruttaanko julkaisu kaikilta {0} alasivulta?</confirm_unpublishall>
+          <title_managechildren>Hallitse alasivuja</title_managechildren>
+          <title_managechildren2>Hallitse alasivuja</title_managechildren2>
+          <btn_changeparent>Vaihda yläsivu</btn_changeparent>
+          <lbl_selectall>Valitse kaikki</lbl_selectall>
+          <lbl_selected>{0} valittu</lbl_selected>
+          <btn_publish>Julkaise</btn_publish>
+          <btn_unpublish>Peru julkaisu</btn_unpublish>
+          <btn_move>Siirrä</btn_move>
+          <btn_trash>Siirrä roskakoriin</btn_trash>
+          <btn_delete>Poista pysyvästi</btn_delete>
+          <empty_nochildren>Alasivuja ei löytynyt</empty_nochildren>
+          <badge_haschildren>sisältää alasivuja</badge_haschildren>
+          <col_changedby>Muuttanut</col_changedby>
+          <lbl_childrenof>Kohteen {0} alasivut ({1}, ID: {2})</lbl_childrenof>
+          <confirm_movetotrash>Siirretäänkö {0} kohdetta roskakoriin?</confirm_movetotrash>
+          <result_msg>{0}: {1} onnistui</result_msg>
+          <result_failed>, {0} epäonnistui</result_failed>
+          <dlg_selecttarget>Valitse kohdesijainti</dlg_selecttarget>
+          <dlg_selectparent>Valitse yläsisältö</dlg_selectparent>
+          <lbl_loading>Ladataan...</lbl_loading>
+          <btn_edit>Muokkaa</btn_edit>
+          <err_generic>Virhe: {0}</err_generic>
+          <result_succeeded>{0} onnistui</result_succeeded>
         </managechildren>
         <recommendations>
           <banner_info>Kun muokkaajat luovat uutta sisältöä, Optimizely voi ehdottaa käytettäviä sisältötyyppejä. Määritä alla säännöt näiden ehdotusten hallitsemiseksi sen perusteella, mihin sisältöä luodaan.</banner_info>
@@ -702,6 +725,23 @@
           <btn_delete>Poista</btn_delete>
           <empty_norules>Suositussääntöjä ei ole vielä määritetty. Luo sääntö napsauttamalla "Lisää sääntö".</empty_norules>
           <confirm_delete>Poistetaanko tämä sääntö?</confirm_delete>
+          <col_parentcontent>Yläsisältö</col_parentcontent>
+          <col_includedescendants>Sisällytä alatasot</col_includedescendants>
+          <col_contentfolderonly>Vain sisältökansio</col_contentfolderonly>
+          <col_suggestedtypes>Ehdotetut tyypit</col_suggestedtypes>
+          <lbl_parentcontent>Yläsisältö</lbl_parentcontent>
+          <lbl_includedescendants>Sisällytä alatasot</lbl_includedescendants>
+          <lbl_contentfolderonly>Vain tälle sisältökansiolle</lbl_contentfolderonly>
+          <lbl_filtertypes>Suodata tyyppejä...</lbl_filtertypes>
+          <opt_any>Mikä tahansa</opt_any>
+          <opt_anylocation>Mikä tahansa sijainti</opt_anylocation>
+          <opt_nomatching>Ei vastaavia tyyppejä</opt_nomatching>
+          <btn_browse>Selaa...</btn_browse>
+          <btn_clear>Tyhjennä</btn_clear>
+          <btn_saving>Tallennetaan...</btn_saving>
+          <err_selecttype>Valitse vähintään yksi sisältötyyppi ehdotettavaksi.</err_selecttype>
+          <err_save>Virhe säännön tallentamisessa: {0}</err_save>
+          <err_delete>Virhe säännön poistamisessa: {0}</err_delete>
         </recommendations>
         <gantt>
           <error_load>Gantt-tietojen lataaminen epäonnistui: {0}</error_load>

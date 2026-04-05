@@ -60,14 +60,14 @@
     }
 
     function renderPickParent() {
-        root.innerHTML = '<div class="ept-page-header"><h1>Manage Child Items</h1>' +
+        root.innerHTML = '<div class="ept-page-header"><h1>' + EPT.s('managechildren.title_managechildren', 'Manage Child Items') + '</h1>' +
             '<p>' + EPT.s('managechildren.lbl_selectparent', 'Select a parent page to manage its children') + '</p></div>' +
             '<div class="ept-card"><div class="ept-card__body">' +
             '<button class="ept-btn ept-btn--primary" id="pick-parent">' + EPT.s('managechildren.btn_selectparent', 'Select Parent Page') + '</button>' +
             '</div></div>';
 
         document.getElementById('pick-parent').onclick = function () {
-            EPT.contentPicker({ title: 'Select Parent Content' }).then(function (sel) {
+            EPT.contentPicker({ title: EPT.s('managechildren.dlg_selectparent', 'Select Parent Content') }).then(function (sel) {
                 if (sel) {
                     state.parentId = sel.id;
                     state.parentName = sel.name;
@@ -80,22 +80,22 @@
     function renderManager() {
         var selCount = state.selected.size;
         var html = '<div class="ept-page-header" style="display:flex;align-items:center;justify-content:space-between">';
-        html += '<div><h1>Manage Children</h1>';
-        html += '<p id="parent-info">Loading...</p></div>';
-        html += '<button class="ept-btn" id="change-parent">Change Parent</button>';
+        html += '<div><h1>' + EPT.s('managechildren.title_managechildren', 'Manage Children') + '</h1>';
+        html += '<p id="parent-info">' + EPT.s('managechildren.lbl_loading', 'Loading...') + '</p></div>';
+        html += '<button class="ept-btn" id="change-parent">' + EPT.s('managechildren.btn_changeparent', 'Change Parent') + '</button>';
         html += '</div>';
 
         // Toolbar
         html += '<div class="ept-toolbar" id="toolbar">';
-        html += '<label class="ept-toggle"><input type="checkbox" id="select-all"> Select all</label>';
+        html += '<label class="ept-toggle"><input type="checkbox" id="select-all"> ' + EPT.s('managechildren.lbl_selectall', 'Select all') + '</label>';
         html += '<div class="ept-toolbar__spacer"></div>';
         html += '<span id="sel-count" style="font-size:13px;color:var(--ept-text-secondary)">' +
-            (selCount > 0 ? selCount + ' selected' : '') + '</span>';
-        html += '<button class="ept-btn ept-btn--sm" id="btn-publish" disabled>Publish</button>';
-        html += '<button class="ept-btn ept-btn--sm" id="btn-unpublish" disabled>Unpublish</button>';
-        html += '<button class="ept-btn ept-btn--sm" id="btn-move" disabled>Move</button>';
-        html += '<button class="ept-btn ept-btn--sm" id="btn-trash" disabled style="color:var(--ept-warning)">Move to Trash</button>';
-        html += '<button class="ept-btn ept-btn--sm" id="btn-delete" disabled style="color:var(--ept-danger)">Delete Permanently</button>';
+            (selCount > 0 ? EPT.s('managechildren.lbl_selected', '{0} selected').replace('{0}', selCount) : '') + '</span>';
+        html += '<button class="ept-btn ept-btn--sm" id="btn-publish" disabled>' + EPT.s('managechildren.btn_publish', 'Publish') + '</button>';
+        html += '<button class="ept-btn ept-btn--sm" id="btn-unpublish" disabled>' + EPT.s('managechildren.btn_unpublish', 'Unpublish') + '</button>';
+        html += '<button class="ept-btn ept-btn--sm" id="btn-move" disabled>' + EPT.s('managechildren.btn_move', 'Move') + '</button>';
+        html += '<button class="ept-btn ept-btn--sm" id="btn-trash" disabled style="color:var(--ept-warning)">' + EPT.s('managechildren.btn_trash', 'Move to Trash') + '</button>';
+        html += '<button class="ept-btn ept-btn--sm" id="btn-delete" disabled style="color:var(--ept-danger)">' + EPT.s('managechildren.btn_delete', 'Delete Permanently') + '</button>';
         html += '</div>';
 
         // Table
@@ -107,7 +107,7 @@
         html += '<th class="sortable" data-sort="type">' + EPT.s('managechildren.col_type', 'Type') + '</th>';
         html += '<th class="sortable" data-sort="status">' + EPT.s('managechildren.col_status', 'Status') + '</th>';
         html += '<th class="sortable" data-sort="changed">' + EPT.s('managechildren.col_changed', 'Changed') + '</th>';
-        html += '<th>Changed By</th>';
+        html += '<th>' + EPT.s('managechildren.col_changedby', 'Changed By') + '</th>';
         html += '<th style="width:50px"></th>';
         html += '</tr></thead>';
         html += '<tbody id="children-body">';
@@ -115,7 +115,7 @@
         if (state.loading) {
             html += '<tr><td colspan="7"><div class="ept-loading"><div class="ept-spinner"></div></div></td></tr>';
         } else if (state.items.length === 0) {
-            html += '<tr><td colspan="7"><div class="ept-empty">No children found</div></td></tr>';
+            html += '<tr><td colspan="7"><div class="ept-empty">' + EPT.s('managechildren.empty_nochildren', 'No children found') + '</div></td></tr>';
         } else {
             for (var i = 0; i < state.items.length; i++) {
                 var item = state.items[i];
@@ -126,14 +126,14 @@
                 html += '<tr data-id="' + item.contentId + '">';
                 html += '<td><input type="checkbox" class="row-check" data-id="' + item.contentId + '"' + checked + '></td>';
                 html += '<td><a href="' + escHtml(item.editUrl) + '" target="_blank" style="color:var(--ept-primary);text-decoration:none;font-weight:500">' + escHtml(item.name) + '</a>';
-                if (item.hasChildren) html += ' <span class="ept-badge ept-badge--default" style="font-size:9px">has children</span>';
+                if (item.hasChildren) html += ' <span class="ept-badge ept-badge--default" style="font-size:9px">' + EPT.s('managechildren.badge_haschildren', 'has children') + '</span>';
                 html += '</td>';
                 html += '<td><span class="ept-muted">' + escHtml(item.contentTypeName) + '</span></td>';
                 html += '<td><span class="ept-badge ' + statusCls + '">' + escHtml(item.status) + '</span></td>';
                 html += '<td>' + fmtDate(item.changed) + '</td>';
                 html += '<td>' + escHtml(item.changedBy || '') + '</td>';
-                html += '<td><a href="' + escHtml(item.editUrl) + '" target="_blank" class="ept-btn ept-btn--sm ept-btn--icon" title="Edit">' +
-                    (EPT && EPT.icons ? EPT.icons.edit : 'Edit') + '</a></td>';
+                html += '<td><a href="' + escHtml(item.editUrl) + '" target="_blank" class="ept-btn ept-btn--sm ept-btn--icon" title="' + EPT.s('managechildren.btn_edit', 'Edit') + '">' +
+                    (EPT && EPT.icons ? EPT.icons.edit : EPT.s('managechildren.btn_edit', 'Edit')) + '</a></td>';
                 html += '</tr>';
             }
         }
@@ -146,7 +146,7 @@
         // Load parent info
         fetchJson(API + '/parent/' + state.parentId).then(function (info) {
             document.getElementById('parent-info').innerHTML =
-                'Children of <strong>' + escHtml(info.name) + '</strong> (' + escHtml(info.contentTypeName) + ', ID: ' + info.contentId + ')';
+                EPT.s('managechildren.lbl_childrenof', 'Children of {0} ({1}, ID: {2})').replace('{0}', '<strong>' + escHtml(info.name) + '</strong>').replace('{1}', escHtml(info.contentTypeName)).replace('{2}', info.contentId);
         }).catch(function () {});
     }
 
@@ -155,7 +155,7 @@
         var changeBtn = document.getElementById('change-parent');
         if (changeBtn) {
             changeBtn.onclick = function () {
-                EPT.contentPicker({ title: 'Select Parent Content' }).then(function (sel) {
+                EPT.contentPicker({ title: EPT.s('managechildren.dlg_selectparent', 'Select Parent Content') }).then(function (sel) {
                     if (sel) {
                         state.parentId = sel.id;
                         state.parentName = sel.name;
@@ -206,7 +206,7 @@
         // Bulk action buttons
         bindAction('btn-publish', 'publish', EPT.s('managechildren.confirm_publishall', 'Publish all {0} children?').replace('{0}', state.selected.size));
         bindAction('btn-unpublish', 'unpublish', EPT.s('managechildren.confirm_unpublishall', 'Unpublish all {0} children?').replace('{0}', state.selected.size));
-        bindAction('btn-trash', 'delete', 'Move ' + state.selected.size + ' items to trash?');
+        bindAction('btn-trash', 'delete', EPT.s('managechildren.confirm_movetotrash', 'Move {0} items to trash?').replace('{0}', state.selected.size));
         bindAction('btn-delete', 'delete-permanently', EPT.s('managechildren.confirm_delete', 'Delete {0} selected item(s)? This cannot be undone.').replace('{0}', state.selected.size));
 
         // Move button
@@ -214,7 +214,7 @@
         if (moveBtn) {
             moveBtn.onclick = function () {
                 if (state.selected.size === 0) return;
-                EPT.contentPicker({ title: 'Select Target Location' }).then(function (sel) {
+                EPT.contentPicker({ title: EPT.s('managechildren.dlg_selecttarget', 'Select Target Location') }).then(function (sel) {
                     if (!sel) return;
                     postJson(API + '/move', {
                         parentContentId: state.parentId,
@@ -224,7 +224,7 @@
                         showResult(result, 'moved');
                         state.selected.clear();
                         loadChildren();
-                    }).catch(function (err) { alert('Error: ' + err.message); });
+                    }).catch(function (err) { alert(EPT.s('managechildren.err_generic', 'Error: {0}').replace('{0}', err.message)); });
                 });
             };
         }
@@ -243,13 +243,13 @@
                 showResult(result, action);
                 state.selected.clear();
                 loadChildren();
-            }).catch(function (err) { alert('Error: ' + err.message); });
+            }).catch(function (err) { alert(EPT.s('managechildren.err_generic', 'Error: {0}').replace('{0}', err.message)); });
         };
     }
 
     function showResult(result, action) {
-        var msg = action + ': ' + result.succeeded + ' succeeded';
-        if (result.failed > 0) msg += ', ' + result.failed + ' failed';
+        var msg = action + ': ' + EPT.s('managechildren.result_succeeded', '{0} succeeded').replace('{0}', result.succeeded);
+        if (result.failed > 0) msg += ', ' + EPT.s('managechildren.result_failed', '{0} failed').replace('{0}', result.failed);
         if (result.errors && result.errors.length > 0) msg += '\n' + result.errors.join('\n');
         alert(msg);
     }
@@ -257,7 +257,7 @@
     function updateToolbarState() {
         var count = state.selected.size;
         var countEl = document.getElementById('sel-count');
-        if (countEl) countEl.textContent = count > 0 ? count + ' selected' : '';
+        if (countEl) countEl.textContent = count > 0 ? EPT.s('managechildren.lbl_selected', '{0} selected').replace('{0}', count) : '';
 
         var btns = ['btn-publish', 'btn-unpublish', 'btn-move', 'btn-trash', 'btn-delete'];
         for (var i = 0; i < btns.length; i++) {
@@ -279,7 +279,7 @@
             render();
         }).catch(function (err) {
             state.loading = false;
-            root.innerHTML = '<div class="ept-alert ept-alert--danger">Error: ' + escHtml(err.message) + '</div>';
+            root.innerHTML = '<div class="ept-alert ept-alert--danger">' + EPT.s('managechildren.err_generic', 'Error: {0}').replace('{0}', escHtml(err.message)) + '</div>';
         });
     }
 

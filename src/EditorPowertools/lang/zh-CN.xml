@@ -685,6 +685,29 @@
           <confirm_delete>删除所选的 {0} 个条目？此操作无法撤销。</confirm_delete>
           <confirm_publishall>发布全部 {0} 个子页面？</confirm_publishall>
           <confirm_unpublishall>取消发布全部 {0} 个子页面？</confirm_unpublishall>
+          <title_managechildren>管理子项</title_managechildren>
+          <title_managechildren2>管理子项</title_managechildren2>
+          <btn_changeparent>更改父级</btn_changeparent>
+          <lbl_selectall>全选</lbl_selectall>
+          <lbl_selected>已选择 {0} 项</lbl_selected>
+          <btn_publish>发布</btn_publish>
+          <btn_unpublish>取消发布</btn_unpublish>
+          <btn_move>移动</btn_move>
+          <btn_trash>移至回收站</btn_trash>
+          <btn_delete>永久删除</btn_delete>
+          <empty_nochildren>未找到子项</empty_nochildren>
+          <badge_haschildren>有子项</badge_haschildren>
+          <col_changedby>修改者</col_changedby>
+          <lbl_childrenof>{0} 的子项（{1}，ID：{2}）</lbl_childrenof>
+          <confirm_movetotrash>将 {0} 个项目移至回收站？</confirm_movetotrash>
+          <result_msg>{0}：{1} 个成功</result_msg>
+          <result_failed>，{0} 个失败</result_failed>
+          <dlg_selecttarget>选择目标位置</dlg_selecttarget>
+          <dlg_selectparent>选择父内容</dlg_selectparent>
+          <lbl_loading>加载中...</lbl_loading>
+          <btn_edit>编辑</btn_edit>
+          <err_generic>错误：{0}</err_generic>
+          <result_succeeded>{0} 个成功</result_succeeded>
         </managechildren>
         <recommendations>
           <banner_info>编辑者创建新内容时，Optimizely 可以建议使用哪些内容类型。请在下方定义规则，根据内容创建位置控制这些建议。</banner_info>
@@ -702,6 +725,23 @@
           <btn_delete>删除</btn_delete>
           <empty_norules>尚未定义建议规则。点击"添加规则"创建一条。</empty_norules>
           <confirm_delete>删除此规则？</confirm_delete>
+          <col_parentcontent>父内容</col_parentcontent>
+          <col_includedescendants>包含后代</col_includedescendants>
+          <col_contentfolderonly>仅内容文件夹</col_contentfolderonly>
+          <col_suggestedtypes>建议类型</col_suggestedtypes>
+          <lbl_parentcontent>父内容</lbl_parentcontent>
+          <lbl_includedescendants>包含后代</lbl_includedescendants>
+          <lbl_contentfolderonly>仅限此内容文件夹</lbl_contentfolderonly>
+          <lbl_filtertypes>筛选类型...</lbl_filtertypes>
+          <opt_any>任意</opt_any>
+          <opt_anylocation>任意位置</opt_anylocation>
+          <opt_nomatching>没有匹配的类型</opt_nomatching>
+          <btn_browse>浏览...</btn_browse>
+          <btn_clear>清除</btn_clear>
+          <btn_saving>保存中...</btn_saving>
+          <err_selecttype>请至少选择一个内容类型进行建议。</err_selecttype>
+          <err_save>保存规则时出错：{0}</err_save>
+          <err_delete>删除规则时出错：{0}</err_delete>
         </recommendations>
         <gantt>
           <error_load>加载 Gantt 数据失败：{0}</error_load>

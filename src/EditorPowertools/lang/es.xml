@@ -685,6 +685,29 @@
           <confirm_delete>¿Eliminar {0} elemento(s) seleccionado(s)? Esta acción no se puede deshacer.</confirm_delete>
           <confirm_publishall>¿Publicar todos los {0} elementos secundarios?</confirm_publishall>
           <confirm_unpublishall>¿Despublicar todos los {0} elementos secundarios?</confirm_unpublishall>
+          <title_managechildren>Gestionar elementos secundarios</title_managechildren>
+          <title_managechildren2>Gestionar elementos secundarios</title_managechildren2>
+          <btn_changeparent>Cambiar padre</btn_changeparent>
+          <lbl_selectall>Seleccionar todo</lbl_selectall>
+          <lbl_selected>{0} seleccionado(s)</lbl_selected>
+          <btn_publish>Publicar</btn_publish>
+          <btn_unpublish>Despublicar</btn_unpublish>
+          <btn_move>Mover</btn_move>
+          <btn_trash>Mover a la papelera</btn_trash>
+          <btn_delete>Eliminar permanentemente</btn_delete>
+          <empty_nochildren>No se encontraron elementos secundarios</empty_nochildren>
+          <badge_haschildren>tiene elementos secundarios</badge_haschildren>
+          <col_changedby>Modificado por</col_changedby>
+          <lbl_childrenof>Elementos secundarios de {0} ({1}, ID: {2})</lbl_childrenof>
+          <confirm_movetotrash>¿Mover {0} elementos a la papelera?</confirm_movetotrash>
+          <result_msg>{0}: {1} exitoso(s)</result_msg>
+          <result_failed>, {0} fallido(s)</result_failed>
+          <dlg_selecttarget>Seleccionar ubicación destino</dlg_selecttarget>
+          <dlg_selectparent>Seleccionar contenido padre</dlg_selectparent>
+          <lbl_loading>Cargando...</lbl_loading>
+          <btn_edit>Editar</btn_edit>
+          <err_generic>Error: {0}</err_generic>
+          <result_succeeded>{0} exitoso(s)</result_succeeded>
         </managechildren>
         <recommendations>
           <banner_info>Cuando los editores crean contenido nuevo, Optimizely puede sugerir qué tipos de contenido usar. Defina reglas a continuación para controlar estas sugerencias según dónde se está creando el contenido.</banner_info>
@@ -702,6 +725,23 @@
           <btn_delete>Eliminar</btn_delete>
           <empty_norules>No hay reglas de recomendación definidas. Haga clic en "Añadir regla" para crear una.</empty_norules>
           <confirm_delete>¿Eliminar esta regla?</confirm_delete>
+          <col_parentcontent>Contenido padre</col_parentcontent>
+          <col_includedescendants>Incluir descendientes</col_includedescendants>
+          <col_contentfolderonly>Solo carpeta de contenido</col_contentfolderonly>
+          <col_suggestedtypes>Tipos sugeridos</col_suggestedtypes>
+          <lbl_parentcontent>Contenido padre</lbl_parentcontent>
+          <lbl_includedescendants>Incluir descendientes</lbl_includedescendants>
+          <lbl_contentfolderonly>Solo para esta carpeta de contenido</lbl_contentfolderonly>
+          <lbl_filtertypes>Filtrar tipos...</lbl_filtertypes>
+          <opt_any>Cualquiera</opt_any>
+          <opt_anylocation>Cualquier ubicación</opt_anylocation>
+          <opt_nomatching>No hay tipos coincidentes</opt_nomatching>
+          <btn_browse>Examinar...</btn_browse>
+          <btn_clear>Borrar</btn_clear>
+          <btn_saving>Guardando...</btn_saving>
+          <err_selecttype>Seleccione al menos un tipo de contenido para sugerir.</err_selecttype>
+          <err_save>Error al guardar la regla: {0}</err_save>
+          <err_delete>Error al eliminar la regla: {0}</err_delete>
         </recommendations>
         <gantt>
           <error_load>Error al cargar datos de Gantt: {0}</error_load>

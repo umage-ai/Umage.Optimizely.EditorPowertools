@@ -685,6 +685,29 @@
           <confirm_delete>選択した {0} 件のアイテムを削除しますか？この操作は元に戻せません。</confirm_delete>
           <confirm_publishall>すべての {0} 件の子ページを公開しますか？</confirm_publishall>
           <confirm_unpublishall>すべての {0} 件の子ページを非公開にしますか？</confirm_unpublishall>
+          <title_managechildren>子アイテムの管理</title_managechildren>
+          <title_managechildren2>子アイテムの管理</title_managechildren2>
+          <btn_changeparent>親を変更</btn_changeparent>
+          <lbl_selectall>すべて選択</lbl_selectall>
+          <lbl_selected>{0} 件選択中</lbl_selected>
+          <btn_publish>公開</btn_publish>
+          <btn_unpublish>非公開</btn_unpublish>
+          <btn_move>移動</btn_move>
+          <btn_trash>ゴミ箱に移動</btn_trash>
+          <btn_delete>完全に削除</btn_delete>
+          <empty_nochildren>子アイテムが見つかりません</empty_nochildren>
+          <badge_haschildren>子あり</badge_haschildren>
+          <col_changedby>更新者</col_changedby>
+          <lbl_childrenof>{0} の子アイテム（{1}、ID: {2}）</lbl_childrenof>
+          <confirm_movetotrash>{0} 件のアイテムをゴミ箱に移動しますか？</confirm_movetotrash>
+          <result_msg>{0}: {1} 件成功</result_msg>
+          <result_failed>、{0} 件失敗</result_failed>
+          <dlg_selecttarget>移動先を選択</dlg_selecttarget>
+          <dlg_selectparent>親コンテンツを選択</dlg_selectparent>
+          <lbl_loading>読み込み中...</lbl_loading>
+          <btn_edit>編集</btn_edit>
+          <err_generic>エラー: {0}</err_generic>
+          <result_succeeded>{0} 件成功</result_succeeded>
         </managechildren>
         <recommendations>
           <banner_info>エディターが新しいコンテンツを作成する際、Optimizelyは使用するコンテンツタイプを提案できます。コンテンツが作成される場所に基づいてこれらの提案を制御するルールを以下で定義してください。</banner_info>
@@ -702,6 +725,23 @@
           <btn_delete>削除</btn_delete>
           <empty_norules>推奨ルールがまだ定義されていません。「ルールを追加」をクリックして作成してください。</empty_norules>
           <confirm_delete>このルールを削除しますか？</confirm_delete>
+          <col_parentcontent>親コンテンツ</col_parentcontent>
+          <col_includedescendants>子孫を含む</col_includedescendants>
+          <col_contentfolderonly>コンテンツフォルダーのみ</col_contentfolderonly>
+          <col_suggestedtypes>推奨タイプ</col_suggestedtypes>
+          <lbl_parentcontent>親コンテンツ</lbl_parentcontent>
+          <lbl_includedescendants>子孫を含む</lbl_includedescendants>
+          <lbl_contentfolderonly>このコンテンツフォルダーのみ</lbl_contentfolderonly>
+          <lbl_filtertypes>タイプをフィルター...</lbl_filtertypes>
+          <opt_any>すべて</opt_any>
+          <opt_anylocation>任意の場所</opt_anylocation>
+          <opt_nomatching>一致するタイプがありません</opt_nomatching>
+          <btn_browse>参照...</btn_browse>
+          <btn_clear>クリア</btn_clear>
+          <btn_saving>保存中...</btn_saving>
+          <err_selecttype>提案するコンテンツタイプを少なくとも1つ選択してください。</err_selecttype>
+          <err_save>ルールの保存エラー: {0}</err_save>
+          <err_delete>ルールの削除エラー: {0}</err_delete>
         </recommendations>
         <gantt>
           <error_load>Ganttデータの読み込みに失敗しました：{0}</error_load>

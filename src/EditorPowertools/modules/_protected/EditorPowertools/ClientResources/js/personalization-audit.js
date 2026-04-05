@@ -60,7 +60,7 @@
                 el.innerHTML = EPT.s('personalizationaudit.alert_old', 'Analysis was last run {0}. Consider running the job again for fresh data.').replace('{0}', `<strong>${ago}</strong>`) + ` ${runBtn}`;
             } else {
                 el.className = 'ept-alert ept-alert--info';
-                el.innerHTML = `Analysis was last run <strong>${ago}</strong>. ${runBtn}`;
+                el.innerHTML = EPT.s('personalizationaudit.alert_lastrun', 'Analysis was last run {0}.').replace('{0}', `<strong>${ago}</strong>`) + ` ${runBtn}`;
             }
         }
 
@@ -76,9 +76,9 @@
                 try {
                     await EPT.postJson(`${API}/job-start`);
                     el.className = 'ept-alert ept-alert--info';
-                    el.innerHTML = `<strong>Personalization analysis job has been started.</strong> Results will be updated when it completes. <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">Refresh</button>`;
+                    el.innerHTML = `<strong>${EPT.s('personalizationaudit.alert_jobstarted', 'Personalization analysis job has been started. Results will be updated when it completes.')}</strong> <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('personalizationaudit.btn_refresh', 'Refresh')}</button>`;
                 } catch (err) {
-                    btn.textContent = 'Failed';
+                    btn.textContent = EPT.s('shared.failed', 'Failed');
                     console.error('Failed to start job:', err);
                 }
             });
@@ -125,10 +125,10 @@
             <div class="ept-stat"><div class="ept-stat__value">${allUsages.length}</div><div class="ept-stat__label">${EPT.s('personalizationaudit.stat_total', 'Total Usages')}</div></div>
             <div class="ept-stat"><div class="ept-stat__value">${uniqueVGs}</div><div class="ept-stat__label">${EPT.s('personalizationaudit.stat_groups', 'Visitor Groups Used')}</div></div>
             <div class="ept-stat"><div class="ept-stat__value">${uniqueContent}</div><div class="ept-stat__label">${EPT.s('personalizationaudit.stat_content', 'Content Items')}</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${accessRights}</div><div class="ept-stat__label">Access Rights</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${contentAreas}</div><div class="ept-stat__label">Content Areas</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${xhtmlStrings}</div><div class="ept-stat__label">XHTML Strings</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${filtered.length}</div><div class="ept-stat__label">Showing</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${accessRights}</div><div class="ept-stat__label">${EPT.s('personalizationaudit.stat_accessrights', 'Access Rights')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${contentAreas}</div><div class="ept-stat__label">${EPT.s('personalizationaudit.stat_contentareas', 'Content Areas')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${xhtmlStrings}</div><div class="ept-stat__label">${EPT.s('personalizationaudit.stat_xhtmlstrings', 'XHTML Strings')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${filtered.length}</div><div class="ept-stat__label">${EPT.s('personalizationaudit.stat_showing', 'Showing')}</div></div>
         `;
     }
 
@@ -144,15 +144,15 @@
                 <input type="text" id="pers-search" placeholder="${EPT.s('personalizationaudit.lbl_search', 'Search...')}" />
             </div>
             <select id="pers-type-filter" class="ept-select">
-                <option value="">All usage types</option>
+                <option value="">${EPT.s('personalizationaudit.opt_allusagetypes', 'All usage types')}</option>
                 ${usageTypes.map(t => `<option value="${t}">${t} (${allUsages.filter(u => u.usageType === t).length})</option>`).join('')}
             </select>
             <select id="pers-vg-filter" class="ept-select">
-                <option value="">All audiences</option>
+                <option value="">${EPT.s('personalizationaudit.opt_allaudiences', 'All audiences')}</option>
                 ${vgNames.map(vg => `<option value="${escAttr(vg.id)}">${escHtml(vg.name)} (${allUsages.filter(u => u.visitorGroupId === vg.id).length})</option>`).join('')}
             </select>
             <div class="ept-toolbar__spacer"></div>
-            <button class="ept-btn" id="pers-export" title="Export to CSV">${EPT.icons.download} Export</button>
+            <button class="ept-btn" id="pers-export" title="Export to CSV">${EPT.icons.download} ${EPT.s('personalizationaudit.btn_export', 'Export')}</button>
         `;
 
         document.getElementById('pers-search').addEventListener('input', (e) => {
@@ -181,7 +181,7 @@
 
         if (data.length === 0 && allUsages.length === 0) {
             const content = document.getElementById('personalization-content');
-            EPT.showEmpty(content, 'No personalization usage data available. Run the analysis job first.');
+            EPT.showEmpty(content, EPT.s('personalizationaudit.empty_nousages', 'No personalization usage data available. Run the analysis job first.'));
             return;
         }
 
@@ -214,7 +214,7 @@
                 }
             },
             { key: 'propertyName', label: EPT.s('personalizationaudit.col_location', 'Location') },
-            { key: 'contentTypeName', label: 'Content Type' }
+            { key: 'contentTypeName', label: EPT.s('personalizationaudit.col_contenttype', 'Content Type') }
         ];
 
         tableInstance = EPT.createTable(columns, data, {
