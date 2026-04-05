@@ -47,6 +47,15 @@ public class VisitorGroupTesterMiddleware
             return;
         }
 
+        // Skip Optimizely on-page edit mode (toolbar would appear inside CMS editing iframe)
+        var queryString = context.Request.QueryString.Value ?? "";
+        if (queryString.Contains("epieditmode", StringComparison.OrdinalIgnoreCase) ||
+            queryString.Contains("epi.editmode", StringComparison.OrdinalIgnoreCase))
+        {
+            await _next(context);
+            return;
+        }
+
         // Check authentication
         if (context.User?.Identity?.IsAuthenticated != true)
         {
@@ -481,13 +490,27 @@ public class VisitorGroupTesterMiddleware
 
     // Inspector tab
     function renderInspector() {
+        var isPreview = window.location.search.indexOf('epieditmode') >= 0;
         var html = '<div style="padding: 16px;">' +
-            '<p style="margin: 0 0 12px; color: #94a3b8;">Highlight editable content elements on the page and link to CMS edit mode.</p>' +
+            '<p style="margin: 0 0 12px; color: #94a3b8;">Highlight blocks and content elements. Hover to see details and jump to edit mode.</p>' +
             '<label class="ept-vgt-group" style="padding: 8px 0;">' +
             '<input type="checkbox" id="ept-vgt-inspect-toggle"' + (inspectActive ? ' checked' : '') + '>' +
             '<span class="ept-vgt-group-name" style="font-weight: 600;">Enable Content Inspector</span>' +
-            '</label></div>';
+            '</label>';
+        if (!isPreview) {
+            html += '<p style="margin: 12px 0 0; font-size: 11px; color: #64748b;">Tip: For best results, use Preview Mode which includes content metadata.</p>' +
+                '<button id="ept-vgt-preview-btn" class="ept-vgt-btn" style="margin-top:8px;width:100%;">Open in Preview Mode</button>';
+        }
+        html += '</div>';
         body.innerHTML = html;
+
+        if (!isPreview) {
+            document.getElementById('ept-vgt-preview-btn').addEventListener('click', function() {
+                var href = window.location.href;
+                var sep = href.indexOf('?') >= 0 ? '&' : '?';
+                window.location.href = href + sep + 'epieditmode=false';
+            });
+        }
 
         document.getElementById('ept-vgt-inspect-toggle').addEventListener('change', function() {
             inspectActive = this.checked;
