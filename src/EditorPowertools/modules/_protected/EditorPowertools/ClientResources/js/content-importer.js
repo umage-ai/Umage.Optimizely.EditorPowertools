@@ -67,7 +67,14 @@
     }
 
     function renderStepBar() {
-        var steps = ['Upload', 'Preview', 'Target', 'Mapping', 'Preview', 'Import'];
+        var steps = [
+            EPT.s('contentimporter.step_upload', '1. Upload File'),
+            EPT.s('contentimporter.step_preview', '2. Preview'),
+            EPT.s('contentimporter.step_target', '3. Target'),
+            EPT.s('contentimporter.step_mapping', '4. Mapping'),
+            EPT.s('contentimporter.step_dryrun', '5. Dry Run'),
+            EPT.s('contentimporter.step_import', '6. Import')
+        ];
         var html = '<div class="ept-importer-steps">';
         for (var i = 0; i < steps.length; i++) {
             var cls = 'ept-importer-step';
@@ -86,10 +93,10 @@
         html += '<div class="ept-card"><div class="ept-card__body">';
         html += '<div class="ept-importer-dropzone" id="dropzone">';
         html += '<div style="text-align:center;padding:40px">';
-        html += '<p style="font-size:16px;font-weight:600;margin-bottom:8px">Drop file here or click to browse</p>';
+        html += '<p style="font-size:16px;font-weight:600;margin-bottom:8px">' + EPT.s('contentimporter.lbl_dropfile', 'Drop a CSV, JSON, or Excel file here, or click to browse') + '</p>';
         html += '<p style="color:var(--ept-text-muted)">Supported formats: CSV, XLSX, JSON</p>';
         html += '<input type="file" id="file-input" accept=".csv,.tsv,.xlsx,.xls,.json" style="display:none">';
-        html += '<button class="ept-btn ept-btn--primary" id="browse-btn" style="margin-top:16px">Choose File</button>';
+        html += '<button class="ept-btn ept-btn--primary" id="browse-btn" style="margin-top:16px">' + EPT.s('contentimporter.btn_browse', 'Browse...') + '</button>';
         html += '</div></div>';
         html += '<div id="upload-status"></div>';
         html += '</div></div>';
@@ -176,7 +183,7 @@
         html += '<div class="ept-card__body">';
 
         // Content type filter
-        html += '<div class="ept-importer-field"><label>Content Type</label>';
+        html += '<div class="ept-importer-field"><label>' + EPT.s('contentimporter.lbl_contenttype', 'Content Type:') + '</label>';
         html += '<div style="display:flex;gap:8px;margin-bottom:8px">';
         html += '<button class="ept-btn ept-btn--sm ct-filter" data-filter="Page">Pages</button>';
         html += '<button class="ept-btn ept-btn--sm ct-filter" data-filter="Block">Blocks</button>';
@@ -186,21 +193,21 @@
         html += '</div>';
 
         // Parent content
-        html += '<div class="ept-importer-field"><label>Parent Content</label>';
+        html += '<div class="ept-importer-field"><label>' + EPT.s('contentimporter.lbl_parent', 'Parent Location:') + '</label>';
         html += '<div style="display:flex;gap:8px;align-items:center">';
         html += '<span id="parent-name" style="font-size:13px">' + (state.parentContentName ? escHtml(state.parentContentName) + ' (ID: ' + state.parentContentId + ')' : '<em style="color:var(--ept-text-muted)">No parent selected</em>') + '</span>';
         html += '<button class="ept-btn ept-btn--sm" id="pick-parent-btn">Browse...</button>';
         html += '</div></div>';
 
         // Language
-        html += '<div class="ept-importer-field"><label>Language</label>';
+        html += '<div class="ept-importer-field"><label>' + EPT.s('contentimporter.lbl_language', 'Language:') + '</label>';
         html += '<select class="ept-select" id="lang-select" style="width:100%"><option value="">Loading...</option></select>';
         html += '</div>';
 
         // Publish option
         html += '<div class="ept-importer-field"><label class="ept-toggle">';
         html += '<input type="checkbox" id="publish-check"' + (state.publishAfterImport ? ' checked' : '') + '>';
-        html += ' Publish after import</label></div>';
+        html += ' ' + EPT.s('contentimporter.lbl_publishafter', 'Publish after import') + '</label></div>';
 
         html += '</div></div>';
         html += renderNav(2, 4);
@@ -571,7 +578,7 @@
         var html = renderStepBar();
         html += '<div class="ept-card"><div class="ept-card__header"><div class="ept-card__title">Import Preview</div></div>';
         html += '<div class="ept-card__body" id="dryrun-body"><div class="ept-loading"><div class="ept-spinner"></div><p>Running preview...</p></div></div></div>';
-        html += renderNav(4, 6, 'Execute Import');
+        html += renderNav(4, 6, EPT.s('contentimporter.btn_import', 'Start Import'));
         root.innerHTML = html;
         bindNav();
 
@@ -633,7 +640,7 @@
     // ── Step 6: Execute ──
     function renderExecute() {
         var html = renderStepBar();
-        html += '<div class="ept-card"><div class="ept-card__header"><div class="ept-card__title">Importing...</div></div>';
+        html += '<div class="ept-card"><div class="ept-card__header"><div class="ept-card__title">' + EPT.s('contentimporter.lbl_importing', 'Importing...') + '</div></div>';
         html += '<div class="ept-card__body" id="exec-body"><div class="ept-loading"><div class="ept-spinner"></div><p>Starting import...</p></div></div></div>';
         root.innerHTML = html;
 
@@ -673,7 +680,7 @@
 
         if (progress.status === 'completed') {
             html += '<div class="ept-alert ept-alert--success" style="margin-top:12px">Import completed! Created ' + progress.createdContentIds.length + ' content items.</div>';
-            html += '<button class="ept-btn ept-btn--primary" id="new-import-btn" style="margin-top:8px">Start New Import</button>';
+            html += '<button class="ept-btn ept-btn--primary" id="new-import-btn" style="margin-top:8px">' + EPT.s('contentimporter.btn_startover', 'Start Over') + '</button>';
         } else if (progress.status === 'failed') {
             html += '<div class="ept-alert ept-alert--danger" style="margin-top:12px">Import failed.</div>';
         }
@@ -703,9 +710,9 @@
     // ── Navigation ──
     function renderNav(prevStep, nextStep, nextLabel) {
         var html = '<div class="ept-importer-nav">';
-        if (prevStep) html += '<button class="ept-btn" id="nav-back">Back</button>';
+        if (prevStep) html += '<button class="ept-btn" id="nav-back">' + EPT.s('contentimporter.btn_back', 'Back') + '</button>';
         html += '<div style="flex:1"></div>';
-        if (nextStep) html += '<button class="ept-btn ept-btn--primary" id="nav-next">' + (nextLabel || 'Next') + '</button>';
+        if (nextStep) html += '<button class="ept-btn ept-btn--primary" id="nav-next">' + (nextLabel || EPT.s('contentimporter.btn_next', 'Next')) + '</button>';
         html += '</div>';
         return html;
     }
