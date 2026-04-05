@@ -14,7 +14,6 @@ define([
     return declare("editorpowertools.ActiveEditorsWidget", [_LayoutWidget, _TemplatedMixin, _ContextMixin], {
         templateString: '<div class="ept-ae-root">' +
             '<div data-dojo-attach-point="containerNode" class="ept-ae-container">' +
-            '<div class="ept-ae-empty">Connecting...</div>' +
             '</div>' +
             '</div>',
 
@@ -28,6 +27,7 @@ define([
         postCreate: function () {
             this.inherited(arguments);
             this._injectStyles();
+            this.containerNode.innerHTML = '<div class="ept-ae-empty">' + EPT.s('activeeditors.lbl_connecting', 'Connecting...') + '</div>';
             var self = this;
 
             this._presenceHandler = function (e) {
@@ -106,10 +106,10 @@ define([
             if (currentUser) editorCount = allEditors.filter(function (e) { return e.username.toLowerCase() !== currentUser; }).length;
 
             var html = '<div class="ept-ae-tabs">';
-            html += '<button class="ept-ae-tab' + (this._activeTab === "editors" ? ' ept-ae-tab--active' : '') + '" data-tab="editors">Editors';
+            html += '<button class="ept-ae-tab' + (this._activeTab === "editors" ? ' ept-ae-tab--active' : '') + '" data-tab="editors">' + EPT.s('activeeditors.tab_editors', 'Editors');
             if (editorCount > 0) html += ' <span class="ept-ae-badge">' + editorCount + '</span>';
             html += '</button>';
-            html += '<button class="ept-ae-tab' + (this._activeTab === "chat" ? ' ept-ae-tab--active' : '') + '" data-tab="chat">Chat';
+            html += '<button class="ept-ae-tab' + (this._activeTab === "chat" ? ' ept-ae-tab--active' : '') + '" data-tab="chat">' + EPT.s('activeeditors.tab_chat', 'Chat');
             if (this._unreadCount > 0) html += ' <span class="ept-ae-badge ept-ae-badge--chat">' + this._unreadCount + '</span>';
             html += '</button>';
             html += '</div>';
@@ -160,7 +160,7 @@ define([
             if (!panel) return;
 
             if (!this._currentContentId) {
-                panel.innerHTML = '<div class="ept-ae-empty">Select content to see active editors.</div>';
+                panel.innerHTML = '<div class="ept-ae-empty">' + EPT.s('activeeditors.empty_selectcontent', 'Select content to see active editors.') + '</div>';
                 return;
             }
 
@@ -182,7 +182,7 @@ define([
 
             if (onContent.length > 0) {
                 html += '<div class="ept-ae-section">';
-                html += '<div class="ept-ae-section-title">On this content</div>';
+                html += '<div class="ept-ae-section-title">' + EPT.s('activeeditors.section_oncontent', 'On this content') + '</div>';
                 for (var j = 0; j < onContent.length; j++) {
                     html += this._renderEditor(onContent[j], true);
                 }
@@ -191,7 +191,7 @@ define([
 
             if (otherOnline.length > 0) {
                 html += '<div class="ept-ae-section">';
-                html += '<div class="ept-ae-section-title">Online now</div>';
+                html += '<div class="ept-ae-section-title">' + EPT.s('activeeditors.section_online', 'Online now') + '</div>';
                 for (var k = 0; k < otherOnline.length; k++) {
                     html += this._renderEditor(otherOnline[k], false);
                 }
@@ -199,7 +199,7 @@ define([
             }
 
             if (!html) {
-                html = '<div class="ept-ae-empty">No other editors online.</div>';
+                html = '<div class="ept-ae-empty">' + EPT.s('activeeditors.empty_noeditors', 'No other editors online.') + '</div>';
             }
 
             panel.innerHTML = html;
@@ -219,7 +219,7 @@ define([
                 html += '<div class="ept-ae-content-detail">' + this._esc(editor.contentName) + '</div>';
             }
             html += '</div>';
-            html += '<button class="ept-ae-notify-btn" data-username="' + this._esc(editor.username) + '" data-displayname="' + this._esc(editor.displayName) + '" title="Send notification">&#9993;</button>';
+            html += '<button class="ept-ae-notify-btn" data-username="' + this._esc(editor.username) + '" data-displayname="' + this._esc(editor.displayName) + '" title="' + EPT.s('activeeditors.btn_sendmessage', 'Send notification') + '">&#9993;</button>';
             html += '</div>';
             return html;
         },
@@ -246,10 +246,10 @@ define([
             var dialog = EPT.openDialog("Message " + displayName, { wide: false });
             dialog.body.innerHTML =
                 '<div style="padding:4px 0">' +
-                    '<textarea id="ept-ae-msg" rows="3" placeholder="Type your message..." maxlength="500" style="width:100%;border:1px solid #e0e0e0;border-radius:8px;padding:10px;font-size:13px;font-family:inherit;resize:vertical;outline:none;box-sizing:border-box"></textarea>' +
+                    '<textarea id="ept-ae-msg" rows="3" placeholder="' + EPT.s('activeeditors.dlg_placeholder', 'Type your message...') + '" maxlength="500" style="width:100%;border:1px solid #e0e0e0;border-radius:8px;padding:10px;font-size:13px;font-family:inherit;resize:vertical;outline:none;box-sizing:border-box"></textarea>' +
                     '<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:10px">' +
-                        '<button id="ept-ae-cancel" class="ept-btn">Cancel</button>' +
-                        '<button id="ept-ae-send" class="ept-btn ept-btn--primary">Send</button>' +
+                        '<button id="ept-ae-cancel" class="ept-btn">' + EPT.s('activeeditors.btn_cancel', 'Cancel') + '</button>' +
+                        '<button id="ept-ae-send" class="ept-btn ept-btn--primary">' + EPT.s('activeeditors.btn_send', 'Send') + '</button>' +
                     '</div>' +
                 '</div>';
 
@@ -277,7 +277,7 @@ define([
 
             var html = '<div class="ept-ae-chat-msgs" id="ept-ae-chat-scroll">';
             if (msgs.length === 0) {
-                html += '<div class="ept-ae-empty" style="text-align:center;padding:20px 0">No messages yet</div>';
+                html += '<div class="ept-ae-empty" style="text-align:center;padding:20px 0">' + EPT.s('activeeditors.chat_empty', 'No messages yet') + '</div>';
             } else {
                 var lastUser = '';
                 for (var i = 0; i < msgs.length; i++) {
@@ -301,7 +301,7 @@ define([
             html += '</div>';
 
             html += '<div class="ept-ae-chat-input">';
-            html += '<input type="text" id="ept-ae-chat-text" class="ept-ae-chat-textbox" placeholder="Message..." maxlength="500" />';
+            html += '<input type="text" id="ept-ae-chat-text" class="ept-ae-chat-textbox" placeholder="' + EPT.s('activeeditors.chat_placeholder', 'Message...') + '" maxlength="500" />';
             html += '<button id="ept-ae-chat-send" class="ept-ae-chat-send" title="Send">&#9654;</button>';
             html += '</div>';
 

@@ -15,13 +15,14 @@ define([
 ) {
     return declare("editorpowertools.ContentDetailsWidget", [_LayoutWidget, _TemplatedMixin, _ContextMixin], {
         templateString: '<div class="ept-cd-root">' +
-            '<div data-dojo-attach-point="containerNode" class="ept-cd-container">Select content to see details.</div>' +
+            '<div data-dojo-attach-point="containerNode" class="ept-cd-container"></div>' +
             '</div>',
 
         _currentContentId: null,
 
         postCreate: function () {
             this.inherited(arguments);
+            this.containerNode.innerHTML = '<div class="ept-cd-empty">' + EPT.s('contentdetails.empty_selectcontent', 'Select content to see details.') + '</div>';
             // Load initial context
             var self = this;
             when(this.getCurrentContext(), function (context) {
@@ -48,7 +49,7 @@ define([
 
         _loadDetails: function (contentId) {
             var container = this.containerNode;
-            container.innerHTML = '<div class="ept-cd-loading">Loading...</div>';
+            container.innerHTML = '<div class="ept-cd-loading">' + EPT.s('shared.loading', 'Loading...') + '</div>';
             var self = this;
             fetch(window.EPT_API_URL + "/content-details/" + contentId)
                 .then(function (r) {
@@ -79,28 +80,28 @@ define([
             var langBehind = data.languageSync ? data.languageSync.filter(function(l) { return l.isBehindMaster; }).length : 0;
 
             html += '<div class="ept-cd-tabs">';
-            html += '<button class="ept-cd-tab ept-cd-tab--active" data-tab="info">Info</button>';
-            html += '<button class="ept-cd-tab" data-tab="uses">Uses <span class="ept-cd-count">(' + usesCount + ')</span></button>';
-            html += '<button class="ept-cd-tab" data-tab="usedby">Used By <span class="ept-cd-count">(' + usedByCount + ')</span></button>';
-            html += '<button class="ept-cd-tab" data-tab="tree">Tree <span class="ept-cd-count">(' + treeChildren + ')</span></button>';
-            html += '<button class="ept-cd-tab" data-tab="vers">Versions <span class="ept-cd-count">(' + verCount + ')</span></button>';
-            if (persCount > 0) html += '<button class="ept-cd-tab" data-tab="pers">Pers. <span class="ept-cd-count">(' + persCount + ')</span></button>';
-            if (langCount > 1) html += '<button class="ept-cd-tab" data-tab="lang">Lang' + (langBehind > 0 ? ' <span class="ept-cd-count ept-cd-warn">(' + langBehind + ' behind)</span>' : '') + '</button>';
+            html += '<button class="ept-cd-tab ept-cd-tab--active" data-tab="info">' + EPT.s('contentdetails.tab_info', 'Info') + '</button>';
+            html += '<button class="ept-cd-tab" data-tab="uses">' + EPT.s('contentdetails.tab_uses', 'Uses') + ' <span class="ept-cd-count">(' + usesCount + ')</span></button>';
+            html += '<button class="ept-cd-tab" data-tab="usedby">' + EPT.s('contentdetails.tab_usedby', 'Used By') + ' <span class="ept-cd-count">(' + usedByCount + ')</span></button>';
+            html += '<button class="ept-cd-tab" data-tab="tree">' + EPT.s('contentdetails.tab_tree', 'Tree') + ' <span class="ept-cd-count">(' + treeChildren + ')</span></button>';
+            html += '<button class="ept-cd-tab" data-tab="vers">' + EPT.s('contentdetails.tab_versions', 'Versions') + ' <span class="ept-cd-count">(' + verCount + ')</span></button>';
+            if (persCount > 0) html += '<button class="ept-cd-tab" data-tab="pers">' + EPT.s('contentdetails.tab_pers', 'Pers.') + ' <span class="ept-cd-count">(' + persCount + ')</span></button>';
+            if (langCount > 1) html += '<button class="ept-cd-tab" data-tab="lang">' + EPT.s('contentdetails.tab_lang', 'Lang') + (langBehind > 0 ? ' <span class="ept-cd-count ept-cd-warn">(' + langBehind + ' ' + EPT.s('contentdetails.lbl_behind', 'behind') + ')</span>' : '') + '</button>';
             html += '</div>';
 
             // Info panel
             html += '<div class="ept-cd-panel ept-cd-panel--active" data-panel="info">';
-            html += this._row("Name", data.name);
-            html += this._row("Type", data.contentTypeName);
-            html += this._row("ID", data.contentId);
-            html += this._row("Status", this._statusBadge(data.status));
-            html += this._row("Created", this._fmtDate(data.created) + (data.createdBy ? " by " + this._esc(data.createdBy) : ""));
-            html += this._row("Changed", this._fmtDate(data.changed) + (data.changedBy ? " by " + this._esc(data.changedBy) : ""));
-            if (data.published) html += this._row("Published", this._fmtDate(data.published));
-            html += this._row("Language", data.language || "N/A");
-            html += this._row("Versions", data.versionCount || 0);
-            if (data.parentName) html += this._row("Parent", data.parentName);
-            html += this._row("GUID", '<span style="font-size:10px;word-break:break-all">' + this._esc(data.contentGuid) + '</span>');
+            html += this._row(EPT.s('contentdetails.lbl_name', 'Name'), data.name);
+            html += this._row(EPT.s('contentdetails.lbl_type', 'Type'), data.contentTypeName);
+            html += this._row(EPT.s('contentdetails.lbl_id', 'ID'), data.contentId);
+            html += this._row(EPT.s('contentdetails.lbl_status', 'Status'), this._statusBadge(data.status));
+            html += this._row(EPT.s('contentdetails.lbl_created', 'Created'), this._fmtDate(data.created) + (data.createdBy ? " " + EPT.s('shared.lbl_by', 'by') + " " + this._esc(data.createdBy) : ""));
+            html += this._row(EPT.s('contentdetails.lbl_changed', 'Changed'), this._fmtDate(data.changed) + (data.changedBy ? " " + EPT.s('shared.lbl_by', 'by') + " " + this._esc(data.changedBy) : ""));
+            if (data.published) html += this._row(EPT.s('contentdetails.lbl_published', 'Published'), this._fmtDate(data.published));
+            html += this._row(EPT.s('contentdetails.lbl_language', 'Language'), data.language || EPT.s('shared.lbl_na', 'N/A'));
+            html += this._row(EPT.s('contentdetails.lbl_versions', 'Versions'), data.versionCount || 0);
+            if (data.parentName) html += this._row(EPT.s('contentdetails.lbl_parent', 'Parent'), data.parentName);
+            html += this._row(EPT.s('contentdetails.lbl_guid', 'GUID'), '<span style="font-size:10px;word-break:break-all">' + this._esc(data.contentGuid) + '</span>');
             html += '</div>';
 
             // Uses panel (what this content references)
@@ -116,7 +117,7 @@ define([
                     html += '</div>';
                 }
             } else {
-                html += '<div class="ept-cd-empty">This content does not reference other content.</div>';
+                html += '<div class="ept-cd-empty">' + EPT.s('contentdetails.empty_uses', 'This content does not reference other content.') + '</div>';
             }
             html += '</div>';
 
@@ -132,7 +133,7 @@ define([
                     html += '</div>';
                 }
             } else {
-                html += '<div class="ept-cd-empty">Not referenced by other content.</div>';
+                html += '<div class="ept-cd-empty">' + EPT.s('contentdetails.empty_usedby', 'No content references this item.') + '</div>';
             }
             html += '</div>';
 
@@ -141,19 +142,19 @@ define([
             if (data.contentTree && data.contentTree.properties && data.contentTree.properties.length > 0) {
                 html += this._renderTreeNode(data.contentTree, true);
             } else {
-                html += '<div class="ept-cd-empty">No nested content found.</div>';
+                html += '<div class="ept-cd-empty">' + EPT.s('contentdetails.empty_tree', 'No nested content found.') + '</div>';
             }
             html += '</div>';
 
             // Versions panel
             html += '<div class="ept-cd-panel" data-panel="vers">';
             if (data.versions && data.versions.length > 0) {
-                html += '<button class="ept-cd-expand" data-action="timeline-versions">Full Timeline</button>';
+                html += '<button class="ept-cd-expand" data-action="timeline-versions">' + EPT.s('contentdetails.btn_fulltimeline', 'Full Timeline') + '</button>';
                 for (var k = 0; k < data.versions.length; k++) {
                     html += this._renderVersion(data.versions[k]);
                 }
             } else {
-                html += '<div class="ept-cd-empty">No versions found.</div>';
+                html += '<div class="ept-cd-empty">' + EPT.s('contentdetails.empty_versions', 'No versions found.') + '</div>';
             }
             html += '</div>';
 
@@ -164,7 +165,7 @@ define([
                     var pr = data.personalizations[p];
                     html += '<div class="ept-cd-ref">';
                     html += '<span class="ept-cd-ref-name">' + this._esc(pr.visitorGroupName) + '</span>';
-                    html += ' <span class="ept-cd-ref-type">on ' + this._esc(pr.contentName) + '</span>';
+                    html += ' <span class="ept-cd-ref-type">' + EPT.s('contentdetails.lbl_on', 'on') + ' ' + this._esc(pr.contentName) + '</span>';
                     html += ' <span class="ept-cd-ref-prop">' + this._esc(pr.propertyName) + '</span>';
                     html += '</div>';
                 }
@@ -178,10 +179,10 @@ define([
                     var ls = data.languageSync[l];
                     html += '<div class="ept-cd-ref" style="display:flex;align-items:center;gap:6px">';
                     html += '<span class="ept-cd-ver-lang">' + this._esc(ls.language) + '</span>';
-                    if (ls.isMaster) html += '<span class="ept-cd-ref-kind">master</span>';
+                    if (ls.isMaster) html += '<span class="ept-cd-ref-kind">' + EPT.s('contentdetails.lbl_master', 'master') + '</span>';
                     html += '<span class="ept-cd-ver-status ept-cd-ver-status--' + (ls.status || '').toLowerCase() + '">' + this._esc(ls.status) + '</span>';
                     html += '<span class="ept-cd-muted">' + this._fmtDate(ls.lastChanged) + '</span>';
-                    if (ls.isBehindMaster) html += '<span style="color:#ef6c00;font-size:10px;font-weight:600">behind master</span>';
+                    if (ls.isBehindMaster) html += '<span style="color:#ef6c00;font-size:10px;font-weight:600">' + EPT.s('contentdetails.lbl_behindmaster', 'behind master') + '</span>';
                     html += '</div>';
                 }
                 html += '</div>';
@@ -248,7 +249,7 @@ define([
             html += '<div style="font-size:10px;color:#555;margin-top:2px">';
             if (v.savedBy) html += '<strong>' + this._esc(v.savedBy) + '</strong> &middot; ';
             html += this._fmtDate(v.saved);
-            if (v.compareUrl) html += ' &middot; <a class="ept-cd-ver-compare" href="' + this._esc(v.compareUrl) + '">compare</a>';
+            if (v.compareUrl) html += ' &middot; <a class="ept-cd-ver-compare" href="' + this._esc(v.compareUrl) + '">' + EPT.s('contentdetails.lbl_compare', 'compare') + '</a>';
             html += '</div>';
 
             if (v.changedProperties && v.changedProperties.length > 0) {
@@ -256,7 +257,7 @@ define([
                 for (var c = 0; c < v.changedProperties.length; c++) {
                     var ch = v.changedProperties[c];
                     html += '<div class="ept-cd-ver-change">';
-                    html += '<span class="ept-cd-ver-change-prop">' + this._esc(ch.propertyName) + '</span> changed';
+                    html += '<span class="ept-cd-ver-change-prop">' + this._esc(ch.propertyName) + '</span> ' + EPT.s('contentdetails.lbl_changed', 'changed');
                     html += '</div>';
                 }
                 html += '</div>';
@@ -267,7 +268,7 @@ define([
         },
 
         _statusBadge: function (status) {
-            if (!status) return "N/A";
+            if (!status) return EPT.s('shared.lbl_na', 'N/A');
             var cls = "ept-cd-ver-status--" + status.toLowerCase().replace(/\s/g, "");
             return '<span class="ept-cd-ver-status ' + cls + '">' + this._esc(status) + '</span>';
         },
@@ -333,7 +334,7 @@ define([
 
             var html = '<div class="ept-cd-popup">';
             html += '<div class="ept-cd-popup-header">';
-            html += '<span class="ept-cd-popup-title">Timeline: ' + this._esc(data.name) + '</span>';
+            html += '<span class="ept-cd-popup-title">' + EPT.s('contentdetails.lbl_timeline', 'Timeline') + ': ' + this._esc(data.name) + '</span>';
             html += '<button class="ept-cd-popup-close">&times;</button>';
             html += '</div>';
             html += '<div class="ept-cd-popup-body">';
@@ -356,7 +357,7 @@ define([
                     if (v.language) html += ' <span class="ept-cd-ver-lang">' + this._esc(v.language) + '</span>';
                     html += '</div>';
                     html += '<div class="ept-cd-tl-meta">' + this._fmtDate(v.saved);
-                    if (v.savedBy) html += ' by ' + this._esc(v.savedBy);
+                    if (v.savedBy) html += ' ' + EPT.s('shared.lbl_by', 'by') + ' ' + this._esc(v.savedBy);
                     html += '</div>';
 
                     if (v.changedProperties && v.changedProperties.length > 0) {
@@ -372,19 +373,19 @@ define([
                     }
 
                     if (v.compareUrl) {
-                        html += '<a class="ept-cd-tl-compare" href="' + this._esc(v.compareUrl) + '">Compare with previous</a>';
+                        html += '<a class="ept-cd-tl-compare" href="' + this._esc(v.compareUrl) + '">' + EPT.s('contentdetails.lbl_comparewithprevious', 'Compare with previous') + '</a>';
                     }
 
                     html += '</div>';
                 }
                 html += '</div>';
             } else {
-                html += '<div class="ept-cd-empty">No version history available.</div>';
+                html += '<div class="ept-cd-empty">' + EPT.s('contentdetails.empty_history', 'No version history available.') + '</div>';
             }
 
             // Content tree section
             if (data.contentTree && data.contentTree.properties && data.contentTree.properties.length > 0) {
-                html += '<h3 style="margin:20px 0 10px;font-size:14px;font-weight:600;">Content Structure</h3>';
+                html += '<h3 style="margin:20px 0 10px;font-size:14px;font-weight:600;">' + EPT.s('contentdetails.lbl_contentstructure', 'Content Structure') + '</h3>';
                 html += this._renderTreeNode(data.contentTree, true);
             }
 
@@ -412,7 +413,7 @@ define([
         },
 
         _fmtDate: function (s) {
-            if (!s) return "N/A";
+            if (!s) return EPT.s('shared.lbl_na', 'N/A');
             var d = new Date(s);
             if (isNaN(d.getTime())) return s;
             return d.toLocaleDateString() + " " + d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
