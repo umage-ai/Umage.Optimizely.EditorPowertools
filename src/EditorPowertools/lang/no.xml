@@ -314,444 +314,444 @@
       <!-- JavaScript UI strings (injected via window.EPT_STRINGS) -->
       <ui>
         <shared>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
-          <cancel>Cancel</cancel>
-          <apply>Apply</apply>
-          <close>Close</close>
-          <runnow>Run now</runnow>
-          <refresh>Refresh</refresh>
-          <starting>Starting...</starting>
-          <export>Export</export>
-          <prev>Prev</prev>
-          <next>Next</next>
-          <yes>Yes</yes>
-          <no>No</no>
-          <open>Open</open>
-          <all>All</all>
-          <save>Save</save>
-          <delete>Delete</delete>
-          <edit>Edit</edit>
-          <failed>Failed</failed>
+          <loading>Laster...</loading>
+          <noresults>Ingen resultater funnet</noresults>
+          <cancel>Avbryt</cancel>
+          <apply>Bruk</apply>
+          <close>Lukk</close>
+          <runnow>Kjør nå</runnow>
+          <refresh>Oppdater</refresh>
+          <starting>Starter...</starting>
+          <export>Eksporter</export>
+          <prev>Forrige</prev>
+          <next>Neste</next>
+          <yes>Ja</yes>
+          <no>Nei</no>
+          <open>Åpne</open>
+          <all>Alle</all>
+          <save>Lagre</save>
+          <delete>Slett</delete>
+          <edit>Rediger</edit>
+          <failed>Mislyktes</failed>
         </shared>
         <contentaudit>
-          <col_contentid>Content ID</col_contentid>
-          <col_name>Name</col_name>
-          <col_language>Language</col_language>
-          <col_contenttype>Content Type</col_contenttype>
-          <col_maintype>Main Type</col_maintype>
+          <col_contentid>Innholds-ID</col_contentid>
+          <col_name>Navn</col_name>
+          <col_language>Språk</col_language>
+          <col_contenttype>Innholdstype</col_contenttype>
+          <col_maintype>Hovedtype</col_maintype>
           <col_url>URL</col_url>
-          <col_editurl>Edit URL</col_editurl>
-          <col_breadcrumb>Breadcrumb</col_breadcrumb>
+          <col_editurl>Rediger-URL</col_editurl>
+          <col_breadcrumb>Brødsmule</col_breadcrumb>
           <col_status>Status</col_status>
-          <col_createdby>Created By</col_createdby>
-          <col_created>Created</col_created>
-          <col_changedby>Changed By</col_changedby>
-          <col_changed>Changed</col_changed>
-          <col_published>Published</col_published>
-          <col_publisheduntil>Published Until</col_publisheduntil>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_alllanguages>All Languages</col_alllanguages>
-          <col_referencecount>Reference Count</col_referencecount>
-          <col_versioncount>Version Count</col_versioncount>
-          <col_haspersonalizations>Has Personalizations</col_haspersonalizations>
-          <filter_all>All content</filter_all>
-          <filter_pages>Pages only</filter_pages>
-          <filter_blocks>Blocks only</filter_blocks>
-          <filter_media>Media only</filter_media>
-          <filter_unpublished>Unpublished</filter_unpublished>
-          <filter_unused>Unused content</filter_unused>
-          <op_contains>Contains</op_contains>
-          <op_equals>Equals</op_equals>
-          <op_startswith>Starts with</op_startswith>
-          <op_isempty>Is empty</op_isempty>
-          <op_isnotempty>Is not empty</op_isnotempty>
-          <btn_filter>Filter</btn_filter>
-          <btn_columns>Columns</btn_columns>
-          <btn_selectall>Select all</btn_selectall>
-          <btn_reset>Reset</btn_reset>
-          <btn_addfilter>Add filter</btn_addfilter>
-          <btn_clearall>Clear all</btn_clearall>
-          <dlg_choosecolumns>Choose Columns</dlg_choosecolumns>
-          <dlg_addfilter>Add Filter</dlg_addfilter>
-          <lbl_column>Column</lbl_column>
+          <col_createdby>Opprettet av</col_createdby>
+          <col_created>Opprettet</col_created>
+          <col_changedby>Endret av</col_changedby>
+          <col_changed>Endret</col_changed>
+          <col_published>Publisert</col_published>
+          <col_publisheduntil>Publisert til</col_publisheduntil>
+          <col_masterlanguage>Primærspråk</col_masterlanguage>
+          <col_alllanguages>Alle språk</col_alllanguages>
+          <col_referencecount>Antall referanser</col_referencecount>
+          <col_versioncount>Antall versjoner</col_versioncount>
+          <col_haspersonalizations>Har personaliseringer</col_haspersonalizations>
+          <filter_all>Alt innhold</filter_all>
+          <filter_pages>Bare sider</filter_pages>
+          <filter_blocks>Bare blokker</filter_blocks>
+          <filter_media>Bare media</filter_media>
+          <filter_unpublished>Upublisert</filter_unpublished>
+          <filter_unused>Ubrukt innhold</filter_unused>
+          <op_contains>Inneholder</op_contains>
+          <op_equals>Er lik</op_equals>
+          <op_startswith>Starter med</op_startswith>
+          <op_isempty>Er tom</op_isempty>
+          <op_isnotempty>Er ikke tom</op_isnotempty>
+          <btn_filter>Filtrer</btn_filter>
+          <btn_columns>Kolonner</btn_columns>
+          <btn_selectall>Velg alle</btn_selectall>
+          <btn_reset>Tilbakestill</btn_reset>
+          <btn_addfilter>Legg til filter</btn_addfilter>
+          <btn_clearall>Fjern alle</btn_clearall>
+          <dlg_choosecolumns>Velg kolonner</dlg_choosecolumns>
+          <dlg_addfilter>Legg til filter</dlg_addfilter>
+          <lbl_column>Kolonne</lbl_column>
           <lbl_operator>Operator</lbl_operator>
-          <lbl_value>Value</lbl_value>
-          <lbl_filtervalue>Filter value...</lbl_filtervalue>
-          <lbl_search>Search by name...</lbl_search>
-          <stat_totalitems>Total items</stat_totalitems>
-          <stat_pages>Pages</stat_pages>
-          <stat_currentpage>Current page</stat_currentpage>
-          <empty_nodata>No data loaded.</empty_nodata>
-          <empty_nofilter>No content matches the current filters.</empty_nofilter>
-          <page_showing>Showing {0}-{1} of {2}</page_showing>
-          <perpage>{0} per page</perpage>
+          <lbl_value>Verdi</lbl_value>
+          <lbl_filtervalue>Filterverdi...</lbl_filtervalue>
+          <lbl_search>Søk etter navn...</lbl_search>
+          <stat_totalitems>Elementer totalt</stat_totalitems>
+          <stat_pages>Sider</stat_pages>
+          <stat_currentpage>Gjeldende side</stat_currentpage>
+          <empty_nodata>Ingen data lastet.</empty_nodata>
+          <empty_nofilter>Ingen innhold samsvarer med gjeldende filtre.</empty_nofilter>
+          <page_showing>Viser {0}-{1} av {2}</page_showing>
+          <perpage>{0} per side</perpage>
           <fmt_excel>Excel (.xlsx)</fmt_excel>
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
-          <cell_openeditmode>Open in edit mode</cell_openeditmode>
+          <cell_openeditmode>Åpne i redigeringsmodus</cell_openeditmode>
         </contentaudit>
         <languageaudit>
-          <tab_overview>Overview</tab_overview>
-          <tab_missing>Missing Translations</tab_missing>
-          <tab_stale>Stale Translations</tab_stale>
-          <tab_queue>Translation Queue</tab_queue>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_languages>Languages</stat_languages>
-          <stat_missing>Missing Translations</stat_missing>
-          <stat_stale>Stale (30+ days)</stat_stale>
-          <stat_itemstotranslate>Items to Translate</stat_itemstotranslate>
-          <stat_page>Page</stat_page>
-          <stat_missing_lang>Missing {0}</stat_missing_lang>
-          <stat_stale_count>Stale Translations</stat_stale_count>
-          <card_coverage>Language Coverage</card_coverage>
-          <card_contentitems>{0} content items</card_contentitems>
-          <card_published>{0} published</card_published>
-          <lbl_language>Language:</lbl_language>
-          <lbl_threshold>Threshold (days):</lbl_threshold>
-          <lbl_targetlang>Target Language:</lbl_targetlang>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_alllanguages>All languages</lbl_alllanguages>
-          <lbl_alltypes>All types</lbl_alltypes>
-          <btn_coveragetree>Coverage Tree</btn_coveragetree>
-          <btn_apply>Apply</btn_apply>
-          <btn_exportcsv>Export CSV</btn_exportcsv>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_started>Job started, please refresh in a few minutes.</btn_started>
-          <btn_failed>Failed to start job</btn_failed>
+          <tab_overview>Oversikt</tab_overview>
+          <tab_missing>Manglende oversettelser</tab_missing>
+          <tab_stale>Utdaterte oversettelser</tab_stale>
+          <tab_queue>Oversettelseskø</tab_queue>
+          <stat_totalcontent>Totalt innhold</stat_totalcontent>
+          <stat_languages>Språk</stat_languages>
+          <stat_missing>Manglende oversettelser</stat_missing>
+          <stat_stale>Utdatert (30+ dager)</stat_stale>
+          <stat_itemstotranslate>Elementer som skal oversettes</stat_itemstotranslate>
+          <stat_page>Side</stat_page>
+          <stat_missing_lang>Mangler {0}</stat_missing_lang>
+          <stat_stale_count>Utdaterte oversettelser</stat_stale_count>
+          <card_coverage>Språkdekning</card_coverage>
+          <card_contentitems>{0} innholdselementer</card_contentitems>
+          <card_published>{0} publisert</card_published>
+          <lbl_language>Språk:</lbl_language>
+          <lbl_threshold>Grense (dager):</lbl_threshold>
+          <lbl_targetlang>Målspråk:</lbl_targetlang>
+          <lbl_contenttype>Innholdstype:</lbl_contenttype>
+          <lbl_alllanguages>Alle språk</lbl_alllanguages>
+          <lbl_alltypes>Alle typer</lbl_alltypes>
+          <btn_coveragetree>Dekningstre</btn_coveragetree>
+          <btn_apply>Bruk</btn_apply>
+          <btn_exportcsv>Eksporter CSV</btn_exportcsv>
+          <btn_runnow>Kjør nå</btn_runnow>
+          <btn_started>Jobb startet, vennligst oppdater om noen minutter.</btn_started>
+          <btn_failed>Kunne ikke starte jobb</btn_failed>
           <col_id>ID</col_id>
-          <col_name>Name</col_name>
+          <col_name>Navn</col_name>
           <col_type>Type</col_type>
-          <col_master>Master</col_master>
-          <col_available>Available Languages</col_available>
-          <col_location>Location</col_location>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_stalelanguage>Stale Language</col_stalelanguage>
-          <col_daysbehind>Days Behind</col_daysbehind>
-          <col_lastupdated>Last Updated</col_lastupdated>
-          <col_available_short>Available</col_available_short>
-          <empty_all_translated>All content has been translated to {0}</empty_all_translated>
-          <empty_no_stale>No stale translations found (threshold: {0} days)</empty_no_stale>
-          <empty_no_queue>No content needs translation to {0}</empty_no_queue>
-          <empty_no_tree>No coverage tree data available</empty_no_tree>
-          <empty_nodata>No language data available. Run the aggregation job to collect statistics.</empty_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <page_info>Page {0} of {1}</page_info>
-          <btn_previous>Previous</btn_previous>
-          <btn_next>Next</btn_next>
+          <col_master>Primær</col_master>
+          <col_available>Tilgjengelige språk</col_available>
+          <col_location>Plassering</col_location>
+          <col_masterlanguage>Primærspråk</col_masterlanguage>
+          <col_stalelanguage>Utdatert språk</col_stalelanguage>
+          <col_daysbehind>Dager etter</col_daysbehind>
+          <col_lastupdated>Sist oppdatert</col_lastupdated>
+          <col_available_short>Tilgjengelig</col_available_short>
+          <empty_all_translated>Alt innhold er oversatt til {0}</empty_all_translated>
+          <empty_no_stale>Ingen utdaterte oversettelser funnet (grense: {0} dager)</empty_no_stale>
+          <empty_no_queue>Ingen innhold trenger oversettelse til {0}</empty_no_queue>
+          <empty_no_tree>Ingen dekningstre-data tilgjengelig</empty_no_tree>
+          <empty_nodata>Ingen språkdata tilgjengelig. Kjør samlingsjobben for å samle statistikk.</empty_nodata>
+          <banner_runjob>Kjør det planlagte jobbet [EditorPowertools] Innholdsanalyse for å fylle inn data.</banner_runjob>
+          <page_info>Side {0} av {1}</page_info>
+          <btn_previous>Forrige</btn_previous>
+          <btn_next>Neste</btn_next>
         </languageaudit>
         <cmsdoctor>
-          <header_title>CMS Doctor</header_title>
-          <header_desc>Health checks for your Optimizely CMS. Extensible by third-party packages.</header_desc>
-          <lbl_lastrun>Last run: {0}</lbl_lastrun>
-          <btn_runall>Run All Checks</btn_runall>
-          <btn_running>Running...</btn_running>
-          <sum_healthy>Healthy</sum_healthy>
-          <sum_warnings>Warnings</sum_warnings>
-          <sum_faults>Faults</sum_faults>
-          <sum_notchecked>Not Checked</sum_notchecked>
-          <tag_all>All</tag_all>
-          <status_ok>Healthy</status_ok>
-          <status_warning>Warning</status_warning>
-          <status_badpractice>Bad Practice</status_badpractice>
-          <status_fault>Fault</status_fault>
-          <status_performance>Performance</status_performance>
-          <status_notchecked>Not Checked</status_notchecked>
-          <btn_run>Run</btn_run>
-          <btn_fix>Fix</btn_fix>
-          <btn_details>Details</btn_details>
-          <btn_dismiss>Dismiss</btn_dismiss>
-          <btn_restore>Restore</btn_restore>
-          <dlg_result>Result:</dlg_result>
-          <dlg_details>Details:</dlg_details>
-          <dlg_categories>Categories:</dlg_categories>
-          <dlg_checked>Checked: {0}</dlg_checked>
-          <btn_applyfix>Apply Fix</btn_applyfix>
-          <btn_rerun>Re-run Check</btn_rerun>
-          <btn_close>Close</btn_close>
-          <confirm_applyfix>Apply fix for this check?</confirm_applyfix>
-          <confirm_fix>Apply fix?</confirm_fix>
+          <header_title>CMS-doktor</header_title>
+          <header_desc>Helsesjekker for din Optimizely CMS. Kan utvides av tredjepartspakker.</header_desc>
+          <lbl_lastrun>Sist kjørt: {0}</lbl_lastrun>
+          <btn_runall>Kjør alle sjekker</btn_runall>
+          <btn_running>Kjører...</btn_running>
+          <sum_healthy>Frisk</sum_healthy>
+          <sum_warnings>Advarsler</sum_warnings>
+          <sum_faults>Feil</sum_faults>
+          <sum_notchecked>Ikke sjekket</sum_notchecked>
+          <tag_all>Alle</tag_all>
+          <status_ok>Frisk</status_ok>
+          <status_warning>Advarsel</status_warning>
+          <status_badpractice>Dårlig praksis</status_badpractice>
+          <status_fault>Feil</status_fault>
+          <status_performance>Ytelse</status_performance>
+          <status_notchecked>Ikke sjekket</status_notchecked>
+          <btn_run>Kjør</btn_run>
+          <btn_fix>Fiks</btn_fix>
+          <btn_details>Detaljer</btn_details>
+          <btn_dismiss>Avvis</btn_dismiss>
+          <btn_restore>Gjenopprett</btn_restore>
+          <dlg_result>Resultat:</dlg_result>
+          <dlg_details>Detaljer:</dlg_details>
+          <dlg_categories>Kategorier:</dlg_categories>
+          <dlg_checked>Sjekket: {0}</dlg_checked>
+          <btn_applyfix>Bruk fiks</btn_applyfix>
+          <btn_rerun>Kjør sjekk på nytt</btn_rerun>
+          <btn_close>Lukk</btn_close>
+          <confirm_applyfix>Bruk fiks for denne sjekken?</confirm_applyfix>
+          <confirm_fix>Bruk fiks?</confirm_fix>
         </cmsdoctor>
         <contenttypeaudit>
-          <alert_running>Aggregation job is currently running. Content counts will be updated when it completes.</alert_running>
-          <alert_notrun>Content statistics have not been collected yet. The "Content" column will show data after the aggregation job has been run.</alert_notrun>
-          <alert_old>Statistics were last updated {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <alert_started>Aggregation job has been started. Content counts will be updated when it completes.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <stat_contenttypes>Content Types</stat_contenttypes>
-          <stat_systemtypes>System Types</stat_systemtypes>
-          <stat_orphaned>Orphaned</stat_orphaned>
-          <stat_unused>Unused (0 content)</stat_unused>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search types... (or property:name)</lbl_search>
-          <opt_allbases>All base types</opt_allbases>
-          <chk_showsystem>Show system types</chk_showsystem>
-          <btn_table>Table</btn_table>
-          <btn_tree>Tree</btn_tree>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
-          <col_base>Base</col_base>
-          <col_group>Group</col_group>
-          <col_properties>Properties</col_properties>
-          <col_content>Content</col_content>
-          <opt_all>All</opt_all>
+          <alert_running>Samlingsjobb kjører for øyeblikket. Innholdsantall oppdateres når det er fullført.</alert_running>
+          <alert_notrun>Innholdsstatistikk er ikke samlet inn ennå. Kolonnen «Innhold» vil vise data etter at samlingsjobben er kjørt.</alert_notrun>
+          <alert_old>Statistikk ble sist oppdatert {0}. Vurder å kjøre samlingsjobben for ferske data.</alert_old>
+          <alert_started>Samlingsjobb er startet. Innholdsantall oppdateres når det er fullført.</alert_started>
+          <btn_refresh>Oppdater</btn_refresh>
+          <btn_runnow>Kjør nå</btn_runnow>
+          <btn_starting>Starter...</btn_starting>
+          <btn_failed>Mislyktes</btn_failed>
+          <stat_contenttypes>Innholdstyper</stat_contenttypes>
+          <stat_systemtypes>Systemtyper</stat_systemtypes>
+          <stat_orphaned>Foreldreløse</stat_orphaned>
+          <stat_unused>Ubrukte (0 innhold)</stat_unused>
+          <stat_showing>Viser</stat_showing>
+          <lbl_search>Søk typer... (eller egenskap:navn)</lbl_search>
+          <opt_allbases>Alle basistyper</opt_allbases>
+          <chk_showsystem>Vis systemtyper</chk_showsystem>
+          <btn_table>Tabell</btn_table>
+          <btn_tree>Tre</btn_tree>
+          <btn_export>Eksporter</btn_export>
+          <col_name>Navn</col_name>
+          <col_base>Basis</col_base>
+          <col_group>Gruppe</col_group>
+          <col_properties>Egenskaper</col_properties>
+          <col_content>Innhold</col_content>
+          <opt_all>Alle</opt_all>
           <badge_system>System</badge_system>
-          <badge_orphaned>Orphaned</badge_orphaned>
+          <badge_orphaned>Foreldreløs</badge_orphaned>
         </contenttypeaudit>
         <linkchecker>
-          <alert_running>Link checker job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Link checker has not been run yet. Run the scheduled job to scan content for links.</alert_notrun>
-          <alert_lastran>Link check last ran {0}.</alert_lastran>
-          <alert_started>Job started.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <btn_export>Export</btn_export>
-          <stat_total>Total Links</stat_total>
-          <stat_broken>Broken</stat_broken>
-          <stat_valid>Valid</stat_valid>
-          <stat_internal>Internal</stat_internal>
-          <stat_external>External</stat_external>
-          <lbl_search>Search URLs, content, properties...</lbl_search>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_internal>Internal</opt_internal>
-          <opt_external>External</opt_external>
-          <opt_allstatus>All status</opt_allstatus>
-          <opt_brokenonly>Broken only</opt_brokenonly>
-          <opt_validonly>Valid only</opt_validonly>
+          <alert_running>Lenkesjekk-jobb kjører for øyeblikket. Resultater oppdateres når det er fullført.</alert_running>
+          <alert_notrun>Lenkesjekk er ikke kjørt ennå. Kjør det planlagte jobbet for å skanne innhold for lenker.</alert_notrun>
+          <alert_lastran>Lenkesjekk ble sist kjørt {0}.</alert_lastran>
+          <alert_started>Jobb startet.</alert_started>
+          <btn_refresh>Oppdater</btn_refresh>
+          <btn_runnow>Kjør nå</btn_runnow>
+          <btn_starting>Starter...</btn_starting>
+          <btn_failed>Mislyktes</btn_failed>
+          <btn_export>Eksporter</btn_export>
+          <stat_total>Totale lenker</stat_total>
+          <stat_broken>Ødelagte</stat_broken>
+          <stat_valid>Gyldige</stat_valid>
+          <stat_internal>Interne</stat_internal>
+          <stat_external>Eksterne</stat_external>
+          <lbl_search>Søk URL-er, innhold, egenskaper...</lbl_search>
+          <opt_alltypes>Alle typer</opt_alltypes>
+          <opt_internal>Interne</opt_internal>
+          <opt_external>Eksterne</opt_external>
+          <opt_allstatus>Alle statuser</opt_allstatus>
+          <opt_brokenonly>Bare ødelagte</opt_brokenonly>
+          <opt_validonly>Bare gyldige</opt_validonly>
           <col_status>Status</col_status>
           <col_url>URL</col_url>
           <col_type>Type</col_type>
-          <col_foundin>Found In</col_foundin>
-          <col_checked>Checked</col_checked>
-          <cell_usedon>Used on: </cell_usedon>
+          <col_foundin>Funnet i</col_foundin>
+          <col_checked>Sjekket</col_checked>
+          <cell_usedon>Brukt på: </cell_usedon>
         </linkchecker>
         <securityaudit>
-          <tab_tree>Content Tree</tab_tree>
-          <tab_roles>Role/User Explorer</tab_roles>
-          <tab_issues>Issues</tab_issues>
-          <banner_nodata>Security audit data not available.</banner_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to analyze content permissions.</banner_runjob>
-          <banner_started>Aggregation job has been started. Data will update when it completes.</banner_started>
-          <alert_old>Security data was last analyzed {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_failed>Failed</btn_failed>
-          <stat_analyzed>Content Analyzed</stat_analyzed>
-          <stat_roles>Roles/Users</stat_roles>
-          <stat_issues>Issues Found</stat_issues>
-          <stat_lastanalysis>Last Analysis</stat_lastanalysis>
-          <pager_previous>Previous</pager_previous>
-          <pager_info>Page {0} of {1}</pager_info>
-          <pager_next>Next</pager_next>
+          <tab_tree>Innholdstre</tab_tree>
+          <tab_roles>Rolle/bruker-utforsker</tab_roles>
+          <tab_issues>Problemer</tab_issues>
+          <banner_nodata>Sikkerhetsrevisjonsdata er ikke tilgjengelig.</banner_nodata>
+          <banner_runjob>Kjør det planlagte jobbet [EditorPowertools] Innholdsanalyse for å analysere innholdstillatelser.</banner_runjob>
+          <banner_started>Samlingsjobb er startet. Data oppdateres når det er fullført.</banner_started>
+          <alert_old>Sikkerhetsdata ble sist analysert {0}. Vurder å kjøre samlingsjobben for ferske data.</alert_old>
+          <btn_runnow>Kjør nå</btn_runnow>
+          <btn_starting>Starter...</btn_starting>
+          <btn_refresh>Oppdater</btn_refresh>
+          <btn_failed>Mislyktes</btn_failed>
+          <stat_analyzed>Innhold analysert</stat_analyzed>
+          <stat_roles>Roller/brukere</stat_roles>
+          <stat_issues>Problemer funnet</stat_issues>
+          <stat_lastanalysis>Siste analyse</stat_lastanalysis>
+          <pager_previous>Forrige</pager_previous>
+          <pager_info>Side {0} av {1}</pager_info>
+          <pager_next>Neste</pager_next>
         </securityaudit>
         <bulkeditor>
-          <opt_selecttype>-- Select content type --</opt_selecttype>
-          <btn_columns>Columns</btn_columns>
-          <btn_addfilter>Add Filter</btn_addfilter>
-          <chk_includereferences>Include references</chk_includereferences>
-          <btn_applyfilters>Apply Filters</btn_applyfilters>
-          <empty_selecttype>Select a content type above to start editing.</empty_selecttype>
-          <lbl_perpage>Per page:</lbl_perpage>
-          <pending_count>{0} changes pending</pending_count>
-          <btn_discardall>Discard All</btn_discardall>
-          <btn_saveall>Save All</btn_saveall>
-          <btn_publishall>Publish All</btn_publishall>
-          <confirm_discard>Discard all pending changes?</confirm_discard>
+          <opt_selecttype>-- Velg innholdstype --</opt_selecttype>
+          <btn_columns>Kolonner</btn_columns>
+          <btn_addfilter>Legg til filter</btn_addfilter>
+          <chk_includereferences>Inkluder referanser</chk_includereferences>
+          <btn_applyfilters>Bruk filtre</btn_applyfilters>
+          <empty_selecttype>Velg en innholdstype ovenfor for å begynne redigering.</empty_selecttype>
+          <lbl_perpage>Per side:</lbl_perpage>
+          <pending_count>{0} endringer venter</pending_count>
+          <btn_discardall>Forkast alle</btn_discardall>
+          <btn_saveall>Lagre alle</btn_saveall>
+          <btn_publishall>Publiser alle</btn_publishall>
+          <confirm_discard>Forkast alle ventende endringer?</confirm_discard>
         </bulkeditor>
         <contentstatistics>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <error_load>Failed to load statistics from API.</error_load>
-          <error_render>Error rendering statistics dashboard.</error_render>
-          <chart_byctype>Content by Type</chart_byctype>
-          <chart_bystatus>Content by Status</chart_bystatus>
-          <chart_created>Content Created (last 12 months)</chart_created>
-          <chart_staleness>Content Staleness</chart_staleness>
-          <chart_editoractivity>Editor Activity (last 30 days)</chart_editoractivity>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_published>Published</stat_published>
-          <stat_draft>Draft</stat_draft>
-          <stat_editors>Active Editors</stat_editors>
-          <stat_pages>Pages</stat_pages>
-          <stat_blocks>Blocks</stat_blocks>
+          <banner_runjob>Kjør det planlagte jobbet [EditorPowertools] Innholdsanalyse for å fylle inn data.</banner_runjob>
+          <btn_runnow>Kjør nå</btn_runnow>
+          <btn_starting>Starter...</btn_starting>
+          <error_load>Kunne ikke laste statistikk fra API.</error_load>
+          <error_render>Feil ved visning av statistikkdashboard.</error_render>
+          <chart_byctype>Innhold etter type</chart_byctype>
+          <chart_bystatus>Innhold etter status</chart_bystatus>
+          <chart_created>Opprettet innhold (siste 12 måneder)</chart_created>
+          <chart_staleness>Innholdsforeldelse</chart_staleness>
+          <chart_editoractivity>Redaktøraktivitet (siste 30 dager)</chart_editoractivity>
+          <stat_totalcontent>Totalt innhold</stat_totalcontent>
+          <stat_published>Publisert</stat_published>
+          <stat_draft>Utkast</stat_draft>
+          <stat_editors>Aktive redaktører</stat_editors>
+          <stat_pages>Sider</stat_pages>
+          <stat_blocks>Blokker</stat_blocks>
           <stat_media>Media</stat_media>
         </contentstatistics>
         <activitytimeline>
-          <stat_today>Activities Today</stat_today>
-          <stat_activeeditors>Active Editors</stat_activeeditors>
-          <stat_publishes>Publishes Today</stat_publishes>
-          <stat_drafts>Drafts Today</stat_drafts>
-          <opt_allusers>All users</opt_allusers>
-          <opt_published>Published</opt_published>
-          <opt_draft>Draft saved</opt_draft>
-          <opt_readytopublish>Ready to publish</opt_readytopublish>
-          <opt_scheduled>Scheduled</opt_scheduled>
-          <opt_rejected>Rejected</opt_rejected>
-          <opt_previouslypublished>Previously published</opt_previouslypublished>
-          <opt_comment>Comments</opt_comment>
-          <opt_allcontenttypes>All content types</opt_allcontenttypes>
-          <btn_filter>Filter</btn_filter>
-          <btn_clear>Clear</btn_clear>
-          <banner_showingfor>Showing timeline for {0}</banner_showingfor>
-          <btn_showall>Show all activity</btn_showall>
+          <stat_today>Aktiviteter i dag</stat_today>
+          <stat_activeeditors>Aktive redaktører</stat_activeeditors>
+          <stat_publishes>Publiseringer i dag</stat_publishes>
+          <stat_drafts>Utkast i dag</stat_drafts>
+          <opt_allusers>Alle brukere</opt_allusers>
+          <opt_published>Publisert</opt_published>
+          <opt_draft>Utkast lagret</opt_draft>
+          <opt_readytopublish>Klar til publisering</opt_readytopublish>
+          <opt_scheduled>Planlagt</opt_scheduled>
+          <opt_rejected>Avvist</opt_rejected>
+          <opt_previouslypublished>Tidligere publisert</opt_previouslypublished>
+          <opt_comment>Kommentarer</opt_comment>
+          <opt_allcontenttypes>Alle innholdstyper</opt_allcontenttypes>
+          <btn_filter>Filtrer</btn_filter>
+          <btn_clear>Tøm</btn_clear>
+          <banner_showingfor>Viser tidslinje for {0}</banner_showingfor>
+          <btn_showall>Vis all aktivitet</btn_showall>
         </activitytimeline>
         <personalizationaudit>
-          <alert_running>Personalization analysis job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Personalization usage has not been analyzed yet. Run the analysis job to scan content for audience usage.</alert_notrun>
-          <alert_old>Analysis was last run {0}. Consider running the job again for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_starting>Starting...</btn_starting>
-          <stat_total>Total Usages</stat_total>
-          <stat_content>Content Items</stat_content>
-          <stat_groups>Visitor Groups Used</stat_groups>
-          <lbl_search>Search...</lbl_search>
-          <lbl_type>Usage Type:</lbl_type>
-          <lbl_group>Visitor Group:</lbl_group>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_allgroups>All groups</opt_allgroups>
-          <col_content>Content</col_content>
-          <col_type>Usage Type</col_type>
-          <col_groups>Visitor Groups</col_groups>
-          <col_location>Location</col_location>
+          <alert_running>Personaliseringsanalysejobb kjører for øyeblikket. Resultater oppdateres når det er fullført.</alert_running>
+          <alert_notrun>Personaliseringsbruk er ikke analysert ennå. Kjør analysejobben for å skanne innhold for målgruppebruk.</alert_notrun>
+          <alert_old>Analyse ble sist kjørt {0}. Vurder å kjøre jobben igjen for ferske data.</alert_old>
+          <btn_runnow>Kjør nå</btn_runnow>
+          <btn_refresh>Oppdater</btn_refresh>
+          <btn_starting>Starter...</btn_starting>
+          <stat_total>Totale bruksforekomster</stat_total>
+          <stat_content>Innholdselementer</stat_content>
+          <stat_groups>Besøksgrupper brukt</stat_groups>
+          <lbl_search>Søk...</lbl_search>
+          <lbl_type>Brukstype:</lbl_type>
+          <lbl_group>Besøksgruppe:</lbl_group>
+          <opt_alltypes>Alle typer</opt_alltypes>
+          <opt_allgroups>Alle grupper</opt_allgroups>
+          <col_content>Innhold</col_content>
+          <col_type>Brukstype</col_type>
+          <col_groups>Besøksgrupper</col_groups>
+          <col_location>Plassering</col_location>
         </personalizationaudit>
         <audiencemanager>
-          <stat_audiences>Audiences</stat_audiences>
-          <stat_withstats>With Statistics</stat_withstats>
-          <stat_categories>Categories</stat_categories>
-          <stat_totalcriteria>Total Criteria</stat_totalcriteria>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search audiences...</lbl_search>
-          <opt_allcategories>All categories</opt_allcategories>
-          <chk_hasstats>Has Statistics</chk_hasstats>
-          <lnk_personalizationaudit>Personalization Audit</lnk_personalizationaudit>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
-          <col_criteria>Criteria</col_criteria>
+          <stat_audiences>Målgrupper</stat_audiences>
+          <stat_withstats>Med statistikk</stat_withstats>
+          <stat_categories>Kategorier</stat_categories>
+          <stat_totalcriteria>Kriterier totalt</stat_totalcriteria>
+          <stat_showing>Viser</stat_showing>
+          <lbl_search>Søk målgrupper...</lbl_search>
+          <opt_allcategories>Alle kategorier</opt_allcategories>
+          <chk_hasstats>Har statistikk</chk_hasstats>
+          <lnk_personalizationaudit>Personaliseringsrevisjon</lnk_personalizationaudit>
+          <btn_export>Eksporter</btn_export>
+          <col_name>Navn</col_name>
+          <col_criteria>Kriterier</col_criteria>
           <col_operator>Operator</col_operator>
-          <col_statistics>Statistics</col_statistics>
-          <col_usage>Usage</col_usage>
-          <opt_all>All</opt_all>
-          <title_usagedetails>Show usage details</title_usagedetails>
-          <title_notused>Not used in any personalized content</title_notused>
-          <title_runjobfirst>Run the Personalization Analysis job first</title_runjobfirst>
+          <col_statistics>Statistikk</col_statistics>
+          <col_usage>Bruk</col_usage>
+          <opt_all>Alle</opt_all>
+          <title_usagedetails>Vis bruksdetaljer</title_usagedetails>
+          <title_notused>Brukes ikke i noe personalisert innhold</title_notused>
+          <title_runjobfirst>Kjør personaliseringsanalysejobben først</title_runjobfirst>
         </audiencemanager>
         <contentimporter>
-          <step_upload>1. Upload File</step_upload>
-          <step_configure>2. Configure</step_configure>
-          <step_dryrun>3. Dry Run</step_dryrun>
-          <step_import>4. Import</step_import>
-          <lbl_dropfile>Drop a CSV, JSON, or Excel file here, or click to browse</lbl_dropfile>
-          <btn_browse>Browse...</btn_browse>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_language>Language:</lbl_language>
-          <lbl_parent>Parent Location:</lbl_parent>
-          <lbl_namecol>Name Column:</lbl_namecol>
-          <lbl_publishafter>Publish after import</lbl_publishafter>
-          <lbl_selectparent>Select parent...</lbl_selectparent>
-          <btn_next>Next</btn_next>
-          <btn_back>Back</btn_back>
-          <lbl_mapping>Field Mapping</lbl_mapping>
-          <lbl_sourcecol>Source Column</lbl_sourcecol>
-          <lbl_targetfield>Target Field</lbl_targetfield>
-          <opt_skip>-- Skip --</opt_skip>
-          <btn_dryrun>Run Dry Run</btn_dryrun>
-          <lbl_dryresult>Dry Run Results</lbl_dryresult>
-          <btn_import>Start Import</btn_import>
-          <btn_startover>Start Over</btn_startover>
-          <lbl_importing>Importing...</lbl_importing>
+          <step_upload>1. Last opp fil</step_upload>
+          <step_configure>2. Konfigurer</step_configure>
+          <step_dryrun>3. Testkjøring</step_dryrun>
+          <step_import>4. Importer</step_import>
+          <lbl_dropfile>Slipp en CSV-, JSON- eller Excel-fil her, eller klikk for å bla</lbl_dropfile>
+          <btn_browse>Bla...</btn_browse>
+          <lbl_contenttype>Innholdstype:</lbl_contenttype>
+          <lbl_language>Språk:</lbl_language>
+          <lbl_parent>Overordnet plassering:</lbl_parent>
+          <lbl_namecol>Navnekolonne:</lbl_namecol>
+          <lbl_publishafter>Publiser etter import</lbl_publishafter>
+          <lbl_selectparent>Velg overordnet...</lbl_selectparent>
+          <btn_next>Neste</btn_next>
+          <btn_back>Tilbake</btn_back>
+          <lbl_mapping>Feltkartlegging</lbl_mapping>
+          <lbl_sourcecol>Kildekolonne</lbl_sourcecol>
+          <lbl_targetfield>Målfelt</lbl_targetfield>
+          <opt_skip>-- Hopp over --</opt_skip>
+          <btn_dryrun>Kjør testkjøring</btn_dryrun>
+          <lbl_dryresult>Testkjøringsresultater</lbl_dryresult>
+          <btn_import>Start import</btn_import>
+          <btn_startover>Begynn på nytt</btn_startover>
+          <lbl_importing>Importerer...</lbl_importing>
         </contentimporter>
         <managechildren>
-          <lbl_selectparent>Select a parent page to manage its children</lbl_selectparent>
-          <btn_selectparent>Select Parent Page</btn_selectparent>
-          <btn_sortaz>Sort A-Z</btn_sortaz>
-          <btn_sortza>Sort Z-A</btn_sortza>
-          <btn_sortbydate>Sort by Date</btn_sortbydate>
-          <btn_publishall>Publish All</btn_publishall>
-          <btn_unpublishall>Unpublish All</btn_unpublishall>
-          <btn_deleteselected>Delete Selected</btn_deleteselected>
-          <btn_saveorder>Save Order</btn_saveorder>
-          <col_name>Name</col_name>
+          <lbl_selectparent>Velg en overordnet side for å administrere dens undersider</lbl_selectparent>
+          <btn_selectparent>Velg overordnet side</btn_selectparent>
+          <btn_sortaz>Sorter A-Å</btn_sortaz>
+          <btn_sortza>Sorter Å-A</btn_sortza>
+          <btn_sortbydate>Sorter etter dato</btn_sortbydate>
+          <btn_publishall>Publiser alle</btn_publishall>
+          <btn_unpublishall>Avpubliser alle</btn_unpublishall>
+          <btn_deleteselected>Slett valgte</btn_deleteselected>
+          <btn_saveorder>Lagre rekkefølge</btn_saveorder>
+          <col_name>Navn</col_name>
           <col_status>Status</col_status>
-          <col_changed>Changed</col_changed>
+          <col_changed>Endret</col_changed>
           <col_type>Type</col_type>
-          <confirm_delete>Delete {0} selected item(s)? This cannot be undone.</confirm_delete>
-          <confirm_publishall>Publish all {0} children?</confirm_publishall>
-          <confirm_unpublishall>Unpublish all {0} children?</confirm_unpublishall>
+          <confirm_delete>Slett {0} valgte element(er)? Dette kan ikke angres.</confirm_delete>
+          <confirm_publishall>Publiser alle {0} undersider?</confirm_publishall>
+          <confirm_unpublishall>Avpubliser alle {0} undersider?</confirm_unpublishall>
         </managechildren>
         <recommendations>
-          <banner_info>When editors create new content, Optimizely can suggest which content types to use. Define rules below to control these suggestions based on where content is being created.</banner_info>
-          <btn_addrule>Add Rule</btn_addrule>
-          <col_parenttype>Parent Type</col_parenttype>
-          <col_allowedtypes>Allowed Types</col_allowedtypes>
-          <col_actions>Actions</col_actions>
-          <dlg_addrule>Add Rule</dlg_addrule>
-          <dlg_editrule>Edit Rule</dlg_editrule>
-          <lbl_parenttype>Parent Content Type:</lbl_parenttype>
-          <lbl_allowedtypes>Allowed Child Types:</lbl_allowedtypes>
-          <btn_save>Save</btn_save>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_edit>Edit</btn_edit>
-          <btn_delete>Delete</btn_delete>
-          <empty_norules>No recommendation rules defined yet. Click "Add Rule" to create one.</empty_norules>
-          <confirm_delete>Delete this rule?</confirm_delete>
+          <banner_info>Når redaktører oppretter nytt innhold, kan Optimizely foreslå hvilke innholdstyper som skal brukes. Definer regler nedenfor for å styre disse forslagene basert på hvor innhold opprettes.</banner_info>
+          <btn_addrule>Legg til regel</btn_addrule>
+          <col_parenttype>Overordnet type</col_parenttype>
+          <col_allowedtypes>Tillatte typer</col_allowedtypes>
+          <col_actions>Handlinger</col_actions>
+          <dlg_addrule>Legg til regel</dlg_addrule>
+          <dlg_editrule>Rediger regel</dlg_editrule>
+          <lbl_parenttype>Overordnet innholdstype:</lbl_parenttype>
+          <lbl_allowedtypes>Tillatte underordnede typer:</lbl_allowedtypes>
+          <btn_save>Lagre</btn_save>
+          <btn_cancel>Avbryt</btn_cancel>
+          <btn_edit>Rediger</btn_edit>
+          <btn_delete>Slett</btn_delete>
+          <empty_norules>Ingen anbefalingsregler definert ennå. Klikk «Legg til regel» for å opprette en.</empty_norules>
+          <confirm_delete>Slett denne regelen?</confirm_delete>
         </recommendations>
         <gantt>
-          <error_load>Failed to load Gantt data: {0}</error_load>
-          <empty_nojobs>No scheduled jobs found.</empty_nojobs>
-          <stat_totaljobs>Total Jobs</stat_totaljobs>
-          <stat_enabled>Enabled</stat_enabled>
-          <stat_running>Running Now</stat_running>
-          <stat_executions>Executions in View</stat_executions>
-          <btn_previous>Previous</btn_previous>
-          <btn_today>Today</btn_today>
-          <btn_next>Next</btn_next>
-          <lbl_viewhours>{0}h view</lbl_viewhours>
-          <col_job>Job</col_job>
+          <error_load>Kunne ikke laste Gantt-data: {0}</error_load>
+          <empty_nojobs>Ingen planlagte jobber funnet.</empty_nojobs>
+          <stat_totaljobs>Jobber totalt</stat_totaljobs>
+          <stat_enabled>Aktiverte</stat_enabled>
+          <stat_running>Kjører nå</stat_running>
+          <stat_executions>Kjøringer i visning</stat_executions>
+          <btn_previous>Forrige</btn_previous>
+          <btn_today>I dag</btn_today>
+          <btn_next>Neste</btn_next>
+          <lbl_viewhours>{0}t visning</lbl_viewhours>
+          <col_job>Jobb</col_job>
         </gantt>
         <activeeditors>
-          <error_nosignalr>SignalR client not available. Check browser console for errors.</error_nosignalr>
-          <error_connect>Could not connect: {0}</error_connect>
-          <stat_online>Online Now</stat_online>
-          <stat_editing>Currently Editing</stat_editing>
-          <stat_today>Active Today</stat_today>
-          <section_online>Online Now</section_online>
-          <section_today>Also Active Today</section_today>
-          <lbl_connected>Connected {0}</lbl_connected>
-          <btn_sendmessage>Send Message</btn_sendmessage>
-          <badge_you>you</badge_you>
-          <badge_offline>offline</badge_offline>
-          <chat_title>Team Chat</chat_title>
-          <chat_empty>No messages yet. Say hello!</chat_empty>
-          <chat_placeholder>Type a message... (Enter to send)</chat_placeholder>
-          <dlg_sendmessage>Send Message to {0}</dlg_sendmessage>
-          <dlg_desc>This will send a CMS notification that {0} will see in their notification bell.</dlg_desc>
-          <dlg_placeholder>Type your message...</dlg_placeholder>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_send>Send Notification</btn_send>
-          <btn_sending>Sending...</btn_sending>
-          <msg_sent>Message sent to {0}</msg_sent>
+          <error_nosignalr>SignalR-klient er ikke tilgjengelig. Sjekk nettleserkonsollen for feil.</error_nosignalr>
+          <error_connect>Kunne ikke koble til: {0}</error_connect>
+          <stat_online>Online nå</stat_online>
+          <stat_editing>Redigerer nå</stat_editing>
+          <stat_today>Aktiv i dag</stat_today>
+          <section_online>Online nå</section_online>
+          <section_today>Også aktiv i dag</section_today>
+          <lbl_connected>Tilkoblet {0}</lbl_connected>
+          <btn_sendmessage>Send melding</btn_sendmessage>
+          <badge_you>deg</badge_you>
+          <badge_offline>frakoblet</badge_offline>
+          <chat_title>Team-chat</chat_title>
+          <chat_empty>Ingen meldinger ennå. Si hei!</chat_empty>
+          <chat_placeholder>Skriv en melding... (Enter for å sende)</chat_placeholder>
+          <dlg_sendmessage>Send melding til {0}</dlg_sendmessage>
+          <dlg_desc>Dette sender et CMS-varsel som {0} vil se i varslingsbjellea si.</dlg_desc>
+          <dlg_placeholder>Skriv meldingen din...</dlg_placeholder>
+          <btn_cancel>Avbryt</btn_cancel>
+          <btn_send>Send varsel</btn_send>
+          <btn_sending>Sender...</btn_sending>
+          <msg_sent>Melding sendt til {0}</msg_sent>
         </activeeditors>
         <components>
-          <picker_title>Select Content</picker_title>
-          <picker_search>Search content by name...</picker_search>
-          <picker_noresults>No results found</picker_noresults>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_select>Select</btn_select>
-          <typepicker_title>Select Content Type</typepicker_title>
-          <typepicker_search>Search content types...</typepicker_search>
-          <typepicker_noresults>No content types found</typepicker_noresults>
+          <picker_title>Velg innhold</picker_title>
+          <picker_search>Søk innhold etter navn...</picker_search>
+          <picker_noresults>Ingen resultater funnet</picker_noresults>
+          <btn_cancel>Avbryt</btn_cancel>
+          <btn_select>Velg</btn_select>
+          <typepicker_title>Velg innholdstype</typepicker_title>
+          <typepicker_search>Søk innholdstyper...</typepicker_search>
+          <typepicker_noresults>Ingen innholdstyper funnet</typepicker_noresults>
         </components>
         <editorpowertools>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
+          <loading>Laster...</loading>
+          <noresults>Ingen resultater funnet</noresults>
         </editorpowertools>
       </ui>
     </editorpowertools>
