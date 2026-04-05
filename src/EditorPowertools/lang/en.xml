@@ -333,6 +333,8 @@
           <delete>Delete</delete>
           <edit>Edit</edit>
           <failed>Failed</failed>
+          <lbl_by>by</lbl_by>
+          <lbl_na>N/A</lbl_na>
         </shared>
         <contentaudit>
           <col_contentid>Content ID</col_contentid>
@@ -988,7 +990,47 @@
           <time_justnow>just now</time_justnow>
           <time_mago>{0}m ago</time_mago>
           <time_hago>{0}h ago</time_hago>
+          <tab_editors>Editors</tab_editors>
+          <tab_chat>Chat</tab_chat>
+          <lbl_connecting>Connecting...</lbl_connecting>
+          <empty_selectcontent>Select content to see active editors.</empty_selectcontent>
+          <section_oncontent>On this content</section_oncontent>
         </activeeditors>
+        <contentdetails>
+          <tab_info>Info</tab_info>
+          <tab_uses>Uses</tab_uses>
+          <tab_usedby>Used By</tab_usedby>
+          <tab_tree>Tree</tab_tree>
+          <tab_versions>Versions</tab_versions>
+          <tab_pers>Pers.</tab_pers>
+          <tab_lang>Lang</tab_lang>
+          <lbl_behind>behind</lbl_behind>
+          <lbl_behindmaster>behind master</lbl_behindmaster>
+          <lbl_master>master</lbl_master>
+          <lbl_name>Name</lbl_name>
+          <lbl_type>Type</lbl_type>
+          <lbl_id>ID</lbl_id>
+          <lbl_status>Status</lbl_status>
+          <lbl_created>Created</lbl_created>
+          <lbl_changed>changed</lbl_changed>
+          <lbl_published>Published</lbl_published>
+          <lbl_language>Language</lbl_language>
+          <lbl_versions>Versions</lbl_versions>
+          <lbl_parent>Parent</lbl_parent>
+          <lbl_guid>GUID</lbl_guid>
+          <lbl_compare>compare</lbl_compare>
+          <lbl_comparewithprevious>Compare with previous</lbl_comparewithprevious>
+          <lbl_timeline>Timeline</lbl_timeline>
+          <lbl_contentstructure>Content Structure</lbl_contentstructure>
+          <lbl_on>on</lbl_on>
+          <btn_fulltimeline>Full Timeline</btn_fulltimeline>
+          <empty_selectcontent>Select content to see details.</empty_selectcontent>
+          <empty_uses>This content does not reference other content.</empty_uses>
+          <empty_usedby>No content references this item.</empty_usedby>
+          <empty_tree>No nested content found.</empty_tree>
+          <empty_versions>No versions found.</empty_versions>
+          <empty_history>No version history available.</empty_history>
+        </contentdetails>
         <components>
           <picker_title>Select Content</picker_title>
           <picker_search>Search content by name...</picker_search>

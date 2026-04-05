@@ -32,7 +32,9 @@ public class UiStringsProvider(LocalizationService loc)
             save = S("shared/save"),
             delete = S("shared/delete"),
             edit = S("shared/edit"),
-            failed = S("shared/failed")
+            failed = S("shared/failed"),
+            lbl_by = S("shared/lbl_by"),
+            lbl_na = S("shared/lbl_na")
         },
         contentaudit = new
         {
@@ -703,7 +705,48 @@ public class UiStringsProvider(LocalizationService loc)
             empty_noeditors = S("activeeditors/empty_noeditors"),
             time_justnow = S("activeeditors/time_justnow"),
             time_mago = S("activeeditors/time_mago"),
-            time_hago = S("activeeditors/time_hago")
+            time_hago = S("activeeditors/time_hago"),
+            tab_editors = S("activeeditors/tab_editors"),
+            tab_chat = S("activeeditors/tab_chat"),
+            lbl_connecting = S("activeeditors/lbl_connecting"),
+            empty_selectcontent = S("activeeditors/empty_selectcontent"),
+            section_oncontent = S("activeeditors/section_oncontent")
+        },
+        contentdetails = new
+        {
+            tab_info = S("contentdetails/tab_info"),
+            tab_uses = S("contentdetails/tab_uses"),
+            tab_usedby = S("contentdetails/tab_usedby"),
+            tab_tree = S("contentdetails/tab_tree"),
+            tab_versions = S("contentdetails/tab_versions"),
+            tab_pers = S("contentdetails/tab_pers"),
+            tab_lang = S("contentdetails/tab_lang"),
+            lbl_behind = S("contentdetails/lbl_behind"),
+            lbl_behindmaster = S("contentdetails/lbl_behindmaster"),
+            lbl_master = S("contentdetails/lbl_master"),
+            lbl_name = S("contentdetails/lbl_name"),
+            lbl_type = S("contentdetails/lbl_type"),
+            lbl_id = S("contentdetails/lbl_id"),
+            lbl_status = S("contentdetails/lbl_status"),
+            lbl_created = S("contentdetails/lbl_created"),
+            lbl_changed = S("contentdetails/lbl_changed"),
+            lbl_published = S("contentdetails/lbl_published"),
+            lbl_language = S("contentdetails/lbl_language"),
+            lbl_versions = S("contentdetails/lbl_versions"),
+            lbl_parent = S("contentdetails/lbl_parent"),
+            lbl_guid = S("contentdetails/lbl_guid"),
+            lbl_compare = S("contentdetails/lbl_compare"),
+            lbl_comparewithprevious = S("contentdetails/lbl_comparewithprevious"),
+            lbl_timeline = S("contentdetails/lbl_timeline"),
+            lbl_contentstructure = S("contentdetails/lbl_contentstructure"),
+            lbl_on = S("contentdetails/lbl_on"),
+            btn_fulltimeline = S("contentdetails/btn_fulltimeline"),
+            empty_selectcontent = S("contentdetails/empty_selectcontent"),
+            empty_uses = S("contentdetails/empty_uses"),
+            empty_usedby = S("contentdetails/empty_usedby"),
+            empty_tree = S("contentdetails/empty_tree"),
+            empty_versions = S("contentdetails/empty_versions"),
+            empty_history = S("contentdetails/empty_history")
         },
         components = new
         {
