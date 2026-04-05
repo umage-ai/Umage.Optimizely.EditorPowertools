@@ -6,6 +6,7 @@
       <menu>
         <title>Editor Powertools</title>
         <overview>Overview</overview>
+        <about>About</about>
         <contenttypeaudit>Content Type Audit</contenttypeaudit>
         <personalizationaudit>Personalization Audit</personalizationaudit>
         <audiencemanager>Audience Manager</audiencemanager>
@@ -95,6 +96,19 @@
           <title>Overview</title>
           <description>Dashboard overview of all Editor Powertools features.</description>
         </overview>
+        <about>
+          <title>About Editor Powertools</title>
+          <description>About this plugin and the team behind it.</description>
+          <whatis_title>What is Editor Powertools?</whatis_title>
+          <whatis_body>Editor Powertools is a free, open-source collection of power tools for Optimizely CMS 12 editors and administrators. It adds productivity tools, audit reports, and real-time collaboration features that are missing from the standard CMS — all accessible directly from the CMS navigation menu.</whatis_body>
+          <whatis_install>Install via NuGet:</whatis_install>
+          <tools_title>Included Tools</tools_title>
+          <github_label>GitHub Repository</github_label>
+          <github_docs>Documentation &amp; Source</github_docs>
+          <madeby_title>Built by umage.ai</madeby_title>
+          <madeby_body>umage.ai is an agentic development company that connects people and software with AI. We help organizations modernize, build, and scale software that creates real business value — combining decades of consulting experience with the conviction that AI fundamentally transforms how software is built.</madeby_body>
+          <madeby_cta>Visit umage.ai</madeby_cta>
+        </about>
         <languageaudit>
           <title>Language Audit</title>
           <description>Analyze language coverage, find missing translations, and manage translation priorities.</description>

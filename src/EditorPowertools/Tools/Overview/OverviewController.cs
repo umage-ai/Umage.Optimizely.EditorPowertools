@@ -205,4 +205,10 @@ public class EditorPowertoolsController : Controller
 
         return View("/Views/LanguageAudit/Index.cshtml");
     }
+
+    [HttpGet]
+    public IActionResult About()
+    {
+        return View("/Views/About/Index.cshtml");
+    }
 }

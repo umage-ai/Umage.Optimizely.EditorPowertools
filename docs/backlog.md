@@ -242,6 +242,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Fix iframe sandbox** - Change empty `sandbox=""` to `sandbox="allow-same-origin"` in activity-timeline.js version comparison.
 - [ ] **Add PreferencesApiController feature checks** - Inject FeatureAccessChecker and validate tool access.
 - [ ] **Documentation with Screenshots** - Comprehensive documentation of every component with screenshots: installation guide, configuration options, each tool's UI and features, API reference, permission setup. Suitable for the NuGet package README and a docs site.
+- [ ] **In-edit-mode tool documentation** - Contextual help/documentation panel accessible from within the CMS edit mode. Each tool should have a brief description, use-case guidance, and tips visible without leaving the CMS. Could be a collapsible help section at the top of each tool page, or a dedicated help panel triggered by a "?" icon.
 - [x] **Unit Tests** - Unit test project covering all services, parsers, and API controllers. 162 tests with Moq and FluentAssertions covering ActiveEditors, file parsers, LinkChecker, CmsDoctor, ActivityTimeline, ScheduledJobsGantt, ContentTypeAudit, and AudienceManager.
 
 *Priority: Carried-over tools first, then Activity Timeline, Scheduled Jobs Gantt, Bulk Edit, Active Editors, Health Check.*

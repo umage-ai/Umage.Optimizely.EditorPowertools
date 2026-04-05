@@ -148,6 +148,15 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
             SortIndex = 440,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ScheduledJobsGantt))
         };
+
+        // ── About ────────────────────────────────────────────────
+
+        yield return new UrlMenuItem(L("/editorpowertools/menu/about", "About"), BaseMenuPath + "/about",
+            GetResourcePath("EditorPowertools/About"))
+        {
+            SortIndex = 900,
+            IsAvailable = _ => true
+        };
     }
 
     private static string GetResourcePath(string resourcePath)
