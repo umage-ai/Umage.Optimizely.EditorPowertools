@@ -314,444 +314,444 @@
       <!-- JavaScript UI strings (injected via window.EPT_STRINGS) -->
       <ui>
         <shared>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
-          <cancel>Cancel</cancel>
-          <apply>Apply</apply>
-          <close>Close</close>
-          <runnow>Run now</runnow>
-          <refresh>Refresh</refresh>
-          <starting>Starting...</starting>
-          <export>Export</export>
-          <prev>Prev</prev>
-          <next>Next</next>
-          <yes>Yes</yes>
-          <no>No</no>
-          <open>Open</open>
-          <all>All</all>
-          <save>Save</save>
-          <delete>Delete</delete>
-          <edit>Edit</edit>
-          <failed>Failed</failed>
+          <loading>Laden...</loading>
+          <noresults>Geen resultaten gevonden</noresults>
+          <cancel>Annuleren</cancel>
+          <apply>Toepassen</apply>
+          <close>Sluiten</close>
+          <runnow>Nu uitvoeren</runnow>
+          <refresh>Vernieuwen</refresh>
+          <starting>Wordt gestart...</starting>
+          <export>Exporteren</export>
+          <prev>Vorige</prev>
+          <next>Volgende</next>
+          <yes>Ja</yes>
+          <no>Nee</no>
+          <open>Openen</open>
+          <all>Alle</all>
+          <save>Opslaan</save>
+          <delete>Verwijderen</delete>
+          <edit>Bewerken</edit>
+          <failed>Mislukt</failed>
         </shared>
         <contentaudit>
-          <col_contentid>Content ID</col_contentid>
-          <col_name>Name</col_name>
-          <col_language>Language</col_language>
-          <col_contenttype>Content Type</col_contenttype>
-          <col_maintype>Main Type</col_maintype>
+          <col_contentid>Inhouds-ID</col_contentid>
+          <col_name>Naam</col_name>
+          <col_language>Taal</col_language>
+          <col_contenttype>Inhoudstype</col_contenttype>
+          <col_maintype>Hoofdtype</col_maintype>
           <col_url>URL</col_url>
-          <col_editurl>Edit URL</col_editurl>
+          <col_editurl>Bewerkings-URL</col_editurl>
           <col_breadcrumb>Breadcrumb</col_breadcrumb>
           <col_status>Status</col_status>
-          <col_createdby>Created By</col_createdby>
-          <col_created>Created</col_created>
-          <col_changedby>Changed By</col_changedby>
-          <col_changed>Changed</col_changed>
-          <col_published>Published</col_published>
-          <col_publisheduntil>Published Until</col_publisheduntil>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_alllanguages>All Languages</col_alllanguages>
-          <col_referencecount>Reference Count</col_referencecount>
-          <col_versioncount>Version Count</col_versioncount>
-          <col_haspersonalizations>Has Personalizations</col_haspersonalizations>
-          <filter_all>All content</filter_all>
-          <filter_pages>Pages only</filter_pages>
-          <filter_blocks>Blocks only</filter_blocks>
-          <filter_media>Media only</filter_media>
-          <filter_unpublished>Unpublished</filter_unpublished>
-          <filter_unused>Unused content</filter_unused>
-          <op_contains>Contains</op_contains>
-          <op_equals>Equals</op_equals>
-          <op_startswith>Starts with</op_startswith>
-          <op_isempty>Is empty</op_isempty>
-          <op_isnotempty>Is not empty</op_isnotempty>
-          <btn_filter>Filter</btn_filter>
-          <btn_columns>Columns</btn_columns>
-          <btn_selectall>Select all</btn_selectall>
-          <btn_reset>Reset</btn_reset>
-          <btn_addfilter>Add filter</btn_addfilter>
-          <btn_clearall>Clear all</btn_clearall>
-          <dlg_choosecolumns>Choose Columns</dlg_choosecolumns>
-          <dlg_addfilter>Add Filter</dlg_addfilter>
-          <lbl_column>Column</lbl_column>
+          <col_createdby>Aangemaakt door</col_createdby>
+          <col_created>Aangemaakt</col_created>
+          <col_changedby>Gewijzigd door</col_changedby>
+          <col_changed>Gewijzigd</col_changed>
+          <col_published>Gepubliceerd</col_published>
+          <col_publisheduntil>Gepubliceerd tot</col_publisheduntil>
+          <col_masterlanguage>Hoofdtaal</col_masterlanguage>
+          <col_alllanguages>Alle talen</col_alllanguages>
+          <col_referencecount>Aantal referenties</col_referencecount>
+          <col_versioncount>Aantal versies</col_versioncount>
+          <col_haspersonalizations>Heeft personalisaties</col_haspersonalizations>
+          <filter_all>Alle inhoud</filter_all>
+          <filter_pages>Alleen pagina's</filter_pages>
+          <filter_blocks>Alleen blokken</filter_blocks>
+          <filter_media>Alleen media</filter_media>
+          <filter_unpublished>Niet gepubliceerd</filter_unpublished>
+          <filter_unused>Ongebruikte inhoud</filter_unused>
+          <op_contains>Bevat</op_contains>
+          <op_equals>Is gelijk aan</op_equals>
+          <op_startswith>Begint met</op_startswith>
+          <op_isempty>Is leeg</op_isempty>
+          <op_isnotempty>Is niet leeg</op_isnotempty>
+          <btn_filter>Filteren</btn_filter>
+          <btn_columns>Kolommen</btn_columns>
+          <btn_selectall>Alles selecteren</btn_selectall>
+          <btn_reset>Opnieuw instellen</btn_reset>
+          <btn_addfilter>Filter toevoegen</btn_addfilter>
+          <btn_clearall>Alles wissen</btn_clearall>
+          <dlg_choosecolumns>Kolommen kiezen</dlg_choosecolumns>
+          <dlg_addfilter>Filter toevoegen</dlg_addfilter>
+          <lbl_column>Kolom</lbl_column>
           <lbl_operator>Operator</lbl_operator>
-          <lbl_value>Value</lbl_value>
-          <lbl_filtervalue>Filter value...</lbl_filtervalue>
-          <lbl_search>Search by name...</lbl_search>
-          <stat_totalitems>Total items</stat_totalitems>
-          <stat_pages>Pages</stat_pages>
-          <stat_currentpage>Current page</stat_currentpage>
-          <empty_nodata>No data loaded.</empty_nodata>
-          <empty_nofilter>No content matches the current filters.</empty_nofilter>
-          <page_showing>Showing {0}-{1} of {2}</page_showing>
-          <perpage>{0} per page</perpage>
+          <lbl_value>Waarde</lbl_value>
+          <lbl_filtervalue>Filterwaarde...</lbl_filtervalue>
+          <lbl_search>Zoeken op naam...</lbl_search>
+          <stat_totalitems>Totaal items</stat_totalitems>
+          <stat_pages>Pagina's</stat_pages>
+          <stat_currentpage>Huidige pagina</stat_currentpage>
+          <empty_nodata>Geen gegevens geladen.</empty_nodata>
+          <empty_nofilter>Geen inhoud komt overeen met de huidige filters.</empty_nofilter>
+          <page_showing>Weergave {0}-{1} van {2}</page_showing>
+          <perpage>{0} per pagina</perpage>
           <fmt_excel>Excel (.xlsx)</fmt_excel>
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
-          <cell_openeditmode>Open in edit mode</cell_openeditmode>
+          <cell_openeditmode>Openen in bewerkingsmodus</cell_openeditmode>
         </contentaudit>
         <languageaudit>
-          <tab_overview>Overview</tab_overview>
-          <tab_missing>Missing Translations</tab_missing>
-          <tab_stale>Stale Translations</tab_stale>
-          <tab_queue>Translation Queue</tab_queue>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_languages>Languages</stat_languages>
-          <stat_missing>Missing Translations</stat_missing>
-          <stat_stale>Stale (30+ days)</stat_stale>
-          <stat_itemstotranslate>Items to Translate</stat_itemstotranslate>
-          <stat_page>Page</stat_page>
-          <stat_missing_lang>Missing {0}</stat_missing_lang>
-          <stat_stale_count>Stale Translations</stat_stale_count>
-          <card_coverage>Language Coverage</card_coverage>
-          <card_contentitems>{0} content items</card_contentitems>
-          <card_published>{0} published</card_published>
-          <lbl_language>Language:</lbl_language>
-          <lbl_threshold>Threshold (days):</lbl_threshold>
-          <lbl_targetlang>Target Language:</lbl_targetlang>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_alllanguages>All languages</lbl_alllanguages>
-          <lbl_alltypes>All types</lbl_alltypes>
-          <btn_coveragetree>Coverage Tree</btn_coveragetree>
-          <btn_apply>Apply</btn_apply>
-          <btn_exportcsv>Export CSV</btn_exportcsv>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_started>Job started, please refresh in a few minutes.</btn_started>
-          <btn_failed>Failed to start job</btn_failed>
+          <tab_overview>Overzicht</tab_overview>
+          <tab_missing>Ontbrekende vertalingen</tab_missing>
+          <tab_stale>Verouderde vertalingen</tab_stale>
+          <tab_queue>Vertaalwachtrij</tab_queue>
+          <stat_totalcontent>Totale inhoud</stat_totalcontent>
+          <stat_languages>Talen</stat_languages>
+          <stat_missing>Ontbrekende vertalingen</stat_missing>
+          <stat_stale>Verouderd (30+ dagen)</stat_stale>
+          <stat_itemstotranslate>Te vertalen items</stat_itemstotranslate>
+          <stat_page>Pagina</stat_page>
+          <stat_missing_lang>Ontbrekend {0}</stat_missing_lang>
+          <stat_stale_count>Verouderde vertalingen</stat_stale_count>
+          <card_coverage>Taaldekking</card_coverage>
+          <card_contentitems>{0} inhoudselementen</card_contentitems>
+          <card_published>{0} gepubliceerd</card_published>
+          <lbl_language>Taal:</lbl_language>
+          <lbl_threshold>Drempelwaarde (dagen):</lbl_threshold>
+          <lbl_targetlang>Doeltaal:</lbl_targetlang>
+          <lbl_contenttype>Inhoudstype:</lbl_contenttype>
+          <lbl_alllanguages>Alle talen</lbl_alllanguages>
+          <lbl_alltypes>Alle typen</lbl_alltypes>
+          <btn_coveragetree>Dekkingsboom</btn_coveragetree>
+          <btn_apply>Toepassen</btn_apply>
+          <btn_exportcsv>CSV exporteren</btn_exportcsv>
+          <btn_runnow>Nu uitvoeren</btn_runnow>
+          <btn_started>Taak gestart, vernieuw over enkele minuten.</btn_started>
+          <btn_failed>Taak starten mislukt</btn_failed>
           <col_id>ID</col_id>
-          <col_name>Name</col_name>
+          <col_name>Naam</col_name>
           <col_type>Type</col_type>
           <col_master>Master</col_master>
-          <col_available>Available Languages</col_available>
-          <col_location>Location</col_location>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_stalelanguage>Stale Language</col_stalelanguage>
-          <col_daysbehind>Days Behind</col_daysbehind>
-          <col_lastupdated>Last Updated</col_lastupdated>
-          <col_available_short>Available</col_available_short>
-          <empty_all_translated>All content has been translated to {0}</empty_all_translated>
-          <empty_no_stale>No stale translations found (threshold: {0} days)</empty_no_stale>
-          <empty_no_queue>No content needs translation to {0}</empty_no_queue>
-          <empty_no_tree>No coverage tree data available</empty_no_tree>
-          <empty_nodata>No language data available. Run the aggregation job to collect statistics.</empty_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <page_info>Page {0} of {1}</page_info>
-          <btn_previous>Previous</btn_previous>
-          <btn_next>Next</btn_next>
+          <col_available>Beschikbare talen</col_available>
+          <col_location>Locatie</col_location>
+          <col_masterlanguage>Hoofdtaal</col_masterlanguage>
+          <col_stalelanguage>Verouderde taal</col_stalelanguage>
+          <col_daysbehind>Dagen achter</col_daysbehind>
+          <col_lastupdated>Laatst bijgewerkt</col_lastupdated>
+          <col_available_short>Beschikbaar</col_available_short>
+          <empty_all_translated>Alle inhoud is vertaald naar {0}</empty_all_translated>
+          <empty_no_stale>Geen verouderde vertalingen gevonden (drempelwaarde: {0} dagen)</empty_no_stale>
+          <empty_no_queue>Geen inhoud heeft vertaling nodig naar {0}</empty_no_queue>
+          <empty_no_tree>Geen dekkingsboomgegevens beschikbaar</empty_no_tree>
+          <empty_nodata>Geen taalgegevens beschikbaar. Voer de aggregatietaak uit om statistieken te verzamelen.</empty_nodata>
+          <banner_runjob>Voer de geplande taak [EditorPowertools] Inhoudsanalyse uit om gegevens te vullen.</banner_runjob>
+          <page_info>Pagina {0} van {1}</page_info>
+          <btn_previous>Vorige</btn_previous>
+          <btn_next>Volgende</btn_next>
         </languageaudit>
         <cmsdoctor>
-          <header_title>CMS Doctor</header_title>
-          <header_desc>Health checks for your Optimizely CMS. Extensible by third-party packages.</header_desc>
-          <lbl_lastrun>Last run: {0}</lbl_lastrun>
-          <btn_runall>Run All Checks</btn_runall>
-          <btn_running>Running...</btn_running>
-          <sum_healthy>Healthy</sum_healthy>
-          <sum_warnings>Warnings</sum_warnings>
-          <sum_faults>Faults</sum_faults>
-          <sum_notchecked>Not Checked</sum_notchecked>
-          <tag_all>All</tag_all>
-          <status_ok>Healthy</status_ok>
-          <status_warning>Warning</status_warning>
-          <status_badpractice>Bad Practice</status_badpractice>
-          <status_fault>Fault</status_fault>
-          <status_performance>Performance</status_performance>
-          <status_notchecked>Not Checked</status_notchecked>
-          <btn_run>Run</btn_run>
-          <btn_fix>Fix</btn_fix>
+          <header_title>CMS-dokter</header_title>
+          <header_desc>Gezondheidscontroles voor uw Optimizely CMS. Uitbreidbaar door externe pakketten.</header_desc>
+          <lbl_lastrun>Laatste uitvoering: {0}</lbl_lastrun>
+          <btn_runall>Alle controles uitvoeren</btn_runall>
+          <btn_running>Wordt uitgevoerd...</btn_running>
+          <sum_healthy>Gezond</sum_healthy>
+          <sum_warnings>Waarschuwingen</sum_warnings>
+          <sum_faults>Fouten</sum_faults>
+          <sum_notchecked>Niet gecontroleerd</sum_notchecked>
+          <tag_all>Alle</tag_all>
+          <status_ok>Gezond</status_ok>
+          <status_warning>Waarschuwing</status_warning>
+          <status_badpractice>Slechte praktijk</status_badpractice>
+          <status_fault>Fout</status_fault>
+          <status_performance>Prestatie</status_performance>
+          <status_notchecked>Niet gecontroleerd</status_notchecked>
+          <btn_run>Uitvoeren</btn_run>
+          <btn_fix>Oplossen</btn_fix>
           <btn_details>Details</btn_details>
-          <btn_dismiss>Dismiss</btn_dismiss>
-          <btn_restore>Restore</btn_restore>
-          <dlg_result>Result:</dlg_result>
+          <btn_dismiss>Negeren</btn_dismiss>
+          <btn_restore>Herstellen</btn_restore>
+          <dlg_result>Resultaat:</dlg_result>
           <dlg_details>Details:</dlg_details>
-          <dlg_categories>Categories:</dlg_categories>
-          <dlg_checked>Checked: {0}</dlg_checked>
-          <btn_applyfix>Apply Fix</btn_applyfix>
-          <btn_rerun>Re-run Check</btn_rerun>
-          <btn_close>Close</btn_close>
-          <confirm_applyfix>Apply fix for this check?</confirm_applyfix>
-          <confirm_fix>Apply fix?</confirm_fix>
+          <dlg_categories>Categorieën:</dlg_categories>
+          <dlg_checked>Gecontroleerd: {0}</dlg_checked>
+          <btn_applyfix>Oplossing toepassen</btn_applyfix>
+          <btn_rerun>Controle opnieuw uitvoeren</btn_rerun>
+          <btn_close>Sluiten</btn_close>
+          <confirm_applyfix>Oplossing voor deze controle toepassen?</confirm_applyfix>
+          <confirm_fix>Oplossing toepassen?</confirm_fix>
         </cmsdoctor>
         <contenttypeaudit>
-          <alert_running>Aggregation job is currently running. Content counts will be updated when it completes.</alert_running>
-          <alert_notrun>Content statistics have not been collected yet. The "Content" column will show data after the aggregation job has been run.</alert_notrun>
-          <alert_old>Statistics were last updated {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <alert_started>Aggregation job has been started. Content counts will be updated when it completes.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <stat_contenttypes>Content Types</stat_contenttypes>
-          <stat_systemtypes>System Types</stat_systemtypes>
-          <stat_orphaned>Orphaned</stat_orphaned>
-          <stat_unused>Unused (0 content)</stat_unused>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search types... (or property:name)</lbl_search>
-          <opt_allbases>All base types</opt_allbases>
-          <chk_showsystem>Show system types</chk_showsystem>
-          <btn_table>Table</btn_table>
-          <btn_tree>Tree</btn_tree>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
-          <col_base>Base</col_base>
-          <col_group>Group</col_group>
-          <col_properties>Properties</col_properties>
-          <col_content>Content</col_content>
-          <opt_all>All</opt_all>
-          <badge_system>System</badge_system>
-          <badge_orphaned>Orphaned</badge_orphaned>
+          <alert_running>Aggregatietaak wordt momenteel uitgevoerd. Inhoudsaantallen worden bijgewerkt wanneer het klaar is.</alert_running>
+          <alert_notrun>Inhoudsstatistieken zijn nog niet verzameld. De kolom "Inhoud" toont gegevens nadat de aggregatietaak is uitgevoerd.</alert_notrun>
+          <alert_old>Statistieken zijn voor het laatst bijgewerkt op {0}. Overweeg de aggregatietaak uit te voeren voor actuele gegevens.</alert_old>
+          <alert_started>Aggregatietaak is gestart. Inhoudsaantallen worden bijgewerkt wanneer het klaar is.</alert_started>
+          <btn_refresh>Vernieuwen</btn_refresh>
+          <btn_runnow>Nu uitvoeren</btn_runnow>
+          <btn_starting>Wordt gestart...</btn_starting>
+          <btn_failed>Mislukt</btn_failed>
+          <stat_contenttypes>Inhoudstypen</stat_contenttypes>
+          <stat_systemtypes>Systeemtypen</stat_systemtypes>
+          <stat_orphaned>Verweesd</stat_orphaned>
+          <stat_unused>Ongebruikt (0 inhoud)</stat_unused>
+          <stat_showing>Weergegeven</stat_showing>
+          <lbl_search>Typen zoeken... (of eigenschap:naam)</lbl_search>
+          <opt_allbases>Alle basistypen</opt_allbases>
+          <chk_showsystem>Systeemtypen weergeven</chk_showsystem>
+          <btn_table>Tabel</btn_table>
+          <btn_tree>Boom</btn_tree>
+          <btn_export>Exporteren</btn_export>
+          <col_name>Naam</col_name>
+          <col_base>Basis</col_base>
+          <col_group>Groep</col_group>
+          <col_properties>Eigenschappen</col_properties>
+          <col_content>Inhoud</col_content>
+          <opt_all>Alle</opt_all>
+          <badge_system>Systeem</badge_system>
+          <badge_orphaned>Verweesd</badge_orphaned>
         </contenttypeaudit>
         <linkchecker>
-          <alert_running>Link checker job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Link checker has not been run yet. Run the scheduled job to scan content for links.</alert_notrun>
-          <alert_lastran>Link check last ran {0}.</alert_lastran>
-          <alert_started>Job started.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <btn_export>Export</btn_export>
-          <stat_total>Total Links</stat_total>
-          <stat_broken>Broken</stat_broken>
-          <stat_valid>Valid</stat_valid>
-          <stat_internal>Internal</stat_internal>
-          <stat_external>External</stat_external>
-          <lbl_search>Search URLs, content, properties...</lbl_search>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_internal>Internal</opt_internal>
-          <opt_external>External</opt_external>
-          <opt_allstatus>All status</opt_allstatus>
-          <opt_brokenonly>Broken only</opt_brokenonly>
-          <opt_validonly>Valid only</opt_validonly>
+          <alert_running>Linkcontrole-taak wordt momenteel uitgevoerd. Resultaten worden bijgewerkt wanneer het klaar is.</alert_running>
+          <alert_notrun>Linkcontrole is nog niet uitgevoerd. Voer de geplande taak uit om inhoud op links te scannen.</alert_notrun>
+          <alert_lastran>Linkcontrole voor het laatst uitgevoerd op {0}.</alert_lastran>
+          <alert_started>Taak gestart.</alert_started>
+          <btn_refresh>Vernieuwen</btn_refresh>
+          <btn_runnow>Nu uitvoeren</btn_runnow>
+          <btn_starting>Wordt gestart...</btn_starting>
+          <btn_failed>Mislukt</btn_failed>
+          <btn_export>Exporteren</btn_export>
+          <stat_total>Totaal links</stat_total>
+          <stat_broken>Gebroken</stat_broken>
+          <stat_valid>Geldig</stat_valid>
+          <stat_internal>Intern</stat_internal>
+          <stat_external>Extern</stat_external>
+          <lbl_search>URL's, inhoud, eigenschappen doorzoeken...</lbl_search>
+          <opt_alltypes>Alle typen</opt_alltypes>
+          <opt_internal>Intern</opt_internal>
+          <opt_external>Extern</opt_external>
+          <opt_allstatus>Alle statussen</opt_allstatus>
+          <opt_brokenonly>Alleen gebroken</opt_brokenonly>
+          <opt_validonly>Alleen geldige</opt_validonly>
           <col_status>Status</col_status>
           <col_url>URL</col_url>
           <col_type>Type</col_type>
-          <col_foundin>Found In</col_foundin>
-          <col_checked>Checked</col_checked>
-          <cell_usedon>Used on: </cell_usedon>
+          <col_foundin>Gevonden in</col_foundin>
+          <col_checked>Gecontroleerd</col_checked>
+          <cell_usedon>Gebruikt op: </cell_usedon>
         </linkchecker>
         <securityaudit>
-          <tab_tree>Content Tree</tab_tree>
-          <tab_roles>Role/User Explorer</tab_roles>
-          <tab_issues>Issues</tab_issues>
-          <banner_nodata>Security audit data not available.</banner_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to analyze content permissions.</banner_runjob>
-          <banner_started>Aggregation job has been started. Data will update when it completes.</banner_started>
-          <alert_old>Security data was last analyzed {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_failed>Failed</btn_failed>
-          <stat_analyzed>Content Analyzed</stat_analyzed>
-          <stat_roles>Roles/Users</stat_roles>
-          <stat_issues>Issues Found</stat_issues>
-          <stat_lastanalysis>Last Analysis</stat_lastanalysis>
-          <pager_previous>Previous</pager_previous>
-          <pager_info>Page {0} of {1}</pager_info>
-          <pager_next>Next</pager_next>
+          <tab_tree>Inhoudsstructuur</tab_tree>
+          <tab_roles>Rol-/gebruikersverkenner</tab_roles>
+          <tab_issues>Problemen</tab_issues>
+          <banner_nodata>Beveiligingsauditgegevens niet beschikbaar.</banner_nodata>
+          <banner_runjob>Voer de geplande taak [EditorPowertools] Inhoudsanalyse uit om inhoudsmachtigingen te analyseren.</banner_runjob>
+          <banner_started>Aggregatietaak is gestart. Gegevens worden bijgewerkt wanneer het klaar is.</banner_started>
+          <alert_old>Beveiligingsgegevens zijn voor het laatst geanalyseerd op {0}. Overweeg de aggregatietaak uit te voeren voor actuele gegevens.</alert_old>
+          <btn_runnow>Nu uitvoeren</btn_runnow>
+          <btn_starting>Wordt gestart...</btn_starting>
+          <btn_refresh>Vernieuwen</btn_refresh>
+          <btn_failed>Mislukt</btn_failed>
+          <stat_analyzed>Geanalyseerde inhoud</stat_analyzed>
+          <stat_roles>Rollen/gebruikers</stat_roles>
+          <stat_issues>Gevonden problemen</stat_issues>
+          <stat_lastanalysis>Laatste analyse</stat_lastanalysis>
+          <pager_previous>Vorige</pager_previous>
+          <pager_info>Pagina {0} van {1}</pager_info>
+          <pager_next>Volgende</pager_next>
         </securityaudit>
         <bulkeditor>
-          <opt_selecttype>-- Select content type --</opt_selecttype>
-          <btn_columns>Columns</btn_columns>
-          <btn_addfilter>Add Filter</btn_addfilter>
-          <chk_includereferences>Include references</chk_includereferences>
-          <btn_applyfilters>Apply Filters</btn_applyfilters>
-          <empty_selecttype>Select a content type above to start editing.</empty_selecttype>
-          <lbl_perpage>Per page:</lbl_perpage>
-          <pending_count>{0} changes pending</pending_count>
-          <btn_discardall>Discard All</btn_discardall>
-          <btn_saveall>Save All</btn_saveall>
-          <btn_publishall>Publish All</btn_publishall>
-          <confirm_discard>Discard all pending changes?</confirm_discard>
+          <opt_selecttype>-- Inhoudstype selecteren --</opt_selecttype>
+          <btn_columns>Kolommen</btn_columns>
+          <btn_addfilter>Filter toevoegen</btn_addfilter>
+          <chk_includereferences>Referenties opnemen</chk_includereferences>
+          <btn_applyfilters>Filters toepassen</btn_applyfilters>
+          <empty_selecttype>Selecteer hierboven een inhoudstype om te beginnen met bewerken.</empty_selecttype>
+          <lbl_perpage>Per pagina:</lbl_perpage>
+          <pending_count>{0} wijzigingen in behandeling</pending_count>
+          <btn_discardall>Alles verwerpen</btn_discardall>
+          <btn_saveall>Alles opslaan</btn_saveall>
+          <btn_publishall>Alles publiceren</btn_publishall>
+          <confirm_discard>Alle openstaande wijzigingen verwerpen?</confirm_discard>
         </bulkeditor>
         <contentstatistics>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <error_load>Failed to load statistics from API.</error_load>
-          <error_render>Error rendering statistics dashboard.</error_render>
-          <chart_byctype>Content by Type</chart_byctype>
-          <chart_bystatus>Content by Status</chart_bystatus>
-          <chart_created>Content Created (last 12 months)</chart_created>
-          <chart_staleness>Content Staleness</chart_staleness>
-          <chart_editoractivity>Editor Activity (last 30 days)</chart_editoractivity>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_published>Published</stat_published>
-          <stat_draft>Draft</stat_draft>
-          <stat_editors>Active Editors</stat_editors>
-          <stat_pages>Pages</stat_pages>
-          <stat_blocks>Blocks</stat_blocks>
+          <banner_runjob>Voer de geplande taak [EditorPowertools] Inhoudsanalyse uit om gegevens te vullen.</banner_runjob>
+          <btn_runnow>Nu uitvoeren</btn_runnow>
+          <btn_starting>Wordt gestart...</btn_starting>
+          <error_load>Statistieken konden niet worden geladen van de API.</error_load>
+          <error_render>Fout bij het weergeven van het statistiekendashboard.</error_render>
+          <chart_byctype>Inhoud per type</chart_byctype>
+          <chart_bystatus>Inhoud per status</chart_bystatus>
+          <chart_created>Aangemaakt inhoud (laatste 12 maanden)</chart_created>
+          <chart_staleness>Veroudering van inhoud</chart_staleness>
+          <chart_editoractivity>Redacteursactiviteit (laatste 30 dagen)</chart_editoractivity>
+          <stat_totalcontent>Totale inhoud</stat_totalcontent>
+          <stat_published>Gepubliceerd</stat_published>
+          <stat_draft>Concept</stat_draft>
+          <stat_editors>Actieve redacteuren</stat_editors>
+          <stat_pages>Pagina's</stat_pages>
+          <stat_blocks>Blokken</stat_blocks>
           <stat_media>Media</stat_media>
         </contentstatistics>
         <activitytimeline>
-          <stat_today>Activities Today</stat_today>
-          <stat_activeeditors>Active Editors</stat_activeeditors>
-          <stat_publishes>Publishes Today</stat_publishes>
-          <stat_drafts>Drafts Today</stat_drafts>
-          <opt_allusers>All users</opt_allusers>
-          <opt_published>Published</opt_published>
-          <opt_draft>Draft saved</opt_draft>
-          <opt_readytopublish>Ready to publish</opt_readytopublish>
-          <opt_scheduled>Scheduled</opt_scheduled>
-          <opt_rejected>Rejected</opt_rejected>
-          <opt_previouslypublished>Previously published</opt_previouslypublished>
-          <opt_comment>Comments</opt_comment>
-          <opt_allcontenttypes>All content types</opt_allcontenttypes>
-          <btn_filter>Filter</btn_filter>
-          <btn_clear>Clear</btn_clear>
-          <banner_showingfor>Showing timeline for {0}</banner_showingfor>
-          <btn_showall>Show all activity</btn_showall>
+          <stat_today>Activiteiten vandaag</stat_today>
+          <stat_activeeditors>Actieve redacteuren</stat_activeeditors>
+          <stat_publishes>Publicaties vandaag</stat_publishes>
+          <stat_drafts>Concepten vandaag</stat_drafts>
+          <opt_allusers>Alle gebruikers</opt_allusers>
+          <opt_published>Gepubliceerd</opt_published>
+          <opt_draft>Concept opgeslagen</opt_draft>
+          <opt_readytopublish>Klaar voor publicatie</opt_readytopublish>
+          <opt_scheduled>Gepland</opt_scheduled>
+          <opt_rejected>Afgewezen</opt_rejected>
+          <opt_previouslypublished>Eerder gepubliceerd</opt_previouslypublished>
+          <opt_comment>Reacties</opt_comment>
+          <opt_allcontenttypes>Alle inhoudstypen</opt_allcontenttypes>
+          <btn_filter>Filteren</btn_filter>
+          <btn_clear>Wissen</btn_clear>
+          <banner_showingfor>Tijdlijn weergeven voor {0}</banner_showingfor>
+          <btn_showall>Alle activiteit weergeven</btn_showall>
         </activitytimeline>
         <personalizationaudit>
-          <alert_running>Personalization analysis job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Personalization usage has not been analyzed yet. Run the analysis job to scan content for audience usage.</alert_notrun>
-          <alert_old>Analysis was last run {0}. Consider running the job again for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_starting>Starting...</btn_starting>
-          <stat_total>Total Usages</stat_total>
-          <stat_content>Content Items</stat_content>
-          <stat_groups>Visitor Groups Used</stat_groups>
-          <lbl_search>Search...</lbl_search>
-          <lbl_type>Usage Type:</lbl_type>
-          <lbl_group>Visitor Group:</lbl_group>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_allgroups>All groups</opt_allgroups>
-          <col_content>Content</col_content>
-          <col_type>Usage Type</col_type>
-          <col_groups>Visitor Groups</col_groups>
-          <col_location>Location</col_location>
+          <alert_running>Personalisatieanalyse-taak wordt momenteel uitgevoerd. Resultaten worden bijgewerkt wanneer het klaar is.</alert_running>
+          <alert_notrun>Personalisatiegebruik is nog niet geanalyseerd. Voer de analysetaak uit om inhoud op doelgroepgebruik te scannen.</alert_notrun>
+          <alert_old>Analyse is voor het laatst uitgevoerd op {0}. Overweeg de taak opnieuw uit te voeren voor actuele gegevens.</alert_old>
+          <btn_runnow>Nu uitvoeren</btn_runnow>
+          <btn_refresh>Vernieuwen</btn_refresh>
+          <btn_starting>Wordt gestart...</btn_starting>
+          <stat_total>Totaal gebruik</stat_total>
+          <stat_content>Inhoudselementen</stat_content>
+          <stat_groups>Gebruikte bezoekersgroepen</stat_groups>
+          <lbl_search>Zoeken...</lbl_search>
+          <lbl_type>Gebruikstype:</lbl_type>
+          <lbl_group>Bezoekersgroep:</lbl_group>
+          <opt_alltypes>Alle typen</opt_alltypes>
+          <opt_allgroups>Alle groepen</opt_allgroups>
+          <col_content>Inhoud</col_content>
+          <col_type>Gebruikstype</col_type>
+          <col_groups>Bezoekersgroepen</col_groups>
+          <col_location>Locatie</col_location>
         </personalizationaudit>
         <audiencemanager>
-          <stat_audiences>Audiences</stat_audiences>
-          <stat_withstats>With Statistics</stat_withstats>
-          <stat_categories>Categories</stat_categories>
-          <stat_totalcriteria>Total Criteria</stat_totalcriteria>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search audiences...</lbl_search>
-          <opt_allcategories>All categories</opt_allcategories>
-          <chk_hasstats>Has Statistics</chk_hasstats>
-          <lnk_personalizationaudit>Personalization Audit</lnk_personalizationaudit>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
+          <stat_audiences>Doelgroepen</stat_audiences>
+          <stat_withstats>Met statistieken</stat_withstats>
+          <stat_categories>Categorieën</stat_categories>
+          <stat_totalcriteria>Totaal criteria</stat_totalcriteria>
+          <stat_showing>Weergegeven</stat_showing>
+          <lbl_search>Doelgroepen zoeken...</lbl_search>
+          <opt_allcategories>Alle categorieën</opt_allcategories>
+          <chk_hasstats>Heeft statistieken</chk_hasstats>
+          <lnk_personalizationaudit>Personalisatie-audit</lnk_personalizationaudit>
+          <btn_export>Exporteren</btn_export>
+          <col_name>Naam</col_name>
           <col_criteria>Criteria</col_criteria>
           <col_operator>Operator</col_operator>
-          <col_statistics>Statistics</col_statistics>
-          <col_usage>Usage</col_usage>
-          <opt_all>All</opt_all>
-          <title_usagedetails>Show usage details</title_usagedetails>
-          <title_notused>Not used in any personalized content</title_notused>
-          <title_runjobfirst>Run the Personalization Analysis job first</title_runjobfirst>
+          <col_statistics>Statistieken</col_statistics>
+          <col_usage>Gebruik</col_usage>
+          <opt_all>Alle</opt_all>
+          <title_usagedetails>Gebruiksdetails weergeven</title_usagedetails>
+          <title_notused>Niet gebruikt in gepersonaliseerde inhoud</title_notused>
+          <title_runjobfirst>Voer eerst de personalisatieanalyse-taak uit</title_runjobfirst>
         </audiencemanager>
         <contentimporter>
-          <step_upload>1. Upload File</step_upload>
-          <step_configure>2. Configure</step_configure>
-          <step_dryrun>3. Dry Run</step_dryrun>
-          <step_import>4. Import</step_import>
-          <lbl_dropfile>Drop a CSV, JSON, or Excel file here, or click to browse</lbl_dropfile>
-          <btn_browse>Browse...</btn_browse>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_language>Language:</lbl_language>
-          <lbl_parent>Parent Location:</lbl_parent>
-          <lbl_namecol>Name Column:</lbl_namecol>
-          <lbl_publishafter>Publish after import</lbl_publishafter>
-          <lbl_selectparent>Select parent...</lbl_selectparent>
-          <btn_next>Next</btn_next>
-          <btn_back>Back</btn_back>
-          <lbl_mapping>Field Mapping</lbl_mapping>
-          <lbl_sourcecol>Source Column</lbl_sourcecol>
-          <lbl_targetfield>Target Field</lbl_targetfield>
-          <opt_skip>-- Skip --</opt_skip>
-          <btn_dryrun>Run Dry Run</btn_dryrun>
-          <lbl_dryresult>Dry Run Results</lbl_dryresult>
-          <btn_import>Start Import</btn_import>
-          <btn_startover>Start Over</btn_startover>
-          <lbl_importing>Importing...</lbl_importing>
+          <step_upload>1. Bestand uploaden</step_upload>
+          <step_configure>2. Configureren</step_configure>
+          <step_dryrun>3. Testrun</step_dryrun>
+          <step_import>4. Importeren</step_import>
+          <lbl_dropfile>Sleep een CSV-, JSON- of Excel-bestand hierheen of klik om te bladeren</lbl_dropfile>
+          <btn_browse>Bladeren...</btn_browse>
+          <lbl_contenttype>Inhoudstype:</lbl_contenttype>
+          <lbl_language>Taal:</lbl_language>
+          <lbl_parent>Bovenliggende locatie:</lbl_parent>
+          <lbl_namecol>Naamkolom:</lbl_namecol>
+          <lbl_publishafter>Publiceren na import</lbl_publishafter>
+          <lbl_selectparent>Bovenliggend element selecteren...</lbl_selectparent>
+          <btn_next>Volgende</btn_next>
+          <btn_back>Terug</btn_back>
+          <lbl_mapping>Veldkoppeling</lbl_mapping>
+          <lbl_sourcecol>Bronkolom</lbl_sourcecol>
+          <lbl_targetfield>Doelveld</lbl_targetfield>
+          <opt_skip>-- Overslaan --</opt_skip>
+          <btn_dryrun>Testrun starten</btn_dryrun>
+          <lbl_dryresult>Testrunresultaten</lbl_dryresult>
+          <btn_import>Import starten</btn_import>
+          <btn_startover>Opnieuw beginnen</btn_startover>
+          <lbl_importing>Importeren...</lbl_importing>
         </contentimporter>
         <managechildren>
-          <lbl_selectparent>Select a parent page to manage its children</lbl_selectparent>
-          <btn_selectparent>Select Parent Page</btn_selectparent>
-          <btn_sortaz>Sort A-Z</btn_sortaz>
-          <btn_sortza>Sort Z-A</btn_sortza>
-          <btn_sortbydate>Sort by Date</btn_sortbydate>
-          <btn_publishall>Publish All</btn_publishall>
-          <btn_unpublishall>Unpublish All</btn_unpublishall>
-          <btn_deleteselected>Delete Selected</btn_deleteselected>
-          <btn_saveorder>Save Order</btn_saveorder>
-          <col_name>Name</col_name>
+          <lbl_selectparent>Selecteer een bovenliggende pagina om de subpagina's te beheren</lbl_selectparent>
+          <btn_selectparent>Bovenliggende pagina selecteren</btn_selectparent>
+          <btn_sortaz>Sorteren A-Z</btn_sortaz>
+          <btn_sortza>Sorteren Z-A</btn_sortza>
+          <btn_sortbydate>Sorteren op datum</btn_sortbydate>
+          <btn_publishall>Alles publiceren</btn_publishall>
+          <btn_unpublishall>Alles depubliceren</btn_unpublishall>
+          <btn_deleteselected>Selectie verwijderen</btn_deleteselected>
+          <btn_saveorder>Volgorde opslaan</btn_saveorder>
+          <col_name>Naam</col_name>
           <col_status>Status</col_status>
-          <col_changed>Changed</col_changed>
+          <col_changed>Gewijzigd</col_changed>
           <col_type>Type</col_type>
-          <confirm_delete>Delete {0} selected item(s)? This cannot be undone.</confirm_delete>
-          <confirm_publishall>Publish all {0} children?</confirm_publishall>
-          <confirm_unpublishall>Unpublish all {0} children?</confirm_unpublishall>
+          <confirm_delete>{0} geselecteerd(e) item(s) verwijderen? Dit kan niet ongedaan worden gemaakt.</confirm_delete>
+          <confirm_publishall>Alle {0} subpagina's publiceren?</confirm_publishall>
+          <confirm_unpublishall>Alle {0} subpagina's depubliceren?</confirm_unpublishall>
         </managechildren>
         <recommendations>
-          <banner_info>When editors create new content, Optimizely can suggest which content types to use. Define rules below to control these suggestions based on where content is being created.</banner_info>
-          <btn_addrule>Add Rule</btn_addrule>
-          <col_parenttype>Parent Type</col_parenttype>
-          <col_allowedtypes>Allowed Types</col_allowedtypes>
-          <col_actions>Actions</col_actions>
-          <dlg_addrule>Add Rule</dlg_addrule>
-          <dlg_editrule>Edit Rule</dlg_editrule>
-          <lbl_parenttype>Parent Content Type:</lbl_parenttype>
-          <lbl_allowedtypes>Allowed Child Types:</lbl_allowedtypes>
-          <btn_save>Save</btn_save>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_edit>Edit</btn_edit>
-          <btn_delete>Delete</btn_delete>
-          <empty_norules>No recommendation rules defined yet. Click "Add Rule" to create one.</empty_norules>
-          <confirm_delete>Delete this rule?</confirm_delete>
+          <banner_info>Wanneer redacteuren nieuwe inhoud aanmaken, kan Optimizely voorstellen welke inhoudstypen te gebruiken. Definieer hieronder regels om deze suggesties te beheren op basis van waar inhoud wordt aangemaakt.</banner_info>
+          <btn_addrule>Regel toevoegen</btn_addrule>
+          <col_parenttype>Bovenliggend type</col_parenttype>
+          <col_allowedtypes>Toegestane typen</col_allowedtypes>
+          <col_actions>Acties</col_actions>
+          <dlg_addrule>Regel toevoegen</dlg_addrule>
+          <dlg_editrule>Regel bewerken</dlg_editrule>
+          <lbl_parenttype>Bovenliggend inhoudstype:</lbl_parenttype>
+          <lbl_allowedtypes>Toegestane onderliggende typen:</lbl_allowedtypes>
+          <btn_save>Opslaan</btn_save>
+          <btn_cancel>Annuleren</btn_cancel>
+          <btn_edit>Bewerken</btn_edit>
+          <btn_delete>Verwijderen</btn_delete>
+          <empty_norules>Nog geen aanbevelingsregels gedefinieerd. Klik op "Regel toevoegen" om er een te maken.</empty_norules>
+          <confirm_delete>Deze regel verwijderen?</confirm_delete>
         </recommendations>
         <gantt>
-          <error_load>Failed to load Gantt data: {0}</error_load>
-          <empty_nojobs>No scheduled jobs found.</empty_nojobs>
-          <stat_totaljobs>Total Jobs</stat_totaljobs>
-          <stat_enabled>Enabled</stat_enabled>
-          <stat_running>Running Now</stat_running>
-          <stat_executions>Executions in View</stat_executions>
-          <btn_previous>Previous</btn_previous>
-          <btn_today>Today</btn_today>
-          <btn_next>Next</btn_next>
-          <lbl_viewhours>{0}h view</lbl_viewhours>
-          <col_job>Job</col_job>
+          <error_load>Gantt-gegevens konden niet worden geladen: {0}</error_load>
+          <empty_nojobs>Geen geplande taken gevonden.</empty_nojobs>
+          <stat_totaljobs>Totaal taken</stat_totaljobs>
+          <stat_enabled>Ingeschakeld</stat_enabled>
+          <stat_running>Wordt nu uitgevoerd</stat_running>
+          <stat_executions>Uitvoeringen in weergave</stat_executions>
+          <btn_previous>Vorige</btn_previous>
+          <btn_today>Vandaag</btn_today>
+          <btn_next>Volgende</btn_next>
+          <lbl_viewhours>{0}u weergave</lbl_viewhours>
+          <col_job>Taak</col_job>
         </gantt>
         <activeeditors>
-          <error_nosignalr>SignalR client not available. Check browser console for errors.</error_nosignalr>
-          <error_connect>Could not connect: {0}</error_connect>
-          <stat_online>Online Now</stat_online>
-          <stat_editing>Currently Editing</stat_editing>
-          <stat_today>Active Today</stat_today>
-          <section_online>Online Now</section_online>
-          <section_today>Also Active Today</section_today>
-          <lbl_connected>Connected {0}</lbl_connected>
-          <btn_sendmessage>Send Message</btn_sendmessage>
-          <badge_you>you</badge_you>
+          <error_nosignalr>SignalR-client niet beschikbaar. Controleer de browserconsole op fouten.</error_nosignalr>
+          <error_connect>Verbinding mislukt: {0}</error_connect>
+          <stat_online>Nu online</stat_online>
+          <stat_editing>Bewerkt momenteel</stat_editing>
+          <stat_today>Vandaag actief</stat_today>
+          <section_online>Nu online</section_online>
+          <section_today>Ook vandaag actief</section_today>
+          <lbl_connected>Verbonden {0}</lbl_connected>
+          <btn_sendmessage>Bericht sturen</btn_sendmessage>
+          <badge_you>u</badge_you>
           <badge_offline>offline</badge_offline>
-          <chat_title>Team Chat</chat_title>
-          <chat_empty>No messages yet. Say hello!</chat_empty>
-          <chat_placeholder>Type a message... (Enter to send)</chat_placeholder>
-          <dlg_sendmessage>Send Message to {0}</dlg_sendmessage>
-          <dlg_desc>This will send a CMS notification that {0} will see in their notification bell.</dlg_desc>
-          <dlg_placeholder>Type your message...</dlg_placeholder>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_send>Send Notification</btn_send>
-          <btn_sending>Sending...</btn_sending>
-          <msg_sent>Message sent to {0}</msg_sent>
+          <chat_title>Teamchat</chat_title>
+          <chat_empty>Nog geen berichten. Zeg hallo!</chat_empty>
+          <chat_placeholder>Typ een bericht... (Enter om te verzenden)</chat_placeholder>
+          <dlg_sendmessage>Bericht sturen naar {0}</dlg_sendmessage>
+          <dlg_desc>Dit stuurt een CMS-melding die {0} ziet in hun meldingsbel.</dlg_desc>
+          <dlg_placeholder>Typ uw bericht...</dlg_placeholder>
+          <btn_cancel>Annuleren</btn_cancel>
+          <btn_send>Melding verzenden</btn_send>
+          <btn_sending>Wordt verzonden...</btn_sending>
+          <msg_sent>Bericht verzonden naar {0}</msg_sent>
         </activeeditors>
         <components>
-          <picker_title>Select Content</picker_title>
-          <picker_search>Search content by name...</picker_search>
-          <picker_noresults>No results found</picker_noresults>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_select>Select</btn_select>
-          <typepicker_title>Select Content Type</typepicker_title>
-          <typepicker_search>Search content types...</typepicker_search>
-          <typepicker_noresults>No content types found</typepicker_noresults>
+          <picker_title>Inhoud selecteren</picker_title>
+          <picker_search>Inhoud zoeken op naam...</picker_search>
+          <picker_noresults>Geen resultaten gevonden</picker_noresults>
+          <btn_cancel>Annuleren</btn_cancel>
+          <btn_select>Selecteren</btn_select>
+          <typepicker_title>Inhoudstype selecteren</typepicker_title>
+          <typepicker_search>Inhoudstypen zoeken...</typepicker_search>
+          <typepicker_noresults>Geen inhoudstypen gevonden</typepicker_noresults>
         </components>
         <editorpowertools>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
+          <loading>Laden...</loading>
+          <noresults>Geen resultaten gevonden</noresults>
         </editorpowertools>
       </ui>
     </editorpowertools>
