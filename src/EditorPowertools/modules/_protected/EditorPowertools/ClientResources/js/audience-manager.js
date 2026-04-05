@@ -50,11 +50,11 @@
 
         const el = document.getElementById('audience-stats');
         el.innerHTML = `
-            <div class="ept-stat"><div class="ept-stat__value">${total}</div><div class="ept-stat__label">Audiences</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${withStats}</div><div class="ept-stat__label">With Statistics</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${categories.size}</div><div class="ept-stat__label">Categories</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${totalCriteria}</div><div class="ept-stat__label">Total Criteria</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${filtered.length}</div><div class="ept-stat__label">Showing</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${total}</div><div class="ept-stat__label">${EPT.s('audiencemanager.stat_audiences', 'Audiences')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${withStats}</div><div class="ept-stat__label">${EPT.s('audiencemanager.stat_withstats', 'With Statistics')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${categories.size}</div><div class="ept-stat__label">${EPT.s('audiencemanager.stat_categories', 'Categories')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${totalCriteria}</div><div class="ept-stat__label">${EPT.s('audiencemanager.stat_totalcriteria', 'Total Criteria')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${filtered.length}</div><div class="ept-stat__label">${EPT.s('audiencemanager.stat_showing', 'Showing')}</div></div>
         `;
     }
 
@@ -65,21 +65,21 @@
         toolbar.innerHTML = `
             <div class="ept-search">
                 <span class="ept-search__icon">${EPT.icons.search}</span>
-                <input type="text" id="audience-search" placeholder="Search audiences..." />
+                <input type="text" id="audience-search" placeholder="${EPT.s('audiencemanager.lbl_search', 'Search audiences...')}" />
             </div>
             <select id="audience-category-filter" class="ept-select">
-                <option value="">All categories</option>
+                <option value="">${EPT.s('audiencemanager.opt_allcategories', 'All categories')}</option>
                 ${categories.map(c => `<option value="${escAttr(c)}">${escHtml(c)} (${allGroups.filter(g => g.category === c).length})</option>`).join('')}
             </select>
             <label class="ept-toggle">
                 <input type="checkbox" id="audience-stats-filter" ${statsOnlyFilter ? 'checked' : ''} />
-                Has Statistics
+                ${EPT.s('audiencemanager.chk_hasstats', 'Has Statistics')}
             </label>
             <div class="ept-toolbar__spacer"></div>
             <a href="${EPT_BASE_URL}EditorPowertools/PersonalizationAudit" class="ept-btn" title="View Personalization Usage">
-                ${EPT.icons.link} Personalization Audit
+                ${EPT.icons.link} ${EPT.s('audiencemanager.lnk_personalizationaudit', 'Personalization Audit')}
             </a>
-            <button class="ept-btn" id="audience-export" title="Export to CSV">${EPT.icons.download} Export</button>
+            <button class="ept-btn" id="audience-export" title="Export to CSV">${EPT.icons.download} ${EPT.s('audiencemanager.btn_export', 'Export')}</button>
         `;
 
         document.getElementById('audience-search').addEventListener('input', (e) => {
@@ -110,11 +110,11 @@
         const distinctOperators = [...new Set(data.map(r => r.criteriaOperator).filter(Boolean))].sort();
 
         const columns = [
-            { key: 'cleanName', label: 'Name', render: (r) => renderGroupName(r) },
-            { key: 'criteriaCount', label: 'Criteria', align: 'right' },
-            { key: 'criteriaOperator', label: 'Operator', filterable: distinctOperators, render: (r) => renderOperator(r) },
-            { key: 'statisticsEnabled', label: 'Statistics', render: (r) => r.statisticsEnabled ? '<span style="color:var(--ept-success, #2e7d32)">&#10003;</span>' : '<span class="ept-muted">&mdash;</span>' },
-            { key: 'usageCount', label: 'Usage', align: 'right', render: (r) => renderUsageCount(r) },
+            { key: 'cleanName', label: EPT.s('audiencemanager.col_name', 'Name'), render: (r) => renderGroupName(r) },
+            { key: 'criteriaCount', label: EPT.s('audiencemanager.col_criteria', 'Criteria'), align: 'right' },
+            { key: 'criteriaOperator', label: EPT.s('audiencemanager.col_operator', 'Operator'), filterable: distinctOperators, render: (r) => renderOperator(r) },
+            { key: 'statisticsEnabled', label: EPT.s('audiencemanager.col_statistics', 'Statistics'), render: (r) => r.statisticsEnabled ? '<span style="color:var(--ept-success, #2e7d32)">&#10003;</span>' : '<span class="ept-muted">&mdash;</span>' },
+            { key: 'usageCount', label: EPT.s('audiencemanager.col_usage', 'Usage'), align: 'right', render: (r) => renderUsageCount(r) },
             { key: 'actions', label: '', sortable: false, render: (r) => renderActions(r) }
         ];
 
@@ -142,7 +142,7 @@
                 const sel = document.createElement('select');
                 sel.className = 'ept-select';
                 sel.style.cssText = 'width:100%;font-size:11px;padding:2px 20px 2px 4px';
-                sel.innerHTML = `<option value="">All</option>${col.filterable.map(v => `<option value="${escAttr(v)}">${escHtml(v)}</option>`).join('')}`;
+                sel.innerHTML = `<option value="">${EPT.s('audiencemanager.opt_all', 'All')}</option>${col.filterable.map(v => `<option value="${escAttr(v)}">${escHtml(v)}</option>`).join('')}`;
                 sel.addEventListener('change', () => {
                     colFilters[col.key] = sel.value || null;
                     applyColumnFilters();
@@ -190,14 +190,14 @@
 
     function renderUsageCount(r) {
         if (r.usageCount == null) {
-            return '<span class="ept-muted" title="Run the Personalization Analysis job first">&mdash;</span>';
+            return '<span class="ept-muted" title="' + EPT.s('audiencemanager.title_runjobfirst', 'Run the Personalization Analysis job first') + '">&mdash;</span>';
         }
         if (r.usageCount === 0) {
-            return '<span class="ept-badge ept-badge--warning" title="Not used in any personalized content">0</span>';
+            return '<span class="ept-badge ept-badge--warning" title="' + EPT.s('audiencemanager.title_notused', 'Not used in any personalized content') + '">0</span>';
         }
         const btn = document.createElement('button');
         btn.className = 'ept-btn ept-btn--sm';
-        btn.title = 'Show usage details';
+        btn.title = EPT.s('audiencemanager.title_usagedetails', 'Show usage details');
         btn.textContent = String(r.usageCount);
         btn.addEventListener('click', (e) => { e.stopPropagation(); showUsages(r); });
         return btn;
