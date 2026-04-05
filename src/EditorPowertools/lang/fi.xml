@@ -314,444 +314,444 @@
       <!-- JavaScript UI strings (injected via window.EPT_STRINGS) -->
       <ui>
         <shared>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
-          <cancel>Cancel</cancel>
-          <apply>Apply</apply>
-          <close>Close</close>
-          <runnow>Run now</runnow>
-          <refresh>Refresh</refresh>
-          <starting>Starting...</starting>
-          <export>Export</export>
-          <prev>Prev</prev>
-          <next>Next</next>
-          <yes>Yes</yes>
-          <no>No</no>
-          <open>Open</open>
-          <all>All</all>
-          <save>Save</save>
-          <delete>Delete</delete>
-          <edit>Edit</edit>
-          <failed>Failed</failed>
+          <loading>Ladataan...</loading>
+          <noresults>Tuloksia ei löytynyt</noresults>
+          <cancel>Peruuta</cancel>
+          <apply>Käytä</apply>
+          <close>Sulje</close>
+          <runnow>Suorita nyt</runnow>
+          <refresh>Päivitä</refresh>
+          <starting>Käynnistetään...</starting>
+          <export>Vie</export>
+          <prev>Edellinen</prev>
+          <next>Seuraava</next>
+          <yes>Kyllä</yes>
+          <no>Ei</no>
+          <open>Avaa</open>
+          <all>Kaikki</all>
+          <save>Tallenna</save>
+          <delete>Poista</delete>
+          <edit>Muokkaa</edit>
+          <failed>Epäonnistui</failed>
         </shared>
         <contentaudit>
-          <col_contentid>Content ID</col_contentid>
-          <col_name>Name</col_name>
-          <col_language>Language</col_language>
-          <col_contenttype>Content Type</col_contenttype>
-          <col_maintype>Main Type</col_maintype>
+          <col_contentid>Sisältö-ID</col_contentid>
+          <col_name>Nimi</col_name>
+          <col_language>Kieli</col_language>
+          <col_contenttype>Sisältötyyppi</col_contenttype>
+          <col_maintype>Päätyyppi</col_maintype>
           <col_url>URL</col_url>
-          <col_editurl>Edit URL</col_editurl>
-          <col_breadcrumb>Breadcrumb</col_breadcrumb>
-          <col_status>Status</col_status>
-          <col_createdby>Created By</col_createdby>
-          <col_created>Created</col_created>
-          <col_changedby>Changed By</col_changedby>
-          <col_changed>Changed</col_changed>
-          <col_published>Published</col_published>
-          <col_publisheduntil>Published Until</col_publisheduntil>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_alllanguages>All Languages</col_alllanguages>
-          <col_referencecount>Reference Count</col_referencecount>
-          <col_versioncount>Version Count</col_versioncount>
-          <col_haspersonalizations>Has Personalizations</col_haspersonalizations>
-          <filter_all>All content</filter_all>
-          <filter_pages>Pages only</filter_pages>
-          <filter_blocks>Blocks only</filter_blocks>
-          <filter_media>Media only</filter_media>
-          <filter_unpublished>Unpublished</filter_unpublished>
-          <filter_unused>Unused content</filter_unused>
-          <op_contains>Contains</op_contains>
-          <op_equals>Equals</op_equals>
-          <op_startswith>Starts with</op_startswith>
-          <op_isempty>Is empty</op_isempty>
-          <op_isnotempty>Is not empty</op_isnotempty>
-          <btn_filter>Filter</btn_filter>
-          <btn_columns>Columns</btn_columns>
-          <btn_selectall>Select all</btn_selectall>
-          <btn_reset>Reset</btn_reset>
-          <btn_addfilter>Add filter</btn_addfilter>
-          <btn_clearall>Clear all</btn_clearall>
-          <dlg_choosecolumns>Choose Columns</dlg_choosecolumns>
-          <dlg_addfilter>Add Filter</dlg_addfilter>
-          <lbl_column>Column</lbl_column>
-          <lbl_operator>Operator</lbl_operator>
-          <lbl_value>Value</lbl_value>
-          <lbl_filtervalue>Filter value...</lbl_filtervalue>
-          <lbl_search>Search by name...</lbl_search>
-          <stat_totalitems>Total items</stat_totalitems>
-          <stat_pages>Pages</stat_pages>
-          <stat_currentpage>Current page</stat_currentpage>
-          <empty_nodata>No data loaded.</empty_nodata>
-          <empty_nofilter>No content matches the current filters.</empty_nofilter>
-          <page_showing>Showing {0}-{1} of {2}</page_showing>
-          <perpage>{0} per page</perpage>
+          <col_editurl>Muokkaus-URL</col_editurl>
+          <col_breadcrumb>Navigointipolku</col_breadcrumb>
+          <col_status>Tila</col_status>
+          <col_createdby>Luonut</col_createdby>
+          <col_created>Luotu</col_created>
+          <col_changedby>Muuttanut</col_changedby>
+          <col_changed>Muutettu</col_changed>
+          <col_published>Julkaistu</col_published>
+          <col_publisheduntil>Julkaistu asti</col_publisheduntil>
+          <col_masterlanguage>Pääkieli</col_masterlanguage>
+          <col_alllanguages>Kaikki kielet</col_alllanguages>
+          <col_referencecount>Viittausten määrä</col_referencecount>
+          <col_versioncount>Versioiden määrä</col_versioncount>
+          <col_haspersonalizations>On personointeja</col_haspersonalizations>
+          <filter_all>Kaikki sisältö</filter_all>
+          <filter_pages>Vain sivut</filter_pages>
+          <filter_blocks>Vain lohkot</filter_blocks>
+          <filter_media>Vain media</filter_media>
+          <filter_unpublished>Julkaisemattomat</filter_unpublished>
+          <filter_unused>Käyttämätön sisältö</filter_unused>
+          <op_contains>Sisältää</op_contains>
+          <op_equals>On yhtä suuri kuin</op_equals>
+          <op_startswith>Alkaa</op_startswith>
+          <op_isempty>On tyhjä</op_isempty>
+          <op_isnotempty>Ei ole tyhjä</op_isnotempty>
+          <btn_filter>Suodata</btn_filter>
+          <btn_columns>Sarakkeet</btn_columns>
+          <btn_selectall>Valitse kaikki</btn_selectall>
+          <btn_reset>Nollaa</btn_reset>
+          <btn_addfilter>Lisää suodatin</btn_addfilter>
+          <btn_clearall>Tyhjennä kaikki</btn_clearall>
+          <dlg_choosecolumns>Valitse sarakkeet</dlg_choosecolumns>
+          <dlg_addfilter>Lisää suodatin</dlg_addfilter>
+          <lbl_column>Sarake</lbl_column>
+          <lbl_operator>Operaattori</lbl_operator>
+          <lbl_value>Arvo</lbl_value>
+          <lbl_filtervalue>Suodatusarvo...</lbl_filtervalue>
+          <lbl_search>Hae nimellä...</lbl_search>
+          <stat_totalitems>Kohteita yhteensä</stat_totalitems>
+          <stat_pages>Sivut</stat_pages>
+          <stat_currentpage>Nykyinen sivu</stat_currentpage>
+          <empty_nodata>Tietoja ei ladattu.</empty_nodata>
+          <empty_nofilter>Mikään sisältö ei vastaa nykyisiä suodattimia.</empty_nofilter>
+          <page_showing>Näytetään {0}-{1} / {2}</page_showing>
+          <perpage>{0} per sivu</perpage>
           <fmt_excel>Excel (.xlsx)</fmt_excel>
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
-          <cell_openeditmode>Open in edit mode</cell_openeditmode>
+          <cell_openeditmode>Avaa muokkaustilassa</cell_openeditmode>
         </contentaudit>
         <languageaudit>
-          <tab_overview>Overview</tab_overview>
-          <tab_missing>Missing Translations</tab_missing>
-          <tab_stale>Stale Translations</tab_stale>
-          <tab_queue>Translation Queue</tab_queue>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_languages>Languages</stat_languages>
-          <stat_missing>Missing Translations</stat_missing>
-          <stat_stale>Stale (30+ days)</stat_stale>
-          <stat_itemstotranslate>Items to Translate</stat_itemstotranslate>
-          <stat_page>Page</stat_page>
-          <stat_missing_lang>Missing {0}</stat_missing_lang>
-          <stat_stale_count>Stale Translations</stat_stale_count>
-          <card_coverage>Language Coverage</card_coverage>
-          <card_contentitems>{0} content items</card_contentitems>
-          <card_published>{0} published</card_published>
-          <lbl_language>Language:</lbl_language>
-          <lbl_threshold>Threshold (days):</lbl_threshold>
-          <lbl_targetlang>Target Language:</lbl_targetlang>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_alllanguages>All languages</lbl_alllanguages>
-          <lbl_alltypes>All types</lbl_alltypes>
-          <btn_coveragetree>Coverage Tree</btn_coveragetree>
-          <btn_apply>Apply</btn_apply>
-          <btn_exportcsv>Export CSV</btn_exportcsv>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_started>Job started, please refresh in a few minutes.</btn_started>
-          <btn_failed>Failed to start job</btn_failed>
+          <tab_overview>Yleiskatsaus</tab_overview>
+          <tab_missing>Puuttuvat käännökset</tab_missing>
+          <tab_stale>Vanhentuneet käännökset</tab_stale>
+          <tab_queue>Käännösjono</tab_queue>
+          <stat_totalcontent>Sisältö yhteensä</stat_totalcontent>
+          <stat_languages>Kielet</stat_languages>
+          <stat_missing>Puuttuvat käännökset</stat_missing>
+          <stat_stale>Vanhentuneet (30+ päivää)</stat_stale>
+          <stat_itemstotranslate>Käännettävät kohteet</stat_itemstotranslate>
+          <stat_page>Sivu</stat_page>
+          <stat_missing_lang>Puuttuu {0}</stat_missing_lang>
+          <stat_stale_count>Vanhentuneet käännökset</stat_stale_count>
+          <card_coverage>Kielikattavuus</card_coverage>
+          <card_contentitems>{0} sisältökohdetta</card_contentitems>
+          <card_published>{0} julkaistu</card_published>
+          <lbl_language>Kieli:</lbl_language>
+          <lbl_threshold>Kynnys (päivää):</lbl_threshold>
+          <lbl_targetlang>Kohdekieli:</lbl_targetlang>
+          <lbl_contenttype>Sisältötyyppi:</lbl_contenttype>
+          <lbl_alllanguages>Kaikki kielet</lbl_alllanguages>
+          <lbl_alltypes>Kaikki tyypit</lbl_alltypes>
+          <btn_coveragetree>Kattavuuspuu</btn_coveragetree>
+          <btn_apply>Käytä</btn_apply>
+          <btn_exportcsv>Vie CSV</btn_exportcsv>
+          <btn_runnow>Suorita nyt</btn_runnow>
+          <btn_started>Tehtävä käynnistetty, päivitä muutaman minuutin kuluttua.</btn_started>
+          <btn_failed>Tehtävän käynnistys epäonnistui</btn_failed>
           <col_id>ID</col_id>
-          <col_name>Name</col_name>
-          <col_type>Type</col_type>
-          <col_master>Master</col_master>
-          <col_available>Available Languages</col_available>
-          <col_location>Location</col_location>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_stalelanguage>Stale Language</col_stalelanguage>
-          <col_daysbehind>Days Behind</col_daysbehind>
-          <col_lastupdated>Last Updated</col_lastupdated>
-          <col_available_short>Available</col_available_short>
-          <empty_all_translated>All content has been translated to {0}</empty_all_translated>
-          <empty_no_stale>No stale translations found (threshold: {0} days)</empty_no_stale>
-          <empty_no_queue>No content needs translation to {0}</empty_no_queue>
-          <empty_no_tree>No coverage tree data available</empty_no_tree>
-          <empty_nodata>No language data available. Run the aggregation job to collect statistics.</empty_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <page_info>Page {0} of {1}</page_info>
-          <btn_previous>Previous</btn_previous>
-          <btn_next>Next</btn_next>
+          <col_name>Nimi</col_name>
+          <col_type>Tyyppi</col_type>
+          <col_master>Pää</col_master>
+          <col_available>Saatavilla olevat kielet</col_available>
+          <col_location>Sijainti</col_location>
+          <col_masterlanguage>Pääkieli</col_masterlanguage>
+          <col_stalelanguage>Vanhentunut kieli</col_stalelanguage>
+          <col_daysbehind>Päiviä jäljessä</col_daysbehind>
+          <col_lastupdated>Viimeksi päivitetty</col_lastupdated>
+          <col_available_short>Saatavilla</col_available_short>
+          <empty_all_translated>Kaikki sisältö on käännetty kielelle {0}</empty_all_translated>
+          <empty_no_stale>Vanhentuneita käännöksiä ei löytynyt (kynnys: {0} päivää)</empty_no_stale>
+          <empty_no_queue>Mikään sisältö ei tarvitse käännöstä kielelle {0}</empty_no_queue>
+          <empty_no_tree>Kattavuuspuun tietoja ei saatavilla</empty_no_tree>
+          <empty_nodata>Kielitietoja ei saatavilla. Suorita koostamistehtävä tilastojen keräämiseksi.</empty_nodata>
+          <banner_runjob>Suorita ajastettu tehtävä [EditorPowertools] Sisältöanalyysi tietojen täyttämiseksi.</banner_runjob>
+          <page_info>Sivu {0} / {1}</page_info>
+          <btn_previous>Edellinen</btn_previous>
+          <btn_next>Seuraava</btn_next>
         </languageaudit>
         <cmsdoctor>
-          <header_title>CMS Doctor</header_title>
-          <header_desc>Health checks for your Optimizely CMS. Extensible by third-party packages.</header_desc>
-          <lbl_lastrun>Last run: {0}</lbl_lastrun>
-          <btn_runall>Run All Checks</btn_runall>
-          <btn_running>Running...</btn_running>
-          <sum_healthy>Healthy</sum_healthy>
-          <sum_warnings>Warnings</sum_warnings>
-          <sum_faults>Faults</sum_faults>
-          <sum_notchecked>Not Checked</sum_notchecked>
-          <tag_all>All</tag_all>
-          <status_ok>Healthy</status_ok>
-          <status_warning>Warning</status_warning>
-          <status_badpractice>Bad Practice</status_badpractice>
-          <status_fault>Fault</status_fault>
-          <status_performance>Performance</status_performance>
-          <status_notchecked>Not Checked</status_notchecked>
-          <btn_run>Run</btn_run>
-          <btn_fix>Fix</btn_fix>
-          <btn_details>Details</btn_details>
-          <btn_dismiss>Dismiss</btn_dismiss>
-          <btn_restore>Restore</btn_restore>
-          <dlg_result>Result:</dlg_result>
-          <dlg_details>Details:</dlg_details>
-          <dlg_categories>Categories:</dlg_categories>
-          <dlg_checked>Checked: {0}</dlg_checked>
-          <btn_applyfix>Apply Fix</btn_applyfix>
-          <btn_rerun>Re-run Check</btn_rerun>
-          <btn_close>Close</btn_close>
-          <confirm_applyfix>Apply fix for this check?</confirm_applyfix>
-          <confirm_fix>Apply fix?</confirm_fix>
+          <header_title>CMS-tohtori</header_title>
+          <header_desc>Terveystarkastukset Optimizely CMS:lle. Laajennettavissa kolmannen osapuolen paketeilla.</header_desc>
+          <lbl_lastrun>Viimeksi suoritettu: {0}</lbl_lastrun>
+          <btn_runall>Suorita kaikki tarkistukset</btn_runall>
+          <btn_running>Suoritetaan...</btn_running>
+          <sum_healthy>Terve</sum_healthy>
+          <sum_warnings>Varoitukset</sum_warnings>
+          <sum_faults>Viat</sum_faults>
+          <sum_notchecked>Ei tarkistettu</sum_notchecked>
+          <tag_all>Kaikki</tag_all>
+          <status_ok>Terve</status_ok>
+          <status_warning>Varoitus</status_warning>
+          <status_badpractice>Huono käytäntö</status_badpractice>
+          <status_fault>Vika</status_fault>
+          <status_performance>Suorituskyky</status_performance>
+          <status_notchecked>Ei tarkistettu</status_notchecked>
+          <btn_run>Suorita</btn_run>
+          <btn_fix>Korjaa</btn_fix>
+          <btn_details>Tiedot</btn_details>
+          <btn_dismiss>Hylkää</btn_dismiss>
+          <btn_restore>Palauta</btn_restore>
+          <dlg_result>Tulos:</dlg_result>
+          <dlg_details>Tiedot:</dlg_details>
+          <dlg_categories>Kategoriat:</dlg_categories>
+          <dlg_checked>Tarkistettu: {0}</dlg_checked>
+          <btn_applyfix>Käytä korjaus</btn_applyfix>
+          <btn_rerun>Suorita tarkistus uudelleen</btn_rerun>
+          <btn_close>Sulje</btn_close>
+          <confirm_applyfix>Käytetäänkö korjaus tälle tarkistukselle?</confirm_applyfix>
+          <confirm_fix>Käytetäänkö korjaus?</confirm_fix>
         </cmsdoctor>
         <contenttypeaudit>
-          <alert_running>Aggregation job is currently running. Content counts will be updated when it completes.</alert_running>
-          <alert_notrun>Content statistics have not been collected yet. The "Content" column will show data after the aggregation job has been run.</alert_notrun>
-          <alert_old>Statistics were last updated {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <alert_started>Aggregation job has been started. Content counts will be updated when it completes.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <stat_contenttypes>Content Types</stat_contenttypes>
-          <stat_systemtypes>System Types</stat_systemtypes>
-          <stat_orphaned>Orphaned</stat_orphaned>
-          <stat_unused>Unused (0 content)</stat_unused>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search types... (or property:name)</lbl_search>
-          <opt_allbases>All base types</opt_allbases>
-          <chk_showsystem>Show system types</chk_showsystem>
-          <btn_table>Table</btn_table>
-          <btn_tree>Tree</btn_tree>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
-          <col_base>Base</col_base>
-          <col_group>Group</col_group>
-          <col_properties>Properties</col_properties>
-          <col_content>Content</col_content>
-          <opt_all>All</opt_all>
-          <badge_system>System</badge_system>
-          <badge_orphaned>Orphaned</badge_orphaned>
+          <alert_running>Koostamistehtävä on parhaillaan käynnissä. Sisältömäärät päivitetään kun se valmistuu.</alert_running>
+          <alert_notrun>Sisältötilastoja ei ole vielä kerätty. "Sisältö"-sarake näyttää tiedot sen jälkeen kun koostamistehtävä on suoritettu.</alert_notrun>
+          <alert_old>Tilastot päivitettiin viimeksi {0}. Harkitse koostamistehtävän suorittamista tuoreita tietoja varten.</alert_old>
+          <alert_started>Koostamistehtävä on käynnistetty. Sisältömäärät päivitetään kun se valmistuu.</alert_started>
+          <btn_refresh>Päivitä</btn_refresh>
+          <btn_runnow>Suorita nyt</btn_runnow>
+          <btn_starting>Käynnistetään...</btn_starting>
+          <btn_failed>Epäonnistui</btn_failed>
+          <stat_contenttypes>Sisältötyypit</stat_contenttypes>
+          <stat_systemtypes>Järjestelmätyypit</stat_systemtypes>
+          <stat_orphaned>Orvot</stat_orphaned>
+          <stat_unused>Käyttämättömät (0 sisältöä)</stat_unused>
+          <stat_showing>Näytetään</stat_showing>
+          <lbl_search>Hae tyyppejä... (tai ominaisuus:nimi)</lbl_search>
+          <opt_allbases>Kaikki perustyypit</opt_allbases>
+          <chk_showsystem>Näytä järjestelmätyypit</chk_showsystem>
+          <btn_table>Taulukko</btn_table>
+          <btn_tree>Puu</btn_tree>
+          <btn_export>Vie</btn_export>
+          <col_name>Nimi</col_name>
+          <col_base>Perusta</col_base>
+          <col_group>Ryhmä</col_group>
+          <col_properties>Ominaisuudet</col_properties>
+          <col_content>Sisältö</col_content>
+          <opt_all>Kaikki</opt_all>
+          <badge_system>Järjestelmä</badge_system>
+          <badge_orphaned>Orpo</badge_orphaned>
         </contenttypeaudit>
         <linkchecker>
-          <alert_running>Link checker job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Link checker has not been run yet. Run the scheduled job to scan content for links.</alert_notrun>
-          <alert_lastran>Link check last ran {0}.</alert_lastran>
-          <alert_started>Job started.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <btn_export>Export</btn_export>
-          <stat_total>Total Links</stat_total>
-          <stat_broken>Broken</stat_broken>
-          <stat_valid>Valid</stat_valid>
-          <stat_internal>Internal</stat_internal>
-          <stat_external>External</stat_external>
-          <lbl_search>Search URLs, content, properties...</lbl_search>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_internal>Internal</opt_internal>
-          <opt_external>External</opt_external>
-          <opt_allstatus>All status</opt_allstatus>
-          <opt_brokenonly>Broken only</opt_brokenonly>
-          <opt_validonly>Valid only</opt_validonly>
-          <col_status>Status</col_status>
+          <alert_running>Linkkien tarkistuksen tehtävä on parhaillaan käynnissä. Tulokset päivitetään kun se valmistuu.</alert_running>
+          <alert_notrun>Linkkien tarkistusta ei ole suoritettu vielä. Suorita ajastettu tehtävä linkkien etsimiseksi sisällöstä.</alert_notrun>
+          <alert_lastran>Linkkien tarkistus suoritettiin viimeksi {0}.</alert_lastran>
+          <alert_started>Tehtävä käynnistetty.</alert_started>
+          <btn_refresh>Päivitä</btn_refresh>
+          <btn_runnow>Suorita nyt</btn_runnow>
+          <btn_starting>Käynnistetään...</btn_starting>
+          <btn_failed>Epäonnistui</btn_failed>
+          <btn_export>Vie</btn_export>
+          <stat_total>Linkkejä yhteensä</stat_total>
+          <stat_broken>Rikkinäiset</stat_broken>
+          <stat_valid>Kelvolliset</stat_valid>
+          <stat_internal>Sisäiset</stat_internal>
+          <stat_external>Ulkoiset</stat_external>
+          <lbl_search>Hae URL-osoitteita, sisältöä, ominaisuuksia...</lbl_search>
+          <opt_alltypes>Kaikki tyypit</opt_alltypes>
+          <opt_internal>Sisäiset</opt_internal>
+          <opt_external>Ulkoiset</opt_external>
+          <opt_allstatus>Kaikki tilat</opt_allstatus>
+          <opt_brokenonly>Vain rikkinäiset</opt_brokenonly>
+          <opt_validonly>Vain kelvolliset</opt_validonly>
+          <col_status>Tila</col_status>
           <col_url>URL</col_url>
-          <col_type>Type</col_type>
-          <col_foundin>Found In</col_foundin>
-          <col_checked>Checked</col_checked>
-          <cell_usedon>Used on: </cell_usedon>
+          <col_type>Tyyppi</col_type>
+          <col_foundin>Löydetty kohteesta</col_foundin>
+          <col_checked>Tarkistettu</col_checked>
+          <cell_usedon>Käytetään: </cell_usedon>
         </linkchecker>
         <securityaudit>
-          <tab_tree>Content Tree</tab_tree>
-          <tab_roles>Role/User Explorer</tab_roles>
-          <tab_issues>Issues</tab_issues>
-          <banner_nodata>Security audit data not available.</banner_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to analyze content permissions.</banner_runjob>
-          <banner_started>Aggregation job has been started. Data will update when it completes.</banner_started>
-          <alert_old>Security data was last analyzed {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_failed>Failed</btn_failed>
-          <stat_analyzed>Content Analyzed</stat_analyzed>
-          <stat_roles>Roles/Users</stat_roles>
-          <stat_issues>Issues Found</stat_issues>
-          <stat_lastanalysis>Last Analysis</stat_lastanalysis>
-          <pager_previous>Previous</pager_previous>
-          <pager_info>Page {0} of {1}</pager_info>
-          <pager_next>Next</pager_next>
+          <tab_tree>Sisältöpuu</tab_tree>
+          <tab_roles>Rooli-/käyttäjähakemisto</tab_roles>
+          <tab_issues>Ongelmat</tab_issues>
+          <banner_nodata>Tietoturvatarkastuksen tiedot eivät ole saatavilla.</banner_nodata>
+          <banner_runjob>Suorita ajastettu tehtävä [EditorPowertools] Sisältöanalyysi sisällön käyttöoikeuksien analysoimiseksi.</banner_runjob>
+          <banner_started>Koostamistehtävä on käynnistetty. Tiedot päivitetään kun se valmistuu.</banner_started>
+          <alert_old>Tietoturvatiedot analysoitiin viimeksi {0}. Harkitse koostamistehtävän suorittamista tuoreita tietoja varten.</alert_old>
+          <btn_runnow>Suorita nyt</btn_runnow>
+          <btn_starting>Käynnistetään...</btn_starting>
+          <btn_refresh>Päivitä</btn_refresh>
+          <btn_failed>Epäonnistui</btn_failed>
+          <stat_analyzed>Analysoitu sisältö</stat_analyzed>
+          <stat_roles>Roolit/Käyttäjät</stat_roles>
+          <stat_issues>Löydetyt ongelmat</stat_issues>
+          <stat_lastanalysis>Viimeisin analyysi</stat_lastanalysis>
+          <pager_previous>Edellinen</pager_previous>
+          <pager_info>Sivu {0} / {1}</pager_info>
+          <pager_next>Seuraava</pager_next>
         </securityaudit>
         <bulkeditor>
-          <opt_selecttype>-- Select content type --</opt_selecttype>
-          <btn_columns>Columns</btn_columns>
-          <btn_addfilter>Add Filter</btn_addfilter>
-          <chk_includereferences>Include references</chk_includereferences>
-          <btn_applyfilters>Apply Filters</btn_applyfilters>
-          <empty_selecttype>Select a content type above to start editing.</empty_selecttype>
-          <lbl_perpage>Per page:</lbl_perpage>
-          <pending_count>{0} changes pending</pending_count>
-          <btn_discardall>Discard All</btn_discardall>
-          <btn_saveall>Save All</btn_saveall>
-          <btn_publishall>Publish All</btn_publishall>
-          <confirm_discard>Discard all pending changes?</confirm_discard>
+          <opt_selecttype>-- Valitse sisältötyyppi --</opt_selecttype>
+          <btn_columns>Sarakkeet</btn_columns>
+          <btn_addfilter>Lisää suodatin</btn_addfilter>
+          <chk_includereferences>Sisällytä viittaukset</chk_includereferences>
+          <btn_applyfilters>Käytä suodattimet</btn_applyfilters>
+          <empty_selecttype>Valitse sisältötyyppi yllä aloittaaksesi muokkaamisen.</empty_selecttype>
+          <lbl_perpage>Per sivu:</lbl_perpage>
+          <pending_count>{0} muutosta odottaa</pending_count>
+          <btn_discardall>Hylkää kaikki</btn_discardall>
+          <btn_saveall>Tallenna kaikki</btn_saveall>
+          <btn_publishall>Julkaise kaikki</btn_publishall>
+          <confirm_discard>Hylätäänkö kaikki odottavat muutokset?</confirm_discard>
         </bulkeditor>
         <contentstatistics>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <error_load>Failed to load statistics from API.</error_load>
-          <error_render>Error rendering statistics dashboard.</error_render>
-          <chart_byctype>Content by Type</chart_byctype>
-          <chart_bystatus>Content by Status</chart_bystatus>
-          <chart_created>Content Created (last 12 months)</chart_created>
-          <chart_staleness>Content Staleness</chart_staleness>
-          <chart_editoractivity>Editor Activity (last 30 days)</chart_editoractivity>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_published>Published</stat_published>
-          <stat_draft>Draft</stat_draft>
-          <stat_editors>Active Editors</stat_editors>
-          <stat_pages>Pages</stat_pages>
-          <stat_blocks>Blocks</stat_blocks>
+          <banner_runjob>Suorita ajastettu tehtävä [EditorPowertools] Sisältöanalyysi tietojen täyttämiseksi.</banner_runjob>
+          <btn_runnow>Suorita nyt</btn_runnow>
+          <btn_starting>Käynnistetään...</btn_starting>
+          <error_load>Tilastojen lataaminen API:sta epäonnistui.</error_load>
+          <error_render>Virhe tilastokojelaudan renderöinnissä.</error_render>
+          <chart_byctype>Sisältö tyypin mukaan</chart_byctype>
+          <chart_bystatus>Sisältö tilan mukaan</chart_bystatus>
+          <chart_created>Luotu sisältö (viimeiset 12 kuukautta)</chart_created>
+          <chart_staleness>Sisällön vanhentuminen</chart_staleness>
+          <chart_editoractivity>Muokkaajien toiminta (viimeiset 30 päivää)</chart_editoractivity>
+          <stat_totalcontent>Sisältö yhteensä</stat_totalcontent>
+          <stat_published>Julkaistu</stat_published>
+          <stat_draft>Luonnos</stat_draft>
+          <stat_editors>Aktiiviset muokkaajat</stat_editors>
+          <stat_pages>Sivut</stat_pages>
+          <stat_blocks>Lohkot</stat_blocks>
           <stat_media>Media</stat_media>
         </contentstatistics>
         <activitytimeline>
-          <stat_today>Activities Today</stat_today>
-          <stat_activeeditors>Active Editors</stat_activeeditors>
-          <stat_publishes>Publishes Today</stat_publishes>
-          <stat_drafts>Drafts Today</stat_drafts>
-          <opt_allusers>All users</opt_allusers>
-          <opt_published>Published</opt_published>
-          <opt_draft>Draft saved</opt_draft>
-          <opt_readytopublish>Ready to publish</opt_readytopublish>
-          <opt_scheduled>Scheduled</opt_scheduled>
-          <opt_rejected>Rejected</opt_rejected>
-          <opt_previouslypublished>Previously published</opt_previouslypublished>
-          <opt_comment>Comments</opt_comment>
-          <opt_allcontenttypes>All content types</opt_allcontenttypes>
-          <btn_filter>Filter</btn_filter>
-          <btn_clear>Clear</btn_clear>
-          <banner_showingfor>Showing timeline for {0}</banner_showingfor>
-          <btn_showall>Show all activity</btn_showall>
+          <stat_today>Toimintaa tänään</stat_today>
+          <stat_activeeditors>Aktiiviset muokkaajat</stat_activeeditors>
+          <stat_publishes>Julkaisuja tänään</stat_publishes>
+          <stat_drafts>Luonnoksia tänään</stat_drafts>
+          <opt_allusers>Kaikki käyttäjät</opt_allusers>
+          <opt_published>Julkaistu</opt_published>
+          <opt_draft>Luonnos tallennettu</opt_draft>
+          <opt_readytopublish>Valmis julkaistavaksi</opt_readytopublish>
+          <opt_scheduled>Ajastettu</opt_scheduled>
+          <opt_rejected>Hylätty</opt_rejected>
+          <opt_previouslypublished>Aiemmin julkaistu</opt_previouslypublished>
+          <opt_comment>Kommentit</opt_comment>
+          <opt_allcontenttypes>Kaikki sisältötyypit</opt_allcontenttypes>
+          <btn_filter>Suodata</btn_filter>
+          <btn_clear>Tyhjennä</btn_clear>
+          <banner_showingfor>Näytetään aikajana kohteelle {0}</banner_showingfor>
+          <btn_showall>Näytä kaikki toiminta</btn_showall>
         </activitytimeline>
         <personalizationaudit>
-          <alert_running>Personalization analysis job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Personalization usage has not been analyzed yet. Run the analysis job to scan content for audience usage.</alert_notrun>
-          <alert_old>Analysis was last run {0}. Consider running the job again for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_starting>Starting...</btn_starting>
-          <stat_total>Total Usages</stat_total>
-          <stat_content>Content Items</stat_content>
-          <stat_groups>Visitor Groups Used</stat_groups>
-          <lbl_search>Search...</lbl_search>
-          <lbl_type>Usage Type:</lbl_type>
-          <lbl_group>Visitor Group:</lbl_group>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_allgroups>All groups</opt_allgroups>
-          <col_content>Content</col_content>
-          <col_type>Usage Type</col_type>
-          <col_groups>Visitor Groups</col_groups>
-          <col_location>Location</col_location>
+          <alert_running>Personoinnin analyysitehtävä on parhaillaan käynnissä. Tulokset päivitetään kun se valmistuu.</alert_running>
+          <alert_notrun>Personoinnin käyttöä ei ole vielä analysoitu. Suorita analyysitehtävä kohderyhmäkäytön etsimiseksi sisällöstä.</alert_notrun>
+          <alert_old>Analyysi suoritettiin viimeksi {0}. Harkitse tehtävän suorittamista uudelleen tuoreita tietoja varten.</alert_old>
+          <btn_runnow>Suorita nyt</btn_runnow>
+          <btn_refresh>Päivitä</btn_refresh>
+          <btn_starting>Käynnistetään...</btn_starting>
+          <stat_total>Käyttöjä yhteensä</stat_total>
+          <stat_content>Sisältökohteet</stat_content>
+          <stat_groups>Käytetyt vierailijaryhmät</stat_groups>
+          <lbl_search>Hae...</lbl_search>
+          <lbl_type>Käyttötyyppi:</lbl_type>
+          <lbl_group>Vierailijaryhmä:</lbl_group>
+          <opt_alltypes>Kaikki tyypit</opt_alltypes>
+          <opt_allgroups>Kaikki ryhmät</opt_allgroups>
+          <col_content>Sisältö</col_content>
+          <col_type>Käyttötyyppi</col_type>
+          <col_groups>Vierailijaryhmät</col_groups>
+          <col_location>Sijainti</col_location>
         </personalizationaudit>
         <audiencemanager>
-          <stat_audiences>Audiences</stat_audiences>
-          <stat_withstats>With Statistics</stat_withstats>
-          <stat_categories>Categories</stat_categories>
-          <stat_totalcriteria>Total Criteria</stat_totalcriteria>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search audiences...</lbl_search>
-          <opt_allcategories>All categories</opt_allcategories>
-          <chk_hasstats>Has Statistics</chk_hasstats>
-          <lnk_personalizationaudit>Personalization Audit</lnk_personalizationaudit>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
-          <col_criteria>Criteria</col_criteria>
-          <col_operator>Operator</col_operator>
-          <col_statistics>Statistics</col_statistics>
-          <col_usage>Usage</col_usage>
-          <opt_all>All</opt_all>
-          <title_usagedetails>Show usage details</title_usagedetails>
-          <title_notused>Not used in any personalized content</title_notused>
-          <title_runjobfirst>Run the Personalization Analysis job first</title_runjobfirst>
+          <stat_audiences>Kohderyhmät</stat_audiences>
+          <stat_withstats>Tilastojen kanssa</stat_withstats>
+          <stat_categories>Kategoriat</stat_categories>
+          <stat_totalcriteria>Kriteerejä yhteensä</stat_totalcriteria>
+          <stat_showing>Näytetään</stat_showing>
+          <lbl_search>Hae kohderyhmiä...</lbl_search>
+          <opt_allcategories>Kaikki kategoriat</opt_allcategories>
+          <chk_hasstats>On tilastoja</chk_hasstats>
+          <lnk_personalizationaudit>Personoinnin tarkastus</lnk_personalizationaudit>
+          <btn_export>Vie</btn_export>
+          <col_name>Nimi</col_name>
+          <col_criteria>Kriteerit</col_criteria>
+          <col_operator>Operaattori</col_operator>
+          <col_statistics>Tilastot</col_statistics>
+          <col_usage>Käyttö</col_usage>
+          <opt_all>Kaikki</opt_all>
+          <title_usagedetails>Näytä käyttötiedot</title_usagedetails>
+          <title_notused>Ei käytetty missään personoidussa sisällössä</title_notused>
+          <title_runjobfirst>Suorita personoinnin analyysitehtävä ensin</title_runjobfirst>
         </audiencemanager>
         <contentimporter>
-          <step_upload>1. Upload File</step_upload>
-          <step_configure>2. Configure</step_configure>
-          <step_dryrun>3. Dry Run</step_dryrun>
-          <step_import>4. Import</step_import>
-          <lbl_dropfile>Drop a CSV, JSON, or Excel file here, or click to browse</lbl_dropfile>
-          <btn_browse>Browse...</btn_browse>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_language>Language:</lbl_language>
-          <lbl_parent>Parent Location:</lbl_parent>
-          <lbl_namecol>Name Column:</lbl_namecol>
-          <lbl_publishafter>Publish after import</lbl_publishafter>
-          <lbl_selectparent>Select parent...</lbl_selectparent>
-          <btn_next>Next</btn_next>
-          <btn_back>Back</btn_back>
-          <lbl_mapping>Field Mapping</lbl_mapping>
-          <lbl_sourcecol>Source Column</lbl_sourcecol>
-          <lbl_targetfield>Target Field</lbl_targetfield>
-          <opt_skip>-- Skip --</opt_skip>
-          <btn_dryrun>Run Dry Run</btn_dryrun>
-          <lbl_dryresult>Dry Run Results</lbl_dryresult>
-          <btn_import>Start Import</btn_import>
-          <btn_startover>Start Over</btn_startover>
-          <lbl_importing>Importing...</lbl_importing>
+          <step_upload>1. Lataa tiedosto</step_upload>
+          <step_configure>2. Määritä</step_configure>
+          <step_dryrun>3. Testajo</step_dryrun>
+          <step_import>4. Tuo</step_import>
+          <lbl_dropfile>Pudota CSV-, JSON- tai Excel-tiedosto tähän tai napsauta selataksesi</lbl_dropfile>
+          <btn_browse>Selaa...</btn_browse>
+          <lbl_contenttype>Sisältötyyppi:</lbl_contenttype>
+          <lbl_language>Kieli:</lbl_language>
+          <lbl_parent>Yläkohteen sijainti:</lbl_parent>
+          <lbl_namecol>Nimisarake:</lbl_namecol>
+          <lbl_publishafter>Julkaise tuonnin jälkeen</lbl_publishafter>
+          <lbl_selectparent>Valitse yläkohde...</lbl_selectparent>
+          <btn_next>Seuraava</btn_next>
+          <btn_back>Takaisin</btn_back>
+          <lbl_mapping>Kenttien kartoitus</lbl_mapping>
+          <lbl_sourcecol>Lähdesarake</lbl_sourcecol>
+          <lbl_targetfield>Kohdekenttä</lbl_targetfield>
+          <opt_skip>-- Ohita --</opt_skip>
+          <btn_dryrun>Suorita testajo</btn_dryrun>
+          <lbl_dryresult>Testoajotulokset</lbl_dryresult>
+          <btn_import>Aloita tuonti</btn_import>
+          <btn_startover>Aloita alusta</btn_startover>
+          <lbl_importing>Tuodaan...</lbl_importing>
         </contentimporter>
         <managechildren>
-          <lbl_selectparent>Select a parent page to manage its children</lbl_selectparent>
-          <btn_selectparent>Select Parent Page</btn_selectparent>
-          <btn_sortaz>Sort A-Z</btn_sortaz>
-          <btn_sortza>Sort Z-A</btn_sortza>
-          <btn_sortbydate>Sort by Date</btn_sortbydate>
-          <btn_publishall>Publish All</btn_publishall>
-          <btn_unpublishall>Unpublish All</btn_unpublishall>
-          <btn_deleteselected>Delete Selected</btn_deleteselected>
-          <btn_saveorder>Save Order</btn_saveorder>
-          <col_name>Name</col_name>
-          <col_status>Status</col_status>
-          <col_changed>Changed</col_changed>
-          <col_type>Type</col_type>
-          <confirm_delete>Delete {0} selected item(s)? This cannot be undone.</confirm_delete>
-          <confirm_publishall>Publish all {0} children?</confirm_publishall>
-          <confirm_unpublishall>Unpublish all {0} children?</confirm_unpublishall>
+          <lbl_selectparent>Valitse yläsivu hallitaksesi sen alasivuja</lbl_selectparent>
+          <btn_selectparent>Valitse yläsivu</btn_selectparent>
+          <btn_sortaz>Lajittele A-Ö</btn_sortaz>
+          <btn_sortza>Lajittele Ö-A</btn_sortza>
+          <btn_sortbydate>Lajittele päivämäärän mukaan</btn_sortbydate>
+          <btn_publishall>Julkaise kaikki</btn_publishall>
+          <btn_unpublishall>Peru julkaisu kaikilta</btn_unpublishall>
+          <btn_deleteselected>Poista valitut</btn_deleteselected>
+          <btn_saveorder>Tallenna järjestys</btn_saveorder>
+          <col_name>Nimi</col_name>
+          <col_status>Tila</col_status>
+          <col_changed>Muutettu</col_changed>
+          <col_type>Tyyppi</col_type>
+          <confirm_delete>Poistetaanko {0} valittu kohde? Tätä ei voi kumota.</confirm_delete>
+          <confirm_publishall>Julkaistaanko kaikki {0} alasivua?</confirm_publishall>
+          <confirm_unpublishall>Peruttaanko julkaisu kaikilta {0} alasivulta?</confirm_unpublishall>
         </managechildren>
         <recommendations>
-          <banner_info>When editors create new content, Optimizely can suggest which content types to use. Define rules below to control these suggestions based on where content is being created.</banner_info>
-          <btn_addrule>Add Rule</btn_addrule>
-          <col_parenttype>Parent Type</col_parenttype>
-          <col_allowedtypes>Allowed Types</col_allowedtypes>
-          <col_actions>Actions</col_actions>
-          <dlg_addrule>Add Rule</dlg_addrule>
-          <dlg_editrule>Edit Rule</dlg_editrule>
-          <lbl_parenttype>Parent Content Type:</lbl_parenttype>
-          <lbl_allowedtypes>Allowed Child Types:</lbl_allowedtypes>
-          <btn_save>Save</btn_save>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_edit>Edit</btn_edit>
-          <btn_delete>Delete</btn_delete>
-          <empty_norules>No recommendation rules defined yet. Click "Add Rule" to create one.</empty_norules>
-          <confirm_delete>Delete this rule?</confirm_delete>
+          <banner_info>Kun muokkaajat luovat uutta sisältöä, Optimizely voi ehdottaa käytettäviä sisältötyyppejä. Määritä alla säännöt näiden ehdotusten hallitsemiseksi sen perusteella, mihin sisältöä luodaan.</banner_info>
+          <btn_addrule>Lisää sääntö</btn_addrule>
+          <col_parenttype>Ylätyyppi</col_parenttype>
+          <col_allowedtypes>Sallitut tyypit</col_allowedtypes>
+          <col_actions>Toiminnot</col_actions>
+          <dlg_addrule>Lisää sääntö</dlg_addrule>
+          <dlg_editrule>Muokkaa sääntöä</dlg_editrule>
+          <lbl_parenttype>Yläsisältötyyppi:</lbl_parenttype>
+          <lbl_allowedtypes>Sallitut alityypit:</lbl_allowedtypes>
+          <btn_save>Tallenna</btn_save>
+          <btn_cancel>Peruuta</btn_cancel>
+          <btn_edit>Muokkaa</btn_edit>
+          <btn_delete>Poista</btn_delete>
+          <empty_norules>Suositussääntöjä ei ole vielä määritetty. Luo sääntö napsauttamalla "Lisää sääntö".</empty_norules>
+          <confirm_delete>Poistetaanko tämä sääntö?</confirm_delete>
         </recommendations>
         <gantt>
-          <error_load>Failed to load Gantt data: {0}</error_load>
-          <empty_nojobs>No scheduled jobs found.</empty_nojobs>
-          <stat_totaljobs>Total Jobs</stat_totaljobs>
-          <stat_enabled>Enabled</stat_enabled>
-          <stat_running>Running Now</stat_running>
-          <stat_executions>Executions in View</stat_executions>
-          <btn_previous>Previous</btn_previous>
-          <btn_today>Today</btn_today>
-          <btn_next>Next</btn_next>
-          <lbl_viewhours>{0}h view</lbl_viewhours>
-          <col_job>Job</col_job>
+          <error_load>Gantt-tietojen lataaminen epäonnistui: {0}</error_load>
+          <empty_nojobs>Ajastettuja tehtäviä ei löytynyt.</empty_nojobs>
+          <stat_totaljobs>Tehtäviä yhteensä</stat_totaljobs>
+          <stat_enabled>Käytössä</stat_enabled>
+          <stat_running>Käynnissä nyt</stat_running>
+          <stat_executions>Suorituksia näkymässä</stat_executions>
+          <btn_previous>Edellinen</btn_previous>
+          <btn_today>Tänään</btn_today>
+          <btn_next>Seuraava</btn_next>
+          <lbl_viewhours>{0}h näkymä</lbl_viewhours>
+          <col_job>Tehtävä</col_job>
         </gantt>
         <activeeditors>
-          <error_nosignalr>SignalR client not available. Check browser console for errors.</error_nosignalr>
-          <error_connect>Could not connect: {0}</error_connect>
-          <stat_online>Online Now</stat_online>
-          <stat_editing>Currently Editing</stat_editing>
-          <stat_today>Active Today</stat_today>
-          <section_online>Online Now</section_online>
-          <section_today>Also Active Today</section_today>
-          <lbl_connected>Connected {0}</lbl_connected>
-          <btn_sendmessage>Send Message</btn_sendmessage>
-          <badge_you>you</badge_you>
+          <error_nosignalr>SignalR-asiakas ei ole saatavilla. Tarkista selainkonsolista virheet.</error_nosignalr>
+          <error_connect>Yhteyttä ei voitu muodostaa: {0}</error_connect>
+          <stat_online>Paikalla nyt</stat_online>
+          <stat_editing>Muokkaa parhaillaan</stat_editing>
+          <stat_today>Aktiivinen tänään</stat_today>
+          <section_online>Paikalla nyt</section_online>
+          <section_today>Myös aktiivinen tänään</section_today>
+          <lbl_connected>Yhdistetty {0}</lbl_connected>
+          <btn_sendmessage>Lähetä viesti</btn_sendmessage>
+          <badge_you>sinä</badge_you>
           <badge_offline>offline</badge_offline>
-          <chat_title>Team Chat</chat_title>
-          <chat_empty>No messages yet. Say hello!</chat_empty>
-          <chat_placeholder>Type a message... (Enter to send)</chat_placeholder>
-          <dlg_sendmessage>Send Message to {0}</dlg_sendmessage>
-          <dlg_desc>This will send a CMS notification that {0} will see in their notification bell.</dlg_desc>
-          <dlg_placeholder>Type your message...</dlg_placeholder>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_send>Send Notification</btn_send>
-          <btn_sending>Sending...</btn_sending>
-          <msg_sent>Message sent to {0}</msg_sent>
+          <chat_title>Tiimiviestintä</chat_title>
+          <chat_empty>Ei viestejä vielä. Sano hei!</chat_empty>
+          <chat_placeholder>Kirjoita viesti... (Enter lähettää)</chat_placeholder>
+          <dlg_sendmessage>Lähetä viesti käyttäjälle {0}</dlg_sendmessage>
+          <dlg_desc>Tämä lähettää CMS-ilmoituksen, jonka {0} näkee ilmoituskellossaan.</dlg_desc>
+          <dlg_placeholder>Kirjoita viestisi...</dlg_placeholder>
+          <btn_cancel>Peruuta</btn_cancel>
+          <btn_send>Lähetä ilmoitus</btn_send>
+          <btn_sending>Lähetetään...</btn_sending>
+          <msg_sent>Viesti lähetetty käyttäjälle {0}</msg_sent>
         </activeeditors>
         <components>
-          <picker_title>Select Content</picker_title>
-          <picker_search>Search content by name...</picker_search>
-          <picker_noresults>No results found</picker_noresults>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_select>Select</btn_select>
-          <typepicker_title>Select Content Type</typepicker_title>
-          <typepicker_search>Search content types...</typepicker_search>
-          <typepicker_noresults>No content types found</typepicker_noresults>
+          <picker_title>Valitse sisältö</picker_title>
+          <picker_search>Hae sisältöä nimellä...</picker_search>
+          <picker_noresults>Tuloksia ei löytynyt</picker_noresults>
+          <btn_cancel>Peruuta</btn_cancel>
+          <btn_select>Valitse</btn_select>
+          <typepicker_title>Valitse sisältötyyppi</typepicker_title>
+          <typepicker_search>Hae sisältötyyppejä...</typepicker_search>
+          <typepicker_noresults>Sisältötyyppejä ei löytynyt</typepicker_noresults>
         </components>
         <editorpowertools>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
+          <loading>Ladataan...</loading>
+          <noresults>Tuloksia ei löytynyt</noresults>
         </editorpowertools>
       </ui>
     </editorpowertools>
