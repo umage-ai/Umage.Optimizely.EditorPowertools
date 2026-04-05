@@ -314,444 +314,444 @@
       <!-- JavaScript UI strings (injected via window.EPT_STRINGS) -->
       <ui>
         <shared>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
-          <cancel>Cancel</cancel>
-          <apply>Apply</apply>
-          <close>Close</close>
-          <runnow>Run now</runnow>
-          <refresh>Refresh</refresh>
-          <starting>Starting...</starting>
-          <export>Export</export>
-          <prev>Prev</prev>
-          <next>Next</next>
-          <yes>Yes</yes>
-          <no>No</no>
-          <open>Open</open>
-          <all>All</all>
-          <save>Save</save>
-          <delete>Delete</delete>
-          <edit>Edit</edit>
-          <failed>Failed</failed>
+          <loading>読み込み中...</loading>
+          <noresults>結果が見つかりませんでした</noresults>
+          <cancel>キャンセル</cancel>
+          <apply>適用</apply>
+          <close>閉じる</close>
+          <runnow>今すぐ実行</runnow>
+          <refresh>更新</refresh>
+          <starting>開始中...</starting>
+          <export>エクスポート</export>
+          <prev>前へ</prev>
+          <next>次へ</next>
+          <yes>はい</yes>
+          <no>いいえ</no>
+          <open>開く</open>
+          <all>すべて</all>
+          <save>保存</save>
+          <delete>削除</delete>
+          <edit>編集</edit>
+          <failed>失敗</failed>
         </shared>
         <contentaudit>
-          <col_contentid>Content ID</col_contentid>
-          <col_name>Name</col_name>
-          <col_language>Language</col_language>
-          <col_contenttype>Content Type</col_contenttype>
-          <col_maintype>Main Type</col_maintype>
+          <col_contentid>コンテンツID</col_contentid>
+          <col_name>名前</col_name>
+          <col_language>言語</col_language>
+          <col_contenttype>コンテンツタイプ</col_contenttype>
+          <col_maintype>メインタイプ</col_maintype>
           <col_url>URL</col_url>
-          <col_editurl>Edit URL</col_editurl>
-          <col_breadcrumb>Breadcrumb</col_breadcrumb>
-          <col_status>Status</col_status>
-          <col_createdby>Created By</col_createdby>
-          <col_created>Created</col_created>
-          <col_changedby>Changed By</col_changedby>
-          <col_changed>Changed</col_changed>
-          <col_published>Published</col_published>
-          <col_publisheduntil>Published Until</col_publisheduntil>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_alllanguages>All Languages</col_alllanguages>
-          <col_referencecount>Reference Count</col_referencecount>
-          <col_versioncount>Version Count</col_versioncount>
-          <col_haspersonalizations>Has Personalizations</col_haspersonalizations>
-          <filter_all>All content</filter_all>
-          <filter_pages>Pages only</filter_pages>
-          <filter_blocks>Blocks only</filter_blocks>
-          <filter_media>Media only</filter_media>
-          <filter_unpublished>Unpublished</filter_unpublished>
-          <filter_unused>Unused content</filter_unused>
-          <op_contains>Contains</op_contains>
-          <op_equals>Equals</op_equals>
-          <op_startswith>Starts with</op_startswith>
-          <op_isempty>Is empty</op_isempty>
-          <op_isnotempty>Is not empty</op_isnotempty>
-          <btn_filter>Filter</btn_filter>
-          <btn_columns>Columns</btn_columns>
-          <btn_selectall>Select all</btn_selectall>
-          <btn_reset>Reset</btn_reset>
-          <btn_addfilter>Add filter</btn_addfilter>
-          <btn_clearall>Clear all</btn_clearall>
-          <dlg_choosecolumns>Choose Columns</dlg_choosecolumns>
-          <dlg_addfilter>Add Filter</dlg_addfilter>
-          <lbl_column>Column</lbl_column>
-          <lbl_operator>Operator</lbl_operator>
-          <lbl_value>Value</lbl_value>
-          <lbl_filtervalue>Filter value...</lbl_filtervalue>
-          <lbl_search>Search by name...</lbl_search>
-          <stat_totalitems>Total items</stat_totalitems>
-          <stat_pages>Pages</stat_pages>
-          <stat_currentpage>Current page</stat_currentpage>
-          <empty_nodata>No data loaded.</empty_nodata>
-          <empty_nofilter>No content matches the current filters.</empty_nofilter>
-          <page_showing>Showing {0}-{1} of {2}</page_showing>
-          <perpage>{0} per page</perpage>
+          <col_editurl>編集URL</col_editurl>
+          <col_breadcrumb>パンくずリスト</col_breadcrumb>
+          <col_status>ステータス</col_status>
+          <col_createdby>作成者</col_createdby>
+          <col_created>作成日時</col_created>
+          <col_changedby>変更者</col_changedby>
+          <col_changed>変更日時</col_changed>
+          <col_published>公開日時</col_published>
+          <col_publisheduntil>公開終了日時</col_publisheduntil>
+          <col_masterlanguage>マスター言語</col_masterlanguage>
+          <col_alllanguages>すべての言語</col_alllanguages>
+          <col_referencecount>参照数</col_referencecount>
+          <col_versioncount>バージョン数</col_versioncount>
+          <col_haspersonalizations>パーソナライゼーションあり</col_haspersonalizations>
+          <filter_all>すべてのコンテンツ</filter_all>
+          <filter_pages>ページのみ</filter_pages>
+          <filter_blocks>ブロックのみ</filter_blocks>
+          <filter_media>メディアのみ</filter_media>
+          <filter_unpublished>未公開</filter_unpublished>
+          <filter_unused>未使用コンテンツ</filter_unused>
+          <op_contains>含む</op_contains>
+          <op_equals>等しい</op_equals>
+          <op_startswith>で始まる</op_startswith>
+          <op_isempty>空である</op_isempty>
+          <op_isnotempty>空でない</op_isnotempty>
+          <btn_filter>フィルター</btn_filter>
+          <btn_columns>列</btn_columns>
+          <btn_selectall>すべて選択</btn_selectall>
+          <btn_reset>リセット</btn_reset>
+          <btn_addfilter>フィルターを追加</btn_addfilter>
+          <btn_clearall>すべてクリア</btn_clearall>
+          <dlg_choosecolumns>列を選択</dlg_choosecolumns>
+          <dlg_addfilter>フィルターを追加</dlg_addfilter>
+          <lbl_column>列</lbl_column>
+          <lbl_operator>演算子</lbl_operator>
+          <lbl_value>値</lbl_value>
+          <lbl_filtervalue>フィルター値...</lbl_filtervalue>
+          <lbl_search>名前で検索...</lbl_search>
+          <stat_totalitems>合計アイテム数</stat_totalitems>
+          <stat_pages>ページ数</stat_pages>
+          <stat_currentpage>現在のページ</stat_currentpage>
+          <empty_nodata>データが読み込まれていません。</empty_nodata>
+          <empty_nofilter>現在のフィルターに一致するコンテンツがありません。</empty_nofilter>
+          <page_showing>{2}件中 {0}〜{1}件を表示</page_showing>
+          <perpage>1ページ {0}件</perpage>
           <fmt_excel>Excel (.xlsx)</fmt_excel>
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
-          <cell_openeditmode>Open in edit mode</cell_openeditmode>
+          <cell_openeditmode>編集モードで開く</cell_openeditmode>
         </contentaudit>
         <languageaudit>
-          <tab_overview>Overview</tab_overview>
-          <tab_missing>Missing Translations</tab_missing>
-          <tab_stale>Stale Translations</tab_stale>
-          <tab_queue>Translation Queue</tab_queue>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_languages>Languages</stat_languages>
-          <stat_missing>Missing Translations</stat_missing>
-          <stat_stale>Stale (30+ days)</stat_stale>
-          <stat_itemstotranslate>Items to Translate</stat_itemstotranslate>
-          <stat_page>Page</stat_page>
-          <stat_missing_lang>Missing {0}</stat_missing_lang>
-          <stat_stale_count>Stale Translations</stat_stale_count>
-          <card_coverage>Language Coverage</card_coverage>
-          <card_contentitems>{0} content items</card_contentitems>
-          <card_published>{0} published</card_published>
-          <lbl_language>Language:</lbl_language>
-          <lbl_threshold>Threshold (days):</lbl_threshold>
-          <lbl_targetlang>Target Language:</lbl_targetlang>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_alllanguages>All languages</lbl_alllanguages>
-          <lbl_alltypes>All types</lbl_alltypes>
-          <btn_coveragetree>Coverage Tree</btn_coveragetree>
-          <btn_apply>Apply</btn_apply>
-          <btn_exportcsv>Export CSV</btn_exportcsv>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_started>Job started, please refresh in a few minutes.</btn_started>
-          <btn_failed>Failed to start job</btn_failed>
+          <tab_overview>概要</tab_overview>
+          <tab_missing>未翻訳</tab_missing>
+          <tab_stale>古い翻訳</tab_stale>
+          <tab_queue>翻訳キュー</tab_queue>
+          <stat_totalcontent>コンテンツ合計</stat_totalcontent>
+          <stat_languages>言語数</stat_languages>
+          <stat_missing>未翻訳</stat_missing>
+          <stat_stale>古い翻訳（30日以上）</stat_stale>
+          <stat_itemstotranslate>翻訳対象アイテム数</stat_itemstotranslate>
+          <stat_page>ページ</stat_page>
+          <stat_missing_lang>{0} が未翻訳</stat_missing_lang>
+          <stat_stale_count>古い翻訳</stat_stale_count>
+          <card_coverage>言語カバレッジ</card_coverage>
+          <card_contentitems>{0}件のコンテンツ</card_contentitems>
+          <card_published>{0}件公開済み</card_published>
+          <lbl_language>言語：</lbl_language>
+          <lbl_threshold>閾値（日数）：</lbl_threshold>
+          <lbl_targetlang>対象言語：</lbl_targetlang>
+          <lbl_contenttype>コンテンツタイプ：</lbl_contenttype>
+          <lbl_alllanguages>すべての言語</lbl_alllanguages>
+          <lbl_alltypes>すべてのタイプ</lbl_alltypes>
+          <btn_coveragetree>カバレッジツリー</btn_coveragetree>
+          <btn_apply>適用</btn_apply>
+          <btn_exportcsv>CSV エクスポート</btn_exportcsv>
+          <btn_runnow>今すぐ実行</btn_runnow>
+          <btn_started>ジョブを開始しました。数分後に更新してください。</btn_started>
+          <btn_failed>ジョブの開始に失敗しました</btn_failed>
           <col_id>ID</col_id>
-          <col_name>Name</col_name>
-          <col_type>Type</col_type>
-          <col_master>Master</col_master>
-          <col_available>Available Languages</col_available>
-          <col_location>Location</col_location>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_stalelanguage>Stale Language</col_stalelanguage>
-          <col_daysbehind>Days Behind</col_daysbehind>
-          <col_lastupdated>Last Updated</col_lastupdated>
-          <col_available_short>Available</col_available_short>
-          <empty_all_translated>All content has been translated to {0}</empty_all_translated>
-          <empty_no_stale>No stale translations found (threshold: {0} days)</empty_no_stale>
-          <empty_no_queue>No content needs translation to {0}</empty_no_queue>
-          <empty_no_tree>No coverage tree data available</empty_no_tree>
-          <empty_nodata>No language data available. Run the aggregation job to collect statistics.</empty_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <page_info>Page {0} of {1}</page_info>
-          <btn_previous>Previous</btn_previous>
-          <btn_next>Next</btn_next>
+          <col_name>名前</col_name>
+          <col_type>タイプ</col_type>
+          <col_master>マスター</col_master>
+          <col_available>利用可能な言語</col_available>
+          <col_location>場所</col_location>
+          <col_masterlanguage>マスター言語</col_masterlanguage>
+          <col_stalelanguage>古い言語</col_stalelanguage>
+          <col_daysbehind>遅延日数</col_daysbehind>
+          <col_lastupdated>最終更新日時</col_lastupdated>
+          <col_available_short>利用可能</col_available_short>
+          <empty_all_translated>すべてのコンテンツが {0} に翻訳されています</empty_all_translated>
+          <empty_no_stale>古い翻訳はありません（閾値：{0}日）</empty_no_stale>
+          <empty_no_queue>{0} への翻訳が必要なコンテンツはありません</empty_no_queue>
+          <empty_no_tree>カバレッジツリーのデータがありません</empty_no_tree>
+          <empty_nodata>言語データがありません。集計ジョブを実行して統計を収集してください。</empty_nodata>
+          <banner_runjob>[EditorPowertools] コンテンツ分析スケジュールジョブを実行してデータを生成してください。</banner_runjob>
+          <page_info>{1}ページ中 {0}ページ目</page_info>
+          <btn_previous>前へ</btn_previous>
+          <btn_next>次へ</btn_next>
         </languageaudit>
         <cmsdoctor>
           <header_title>CMS Doctor</header_title>
-          <header_desc>Health checks for your Optimizely CMS. Extensible by third-party packages.</header_desc>
-          <lbl_lastrun>Last run: {0}</lbl_lastrun>
-          <btn_runall>Run All Checks</btn_runall>
-          <btn_running>Running...</btn_running>
-          <sum_healthy>Healthy</sum_healthy>
-          <sum_warnings>Warnings</sum_warnings>
-          <sum_faults>Faults</sum_faults>
-          <sum_notchecked>Not Checked</sum_notchecked>
-          <tag_all>All</tag_all>
-          <status_ok>Healthy</status_ok>
-          <status_warning>Warning</status_warning>
-          <status_badpractice>Bad Practice</status_badpractice>
-          <status_fault>Fault</status_fault>
-          <status_performance>Performance</status_performance>
-          <status_notchecked>Not Checked</status_notchecked>
-          <btn_run>Run</btn_run>
-          <btn_fix>Fix</btn_fix>
-          <btn_details>Details</btn_details>
-          <btn_dismiss>Dismiss</btn_dismiss>
-          <btn_restore>Restore</btn_restore>
-          <dlg_result>Result:</dlg_result>
-          <dlg_details>Details:</dlg_details>
-          <dlg_categories>Categories:</dlg_categories>
-          <dlg_checked>Checked: {0}</dlg_checked>
-          <btn_applyfix>Apply Fix</btn_applyfix>
-          <btn_rerun>Re-run Check</btn_rerun>
-          <btn_close>Close</btn_close>
-          <confirm_applyfix>Apply fix for this check?</confirm_applyfix>
-          <confirm_fix>Apply fix?</confirm_fix>
+          <header_desc>Optimizely CMSのヘルスチェック。サードパーティパッケージによる拡張が可能です。</header_desc>
+          <lbl_lastrun>最終実行：{0}</lbl_lastrun>
+          <btn_runall>すべてのチェックを実行</btn_runall>
+          <btn_running>実行中...</btn_running>
+          <sum_healthy>正常</sum_healthy>
+          <sum_warnings>警告</sum_warnings>
+          <sum_faults>障害</sum_faults>
+          <sum_notchecked>未チェック</sum_notchecked>
+          <tag_all>すべて</tag_all>
+          <status_ok>正常</status_ok>
+          <status_warning>警告</status_warning>
+          <status_badpractice>非推奨</status_badpractice>
+          <status_fault>障害</status_fault>
+          <status_performance>パフォーマンス</status_performance>
+          <status_notchecked>未チェック</status_notchecked>
+          <btn_run>実行</btn_run>
+          <btn_fix>修正</btn_fix>
+          <btn_details>詳細</btn_details>
+          <btn_dismiss>閉じる</btn_dismiss>
+          <btn_restore>復元</btn_restore>
+          <dlg_result>結果：</dlg_result>
+          <dlg_details>詳細：</dlg_details>
+          <dlg_categories>カテゴリー：</dlg_categories>
+          <dlg_checked>チェック日時：{0}</dlg_checked>
+          <btn_applyfix>修正を適用</btn_applyfix>
+          <btn_rerun>再チェック</btn_rerun>
+          <btn_close>閉じる</btn_close>
+          <confirm_applyfix>このチェックの修正を適用しますか？</confirm_applyfix>
+          <confirm_fix>修正を適用しますか？</confirm_fix>
         </cmsdoctor>
         <contenttypeaudit>
-          <alert_running>Aggregation job is currently running. Content counts will be updated when it completes.</alert_running>
-          <alert_notrun>Content statistics have not been collected yet. The "Content" column will show data after the aggregation job has been run.</alert_notrun>
-          <alert_old>Statistics were last updated {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <alert_started>Aggregation job has been started. Content counts will be updated when it completes.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <stat_contenttypes>Content Types</stat_contenttypes>
-          <stat_systemtypes>System Types</stat_systemtypes>
-          <stat_orphaned>Orphaned</stat_orphaned>
-          <stat_unused>Unused (0 content)</stat_unused>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search types... (or property:name)</lbl_search>
-          <opt_allbases>All base types</opt_allbases>
-          <chk_showsystem>Show system types</chk_showsystem>
-          <btn_table>Table</btn_table>
-          <btn_tree>Tree</btn_tree>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
-          <col_base>Base</col_base>
-          <col_group>Group</col_group>
-          <col_properties>Properties</col_properties>
-          <col_content>Content</col_content>
-          <opt_all>All</opt_all>
-          <badge_system>System</badge_system>
-          <badge_orphaned>Orphaned</badge_orphaned>
+          <alert_running>集計ジョブが実行中です。完了するとコンテンツ数が更新されます。</alert_running>
+          <alert_notrun>コンテンツ統計がまだ収集されていません。集計ジョブを実行すると「コンテンツ」列にデータが表示されます。</alert_notrun>
+          <alert_old>統計は {0} に最終更新されました。最新データのために集計ジョブの実行を検討してください。</alert_old>
+          <alert_started>集計ジョブを開始しました。完了するとコンテンツ数が更新されます。</alert_started>
+          <btn_refresh>更新</btn_refresh>
+          <btn_runnow>今すぐ実行</btn_runnow>
+          <btn_starting>開始中...</btn_starting>
+          <btn_failed>失敗</btn_failed>
+          <stat_contenttypes>コンテンツタイプ数</stat_contenttypes>
+          <stat_systemtypes>システムタイプ数</stat_systemtypes>
+          <stat_orphaned>孤立</stat_orphaned>
+          <stat_unused>未使用（コンテンツ0件）</stat_unused>
+          <stat_showing>表示中</stat_showing>
+          <lbl_search>タイプを検索...（または property:名前）</lbl_search>
+          <opt_allbases>すべての基底タイプ</opt_allbases>
+          <chk_showsystem>システムタイプを表示</chk_showsystem>
+          <btn_table>テーブル</btn_table>
+          <btn_tree>ツリー</btn_tree>
+          <btn_export>エクスポート</btn_export>
+          <col_name>名前</col_name>
+          <col_base>基底</col_base>
+          <col_group>グループ</col_group>
+          <col_properties>プロパティ</col_properties>
+          <col_content>コンテンツ</col_content>
+          <opt_all>すべて</opt_all>
+          <badge_system>システム</badge_system>
+          <badge_orphaned>孤立</badge_orphaned>
         </contenttypeaudit>
         <linkchecker>
-          <alert_running>Link checker job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Link checker has not been run yet. Run the scheduled job to scan content for links.</alert_notrun>
-          <alert_lastran>Link check last ran {0}.</alert_lastran>
-          <alert_started>Job started.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <btn_export>Export</btn_export>
-          <stat_total>Total Links</stat_total>
-          <stat_broken>Broken</stat_broken>
-          <stat_valid>Valid</stat_valid>
-          <stat_internal>Internal</stat_internal>
-          <stat_external>External</stat_external>
-          <lbl_search>Search URLs, content, properties...</lbl_search>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_internal>Internal</opt_internal>
-          <opt_external>External</opt_external>
-          <opt_allstatus>All status</opt_allstatus>
-          <opt_brokenonly>Broken only</opt_brokenonly>
-          <opt_validonly>Valid only</opt_validonly>
-          <col_status>Status</col_status>
+          <alert_running>リンクチェッカージョブが実行中です。完了すると結果が更新されます。</alert_running>
+          <alert_notrun>リンクチェッカーはまだ実行されていません。スケジュールジョブを実行してコンテンツのリンクをスキャンしてください。</alert_notrun>
+          <alert_lastran>リンクチェックは {0} に最後に実行されました。</alert_lastran>
+          <alert_started>ジョブを開始しました。</alert_started>
+          <btn_refresh>更新</btn_refresh>
+          <btn_runnow>今すぐ実行</btn_runnow>
+          <btn_starting>開始中...</btn_starting>
+          <btn_failed>失敗</btn_failed>
+          <btn_export>エクスポート</btn_export>
+          <stat_total>リンク合計数</stat_total>
+          <stat_broken>リンク切れ</stat_broken>
+          <stat_valid>有効</stat_valid>
+          <stat_internal>内部</stat_internal>
+          <stat_external>外部</stat_external>
+          <lbl_search>URL、コンテンツ、プロパティを検索...</lbl_search>
+          <opt_alltypes>すべてのタイプ</opt_alltypes>
+          <opt_internal>内部</opt_internal>
+          <opt_external>外部</opt_external>
+          <opt_allstatus>すべてのステータス</opt_allstatus>
+          <opt_brokenonly>リンク切れのみ</opt_brokenonly>
+          <opt_validonly>有効のみ</opt_validonly>
+          <col_status>ステータス</col_status>
           <col_url>URL</col_url>
-          <col_type>Type</col_type>
-          <col_foundin>Found In</col_foundin>
-          <col_checked>Checked</col_checked>
-          <cell_usedon>Used on: </cell_usedon>
+          <col_type>タイプ</col_type>
+          <col_foundin>発見場所</col_foundin>
+          <col_checked>チェック日時</col_checked>
+          <cell_usedon>使用箇所：</cell_usedon>
         </linkchecker>
         <securityaudit>
-          <tab_tree>Content Tree</tab_tree>
-          <tab_roles>Role/User Explorer</tab_roles>
-          <tab_issues>Issues</tab_issues>
-          <banner_nodata>Security audit data not available.</banner_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to analyze content permissions.</banner_runjob>
-          <banner_started>Aggregation job has been started. Data will update when it completes.</banner_started>
-          <alert_old>Security data was last analyzed {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_failed>Failed</btn_failed>
-          <stat_analyzed>Content Analyzed</stat_analyzed>
-          <stat_roles>Roles/Users</stat_roles>
-          <stat_issues>Issues Found</stat_issues>
-          <stat_lastanalysis>Last Analysis</stat_lastanalysis>
-          <pager_previous>Previous</pager_previous>
-          <pager_info>Page {0} of {1}</pager_info>
-          <pager_next>Next</pager_next>
+          <tab_tree>コンテンツツリー</tab_tree>
+          <tab_roles>ロール/ユーザー エクスプローラー</tab_roles>
+          <tab_issues>問題点</tab_issues>
+          <banner_nodata>セキュリティ監査データがありません。</banner_nodata>
+          <banner_runjob>[EditorPowertools] コンテンツ分析スケジュールジョブを実行してコンテンツの権限を分析してください。</banner_runjob>
+          <banner_started>集計ジョブを開始しました。完了するとデータが更新されます。</banner_started>
+          <alert_old>セキュリティデータは {0} に最終分析されました。最新データのために集計ジョブの実行を検討してください。</alert_old>
+          <btn_runnow>今すぐ実行</btn_runnow>
+          <btn_starting>開始中...</btn_starting>
+          <btn_refresh>更新</btn_refresh>
+          <btn_failed>失敗</btn_failed>
+          <stat_analyzed>分析済みコンテンツ数</stat_analyzed>
+          <stat_roles>ロール/ユーザー数</stat_roles>
+          <stat_issues>検出された問題数</stat_issues>
+          <stat_lastanalysis>最終分析日時</stat_lastanalysis>
+          <pager_previous>前へ</pager_previous>
+          <pager_info>{1}ページ中 {0}ページ目</pager_info>
+          <pager_next>次へ</pager_next>
         </securityaudit>
         <bulkeditor>
-          <opt_selecttype>-- Select content type --</opt_selecttype>
-          <btn_columns>Columns</btn_columns>
-          <btn_addfilter>Add Filter</btn_addfilter>
-          <chk_includereferences>Include references</chk_includereferences>
-          <btn_applyfilters>Apply Filters</btn_applyfilters>
-          <empty_selecttype>Select a content type above to start editing.</empty_selecttype>
-          <lbl_perpage>Per page:</lbl_perpage>
-          <pending_count>{0} changes pending</pending_count>
-          <btn_discardall>Discard All</btn_discardall>
-          <btn_saveall>Save All</btn_saveall>
-          <btn_publishall>Publish All</btn_publishall>
-          <confirm_discard>Discard all pending changes?</confirm_discard>
+          <opt_selecttype>-- コンテンツタイプを選択 --</opt_selecttype>
+          <btn_columns>列</btn_columns>
+          <btn_addfilter>フィルターを追加</btn_addfilter>
+          <chk_includereferences>参照を含む</chk_includereferences>
+          <btn_applyfilters>フィルターを適用</btn_applyfilters>
+          <empty_selecttype>上でコンテンツタイプを選択して編集を開始してください。</empty_selecttype>
+          <lbl_perpage>1ページあたり：</lbl_perpage>
+          <pending_count>{0}件の変更が保留中</pending_count>
+          <btn_discardall>すべて破棄</btn_discardall>
+          <btn_saveall>すべて保存</btn_saveall>
+          <btn_publishall>すべて公開</btn_publishall>
+          <confirm_discard>保留中のすべての変更を破棄しますか？</confirm_discard>
         </bulkeditor>
         <contentstatistics>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <error_load>Failed to load statistics from API.</error_load>
-          <error_render>Error rendering statistics dashboard.</error_render>
-          <chart_byctype>Content by Type</chart_byctype>
-          <chart_bystatus>Content by Status</chart_bystatus>
-          <chart_created>Content Created (last 12 months)</chart_created>
-          <chart_staleness>Content Staleness</chart_staleness>
-          <chart_editoractivity>Editor Activity (last 30 days)</chart_editoractivity>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_published>Published</stat_published>
-          <stat_draft>Draft</stat_draft>
-          <stat_editors>Active Editors</stat_editors>
-          <stat_pages>Pages</stat_pages>
-          <stat_blocks>Blocks</stat_blocks>
-          <stat_media>Media</stat_media>
+          <banner_runjob>[EditorPowertools] コンテンツ分析スケジュールジョブを実行してデータを生成してください。</banner_runjob>
+          <btn_runnow>今すぐ実行</btn_runnow>
+          <btn_starting>開始中...</btn_starting>
+          <error_load>APIから統計の読み込みに失敗しました。</error_load>
+          <error_render>統計ダッシュボードのレンダリング中にエラーが発生しました。</error_render>
+          <chart_byctype>タイプ別コンテンツ</chart_byctype>
+          <chart_bystatus>ステータス別コンテンツ</chart_bystatus>
+          <chart_created>作成されたコンテンツ（過去12ヶ月）</chart_created>
+          <chart_staleness>コンテンツの陳腐化</chart_staleness>
+          <chart_editoractivity>エディター活動（過去30日）</chart_editoractivity>
+          <stat_totalcontent>コンテンツ合計</stat_totalcontent>
+          <stat_published>公開済み</stat_published>
+          <stat_draft>下書き</stat_draft>
+          <stat_editors>アクティブなエディター数</stat_editors>
+          <stat_pages>ページ数</stat_pages>
+          <stat_blocks>ブロック数</stat_blocks>
+          <stat_media>メディア数</stat_media>
         </contentstatistics>
         <activitytimeline>
-          <stat_today>Activities Today</stat_today>
-          <stat_activeeditors>Active Editors</stat_activeeditors>
-          <stat_publishes>Publishes Today</stat_publishes>
-          <stat_drafts>Drafts Today</stat_drafts>
-          <opt_allusers>All users</opt_allusers>
-          <opt_published>Published</opt_published>
-          <opt_draft>Draft saved</opt_draft>
-          <opt_readytopublish>Ready to publish</opt_readytopublish>
-          <opt_scheduled>Scheduled</opt_scheduled>
-          <opt_rejected>Rejected</opt_rejected>
-          <opt_previouslypublished>Previously published</opt_previouslypublished>
-          <opt_comment>Comments</opt_comment>
-          <opt_allcontenttypes>All content types</opt_allcontenttypes>
-          <btn_filter>Filter</btn_filter>
-          <btn_clear>Clear</btn_clear>
-          <banner_showingfor>Showing timeline for {0}</banner_showingfor>
-          <btn_showall>Show all activity</btn_showall>
+          <stat_today>本日のアクティビティ数</stat_today>
+          <stat_activeeditors>アクティブなエディター数</stat_activeeditors>
+          <stat_publishes>本日の公開数</stat_publishes>
+          <stat_drafts>本日の下書き数</stat_drafts>
+          <opt_allusers>すべてのユーザー</opt_allusers>
+          <opt_published>公開済み</opt_published>
+          <opt_draft>下書き保存</opt_draft>
+          <opt_readytopublish>公開準備完了</opt_readytopublish>
+          <opt_scheduled>スケジュール済み</opt_scheduled>
+          <opt_rejected>却下</opt_rejected>
+          <opt_previouslypublished>以前に公開済み</opt_previouslypublished>
+          <opt_comment>コメント</opt_comment>
+          <opt_allcontenttypes>すべてのコンテンツタイプ</opt_allcontenttypes>
+          <btn_filter>フィルター</btn_filter>
+          <btn_clear>クリア</btn_clear>
+          <banner_showingfor>{0} のタイムラインを表示中</banner_showingfor>
+          <btn_showall>すべてのアクティビティを表示</btn_showall>
         </activitytimeline>
         <personalizationaudit>
-          <alert_running>Personalization analysis job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Personalization usage has not been analyzed yet. Run the analysis job to scan content for audience usage.</alert_notrun>
-          <alert_old>Analysis was last run {0}. Consider running the job again for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_starting>Starting...</btn_starting>
-          <stat_total>Total Usages</stat_total>
-          <stat_content>Content Items</stat_content>
-          <stat_groups>Visitor Groups Used</stat_groups>
-          <lbl_search>Search...</lbl_search>
-          <lbl_type>Usage Type:</lbl_type>
-          <lbl_group>Visitor Group:</lbl_group>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_allgroups>All groups</opt_allgroups>
-          <col_content>Content</col_content>
-          <col_type>Usage Type</col_type>
-          <col_groups>Visitor Groups</col_groups>
-          <col_location>Location</col_location>
+          <alert_running>パーソナライゼーション分析ジョブが実行中です。完了すると結果が更新されます。</alert_running>
+          <alert_notrun>パーソナライゼーションの使用状況はまだ分析されていません。分析ジョブを実行してオーディエンスの使用状況をスキャンしてください。</alert_notrun>
+          <alert_old>分析は {0} に最後に実行されました。最新データのためにジョブの再実行を検討してください。</alert_old>
+          <btn_runnow>今すぐ実行</btn_runnow>
+          <btn_refresh>更新</btn_refresh>
+          <btn_starting>開始中...</btn_starting>
+          <stat_total>使用箇所合計数</stat_total>
+          <stat_content>コンテンツアイテム数</stat_content>
+          <stat_groups>使用中のビジターグループ数</stat_groups>
+          <lbl_search>検索...</lbl_search>
+          <lbl_type>使用タイプ：</lbl_type>
+          <lbl_group>ビジターグループ：</lbl_group>
+          <opt_alltypes>すべてのタイプ</opt_alltypes>
+          <opt_allgroups>すべてのグループ</opt_allgroups>
+          <col_content>コンテンツ</col_content>
+          <col_type>使用タイプ</col_type>
+          <col_groups>ビジターグループ</col_groups>
+          <col_location>場所</col_location>
         </personalizationaudit>
         <audiencemanager>
-          <stat_audiences>Audiences</stat_audiences>
-          <stat_withstats>With Statistics</stat_withstats>
-          <stat_categories>Categories</stat_categories>
-          <stat_totalcriteria>Total Criteria</stat_totalcriteria>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search audiences...</lbl_search>
-          <opt_allcategories>All categories</opt_allcategories>
-          <chk_hasstats>Has Statistics</chk_hasstats>
-          <lnk_personalizationaudit>Personalization Audit</lnk_personalizationaudit>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
-          <col_criteria>Criteria</col_criteria>
-          <col_operator>Operator</col_operator>
-          <col_statistics>Statistics</col_statistics>
-          <col_usage>Usage</col_usage>
-          <opt_all>All</opt_all>
-          <title_usagedetails>Show usage details</title_usagedetails>
-          <title_notused>Not used in any personalized content</title_notused>
-          <title_runjobfirst>Run the Personalization Analysis job first</title_runjobfirst>
+          <stat_audiences>オーディエンス数</stat_audiences>
+          <stat_withstats>統計あり</stat_withstats>
+          <stat_categories>カテゴリー数</stat_categories>
+          <stat_totalcriteria>条件合計数</stat_totalcriteria>
+          <stat_showing>表示中</stat_showing>
+          <lbl_search>オーディエンスを検索...</lbl_search>
+          <opt_allcategories>すべてのカテゴリー</opt_allcategories>
+          <chk_hasstats>統計あり</chk_hasstats>
+          <lnk_personalizationaudit>パーソナライゼーション監査</lnk_personalizationaudit>
+          <btn_export>エクスポート</btn_export>
+          <col_name>名前</col_name>
+          <col_criteria>条件</col_criteria>
+          <col_operator>演算子</col_operator>
+          <col_statistics>統計</col_statistics>
+          <col_usage>使用状況</col_usage>
+          <opt_all>すべて</opt_all>
+          <title_usagedetails>使用状況の詳細を表示</title_usagedetails>
+          <title_notused>パーソナライズされたコンテンツには使用されていません</title_notused>
+          <title_runjobfirst>最初にパーソナライゼーション分析ジョブを実行してください</title_runjobfirst>
         </audiencemanager>
         <contentimporter>
-          <step_upload>1. Upload File</step_upload>
-          <step_configure>2. Configure</step_configure>
-          <step_dryrun>3. Dry Run</step_dryrun>
-          <step_import>4. Import</step_import>
-          <lbl_dropfile>Drop a CSV, JSON, or Excel file here, or click to browse</lbl_dropfile>
-          <btn_browse>Browse...</btn_browse>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_language>Language:</lbl_language>
-          <lbl_parent>Parent Location:</lbl_parent>
-          <lbl_namecol>Name Column:</lbl_namecol>
-          <lbl_publishafter>Publish after import</lbl_publishafter>
-          <lbl_selectparent>Select parent...</lbl_selectparent>
-          <btn_next>Next</btn_next>
-          <btn_back>Back</btn_back>
-          <lbl_mapping>Field Mapping</lbl_mapping>
-          <lbl_sourcecol>Source Column</lbl_sourcecol>
-          <lbl_targetfield>Target Field</lbl_targetfield>
-          <opt_skip>-- Skip --</opt_skip>
-          <btn_dryrun>Run Dry Run</btn_dryrun>
-          <lbl_dryresult>Dry Run Results</lbl_dryresult>
-          <btn_import>Start Import</btn_import>
-          <btn_startover>Start Over</btn_startover>
-          <lbl_importing>Importing...</lbl_importing>
+          <step_upload>1. ファイルのアップロード</step_upload>
+          <step_configure>2. 設定</step_configure>
+          <step_dryrun>3. ドライラン</step_dryrun>
+          <step_import>4. インポート</step_import>
+          <lbl_dropfile>CSV、JSON、またはExcelファイルをここにドロップするか、クリックして参照してください</lbl_dropfile>
+          <btn_browse>参照...</btn_browse>
+          <lbl_contenttype>コンテンツタイプ：</lbl_contenttype>
+          <lbl_language>言語：</lbl_language>
+          <lbl_parent>親の場所：</lbl_parent>
+          <lbl_namecol>名前列：</lbl_namecol>
+          <lbl_publishafter>インポート後に公開</lbl_publishafter>
+          <lbl_selectparent>親を選択...</lbl_selectparent>
+          <btn_next>次へ</btn_next>
+          <btn_back>戻る</btn_back>
+          <lbl_mapping>フィールドマッピング</lbl_mapping>
+          <lbl_sourcecol>ソース列</lbl_sourcecol>
+          <lbl_targetfield>対象フィールド</lbl_targetfield>
+          <opt_skip>-- スキップ --</opt_skip>
+          <btn_dryrun>ドライランを実行</btn_dryrun>
+          <lbl_dryresult>ドライラン結果</lbl_dryresult>
+          <btn_import>インポート開始</btn_import>
+          <btn_startover>最初からやり直す</btn_startover>
+          <lbl_importing>インポート中...</lbl_importing>
         </contentimporter>
         <managechildren>
-          <lbl_selectparent>Select a parent page to manage its children</lbl_selectparent>
-          <btn_selectparent>Select Parent Page</btn_selectparent>
-          <btn_sortaz>Sort A-Z</btn_sortaz>
-          <btn_sortza>Sort Z-A</btn_sortza>
-          <btn_sortbydate>Sort by Date</btn_sortbydate>
-          <btn_publishall>Publish All</btn_publishall>
-          <btn_unpublishall>Unpublish All</btn_unpublishall>
-          <btn_deleteselected>Delete Selected</btn_deleteselected>
-          <btn_saveorder>Save Order</btn_saveorder>
-          <col_name>Name</col_name>
-          <col_status>Status</col_status>
-          <col_changed>Changed</col_changed>
-          <col_type>Type</col_type>
-          <confirm_delete>Delete {0} selected item(s)? This cannot be undone.</confirm_delete>
-          <confirm_publishall>Publish all {0} children?</confirm_publishall>
-          <confirm_unpublishall>Unpublish all {0} children?</confirm_unpublishall>
+          <lbl_selectparent>子ページを管理する親ページを選択してください</lbl_selectparent>
+          <btn_selectparent>親ページを選択</btn_selectparent>
+          <btn_sortaz>A〜Z順に並び替え</btn_sortaz>
+          <btn_sortza>Z〜A順に並び替え</btn_sortza>
+          <btn_sortbydate>日付順に並び替え</btn_sortbydate>
+          <btn_publishall>すべて公開</btn_publishall>
+          <btn_unpublishall>すべて非公開</btn_unpublishall>
+          <btn_deleteselected>選択項目を削除</btn_deleteselected>
+          <btn_saveorder>順序を保存</btn_saveorder>
+          <col_name>名前</col_name>
+          <col_status>ステータス</col_status>
+          <col_changed>変更日時</col_changed>
+          <col_type>タイプ</col_type>
+          <confirm_delete>選択した {0} 件のアイテムを削除しますか？この操作は元に戻せません。</confirm_delete>
+          <confirm_publishall>すべての {0} 件の子ページを公開しますか？</confirm_publishall>
+          <confirm_unpublishall>すべての {0} 件の子ページを非公開にしますか？</confirm_unpublishall>
         </managechildren>
         <recommendations>
-          <banner_info>When editors create new content, Optimizely can suggest which content types to use. Define rules below to control these suggestions based on where content is being created.</banner_info>
-          <btn_addrule>Add Rule</btn_addrule>
-          <col_parenttype>Parent Type</col_parenttype>
-          <col_allowedtypes>Allowed Types</col_allowedtypes>
-          <col_actions>Actions</col_actions>
-          <dlg_addrule>Add Rule</dlg_addrule>
-          <dlg_editrule>Edit Rule</dlg_editrule>
-          <lbl_parenttype>Parent Content Type:</lbl_parenttype>
-          <lbl_allowedtypes>Allowed Child Types:</lbl_allowedtypes>
-          <btn_save>Save</btn_save>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_edit>Edit</btn_edit>
-          <btn_delete>Delete</btn_delete>
-          <empty_norules>No recommendation rules defined yet. Click "Add Rule" to create one.</empty_norules>
-          <confirm_delete>Delete this rule?</confirm_delete>
+          <banner_info>エディターが新しいコンテンツを作成する際、Optimizelyは使用するコンテンツタイプを提案できます。コンテンツが作成される場所に基づいてこれらの提案を制御するルールを以下で定義してください。</banner_info>
+          <btn_addrule>ルールを追加</btn_addrule>
+          <col_parenttype>親タイプ</col_parenttype>
+          <col_allowedtypes>許可タイプ</col_allowedtypes>
+          <col_actions>操作</col_actions>
+          <dlg_addrule>ルールを追加</dlg_addrule>
+          <dlg_editrule>ルールを編集</dlg_editrule>
+          <lbl_parenttype>親コンテンツタイプ：</lbl_parenttype>
+          <lbl_allowedtypes>許可された子タイプ：</lbl_allowedtypes>
+          <btn_save>保存</btn_save>
+          <btn_cancel>キャンセル</btn_cancel>
+          <btn_edit>編集</btn_edit>
+          <btn_delete>削除</btn_delete>
+          <empty_norules>推奨ルールがまだ定義されていません。「ルールを追加」をクリックして作成してください。</empty_norules>
+          <confirm_delete>このルールを削除しますか？</confirm_delete>
         </recommendations>
         <gantt>
-          <error_load>Failed to load Gantt data: {0}</error_load>
-          <empty_nojobs>No scheduled jobs found.</empty_nojobs>
-          <stat_totaljobs>Total Jobs</stat_totaljobs>
-          <stat_enabled>Enabled</stat_enabled>
-          <stat_running>Running Now</stat_running>
-          <stat_executions>Executions in View</stat_executions>
-          <btn_previous>Previous</btn_previous>
-          <btn_today>Today</btn_today>
-          <btn_next>Next</btn_next>
-          <lbl_viewhours>{0}h view</lbl_viewhours>
-          <col_job>Job</col_job>
+          <error_load>Ganttデータの読み込みに失敗しました：{0}</error_load>
+          <empty_nojobs>スケジュールジョブが見つかりませんでした。</empty_nojobs>
+          <stat_totaljobs>ジョブ合計数</stat_totaljobs>
+          <stat_enabled>有効</stat_enabled>
+          <stat_running>実行中</stat_running>
+          <stat_executions>表示中の実行数</stat_executions>
+          <btn_previous>前へ</btn_previous>
+          <btn_today>今日</btn_today>
+          <btn_next>次へ</btn_next>
+          <lbl_viewhours>{0}時間表示</lbl_viewhours>
+          <col_job>ジョブ</col_job>
         </gantt>
         <activeeditors>
-          <error_nosignalr>SignalR client not available. Check browser console for errors.</error_nosignalr>
-          <error_connect>Could not connect: {0}</error_connect>
-          <stat_online>Online Now</stat_online>
-          <stat_editing>Currently Editing</stat_editing>
-          <stat_today>Active Today</stat_today>
-          <section_online>Online Now</section_online>
-          <section_today>Also Active Today</section_today>
-          <lbl_connected>Connected {0}</lbl_connected>
-          <btn_sendmessage>Send Message</btn_sendmessage>
-          <badge_you>you</badge_you>
-          <badge_offline>offline</badge_offline>
-          <chat_title>Team Chat</chat_title>
-          <chat_empty>No messages yet. Say hello!</chat_empty>
-          <chat_placeholder>Type a message... (Enter to send)</chat_placeholder>
-          <dlg_sendmessage>Send Message to {0}</dlg_sendmessage>
-          <dlg_desc>This will send a CMS notification that {0} will see in their notification bell.</dlg_desc>
-          <dlg_placeholder>Type your message...</dlg_placeholder>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_send>Send Notification</btn_send>
-          <btn_sending>Sending...</btn_sending>
-          <msg_sent>Message sent to {0}</msg_sent>
+          <error_nosignalr>SignalRクライアントが利用できません。ブラウザのコンソールでエラーを確認してください。</error_nosignalr>
+          <error_connect>接続できませんでした：{0}</error_connect>
+          <stat_online>現在オンライン</stat_online>
+          <stat_editing>編集中</stat_editing>
+          <stat_today>本日アクティブ</stat_today>
+          <section_online>現在オンライン</section_online>
+          <section_today>本日もアクティブ</section_today>
+          <lbl_connected>{0} に接続済み</lbl_connected>
+          <btn_sendmessage>メッセージを送信</btn_sendmessage>
+          <badge_you>あなた</badge_you>
+          <badge_offline>オフライン</badge_offline>
+          <chat_title>チームチャット</chat_title>
+          <chat_empty>まだメッセージがありません。挨拶してみましょう！</chat_empty>
+          <chat_placeholder>メッセージを入力...（Enterで送信）</chat_placeholder>
+          <dlg_sendmessage>{0} にメッセージを送信</dlg_sendmessage>
+          <dlg_desc>{0} の通知ベルに表示されるCMS通知を送信します。</dlg_desc>
+          <dlg_placeholder>メッセージを入力してください...</dlg_placeholder>
+          <btn_cancel>キャンセル</btn_cancel>
+          <btn_send>通知を送信</btn_send>
+          <btn_sending>送信中...</btn_sending>
+          <msg_sent>{0} にメッセージを送信しました</msg_sent>
         </activeeditors>
         <components>
-          <picker_title>Select Content</picker_title>
-          <picker_search>Search content by name...</picker_search>
-          <picker_noresults>No results found</picker_noresults>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_select>Select</btn_select>
-          <typepicker_title>Select Content Type</typepicker_title>
-          <typepicker_search>Search content types...</typepicker_search>
-          <typepicker_noresults>No content types found</typepicker_noresults>
+          <picker_title>コンテンツを選択</picker_title>
+          <picker_search>名前でコンテンツを検索...</picker_search>
+          <picker_noresults>結果が見つかりませんでした</picker_noresults>
+          <btn_cancel>キャンセル</btn_cancel>
+          <btn_select>選択</btn_select>
+          <typepicker_title>コンテンツタイプを選択</typepicker_title>
+          <typepicker_search>コンテンツタイプを検索...</typepicker_search>
+          <typepicker_noresults>コンテンツタイプが見つかりませんでした</typepicker_noresults>
         </components>
         <editorpowertools>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
+          <loading>読み込み中...</loading>
+          <noresults>結果が見つかりませんでした</noresults>
         </editorpowertools>
       </ui>
     </editorpowertools>
