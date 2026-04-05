@@ -121,6 +121,25 @@
 .ept-header__nav a:hover { background: var(--ept-surface-hover); color: var(--ept-text); }
 .ept-header__nav a.active { background: var(--ept-primary-light); color: var(--ept-primary); }
 
+.ept-header__about {
+    margin-left: auto;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    font-size: var(--ept-text-sm);
+    font-weight: 500;
+    color: var(--ept-text-secondary);
+    text-decoration: none;
+    border-radius: var(--ept-radius-sm);
+    border: 1px solid var(--ept-border);
+    transition: background .15s, color .15s, border-color .15s;
+    white-space: nowrap;
+}
+.ept-header__about:hover { background: var(--ept-surface-hover); color: var(--ept-text); border-color: var(--ept-text-muted); }
+.ept-header__about svg { width: 13px; height: 13px; }
+
 .ept-main {
     flex: 1;
     padding: var(--ept-space-lg);
