@@ -61,9 +61,9 @@
 
     function renderPickParent() {
         root.innerHTML = '<div class="ept-page-header"><h1>Manage Child Items</h1>' +
-            '<p>Select a content item to manage its children.</p></div>' +
+            '<p>' + EPT.s('managechildren.lbl_selectparent', 'Select a parent page to manage its children') + '</p></div>' +
             '<div class="ept-card"><div class="ept-card__body">' +
-            '<button class="ept-btn ept-btn--primary" id="pick-parent">Browse Content Tree...</button>' +
+            '<button class="ept-btn ept-btn--primary" id="pick-parent">' + EPT.s('managechildren.btn_selectparent', 'Select Parent Page') + '</button>' +
             '</div></div>';
 
         document.getElementById('pick-parent').onclick = function () {
@@ -103,10 +103,10 @@
         html += '<div style="overflow-x:auto"><table class="ept-table" id="children-table">';
         html += '<thead><tr>';
         html += '<th style="width:40px"></th>';
-        html += '<th class="sortable" data-sort="name">Name</th>';
-        html += '<th class="sortable" data-sort="type">Type</th>';
-        html += '<th class="sortable" data-sort="status">Status</th>';
-        html += '<th class="sortable" data-sort="changed">Changed</th>';
+        html += '<th class="sortable" data-sort="name">' + EPT.s('managechildren.col_name', 'Name') + '</th>';
+        html += '<th class="sortable" data-sort="type">' + EPT.s('managechildren.col_type', 'Type') + '</th>';
+        html += '<th class="sortable" data-sort="status">' + EPT.s('managechildren.col_status', 'Status') + '</th>';
+        html += '<th class="sortable" data-sort="changed">' + EPT.s('managechildren.col_changed', 'Changed') + '</th>';
         html += '<th>Changed By</th>';
         html += '<th style="width:50px"></th>';
         html += '</tr></thead>';
@@ -204,10 +204,10 @@
         }
 
         // Bulk action buttons
-        bindAction('btn-publish', 'publish', 'Publish ' + state.selected.size + ' items?');
-        bindAction('btn-unpublish', 'unpublish', 'Unpublish ' + state.selected.size + ' items?');
+        bindAction('btn-publish', 'publish', EPT.s('managechildren.confirm_publishall', 'Publish all {0} children?').replace('{0}', state.selected.size));
+        bindAction('btn-unpublish', 'unpublish', EPT.s('managechildren.confirm_unpublishall', 'Unpublish all {0} children?').replace('{0}', state.selected.size));
         bindAction('btn-trash', 'delete', 'Move ' + state.selected.size + ' items to trash?');
-        bindAction('btn-delete', 'delete-permanently', 'PERMANENTLY delete ' + state.selected.size + ' items? This cannot be undone!');
+        bindAction('btn-delete', 'delete-permanently', EPT.s('managechildren.confirm_delete', 'Delete {0} selected item(s)? This cannot be undone.').replace('{0}', state.selected.size));
 
         // Move button
         var moveBtn = document.getElementById('btn-move');
