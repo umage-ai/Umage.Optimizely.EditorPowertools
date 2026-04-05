@@ -314,444 +314,444 @@
       <!-- JavaScript UI strings (injected via window.EPT_STRINGS) -->
       <ui>
         <shared>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
-          <cancel>Cancel</cancel>
-          <apply>Apply</apply>
-          <close>Close</close>
-          <runnow>Run now</runnow>
-          <refresh>Refresh</refresh>
-          <starting>Starting...</starting>
-          <export>Export</export>
-          <prev>Prev</prev>
-          <next>Next</next>
-          <yes>Yes</yes>
-          <no>No</no>
-          <open>Open</open>
-          <all>All</all>
-          <save>Save</save>
-          <delete>Delete</delete>
-          <edit>Edit</edit>
-          <failed>Failed</failed>
+          <loading>Chargement...</loading>
+          <noresults>Aucun résultat trouvé</noresults>
+          <cancel>Annuler</cancel>
+          <apply>Appliquer</apply>
+          <close>Fermer</close>
+          <runnow>Exécuter maintenant</runnow>
+          <refresh>Actualiser</refresh>
+          <starting>Démarrage...</starting>
+          <export>Exporter</export>
+          <prev>Préc.</prev>
+          <next>Suiv.</next>
+          <yes>Oui</yes>
+          <no>Non</no>
+          <open>Ouvrir</open>
+          <all>Tout</all>
+          <save>Enregistrer</save>
+          <delete>Supprimer</delete>
+          <edit>Modifier</edit>
+          <failed>Échec</failed>
         </shared>
         <contentaudit>
-          <col_contentid>Content ID</col_contentid>
-          <col_name>Name</col_name>
-          <col_language>Language</col_language>
-          <col_contenttype>Content Type</col_contenttype>
-          <col_maintype>Main Type</col_maintype>
+          <col_contentid>ID contenu</col_contentid>
+          <col_name>Nom</col_name>
+          <col_language>Langue</col_language>
+          <col_contenttype>Type de contenu</col_contenttype>
+          <col_maintype>Type principal</col_maintype>
           <col_url>URL</col_url>
-          <col_editurl>Edit URL</col_editurl>
-          <col_breadcrumb>Breadcrumb</col_breadcrumb>
-          <col_status>Status</col_status>
-          <col_createdby>Created By</col_createdby>
-          <col_created>Created</col_created>
-          <col_changedby>Changed By</col_changedby>
-          <col_changed>Changed</col_changed>
-          <col_published>Published</col_published>
-          <col_publisheduntil>Published Until</col_publisheduntil>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_alllanguages>All Languages</col_alllanguages>
-          <col_referencecount>Reference Count</col_referencecount>
-          <col_versioncount>Version Count</col_versioncount>
-          <col_haspersonalizations>Has Personalizations</col_haspersonalizations>
-          <filter_all>All content</filter_all>
-          <filter_pages>Pages only</filter_pages>
-          <filter_blocks>Blocks only</filter_blocks>
-          <filter_media>Media only</filter_media>
-          <filter_unpublished>Unpublished</filter_unpublished>
-          <filter_unused>Unused content</filter_unused>
-          <op_contains>Contains</op_contains>
-          <op_equals>Equals</op_equals>
-          <op_startswith>Starts with</op_startswith>
-          <op_isempty>Is empty</op_isempty>
-          <op_isnotempty>Is not empty</op_isnotempty>
-          <btn_filter>Filter</btn_filter>
-          <btn_columns>Columns</btn_columns>
-          <btn_selectall>Select all</btn_selectall>
-          <btn_reset>Reset</btn_reset>
-          <btn_addfilter>Add filter</btn_addfilter>
-          <btn_clearall>Clear all</btn_clearall>
-          <dlg_choosecolumns>Choose Columns</dlg_choosecolumns>
-          <dlg_addfilter>Add Filter</dlg_addfilter>
-          <lbl_column>Column</lbl_column>
-          <lbl_operator>Operator</lbl_operator>
-          <lbl_value>Value</lbl_value>
-          <lbl_filtervalue>Filter value...</lbl_filtervalue>
-          <lbl_search>Search by name...</lbl_search>
-          <stat_totalitems>Total items</stat_totalitems>
+          <col_editurl>URL d'édition</col_editurl>
+          <col_breadcrumb>Fil d'Ariane</col_breadcrumb>
+          <col_status>Statut</col_status>
+          <col_createdby>Créé par</col_createdby>
+          <col_created>Créé</col_created>
+          <col_changedby>Modifié par</col_changedby>
+          <col_changed>Modifié</col_changed>
+          <col_published>Publié</col_published>
+          <col_publisheduntil>Publié jusqu'au</col_publisheduntil>
+          <col_masterlanguage>Langue principale</col_masterlanguage>
+          <col_alllanguages>Toutes les langues</col_alllanguages>
+          <col_referencecount>Nombre de références</col_referencecount>
+          <col_versioncount>Nombre de versions</col_versioncount>
+          <col_haspersonalizations>A des personnalisations</col_haspersonalizations>
+          <filter_all>Tout le contenu</filter_all>
+          <filter_pages>Pages uniquement</filter_pages>
+          <filter_blocks>Blocs uniquement</filter_blocks>
+          <filter_media>Médias uniquement</filter_media>
+          <filter_unpublished>Non publié</filter_unpublished>
+          <filter_unused>Contenu inutilisé</filter_unused>
+          <op_contains>Contient</op_contains>
+          <op_equals>Égal à</op_equals>
+          <op_startswith>Commence par</op_startswith>
+          <op_isempty>Est vide</op_isempty>
+          <op_isnotempty>N'est pas vide</op_isnotempty>
+          <btn_filter>Filtrer</btn_filter>
+          <btn_columns>Colonnes</btn_columns>
+          <btn_selectall>Tout sélectionner</btn_selectall>
+          <btn_reset>Réinitialiser</btn_reset>
+          <btn_addfilter>Ajouter un filtre</btn_addfilter>
+          <btn_clearall>Tout effacer</btn_clearall>
+          <dlg_choosecolumns>Choisir les colonnes</dlg_choosecolumns>
+          <dlg_addfilter>Ajouter un filtre</dlg_addfilter>
+          <lbl_column>Colonne</lbl_column>
+          <lbl_operator>Opérateur</lbl_operator>
+          <lbl_value>Valeur</lbl_value>
+          <lbl_filtervalue>Valeur du filtre...</lbl_filtervalue>
+          <lbl_search>Rechercher par nom...</lbl_search>
+          <stat_totalitems>Total des éléments</stat_totalitems>
           <stat_pages>Pages</stat_pages>
-          <stat_currentpage>Current page</stat_currentpage>
-          <empty_nodata>No data loaded.</empty_nodata>
-          <empty_nofilter>No content matches the current filters.</empty_nofilter>
-          <page_showing>Showing {0}-{1} of {2}</page_showing>
-          <perpage>{0} per page</perpage>
+          <stat_currentpage>Page actuelle</stat_currentpage>
+          <empty_nodata>Aucune donnée chargée.</empty_nodata>
+          <empty_nofilter>Aucun contenu ne correspond aux filtres actuels.</empty_nofilter>
+          <page_showing>Affichage {0}-{1} sur {2}</page_showing>
+          <perpage>{0} par page</perpage>
           <fmt_excel>Excel (.xlsx)</fmt_excel>
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
-          <cell_openeditmode>Open in edit mode</cell_openeditmode>
+          <cell_openeditmode>Ouvrir en mode édition</cell_openeditmode>
         </contentaudit>
         <languageaudit>
-          <tab_overview>Overview</tab_overview>
-          <tab_missing>Missing Translations</tab_missing>
-          <tab_stale>Stale Translations</tab_stale>
-          <tab_queue>Translation Queue</tab_queue>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_languages>Languages</stat_languages>
-          <stat_missing>Missing Translations</stat_missing>
-          <stat_stale>Stale (30+ days)</stat_stale>
-          <stat_itemstotranslate>Items to Translate</stat_itemstotranslate>
+          <tab_overview>Vue d'ensemble</tab_overview>
+          <tab_missing>Traductions manquantes</tab_missing>
+          <tab_stale>Traductions obsolètes</tab_stale>
+          <tab_queue>File de traduction</tab_queue>
+          <stat_totalcontent>Contenu total</stat_totalcontent>
+          <stat_languages>Langues</stat_languages>
+          <stat_missing>Traductions manquantes</stat_missing>
+          <stat_stale>Obsolètes (30+ jours)</stat_stale>
+          <stat_itemstotranslate>Éléments à traduire</stat_itemstotranslate>
           <stat_page>Page</stat_page>
-          <stat_missing_lang>Missing {0}</stat_missing_lang>
-          <stat_stale_count>Stale Translations</stat_stale_count>
-          <card_coverage>Language Coverage</card_coverage>
-          <card_contentitems>{0} content items</card_contentitems>
-          <card_published>{0} published</card_published>
-          <lbl_language>Language:</lbl_language>
-          <lbl_threshold>Threshold (days):</lbl_threshold>
-          <lbl_targetlang>Target Language:</lbl_targetlang>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_alllanguages>All languages</lbl_alllanguages>
-          <lbl_alltypes>All types</lbl_alltypes>
-          <btn_coveragetree>Coverage Tree</btn_coveragetree>
-          <btn_apply>Apply</btn_apply>
-          <btn_exportcsv>Export CSV</btn_exportcsv>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_started>Job started, please refresh in a few minutes.</btn_started>
-          <btn_failed>Failed to start job</btn_failed>
+          <stat_missing_lang>Manquant {0}</stat_missing_lang>
+          <stat_stale_count>Traductions obsolètes</stat_stale_count>
+          <card_coverage>Couverture linguistique</card_coverage>
+          <card_contentitems>{0} éléments de contenu</card_contentitems>
+          <card_published>{0} publiés</card_published>
+          <lbl_language>Langue :</lbl_language>
+          <lbl_threshold>Seuil (jours) :</lbl_threshold>
+          <lbl_targetlang>Langue cible :</lbl_targetlang>
+          <lbl_contenttype>Type de contenu :</lbl_contenttype>
+          <lbl_alllanguages>Toutes les langues</lbl_alllanguages>
+          <lbl_alltypes>Tous les types</lbl_alltypes>
+          <btn_coveragetree>Arbre de couverture</btn_coveragetree>
+          <btn_apply>Appliquer</btn_apply>
+          <btn_exportcsv>Exporter CSV</btn_exportcsv>
+          <btn_runnow>Exécuter maintenant</btn_runnow>
+          <btn_started>Tâche démarrée, veuillez actualiser dans quelques minutes.</btn_started>
+          <btn_failed>Échec du démarrage de la tâche</btn_failed>
           <col_id>ID</col_id>
-          <col_name>Name</col_name>
+          <col_name>Nom</col_name>
           <col_type>Type</col_type>
-          <col_master>Master</col_master>
-          <col_available>Available Languages</col_available>
-          <col_location>Location</col_location>
-          <col_masterlanguage>Master Language</col_masterlanguage>
-          <col_stalelanguage>Stale Language</col_stalelanguage>
-          <col_daysbehind>Days Behind</col_daysbehind>
-          <col_lastupdated>Last Updated</col_lastupdated>
-          <col_available_short>Available</col_available_short>
-          <empty_all_translated>All content has been translated to {0}</empty_all_translated>
-          <empty_no_stale>No stale translations found (threshold: {0} days)</empty_no_stale>
-          <empty_no_queue>No content needs translation to {0}</empty_no_queue>
-          <empty_no_tree>No coverage tree data available</empty_no_tree>
-          <empty_nodata>No language data available. Run the aggregation job to collect statistics.</empty_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <page_info>Page {0} of {1}</page_info>
-          <btn_previous>Previous</btn_previous>
-          <btn_next>Next</btn_next>
+          <col_master>Principal</col_master>
+          <col_available>Langues disponibles</col_available>
+          <col_location>Emplacement</col_location>
+          <col_masterlanguage>Langue principale</col_masterlanguage>
+          <col_stalelanguage>Langue obsolète</col_stalelanguage>
+          <col_daysbehind>Jours de retard</col_daysbehind>
+          <col_lastupdated>Dernière mise à jour</col_lastupdated>
+          <col_available_short>Disponible</col_available_short>
+          <empty_all_translated>Tout le contenu a été traduit en {0}</empty_all_translated>
+          <empty_no_stale>Aucune traduction obsolète trouvée (seuil : {0} jours)</empty_no_stale>
+          <empty_no_queue>Aucun contenu ne nécessite de traduction en {0}</empty_no_queue>
+          <empty_no_tree>Aucune donnée d'arbre de couverture disponible</empty_no_tree>
+          <empty_nodata>Aucune donnée de langue disponible. Exécutez la tâche d'agrégation pour collecter les statistiques.</empty_nodata>
+          <banner_runjob>Exécutez la tâche planifiée [EditorPowertools] Analyse de contenu pour alimenter les données.</banner_runjob>
+          <page_info>Page {0} sur {1}</page_info>
+          <btn_previous>Précédent</btn_previous>
+          <btn_next>Suivant</btn_next>
         </languageaudit>
         <cmsdoctor>
           <header_title>CMS Doctor</header_title>
-          <header_desc>Health checks for your Optimizely CMS. Extensible by third-party packages.</header_desc>
-          <lbl_lastrun>Last run: {0}</lbl_lastrun>
-          <btn_runall>Run All Checks</btn_runall>
-          <btn_running>Running...</btn_running>
-          <sum_healthy>Healthy</sum_healthy>
-          <sum_warnings>Warnings</sum_warnings>
-          <sum_faults>Faults</sum_faults>
-          <sum_notchecked>Not Checked</sum_notchecked>
-          <tag_all>All</tag_all>
-          <status_ok>Healthy</status_ok>
-          <status_warning>Warning</status_warning>
-          <status_badpractice>Bad Practice</status_badpractice>
-          <status_fault>Fault</status_fault>
+          <header_desc>Bilans de santé pour votre CMS Optimizely. Extensible par des packages tiers.</header_desc>
+          <lbl_lastrun>Dernière exécution : {0}</lbl_lastrun>
+          <btn_runall>Exécuter tous les contrôles</btn_runall>
+          <btn_running>En cours...</btn_running>
+          <sum_healthy>Sain</sum_healthy>
+          <sum_warnings>Avertissements</sum_warnings>
+          <sum_faults>Défauts</sum_faults>
+          <sum_notchecked>Non vérifié</sum_notchecked>
+          <tag_all>Tout</tag_all>
+          <status_ok>Sain</status_ok>
+          <status_warning>Avertissement</status_warning>
+          <status_badpractice>Mauvaise pratique</status_badpractice>
+          <status_fault>Défaut</status_fault>
           <status_performance>Performance</status_performance>
-          <status_notchecked>Not Checked</status_notchecked>
-          <btn_run>Run</btn_run>
-          <btn_fix>Fix</btn_fix>
-          <btn_details>Details</btn_details>
-          <btn_dismiss>Dismiss</btn_dismiss>
-          <btn_restore>Restore</btn_restore>
-          <dlg_result>Result:</dlg_result>
-          <dlg_details>Details:</dlg_details>
-          <dlg_categories>Categories:</dlg_categories>
-          <dlg_checked>Checked: {0}</dlg_checked>
-          <btn_applyfix>Apply Fix</btn_applyfix>
-          <btn_rerun>Re-run Check</btn_rerun>
-          <btn_close>Close</btn_close>
-          <confirm_applyfix>Apply fix for this check?</confirm_applyfix>
-          <confirm_fix>Apply fix?</confirm_fix>
+          <status_notchecked>Non vérifié</status_notchecked>
+          <btn_run>Exécuter</btn_run>
+          <btn_fix>Corriger</btn_fix>
+          <btn_details>Détails</btn_details>
+          <btn_dismiss>Ignorer</btn_dismiss>
+          <btn_restore>Restaurer</btn_restore>
+          <dlg_result>Résultat :</dlg_result>
+          <dlg_details>Détails :</dlg_details>
+          <dlg_categories>Catégories :</dlg_categories>
+          <dlg_checked>Vérifié : {0}</dlg_checked>
+          <btn_applyfix>Appliquer la correction</btn_applyfix>
+          <btn_rerun>Relancer le contrôle</btn_rerun>
+          <btn_close>Fermer</btn_close>
+          <confirm_applyfix>Appliquer la correction pour ce contrôle ?</confirm_applyfix>
+          <confirm_fix>Appliquer la correction ?</confirm_fix>
         </cmsdoctor>
         <contenttypeaudit>
-          <alert_running>Aggregation job is currently running. Content counts will be updated when it completes.</alert_running>
-          <alert_notrun>Content statistics have not been collected yet. The "Content" column will show data after the aggregation job has been run.</alert_notrun>
-          <alert_old>Statistics were last updated {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <alert_started>Aggregation job has been started. Content counts will be updated when it completes.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <stat_contenttypes>Content Types</stat_contenttypes>
-          <stat_systemtypes>System Types</stat_systemtypes>
-          <stat_orphaned>Orphaned</stat_orphaned>
-          <stat_unused>Unused (0 content)</stat_unused>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search types... (or property:name)</lbl_search>
-          <opt_allbases>All base types</opt_allbases>
-          <chk_showsystem>Show system types</chk_showsystem>
-          <btn_table>Table</btn_table>
-          <btn_tree>Tree</btn_tree>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
+          <alert_running>La tâche d'agrégation est en cours d'exécution. Les comptages de contenu seront mis à jour à la fin.</alert_running>
+          <alert_notrun>Les statistiques de contenu n'ont pas encore été collectées. La colonne "Contenu" affichera des données après l'exécution de la tâche d'agrégation.</alert_notrun>
+          <alert_old>Les statistiques ont été mises à jour pour la dernière fois {0}. Envisagez d'exécuter la tâche d'agrégation pour des données récentes.</alert_old>
+          <alert_started>La tâche d'agrégation a été démarrée. Les comptages de contenu seront mis à jour à la fin.</alert_started>
+          <btn_refresh>Actualiser</btn_refresh>
+          <btn_runnow>Exécuter maintenant</btn_runnow>
+          <btn_starting>Démarrage...</btn_starting>
+          <btn_failed>Échec</btn_failed>
+          <stat_contenttypes>Types de contenu</stat_contenttypes>
+          <stat_systemtypes>Types système</stat_systemtypes>
+          <stat_orphaned>Orphelins</stat_orphaned>
+          <stat_unused>Inutilisé (0 contenu)</stat_unused>
+          <stat_showing>Affichage</stat_showing>
+          <lbl_search>Rechercher des types... (ou propriété:nom)</lbl_search>
+          <opt_allbases>Tous les types de base</opt_allbases>
+          <chk_showsystem>Afficher les types système</chk_showsystem>
+          <btn_table>Tableau</btn_table>
+          <btn_tree>Arbre</btn_tree>
+          <btn_export>Exporter</btn_export>
+          <col_name>Nom</col_name>
           <col_base>Base</col_base>
-          <col_group>Group</col_group>
-          <col_properties>Properties</col_properties>
-          <col_content>Content</col_content>
-          <opt_all>All</opt_all>
-          <badge_system>System</badge_system>
-          <badge_orphaned>Orphaned</badge_orphaned>
+          <col_group>Groupe</col_group>
+          <col_properties>Propriétés</col_properties>
+          <col_content>Contenu</col_content>
+          <opt_all>Tout</opt_all>
+          <badge_system>Système</badge_system>
+          <badge_orphaned>Orphelin</badge_orphaned>
         </contenttypeaudit>
         <linkchecker>
-          <alert_running>Link checker job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Link checker has not been run yet. Run the scheduled job to scan content for links.</alert_notrun>
-          <alert_lastran>Link check last ran {0}.</alert_lastran>
-          <alert_started>Job started.</alert_started>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_failed>Failed</btn_failed>
-          <btn_export>Export</btn_export>
-          <stat_total>Total Links</stat_total>
-          <stat_broken>Broken</stat_broken>
-          <stat_valid>Valid</stat_valid>
-          <stat_internal>Internal</stat_internal>
-          <stat_external>External</stat_external>
-          <lbl_search>Search URLs, content, properties...</lbl_search>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_internal>Internal</opt_internal>
-          <opt_external>External</opt_external>
-          <opt_allstatus>All status</opt_allstatus>
-          <opt_brokenonly>Broken only</opt_brokenonly>
-          <opt_validonly>Valid only</opt_validonly>
-          <col_status>Status</col_status>
+          <alert_running>La tâche de vérification des liens est en cours d'exécution. Les résultats seront mis à jour à la fin.</alert_running>
+          <alert_notrun>Le vérificateur de liens n'a pas encore été exécuté. Exécutez la tâche planifiée pour analyser le contenu à la recherche de liens.</alert_notrun>
+          <alert_lastran>La vérification des liens a été exécutée pour la dernière fois {0}.</alert_lastran>
+          <alert_started>Tâche démarrée.</alert_started>
+          <btn_refresh>Actualiser</btn_refresh>
+          <btn_runnow>Exécuter maintenant</btn_runnow>
+          <btn_starting>Démarrage...</btn_starting>
+          <btn_failed>Échec</btn_failed>
+          <btn_export>Exporter</btn_export>
+          <stat_total>Total des liens</stat_total>
+          <stat_broken>Cassés</stat_broken>
+          <stat_valid>Valides</stat_valid>
+          <stat_internal>Internes</stat_internal>
+          <stat_external>Externes</stat_external>
+          <lbl_search>Rechercher des URL, contenus, propriétés...</lbl_search>
+          <opt_alltypes>Tous les types</opt_alltypes>
+          <opt_internal>Interne</opt_internal>
+          <opt_external>Externe</opt_external>
+          <opt_allstatus>Tous les statuts</opt_allstatus>
+          <opt_brokenonly>Cassés uniquement</opt_brokenonly>
+          <opt_validonly>Valides uniquement</opt_validonly>
+          <col_status>Statut</col_status>
           <col_url>URL</col_url>
           <col_type>Type</col_type>
-          <col_foundin>Found In</col_foundin>
-          <col_checked>Checked</col_checked>
-          <cell_usedon>Used on: </cell_usedon>
+          <col_foundin>Trouvé dans</col_foundin>
+          <col_checked>Vérifié</col_checked>
+          <cell_usedon>Utilisé sur : </cell_usedon>
         </linkchecker>
         <securityaudit>
-          <tab_tree>Content Tree</tab_tree>
-          <tab_roles>Role/User Explorer</tab_roles>
-          <tab_issues>Issues</tab_issues>
-          <banner_nodata>Security audit data not available.</banner_nodata>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to analyze content permissions.</banner_runjob>
-          <banner_started>Aggregation job has been started. Data will update when it completes.</banner_started>
-          <alert_old>Security data was last analyzed {0}. Consider running the aggregation job for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_failed>Failed</btn_failed>
-          <stat_analyzed>Content Analyzed</stat_analyzed>
-          <stat_roles>Roles/Users</stat_roles>
-          <stat_issues>Issues Found</stat_issues>
-          <stat_lastanalysis>Last Analysis</stat_lastanalysis>
-          <pager_previous>Previous</pager_previous>
-          <pager_info>Page {0} of {1}</pager_info>
-          <pager_next>Next</pager_next>
+          <tab_tree>Arborescence du contenu</tab_tree>
+          <tab_roles>Explorateur rôles/utilisateurs</tab_roles>
+          <tab_issues>Problèmes</tab_issues>
+          <banner_nodata>Données d'audit de sécurité non disponibles.</banner_nodata>
+          <banner_runjob>Exécutez la tâche planifiée [EditorPowertools] Analyse de contenu pour analyser les permissions du contenu.</banner_runjob>
+          <banner_started>La tâche d'agrégation a été démarrée. Les données seront mises à jour à la fin.</banner_started>
+          <alert_old>Les données de sécurité ont été analysées pour la dernière fois {0}. Envisagez d'exécuter la tâche d'agrégation pour des données récentes.</alert_old>
+          <btn_runnow>Exécuter maintenant</btn_runnow>
+          <btn_starting>Démarrage...</btn_starting>
+          <btn_refresh>Actualiser</btn_refresh>
+          <btn_failed>Échec</btn_failed>
+          <stat_analyzed>Contenu analysé</stat_analyzed>
+          <stat_roles>Rôles/Utilisateurs</stat_roles>
+          <stat_issues>Problèmes trouvés</stat_issues>
+          <stat_lastanalysis>Dernière analyse</stat_lastanalysis>
+          <pager_previous>Précédent</pager_previous>
+          <pager_info>Page {0} sur {1}</pager_info>
+          <pager_next>Suivant</pager_next>
         </securityaudit>
         <bulkeditor>
-          <opt_selecttype>-- Select content type --</opt_selecttype>
-          <btn_columns>Columns</btn_columns>
-          <btn_addfilter>Add Filter</btn_addfilter>
-          <chk_includereferences>Include references</chk_includereferences>
-          <btn_applyfilters>Apply Filters</btn_applyfilters>
-          <empty_selecttype>Select a content type above to start editing.</empty_selecttype>
-          <lbl_perpage>Per page:</lbl_perpage>
-          <pending_count>{0} changes pending</pending_count>
-          <btn_discardall>Discard All</btn_discardall>
-          <btn_saveall>Save All</btn_saveall>
-          <btn_publishall>Publish All</btn_publishall>
-          <confirm_discard>Discard all pending changes?</confirm_discard>
+          <opt_selecttype>-- Sélectionner un type de contenu --</opt_selecttype>
+          <btn_columns>Colonnes</btn_columns>
+          <btn_addfilter>Ajouter un filtre</btn_addfilter>
+          <chk_includereferences>Inclure les références</chk_includereferences>
+          <btn_applyfilters>Appliquer les filtres</btn_applyfilters>
+          <empty_selecttype>Sélectionnez un type de contenu ci-dessus pour commencer l'édition.</empty_selecttype>
+          <lbl_perpage>Par page :</lbl_perpage>
+          <pending_count>{0} modifications en attente</pending_count>
+          <btn_discardall>Tout ignorer</btn_discardall>
+          <btn_saveall>Tout enregistrer</btn_saveall>
+          <btn_publishall>Tout publier</btn_publishall>
+          <confirm_discard>Ignorer toutes les modifications en attente ?</confirm_discard>
         </bulkeditor>
         <contentstatistics>
-          <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_starting>Starting...</btn_starting>
-          <error_load>Failed to load statistics from API.</error_load>
-          <error_render>Error rendering statistics dashboard.</error_render>
-          <chart_byctype>Content by Type</chart_byctype>
-          <chart_bystatus>Content by Status</chart_bystatus>
-          <chart_created>Content Created (last 12 months)</chart_created>
-          <chart_staleness>Content Staleness</chart_staleness>
-          <chart_editoractivity>Editor Activity (last 30 days)</chart_editoractivity>
-          <stat_totalcontent>Total Content</stat_totalcontent>
-          <stat_published>Published</stat_published>
-          <stat_draft>Draft</stat_draft>
-          <stat_editors>Active Editors</stat_editors>
+          <banner_runjob>Exécutez la tâche planifiée [EditorPowertools] Analyse de contenu pour alimenter les données.</banner_runjob>
+          <btn_runnow>Exécuter maintenant</btn_runnow>
+          <btn_starting>Démarrage...</btn_starting>
+          <error_load>Échec du chargement des statistiques depuis l'API.</error_load>
+          <error_render>Erreur lors du rendu du tableau de bord des statistiques.</error_render>
+          <chart_byctype>Contenu par type</chart_byctype>
+          <chart_bystatus>Contenu par statut</chart_bystatus>
+          <chart_created>Contenu créé (12 derniers mois)</chart_created>
+          <chart_staleness>Obsolescence du contenu</chart_staleness>
+          <chart_editoractivity>Activité des éditeurs (30 derniers jours)</chart_editoractivity>
+          <stat_totalcontent>Contenu total</stat_totalcontent>
+          <stat_published>Publié</stat_published>
+          <stat_draft>Brouillon</stat_draft>
+          <stat_editors>Éditeurs actifs</stat_editors>
           <stat_pages>Pages</stat_pages>
-          <stat_blocks>Blocks</stat_blocks>
-          <stat_media>Media</stat_media>
+          <stat_blocks>Blocs</stat_blocks>
+          <stat_media>Médias</stat_media>
         </contentstatistics>
         <activitytimeline>
-          <stat_today>Activities Today</stat_today>
-          <stat_activeeditors>Active Editors</stat_activeeditors>
-          <stat_publishes>Publishes Today</stat_publishes>
-          <stat_drafts>Drafts Today</stat_drafts>
-          <opt_allusers>All users</opt_allusers>
-          <opt_published>Published</opt_published>
-          <opt_draft>Draft saved</opt_draft>
-          <opt_readytopublish>Ready to publish</opt_readytopublish>
-          <opt_scheduled>Scheduled</opt_scheduled>
-          <opt_rejected>Rejected</opt_rejected>
-          <opt_previouslypublished>Previously published</opt_previouslypublished>
-          <opt_comment>Comments</opt_comment>
-          <opt_allcontenttypes>All content types</opt_allcontenttypes>
-          <btn_filter>Filter</btn_filter>
-          <btn_clear>Clear</btn_clear>
-          <banner_showingfor>Showing timeline for {0}</banner_showingfor>
-          <btn_showall>Show all activity</btn_showall>
+          <stat_today>Activités aujourd'hui</stat_today>
+          <stat_activeeditors>Éditeurs actifs</stat_activeeditors>
+          <stat_publishes>Publications aujourd'hui</stat_publishes>
+          <stat_drafts>Brouillons aujourd'hui</stat_drafts>
+          <opt_allusers>Tous les utilisateurs</opt_allusers>
+          <opt_published>Publié</opt_published>
+          <opt_draft>Brouillon enregistré</opt_draft>
+          <opt_readytopublish>Prêt à publier</opt_readytopublish>
+          <opt_scheduled>Planifié</opt_scheduled>
+          <opt_rejected>Rejeté</opt_rejected>
+          <opt_previouslypublished>Précédemment publié</opt_previouslypublished>
+          <opt_comment>Commentaires</opt_comment>
+          <opt_allcontenttypes>Tous les types de contenu</opt_allcontenttypes>
+          <btn_filter>Filtrer</btn_filter>
+          <btn_clear>Effacer</btn_clear>
+          <banner_showingfor>Affichage de la chronologie pour {0}</banner_showingfor>
+          <btn_showall>Afficher toute l'activité</btn_showall>
         </activitytimeline>
         <personalizationaudit>
-          <alert_running>Personalization analysis job is currently running. Results will be updated when it completes.</alert_running>
-          <alert_notrun>Personalization usage has not been analyzed yet. Run the analysis job to scan content for audience usage.</alert_notrun>
-          <alert_old>Analysis was last run {0}. Consider running the job again for fresh data.</alert_old>
-          <btn_runnow>Run now</btn_runnow>
-          <btn_refresh>Refresh</btn_refresh>
-          <btn_starting>Starting...</btn_starting>
-          <stat_total>Total Usages</stat_total>
-          <stat_content>Content Items</stat_content>
-          <stat_groups>Visitor Groups Used</stat_groups>
-          <lbl_search>Search...</lbl_search>
-          <lbl_type>Usage Type:</lbl_type>
-          <lbl_group>Visitor Group:</lbl_group>
-          <opt_alltypes>All types</opt_alltypes>
-          <opt_allgroups>All groups</opt_allgroups>
-          <col_content>Content</col_content>
-          <col_type>Usage Type</col_type>
-          <col_groups>Visitor Groups</col_groups>
-          <col_location>Location</col_location>
+          <alert_running>La tâche d'analyse de personnalisation est en cours d'exécution. Les résultats seront mis à jour à la fin.</alert_running>
+          <alert_notrun>L'utilisation de la personnalisation n'a pas encore été analysée. Exécutez la tâche d'analyse pour rechercher l'utilisation des audiences dans le contenu.</alert_notrun>
+          <alert_old>L'analyse a été exécutée pour la dernière fois {0}. Envisagez d'exécuter à nouveau la tâche pour des données récentes.</alert_old>
+          <btn_runnow>Exécuter maintenant</btn_runnow>
+          <btn_refresh>Actualiser</btn_refresh>
+          <btn_starting>Démarrage...</btn_starting>
+          <stat_total>Total des utilisations</stat_total>
+          <stat_content>Éléments de contenu</stat_content>
+          <stat_groups>Groupes de visiteurs utilisés</stat_groups>
+          <lbl_search>Rechercher...</lbl_search>
+          <lbl_type>Type d'utilisation :</lbl_type>
+          <lbl_group>Groupe de visiteurs :</lbl_group>
+          <opt_alltypes>Tous les types</opt_alltypes>
+          <opt_allgroups>Tous les groupes</opt_allgroups>
+          <col_content>Contenu</col_content>
+          <col_type>Type d'utilisation</col_type>
+          <col_groups>Groupes de visiteurs</col_groups>
+          <col_location>Emplacement</col_location>
         </personalizationaudit>
         <audiencemanager>
           <stat_audiences>Audiences</stat_audiences>
-          <stat_withstats>With Statistics</stat_withstats>
-          <stat_categories>Categories</stat_categories>
-          <stat_totalcriteria>Total Criteria</stat_totalcriteria>
-          <stat_showing>Showing</stat_showing>
-          <lbl_search>Search audiences...</lbl_search>
-          <opt_allcategories>All categories</opt_allcategories>
-          <chk_hasstats>Has Statistics</chk_hasstats>
-          <lnk_personalizationaudit>Personalization Audit</lnk_personalizationaudit>
-          <btn_export>Export</btn_export>
-          <col_name>Name</col_name>
-          <col_criteria>Criteria</col_criteria>
-          <col_operator>Operator</col_operator>
-          <col_statistics>Statistics</col_statistics>
-          <col_usage>Usage</col_usage>
-          <opt_all>All</opt_all>
-          <title_usagedetails>Show usage details</title_usagedetails>
-          <title_notused>Not used in any personalized content</title_notused>
-          <title_runjobfirst>Run the Personalization Analysis job first</title_runjobfirst>
+          <stat_withstats>Avec statistiques</stat_withstats>
+          <stat_categories>Catégories</stat_categories>
+          <stat_totalcriteria>Total des critères</stat_totalcriteria>
+          <stat_showing>Affichage</stat_showing>
+          <lbl_search>Rechercher des audiences...</lbl_search>
+          <opt_allcategories>Toutes les catégories</opt_allcategories>
+          <chk_hasstats>A des statistiques</chk_hasstats>
+          <lnk_personalizationaudit>Audit de personnalisation</lnk_personalizationaudit>
+          <btn_export>Exporter</btn_export>
+          <col_name>Nom</col_name>
+          <col_criteria>Critères</col_criteria>
+          <col_operator>Opérateur</col_operator>
+          <col_statistics>Statistiques</col_statistics>
+          <col_usage>Utilisation</col_usage>
+          <opt_all>Tout</opt_all>
+          <title_usagedetails>Afficher les détails d'utilisation</title_usagedetails>
+          <title_notused>Non utilisé dans aucun contenu personnalisé</title_notused>
+          <title_runjobfirst>Exécutez d'abord la tâche d'analyse de personnalisation</title_runjobfirst>
         </audiencemanager>
         <contentimporter>
-          <step_upload>1. Upload File</step_upload>
-          <step_configure>2. Configure</step_configure>
-          <step_dryrun>3. Dry Run</step_dryrun>
-          <step_import>4. Import</step_import>
-          <lbl_dropfile>Drop a CSV, JSON, or Excel file here, or click to browse</lbl_dropfile>
-          <btn_browse>Browse...</btn_browse>
-          <lbl_contenttype>Content Type:</lbl_contenttype>
-          <lbl_language>Language:</lbl_language>
-          <lbl_parent>Parent Location:</lbl_parent>
-          <lbl_namecol>Name Column:</lbl_namecol>
-          <lbl_publishafter>Publish after import</lbl_publishafter>
-          <lbl_selectparent>Select parent...</lbl_selectparent>
-          <btn_next>Next</btn_next>
-          <btn_back>Back</btn_back>
-          <lbl_mapping>Field Mapping</lbl_mapping>
-          <lbl_sourcecol>Source Column</lbl_sourcecol>
-          <lbl_targetfield>Target Field</lbl_targetfield>
-          <opt_skip>-- Skip --</opt_skip>
-          <btn_dryrun>Run Dry Run</btn_dryrun>
-          <lbl_dryresult>Dry Run Results</lbl_dryresult>
-          <btn_import>Start Import</btn_import>
-          <btn_startover>Start Over</btn_startover>
-          <lbl_importing>Importing...</lbl_importing>
+          <step_upload>1. Télécharger le fichier</step_upload>
+          <step_configure>2. Configurer</step_configure>
+          <step_dryrun>3. Essai à blanc</step_dryrun>
+          <step_import>4. Importer</step_import>
+          <lbl_dropfile>Déposez un fichier CSV, JSON ou Excel ici, ou cliquez pour parcourir</lbl_dropfile>
+          <btn_browse>Parcourir...</btn_browse>
+          <lbl_contenttype>Type de contenu :</lbl_contenttype>
+          <lbl_language>Langue :</lbl_language>
+          <lbl_parent>Emplacement parent :</lbl_parent>
+          <lbl_namecol>Colonne de nom :</lbl_namecol>
+          <lbl_publishafter>Publier après l'import</lbl_publishafter>
+          <lbl_selectparent>Sélectionner le parent...</lbl_selectparent>
+          <btn_next>Suivant</btn_next>
+          <btn_back>Retour</btn_back>
+          <lbl_mapping>Mappage des champs</lbl_mapping>
+          <lbl_sourcecol>Colonne source</lbl_sourcecol>
+          <lbl_targetfield>Champ cible</lbl_targetfield>
+          <opt_skip>-- Ignorer --</opt_skip>
+          <btn_dryrun>Lancer l'essai à blanc</btn_dryrun>
+          <lbl_dryresult>Résultats de l'essai à blanc</lbl_dryresult>
+          <btn_import>Démarrer l'import</btn_import>
+          <btn_startover>Recommencer</btn_startover>
+          <lbl_importing>Import en cours...</lbl_importing>
         </contentimporter>
         <managechildren>
-          <lbl_selectparent>Select a parent page to manage its children</lbl_selectparent>
-          <btn_selectparent>Select Parent Page</btn_selectparent>
-          <btn_sortaz>Sort A-Z</btn_sortaz>
-          <btn_sortza>Sort Z-A</btn_sortza>
-          <btn_sortbydate>Sort by Date</btn_sortbydate>
-          <btn_publishall>Publish All</btn_publishall>
-          <btn_unpublishall>Unpublish All</btn_unpublishall>
-          <btn_deleteselected>Delete Selected</btn_deleteselected>
-          <btn_saveorder>Save Order</btn_saveorder>
-          <col_name>Name</col_name>
-          <col_status>Status</col_status>
-          <col_changed>Changed</col_changed>
+          <lbl_selectparent>Sélectionnez une page parente pour gérer ses sous-pages</lbl_selectparent>
+          <btn_selectparent>Sélectionner la page parente</btn_selectparent>
+          <btn_sortaz>Trier A-Z</btn_sortaz>
+          <btn_sortza>Trier Z-A</btn_sortza>
+          <btn_sortbydate>Trier par date</btn_sortbydate>
+          <btn_publishall>Tout publier</btn_publishall>
+          <btn_unpublishall>Tout dépublier</btn_unpublishall>
+          <btn_deleteselected>Supprimer la sélection</btn_deleteselected>
+          <btn_saveorder>Enregistrer l'ordre</btn_saveorder>
+          <col_name>Nom</col_name>
+          <col_status>Statut</col_status>
+          <col_changed>Modifié</col_changed>
           <col_type>Type</col_type>
-          <confirm_delete>Delete {0} selected item(s)? This cannot be undone.</confirm_delete>
-          <confirm_publishall>Publish all {0} children?</confirm_publishall>
-          <confirm_unpublishall>Unpublish all {0} children?</confirm_unpublishall>
+          <confirm_delete>Supprimer {0} élément(s) sélectionné(s) ? Cette action est irréversible.</confirm_delete>
+          <confirm_publishall>Publier tous les {0} enfants ?</confirm_publishall>
+          <confirm_unpublishall>Dépublier tous les {0} enfants ?</confirm_unpublishall>
         </managechildren>
         <recommendations>
-          <banner_info>When editors create new content, Optimizely can suggest which content types to use. Define rules below to control these suggestions based on where content is being created.</banner_info>
-          <btn_addrule>Add Rule</btn_addrule>
-          <col_parenttype>Parent Type</col_parenttype>
-          <col_allowedtypes>Allowed Types</col_allowedtypes>
+          <banner_info>Lorsque les éditeurs créent du nouveau contenu, Optimizely peut suggérer quels types de contenu utiliser. Définissez des règles ci-dessous pour contrôler ces suggestions en fonction de l'endroit où le contenu est créé.</banner_info>
+          <btn_addrule>Ajouter une règle</btn_addrule>
+          <col_parenttype>Type parent</col_parenttype>
+          <col_allowedtypes>Types autorisés</col_allowedtypes>
           <col_actions>Actions</col_actions>
-          <dlg_addrule>Add Rule</dlg_addrule>
-          <dlg_editrule>Edit Rule</dlg_editrule>
-          <lbl_parenttype>Parent Content Type:</lbl_parenttype>
-          <lbl_allowedtypes>Allowed Child Types:</lbl_allowedtypes>
-          <btn_save>Save</btn_save>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_edit>Edit</btn_edit>
-          <btn_delete>Delete</btn_delete>
-          <empty_norules>No recommendation rules defined yet. Click "Add Rule" to create one.</empty_norules>
-          <confirm_delete>Delete this rule?</confirm_delete>
+          <dlg_addrule>Ajouter une règle</dlg_addrule>
+          <dlg_editrule>Modifier la règle</dlg_editrule>
+          <lbl_parenttype>Type de contenu parent :</lbl_parenttype>
+          <lbl_allowedtypes>Types enfants autorisés :</lbl_allowedtypes>
+          <btn_save>Enregistrer</btn_save>
+          <btn_cancel>Annuler</btn_cancel>
+          <btn_edit>Modifier</btn_edit>
+          <btn_delete>Supprimer</btn_delete>
+          <empty_norules>Aucune règle de recommandation définie. Cliquez sur "Ajouter une règle" pour en créer une.</empty_norules>
+          <confirm_delete>Supprimer cette règle ?</confirm_delete>
         </recommendations>
         <gantt>
-          <error_load>Failed to load Gantt data: {0}</error_load>
-          <empty_nojobs>No scheduled jobs found.</empty_nojobs>
-          <stat_totaljobs>Total Jobs</stat_totaljobs>
-          <stat_enabled>Enabled</stat_enabled>
-          <stat_running>Running Now</stat_running>
-          <stat_executions>Executions in View</stat_executions>
-          <btn_previous>Previous</btn_previous>
-          <btn_today>Today</btn_today>
-          <btn_next>Next</btn_next>
-          <lbl_viewhours>{0}h view</lbl_viewhours>
-          <col_job>Job</col_job>
+          <error_load>Échec du chargement des données Gantt : {0}</error_load>
+          <empty_nojobs>Aucune tâche planifiée trouvée.</empty_nojobs>
+          <stat_totaljobs>Total des tâches</stat_totaljobs>
+          <stat_enabled>Activées</stat_enabled>
+          <stat_running>En cours d'exécution</stat_running>
+          <stat_executions>Exécutions dans la vue</stat_executions>
+          <btn_previous>Précédent</btn_previous>
+          <btn_today>Aujourd'hui</btn_today>
+          <btn_next>Suivant</btn_next>
+          <lbl_viewhours>Vue {0}h</lbl_viewhours>
+          <col_job>Tâche</col_job>
         </gantt>
         <activeeditors>
-          <error_nosignalr>SignalR client not available. Check browser console for errors.</error_nosignalr>
-          <error_connect>Could not connect: {0}</error_connect>
-          <stat_online>Online Now</stat_online>
-          <stat_editing>Currently Editing</stat_editing>
-          <stat_today>Active Today</stat_today>
-          <section_online>Online Now</section_online>
-          <section_today>Also Active Today</section_today>
-          <lbl_connected>Connected {0}</lbl_connected>
-          <btn_sendmessage>Send Message</btn_sendmessage>
-          <badge_you>you</badge_you>
-          <badge_offline>offline</badge_offline>
-          <chat_title>Team Chat</chat_title>
-          <chat_empty>No messages yet. Say hello!</chat_empty>
-          <chat_placeholder>Type a message... (Enter to send)</chat_placeholder>
-          <dlg_sendmessage>Send Message to {0}</dlg_sendmessage>
-          <dlg_desc>This will send a CMS notification that {0} will see in their notification bell.</dlg_desc>
-          <dlg_placeholder>Type your message...</dlg_placeholder>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_send>Send Notification</btn_send>
-          <btn_sending>Sending...</btn_sending>
-          <msg_sent>Message sent to {0}</msg_sent>
+          <error_nosignalr>Client SignalR non disponible. Vérifiez la console du navigateur pour les erreurs.</error_nosignalr>
+          <error_connect>Impossible de se connecter : {0}</error_connect>
+          <stat_online>En ligne maintenant</stat_online>
+          <stat_editing>En cours d'édition</stat_editing>
+          <stat_today>Actif aujourd'hui</stat_today>
+          <section_online>En ligne maintenant</section_online>
+          <section_today>Aussi actif aujourd'hui</section_today>
+          <lbl_connected>Connecté {0}</lbl_connected>
+          <btn_sendmessage>Envoyer un message</btn_sendmessage>
+          <badge_you>vous</badge_you>
+          <badge_offline>hors ligne</badge_offline>
+          <chat_title>Chat d'équipe</chat_title>
+          <chat_empty>Aucun message pour l'instant. Dites bonjour !</chat_empty>
+          <chat_placeholder>Tapez un message... (Entrée pour envoyer)</chat_placeholder>
+          <dlg_sendmessage>Envoyer un message à {0}</dlg_sendmessage>
+          <dlg_desc>Ceci enverra une notification CMS que {0} verra dans sa cloche de notification.</dlg_desc>
+          <dlg_placeholder>Tapez votre message...</dlg_placeholder>
+          <btn_cancel>Annuler</btn_cancel>
+          <btn_send>Envoyer la notification</btn_send>
+          <btn_sending>Envoi en cours...</btn_sending>
+          <msg_sent>Message envoyé à {0}</msg_sent>
         </activeeditors>
         <components>
-          <picker_title>Select Content</picker_title>
-          <picker_search>Search content by name...</picker_search>
-          <picker_noresults>No results found</picker_noresults>
-          <btn_cancel>Cancel</btn_cancel>
-          <btn_select>Select</btn_select>
-          <typepicker_title>Select Content Type</typepicker_title>
-          <typepicker_search>Search content types...</typepicker_search>
-          <typepicker_noresults>No content types found</typepicker_noresults>
+          <picker_title>Sélectionner du contenu</picker_title>
+          <picker_search>Rechercher du contenu par nom...</picker_search>
+          <picker_noresults>Aucun résultat trouvé</picker_noresults>
+          <btn_cancel>Annuler</btn_cancel>
+          <btn_select>Sélectionner</btn_select>
+          <typepicker_title>Sélectionner un type de contenu</typepicker_title>
+          <typepicker_search>Rechercher des types de contenu...</typepicker_search>
+          <typepicker_noresults>Aucun type de contenu trouvé</typepicker_noresults>
         </components>
         <editorpowertools>
-          <loading>Loading...</loading>
-          <noresults>No results found</noresults>
+          <loading>Chargement...</loading>
+          <noresults>Aucun résultat trouvé</noresults>
         </editorpowertools>
       </ui>
     </editorpowertools>
