@@ -91,8 +91,8 @@
             state.fetchedFrom = range.from;
             state.fetchedTo = range.to;
         } catch (err) {
-            container.innerHTML = '<div class="ept-alert ept-alert--danger">Failed to load Gantt data: ' +
-                (err.message || err) + '</div>';
+            container.innerHTML = '<div class="ept-alert ept-alert--danger">' +
+                EPT.s('gantt.error_load', 'Failed to load Gantt data: {0}').replace('{0}', err.message || err) + '</div>';
             state.isLoading = false;
             return;
         }
@@ -114,7 +114,7 @@
         container.innerHTML = '';
 
         if (state.jobs.length === 0 && !state.isLoading) {
-            EPT.showEmpty(container, 'No scheduled jobs found.');
+            EPT.showEmpty(container, EPT.s('gantt.empty_nojobs', 'No scheduled jobs found.'));
             return;
         }
 
@@ -140,10 +140,10 @@
         var statsEl = document.createElement('div');
         statsEl.className = 'ept-stats';
         statsEl.innerHTML =
-            '<div class="ept-stat"><div class="ept-stat__value">' + total + '</div><div class="ept-stat__label">Total Jobs</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + enabled + '</div><div class="ept-stat__label">Enabled</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + running + '</div><div class="ept-stat__label">Running Now</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + execCount + '</div><div class="ept-stat__label">Executions in View</div></div>';
+            '<div class="ept-stat"><div class="ept-stat__value">' + total + '</div><div class="ept-stat__label">' + EPT.s('gantt.stat_totaljobs', 'Total Jobs') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + enabled + '</div><div class="ept-stat__label">' + EPT.s('gantt.stat_enabled', 'Enabled') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + running + '</div><div class="ept-stat__label">' + EPT.s('gantt.stat_running', 'Running Now') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + execCount + '</div><div class="ept-stat__label">' + EPT.s('gantt.stat_executions', 'Executions in View') + '</div></div>';
         container.appendChild(statsEl);
     }
 
@@ -153,10 +153,10 @@
         toolbar.className = 'ept-toolbar';
 
         // Navigation buttons
-        var prevBtn = createButton('Previous', function () { navigate(-0.5); });
-        var todayBtn = createButton('Today', function () { navigateToday(); });
+        var prevBtn = createButton(EPT.s('gantt.btn_previous', 'Previous'), function () { navigate(-0.5); });
+        var todayBtn = createButton(EPT.s('gantt.btn_today', 'Today'), function () { navigateToday(); });
         todayBtn.className += ' ept-btn--primary';
-        var nextBtn = createButton('Next', function () { navigate(0.5); });
+        var nextBtn = createButton(EPT.s('gantt.btn_next', 'Next'), function () { navigate(0.5); });
 
         // Date range display
         var rangeLabel = document.createElement('span');
@@ -170,7 +170,7 @@
         zoomInBtn.title = 'Zoom in (show less time)';
         var zoomLabel = document.createElement('span');
         zoomLabel.style.cssText = 'font-size:12px;color:var(--ept-text-muted);';
-        zoomLabel.textContent = state.viewRangeHours + 'h view';
+        zoomLabel.textContent = EPT.s('gantt.lbl_viewhours', '{0}h view').replace('{0}', state.viewRangeHours);
 
         toolbar.appendChild(prevBtn);
         toolbar.appendChild(todayBtn);
@@ -207,7 +207,7 @@
         var jobColHeader = document.createElement('div');
         jobColHeader.className = 'gantt-job-col-header';
         jobColHeader.style.cssText = 'height:' + HEADER_HEIGHT + 'px;display:flex;align-items:center;padding:0 12px;font-weight:600;font-size:12px;color:var(--ept-text-secondary);border-bottom:1px solid var(--ept-border);';
-        jobColHeader.textContent = 'Scheduled Jobs (' + state.jobs.length + ')';
+        jobColHeader.textContent = EPT.s('gantt.col_job', 'Job') + ' (' + state.jobs.length + ')';
         jobCol.appendChild(jobColHeader);
 
         // Job name rows
