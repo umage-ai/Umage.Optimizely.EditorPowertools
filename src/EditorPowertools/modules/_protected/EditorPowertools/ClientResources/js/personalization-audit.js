@@ -44,20 +44,20 @@
         const el = document.createElement('div');
         el.id = 'pers-job-alert';
 
-        const runBtn = `<button class="ept-btn ept-btn--sm" id="ept-pers-run-job-btn" style="margin-left:8px">Run now</button>`;
+        const runBtn = `<button class="ept-btn ept-btn--sm" id="ept-pers-run-job-btn" style="margin-left:8px">${EPT.s('personalizationaudit.btn_runnow', 'Run now')}</button>`;
 
         if (jobStatus.isRunning) {
             el.className = 'ept-alert ept-alert--info';
-            el.innerHTML = `<strong>Personalization analysis job is currently running.</strong> Results will be updated when it completes. <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">Refresh</button>`;
+            el.innerHTML = `<strong>${EPT.s('personalizationaudit.alert_running', 'Personalization analysis job is currently running. Results will be updated when it completes.')}</strong> <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('personalizationaudit.btn_refresh', 'Refresh')}</button>`;
         } else if (!jobStatus.hasRun) {
             el.className = 'ept-alert ept-alert--warning';
-            el.innerHTML = `<strong>Personalization usage has not been analyzed yet.</strong> Run the analysis job to scan content for audience usage. ${runBtn}`;
+            el.innerHTML = `<strong>${EPT.s('personalizationaudit.alert_notrun', 'Personalization usage has not been analyzed yet.')}</strong> Run the analysis job to scan content for audience usage. ${runBtn}`;
         } else {
             const ago = timeAgo(new Date(jobStatus.lastRunUtc));
             const isOld = (Date.now() - new Date(jobStatus.lastRunUtc).getTime()) > 24 * 60 * 60 * 1000;
             if (isOld) {
                 el.className = 'ept-alert ept-alert--warning';
-                el.innerHTML = `Analysis was last run <strong>${ago}</strong>. Consider running the job again for fresh data. ${runBtn}`;
+                el.innerHTML = EPT.s('personalizationaudit.alert_old', 'Analysis was last run {0}. Consider running the job again for fresh data.').replace('{0}', `<strong>${ago}</strong>`) + ` ${runBtn}`;
             } else {
                 el.className = 'ept-alert ept-alert--info';
                 el.innerHTML = `Analysis was last run <strong>${ago}</strong>. ${runBtn}`;
@@ -72,7 +72,7 @@
         if (btn) {
             btn.addEventListener('click', async () => {
                 btn.disabled = true;
-                btn.textContent = 'Starting...';
+                btn.textContent = EPT.s('personalizationaudit.btn_starting', 'Starting...');
                 try {
                     await EPT.postJson(`${API}/job-start`);
                     el.className = 'ept-alert ept-alert--info';
@@ -122,9 +122,9 @@
 
         const el = document.getElementById('personalization-stats');
         el.innerHTML = `
-            <div class="ept-stat"><div class="ept-stat__value">${allUsages.length}</div><div class="ept-stat__label">Total Usages</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${uniqueVGs}</div><div class="ept-stat__label">Audiences Used</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${uniqueContent}</div><div class="ept-stat__label">Content Items</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${allUsages.length}</div><div class="ept-stat__label">${EPT.s('personalizationaudit.stat_total', 'Total Usages')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${uniqueVGs}</div><div class="ept-stat__label">${EPT.s('personalizationaudit.stat_groups', 'Visitor Groups Used')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${uniqueContent}</div><div class="ept-stat__label">${EPT.s('personalizationaudit.stat_content', 'Content Items')}</div></div>
             <div class="ept-stat"><div class="ept-stat__value">${accessRights}</div><div class="ept-stat__label">Access Rights</div></div>
             <div class="ept-stat"><div class="ept-stat__value">${contentAreas}</div><div class="ept-stat__label">Content Areas</div></div>
             <div class="ept-stat"><div class="ept-stat__value">${xhtmlStrings}</div><div class="ept-stat__label">XHTML Strings</div></div>
@@ -141,7 +141,7 @@
         toolbar.innerHTML = `
             <div class="ept-search">
                 <span class="ept-search__icon">${EPT.icons.search}</span>
-                <input type="text" id="pers-search" placeholder="Search content, audiences, properties..." />
+                <input type="text" id="pers-search" placeholder="${EPT.s('personalizationaudit.lbl_search', 'Search...')}" />
             </div>
             <select id="pers-type-filter" class="ept-select">
                 <option value="">All usage types</option>
@@ -187,7 +187,7 @@
 
         const columns = [
             {
-                key: 'contentName', label: 'Content Name', render: (r) => {
+                key: 'contentName', label: EPT.s('personalizationaudit.col_content', 'Content'), render: (r) => {
                     let html = '';
                     if (r.editUrl) {
                         html += `<a href="${escAttr(r.editUrl)}" target="_blank" style="color:inherit;text-decoration:none"><strong>${escHtml(r.contentName)}</strong> <span style="opacity:.4;display:inline-block;width:14px;height:14px;vertical-align:middle">${EPT.icons.edit}</span></a>`;
@@ -201,19 +201,19 @@
                 }
             },
             {
-                key: 'visitorGroupName', label: 'Audience', render: (r) => {
+                key: 'visitorGroupName', label: EPT.s('personalizationaudit.col_groups', 'Visitor Groups'), render: (r) => {
                     return `<a href="${window.EPT_VG_URL || '/EPiServer/EPiServer.Cms.UI.VisitorGroups/ManageVisitorGroups'}#/group/${encodeURIComponent(r.visitorGroupId)}" target="_blank" style="color:inherit;text-decoration:none"><strong>${escHtml(r.visitorGroupName)}</strong> <span style="opacity:.4;display:inline-block;width:14px;height:14px;vertical-align:middle">${EPT.icons.link}</span></a>`;
                 }
             },
             {
-                key: 'usageType', label: 'Usage Type', render: (r) => {
+                key: 'usageType', label: EPT.s('personalizationaudit.col_type', 'Usage Type'), render: (r) => {
                     let cls = 'default';
                     if (r.usageType === 'ContentArea') cls = 'primary';
                     else if (r.usageType === 'AccessRight') cls = 'warning';
                     return `<span class="ept-badge ept-badge--${cls}">${escHtml(r.usageType)}</span>`;
                 }
             },
-            { key: 'propertyName', label: 'Property' },
+            { key: 'propertyName', label: EPT.s('personalizationaudit.col_location', 'Location') },
             { key: 'contentTypeName', label: 'Content Type' }
         ];
 
