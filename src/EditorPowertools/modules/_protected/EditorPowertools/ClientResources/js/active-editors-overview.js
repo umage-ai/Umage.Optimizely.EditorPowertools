@@ -24,7 +24,7 @@
     function startConnection() {
         if (typeof signalR === 'undefined') {
             document.getElementById('ae-editors-panel').innerHTML =
-                '<div class="ept-empty"><p>SignalR client not available. Check browser console for errors.</p></div>';
+                '<div class="ept-empty"><p>' + EPT.s('activeeditors.error_nosignalr', 'SignalR client not available. Check browser console for errors.') + '</p></div>';
             return;
         }
 
@@ -67,7 +67,7 @@
             renderEditors();
         }).catch(function (err) {
             document.getElementById('ae-editors-panel').innerHTML =
-                '<div class="ept-empty"><p>Could not connect: ' + escHtml(err.message) + '</p></div>';
+                '<div class="ept-empty"><p>' + EPT.s('activeeditors.error_connect', 'Could not connect: {0}').replace('{0}', escHtml(err.message||err)) + '</p></div>';
         });
     }
 
@@ -78,9 +78,9 @@
         var editingCount = editors.filter(function (e) { return e.action === 'editing'; }).length;
 
         el.innerHTML =
-            '<div class="ept-stat"><div class="ept-stat__value">' + onlineCount + '</div><div class="ept-stat__label">Online Now</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + editingCount + '</div><div class="ept-stat__label">Currently Editing</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + todayCount + '</div><div class="ept-stat__label">Active Today</div></div>';
+            '<div class="ept-stat"><div class="ept-stat__value">' + onlineCount + '</div><div class="ept-stat__label">' + EPT.s('activeeditors.stat_online', 'Online Now') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + editingCount + '</div><div class="ept-stat__label">' + EPT.s('activeeditors.stat_editing', 'Currently Editing') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + todayCount + '</div><div class="ept-stat__label">' + EPT.s('activeeditors.stat_today', 'Active Today') + '</div></div>';
     }
 
     function renderEditors() {
@@ -92,7 +92,7 @@
         }
 
         var html = '<div class="ae-editor-list">';
-        html += '<h3>Online Now</h3>';
+        html += '<h3>' + EPT.s('activeeditors.section_online', 'Online Now') + '</h3>';
 
         for (var i = 0; i < editors.length; i++) {
             var e = editors[i];
@@ -102,7 +102,7 @@
             html += '<div class="ae-editor-header">';
             html += '<span class="ae-dot ' + dotClass + '"></span>';
             html += '<strong>' + escHtml(e.displayName) + '</strong>';
-            if (isSelf) html += '<span class="ae-you-badge">you</span>';
+            if (isSelf) html += '<span class="ae-you-badge">' + EPT.s('activeeditors.badge_you', 'you') + '</span>';
             html += '<span class="ae-action-badge ae-action-badge--' + (e.action || 'idle') + '">' + escHtml(e.action || 'idle') + '</span>';
             html += '</div>';
             if (e.contentName) {
@@ -112,12 +112,12 @@
                 html += '</div>';
             }
             var connTime = formatRelativeTime(e.connectedAt);
-            html += '<div class="ae-editor-meta">Connected ' + connTime + '</div>';
+            html += '<div class="ae-editor-meta">' + EPT.s('activeeditors.lbl_connected', 'Connected {0}').replace('{0}', connTime) + '</div>';
             if (!isSelf) {
                 html += '<div class="ae-editor-actions">';
                 html += '<button class="ept-btn ept-btn--sm ae-notify-btn" data-username="' + escHtml(e.username) + '" data-displayname="' + escHtml(e.displayName) + '">';
                 html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>';
-                html += 'Send Message</button>';
+                html += EPT.s('activeeditors.btn_sendmessage', 'Send Message') + '</button>';
                 html += '</div>';
             }
             html += '</div>';
@@ -131,12 +131,12 @@
 
         if (offlineToday.length > 0) {
             html += '<div class="ae-editor-list ae-editor-list--today">';
-            html += '<h3>Also Active Today</h3>';
+            html += '<h3>' + EPT.s('activeeditors.section_today', 'Also Active Today') + '</h3>';
             for (var j = 0; j < offlineToday.length; j++) {
                 html += '<div class="ae-editor-card ae-editor-card--offline">';
                 html += '<span class="ae-dot ae-dot--offline"></span>';
                 html += '<strong>' + escHtml(offlineToday[j]) + '</strong>';
-                html += '<span class="ae-action-badge ae-action-badge--offline">offline</span>';
+                html += '<span class="ae-action-badge ae-action-badge--offline">' + EPT.s('activeeditors.badge_offline', 'offline') + '</span>';
                 html += '</div>';
             }
             html += '</div>';
@@ -160,14 +160,14 @@
     }
 
     function showNotifyDialog(username, displayName) {
-        var dialog = EPT.openDialog('Send Message to ' + displayName, { wide: false });
+        var dialog = EPT.openDialog(EPT.s('activeeditors.dlg_sendmessage', 'Send Message to {0}').replace('{0}', displayName), { wide: false });
         dialog.body.innerHTML =
             '<div class="ae-notify-form">' +
-                '<p class="ae-notify-desc">This will send a CMS notification that ' + escHtml(displayName) + ' will see in their notification bell.</p>' +
-                '<textarea id="ae-notify-msg" class="ae-notify-textarea" rows="4" placeholder="Type your message..." maxlength="500"></textarea>' +
+                '<p class="ae-notify-desc">' + EPT.s('activeeditors.dlg_desc', 'This will send a CMS notification that {0} will see in their notification bell.').replace('{0}', escHtml(displayName)) + '</p>' +
+                '<textarea id="ae-notify-msg" class="ae-notify-textarea" rows="4" placeholder="' + EPT.s('activeeditors.dlg_placeholder', 'Type your message...') + '" maxlength="500"></textarea>' +
                 '<div class="ae-notify-actions">' +
-                    '<button id="ae-notify-cancel" class="ept-btn">Cancel</button>' +
-                    '<button id="ae-notify-send" class="ept-btn ept-btn--primary">Send Notification</button>' +
+                    '<button id="ae-notify-cancel" class="ept-btn">' + EPT.s('activeeditors.btn_cancel', 'Cancel') + '</button>' +
+                    '<button id="ae-notify-send" class="ept-btn ept-btn--primary">' + EPT.s('activeeditors.btn_send', 'Send Notification') + '</button>' +
                 '</div>' +
             '</div>';
 
@@ -185,18 +185,18 @@
 
             var sendBtn = document.getElementById('ae-notify-send');
             sendBtn.disabled = true;
-            sendBtn.textContent = 'Sending...';
+            sendBtn.textContent = EPT.s('activeeditors.btn_sending', 'Sending...');
 
             connection.invoke('SendNotification', username, text).then(function () {
                 dialog.body.innerHTML =
                     '<div class="ae-notify-success">' +
                         '<svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" style="width:48px;height:48px"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' +
-                        '<p>Message sent to ' + escHtml(displayName) + '</p>' +
+                        '<p>' + EPT.s('activeeditors.msg_sent', 'Message sent to {0}').replace('{0}', escHtml(displayName)) + '</p>' +
                     '</div>';
                 setTimeout(function () { dialog.close(); }, 1500);
             }).catch(function (err) {
                 sendBtn.disabled = false;
-                sendBtn.textContent = 'Send Notification';
+                sendBtn.textContent = EPT.s('activeeditors.btn_send', 'Send Notification');
                 dialog.body.querySelector('.ae-notify-desc').textContent = 'Error: ' + err.message;
                 dialog.body.querySelector('.ae-notify-desc').style.color = '#ef4444';
             });
@@ -219,12 +219,12 @@
 
         panel.innerHTML =
             '<div class="ae-chat">' +
-                '<h3>Team Chat</h3>' +
+                '<h3>' + EPT.s('activeeditors.chat_title', 'Team Chat') + '</h3>' +
                 '<div class="ae-chat-messages" id="ae-chat-messages">' +
-                    '<div class="ae-chat-empty">No messages yet. Say hello!</div>' +
+                    '<div class="ae-chat-empty">' + EPT.s('activeeditors.chat_empty', 'No messages yet. Say hello!') + '</div>' +
                 '</div>' +
                 '<div class="ae-chat-input">' +
-                    '<input type="text" id="ae-chat-text" class="ae-chat-textbox" placeholder="Type a message... (Enter to send)" maxlength="500" />' +
+                    '<input type="text" id="ae-chat-text" class="ae-chat-textbox" placeholder="' + EPT.s('activeeditors.chat_placeholder', 'Type a message... (Enter to send)') + '" maxlength="500" />' +
                     '<button id="ae-chat-send" class="ae-chat-send-btn" title="Send">' +
                         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>' +
                     '</button>' +
@@ -247,7 +247,7 @@
         if (!el) return;
 
         if (chatMessages.length === 0) {
-            el.innerHTML = '<div class="ae-chat-empty">No messages yet. Say hello!</div>';
+            el.innerHTML = '<div class="ae-chat-empty">' + EPT.s('activeeditors.chat_empty', 'No messages yet. Say hello!') + '</div>';
             return;
         }
 
