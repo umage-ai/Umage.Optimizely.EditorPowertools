@@ -6,6 +6,7 @@
       <menu>
         <title>Editor Powertools</title>
         <overview>Oversigt</overview>
+        <about>Om</about>
         <contenttypeaudit>Indholdstype-revision</contenttypeaudit>
         <personalizationaudit>Personaliseringsrevision</personalizationaudit>
         <audiencemanager>Målgruppestyring</audiencemanager>
@@ -95,6 +96,19 @@
           <title>Oversigt</title>
           <description>Dashboard-oversigt over alle Editor Powertools-funktioner.</description>
         </overview>
+        <about>
+          <title>Om Editor Powertools</title>
+          <description>Om dette plugin og holdet bag.</description>
+          <whatis_title>Hvad er Editor Powertools?</whatis_title>
+          <whatis_body>Editor Powertools er en gratis, open source-samling af værktøjer til Optimizely CMS 12-redaktører og -administratorer. Det tilføjer produktivitetsværktøjer, revisionsrapporter og realtidssamarbejdsfunktioner, der mangler i standard-CMS'et — alle tilgængelige direkte fra CMS-navigationsmenuen.</whatis_body>
+          <whatis_install>Installer via NuGet:</whatis_install>
+          <tools_title>Inkluderede værktøjer</tools_title>
+          <github_label>GitHub-repository</github_label>
+          <github_docs>Dokumentation &amp; kildekode</github_docs>
+          <madeby_title>Bygget af umage.ai</madeby_title>
+          <madeby_body>umage.ai er et agentisk udviklingsselskab, der forbinder mennesker og software med AI. Vi hjælper organisationer med at modernisere, bygge og skalere software, der skaber reel forretningsværdi — kombinerer årtiers konsulenterfaring med overbevisningen om, at AI grundlæggende transformerer, hvordan software bygges.</madeby_body>
+          <madeby_cta>Besøg umage.ai</madeby_cta>
+        </about>
         <visitorgrouptester>
           <title>Besøgsgruppe-tester</title>
           <description>Flydende værktøjslinje til at simulere besøgsgruppemedlemskab og inspicere redigerbare indholdselementer.</description>

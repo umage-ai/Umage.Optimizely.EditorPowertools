@@ -6,6 +6,7 @@
       <menu>
         <title>Editor Powertools</title>
         <overview>Übersicht</overview>
+        <about>Über</about>
         <contenttypeaudit>Inhaltstyp-Audit</contenttypeaudit>
         <personalizationaudit>Personalisierungs-Audit</personalizationaudit>
         <audiencemanager>Zielgruppenverwaltung</audiencemanager>
@@ -95,6 +96,19 @@
           <title>Übersicht</title>
           <description>Dashboard-Übersicht aller Editor Powertools-Funktionen.</description>
         </overview>
+        <about>
+          <title>Über Editor Powertools</title>
+          <description>Über dieses Plugin und das Team dahinter.</description>
+          <whatis_title>Was ist Editor Powertools?</whatis_title>
+          <whatis_body>Editor Powertools ist eine kostenlose Open-Source-Sammlung von leistungsstarken Werkzeugen für Optimizely CMS 12-Redakteure und -Administratoren. Es fügt Produktivitätswerkzeuge, Prüfberichte und Echtzeit-Kollaborationsfunktionen hinzu, die im Standard-CMS fehlen — alles direkt über das CMS-Navigationsmenü zugänglich.</whatis_body>
+          <whatis_install>Installation über NuGet:</whatis_install>
+          <tools_title>Enthaltene Werkzeuge</tools_title>
+          <github_label>GitHub-Repository</github_label>
+          <github_docs>Dokumentation &amp; Quellcode</github_docs>
+          <madeby_title>Entwickelt von umage.ai</madeby_title>
+          <madeby_body>umage.ai ist ein agentisches Entwicklungsunternehmen, das Menschen und Software mit KI verbindet. Wir helfen Organisationen dabei, Software zu modernisieren, aufzubauen und zu skalieren, die echten Geschäftswert schafft — kombiniert jahrzehntelange Beratungserfahrung mit der Überzeugung, dass KI die Art und Weise, wie Software entwickelt wird, grundlegend verändert.</madeby_body>
+          <madeby_cta>umage.ai besuchen</madeby_cta>
+        </about>
         <visitorgrouptester>
           <title>Besuchergruppen-Tester</title>
           <description>Schwebende Werkzeugleiste zur Simulation von Besuchergruppenszugehörigkeit und Inspektion bearbeitbarer Inhaltselemente.</description>

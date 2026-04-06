@@ -6,6 +6,7 @@
       <menu>
         <title>Editor Powertools</title>
         <overview>概要</overview>
+        <about>について</about>
         <contenttypeaudit>コンテンツタイプ監査</contenttypeaudit>
         <personalizationaudit>パーソナライゼーション監査</personalizationaudit>
         <audiencemanager>オーディエンスマネージャー</audiencemanager>
@@ -95,6 +96,19 @@
           <title>概要</title>
           <description>Editor Powertoolsの全機能のダッシュボード概要。</description>
         </overview>
+        <about>
+          <title>Editor Powertoolsについて</title>
+          <description>このプラグインとその開発チームについて。</description>
+          <whatis_title>Editor Powertoolsとは？</whatis_title>
+          <whatis_body>Editor Powertoolsは、Optimizely CMS 12の編集者と管理者向けの無料オープンソースのパワーツールコレクションです。標準CMSには不足している生産性ツール、監査レポート、リアルタイムコラボレーション機能を追加し、すべてCMSナビゲーションメニューから直接アクセスできます。</whatis_body>
+          <whatis_install>NuGetでインストール：</whatis_install>
+          <tools_title>含まれるツール</tools_title>
+          <github_label>GitHubリポジトリ</github_label>
+          <github_docs>ドキュメント &amp; ソースコード</github_docs>
+          <madeby_title>umage.aiが開発</madeby_title>
+          <madeby_body>umage.aiは、AIで人々とソフトウェアをつなぐエージェント型開発会社です。私たちは、真のビジネス価値を生み出すソフトウェアの近代化・構築・スケールを支援します。数十年のコンサルティング経験と、AIがソフトウェア開発を根本的に変革するという確信を組み合わせています。</madeby_body>
+          <madeby_cta>umage.aiを訪問</madeby_cta>
+        </about>
         <visitorgrouptester>
           <title>ビジターグループテスター</title>
           <description>ビジターグループメンバーシップのシミュレーションと編集可能なコンテンツ要素の検査を行うフローティングツールバー。</description>

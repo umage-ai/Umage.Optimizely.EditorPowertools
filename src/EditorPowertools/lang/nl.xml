@@ -6,6 +6,7 @@
       <menu>
         <title>Editor Powertools</title>
         <overview>Overzicht</overview>
+        <about>Over</about>
         <contenttypeaudit>Inhoudstype-audit</contenttypeaudit>
         <personalizationaudit>Personalisatie-audit</personalizationaudit>
         <audiencemanager>Doelgroepbeheer</audiencemanager>
@@ -95,6 +96,19 @@
           <title>Overzicht</title>
           <description>Dashboardoverzicht van alle Editor Powertools-functies.</description>
         </overview>
+        <about>
+          <title>Over Editor Powertools</title>
+          <description>Over deze plugin en het team erachter.</description>
+          <whatis_title>Wat is Editor Powertools?</whatis_title>
+          <whatis_body>Editor Powertools is een gratis, open-source verzameling van krachtige tools voor Optimizely CMS 12-redacteuren en -beheerders. Het voegt productiviteitstools, auditrapporten en realtime samenwerkingsfuncties toe die ontbreken in het standaard CMS — allemaal direct toegankelijk vanuit het CMS-navigatiemenu.</whatis_body>
+          <whatis_install>Installeren via NuGet:</whatis_install>
+          <tools_title>Inbegrepen tools</tools_title>
+          <github_label>GitHub-repository</github_label>
+          <github_docs>Documentatie &amp; broncode</github_docs>
+          <madeby_title>Gebouwd door umage.ai</madeby_title>
+          <madeby_body>umage.ai is een agentisch ontwikkelingsbedrijf dat mensen en software verbindt met AI. Wij helpen organisaties software te moderniseren, bouwen en schalen die echte bedrijfswaarde creëert — decennia aan advieservaring gecombineerd met de overtuiging dat AI de manier waarop software wordt gebouwd fundamenteel transformeert.</madeby_body>
+          <madeby_cta>Bezoek umage.ai</madeby_cta>
+        </about>
         <visitorgrouptester>
           <title>Bezoekersgroeptester</title>
           <description>Zwevende werkbalk om lidmaatschap van bezoekersgroepen te simuleren en bewerkbare inhoudselementen te inspecteren.</description>

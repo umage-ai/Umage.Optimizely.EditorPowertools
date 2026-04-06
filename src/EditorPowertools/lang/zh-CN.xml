@@ -6,6 +6,7 @@
       <menu>
         <title>Editor Powertools</title>
         <overview>概览</overview>
+        <about>关于</about>
         <contenttypeaudit>内容类型审计</contenttypeaudit>
         <personalizationaudit>个性化审计</personalizationaudit>
         <audiencemanager>受众管理</audiencemanager>
@@ -95,6 +96,19 @@
           <title>概览</title>
           <description>Editor Powertools所有功能的仪表板概览。</description>
         </overview>
+        <about>
+          <title>关于 Editor Powertools</title>
+          <description>关于此插件及其背后的团队。</description>
+          <whatis_title>什么是 Editor Powertools？</whatis_title>
+          <whatis_body>Editor Powertools 是一个免费的开源工具集，专为 Optimizely CMS 12 编辑人员和管理员设计。它添加了标准 CMS 所缺少的生产力工具、审计报告和实时协作功能——所有功能均可直接从 CMS 导航菜单访问。</whatis_body>
+          <whatis_install>通过 NuGet 安装：</whatis_install>
+          <tools_title>包含的工具</tools_title>
+          <github_label>GitHub 仓库</github_label>
+          <github_docs>文档 &amp; 源代码</github_docs>
+          <madeby_title>由 umage.ai 构建</madeby_title>
+          <madeby_body>umage.ai 是一家代理型开发公司，通过 AI 连接人与软件。我们帮助企业实现软件的现代化、构建和扩展，从而创造真正的商业价值——将数十年的咨询经验与 AI 从根本上改变软件开发方式的信念相结合。</madeby_body>
+          <madeby_cta>访问 umage.ai</madeby_cta>
+        </about>
         <visitorgrouptester>
           <title>访客组测试器</title>
           <description>浮动工具栏，用于模拟访客组成员身份并检查可编辑的内容元素。</description>

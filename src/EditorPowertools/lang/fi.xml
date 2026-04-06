@@ -6,6 +6,7 @@
       <menu>
         <title>Editor Powertools</title>
         <overview>Yleiskatsaus</overview>
+        <about>Tietoja</about>
         <contenttypeaudit>Sisältötyyppien tarkastus</contenttypeaudit>
         <personalizationaudit>Personoinnin tarkastus</personalizationaudit>
         <audiencemanager>Kohderyhmien hallinta</audiencemanager>
@@ -95,6 +96,19 @@
           <title>Yleiskatsaus</title>
           <description>Kojelaudan yleiskatsaus kaikista Editor Powertools -ominaisuuksista.</description>
         </overview>
+        <about>
+          <title>Tietoja Editor Powertoolsista</title>
+          <description>Tietoja tästä lisäosasta ja sen tekijöistä.</description>
+          <whatis_title>Mikä on Editor Powertools?</whatis_title>
+          <whatis_body>Editor Powertools on ilmainen, avoimen lähdekoodin kokoelma tehokkaita työkaluja Optimizely CMS 12 -toimittajille ja -järjestelmänvalvojille. Se lisää tuottavuustyökaluja, tarkastusraportteja ja reaaliaikaisia yhteistyöominaisuuksia, joita vakio-CMS:stä puuttuu — kaikki käytettävissä suoraan CMS-navigaatiovalikosta.</whatis_body>
+          <whatis_install>Asenna NuGetin kautta:</whatis_install>
+          <tools_title>Sisällytetyt työkalut</tools_title>
+          <github_label>GitHub-repositorio</github_label>
+          <github_docs>Dokumentaatio &amp; lähdekoodi</github_docs>
+          <madeby_title>Kehittänyt umage.ai</madeby_title>
+          <madeby_body>umage.ai on agenttipohjainen ohjelmistokehitysyritys, joka yhdistää ihmiset ja ohjelmistot tekoälyn avulla. Autamme organisaatioita modernisoimaan, rakentamaan ja skaalaamaan ohjelmistoja, jotka luovat todellista liiketoiminta-arvoa — yhdistämme vuosikymmenten konsultointikokemuksen vakaumukseen, että tekoäly muuttaa perusteellisesti tavan, jolla ohjelmistoja rakennetaan.</madeby_body>
+          <madeby_cta>Vieraile umage.ai:ssa</madeby_cta>
+        </about>
         <visitorgrouptester>
           <title>Vierailijaryhmätestaus</title>
           <description>Kelluva työkalupalkki vierailijaryhmäjäsenyyden simulointiin ja muokattavien sisältöelementtien tarkasteluun.</description>

@@ -6,6 +6,7 @@
       <menu>
         <title>Editor Powertools</title>
         <overview>Vista general</overview>
+        <about>Acerca de</about>
         <contenttypeaudit>Auditoría de tipos de contenido</contenttypeaudit>
         <personalizationaudit>Auditoría de personalización</personalizationaudit>
         <audiencemanager>Gestor de audiencias</audiencemanager>
@@ -95,6 +96,19 @@
           <title>Vista general</title>
           <description>Panel de control con vista general de todas las funciones de Editor Powertools.</description>
         </overview>
+        <about>
+          <title>Acerca de Editor Powertools</title>
+          <description>Acerca de este plugin y el equipo detrás de él.</description>
+          <whatis_title>¿Qué es Editor Powertools?</whatis_title>
+          <whatis_body>Editor Powertools es una colección gratuita y de código abierto de potentes herramientas para editores y administradores de Optimizely CMS 12. Añade herramientas de productividad, informes de auditoría y funciones de colaboración en tiempo real que faltan en el CMS estándar — todas accesibles directamente desde el menú de navegación del CMS.</whatis_body>
+          <whatis_install>Instalar mediante NuGet:</whatis_install>
+          <tools_title>Herramientas incluidas</tools_title>
+          <github_label>Repositorio de GitHub</github_label>
+          <github_docs>Documentación &amp; fuente</github_docs>
+          <madeby_title>Desarrollado por umage.ai</madeby_title>
+          <madeby_body>umage.ai es una empresa de desarrollo agéntico que conecta personas y software con IA. Ayudamos a las organizaciones a modernizar, construir y escalar software que crea valor empresarial real — combinando décadas de experiencia en consultoría con la convicción de que la IA transforma fundamentalmente la forma en que se desarrolla el software.</madeby_body>
+          <madeby_cta>Visitar umage.ai</madeby_cta>
+        </about>
         <visitorgrouptester>
           <title>Probador de grupos de visitantes</title>
           <description>Barra de herramientas flotante para simular la pertenencia a grupos de visitantes e inspeccionar elementos de contenido editables.</description>
