@@ -849,6 +849,26 @@
           <loading>Cargando...</loading>
           <noresults>No se encontraron resultados</noresults>
         </editorpowertools>
+        <help>
+          <helpbtn>Ayuda</helpbtn>
+          <contenttypeaudit>Muestra todos los tipos de contenido definidos en su solución, con recuentos de uso, recuentos de propiedades y la jerarquía de herencia. Úselo para entender qué tipos se utilizan activamente, cuáles son demasiado complejos y cuáles son candidatos para consolidación.</contenttypeaudit>
+          <personalizationaudit>Analiza todo el contenido para mapear el uso de grupos de visitantes en su sitio. Muestra qué grupos se referencian, cuántos elementos de contenido usan cada grupo y qué propiedades llevan personalizaciones. Imprescindible antes de eliminar o renombrar grupos de visitantes.</personalizationaudit>
+          <audiencemanager>Explore y administre las definiciones de grupos de visitantes. Vea los criterios de cada grupo, compruebe cuántos elementos de contenido lo referencian y navegue directamente a los usos. Complementa la Auditoría de personalización.</audiencemanager>
+          <contenttyperecommendations>Analiza la estructura de tipos de contenido y sugiere mejoras: tipos con muy pocas instancias que son candidatos para eliminación o fusión, propiedades duplicadas en múltiples tipos y cadenas de herencia excesivamente profundas.</contenttyperecommendations>
+          <bulkpropertyeditor>Seleccione un tipo de contenido y una propiedad específica, luego actualice su valor en muchos elementos de contenido en una sola operación. Filtre por ruta de contenido para acotar el cambio. Previsualice los resultados antes de confirmar.</bulkpropertyeditor>
+          <scheduledjobsgantt>Visualiza el historial de ejecución de trabajos programados como un diagrama de Gantt. Revela instantáneamente trabajos superpuestos, ejecuciones inusualmente largas y ejecuciones fallidas en una ventana de tiempo configurable.</scheduledjobsgantt>
+          <activitytimeline>Un feed cronológico de cambios de contenido: quién publicó, movió o eliminó qué elemento y cuándo. Filtre por rango de tiempo, usuario o tipo de contenido. Útil para auditar la actividad editorial.</activitytimeline>
+          <contentimporter>Importe elementos de contenido de forma masiva desde archivos CSV, JSON o Excel. Asigne columnas de archivo a propiedades de tipo de contenido, previsualice las filas asignadas y luego ejecute la importación. Las filas fallidas se reportan individualmente.</contentimporter>
+          <cmsdoctor>Ejecuta una serie de comprobaciones de salud contra su instalación CMS: presión de memoria, propiedades de tipo de contenido huérfanas, enlaces internos rotos, texto alternativo faltante en imágenes, contenido público sin restricciones y más. Cada comprobación devuelve un estado y recomendaciones accionables.</cmsdoctor>
+          <contentaudit>Un informe tabular completo de cada elemento de contenido: tipo, estado, idioma, fechas de creación y modificación, autor, recuento de referencias entrantes y recuento de versiones. Filtre por cualquier columna y exporte a CSV, Excel o JSON.</contentaudit>
+          <linkchecker>Analiza todo el contenido en busca de enlaces internos y externos rotos. Se ejecuta como un trabajo en segundo plano e informa de cada URL rota junto con los elementos de contenido que la referencian, con enlaces directos a la vista de edición del CMS.</linkchecker>
+          <activeeditors>Muestra quién está editando contenido actualmente en tiempo real usando SignalR. Vea qué elementos de contenido se están trabajando y por quién, actualizado en vivo cuando los editores abren y cierran páginas.</activeeditors>
+          <managechildren>Seleccione una página padre y administre todas sus páginas hijas de forma masiva: reordene por arrastrar y soltar, publique o despublique múltiples elementos a la vez, muévalos a otro padre o elimínelos — todo en una sola vista.</managechildren>
+          <securityaudit>Reporta sobre los derechos de acceso en su árbol de contenido. Destaca elementos con acceso público sin restricciones, elementos que faltan restricciones esperadas y proporciona una matriz completa de permisos por rol y usuario para cualquier ruta de contenido.</securityaudit>
+          <contentstatistics>Gráficos y métricas para la actividad editorial: elementos de contenido creados y modificados por período de tiempo, autores más activos, distribución de tipos de contenido en el árbol y cobertura de idiomas por sección.</contentstatistics>
+          <languageaudit>Muestra el estado de traducción de todo el contenido en los idiomas habilitados. Identifica elementos sin traducciones, elementos cuyas traducciones están desactualizadas respecto al idioma principal y proporciona una cola para el trabajo de traducción.</languageaudit>
+          <contentdetails>Muestra información detallada sobre el elemento de contenido actualmente seleccionado en el panel de activos del CMS: todos los valores de propiedades, referencias de contenido entrantes e historial de versiones. Se actualiza automáticamente cuando navega a un elemento diferente.</contentdetails>
+        </help>
       </ui>
     </editorpowertools>
   </language>

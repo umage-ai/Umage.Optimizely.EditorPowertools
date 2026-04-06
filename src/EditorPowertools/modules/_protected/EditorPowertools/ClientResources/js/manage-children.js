@@ -60,7 +60,7 @@
     }
 
     function renderPickParent() {
-        root.innerHTML = '<div class="ept-page-header"><h1>' + EPT.s('managechildren.title_managechildren', 'Manage Child Items') + '</h1>' +
+        root.innerHTML = '<div class="ept-page-header"><h1>' + EPT.s('managechildren.title_managechildren', 'Manage Child Items') + ' <button class="ept-help-btn" data-ept-help="managechildren" title="' + EPT.s('help.helpbtn', 'Help') + '">?</button></h1>' +
             '<p>' + EPT.s('managechildren.lbl_selectparent', 'Select a parent page to manage its children') + '</p></div>' +
             '<div class="ept-card"><div class="ept-card__body">' +
             '<button class="ept-btn ept-btn--primary" id="pick-parent">' + EPT.s('managechildren.btn_selectparent', 'Select Parent Page') + '</button>' +
@@ -80,7 +80,7 @@
     function renderManager() {
         var selCount = state.selected.size;
         var html = '<div class="ept-page-header" style="display:flex;align-items:center;justify-content:space-between">';
-        html += '<div><h1>' + EPT.s('managechildren.title_managechildren', 'Manage Children') + '</h1>';
+        html += '<div><h1>' + EPT.s('managechildren.title_managechildren', 'Manage Children') + ' <button class="ept-help-btn" data-ept-help="managechildren" title="' + EPT.s('help.helpbtn', 'Help') + '">?</button></h1>';
         html += '<p id="parent-info">' + EPT.s('managechildren.lbl_loading', 'Loading...') + '</p></div>';
         html += '<button class="ept-btn" id="change-parent">' + EPT.s('managechildren.btn_changeparent', 'Change Parent') + '</button>';
         html += '</div>';

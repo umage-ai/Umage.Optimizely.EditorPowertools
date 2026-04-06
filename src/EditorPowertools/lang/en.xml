@@ -1059,6 +1059,26 @@
           <loading>Loading...</loading>
           <noresults>No results found</noresults>
         </editorpowertools>
+        <help>
+          <helpbtn>Help</helpbtn>
+          <contenttypeaudit>Shows all content types defined in your solution, with usage counts, property counts, and inheritance hierarchy. Use it to understand which types are actively used, which are overly complex, and which are candidates for consolidation.</contenttypeaudit>
+          <personalizationaudit>Scans all content to map visitor group usage across your site. Shows which groups are referenced, how many content items use each group, and which properties carry personalizations. Essential before removing or renaming visitor groups.</personalizationaudit>
+          <audiencemanager>Browse and manage visitor group definitions. See each group's criteria, check how many content items reference it, and navigate directly to usages. Complements the Personalization Audit.</audiencemanager>
+          <contenttyperecommendations>Analyzes your content type structure and suggests improvements: types with very few instances that are candidates for removal or merging, properties duplicated across multiple types, and overly deep inheritance chains.</contenttyperecommendations>
+          <bulkpropertyeditor>Select a content type and a specific property, then update its value across many content items in one operation. Filter by content path to scope the change. Preview results before committing.</bulkpropertyeditor>
+          <scheduledjobsgantt>Visualizes scheduled job execution history as a Gantt chart. Instantly reveals overlapping jobs, unusually long runs, and failed executions across a configurable time window.</scheduledjobsgantt>
+          <activitytimeline>A chronological feed of content changes: who published, moved, or deleted which item and when. Filter by time range, user, or content type. Useful for auditing editorial activity.</activitytimeline>
+          <contentimporter>Import content items in bulk from CSV, JSON, or Excel files. Map file columns to content type properties, preview the mapped rows, then execute the import. Failed rows are reported individually.</contentimporter>
+          <cmsdoctor>Runs a suite of health checks against your CMS installation: memory pressure, orphaned content type properties, broken internal links, missing alt text on images, unrestricted public content, and more. Each check returns a status and actionable recommendations.</cmsdoctor>
+          <contentaudit>A full tabular report of every content item: type, status, language, created and modified dates, author, incoming reference count, and version count. Filter by any column and export to CSV, Excel, or JSON.</contentaudit>
+          <linkchecker>Scans all content for broken internal and external links. Runs as a background job and reports each broken URL alongside the content items that reference it, with direct links to the CMS edit view.</linkchecker>
+          <activeeditors>Shows who is currently editing content in real time using SignalR. See which content items are being worked on and by whom, updated live as editors open and close pages.</activeeditors>
+          <managechildren>Select a parent page and manage all its child pages in bulk: reorder by drag-and-drop, publish or unpublish multiple items at once, move them to another parent, or delete them — all in a single view.</managechildren>
+          <securityaudit>Reports on access rights across your content tree. Highlights items with unrestricted public access, items missing expected restrictions, and provides a full role and user permission matrix for any content path.</securityaudit>
+          <contentstatistics>Charts and metrics for editorial activity: content items created and modified per time period, most active authors, content type distribution across the tree, and language coverage by section.</contentstatistics>
+          <languageaudit>Shows the translation status of all content across enabled languages. Identifies items missing translations entirely, items whose translations are stale relative to the master language, and provides a queue for translation work.</languageaudit>
+          <contentdetails>Displays detailed information about the currently selected content item in the CMS assets panel: all property values, incoming content references, and version history. Refreshes automatically when you navigate to a different item.</contentdetails>
+        </help>
       </ui>
     </editorpowertools>
   </language>

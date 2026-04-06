@@ -849,6 +849,26 @@
           <loading>加载中...</loading>
           <noresults>未找到结果</noresults>
         </editorpowertools>
+        <help>
+          <helpbtn>帮助</helpbtn>
+          <contenttypeaudit>显示解决方案中定义的所有内容类型，包括使用次数、属性数量和继承层次结构。使用它了解哪些类型正在被积极使用、哪些过于复杂，以及哪些是合并的候选对象。</contenttypeaudit>
+          <personalizationaudit>扫描所有内容以映射整个站点的访客组使用情况。显示哪些组被引用、有多少内容项使用每个组，以及哪些属性携带个性化设置。在删除或重命名访客组之前必不可少。</personalizationaudit>
+          <audiencemanager>浏览和管理访客组定义。查看每个组的条件，检查有多少内容项引用它，并直接导航到使用位置。补充个性化审计功能。</audiencemanager>
+          <contenttyperecommendations>分析内容类型结构并提出改进建议：实例极少、可考虑删除或合并的类型，在多个类型中重复的属性，以及过深的继承链。</contenttyperecommendations>
+          <bulkpropertyeditor>选择内容类型和特定属性，然后通过一次操作更新多个内容项中的值。按内容路径过滤以限定更改范围。提交前预览结果。</bulkpropertyeditor>
+          <scheduledjobsgantt>以甘特图形式可视化计划任务的执行历史记录。即时揭示在可配置时间窗口内重叠的任务、异常长时间的运行和失败的执行。</scheduledjobsgantt>
+          <activitytimeline>内容更改的时间顺序动态：谁在何时发布、移动或删除了哪个项目。按时间范围、用户或内容类型筛选。可用于审计编辑活动。</activitytimeline>
+          <contentimporter>从 CSV、JSON 或 Excel 文件批量导入内容项。将文件列映射到内容类型属性，预览映射的行，然后执行导入。失败的行会单独报告。</contentimporter>
+          <cmsdoctor>对 CMS 安装运行一系列健康检查：内存压力、孤立的内容类型属性、损坏的内部链接、图像缺少替代文本、无限制的公开内容等。每项检查返回状态和可操作的建议。</cmsdoctor>
+          <contentaudit>每个内容项的完整表格报告：类型、状态、语言、创建和修改日期、作者、传入引用计数和版本计数。按任意列筛选，并导出为 CSV、Excel 或 JSON。</contentaudit>
+          <linkchecker>扫描所有内容以查找损坏的内部和外部链接。作为后台任务运行，报告每个损坏的 URL 以及引用它的内容项，并附带指向 CMS 编辑视图的直接链接。</linkchecker>
+          <activeeditors>使用 SignalR 实时显示当前正在编辑内容的用户。查看哪些内容项正在被谁处理，当编辑者打开和关闭页面时实时更新。</activeeditors>
+          <managechildren>选择一个父页面并批量管理其所有子页面：通过拖放重新排序，一次发布或取消发布多个项目，移动到另一个父级，或删除 — 全部在单一视图中完成。</managechildren>
+          <securityaudit>报告整个内容树中的访问权限。突出显示具有无限制公开访问权限的项目、缺少预期限制的项目，并为任何内容路径提供完整的角色和用户权限矩阵。</securityaudit>
+          <contentstatistics>编辑活动的图表和指标：每个时间段创建和修改的内容项、最活跃的作者、树中的内容类型分布以及各部分的语言覆盖情况。</contentstatistics>
+          <languageaudit>显示已启用语言中所有内容的翻译状态。识别完全缺少翻译的项目、翻译相对于主语言已过时的项目，并提供翻译工作队列。</languageaudit>
+          <contentdetails>在 CMS 资产面板中显示当前选中内容项的详细信息：所有属性值、传入内容引用和版本历史记录。导航到不同项目时自动刷新。</contentdetails>
+        </help>
       </ui>
     </editorpowertools>
   </language>

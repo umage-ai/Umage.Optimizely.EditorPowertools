@@ -1,3 +1,4 @@
+using EditorPowertools.Localization;
 using EditorPowertools.Permissions;
 using EditorPowertools.Tools.ContentTypeAudit;
 using Microsoft.AspNetCore.Authorization;
@@ -15,13 +16,16 @@ public class EditorPowertoolsController : Controller
 {
     private readonly ContentTypeAuditService _contentTypeAuditService;
     private readonly FeatureAccessChecker _accessChecker;
+    private readonly UiStringsProvider _uiStrings;
 
     public EditorPowertoolsController(
         ContentTypeAuditService contentTypeAuditService,
-        FeatureAccessChecker accessChecker)
+        FeatureAccessChecker accessChecker,
+        UiStringsProvider uiStrings)
     {
         _contentTypeAuditService = contentTypeAuditService;
         _accessChecker = accessChecker;
+        _uiStrings = uiStrings;
     }
 
     [HttpGet]
@@ -210,5 +214,15 @@ public class EditorPowertoolsController : Controller
     public IActionResult About()
     {
         return View("/Views/About/Index.cshtml");
+    }
+
+    /// <summary>
+    /// Returns all UI strings as JSON for CMS shell widgets that cannot access window.EPT_STRINGS.
+    /// This endpoint lives under the module's protected path (not /editorpowertools/api/).
+    /// </summary>
+    [HttpGet]
+    public IActionResult WidgetStrings()
+    {
+        return Json(_uiStrings.GetAll());
     }
 }

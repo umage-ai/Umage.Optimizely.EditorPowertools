@@ -18,8 +18,8 @@ define([
             callback();
             return;
         }
-        var apiBase = window.EPT_API_URL || '/editorpowertools/api';
-        fetch(apiBase + '/ui-strings', { credentials: 'same-origin' })
+        var base = window.EPT_BASE_URL || '';
+        fetch(base + 'EditorPowertools/WidgetStrings', { credentials: 'same-origin' })
             .then(function (r) { return r.ok ? r.json() : null; })
             .then(function (data) {
                 if (data) window.EPT_STRINGS = data;
@@ -31,6 +31,7 @@ define([
     return declare("editorpowertools.ContentDetailsWidget", [_LayoutWidget, _TemplatedMixin, _ContextMixin], {
         templateString: '<div class="ept-cd-root">' +
             '<div data-dojo-attach-point="containerNode" class="ept-cd-container"></div>' +
+            '<button data-dojo-attach-point="helpBtn" class="ept-help-btn ept-cd-help-btn" title="Help">?</button>' +
             '</div>',
 
         _currentContentId: null,
@@ -44,6 +45,27 @@ define([
                 when(self.getCurrentContext(), function (context) {
                     self._onContextChanged(context);
                 });
+                // Set help button title from strings
+                if (self.helpBtn) {
+                    self.helpBtn.title = EPT.s('help.helpbtn', 'Help');
+                    self.helpBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        var existing = self.domNode.querySelector('.ept-help-popover');
+                        if (existing) { existing.remove(); return; }
+                        var popover = document.createElement('div');
+                        popover.className = 'ept-help-popover';
+                        popover.textContent = EPT.s('help.contentdetails', '');
+                        self.domNode.style.position = 'relative';
+                        self.domNode.appendChild(popover);
+                        var close = function(ev) {
+                            if (!popover.contains(ev.target) && ev.target !== self.helpBtn) {
+                                popover.remove();
+                                document.removeEventListener('click', close);
+                            }
+                        };
+                        setTimeout(function() { document.addEventListener('click', close); }, 0);
+                    });
+                }
             });
         },
 

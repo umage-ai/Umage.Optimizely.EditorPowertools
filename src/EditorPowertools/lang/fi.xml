@@ -849,6 +849,26 @@
           <loading>Ladataan...</loading>
           <noresults>Tuloksia ei löytynyt</noresults>
         </editorpowertools>
+        <help>
+          <helpbtn>Ohje</helpbtn>
+          <contenttypeaudit>Näyttää kaikki ratkaisussasi määritellyt sisältötyypit käyttömäärineen, ominaisuusmäärineen ja perintöhierarkioineen. Käytä sitä ymmärtääksesi mitkä tyypit ovat aktiivisessa käytössä, mitkä ovat liian monimutkaisia ja mitkä ovat ehdokkaita konsolidointiin.</contenttypeaudit>
+          <personalizationaudit>Skannaa kaiken sisällön kävijäryhmien käytön kartoittamiseksi koko sivustollasi. Näyttää mihin ryhmiin viitataan, kuinka monta sisältökohdetta käyttää kutakin ryhmää ja mitkä ominaisuudet kantavat personointeja. Välttämätön ennen kävijäryhmien poistamista tai uudelleennimeämistä.</personalizationaudit>
+          <audiencemanager>Selaa ja hallinnoi kävijäryhmämäärityksiä. Katso kunkin ryhmän kriteerit, tarkista kuinka monta sisältökohdetta viittaa siihen ja siirry suoraan käyttöpaikkoihin. Täydentää Personointiauditointia.</audiencemanager>
+          <contenttyperecommendations>Analysoi sisältötyyppirakenteesi ja ehdottaa parannuksia: tyypit joilla on hyvin vähän instansseja ja jotka ovat ehdokkaita poistamiseen tai yhdistämiseen, useiden tyyppien välillä monistetut ominaisuudet ja tarpeettoman syvät perintöketjut.</contenttyperecommendations>
+          <bulkpropertyeditor>Valitse sisältötyyppi ja tietty ominaisuus, ja päivitä sitten sen arvo monissa sisältökohteissa yhdellä kertaa. Rajaa muutos suodattamalla sisältöpolun mukaan. Esikatsele tulokset ennen tallentamista.</bulkpropertyeditor>
+          <scheduledjobsgantt>Visualisoi ajoitettujen töiden suoritushistorian Gantt-kaaviona. Paljastaa välittömästi päällekkäiset työt, epätavallisen pitkät ajot ja epäonnistuneet suoritukset konfiguroitavan aikavälin sisällä.</scheduledjobsgantt>
+          <activitytimeline>Kronologinen syöte sisältömuutoksista: kuka julkaisi, siirsi tai poisti minkä kohteen ja milloin. Suodata ajanjakson, käyttäjän tai sisältötyypin mukaan. Hyödyllinen toimituksellisen toiminnan auditointiin.</activitytimeline>
+          <contentimporter>Tuo sisältökohteita joukkoina CSV-, JSON- tai Excel-tiedostoista. Yhdistä saraketiedot sisältötyypin ominaisuuksiin, esikatsele yhdistetyt rivit ja suorita sitten tuonti. Epäonnistuneet rivit raportoidaan yksitellen.</contentimporter>
+          <cmsdoctor>Suorittaa joukon terveystarkistuksia CMS-asennustasi vastaan: muistipaine, orvot sisältötyypin ominaisuudet, rikkinäiset sisäiset linkit, puuttuva alt-teksti kuvissa, rajoittamaton julkinen sisältö ja paljon muuta. Jokainen tarkistus palauttaa tilan ja toimintakelpoisia suosituksia.</cmsdoctor>
+          <contentaudit>Täydellinen taulukkoraportti jokaisesta sisältökohteesta: tyyppi, tila, kieli, luonti- ja muutospäivät, tekijä, saapuvien viittausten määrä ja versioiden määrä. Suodata minkä tahansa sarakkeen mukaan ja vie CSV-, Excel- tai JSON-muodossa.</contentaudit>
+          <linkchecker>Skannaa kaiken sisällön rikkinäisten sisäisten ja ulkoisten linkkien varalta. Toimii taustatehtävänä ja raportoi jokaisen rikkinäisen URL-osoitteen yhdessä siihen viittaavien sisältökohteiden kanssa, suorien linkkien kera CMS-muokkausnäkymään.</linkchecker>
+          <activeeditors>Näyttää reaaliajassa SignalR:n avulla kuka parhaillaan muokkaa sisältöä. Katso mitä sisältökohteita työstetään ja kenen toimesta, päivittyy reaaliajassa kun toimittajat avaavat ja sulkevat sivuja.</activeeditors>
+          <managechildren>Valitse ylätason sivu ja hallinnoi kaikkia alasivuja joukkona: järjestä uudelleen vetämällä ja pudottamalla, julkaise tai peruuta julkaisu useille kohteille kerralla, siirrä ne toiselle ylätasolle tai poista ne — kaikki yhdessä näkymässä.</managechildren>
+          <securityaudit>Raportoi käyttöoikeuksista koko sisältöpuussa. Korostaa kohteet joilla on rajoittamaton julkinen pääsy, kohteet joista puuttuvat odotetut rajoitukset ja tarjoaa täydellisen rooli- ja käyttäjäoikeusmatriisin mille tahansa sisältöpolulle.</securityaudit>
+          <contentstatistics>Kaaviot ja mittarit toimituksellisesta toiminnasta: ajanjaksottain luodut ja muutetut sisältökohteet, aktiivisimmat tekijät, sisältötyyppien jakautuminen puussa ja kielen kattavuus osiottain.</contentstatistics>
+          <languageaudit>Näyttää kaiken sisällön käännöstilan käytössä olevien kielten välillä. Tunnistaa kohteet joista puuttuvat käännökset kokonaan, kohteet joiden käännökset ovat vanhentuneet pääkieleen nähden ja tarjoaa jonon käännöstöitä varten.</languageaudit>
+          <contentdetails>Näyttää yksityiskohtaisia tietoja CMS-resurssipaneelissa tällä hetkellä valitusta sisältökohteesta: kaikki ominaisuusarvot, saapuvat sisältöviittaukset ja versiohistoria. Päivittyy automaattisesti kun siirryt toiseen kohteeseen.</contentdetails>
+        </help>
       </ui>
     </editorpowertools>
   </language>

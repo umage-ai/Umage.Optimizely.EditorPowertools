@@ -849,6 +849,26 @@
           <loading>Laden...</loading>
           <noresults>Geen resultaten gevonden</noresults>
         </editorpowertools>
+        <help>
+          <helpbtn>Help</helpbtn>
+          <contenttypeaudit>Toont alle inhoudstypen die in uw oplossing zijn gedefinieerd, met gebruiksaantallen, eigenschapsaantallen en de overervingshiërarchie. Gebruik het om te begrijpen welke typen actief worden gebruikt, welke te complex zijn en welke kandidaten zijn voor consolidatie.</contenttypeaudit>
+          <personalizationaudit>Scant alle inhoud om het gebruik van bezoekersgroepen op uw site in kaart te brengen. Toont welke groepen worden gerefereerd, hoeveel inhoudsitems elke groep gebruiken en welke eigenschappen personalisaties dragen. Onmisbaar voordat bezoekersgroepen worden verwijderd of hernoemd.</personalizationaudit>
+          <audiencemanager>Bekijk en beheer definities van bezoekersgroepen. Zie de criteria van elke groep, controleer hoeveel inhoudsitems ernaar verwijzen en navigeer rechtstreeks naar de gebruikslocaties. Complement op de Personalisatieaudit.</audiencemanager>
+          <contenttyperecommendations>Analyseert uw inhoudstype-structuur en stelt verbeteringen voor: typen met zeer weinig instanties die kandidaten zijn voor verwijdering of samenvoeging, eigenschappen gedupliceerd over meerdere typen en onnodig diepe overervingsketens.</contenttyperecommendations>
+          <bulkpropertyeditor>Selecteer een inhoudstype en een specifieke eigenschap en werk vervolgens de waarde ervan bij over veel inhoudsitems in één bewerking. Filter op inhoudspad om de wijziging af te bakenen. Bekijk resultaten in een voorbeeld voordat u ze bevestigt.</bulkpropertyeditor>
+          <scheduledjobsgantt>Visualiseert de uitvoeringsgeschiedenis van geplande taken als een Gantt-diagram. Onthult direct overlappende taken, ongewoon lange uitvoeringen en mislukte uitvoeringen over een configureerbaar tijdvenster.</scheduledjobsgantt>
+          <activitytimeline>Een chronologische feed van inhoudswijzigingen: wie welk item heeft gepubliceerd, verplaatst of verwijderd en wanneer. Filter op tijdsbereik, gebruiker of inhoudstype. Nuttig voor het controleren van redactionele activiteit.</activitytimeline>
+          <contentimporter>Importeer inhoudsitems in bulk vanuit CSV-, JSON- of Excel-bestanden. Wijs bestandskolommen toe aan inhoudstype-eigenschappen, bekijk de toegewezen rijen in een voorbeeld en voer vervolgens de import uit. Mislukte rijen worden afzonderlijk gerapporteerd.</contentimporter>
+          <cmsdoctor>Voert een reeks gezondheidscontroles uit op uw CMS-installatie: geheugendruk, verweesde inhoudstype-eigenschappen, verbroken interne links, ontbrekende alt-tekst op afbeeldingen, onbeperkte openbare inhoud en meer. Elke controle geeft een status en uitvoerbare aanbevelingen terug.</cmsdoctor>
+          <contentaudit>Een volledig tabelrapport van elk inhoudsitem: type, status, taal, aanmaak- en wijzigingsdatums, auteur, aantal inkomende verwijzingen en versieaantal. Filter op elke kolom en exporteer naar CSV, Excel of JSON.</contentaudit>
+          <linkchecker>Scant alle inhoud op verbroken interne en externe links. Wordt uitgevoerd als een achtergrondjob en rapporteert elke verbroken URL samen met de inhoudsitems die ernaar verwijzen, met directe links naar de CMS-bewerkingsweergave.</linkchecker>
+          <activeeditors>Toont wie momenteel inhoud bewerkt in real time met behulp van SignalR. Bekijk welke inhoudsitems worden bewerkt en door wie, live bijgewerkt wanneer redacteurs pagina's openen en sluiten.</activeeditors>
+          <managechildren>Selecteer een bovenliggende pagina en beheer alle onderliggende pagina's in bulk: herorden via slepen en neerzetten, publiceer of depubliceer meerdere items tegelijk, verplaats ze naar een andere bovenliggende of verwijder ze — alles in één weergave.</managechildren>
+          <securityaudit>Rapporteert over toegangsrechten in uw inhoudsstructuur. Markeert items met onbeperkte openbare toegang, items die verwachte beperkingen missen en biedt een volledige rol- en gebruikersmachtigingsmatrix voor elk inhoudspad.</securityaudit>
+          <contentstatistics>Grafieken en statistieken voor redactionele activiteit: per tijdsperiode aangemaakte en gewijzigde inhoudsitems, meest actieve auteurs, verdeling van inhoudstypen in de structuur en taaldekking per sectie.</contentstatistics>
+          <languageaudit>Toont de vertaalstatus van alle inhoud in alle ingeschakelde talen. Identificeert items zonder vertalingen, items waarvan de vertalingen verouderd zijn ten opzichte van de mastertaal en biedt een wachtrij voor vertaalwerk.</languageaudit>
+          <contentdetails>Toont gedetailleerde informatie over het momenteel geselecteerde inhoudsitem in het CMS-middelenpaneel: alle eigenschapswaarden, inkomende inhoudsverwijzingen en versiegeschiedenis. Ververst automatisch wanneer u naar een ander item navigeert.</contentdetails>
+        </help>
       </ui>
     </editorpowertools>
   </language>

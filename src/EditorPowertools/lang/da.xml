@@ -849,6 +849,26 @@
           <loading>Indlæser...</loading>
           <noresults>Ingen resultater fundet</noresults>
         </editorpowertools>
+        <help>
+          <helpbtn>Hjælp</helpbtn>
+          <contenttypeaudit>Viser alle indholdstyper defineret i din løsning med antal anvendelser, antal egenskaber og arvehierarki. Brug det til at forstå, hvilke typer der bruges aktivt, hvilke er for komplekse, og hvilke er kandidater til konsolidering.</contenttypeaudit>
+          <personalizationaudit>Scanner alt indhold for at kortlægge besøgsgruppeanvendelse på tværs af dit websted. Viser hvilke grupper der refereres til, hvor mange indholdselementer der bruger hver gruppe, og hvilke egenskaber der har personaliseringer. Uundværlig inden sletning eller omdøbning af besøgsgrupper.</personalizationaudit>
+          <audiencemanager>Gennemse og administrer definitioner af besøgsgrupper. Se hver gruppes kriterier, kontroller hvor mange indholdselementer der refererer til den, og naviger direkte til anvendelserne. Supplerer Personaliseringsrevision.</audiencemanager>
+          <contenttyperecommendations>Analyserer din indholdstypestruktur og foreslår forbedringer: typer med meget få forekomster der er kandidater til fjernelse eller sammenlægning, egenskaber duplikeret på tværs af flere typer, og unødvendigt dybe arvekæder.</contenttyperecommendations>
+          <bulkpropertyeditor>Vælg en indholdstype og en bestemt egenskab, og opdater derefter dens værdi på tværs af mange indholdselementer i én operation. Filtrer efter indholdssti for at afgrænse ændringen. Forhåndsvis resultater før bekræftelse.</bulkpropertyeditor>
+          <scheduledjobsgantt>Visualiserer planlagt job-udførelseshistorik som et Gantt-diagram. Afslører øjeblikkeligt overlappende job, usædvanligt lange kørsler og mislykkede udførelser over et konfigurerbart tidsvindue.</scheduledjobsgantt>
+          <activitytimeline>Et kronologisk feed af indholdsændringer: hvem der publicerede, flyttede eller slettede hvilket element og hvornår. Filtrer efter tidsinterval, bruger eller indholdstype. Nyttigt til revision af redaktionel aktivitet.</activitytimeline>
+          <contentimporter>Importer indholdselementer i bulk fra CSV-, JSON- eller Excel-filer. Tilknyt filkolonner til indholdstypeegenskaber, forhåndsvis de tilknyttede rækker, og udfør derefter importen. Mislykkede rækker rapporteres individuelt.</contentimporter>
+          <cmsdoctor>Kører en række sundhedstjek mod din CMS-installation: hukommelsespres, forældreløse indholdstypeegenskaber, brudte interne links, manglende alt-tekst på billeder, ubegrænset offentligt indhold og mere. Hvert tjek returnerer en status og handlingsanbefalinger.</cmsdoctor>
+          <contentaudit>En fuld tabelrapport over hvert indholdselement: type, status, sprog, oprettelses- og ændringsdatoer, forfatter, antal indkommende referencer og versionstælling. Filtrer efter en hvilken som helst kolonne og eksporter til CSV, Excel eller JSON.</contentaudit>
+          <linkchecker>Scanner alt indhold for brudte interne og eksterne links. Kører som et baggrundsjob og rapporterer hver brudt URL sammen med de indholdselementer der refererer til den, med direkte links til CMS-redigeringsvisningen.</linkchecker>
+          <activeeditors>Viser hvem der aktuelt redigerer indhold i realtid ved hjælp af SignalR. Se hvilke indholdselementer der arbejdes på og af hvem, opdateret live når redaktører åbner og lukker sider.</activeeditors>
+          <managechildren>Vælg en overordnet side og administrer alle dens undersider i bulk: omarranger med træk-og-slip, publicer eller afpublicer flere elementer på én gang, flyt dem til en anden overordnet, eller slet dem — alt i én visning.</managechildren>
+          <securityaudit>Rapporterer om adgangsrettigheder på tværs af dit indholdstræ. Fremhæver elementer med ubegrænset offentlig adgang, elementer der mangler forventede begrænsninger, og giver en fuld rolle- og brugertilladelsesmatrix for enhver indholdssti.</securityaudit>
+          <contentstatistics>Diagrammer og målinger for redaktionel aktivitet: indholdselementer oprettet og ændret pr. tidsperiode, mest aktive forfattere, indholdstypefordeling på tværs af træet og sprogdækning pr. sektion.</contentstatistics>
+          <languageaudit>Viser oversættelsesstatus for alt indhold på tværs af aktiverede sprog. Identificerer elementer der mangler oversættelser helt, elementer hvis oversættelser er forældede i forhold til masterspraget, og giver en kø til oversættelsesarbejde.</languageaudit>
+          <contentdetails>Viser detaljerede oplysninger om det aktuelt valgte indholdselement i CMS-aktivpanelet: alle egenskabsværdier, indkommende indholdsreferencer og versionshistorik. Opdateres automatisk, når du navigerer til et andet element.</contentdetails>
+        </help>
       </ui>
     </editorpowertools>
   </language>

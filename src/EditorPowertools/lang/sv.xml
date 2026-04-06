@@ -849,6 +849,26 @@
           <loading>Laddar...</loading>
           <noresults>Inga resultat hittades</noresults>
         </editorpowertools>
+        <help>
+          <helpbtn>Hjälp</helpbtn>
+          <contenttypeaudit>Visar alla innehållstyper definierade i din lösning, med antal användningar, antal egenskaper och arvshierarki. Använd det för att förstå vilka typer som används aktivt, vilka som är alltför komplexa och vilka som är kandidater för konsolidering.</contenttypeaudit>
+          <personalizationaudit>Skannar allt innehåll för att kartlägga besökargruppsanvändning på din webbplats. Visar vilka grupper som refereras till, hur många innehållsobjekt som använder varje grupp och vilka egenskaper som bär personaliseringar. Nödvändigt innan besökargrupper tas bort eller döps om.</personalizationaudit>
+          <audiencemanager>Bläddra bland och hantera definitioner av besökargrupper. Se varje grupps kriterier, kontrollera hur många innehållsobjekt som refererar till den och navigera direkt till användningarna. Kompletterar Personaliseringsrevision.</audiencemanager>
+          <contenttyperecommendations>Analyserar din innehållstypstruktur och föreslår förbättringar: typer med mycket få instanser som är kandidater för borttagning eller sammanslagning, egenskaper duplicerade över flera typer och onödigt djupa arvskedjor.</contenttyperecommendations>
+          <bulkpropertyeditor>Välj en innehållstyp och en specifik egenskap och uppdatera sedan dess värde över många innehållsobjekt i en enda operation. Filtrera efter innehållssökväg för att avgränsa ändringen. Förhandsgranska resultaten innan de sparas.</bulkpropertyeditor>
+          <scheduledjobsgantt>Visualiserar schemalagda jobbkörningars historik som ett Gantt-diagram. Avslöjar omedelbart överlappande jobb, ovanligt långa körningar och misslyckade körningar över ett konfigurerbart tidsfönster.</scheduledjobsgantt>
+          <activitytimeline>Ett kronologiskt flöde av innehållsändringar: vem som publicerade, flyttade eller raderade vilket objekt och när. Filtrera efter tidsintervall, användare eller innehållstyp. Användbart för revision av redaktionell aktivitet.</activitytimeline>
+          <contentimporter>Importera innehållsobjekt i bulk från CSV-, JSON- eller Excel-filer. Mappa filkolumner till innehållstypegenskaper, förhandsgranska de mappade raderna och kör sedan importen. Misslyckade rader rapporteras individuellt.</contentimporter>
+          <cmsdoctor>Kör en uppsättning hälsokontroller mot din CMS-installation: minnestryck, föräldralösa innehållstypegenskaper, brutna interna länkar, saknad alt-text på bilder, obegränsat offentligt innehåll och mer. Varje kontroll returnerar en status och genomförbara rekommendationer.</cmsdoctor>
+          <contentaudit>En fullständig tabellrapport över varje innehållsobjekt: typ, status, språk, skapande- och ändringsdatum, författare, antal inkommande referenser och versionantal. Filtrera efter valfri kolumn och exportera till CSV, Excel eller JSON.</contentaudit>
+          <linkchecker>Skannar allt innehåll efter brutna interna och externa länkar. Körs som ett bakgrundsjobb och rapporterar varje bruten URL tillsammans med de innehållsobjekt som refererar till den, med direktlänkar till CMS-redigeringsvyn.</linkchecker>
+          <activeeditors>Visar vem som för närvarande redigerar innehåll i realtid med hjälp av SignalR. Se vilka innehållsobjekt som arbetas på och av vem, uppdaterat live när redaktörer öppnar och stänger sidor.</activeeditors>
+          <managechildren>Välj en föräldrasida och hantera alla dess undersidor i bulk: sortera om med dra-och-släpp, publicera eller avpublicera flera objekt på en gång, flytta dem till en annan förälder eller radera dem — allt i en enda vy.</managechildren>
+          <securityaudit>Rapporterar om åtkomsträttigheter i hela ditt innehållsträd. Markerar objekt med obegränsad offentlig åtkomst, objekt som saknar förväntade begränsningar och tillhandahåller en fullständig roll- och användarbehörighetsmatris för valfri innehållssökväg.</securityaudit>
+          <contentstatistics>Diagram och mätvärden för redaktionell aktivitet: innehållsobjekt skapade och ändrade per tidsperiod, mest aktiva författare, innehållstypfördelning i trädet och språktäckning per sektion.</contentstatistics>
+          <languageaudit>Visar översättningsstatus för allt innehåll på aktiverade språk. Identifierar objekt som saknar översättningar helt, objekt vars översättningar är inaktuella i förhållande till masterspråket och tillhandahåller en kö för översättningsarbete.</languageaudit>
+          <contentdetails>Visar detaljerad information om det för närvarande valda innehållsobjektet i CMS-tillgångspanelen: alla egenskapsvärden, inkommande innehållsreferenser och versionshistorik. Uppdateras automatiskt när du navigerar till ett annat objekt.</contentdetails>
+        </help>
       </ui>
     </editorpowertools>
   </language>

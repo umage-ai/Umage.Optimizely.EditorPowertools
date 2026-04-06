@@ -763,6 +763,27 @@ public class UiStringsProvider(LocalizationService loc)
         {
             loading = S("editorpowertools/loading"),
             noresults = S("editorpowertools/noresults")
+        },
+        help = new
+        {
+            helpbtn = S("help/helpbtn"),
+            contenttypeaudit = S("help/contenttypeaudit"),
+            personalizationaudit = S("help/personalizationaudit"),
+            audiencemanager = S("help/audiencemanager"),
+            contenttyperecommendations = S("help/contenttyperecommendations"),
+            bulkpropertyeditor = S("help/bulkpropertyeditor"),
+            scheduledjobsgantt = S("help/scheduledjobsgantt"),
+            activitytimeline = S("help/activitytimeline"),
+            contentimporter = S("help/contentimporter"),
+            cmsdoctor = S("help/cmsdoctor"),
+            contentaudit = S("help/contentaudit"),
+            linkchecker = S("help/linkchecker"),
+            activeeditors = S("help/activeeditors"),
+            managechildren = S("help/managechildren"),
+            securityaudit = S("help/securityaudit"),
+            contentstatistics = S("help/contentstatistics"),
+            languageaudit = S("help/languageaudit"),
+            contentdetails = S("help/contentdetails")
         }
     };
 }

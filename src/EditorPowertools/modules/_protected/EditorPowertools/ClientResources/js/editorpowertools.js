@@ -1,6 +1,16 @@
 /**
  * Editor Powertools - Shared UI utilities
  */
+
+// Derive module base URL for widgets running outside EPT pages (no layout).
+// require.toUrl('editorpowertools/') resolves to e.g. /_protected/EditorPowertools/ClientResources/js/
+// Strip 'ClientResources/js/' to get the module root.
+if (!window.EPT_BASE_URL && typeof require !== 'undefined' && typeof require.toUrl === 'function') {
+    try {
+        window.EPT_BASE_URL = require.toUrl('editorpowertools/').replace(/ClientResources\/js\/?$/, '');
+    } catch(e) {}
+}
+
 const EPT = {
     /**
      * Fetch JSON from an API endpoint with error handling.
@@ -264,4 +274,69 @@ const EPT = {
             return fallback || path;
         }
     },
+
+    /**
+     * Escape HTML special characters for safe insertion into innerHTML.
+     */
+    escHtml: function(str) {
+        return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    },
+
+    /**
+     * Open the help drawer for the given tool key.
+     * Reads the page h1 for the title and EPT_STRINGS.help.{toolKey} for the body.
+     */
+    openHelp: function(toolKey) {
+        EPT.closeHelp();
+        var h1 = document.querySelector('.ept-page-header h1');
+        var title = h1 ? h1.textContent.replace('?', '').trim() : '';
+        var body = EPT.s('help.' + toolKey, '');
+
+        var drawer = document.createElement('div');
+        drawer.className = 'ept-help-drawer';
+        drawer.id = 'ept-help-drawer';
+        drawer.innerHTML =
+            '<div class="ept-help-drawer__overlay"></div>' +
+            '<div class="ept-help-drawer__panel">' +
+                '<div class="ept-help-drawer__header">' +
+                    '<span class="ept-help-drawer__title">' + EPT.escHtml(title) + '</span>' +
+                    '<button class="ept-help-drawer__close" aria-label="Close">' +
+                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>' +
+                    '</button>' +
+                '</div>' +
+                '<div class="ept-help-drawer__body">' + EPT.escHtml(body) + '</div>' +
+            '</div>';
+
+        document.body.appendChild(drawer);
+        requestAnimationFrame(function() { drawer.classList.add('ept-help-drawer--open'); });
+
+        drawer.querySelector('.ept-help-drawer__close').addEventListener('click', EPT.closeHelp);
+        drawer.querySelector('.ept-help-drawer__overlay').addEventListener('click', EPT.closeHelp);
+
+        var onKey = function(e) {
+            if (e.key === 'Escape') {
+                EPT.closeHelp();
+                document.removeEventListener('keydown', onKey);
+            }
+        };
+        document.addEventListener('keydown', onKey);
+    },
+
+    /**
+     * Close and remove the help drawer if open.
+     */
+    closeHelp: function() {
+        var existing = document.getElementById('ept-help-drawer');
+        if (existing) existing.remove();
+    },
 };
+
+// Event delegation: open help drawer for any [data-ept-help] button.
+document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-ept-help]');
+    if (btn) EPT.openHelp(btn.getAttribute('data-ept-help'));
+});

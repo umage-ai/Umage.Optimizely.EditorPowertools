@@ -47,7 +47,7 @@
 
         // Header
         html += '<div class="ept-page-header" style="display:flex;align-items:center;justify-content:space-between">';
-        html += '<div><h1>' + EPT.s('cmsdoctor.header_title', 'CMS Doctor') + '</h1>';
+        html += '<div><h1>' + EPT.s('cmsdoctor.header_title', 'CMS Doctor') + ' <button class="ept-help-btn" data-ept-help="cmsdoctor" title="' + EPT.s('help.helpbtn', 'Help') + '">?</button></h1>';
         html += '<p>' + EPT.s('cmsdoctor.header_desc', 'Health checks for your Optimizely CMS. Extensible by third-party packages.') + '</p></div>';
         html += '<div style="display:flex;gap:8px;align-items:center">';
         if (d.lastFullCheck) html += '<span class="ept-muted" style="font-size:12px">' + EPT.s('cmsdoctor.lbl_lastrun', 'Last run: {0}').replace('{0}', new Date(d.lastFullCheck).toLocaleString()) + '</span>';

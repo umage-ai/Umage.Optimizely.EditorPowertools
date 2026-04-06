@@ -992,3 +992,129 @@ td.bpe-editing select {
 .ept-cd-tl-change-prop { font-weight: 600; color: #333; }
 .ept-cd-tl-compare { display: inline-block; margin-top: 4px; font-size: 11px; color: #1976d2; text-decoration: none; cursor: pointer; }
 .ept-cd-tl-compare:hover { text-decoration: underline; }
+
+/* ===== Help Button ===== */
+.ept-help-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    background: transparent;
+    color: inherit;
+    font-size: var(--ept-text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    opacity: 0.55;
+    margin-left: var(--ept-space-sm);
+    vertical-align: middle;
+    line-height: 1;
+    padding: 0;
+    transition: opacity 0.15s;
+}
+.ept-help-btn:hover {
+    opacity: 1;
+}
+
+/* ===== Help Drawer ===== */
+.ept-help-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    pointer-events: none;
+}
+.ept-help-drawer--open {
+    pointer-events: auto;
+}
+.ept-help-drawer__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.ept-help-drawer--open .ept-help-drawer__overlay {
+    opacity: 1;
+}
+.ept-help-drawer__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 380px;
+    max-width: 90vw;
+    background: var(--ept-surface);
+    box-shadow: var(--ept-shadow-xl);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+}
+.ept-help-drawer--open .ept-help-drawer__panel {
+    transform: translateX(0);
+}
+.ept-help-drawer__header {
+    display: flex;
+    align-items: center;
+    padding: var(--ept-space-md) var(--ept-space-lg);
+    border-bottom: 1px solid var(--ept-border);
+    gap: var(--ept-space-sm);
+}
+.ept-help-drawer__title {
+    flex: 1;
+    font-weight: 600;
+    font-size: var(--ept-text-base);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ept-help-drawer__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: var(--ept-radius-sm);
+    color: inherit;
+    opacity: 0.6;
+    padding: 0;
+    flex-shrink: 0;
+}
+.ept-help-drawer__close:hover {
+    opacity: 1;
+    background: var(--ept-surface-hover);
+}
+.ept-help-drawer__close svg {
+    width: 16px;
+    height: 16px;
+}
+.ept-help-drawer__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--ept-space-lg);
+    font-size: var(--ept-text-sm);
+    line-height: 1.6;
+    color: var(--ept-text-secondary);
+    white-space: pre-wrap;
+}
+
+/* ===== Widget Help Popover ===== */
+.ept-help-popover {
+    position: absolute;
+    z-index: 9100;
+    background: var(--ept-surface);
+    border: 1px solid var(--ept-border);
+    border-radius: var(--ept-radius);
+    box-shadow: var(--ept-shadow-lg);
+    padding: 12px 14px;
+    font-size: var(--ept-text-sm);
+    line-height: 1.5;
+    color: var(--ept-text-secondary);
+    max-width: 260px;
+    word-break: break-word;
+}
