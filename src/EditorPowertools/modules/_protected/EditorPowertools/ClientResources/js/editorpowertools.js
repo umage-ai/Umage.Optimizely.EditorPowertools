@@ -340,3 +340,59 @@ document.addEventListener('click', function(e) {
     var btn = e.target.closest('[data-ept-help]');
     if (btn) EPT.openHelp(btn.getAttribute('data-ept-help'));
 });
+
+// Dojo's BorderContainer calculates a narrower applicationContainer on initial load
+// due to a brief layout artifact. Watch for the wrong width and correct it.
+(function() {
+    var _eptLayoutFixed = false;
+    function doFix() {
+        if (_eptLayoutFixed) return;
+        if (typeof dijit === 'undefined' || !dijit.registry) return;
+        var rc = dijit.registry.byId('rootContainer');
+        if (!rc || !rc.resize) return;
+        _eptLayoutFixed = true;
+        // Dojo caches the wrong size; clear it to force a full recompute.
+        var parent = rc.domNode && rc.domNode.parentElement;
+        var w = parent ? parent.clientWidth : null;
+        var h = rc.domNode ? rc.domNode.clientHeight : null;
+        rc._borderBox = null;
+        rc._contentBox = null;
+        if (w && h) rc.resize({ w: w, h: h });
+        setTimeout(function() {
+            rc._borderBox = null;
+            rc._contentBox = null;
+            if (w && h) rc.resize({ w: w, h: h });
+        }, 0);
+    }
+    // Watch applicationContainer for when Dojo sets a narrow width, then correct it
+    var observer = new MutationObserver(function(mutations) {
+        var appContainer = document.getElementById('applicationContainer');
+        if (!appContainer) return;
+        var parent = appContainer.parentElement;
+        if (!parent) return;
+        var available = parent.clientWidth;
+        var current = appContainer.offsetWidth;
+        // If there's more than 20px unaccounted for, layout is wrong
+        if (available > 0 && (available - current) > 20) {
+            observer.disconnect();
+            setTimeout(doFix, 0);
+            setTimeout(doFix, 50);
+        }
+    });
+    // Start observing once applicationContainer exists
+    function startObserving() {
+        var appContainer = document.getElementById('applicationContainer');
+        if (appContainer) {
+            observer.observe(appContainer, { attributes: true, attributeFilter: ['style'] });
+        } else {
+            setTimeout(startObserving, 50);
+        }
+    }
+    startObserving();
+    // Fallback: also try after a delay in case the mutation is missed
+    setTimeout(function() {
+        observer.disconnect();
+        doFix();
+    }, 2000);
+})();
+

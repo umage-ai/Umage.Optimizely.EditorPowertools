@@ -42,6 +42,25 @@ define([
 
         postCreate: function () {
             this.inherited(arguments);
+            // Dojo's rootContainer caches a wrong width on init due to EPT CSS timing.
+            // Fix it once after layout has settled.
+            setTimeout(function() {
+                if (typeof dijit === 'undefined' || !dijit.registry) return;
+                var rc = dijit.registry.byId('rootContainer');
+                if (!rc || !rc.domNode) return;
+                var parent = rc.domNode.parentElement;
+                var actualW = parent ? parent.clientWidth : 0;
+                if (actualW > 0 && rc._borderBox && rc._borderBox.w !== actualW) {
+                    rc._borderBox = null;
+                    rc._contentBox = null;
+                    rc.resize({ w: actualW, h: rc.domNode.clientHeight });
+                    setTimeout(function() {
+                        rc._borderBox = null;
+                        rc._contentBox = null;
+                        rc.resize({ w: actualW, h: rc.domNode.clientHeight });
+                    }, 0);
+                }
+            }, 0);
             this._injectStyles();
             var self = this;
             ensureStrings(function () {
