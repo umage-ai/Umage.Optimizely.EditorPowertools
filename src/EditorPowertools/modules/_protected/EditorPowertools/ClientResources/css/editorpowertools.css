@@ -143,9 +143,8 @@
 .ept-main {
     flex: 1;
     padding: var(--ept-space-lg);
-    max-width: 1400px;
     width: 100%;
-    margin: 0 auto;
+    min-width: 0;
 }
 
 /* ── Page Header ────────────────────────────────────────────────── */
@@ -1105,7 +1104,7 @@ td.bpe-editing select {
 
 /* ===== Widget Help Popover ===== */
 .ept-help-popover {
-    position: absolute;
+    position: fixed;
     z-index: 9100;
     background: var(--ept-surface);
     border: 1px solid var(--ept-border);

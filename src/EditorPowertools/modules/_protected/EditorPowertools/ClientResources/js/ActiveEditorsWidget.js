@@ -78,13 +78,18 @@ define([
                     self.helpBtn.title = EPT.s('help.helpbtn', 'Help');
                     self.helpBtn.addEventListener('click', function(e) {
                         e.stopPropagation();
-                        var existing = self.domNode.querySelector('.ept-help-popover');
+                        var existing = document.getElementById('ept-widget-popover');
                         if (existing) { existing.remove(); return; }
+                        var rect = self.helpBtn.getBoundingClientRect();
                         var popover = document.createElement('div');
                         popover.className = 'ept-help-popover';
+                        popover.id = 'ept-widget-popover';
+                        popover.style.position = 'fixed';
+                        popover.style.top = (rect.bottom + 6) + 'px';
+                        popover.style.left = Math.max(8, rect.right - 300) + 'px';
+                        popover.style.width = '300px';
                         popover.textContent = EPT.s('help.activeeditors', '');
-                        self.domNode.style.position = 'relative';
-                        self.domNode.appendChild(popover);
+                        document.body.appendChild(popover);
                         var close = function(ev) {
                             if (!popover.contains(ev.target) && ev.target !== self.helpBtn) {
                                 popover.remove();
