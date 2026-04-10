@@ -47,10 +47,10 @@ public class VisitorGroupTesterMiddleware
             return;
         }
 
-        // Skip Optimizely on-page edit mode (toolbar would appear inside CMS editing iframe)
+        // Skip full edit mode only — preview mode (epieditmode=false) is allowed through
+        // because Optimizely adds data-epi-block-id attributes in preview mode that the inspector uses.
         var queryString = context.Request.QueryString.Value ?? "";
-        if (queryString.Contains("epieditmode", StringComparison.OrdinalIgnoreCase) ||
-            queryString.Contains("epi.editmode", StringComparison.OrdinalIgnoreCase))
+        if (IsEditMode(queryString))
         {
             await _next(context);
             return;
@@ -109,6 +109,22 @@ public class VisitorGroupTesterMiddleware
         context.Response.Body = originalBody;
         context.Response.ContentLength = bytes.Length;
         await context.Response.Body.WriteAsync(bytes);
+    }
+
+    /// <summary>
+    /// Returns true only for full edit mode (epieditmode=true).
+    /// Preview mode (epieditmode=false) is allowed through so the inspector can use
+    /// Optimizely's data-epi-block-id attributes which are only present in preview mode.
+    /// </summary>
+    private static bool IsEditMode(string queryString)
+    {
+        if (string.IsNullOrEmpty(queryString)) return false;
+        var qs = queryString.ToLowerInvariant();
+        // Match epieditmode=true or epieditmode=1
+        if (qs.Contains("epieditmode=true") || qs.Contains("epieditmode=1")) return true;
+        // epi.editmode variant used by some CMS versions
+        if (qs.Contains("epi.editmode=true") || qs.Contains("epi.editmode=1")) return true;
+        return false;
     }
 
     private static string GetToolbarHtml()
@@ -486,123 +502,154 @@ public class VisitorGroupTesterMiddleware
 
     // Inspector tab
     function renderInspector() {
-        var isPreview = window.location.search.indexOf('epieditmode') >= 0;
+        var isPreview = /epieditmode=false/i.test(window.location.search);
         var html = '<div style="padding: 16px;">' +
-            '<p style="margin: 0 0 12px; color: #94a3b8;">Highlight blocks and content elements. Hover to see details and jump to edit mode.</p>' +
+            '<p style="margin: 0 0 12px; color: #94a3b8; font-size: 12px;">Hover over blocks to see their content ID and jump to edit mode.</p>' +
             '<label class="ept-vgt-group" style="padding: 8px 0;">' +
             '<input type="checkbox" id="ept-vgt-inspect-toggle"' + (inspectActive ? ' checked' : '') + '>' +
-            '<span class="ept-vgt-group-name" style="font-weight: 600;">Enable Content Inspector</span>' +
+            '<span class="ept-vgt-group-name" style="font-weight: 600;">Enable Inspector</span>' +
             '</label>';
         if (!isPreview) {
-            html += '<p style="margin: 12px 0 0; font-size: 11px; color: #64748b;">Tip: For best results, use Preview Mode which includes content metadata.</p>' +
-                '<button id="ept-vgt-preview-btn" class="ept-vgt-btn" style="margin-top:8px;width:100%;">Open in Preview Mode</button>';
+            html += '<div style="margin-top:12px;padding:10px;background:#0f172a;border-radius:6px;border:1px solid #334155;">' +
+                '<p style="margin:0 0 8px;font-size:11px;color:#94a3b8;">Inspector requires Preview Mode — Optimizely only adds block metadata to the HTML in preview.</p>' +
+                '<button id="ept-vgt-preview-btn" class="ept-vgt-btn ept-vgt-btn-primary" style="width:100%;font-size:12px;">Open in Preview Mode</button>' +
+                '</div>';
+        } else {
+            var count = document.querySelectorAll('[data-epi-block-id],[data-epi-content-link]').length;
+            html += '<p style="margin:8px 0 0;font-size:11px;color:' + (count > 0 ? '#4ade80' : '#f87171') + ';">' +
+                (count > 0 ? '✓ ' + count + ' inspectable element' + (count === 1 ? '' : 's') + ' found' : '✗ No data-epi-* elements found on this page') +
+                '</p>';
         }
         html += '</div>';
         body.innerHTML = html;
 
-        if (!isPreview) {
-            document.getElementById('ept-vgt-preview-btn').addEventListener('click', function() {
+        var previewBtn = document.getElementById('ept-vgt-preview-btn');
+        if (previewBtn) {
+            previewBtn.addEventListener('click', function() {
                 var href = window.location.href;
+                // Remove any existing epieditmode param first
+                href = href.replace(/([?&])epieditmode=[^&#]*/gi, '$1').replace(/[?&]$/, '').replace(/[?]&/, '?').replace(/&&+/g, '&');
                 var sep = href.indexOf('?') >= 0 ? '&' : '?';
                 window.location.href = href + sep + 'epieditmode=false';
             });
         }
 
-        document.getElementById('ept-vgt-inspect-toggle').addEventListener('change', function() {
-            inspectActive = this.checked;
-            if (inspectActive) {
-                enableInspect();
-            } else {
-                disableInspect();
-            }
-        });
+        var toggleCb = document.getElementById('ept-vgt-inspect-toggle');
+        if (toggleCb) {
+            toggleCb.addEventListener('change', function() {
+                inspectActive = this.checked;
+                if (inspectActive) enableInspect();
+                else disableInspect();
+            });
+        }
     }
+
+    // Currently highlighted element
+    var currentHighlight = null;
 
     function enableInspect() {
         document.body.classList.add('ept-inspect-active');
+        toggle.style.outline = '2px solid #60a5fa';
 
-        // Create tooltip element
         tooltip = document.createElement('div');
         tooltip.className = 'ept-inspect-tooltip';
         tooltip.style.display = 'none';
         document.body.appendChild(tooltip);
 
-        // Find editable elements — try multiple attribute patterns
-        // Edit mode uses data-epi-*, but public site may use data-contentlink or oedit attributes
-        var selectors = '[data-epi-block-id], [data-epi-content-link], [data-epi-property-name], [data-contentlink], [data-epi-edit]';
-        var elements = document.querySelectorAll(selectors);
-        if (elements.length === 0) {
-            // Fallback: look for Optimizely content area divs and block wrappers
-            elements = document.querySelectorAll('[class*="block-"], [class*="content-area"], [data-displayoption]');
-        }
-        elements.forEach(function(el) {
-            el.addEventListener('mouseenter', onInspectEnter);
-            el.addEventListener('mouseleave', onInspectLeave);
-            el.addEventListener('mousemove', onInspectMove);
-        });
+        // Event delegation — works regardless of when elements were rendered
+        document.addEventListener('mouseover', onInspectOver, true);
+        document.addEventListener('mouseout', onInspectOut, true);
+        document.addEventListener('mousemove', onInspectMove, true);
     }
 
     function disableInspect() {
         document.body.classList.remove('ept-inspect-active');
+        toggle.style.outline = '';
 
-        if (tooltip) {
-            tooltip.remove();
-            tooltip = null;
+        if (currentHighlight) {
+            currentHighlight.classList.remove('ept-inspect-highlight');
+            currentHighlight = null;
         }
+        if (tooltip) { tooltip.remove(); tooltip = null; }
 
-        var selectors = '[data-epi-block-id], [data-epi-content-link], [data-epi-property-name]';
-        document.querySelectorAll(selectors).forEach(function(el) {
-            el.removeEventListener('mouseenter', onInspectEnter);
-            el.removeEventListener('mouseleave', onInspectLeave);
-            el.removeEventListener('mousemove', onInspectMove);
-            el.classList.remove('ept-inspect-highlight');
-        });
+        document.removeEventListener('mouseover', onInspectOver, true);
+        document.removeEventListener('mouseout', onInspectOut, true);
+        document.removeEventListener('mousemove', onInspectMove, true);
     }
 
-    function onInspectEnter(e) {
-        this.classList.add('ept-inspect-highlight');
+    // Walk up from target to find nearest element with epi data attributes
+    function findInspectable(el) {
+        var current = el;
+        while (current && current !== document.documentElement) {
+            if (current === panel || current === toggle) return null; // don't highlight our own UI
+            if (current.hasAttribute && (
+                current.hasAttribute('data-epi-block-id') ||
+                current.hasAttribute('data-epi-content-link') ||
+                current.hasAttribute('data-contentlink')
+            )) return current;
+            current = current.parentElement;
+        }
+        return null;
+    }
 
-        var blockId = this.getAttribute('data-epi-block-id');
-        var contentLink = this.getAttribute('data-epi-content-link') || this.getAttribute('data-contentlink');
-        var propertyName = this.getAttribute('data-epi-property-name') || this.getAttribute('data-epi-edit');
-        var displayOption = this.getAttribute('data-displayoption');
+    function onInspectOver(e) {
+        var target = findInspectable(e.target);
+        if (target === currentHighlight) return;
 
-        var contentId = blockId || contentLink;
+        if (currentHighlight) {
+            currentHighlight.classList.remove('ept-inspect-highlight');
+        }
+        currentHighlight = target;
+
+        if (!target) {
+            if (tooltip) tooltip.style.display = 'none';
+            return;
+        }
+
+        target.classList.add('ept-inspect-highlight');
+
+        var blockId    = target.getAttribute('data-epi-block-id');
+        var contentRef = target.getAttribute('data-epi-content-link') || target.getAttribute('data-contentlink');
+        var rawId      = blockId || contentRef || '';
+        // Optimizely content refs are like "42_0" or "42" — extract numeric part for the edit URL
+        var numericId  = rawId.split('_')[0].split(',')[0];
+
         var lines = [];
-
-        if (contentId) {
-            lines.push('<strong>Content ID:</strong> ' + escapeHtml(contentId));
-            var editUrl = '/episerver/CMS/#context=epi.cms.contentdata:///' + contentId;
-            lines.push('<a href="' + editUrl + '" target="_blank">Edit in CMS</a>');
-        }
-        if (propertyName) {
-            lines.push('<strong>Property:</strong> ' + escapeHtml(propertyName));
-        }
-        if (displayOption) {
-            lines.push('<strong>Display:</strong> ' + escapeHtml(displayOption));
-        }
-        if (lines.length === 0) {
-            // Show element info as fallback
-            var tag = this.tagName.toLowerCase();
-            var cls = this.className ? '.' + this.className.split(' ')[0] : '';
-            lines.push('<strong>Element:</strong> ' + escapeHtml(tag + cls));
+        if (numericId) {
+            lines.push('<span style="color:#94a3b8;font-size:11px;">ID: ' + escapeHtml(rawId) + '</span>');
+            var editUrl = '/episerver/CMS/#context=epi.cms.contentdata:///' + numericId;
+            lines.push('<a href="' + editUrl + '" target="_blank" style="display:inline-block;margin-top:4px;padding:3px 8px;background:#3b82f6;color:#fff;border-radius:4px;text-decoration:none;font-size:11px;font-weight:600;">✏ Edit in CMS</a>');
+        } else {
+            lines.push('<span style="color:#94a3b8;font-size:11px;">' + escapeHtml(target.tagName.toLowerCase()) + '</span>');
         }
 
-        if (tooltip && lines.length > 0) {
+        if (tooltip) {
             tooltip.innerHTML = lines.join('<br>');
             tooltip.style.display = 'block';
         }
     }
 
-    function onInspectLeave(e) {
-        this.classList.remove('ept-inspect-highlight');
-        if (tooltip) tooltip.style.display = 'none';
+    function onInspectOut(e) {
+        var target = findInspectable(e.target);
+        if (target && target === currentHighlight) {
+            // Only clear if relatedTarget is outside this element
+            if (!target.contains(e.relatedTarget)) {
+                target.classList.remove('ept-inspect-highlight');
+                currentHighlight = null;
+                if (tooltip) tooltip.style.display = 'none';
+            }
+        }
     }
 
     function onInspectMove(e) {
         if (tooltip && tooltip.style.display === 'block') {
-            tooltip.style.left = (e.clientX + 12) + 'px';
-            tooltip.style.top = (e.clientY + 12) + 'px';
+            var x = e.clientX + 14;
+            var y = e.clientY + 14;
+            // Keep tooltip on screen
+            if (x + 200 > window.innerWidth) x = e.clientX - 214;
+            if (y + 80 > window.innerHeight) y = e.clientY - 84;
+            tooltip.style.left = x + 'px';
+            tooltip.style.top  = y + 'px';
         }
     }
 
