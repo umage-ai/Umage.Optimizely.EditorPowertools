@@ -24,7 +24,6 @@ public class ActivityTimelineApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/activity/timeline")]
     public IActionResult GetTimeline(
         [FromQuery] int skip = 0,
         [FromQuery] int take = 50,
@@ -57,7 +56,6 @@ public class ActivityTimelineApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/activity/stats")]
     public IActionResult GetStats()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -70,8 +68,10 @@ public class ActivityTimelineApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/activity/compare/{contentId}/{versionId}")]
-    public IActionResult CompareVersions(int contentId, int versionId, [FromQuery] string? language = null)
+    public IActionResult CompareVersions(
+        [FromQuery] int contentId,
+        [FromQuery] int versionId,
+        [FromQuery] string? language = null)
     {
         if (!_accessChecker.HasAccess(HttpContext,
             nameof(Configuration.FeatureToggles.ActivityTimeline),
@@ -83,7 +83,6 @@ public class ActivityTimelineApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/activity/users")]
     public IActionResult GetUsers()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -96,7 +95,6 @@ public class ActivityTimelineApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/activity/content-types")]
     public IActionResult GetContentTypes()
     {
         if (!_accessChecker.HasAccess(HttpContext,

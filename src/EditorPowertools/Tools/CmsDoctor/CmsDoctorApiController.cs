@@ -7,7 +7,6 @@ namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor;
 
 [Authorize(Policy = "codeart:editorpowertools")]
 [RequireAjax]
-[Route("editorpowertools/api/cms-doctor")]
 public class CmsDoctorApiController : Controller
 {
     private readonly CmsDoctorService _service;
@@ -23,14 +22,14 @@ public class CmsDoctorApiController : Controller
         nameof(Configuration.FeatureToggles.CmsDoctor),
         EditorPowertoolsPermissions.CmsDoctor);
 
-    [HttpGet("dashboard")]
+    [HttpGet]
     public IActionResult GetDashboard()
     {
         if (!HasAccess()) return Forbid();
         return Ok(_service.GetDashboard());
     }
 
-    [HttpPost("run-all")]
+    [HttpPost]
     public IActionResult RunAll()
     {
         if (!HasAccess()) return Forbid();
@@ -38,39 +37,39 @@ public class CmsDoctorApiController : Controller
         return Ok(_service.GetDashboard());
     }
 
-    [HttpPost("run/{checkType}")]
-    public IActionResult RunCheck(string checkType)
+    [HttpPost]
+    public IActionResult RunCheck([FromQuery] string id)
     {
         if (!HasAccess()) return Forbid();
-        var result = _service.RunCheck(Uri.UnescapeDataString(checkType));
+        var result = _service.RunCheck(Uri.UnescapeDataString(id));
         return result == null ? NotFound() : Ok(result);
     }
 
-    [HttpPost("fix/{checkType}")]
-    public IActionResult FixCheck(string checkType)
+    [HttpPost]
+    public IActionResult FixCheck([FromQuery] string id)
     {
         if (!HasAccess()) return Forbid();
-        var result = _service.FixCheck(Uri.UnescapeDataString(checkType));
+        var result = _service.FixCheck(Uri.UnescapeDataString(id));
         return result == null ? NotFound() : Ok(result);
     }
 
-    [HttpPost("dismiss/{checkType}")]
-    public IActionResult DismissCheck(string checkType)
+    [HttpPost]
+    public IActionResult DismissCheck([FromQuery] string id)
     {
         if (!HasAccess()) return Forbid();
-        _service.DismissCheck(Uri.UnescapeDataString(checkType));
+        _service.DismissCheck(Uri.UnescapeDataString(id));
         return Ok(new { dismissed = true });
     }
 
-    [HttpPost("restore/{checkType}")]
-    public IActionResult RestoreCheck(string checkType)
+    [HttpPost]
+    public IActionResult RestoreCheck([FromQuery] string id)
     {
         if (!HasAccess()) return Forbid();
-        _service.RestoreCheck(Uri.UnescapeDataString(checkType));
+        _service.RestoreCheck(Uri.UnescapeDataString(id));
         return Ok(new { restored = true });
     }
 
-    [HttpGet("tags")]
+    [HttpGet]
     public IActionResult GetTags()
     {
         if (!HasAccess()) return Forbid();

@@ -16,7 +16,6 @@ namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit;
 /// The page view is served by EditorPowertoolsController.ContentAudit().
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
-[Route("editorpowertools/api/content-audit")]
 public class ContentAuditApiController : Controller
 {
     private readonly ContentAuditService _service;
@@ -110,7 +109,7 @@ public class ContentAuditApiController : Controller
         }
     }
 
-    [HttpGet("export")]
+    [HttpGet]
     public IActionResult Export(
         [FromQuery] string format = "xlsx",
         [FromQuery] string? search = null,
@@ -186,7 +185,7 @@ public class ContentAuditApiController : Controller
     /// Saves an export request to DDS and triggers the ContentAuditExportJob.
     /// Returns a requestId the client polls with /export-status.
     /// </summary>
-    [HttpPost("export-request")]
+    [HttpPost]
     [RequireAjax]
     public async Task<IActionResult> RequestExport(
         [FromQuery] string format = "xlsx",
@@ -241,7 +240,7 @@ public class ContentAuditApiController : Controller
     /// Returns the status of an export request. When Status == "Completed",
     /// includes the ContentLink ID so the client can construct a download URL.
     /// </summary>
-    [HttpGet("export-status")]
+    [HttpGet]
     public IActionResult GetExportStatus([FromQuery] Guid requestId)
     {
         if (!_accessChecker.HasAccess(HttpContext,
