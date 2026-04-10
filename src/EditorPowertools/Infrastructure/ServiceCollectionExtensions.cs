@@ -126,6 +126,8 @@ public static class ServiceCollectionExtensions
 
         // Content Audit
         services.AddTransient<ContentAuditService>();
+        services.AddTransient<IContentAuditDataProvider, GetDescendentsContentAuditProvider>();
+        services.AddTransient<ContentAuditExportRenderer>();
 
         // Link Checker
         services.AddSingleton<LinkCheckerRepository>();

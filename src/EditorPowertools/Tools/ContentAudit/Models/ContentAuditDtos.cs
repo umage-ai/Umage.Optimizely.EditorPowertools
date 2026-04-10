@@ -23,10 +23,10 @@ public class ContentAuditFilter
 public class ContentAuditResponse
 {
     public List<ContentAuditRow> Items { get; set; } = [];
-    public int TotalCount { get; set; }
+    public int? TotalCount { get; set; }    // null when provider cannot determine
     public int Page { get; set; }
     public int PageSize { get; set; }
-    public int TotalPages { get; set; }
+    public int? TotalPages { get; set; }    // null when TotalCount is null
 }
 
 public class ContentAuditRow
@@ -63,4 +63,35 @@ public class ContentAuditExportRequest
     public string? SortBy { get; set; }
     public string SortDirection { get; set; } = "asc";
     public List<string>? Columns { get; set; }
+}
+
+/// <summary>
+/// Returned by IContentAuditDataProvider.GetPage().
+/// TotalCount is null when the provider cannot determine it without a full scan (e.g. default provider).
+/// </summary>
+public class ContentAuditPageResult
+{
+    public List<ContentAuditRow> Items { get; init; } = [];
+    public int? TotalCount { get; init; }
+}
+
+/// <summary>
+/// Persisted to DDS when a user triggers an export job.
+/// </summary>
+public class ContentAuditExportJobRequest
+{
+    public EPiServer.Data.Identity Id { get; set; } = EPiServer.Data.Identity.NewIdentity();
+    public Guid RequestId { get; set; } = Guid.NewGuid();
+    public string RequestedBy { get; set; } = "";
+    public DateTime RequestedAt { get; set; } = DateTime.UtcNow;
+    public string Format { get; set; } = "xlsx";
+    public string? Columns { get; set; }       // comma-separated column keys
+    public string? MainTypeFilter { get; set; }
+    public string? QuickFilter { get; set; }
+    public string? Search { get; set; }
+    public string? FiltersJson { get; set; }   // JSON-serialized List<ContentAuditFilter>
+    public string Status { get; set; } = "Pending"; // Pending | Running | Completed | Failed
+    public string? ResultContentId { get; set; }    // ContentLink.ID of the generated media file
+    public string? ErrorMessage { get; set; }
+    public DateTime? CompletedAt { get; set; }
 }

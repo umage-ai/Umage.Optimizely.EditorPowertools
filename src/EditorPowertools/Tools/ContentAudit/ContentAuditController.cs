@@ -1,11 +1,13 @@
-using System.Text;
 using System.Text.Json;
+using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
 using EditorPowertools.Tools.ContentAudit.Models;
+using EPiServer.Data.Dynamic;
+using EPiServer.DataAbstraction;
+using EPiServer.Scheduler;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using OfficeOpenXml;
 
 namespace EditorPowertools.Tools.ContentAudit;
 
@@ -19,16 +21,28 @@ public class ContentAuditApiController : Controller
 {
     private readonly ContentAuditService _service;
     private readonly FeatureAccessChecker _accessChecker;
+    private readonly ContentAuditExportRenderer _renderer;
+    private readonly IScheduledJobRepository _jobRepository;
+    private readonly IScheduledJobExecutor _jobExecutor;
+    private readonly DynamicDataStoreFactory _storeFactory;
     private readonly ILogger<ContentAuditApiController> _logger;
 
     public ContentAuditApiController(
         ContentAuditService service,
         FeatureAccessChecker accessChecker,
+        ContentAuditExportRenderer renderer,
+        IScheduledJobRepository jobRepository,
+        IScheduledJobExecutor jobExecutor,
+        DynamicDataStoreFactory storeFactory,
         ILogger<ContentAuditApiController> logger)
     {
-        _service = service;
+        _service       = service;
         _accessChecker = accessChecker;
-        _logger = logger;
+        _renderer      = renderer;
+        _jobRepository = jobRepository;
+        _jobExecutor   = jobExecutor;
+        _storeFactory  = storeFactory;
+        _logger        = logger;
     }
 
     [HttpGet]
@@ -142,9 +156,18 @@ public class ContentAuditApiController : Controller
 
             return format.ToLowerInvariant() switch
             {
-                "xlsx" => ExportXlsx(allRows, parsedColumns),
-                "csv" => ExportCsv(allRows, parsedColumns),
-                "json" => ExportJson(allRows),
+                "xlsx" => File(
+                    _renderer.RenderXlsx(allRows, parsedColumns),
+                    _renderer.GetContentType("xlsx"),
+                    $"content-audit-{DateTime.UtcNow:yyyyMMdd-HHmmss}.xlsx"),
+                "csv" => File(
+                    _renderer.RenderCsv(allRows, parsedColumns),
+                    _renderer.GetContentType("csv"),
+                    $"content-audit-{DateTime.UtcNow:yyyyMMdd-HHmmss}.csv"),
+                "json" => File(
+                    _renderer.RenderJson(allRows),
+                    _renderer.GetContentType("json"),
+                    $"content-audit-{DateTime.UtcNow:yyyyMMdd-HHmmss}.json"),
                 _ => BadRequest(new { success = false, message = $"Unsupported format: {format}" })
             };
         }
@@ -159,134 +182,101 @@ public class ContentAuditApiController : Controller
         }
     }
 
-    private FileContentResult ExportXlsx(List<ContentAuditRow> rows, List<string> columns)
+    /// <summary>
+    /// Saves an export request to DDS and triggers the ContentAuditExportJob.
+    /// Returns a requestId the client polls with /export-status.
+    /// </summary>
+    [HttpPost("export-request")]
+    [RequireAjax]
+    public async Task<IActionResult> RequestExport(
+        [FromQuery] string format = "xlsx",
+        [FromQuery] string? columns = null,
+        [FromQuery] string? mainTypeFilter = null,
+        [FromQuery] string? quickFilter = null,
+        [FromQuery] string? search = null,
+        [FromQuery] string? filters = null)
     {
-        using var package = new ExcelPackage();
-        var worksheet = package.Workbook.Worksheets.Add("Content Audit");
+        if (!_accessChecker.HasAccess(HttpContext,
+                nameof(Configuration.FeatureToggles.ContentAudit),
+                EditorPowertoolsPermissions.ContentAudit))
+            return Forbid();
 
-        // Headers
-        for (int c = 0; c < columns.Count; c++)
+        try
         {
-            worksheet.Cells[1, c + 1].Value = GetColumnLabel(columns[c]);
-            worksheet.Cells[1, c + 1].Style.Font.Bold = true;
-        }
-
-        // Data
-        for (int r = 0; r < rows.Count; r++)
-        {
-            for (int c = 0; c < columns.Count; c++)
+            var requestId = Guid.NewGuid();
+            var record = new ContentAuditExportJobRequest
             {
-                worksheet.Cells[r + 2, c + 1].Value = GetCellValue(rows[r], columns[c]);
-            }
+                RequestId      = requestId,
+                RequestedBy    = User.Identity?.Name ?? "unknown",
+                RequestedAt    = DateTime.UtcNow,
+                Format         = format,
+                Columns        = columns,
+                MainTypeFilter = mainTypeFilter,
+                QuickFilter    = quickFilter,
+                Search         = search,
+                FiltersJson    = filters,
+                Status         = "Pending"
+            };
+
+            var store = GetStore();
+            store.Save(record);
+
+            // Trigger the job (best-effort — job may already be running)
+            var job = _jobRepository.List()
+                .FirstOrDefault(j => j.TypeName?.Contains("ContentAuditExportJob", StringComparison.OrdinalIgnoreCase) == true);
+
+            if (job != null && !job.IsRunning)
+                await _jobExecutor.StartAsync(job);
+
+            return Ok(new { success = true, requestId });
         }
-
-        // Auto-fit columns (cap at 50 chars width)
-        for (int c = 1; c <= columns.Count; c++)
+        catch (Exception ex)
         {
-            worksheet.Column(c).AutoFit();
-            if (worksheet.Column(c).Width > 50)
-                worksheet.Column(c).Width = 50;
+            _logger.LogError(ex, "Failed to queue content audit export");
+            return StatusCode(500, new { success = false, message = "Failed to queue export." });
         }
-
-        var bytes = package.GetAsByteArray();
-        return File(bytes,
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            $"content-audit-{DateTime.UtcNow:yyyyMMdd-HHmmss}.xlsx");
     }
 
-    private FileContentResult ExportCsv(List<ContentAuditRow> rows, List<string> columns)
+    /// <summary>
+    /// Returns the status of an export request. When Status == "Completed",
+    /// includes the ContentLink ID so the client can construct a download URL.
+    /// </summary>
+    [HttpGet("export-status")]
+    public IActionResult GetExportStatus([FromQuery] Guid requestId)
     {
-        var sb = new StringBuilder();
+        if (!_accessChecker.HasAccess(HttpContext,
+                nameof(Configuration.FeatureToggles.ContentAudit),
+                EditorPowertoolsPermissions.ContentAudit))
+            return Forbid();
 
-        // Header
-        sb.AppendLine(string.Join(",", columns.Select(c => CsvEscape(GetColumnLabel(c)))));
-
-        // Data
-        foreach (var row in rows)
+        try
         {
-            sb.AppendLine(string.Join(",",
-                columns.Select(c => CsvEscape(GetCellValue(row, c)?.ToString() ?? ""))));
+            var store  = GetStore();
+            var record = store.Items<ContentAuditExportJobRequest>()
+                .FirstOrDefault(r => r.RequestId == requestId);
+
+            if (record == null)
+                return NotFound(new { success = false, message = "Export request not found." });
+
+            return Ok(new
+            {
+                success         = true,
+                status          = record.Status,
+                resultContentId = record.ResultContentId,
+                errorMessage    = record.ErrorMessage,
+                completedAt     = record.CompletedAt
+            });
         }
-
-        var bytes = Encoding.UTF8.GetPreamble().Concat(Encoding.UTF8.GetBytes(sb.ToString())).ToArray();
-        return File(bytes, "text/csv", $"content-audit-{DateTime.UtcNow:yyyyMMdd-HHmmss}.csv");
-    }
-
-    private FileContentResult ExportJson(List<ContentAuditRow> rows)
-    {
-        var json = JsonSerializer.Serialize(rows, new JsonSerializerOptions
+        catch (Exception ex)
         {
-            WriteIndented = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        });
-        var bytes = Encoding.UTF8.GetBytes(json);
-        return File(bytes, "application/json", $"content-audit-{DateTime.UtcNow:yyyyMMdd-HHmmss}.json");
-    }
-
-    private static string CsvEscape(string value)
-    {
-        if (value.Contains(',') || value.Contains('"') || value.Contains('\n') || value.Contains('\r'))
-        {
-            return "\"" + value.Replace("\"", "\"\"") + "\"";
+            _logger.LogError(ex, "Failed to get export status for {RequestId}", requestId);
+            return StatusCode(500, new { success = false, message = "Failed to get export status." });
         }
-        return value;
     }
 
-    private static object? GetCellValue(ContentAuditRow row, string column)
-    {
-        return column.ToLowerInvariant() switch
-        {
-            "contentid" => row.ContentId,
-            "name" => row.Name,
-            "language" => row.Language,
-            "contenttype" => row.ContentType,
-            "maintype" => row.MainType,
-            "url" => row.Url,
-            "editurl" => row.EditUrl,
-            "breadcrumb" => row.Breadcrumb,
-            "status" => row.Status,
-            "createdby" => row.CreatedBy,
-            "created" => row.Created?.ToString("yyyy-MM-dd HH:mm"),
-            "changedby" => row.ChangedBy,
-            "changed" => row.Changed?.ToString("yyyy-MM-dd HH:mm"),
-            "published" => row.Published?.ToString("yyyy-MM-dd HH:mm"),
-            "publisheduntil" => row.PublishedUntil?.ToString("yyyy-MM-dd HH:mm"),
-            "masterlanguage" => row.MasterLanguage,
-            "alllanguages" => row.AllLanguages,
-            "referencecount" => row.ReferenceCount,
-            "versioncount" => row.VersionCount,
-            "haspersonalizations" => row.HasPersonalizations == true ? "Yes" : "No",
-            _ => null
-        };
-    }
-
-    private static string GetColumnLabel(string column)
-    {
-        return column.ToLowerInvariant() switch
-        {
-            "contentid" => "Content ID",
-            "name" => "Name",
-            "language" => "Language",
-            "contenttype" => "Content Type",
-            "maintype" => "Main Type",
-            "url" => "URL",
-            "editurl" => "Edit URL",
-            "breadcrumb" => "Breadcrumb",
-            "status" => "Status",
-            "createdby" => "Created By",
-            "created" => "Created",
-            "changedby" => "Changed By",
-            "changed" => "Changed",
-            "published" => "Published",
-            "publisheduntil" => "Published Until",
-            "masterlanguage" => "Master Language",
-            "alllanguages" => "All Languages",
-            "referencecount" => "Reference Count",
-            "versioncount" => "Version Count",
-            "haspersonalizations" => "Has Personalizations",
-            _ => column
-        };
-    }
+    private DynamicDataStore GetStore() =>
+        _storeFactory.GetStore(typeof(ContentAuditExportJobRequest))
+        ?? _storeFactory.CreateStore(typeof(ContentAuditExportJobRequest));
 
     private static List<string> GetAllColumnKeys()
     {

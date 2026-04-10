@@ -25,4 +25,9 @@ public class EditorPowertoolsOptions
     /// Default: WebAdmins, Administrators.
     /// </summary>
     public string[] AuthorizedRoles { get; set; } = ["WebAdmins", "Administrators"];
+
+    /// <summary>
+    /// Options specific to the Content Audit tool.
+    /// </summary>
+    public ContentAuditOptions ContentAudit { get; set; } = new();
 }
