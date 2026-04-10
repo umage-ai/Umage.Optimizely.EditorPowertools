@@ -133,9 +133,8 @@ public class VisitorGroupTesterMiddleware
     }
 
     /// <summary>
-    /// Returns true only for full edit mode (epieditmode=true).
-    /// Preview mode (epieditmode=false) is allowed through so the inspector can use
-    /// Optimizely's data-epi-block-id attributes which are only present in preview mode.
+    /// Returns true only for full edit mode (epieditmode=true or epieditmode=1).
+    /// Preview mode (epieditmode=false) is allowed through.
     /// </summary>
     private static bool IsEditMode(string queryString)
     {
@@ -150,7 +149,7 @@ public class VisitorGroupTesterMiddleware
 
     private static string GetToolbarHtml(string? pageEditUrl = null)
     {
-        var safeEditUrl = (pageEditUrl ?? "").Replace("'", "\\'");
+        var safeEditUrl = System.Text.Encodings.Web.HtmlEncoder.Default.Encode(pageEditUrl ?? "");
         return """
 <style>
 .ept-vgt-toggle {
@@ -207,26 +206,6 @@ public class VisitorGroupTesterMiddleware
 }
 .ept-vgt-header-title { display: flex; align-items: center; gap: 8px; }
 
-.ept-vgt-tabs {
-    display: flex;
-    border-bottom: 1px solid #334155;
-    flex-shrink: 0;
-}
-.ept-vgt-tab {
-    flex: 1;
-    padding: 8px 12px;
-    text-align: center;
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    color: #94a3b8;
-    font-size: 12px;
-    font-weight: 500;
-    transition: all 0.2s;
-}
-.ept-vgt-tab:hover { color: #e2e8f0; background: #334155; }
-.ept-vgt-tab.ept-vgt-active { color: #60a5fa; border-bottom: 2px solid #60a5fa; }
-
 .ept-vgt-body {
     padding: 8px 0;
     overflow-y: auto;
@@ -270,8 +249,13 @@ public class VisitorGroupTesterMiddleware
     padding: 10px 16px;
     border-top: 1px solid #334155;
     display: flex;
+    flex-direction: column;
     gap: 8px;
     flex-shrink: 0;
+}
+.ept-vgt-footer-actions {
+    display: flex;
+    gap: 8px;
 }
 .ept-vgt-btn {
     flex: 1;
@@ -287,6 +271,18 @@ public class VisitorGroupTesterMiddleware
 .ept-vgt-btn-primary:hover { background: #2563eb; }
 .ept-vgt-btn-secondary { background: #475569; color: #e2e8f0; }
 .ept-vgt-btn-secondary:hover { background: #64748b; }
+.ept-vgt-edit-link {
+    display: block;
+    padding: 6px 12px;
+    background: #1e3a5f;
+    border-radius: 6px;
+    color: #93c5fd;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    text-align: center;
+}
+.ept-vgt-edit-link:hover { background: #1e40af; color: #fff; }
 
 .ept-vgt-empty {
     text-align: center;
@@ -301,57 +297,23 @@ public class VisitorGroupTesterMiddleware
     padding: 2px 8px;
     border-radius: 10px;
 }
-
-/* Inspector mode styles */
-.ept-inspect-highlight {
-    outline: 2px dashed #60a5fa !important;
-    outline-offset: 2px;
-    position: relative;
-}
-.ept-inspect-tooltip {
-    position: fixed;
-    z-index: 100000;
-    background: #1e293bee;
-    color: #e2e8f0;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    pointer-events: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    border: 1px solid #475569;
-    max-width: 300px;
-}
-.ept-inspect-tooltip a {
-    color: #60a5fa;
-    text-decoration: underline;
-    pointer-events: auto;
-    cursor: pointer;
-}
-.ept-inspect-active [data-epi-block-id],
-.ept-inspect-active [data-epi-content-link],
-.ept-inspect-active [data-epi-property-name] {
-    outline: 1px dashed #60a5fa44;
-    outline-offset: 1px;
-}
 </style>
 
 <button class="ept-vgt-toggle" id="ept-vgt-toggle" title="Editor Powertools: Visitor Group Tester">&#9881;</button>
 
 <div class="ept-vgt-panel" id="ept-vgt-panel">
     <div class="ept-vgt-header">
-        <span class="ept-vgt-header-title">&#9881; Editor Powertools</span>
-    </div>
-    <div class="ept-vgt-tabs">
-        <button class="ept-vgt-tab ept-vgt-active" data-tab="groups">Visitor Groups</button>
-        <button class="ept-vgt-tab" data-tab="inspect">Inspector</button>
+        <span class="ept-vgt-header-title">&#9881; Visitor Group Tester</span>
     </div>
     <div class="ept-vgt-body" id="ept-vgt-body">
         <div class="ept-vgt-loading">Loading visitor groups...</div>
     </div>
     <div class="ept-vgt-footer" id="ept-vgt-footer">
-        <button class="ept-vgt-btn ept-vgt-btn-secondary" id="ept-vgt-clear">Clear all</button>
-        <button class="ept-vgt-btn ept-vgt-btn-primary" id="ept-vgt-apply">Apply</button>
+        <div class="ept-vgt-footer-actions">
+            <button class="ept-vgt-btn ept-vgt-btn-secondary" id="ept-vgt-clear">Clear all</button>
+            <button class="ept-vgt-btn ept-vgt-btn-primary" id="ept-vgt-apply">Apply</button>
+        </div>
+        ###EDIT_LINK###
     </div>
 </div>
 
@@ -361,22 +323,15 @@ public class VisitorGroupTesterMiddleware
     var panel = document.getElementById('ept-vgt-panel');
     var toggle = document.getElementById('ept-vgt-toggle');
     var body = document.getElementById('ept-vgt-body');
-    var footer = document.getElementById('ept-vgt-footer');
     var groups = [];
-    var activeTab = 'groups';
-    var inspectActive = false;
-    var tooltip = null;
-    var PAGE_EDIT_URL = '###PAGE_EDIT_URL###';
 
     // Parse current visitor groups from query param or cookie
     function getActiveGroupIds() {
-        // Check query param first (takes precedence) — Optimizely uses | as separator
         var params = new URLSearchParams(window.location.search);
         var val = params.get('visitorgroupsByID');
         if (val) return val.split('|').filter(function(s) { return s.trim(); });
-        // Fall back to cookie (Optimizely uses comma-separated GUIDs in cookie)
         var match = document.cookie.match(/ImpersonatedVisitorGroupsById=([^;]*)/);
-        if (match && match[1]) return match[1].split(',').filter(function(s) { return s.trim(); });
+        if (match && match[1]) return match[1].split('|').filter(function(s) { return s.trim(); });
         return [];
     }
 
@@ -393,37 +348,17 @@ public class VisitorGroupTesterMiddleware
         panel.classList.toggle('ept-vgt-open');
     });
 
-    // Tab switching
-    panel.querySelectorAll('.ept-vgt-tab').forEach(function(tab) {
-        tab.addEventListener('click', function() {
-            panel.querySelectorAll('.ept-vgt-tab').forEach(function(t) { t.classList.remove('ept-vgt-active'); });
-            tab.classList.add('ept-vgt-active');
-            activeTab = tab.getAttribute('data-tab');
-            renderContent();
-        });
-    });
-
     // Fetch visitor groups
     fetch('/editorpowertools/api/visitor-group-tester/groups', { credentials: 'same-origin' })
         .then(function(r) { return r.ok ? r.json() : []; })
         .then(function(data) {
             groups = data || [];
-            renderContent();
+            renderGroups('');
         })
         .catch(function() {
             groups = [];
-            renderContent();
-        });
-
-    function renderContent() {
-        if (activeTab === 'groups') {
             renderGroups('');
-            footer.style.display = 'flex';
-        } else {
-            renderInspector();
-            footer.style.display = 'none';
-        }
-    }
+        });
 
     function renderGroups(filter) {
         if (groups.length === 0) {
@@ -456,42 +391,28 @@ public class VisitorGroupTesterMiddleware
 
         body.innerHTML = html;
 
-        // Bind search
         var searchInput = document.getElementById('ept-vgt-search');
         if (searchInput) {
             searchInput.addEventListener('input', function() { renderGroups(this.value); });
             if (filter) searchInput.focus();
         }
 
-        // Bind checkboxes
         body.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
             cb.addEventListener('change', function() {
-                if (this.checked) {
-                    activeGroupIds.add(this.value);
-                } else {
-                    activeGroupIds.delete(this.value);
-                }
-                // Update count display
+                if (this.checked) activeGroupIds.add(this.value);
+                else activeGroupIds.delete(this.value);
                 var countEl = body.querySelector('.ept-vgt-count');
                 var c = 0;
                 activeGroupIds.forEach(function() { c++; });
                 if (countEl) {
-                    if (c > 0) {
-                        countEl.textContent = c + ' active';
-                        countEl.parentElement.style.display = '';
-                    } else {
-                        countEl.parentElement.style.display = 'none';
-                    }
+                    countEl.textContent = c + ' active';
+                    countEl.parentElement.style.display = c > 0 ? '' : 'none';
                 }
             });
         });
     }
 
-    // Apply button
     function setVgCookie(ids) {
-        // Optimizely reads impersonated visitor groups from cookie
-        // Cookie name: ImpersonatedVisitorGroupsById
-        // Value: pipe-separated GUIDs (same format as visitorgroupsByID query param)
         if (ids.length > 0) {
             document.cookie = 'ImpersonatedVisitorGroupsById=' + ids.join('|') + ';path=/';
         } else {
@@ -500,31 +421,21 @@ public class VisitorGroupTesterMiddleware
     }
 
     function buildUrlWithGroups(ids) {
-        // Pure string manipulation — avoid URLSearchParams which would percent-encode | characters
         var href = window.location.href;
-        // Remove existing visitorgroupsByID param
         href = href.replace(/([?&])visitorgroupsByID=[^&#]*/g, '$1');
-        // Clean up leftover ? or &&
         href = href.replace(/[?&]$/, '').replace(/[?]&/, '?').replace(/&&+/g, '&');
         if (ids.length > 0) {
             var sep = href.indexOf('?') >= 0 ? '&' : '?';
-            // Optimizely expects pipe-separated GUIDs: visitorgroupsByID=guid1|guid2
             return href + sep + 'visitorgroupsByID=' + ids.join('|');
         }
         return href;
     }
 
-    // ── Link Rewriting ────────────────────────────────────────────────
-    // Patch a single href: strip existing visitorgroupsByID and add current ids.
     function patchHref(href, ids) {
         if (!href) return href;
-        // Skip external origins
         if (/^https?:\/\//.test(href) && !href.startsWith(window.location.origin)) return href;
-        // Skip non-navigating links
         if (/^(\/\/|mailto:|tel:|javascript:|#)/.test(href)) return href;
-        // Skip CMS and EPT paths
         if (/\/(episerver|editorpowertools)\//i.test(href)) return href;
-        // Strip existing param then re-add
         var clean = href.replace(/([?&])visitorgroupsByID=[^&#]*/g, '$1')
                         .replace(/[?&]$/, '').replace(/\?&/, '?').replace(/&&+/g, '&');
         if (ids.length === 0) return clean;
@@ -570,161 +481,11 @@ public class VisitorGroupTesterMiddleware
         window.location.href = buildUrlWithGroups(ids);
     });
 
-    // Clear button
     document.getElementById('ept-vgt-clear').addEventListener('click', function() {
         activeGroupIds.clear();
         setVgCookie([]);
         window.location.href = buildUrlWithGroups([]);
     });
-
-    // Inspector tab
-    function renderInspector() {
-        var blockCount = document.querySelectorAll('[data-epi-block-id],[data-epi-content-link]').length;
-        var html = '<div style="padding: 16px;">';
-
-        // Always show "Edit this page" link — URL resolved server-side by the middleware
-        var editHref = PAGE_EDIT_URL || '/episerver/CMS/';
-        html += '<div style="margin-bottom:12px;">' +
-            '<a href="' + editHref + '" target="_blank" style="display:block;padding:7px 12px;background:#334155;border-radius:6px;color:#e2e8f0;text-decoration:none;font-size:12px;font-weight:600;text-align:center;">✏ Edit this page in CMS</a>' +
-            '</div>';
-
-        // Block inspector toggle
-        html += '<label class="ept-vgt-group" style="padding: 8px 0;">' +
-            '<input type="checkbox" id="ept-vgt-inspect-toggle"' + (inspectActive ? ' checked' : '') + '>' +
-            '<span class="ept-vgt-group-name" style="font-weight: 600;">Block Inspector</span>' +
-            '</label>';
-
-        if (blockCount > 0) {
-            html += '<p style="margin:6px 0 0;font-size:11px;color:#4ade80;">✓ ' + blockCount + ' inspectable block' + (blockCount === 1 ? '' : 's') + ' found — hover to highlight</p>';
-        } else {
-            html += '<div style="margin-top:8px;padding:10px;background:#0f172a;border-radius:6px;border:1px solid #334155;">' +
-                '<p style="margin:0;font-size:11px;color:#94a3b8;line-height:1.5;">' +
-                'Block-level inspection requires <code style="color:#60a5fa">data-epi-block-id</code> attributes in the HTML.<br><br>' +
-                'Add the EPT TagHelper to your block views: <code style="color:#60a5fa">ept-block="@Model"</code>' +
-                '</p></div>';
-        }
-
-        html += '</div>';
-        body.innerHTML = html;
-
-        var toggleCb = document.getElementById('ept-vgt-inspect-toggle');
-        if (toggleCb) {
-            toggleCb.addEventListener('change', function() {
-                inspectActive = this.checked;
-                if (inspectActive) enableInspect();
-                else disableInspect();
-            });
-        }
-    }
-
-    // Currently highlighted element
-    var currentHighlight = null;
-
-    function enableInspect() {
-        document.body.classList.add('ept-inspect-active');
-        toggle.style.outline = '2px solid #60a5fa';
-
-        tooltip = document.createElement('div');
-        tooltip.className = 'ept-inspect-tooltip';
-        tooltip.style.display = 'none';
-        document.body.appendChild(tooltip);
-
-        // Event delegation — works regardless of when elements were rendered
-        document.addEventListener('mouseover', onInspectOver, true);
-        document.addEventListener('mouseout', onInspectOut, true);
-        document.addEventListener('mousemove', onInspectMove, true);
-    }
-
-    function disableInspect() {
-        document.body.classList.remove('ept-inspect-active');
-        toggle.style.outline = '';
-
-        if (currentHighlight) {
-            currentHighlight.classList.remove('ept-inspect-highlight');
-            currentHighlight = null;
-        }
-        if (tooltip) { tooltip.remove(); tooltip = null; }
-
-        document.removeEventListener('mouseover', onInspectOver, true);
-        document.removeEventListener('mouseout', onInspectOut, true);
-        document.removeEventListener('mousemove', onInspectMove, true);
-    }
-
-    // Walk up from target to find nearest element with epi data attributes
-    function findInspectable(el) {
-        var current = el;
-        while (current && current !== document.documentElement) {
-            if (current === panel || current === toggle) return null; // don't highlight our own UI
-            if (current.hasAttribute && (
-                current.hasAttribute('data-epi-block-id') ||
-                current.hasAttribute('data-epi-content-link') ||
-                current.hasAttribute('data-contentlink')
-            )) return current;
-            current = current.parentElement;
-        }
-        return null;
-    }
-
-    function onInspectOver(e) {
-        var target = findInspectable(e.target);
-        if (target === currentHighlight) return;
-
-        if (currentHighlight) {
-            currentHighlight.classList.remove('ept-inspect-highlight');
-        }
-        currentHighlight = target;
-
-        if (!target) {
-            if (tooltip) tooltip.style.display = 'none';
-            return;
-        }
-
-        target.classList.add('ept-inspect-highlight');
-
-        var blockId    = target.getAttribute('data-epi-block-id');
-        var contentRef = target.getAttribute('data-epi-content-link') || target.getAttribute('data-contentlink');
-        var rawId      = blockId || contentRef || '';
-        // Optimizely content refs are like "42_0" or "42" — extract numeric part for the edit URL
-        var numericId  = rawId.split('_')[0].split(',')[0];
-
-        var lines = [];
-        if (numericId) {
-            lines.push('<span style="color:#94a3b8;font-size:11px;">ID: ' + escapeHtml(rawId) + '</span>');
-            var editUrl = '/episerver/CMS/#context=epi.cms.contentdata:///' + numericId;
-            lines.push('<a href="' + editUrl + '" target="_blank" style="display:inline-block;margin-top:4px;padding:3px 8px;background:#3b82f6;color:#fff;border-radius:4px;text-decoration:none;font-size:11px;font-weight:600;">✏ Edit in CMS</a>');
-        } else {
-            lines.push('<span style="color:#94a3b8;font-size:11px;">' + escapeHtml(target.tagName.toLowerCase()) + '</span>');
-        }
-
-        if (tooltip) {
-            tooltip.innerHTML = lines.join('<br>');
-            tooltip.style.display = 'block';
-        }
-    }
-
-    function onInspectOut(e) {
-        var target = findInspectable(e.target);
-        if (target && target === currentHighlight) {
-            // Only clear if relatedTarget is outside this element
-            if (!target.contains(e.relatedTarget)) {
-                target.classList.remove('ept-inspect-highlight');
-                currentHighlight = null;
-                if (tooltip) tooltip.style.display = 'none';
-            }
-        }
-    }
-
-    function onInspectMove(e) {
-        if (tooltip && tooltip.style.display === 'block') {
-            var x = e.clientX + 14;
-            var y = e.clientY + 14;
-            // Keep tooltip on screen
-            if (x + 200 > window.innerWidth) x = e.clientX - 214;
-            if (y + 80 > window.innerHeight) y = e.clientY - 84;
-            tooltip.style.left = x + 'px';
-            tooltip.style.top  = y + 'px';
-        }
-    }
 
     function escapeHtml(str) {
         var d = document.createElement('div');
@@ -733,6 +494,8 @@ public class VisitorGroupTesterMiddleware
     }
 })();
 </script>
-""".Replace("###PAGE_EDIT_URL###", safeEditUrl);
+""".Replace("###EDIT_LINK###", string.IsNullOrEmpty(safeEditUrl)
+            ? ""
+            : $"<a href=\"{safeEditUrl}\" target=\"_blank\" class=\"ept-vgt-edit-link\">&#9998; Edit this page in CMS</a>");
     }
 }
