@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using EditorPowertools.SampleSite.Business.Rendering;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Rendering;
 using EPiServer.SpecializedProperties;
 using EPiServer.Web;
 
-namespace EditorPowertools.SampleSite.Models.Pages;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 
 /// <summary>
 /// Base class for all page types

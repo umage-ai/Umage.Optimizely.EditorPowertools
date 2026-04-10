@@ -1,5 +1,5 @@
-using EditorPowertools.SampleSite.Models.Pages;
-using EditorPowertools.SampleSite.Models.ViewModels;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 using EPiServer.Data;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
-namespace EditorPowertools.SampleSite.Business;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business;
 
 [ServiceConfiguration]
 public class PageViewContextFactory

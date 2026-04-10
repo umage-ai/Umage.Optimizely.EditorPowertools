@@ -1,6 +1,6 @@
-using EditorPowertools.SampleSite.Business.Rendering;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Rendering;
 
-namespace EditorPowertools.SampleSite.Models.Pages;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 
 /// <summary>
 /// Used to logically group pages in the page tree

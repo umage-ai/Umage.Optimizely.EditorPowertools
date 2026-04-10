@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace EditorPowertools.SampleSite.Models.Pages;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 
 /// <summary>
 /// Used for campaign or landing pages, commonly used for pages linked in online advertising such as AdWords

@@ -1,4 +1,4 @@
-namespace EditorPowertools.SampleSite.Models.Blocks;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
 
 /// <summary>
 /// Base class for all block types on the site

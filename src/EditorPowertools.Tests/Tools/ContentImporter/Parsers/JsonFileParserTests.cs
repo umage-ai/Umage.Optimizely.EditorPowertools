@@ -1,8 +1,8 @@
 using System.Text;
-using EditorPowertools.Tools.ContentImporter.Parsers;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Parsers;
 using FluentAssertions;
 
-namespace EditorPowertools.Tests.Tools.ContentImporter.Parsers;
+namespace UmageAI.Optimizely.EditorPowerTools.Tests.Tools.ContentImporter.Parsers;
 
 public class JsonFileParserTests
 {

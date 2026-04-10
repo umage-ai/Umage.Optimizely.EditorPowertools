@@ -1,10 +1,10 @@
 using System.Diagnostics;
-using EditorPowertools.SampleSite.Helpers;
-using EditorPowertools.SampleSite.Models.ViewModels;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 using EPiServer.Web.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace EditorPowertools.SampleSite.Business.Rendering;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Rendering;
 
 /// <summary>
 /// Wraps an MvcContentRenderer and adds error handling to ensure that blocks and other content

@@ -1,4 +1,4 @@
-namespace EditorPowertools.Configuration;
+namespace UmageAI.Optimizely.EditorPowerTools.Configuration;
 
 /// <summary>
 /// Feature toggles for enabling/disabling individual tools.

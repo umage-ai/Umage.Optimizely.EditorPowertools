@@ -3,12 +3,12 @@ using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Framework.Localization;
 using EPiServer.Security;
-using EditorPowertools.Helpers;
-using EditorPowertools.Tools.SecurityAudit;
-using EditorPowertools.Tools.SecurityAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit;
+using UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Services.Analyzers;
+namespace UmageAI.Optimizely.EditorPowerTools.Services.Analyzers;
 
 /// <summary>
 /// Analyzer that reads ACLs from IContentSecurityRepository for every content item,

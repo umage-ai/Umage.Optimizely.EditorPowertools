@@ -1,6 +1,6 @@
-using EditorPowertools.Tools.ContentAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit.Models;
 
-namespace EditorPowertools.Tools.ContentAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit;
 
 /// <summary>
 /// Pluggable content data source for the Content Audit tool.

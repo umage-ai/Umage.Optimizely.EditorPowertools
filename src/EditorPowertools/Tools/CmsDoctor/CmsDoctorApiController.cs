@@ -1,9 +1,9 @@
-using EditorPowertools.Infrastructure;
-using EditorPowertools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Tools.CmsDoctor;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor;
 
 [Authorize(Policy = "codeart:editorpowertools")]
 [RequireAjax]

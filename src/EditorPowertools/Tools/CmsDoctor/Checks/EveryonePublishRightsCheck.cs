@@ -1,6 +1,6 @@
-using EditorPowertools.Tools.SecurityAudit;
+using UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit;
 
-namespace EditorPowertools.Tools.CmsDoctor.Checks;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Checks;
 
 /// <summary>
 /// Health check that reports content where "Everyone" has Publish or higher access.

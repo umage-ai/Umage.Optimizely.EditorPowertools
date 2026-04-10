@@ -1,4 +1,4 @@
-namespace EditorPowertools.SampleSite.Business.Rendering;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Rendering;
 
 /// <summary>
 /// Defines a property for CSS class(es) which will be added to the class

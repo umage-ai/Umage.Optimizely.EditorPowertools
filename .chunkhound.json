@@ -1,0 +1,19 @@
+{
+  "embedding": {
+    "provider": "openai",
+    "base_url": "http://localhost:11434/v1",
+    "api_key": "sk-xxxx",
+    "model": "nomic-embed-text:latest"
+  },
+  "llm": {
+    "provider": "openai",
+    "base_url": "http://localhost:11434/v1",
+    "api_key": "sk-xxxx",
+    "utility_model": "qwen3.5:9b",
+    "synthesis_model": "qwen3.5:9b"
+  },
+  "indexing": {
+    "exclude": [
+    ]
+  }
+}

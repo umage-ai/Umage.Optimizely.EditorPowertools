@@ -8,11 +8,11 @@ using EPiServer.DataAccess;
 using EPiServer.Framework.Blobs;
 using EPiServer.Security;
 using EPiServer.SpecializedProperties;
-using EditorPowertools.Tools.ContentImporter.Models;
-using EditorPowertools.Tools.ContentImporter.Parsers;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Parsers;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.ContentImporter;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter;
 
 public class ContentImporterService
 {

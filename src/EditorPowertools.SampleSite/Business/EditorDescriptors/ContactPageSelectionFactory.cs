@@ -1,7 +1,7 @@
 using EPiServer.ServiceLocation;
 using EPiServer.Shell.ObjectEditing;
 
-namespace EditorPowertools.SampleSite.Business.EditorDescriptors;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.EditorDescriptors;
 
 /// <summary>
 /// Provides a list of options corresponding to ContactPage pages on the site

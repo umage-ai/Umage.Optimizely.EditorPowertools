@@ -1,11 +1,11 @@
 using System.Text;
-using EditorPowertools.Infrastructure;
-using EditorPowertools.Permissions;
-using EditorPowertools.Services;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Tools.SecurityAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit;
 
 /// <summary>
 /// API controller for Security Audit data endpoints.

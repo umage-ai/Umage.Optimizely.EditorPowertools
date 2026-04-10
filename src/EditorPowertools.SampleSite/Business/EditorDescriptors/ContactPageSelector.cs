@@ -1,7 +1,7 @@
 using EPiServer.Shell.ObjectEditing;
 using EPiServer.Shell.ObjectEditing.EditorDescriptors;
 
-namespace EditorPowertools.SampleSite.Business.EditorDescriptors;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.EditorDescriptors;
 
 /// <summary>
 /// Registers an editor to select a ContactPage for a PageReference property using a dropdown

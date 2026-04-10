@@ -7,14 +7,14 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 
     <!-- NuGet package properties -->
-    <PackageId>CodeArt.Optimizely.EditorPowertools</PackageId>
+    <PackageId>UmageAI.Optimizely.EditorPowerTools</PackageId>
     <Version>0.1.0-local</Version>
-    <Authors>CodeArt</Authors>
-    <Company>CodeArt.dk</Company>
+    <Authors>UmageAI</Authors>
+    <Company>UmageAI</Company>
     <Description>A collection of power tools for Optimizely CMS 12 editors and admins. Includes Content Type Audit, Activity Timeline, Bulk Property Editor, Scheduled Jobs Gantt, Link Checker, Active Editors with real-time chat, and more.</Description>
     <PackageTags>Optimizely;CMS;EPiServer;Editor;Tools;Admin;Audit;PowerTools</PackageTags>
-    <PackageProjectUrl>https://github.com/CodeArtDK/EditorPowertools</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/CodeArtDK/EditorPowertools</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/UmageAI/EditorPowerTools</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/UmageAI/EditorPowerTools</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -49,7 +49,7 @@
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="" />
     <None Include="icon.png" Pack="true" PackagePath="" />
-    <None Include="build\net8.0\CodeArt.Optimizely.EditorPowertools.targets" Pack="true" PackagePath="build\net8.0\" />
+    <None Include="build\net8.0\UmageAI.Optimizely.EditorPowerTools.targets" Pack="true" PackagePath="build\net8.0\" />
   </ItemGroup>
 
   <!--

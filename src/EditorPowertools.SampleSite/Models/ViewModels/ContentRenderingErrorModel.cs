@@ -1,4 +1,4 @@
-namespace EditorPowertools.SampleSite.Models.ViewModels;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 
 public class ContentRenderingErrorModel
 {

@@ -1,4 +1,4 @@
-namespace EditorPowertools.SampleSite.Models.Pages;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 
 public interface IHasRelatedContent
 {

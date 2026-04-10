@@ -1,7 +1,7 @@
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-namespace EditorPowertools.Tools.PersonalizationAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 
 /// <summary>
 /// DDS-persisted record holding a single personalization usage instance.

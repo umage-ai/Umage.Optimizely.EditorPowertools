@@ -4,7 +4,7 @@ using EPiServer.DataAbstraction;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Components;
+namespace UmageAI.Optimizely.EditorPowerTools.Components;
 
 /// <summary>
 /// API endpoints for reusable UI components (content picker, content type picker, etc.).

@@ -6,11 +6,11 @@ using EPiServer.DataAbstraction;
 using EPiServer.Framework.Localization;
 using EPiServer.Shell;
 using EPiServer.Web.Routing;
-using EditorPowertools.Helpers;
-using EditorPowertools.Tools.LinkChecker;
+using UmageAI.Optimizely.EditorPowerTools.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Services.Analyzers;
+namespace UmageAI.Optimizely.EditorPowerTools.Services.Analyzers;
 
 /// <summary>
 /// Analyzer that extracts links from content properties during Analyze()

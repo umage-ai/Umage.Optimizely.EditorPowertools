@@ -2,7 +2,7 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 
-namespace EditorPowertools.Tools.CmsDoctor.Checks;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Checks;
 
 /// <summary>
 /// Checks for images missing alt text. Hooks into the scheduled job to

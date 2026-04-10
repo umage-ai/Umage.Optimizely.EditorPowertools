@@ -1,8 +1,8 @@
 using EPiServer.Core;
-using EditorPowertools.Services;
-using EditorPowertools.Tools.CmsDoctor.Models;
+using UmageAI.Optimizely.EditorPowerTools.Services;
+using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
 
-namespace EditorPowertools.Tools.CmsDoctor;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor;
 
 /// <summary>
 /// Base class for health checks that need to traverse all content via the unified scheduled job.

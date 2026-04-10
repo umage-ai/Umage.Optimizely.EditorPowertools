@@ -1,7 +1,7 @@
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-namespace EditorPowertools.Tools.SecurityAudit.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit.Models;
 
 /// <summary>
 /// DDS-persisted record holding the ACL snapshot and issue flags for a single content item.

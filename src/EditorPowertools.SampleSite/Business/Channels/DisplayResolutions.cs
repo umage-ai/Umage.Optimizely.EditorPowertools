@@ -1,6 +1,6 @@
 using EPiServer.Framework.Localization;
 
-namespace EditorPowertools.SampleSite.Business.Channels;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Channels;
 
 /// <summary>
 /// Defines resolution for desktop displays

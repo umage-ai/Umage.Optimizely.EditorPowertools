@@ -1,6 +1,6 @@
-using EditorPowertools.SampleSite.Models.Pages;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 
-namespace EditorPowertools.SampleSite.Models.ViewModels;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 
 /// <summary>
 /// Defines common characteristics for view models for pages, including properties used by layout files.

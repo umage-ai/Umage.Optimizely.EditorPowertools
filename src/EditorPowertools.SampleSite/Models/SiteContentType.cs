@@ -1,4 +1,4 @@
-namespace EditorPowertools.SampleSite.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models;
 
 /// <summary>
 /// Attribute used for site content types to set default attribute values

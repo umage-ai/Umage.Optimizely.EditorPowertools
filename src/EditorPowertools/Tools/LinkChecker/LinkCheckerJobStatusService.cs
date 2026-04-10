@@ -1,8 +1,8 @@
-using EditorPowertools.Services;
+using UmageAI.Optimizely.EditorPowerTools.Services;
 using EPiServer.DataAbstraction;
 using EPiServer.Scheduler;
 
-namespace EditorPowertools.Tools.LinkChecker;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker;
 
 /// <summary>
 /// Checks the status of the link checker scheduled job and can trigger it.

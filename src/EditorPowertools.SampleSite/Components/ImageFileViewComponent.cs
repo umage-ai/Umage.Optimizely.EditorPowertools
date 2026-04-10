@@ -1,10 +1,10 @@
-using EditorPowertools.SampleSite.Models.Media;
-using EditorPowertools.SampleSite.Models.ViewModels;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Media;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 using EPiServer.Web.Mvc;
 using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.SampleSite.Components;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Components;
 
 /// <summary>
 /// Controller for the image file.

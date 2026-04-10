@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using EditorPowertools.SampleSite.Models.Blocks;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
 
-namespace EditorPowertools.SampleSite.Models.Pages;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 
 /// <summary>
 /// Used to present a single product

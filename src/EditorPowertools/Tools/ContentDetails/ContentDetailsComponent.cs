@@ -1,6 +1,6 @@
 using EPiServer.Shell.ViewComposition;
 
-namespace EditorPowertools.Tools.ContentDetails;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentDetails;
 
 /// <summary>
 /// Registers Power Content Details as a component in the CMS assets panel.

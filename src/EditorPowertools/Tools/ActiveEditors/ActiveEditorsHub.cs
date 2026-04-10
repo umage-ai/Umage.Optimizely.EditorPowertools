@@ -1,11 +1,11 @@
-using EditorPowertools.Configuration;
-using EditorPowertools.Tools.ActiveEditors.Models;
+using UmageAI.Optimizely.EditorPowerTools.Configuration;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ActiveEditors.Models;
 using EPiServer.Notification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
 
-namespace EditorPowertools.Tools.ActiveEditors;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ActiveEditors;
 
 [Authorize(Policy = "codeart:editorpowertools")]
 public class ActiveEditorsHub : Hub

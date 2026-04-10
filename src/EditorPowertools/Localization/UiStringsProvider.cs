@@ -1,6 +1,6 @@
 using EPiServer.Framework.Localization;
 
-namespace EditorPowertools.Localization;
+namespace UmageAI.Optimizely.EditorPowerTools.Localization;
 
 /// <summary>
 /// Provides all JavaScript UI strings from the localization service,

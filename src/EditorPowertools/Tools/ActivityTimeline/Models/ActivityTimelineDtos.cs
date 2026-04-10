@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.ActivityTimeline.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ActivityTimeline.Models;
 
 public class ActivityDto
 {

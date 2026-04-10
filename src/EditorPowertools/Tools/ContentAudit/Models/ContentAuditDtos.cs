@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.ContentAudit.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit.Models;
 
 public class ContentAuditRequest
 {

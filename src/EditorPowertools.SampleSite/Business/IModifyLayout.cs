@@ -1,6 +1,6 @@
-using EditorPowertools.SampleSite.Models.ViewModels;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 
-namespace EditorPowertools.SampleSite.Business;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business;
 
 /// <summary>
 /// Defines a method which may be invoked by PageContextActionFilter allowing controllers

@@ -2,7 +2,7 @@ using EPiServer.Web;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace EditorPowertools.SampleSite.Helpers;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Helpers;
 
 /// <summary>
 /// Extension methods on request Context such as et/Set Node, Lang, Controller

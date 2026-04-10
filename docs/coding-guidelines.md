@@ -365,7 +365,7 @@ _userPreferencesService.Save(username, "BulkPropertyEditor", jsonString);
 
 ## NuGet Packaging
 
-- Ships as `CodeArt.Optimizely.EditorPowertools`.
+- Ships as `UmageAI.Optimizely.EditorPowerTools`.
 - Razor class library (SDK: `Microsoft.NET.Sdk.Razor`) for embedded views and static files.
 - Minimum dependency: `EPiServer.CMS` only.
 - Registered as a protected module via `ProtectedModuleOptions`.

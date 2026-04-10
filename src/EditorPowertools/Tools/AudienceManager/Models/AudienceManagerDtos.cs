@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.AudienceManager.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager.Models;
 
 public class VisitorGroupDetailDto
 {

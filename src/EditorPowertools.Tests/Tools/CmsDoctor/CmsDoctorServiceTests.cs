@@ -1,10 +1,10 @@
-using EditorPowertools.Tools.CmsDoctor;
-using EditorPowertools.Tools.CmsDoctor.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor;
+using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace EditorPowertools.Tests.Tools.CmsDoctor;
+namespace UmageAI.Optimizely.EditorPowerTools.Tests.Tools.CmsDoctor;
 
 #region Stub check implementations (each has a unique type name for the service key)
 

@@ -1,10 +1,10 @@
 using System.Text.RegularExpressions;
 using EPiServer.Personalization.VisitorGroups;
 using EPiServer.Shell;
-using EditorPowertools.Tools.AudienceManager.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.AudienceManager;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager;
 
 public class AudienceManagerService
 {

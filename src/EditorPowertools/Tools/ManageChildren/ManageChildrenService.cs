@@ -4,10 +4,10 @@ using EPiServer.DataAbstraction;
 using EPiServer.DataAccess;
 using EPiServer.Security;
 using EPiServer.Shell;
-using EditorPowertools.Tools.ManageChildren.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ManageChildren.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.ManageChildren;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ManageChildren;
 
 public class ManageChildrenService
 {

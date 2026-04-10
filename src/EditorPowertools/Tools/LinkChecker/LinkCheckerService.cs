@@ -1,6 +1,6 @@
-using EditorPowertools.Tools.LinkChecker.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker.Models;
 
-namespace EditorPowertools.Tools.LinkChecker;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker;
 
 public class LinkCheckerService
 {

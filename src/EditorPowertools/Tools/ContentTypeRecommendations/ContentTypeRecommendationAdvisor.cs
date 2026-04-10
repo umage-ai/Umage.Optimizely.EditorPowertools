@@ -2,7 +2,7 @@ using EPiServer;
 using EPiServer.Cms.Shell.UI.Rest;
 using EPiServer.Core;
 
-namespace EditorPowertools.Tools.ContentTypeRecommendations;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeRecommendations;
 
 /// <summary>
 /// Implements IContentTypeAdvisor to hook into the CMS "create new content" dialog.

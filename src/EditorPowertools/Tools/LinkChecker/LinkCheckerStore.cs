@@ -1,7 +1,7 @@
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-namespace EditorPowertools.Tools.LinkChecker;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker;
 
 /// <summary>
 /// DDS-persisted record holding a single link check result.

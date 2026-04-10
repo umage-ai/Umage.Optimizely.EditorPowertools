@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.PersonalizationAudit.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit.Models;
 
 public class PersonalizationUsageDto
 {

@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using EditorPowertools.SampleSite.Business;
-using EditorPowertools.SampleSite.Models.Blocks;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
 using EPiServer.Filters;
 using EPiServer.Framework.Localization;
 using EPiServer.ServiceLocation;
 
-namespace EditorPowertools.SampleSite.Models.Pages;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 
 /// <summary>
 /// Presents a news section including a list of the most recent articles on the site

@@ -1,8 +1,8 @@
-using EditorPowertools.Tools.CmsDoctor.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
 using EPiServer.Framework.Localization;
 using EPiServer.ServiceLocation;
 
-namespace EditorPowertools.Tools.CmsDoctor;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor;
 
 /// <summary>
 /// Base class for health checks. Override PerformCheck() to implement your check.

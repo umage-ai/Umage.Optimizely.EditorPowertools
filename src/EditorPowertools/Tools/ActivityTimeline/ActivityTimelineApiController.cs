@@ -1,9 +1,9 @@
-using EditorPowertools.Permissions;
-using EditorPowertools.Tools.ActivityTimeline.Models;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ActivityTimeline.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Tools.ActivityTimeline;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ActivityTimeline;
 
 /// <summary>
 /// API controller for Activity Timeline data endpoints.

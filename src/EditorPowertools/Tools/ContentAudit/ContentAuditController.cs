@@ -1,7 +1,7 @@
 using System.Text.Json;
-using EditorPowertools.Infrastructure;
-using EditorPowertools.Permissions;
-using EditorPowertools.Tools.ContentAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit.Models;
 using EPiServer.Data.Dynamic;
 using EPiServer.DataAbstraction;
 using EPiServer.Scheduler;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.ContentAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit;
 
 /// <summary>
 /// API controller for Content Audit operations.

@@ -1,9 +1,9 @@
-using EditorPowertools.SampleSite.Business.Rendering;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Rendering;
 using EPiServer.ServiceLocation;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace EditorPowertools.SampleSite.Views;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Views;
 
 public abstract class AlloyPageBase<TModel> : RazorPage<TModel> where TModel : class
 {

@@ -1,9 +1,9 @@
-using EditorPowertools.Configuration;
+using UmageAI.Optimizely.EditorPowerTools.Configuration;
 using EPiServer.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
-namespace EditorPowertools.Permissions;
+namespace UmageAI.Optimizely.EditorPowerTools.Permissions;
 
 /// <summary>
 /// Checks whether a user has access to a specific feature based on:

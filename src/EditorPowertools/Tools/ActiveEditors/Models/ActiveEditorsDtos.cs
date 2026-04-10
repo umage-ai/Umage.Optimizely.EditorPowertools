@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.ActiveEditors.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ActiveEditors.Models;
 
 public class EditorPresence
 {

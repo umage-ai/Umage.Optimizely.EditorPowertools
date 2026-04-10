@@ -3,7 +3,7 @@
 @{
     Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
     ViewData["Title"] = Loc.GetString("/editorpowertools/tools/contenttypeaudit/title");
-    string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
+    string ActionPath(string path) => Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), path);
 }
 
 @section NavItems {
@@ -20,5 +20,5 @@
 <div id="audit-content"></div>
 
 @section Scripts {
-    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/content-type-audit.js"))"></script>
+    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/content-type-audit.js"))"></script>
 }

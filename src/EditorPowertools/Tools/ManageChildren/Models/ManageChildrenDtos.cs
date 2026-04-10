@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.ManageChildren.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ManageChildren.Models;
 
 public class ChildItemDto
 {

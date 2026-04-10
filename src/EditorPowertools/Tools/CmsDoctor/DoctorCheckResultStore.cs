@@ -1,8 +1,8 @@
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
-using EditorPowertools.Tools.CmsDoctor.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
 
-namespace EditorPowertools.Tools.CmsDoctor;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor;
 
 [EPiServerDataStore(AutomaticallyRemapStore = true, StoreName = "EditorPowertools_DoctorCheckResults")]
 public class DoctorCheckResultEntry : IDynamicData

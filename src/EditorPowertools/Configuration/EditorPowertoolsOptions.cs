@@ -1,4 +1,4 @@
-namespace EditorPowertools.Configuration;
+namespace UmageAI.Optimizely.EditorPowerTools.Configuration;
 
 /// <summary>
 /// Configuration options for Editor Powertools.

@@ -4,12 +4,12 @@ using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Shell;
 using EPiServer.Web.Routing;
-using EditorPowertools.Helpers;
-using EditorPowertools.Services;
-using EditorPowertools.Tools.ContentTypeAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Services;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.ContentTypeAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit;
 
 public class ContentTypeAuditService
 {

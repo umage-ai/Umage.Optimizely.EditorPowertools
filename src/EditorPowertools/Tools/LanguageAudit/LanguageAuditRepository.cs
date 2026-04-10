@@ -1,7 +1,7 @@
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-namespace EditorPowertools.Tools.LanguageAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.LanguageAudit;
 
 /// <summary>
 /// DDS-persisted record holding language version information for a single content item.

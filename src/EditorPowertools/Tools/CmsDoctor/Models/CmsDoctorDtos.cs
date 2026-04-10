@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EditorPowertools.Tools.CmsDoctor.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum HealthStatus

@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using EditorPowertools.SampleSite.Models.Blocks;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
 using EPiServer.SpecializedProperties;
 
-namespace EditorPowertools.SampleSite.Models.Pages;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 
 /// <summary>
 /// Used for the site's start page and also acts as a container for site settings

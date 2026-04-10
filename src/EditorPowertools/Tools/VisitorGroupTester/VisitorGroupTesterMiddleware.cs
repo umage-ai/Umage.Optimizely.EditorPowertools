@@ -1,15 +1,15 @@
 using System.Text;
-using EditorPowertools.Configuration;
-using EditorPowertools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Configuration;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
-namespace EditorPowertools.Tools.VisitorGroupTester;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.VisitorGroupTester;
 
 /// <summary>
 /// Middleware that injects the Visitor Group Tester floating toolbar into HTML pages
-/// for authenticated users with the EditorPowertools policy.
+/// for authenticated users with the UmageAI.Optimizely.EditorPowerTools policy.
 /// Only runs on public-facing pages (not CMS shell or API requests).
 /// </summary>
 public class VisitorGroupTesterMiddleware

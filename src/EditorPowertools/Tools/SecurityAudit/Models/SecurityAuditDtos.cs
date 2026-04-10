@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.SecurityAudit.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit.Models;
 
 /// <summary>
 /// Deserialized from AclEntriesJson for API responses.

@@ -1,7 +1,7 @@
 using EPiServer.DataAnnotations;
 using EPiServer.Security;
 
-namespace EditorPowertools.Permissions;
+namespace UmageAI.Optimizely.EditorPowerTools.Permissions;
 
 /// <summary>
 /// Defines EPiServer permission types for each tool.

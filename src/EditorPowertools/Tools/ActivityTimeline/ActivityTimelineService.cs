@@ -3,10 +3,10 @@ using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAbstraction.Activities;
 using EPiServer.Shell;
-using EditorPowertools.Tools.ActivityTimeline.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ActivityTimeline.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.ActivityTimeline;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ActivityTimeline;
 
 public class ActivityTimelineService
 {

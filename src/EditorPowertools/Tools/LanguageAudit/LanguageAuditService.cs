@@ -1,9 +1,9 @@
 using System.Text.Json;
-using EditorPowertools.Tools.LanguageAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.LanguageAudit.Models;
 using EPiServer.DataAbstraction;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.LanguageAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.LanguageAudit;
 
 public class LanguageAuditService
 {

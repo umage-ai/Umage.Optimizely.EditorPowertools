@@ -1,6 +1,6 @@
 using System.Text.Json;
-using EditorPowertools.Configuration;
-using EditorPowertools.Tools.ContentAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Configuration;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit.Models;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.Data.Dynamic;
@@ -13,7 +13,7 @@ using EPiServer.Web;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace EditorPowertools.Tools.ContentAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit;
 
 [ScheduledPlugIn(
     DisplayName    = "[EditorPowertools] Content Audit Export",

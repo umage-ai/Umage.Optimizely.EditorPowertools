@@ -1,4 +1,4 @@
-namespace EditorPowertools.SampleSite;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite;
 
 public class Program
 {

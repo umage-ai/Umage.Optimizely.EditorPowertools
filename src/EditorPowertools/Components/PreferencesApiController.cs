@@ -1,10 +1,10 @@
-using EditorPowertools.Infrastructure;
-using EditorPowertools.Permissions;
-using EditorPowertools.Services;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Components;
+namespace UmageAI.Optimizely.EditorPowerTools.Components;
 
 /// <summary>
 /// API endpoints for per-user tool preferences. Shared across all tools.

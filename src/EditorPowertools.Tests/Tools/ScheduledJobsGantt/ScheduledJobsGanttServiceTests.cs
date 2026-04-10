@@ -1,11 +1,11 @@
 using EPiServer.DataAbstraction;
 using EPiServer.Scheduler;
-using EditorPowertools.Tools.ScheduledJobsGantt;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ScheduledJobsGantt;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace EditorPowertools.Tests.Tools.ScheduledJobsGantt;
+namespace UmageAI.Optimizely.EditorPowerTools.Tests.Tools.ScheduledJobsGantt;
 
 public class ScheduledJobsGanttServiceTests
 {

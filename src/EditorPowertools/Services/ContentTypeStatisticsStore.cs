@@ -1,7 +1,7 @@
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-namespace EditorPowertools.Services;
+namespace UmageAI.Optimizely.EditorPowerTools.Services;
 
 /// <summary>
 /// DDS-persisted record holding aggregated statistics for a content type.

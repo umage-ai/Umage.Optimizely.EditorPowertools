@@ -1,11 +1,11 @@
-using EditorPowertools.Infrastructure;
-using EditorPowertools.Permissions;
-using EditorPowertools.Tools.ContentImporter.Models;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Tools.ContentImporter;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter;
 
 [Authorize(Policy = "codeart:editorpowertools")]
 [RequireAjax]

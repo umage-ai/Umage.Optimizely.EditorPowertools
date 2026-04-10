@@ -1,4 +1,4 @@
-using EditorPowertools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using EPiServer.Framework.Localization;
 using EPiServer.ServiceLocation;
 using EPiServer.Shell;
@@ -6,7 +6,7 @@ using EPiServer.Shell.Navigation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EditorPowertools.Menu;
+namespace UmageAI.Optimizely.EditorPowerTools.Menu;
 
 [MenuProvider]
 public class EditorPowertoolsMenuProvider : IMenuProvider

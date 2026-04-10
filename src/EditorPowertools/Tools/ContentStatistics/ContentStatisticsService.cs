@@ -2,11 +2,11 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Shell;
-using EditorPowertools.Services;
-using EditorPowertools.Tools.ContentStatistics.Models;
+using UmageAI.Optimizely.EditorPowerTools.Services;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentStatistics.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.ContentStatistics;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentStatistics;
 
 public class ContentStatisticsService
 {

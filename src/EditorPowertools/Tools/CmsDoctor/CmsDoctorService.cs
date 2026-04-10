@@ -1,7 +1,7 @@
-using EditorPowertools.Tools.CmsDoctor.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.CmsDoctor;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor;
 
 public class CmsDoctorService
 {

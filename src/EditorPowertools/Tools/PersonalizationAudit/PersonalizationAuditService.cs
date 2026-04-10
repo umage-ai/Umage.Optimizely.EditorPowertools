@@ -1,8 +1,8 @@
-using EditorPowertools.Tools.PersonalizationAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit.Models;
 using EPiServer.Personalization.VisitorGroups;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.PersonalizationAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 
 public class PersonalizationAuditService
 {

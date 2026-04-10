@@ -1,4 +1,4 @@
-namespace EditorPowertools.SampleSite.Models.Media;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Media;
 
 [ContentType(GUID = "EE3BD195-7CB0-4756-AB5F-E5E223CD9820")]
 public class GenericMedia : MediaData

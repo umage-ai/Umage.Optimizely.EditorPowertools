@@ -1,7 +1,7 @@
-using EditorPowertools.Tools.ContentAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.ContentAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit;
 
 public class ContentAuditService
 {

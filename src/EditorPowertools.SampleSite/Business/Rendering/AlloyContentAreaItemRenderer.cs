@@ -1,10 +1,10 @@
 using EPiServer.Web;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
-using static EditorPowertools.SampleSite.Globals;
+using static UmageAI.Optimizely.EditorPowerTools.SampleSite.Globals;
 using System.Text;
 
-namespace EditorPowertools.SampleSite.Business.Rendering;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Rendering;
 
 public class AlloyContentAreaItemRenderer
 {

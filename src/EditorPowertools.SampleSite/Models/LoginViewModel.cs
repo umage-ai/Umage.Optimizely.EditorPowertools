@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace EditorPowertools.SampleSite.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models;
 
 public class LoginViewModel
 {

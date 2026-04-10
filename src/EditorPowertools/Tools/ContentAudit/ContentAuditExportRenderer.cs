@@ -1,9 +1,9 @@
 using System.Text;
 using System.Text.Json;
-using EditorPowertools.Tools.ContentAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit.Models;
 using OfficeOpenXml;
 
-namespace EditorPowertools.Tools.ContentAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit;
 
 /// <summary>
 /// Pure rendering — converts ContentAuditRow collections to XLSX, CSV, or JSON bytes.

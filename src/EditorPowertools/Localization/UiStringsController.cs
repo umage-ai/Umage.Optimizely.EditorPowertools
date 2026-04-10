@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Localization;
+namespace UmageAI.Optimizely.EditorPowerTools.Localization;
 
 [Authorize(Policy = "codeart:editorpowertools")]
 public class UiStringsController : Controller

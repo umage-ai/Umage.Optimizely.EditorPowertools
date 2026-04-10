@@ -1,13 +1,13 @@
-using EditorPowertools.Configuration;
-using EditorPowertools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Configuration;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace EditorPowertools.Components;
+namespace UmageAI.Optimizely.EditorPowerTools.Components;
 
 /// <summary>
-/// Returns which EditorPowertools features are enabled for the current user.
+/// Returns which UmageAI.Optimizely.EditorPowerTools features are enabled for the current user.
 /// Used by the client-side module initializer to conditionally register commands.
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]

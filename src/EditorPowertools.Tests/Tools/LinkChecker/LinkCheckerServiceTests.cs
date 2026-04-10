@@ -1,9 +1,9 @@
-using EditorPowertools.Tools.LinkChecker;
-using EditorPowertools.Tools.LinkChecker.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker;
+using UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker.Models;
 using FluentAssertions;
 using Moq;
 
-namespace EditorPowertools.Tests.Tools.LinkChecker;
+namespace UmageAI.Optimizely.EditorPowerTools.Tests.Tools.LinkChecker;
 
 public class LinkCheckerServiceTests
 {

@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.ContentDetails.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentDetails.Models;
 
 public class ContentDetailsDto
 {

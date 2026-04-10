@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace EditorPowertools.Infrastructure;
+namespace UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 
 /// <summary>
 /// Requires X-Requested-With header on POST/PUT/DELETE requests as CSRF mitigation.

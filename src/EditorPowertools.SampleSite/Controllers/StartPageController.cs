@@ -1,10 +1,10 @@
-using EditorPowertools.SampleSite.Models.Pages;
-using EditorPowertools.SampleSite.Models.ViewModels;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 using EPiServer.Web;
 using EPiServer.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.SampleSite.Controllers;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Controllers;
 
 public class StartPageController : PageControllerBase<StartPage>
 {

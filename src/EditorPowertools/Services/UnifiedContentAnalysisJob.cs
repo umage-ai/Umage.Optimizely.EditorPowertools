@@ -5,7 +5,7 @@ using EPiServer.PlugIn;
 using EPiServer.Scheduler;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Services;
+namespace UmageAI.Optimizely.EditorPowerTools.Services;
 
 [ScheduledPlugIn(
     DisplayName = "[EditorPowertools] Content Analysis",

@@ -2,7 +2,7 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.ServiceLocation;
 
-namespace EditorPowertools.Helpers;
+namespace UmageAI.Optimizely.EditorPowerTools.Helpers;
 
 public static class ContentExtensions
 {

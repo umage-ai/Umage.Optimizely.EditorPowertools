@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.ContentImporter.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Models;
 
 public class FileUploadResponse
 {

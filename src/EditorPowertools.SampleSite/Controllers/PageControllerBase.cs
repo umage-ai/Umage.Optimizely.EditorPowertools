@@ -1,13 +1,13 @@
-using EditorPowertools.SampleSite.Business;
-using EditorPowertools.SampleSite.Models.Pages;
-using EditorPowertools.SampleSite.Models.ViewModels;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 using EPiServer.ServiceLocation;
 using EPiServer.Shell.Security;
 using EPiServer.Web.Mvc;
 using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.SampleSite.Controllers;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Controllers;
 
 /// <summary>
 /// All controllers that renders pages should inherit from this class so that we can

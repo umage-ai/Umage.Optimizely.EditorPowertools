@@ -1,5 +1,5 @@
 using System.Globalization;
-using EditorPowertools.Tools.BulkPropertyEditor.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor.Models;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
@@ -8,7 +8,7 @@ using EPiServer.Editor;
 using EPiServer.Security;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.BulkPropertyEditor;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor;
 
 public class BulkPropertyEditorService
 {

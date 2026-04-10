@@ -2,14 +2,14 @@
 @using EPiServer.Shell
 @using EPiServer.Shell.Navigation
 @using System.Text.Json
-@inject EditorPowertools.Localization.UiStringsProvider UiStrings
+@inject UmageAI.Optimizely.EditorPowerTools.Localization.UiStringsProvider UiStrings
 @inject LocalizationService Loc
 @{
     var title = ViewData["Title"]?.ToString() ?? "Editor Powertools";
     // For controller routes (menu links, page navigation)
-    string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
+    string ActionPath(string path) => Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), path);
     // For static files (CSS, JS) served from the module's ClientResources folder
-    string ClientResource(string path) => Paths.ToClientResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
+    string ClientResource(string path) => Paths.ToClientResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), path);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +53,7 @@
 
     <div id="ept-dialog-container"></div>
     <script>
-        window.EPT_BASE_URL = '@Html.Raw(Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), ""))';
+        window.EPT_BASE_URL = '@Html.Raw(Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), ""))';
         window.EPT_API_URL = '/editorpowertools/api';
         window.EPT_HUB_URL = '/editorpowertools/hubs';
         window.EPT_CMS_URL = '@Html.Raw(Paths.ToResource("CMS", ""))';

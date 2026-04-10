@@ -1,9 +1,9 @@
 using System.Reflection;
-using EditorPowertools.Tools.ActiveEditors;
-using EditorPowertools.Tools.ActiveEditors.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ActiveEditors;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ActiveEditors.Models;
 using FluentAssertions;
 
-namespace EditorPowertools.Tests.Tools.ActiveEditors;
+namespace UmageAI.Optimizely.EditorPowerTools.Tests.Tools.ActiveEditors;
 
 public class ActiveEditorsServiceTests
 {

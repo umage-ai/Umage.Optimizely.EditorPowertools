@@ -4,11 +4,11 @@ using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Framework.Localization;
 using EPiServer.Shell;
-using EditorPowertools.Helpers;
-using EditorPowertools.Tools.LanguageAudit;
+using UmageAI.Optimizely.EditorPowerTools.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Tools.LanguageAudit;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Services.Analyzers;
+namespace UmageAI.Optimizely.EditorPowerTools.Services.Analyzers;
 
 /// <summary>
 /// Analyzer that collects language version data for each content item.
