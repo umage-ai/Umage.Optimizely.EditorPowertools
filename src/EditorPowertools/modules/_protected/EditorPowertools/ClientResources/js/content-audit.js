@@ -190,8 +190,9 @@
 
     function renderError(msg) {
         var tableArea = document.getElementById('ca-table-area');
-        if (tableArea) {
-            tableArea.innerHTML = '<div class="ept-empty"><p>Error: ' + escapeHtml(msg) + '</p></div>';
+        var target = tableArea || root;
+        if (target) {
+            target.innerHTML = '<div class="ept-empty"><p>Error: ' + escapeHtml(msg) + '</p></div>';
         }
     }
 
@@ -212,9 +213,11 @@
     function renderStats() {
         var d = state.data;
         if (!d) return '';
+        var totalDisplay = d.totalCount != null ? d.totalCount.toLocaleString() : EPT.s('shared.unknown', '—');
+        var totalPagesDisplay = d.totalPages != null ? d.totalPages : EPT.s('shared.unknown', '—');
         return '<div class="ept-stats">' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + d.totalCount.toLocaleString() + '</div><div class="ept-stat__label">' + EPT.s('contentaudit.stat_totalitems', 'Total items') + '</div></div>' +
-            '<div class="ept-stat"><div class="ept-stat__value">' + d.totalPages + '</div><div class="ept-stat__label">' + EPT.s('contentaudit.stat_pages', 'Pages') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + totalDisplay + '</div><div class="ept-stat__label">' + EPT.s('contentaudit.stat_totalitems', 'Total items') + '</div></div>' +
+            '<div class="ept-stat"><div class="ept-stat__value">' + totalPagesDisplay + '</div><div class="ept-stat__label">' + EPT.s('contentaudit.stat_pages', 'Pages') + '</div></div>' +
             '<div class="ept-stat"><div class="ept-stat__value">' + d.page + '</div><div class="ept-stat__label">' + EPT.s('contentaudit.stat_currentpage', 'Current page') + '</div></div>' +
             '</div>';
     }
@@ -364,11 +367,14 @@
         if (!d || d.totalPages <= 1) return '';
 
         var html = '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--ept-border,#e2e8f0)">';
+        var from = ((d.page - 1) * d.pageSize) + 1;
+        var to = d.totalCount != null ? Math.min(d.page * d.pageSize, d.totalCount) : d.page * d.pageSize;
+        var ofTotal = d.totalCount != null ? d.totalCount.toLocaleString() : EPT.s('shared.unknown', '—');
         html += '<span style="font-size:0.875em;color:var(--ept-text-muted,#64748b)">' +
             EPT.s('contentaudit.page_showing', 'Showing {0}-{1} of {2}')
-                .replace('{0}', (((d.page - 1) * d.pageSize) + 1))
-                .replace('{1}', Math.min(d.page * d.pageSize, d.totalCount))
-                .replace('{2}', d.totalCount.toLocaleString()) + '</span>';
+                .replace('{0}', from)
+                .replace('{1}', to)
+                .replace('{2}', ofTotal) + '</span>';
 
         html += '<div style="display:flex;gap:4px">';
 

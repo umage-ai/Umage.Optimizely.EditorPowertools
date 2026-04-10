@@ -46,7 +46,7 @@ public class GetDescendentsContentAuditProvider : IContentAuditDataProvider
     public ContentAuditPageResult GetPage(ContentAuditRequest request, CancellationToken ct = default)
     {
         var columns = request.Columns ?? GetDefaultColumns();
-        bool needsRefCount   = columns.Contains("referenceCount");
+        bool needsRefCount   = columns.Contains("referenceCount") || request.QuickFilter == "unused";
         bool needsVersions   = columns.Contains("versionCount");
         bool needsPersonaliz = columns.Contains("hasPersonalizations");
 
