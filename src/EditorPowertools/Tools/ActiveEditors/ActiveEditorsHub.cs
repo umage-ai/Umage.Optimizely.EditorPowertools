@@ -116,7 +116,7 @@ public class ActiveEditorsHub : Hub
         var notification = new NotificationMessage
         {
             ChannelName = "epi.notifications.default",
-            TypeName = "UmageAI.Optimizely.EditorPowerTools.ActiveEditors",
+            TypeName = "EditorPowertools.ActiveEditors",
             Subject = $"Message from {senderUsername}",
             Content = message,
             Sender = new NotificationUser(senderUsername),

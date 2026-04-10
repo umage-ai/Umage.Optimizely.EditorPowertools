@@ -4,7 +4,7 @@ using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor;
 
-[EPiServerDataStore(AutomaticallyRemapStore = true, StoreName = "UmageAI.Optimizely.EditorPowerTools_DoctorCheckResults")]
+[EPiServerDataStore(AutomaticallyRemapStore = true, StoreName = "EditorPowertools_DoctorCheckResults")]
 public class DoctorCheckResultEntry : IDynamicData
 {
     public Identity Id { get; set; } = Identity.NewIdentity();

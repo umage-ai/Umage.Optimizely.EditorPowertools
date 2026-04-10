@@ -55,7 +55,7 @@ public abstract class AnalyzerDoctorCheckBase : DoctorCheckBase, IContentAnalyze
                 CheckType = GetType().FullName ?? GetType().Name,
                 Group = Group,
                 Status = HealthStatus.NotChecked,
-                StatusText = L("/editorpowertools/cmsdoctor/runjobfirst", "Run the '[UmageAI.Optimizely.EditorPowerTools] Content Analysis' scheduled job first."),
+                StatusText = L("/editorpowertools/cmsdoctor/runjobfirst", "Run the '[EditorPowertools] Content Analysis' scheduled job first."),
                 Tags = Tags,
                 CanFix = false
             };

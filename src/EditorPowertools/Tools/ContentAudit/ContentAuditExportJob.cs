@@ -16,7 +16,7 @@ using Microsoft.Extensions.Options;
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit;
 
 [ScheduledPlugIn(
-    DisplayName    = "[UmageAI.Optimizely.EditorPowerTools] Content Audit Export",
+    DisplayName    = "[EditorPowertools] Content Audit Export",
     Description    = "Generates a Content Audit export file and saves it to the CMS media library.",
     LanguagePath   = "/editorpowertools/jobs/contentauditexport",
     SortIndex      = 10001)]

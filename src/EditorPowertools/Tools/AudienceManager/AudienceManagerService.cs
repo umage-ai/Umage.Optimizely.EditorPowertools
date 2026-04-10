@@ -59,7 +59,7 @@ public class AudienceManagerService
         try
         {
             var store = EPiServer.Data.Dynamic.DynamicDataStoreFactory.Instance
-                .GetStore("UmageAI.Optimizely.EditorPowerTools_PersonalizationUsage");
+                .GetStore("EditorPowertools_PersonalizationUsage");
 
             if (store == null)
                 return results;
@@ -108,7 +108,7 @@ public class AudienceManagerService
         try
         {
             var store = EPiServer.Data.Dynamic.DynamicDataStoreFactory.Instance
-                .GetStore("UmageAI.Optimizely.EditorPowerTools_PersonalizationUsage");
+                .GetStore("EditorPowertools_PersonalizationUsage");
 
             if (store == null)
                 return counts;

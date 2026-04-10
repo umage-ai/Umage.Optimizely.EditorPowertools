@@ -13,65 +13,65 @@ namespace UmageAI.Optimizely.EditorPowerTools.Permissions;
 public static class EditorPowertoolsPermissions
 {
     public static PermissionType ContentTypeAudit { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "ContentTypeAudit");
+        new("EditorPowertools", "ContentTypeAudit");
 
     public static PermissionType PersonalizationUsageAudit { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "PersonalizationUsageAudit");
+        new("EditorPowertools", "PersonalizationUsageAudit");
 
     public static PermissionType ContentTypeRecommendations { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "ContentTypeRecommendations");
+        new("EditorPowertools", "ContentTypeRecommendations");
 
     public static PermissionType AudienceManager { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "AudienceManager");
+        new("EditorPowertools", "AudienceManager");
 
     public static PermissionType ContentDetails { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "ContentDetails");
+        new("EditorPowertools", "ContentDetails");
 
     public static PermissionType BrokenLinkChecker { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "BrokenLinkChecker");
+        new("EditorPowertools", "BrokenLinkChecker");
 
     public static PermissionType OrphanedContentFinder { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "OrphanedContentFinder");
+        new("EditorPowertools", "OrphanedContentFinder");
 
     public static PermissionType UnusedMediaCleaner { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "UnusedMediaCleaner");
+        new("EditorPowertools", "UnusedMediaCleaner");
 
     public static PermissionType ContentExporter { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "ContentExporter");
+        new("EditorPowertools", "ContentExporter");
 
     public static PermissionType BulkPropertyEditor { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "BulkPropertyEditor");
+        new("EditorPowertools", "BulkPropertyEditor");
 
     public static PermissionType ScheduledJobsGantt { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "ScheduledJobsGantt");
+        new("EditorPowertools", "ScheduledJobsGantt");
 
     public static PermissionType ActivityTimeline { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "ActivityTimeline");
+        new("EditorPowertools", "ActivityTimeline");
 
     public static PermissionType ContentImporter { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "ContentImporter");
+        new("EditorPowertools", "ContentImporter");
 
     public static PermissionType ManageChildren { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "ManageChildren");
+        new("EditorPowertools", "ManageChildren");
 
     public static PermissionType ContentAudit { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "ContentAudit");
+        new("EditorPowertools", "ContentAudit");
 
     public static PermissionType CmsDoctor { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "CmsDoctor");
+        new("EditorPowertools", "CmsDoctor");
 
     public static PermissionType ActiveEditors { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "ActiveEditors");
+        new("EditorPowertools", "ActiveEditors");
 
     public static PermissionType SecurityAudit { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "SecurityAudit");
+        new("EditorPowertools", "SecurityAudit");
 
     public static PermissionType VisitorGroupTester { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "VisitorGroupTester");
+        new("EditorPowertools", "VisitorGroupTester");
 
     public static PermissionType ContentStatistics { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "ContentStatistics");
+        new("EditorPowertools", "ContentStatistics");
 
     public static PermissionType LanguageAudit { get; } =
-        new("UmageAI.Optimizely.EditorPowerTools", "LanguageAudit");
+        new("EditorPowertools", "LanguageAudit");
 }

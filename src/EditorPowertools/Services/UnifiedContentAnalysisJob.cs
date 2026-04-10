@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace UmageAI.Optimizely.EditorPowerTools.Services;
 
 [ScheduledPlugIn(
-    DisplayName = "[UmageAI.Optimizely.EditorPowerTools] Content Analysis",
+    DisplayName = "[EditorPowertools] Content Analysis",
     Description = "Unified job that traverses all content once and runs all registered analyzers (content type stats, personalization, link checking, etc.).",
     LanguagePath = "/editorpowertools/jobs/contentanalysis",
     SortIndex = 10000)]

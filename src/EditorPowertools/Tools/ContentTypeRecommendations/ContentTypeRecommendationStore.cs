@@ -4,7 +4,7 @@ using EPiServer.Data.Dynamic;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeRecommendations;
 
-[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "UmageAI.Optimizely.EditorPowerTools_ContentTypeRecommendations")]
+[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "EditorPowertools_ContentTypeRecommendations")]
 public class ContentTypeRecommendationRule : IDynamicData
 {
     public Identity Id { get; set; } = Identity.NewIdentity();

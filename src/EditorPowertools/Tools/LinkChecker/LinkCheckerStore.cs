@@ -7,7 +7,7 @@ namespace UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker;
 /// DDS-persisted record holding a single link check result.
 /// Updated by the scheduled job that scans content for links.
 /// </summary>
-[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "UmageAI.Optimizely.EditorPowerTools_LinkChecker")]
+[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "EditorPowertools_LinkChecker")]
 public class LinkCheckRecord : IDynamicData
 {
     public Identity Id { get; set; } = Identity.NewIdentity();

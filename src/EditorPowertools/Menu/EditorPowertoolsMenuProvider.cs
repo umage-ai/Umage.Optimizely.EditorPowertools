@@ -26,13 +26,13 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
     {
         yield return new SectionMenuItem(L("/editorpowertools/menu/title", "Editor Powertools"), BaseMenuPath)
         {
-            Url = GetResourcePath("UmageAI.Optimizely.EditorPowerTools/Overview"),
+            Url = GetResourcePath("EditorPowertools/Overview"),
             SortIndex = 500,
             IsAvailable = _ => true
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/overview", "Overview"), BaseMenuPath + "/overview",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/Overview"))
+            GetResourcePath("EditorPowertools/Overview"))
         {
             SortIndex = 100,
             IsAvailable = _ => true
@@ -41,28 +41,28 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
         // ── Content & Editorial ──────────────────────────────────
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/contentstatistics", "Content Statistics"), BaseMenuPath + "/contentstatistics",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/ContentStatistics"))
+            GetResourcePath("EditorPowertools/ContentStatistics"))
         {
             SortIndex = 200,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentStatistics))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/activitytimeline", "Activity Timeline"), BaseMenuPath + "/activitytimeline",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/ActivityTimeline"))
+            GetResourcePath("EditorPowertools/ActivityTimeline"))
         {
             SortIndex = 210,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ActivityTimeline))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/bulkpropertyeditor", "Bulk Property Editor"), BaseMenuPath + "/bulkpropertyeditor",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/BulkPropertyEditor"))
+            GetResourcePath("EditorPowertools/BulkPropertyEditor"))
         {
             SortIndex = 220,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.BulkPropertyEditor))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/contentimporter", "Content Importer"), BaseMenuPath + "/contentimporter",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/ContentImporter"))
+            GetResourcePath("EditorPowertools/ContentImporter"))
         {
             SortIndex = 230,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentImporter))
@@ -71,42 +71,42 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
         // ── Audits & Analysis ────────────────────────────────────
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/contentaudit", "Content Audit"), BaseMenuPath + "/contentaudit",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/ContentAudit"))
+            GetResourcePath("EditorPowertools/ContentAudit"))
         {
             SortIndex = 300,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentAudit))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/contenttypeaudit", "Content Type Audit"), BaseMenuPath + "/contenttypeaudit",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/ContentTypeAudit"))
+            GetResourcePath("EditorPowertools/ContentTypeAudit"))
         {
             SortIndex = 310,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentTypeAudit))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/personalizationaudit", "Personalization Audit"), BaseMenuPath + "/personalizationaudit",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/PersonalizationAudit"))
+            GetResourcePath("EditorPowertools/PersonalizationAudit"))
         {
             SortIndex = 320,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.PersonalizationUsageAudit))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/languageaudit", "Language Audit"), BaseMenuPath + "/languageaudit",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/LanguageAudit"))
+            GetResourcePath("EditorPowertools/LanguageAudit"))
         {
             SortIndex = 330,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.LanguageAudit))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/securityaudit", "Security Audit"), BaseMenuPath + "/securityaudit",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/SecurityAudit"))
+            GetResourcePath("EditorPowertools/SecurityAudit"))
         {
             SortIndex = 340,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.SecurityAudit))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/linkaudit", "Link Audit"), BaseMenuPath + "/linkchecker",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/LinkChecker"))
+            GetResourcePath("EditorPowertools/LinkChecker"))
         {
             SortIndex = 350,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.BrokenLinkChecker))
@@ -115,35 +115,35 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
         // ── Configuration & Admin ────────────────────────────────
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/contenttyperecommendations", "Content Type Recommendations"), BaseMenuPath + "/contenttyperecommendations",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/ContentTypeRecommendations"))
+            GetResourcePath("EditorPowertools/ContentTypeRecommendations"))
         {
             SortIndex = 400,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ContentTypeRecommendations))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/audiencemanager", "Audience Manager"), BaseMenuPath + "/audiencemanager",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/AudienceManager"))
+            GetResourcePath("EditorPowertools/AudienceManager"))
         {
             SortIndex = 410,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.AudienceManager))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/cmsdoctor", "CMS Doctor"), BaseMenuPath + "/cmsdoctor",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/CmsDoctor"))
+            GetResourcePath("EditorPowertools/CmsDoctor"))
         {
             SortIndex = 420,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.CmsDoctor))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/activeeditors", "Active Editors"), BaseMenuPath + "/activeeditors",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/ActiveEditors"))
+            GetResourcePath("EditorPowertools/ActiveEditors"))
         {
             SortIndex = 430,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ActiveEditors))
         };
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/scheduledjobsgantt", "Scheduled Jobs Gantt"), BaseMenuPath + "/scheduledjobsgantt",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/ScheduledJobsGantt"))
+            GetResourcePath("EditorPowertools/ScheduledJobsGantt"))
         {
             SortIndex = 440,
             IsAvailable = context => IsFeatureEnabled(context, nameof(Configuration.FeatureToggles.ScheduledJobsGantt))
@@ -152,7 +152,7 @@ public class EditorPowertoolsMenuProvider : IMenuProvider
         // ── About ────────────────────────────────────────────────
 
         yield return new UrlMenuItem(L("/editorpowertools/menu/about", "About"), BaseMenuPath + "/about",
-            GetResourcePath("UmageAI.Optimizely.EditorPowerTools/About"))
+            GetResourcePath("EditorPowertools/About"))
         {
             SortIndex = 900,
             IsAvailable = _ => true

@@ -7,7 +7,7 @@ namespace UmageAI.Optimizely.EditorPowerTools.Tools.LanguageAudit;
 /// DDS-persisted record holding language version information for a single content item.
 /// Updated by the LanguageAuditAnalyzer during the unified scheduled job traversal.
 /// </summary>
-[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "UmageAI.Optimizely.EditorPowerTools_LanguageAudit")]
+[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "EditorPowertools_LanguageAudit")]
 public class LanguageAuditRecord : IDynamicData
 {
     public Identity Id { get; set; } = Identity.NewIdentity();

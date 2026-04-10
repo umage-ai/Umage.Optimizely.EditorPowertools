@@ -360,7 +360,7 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
         {
             var client = _httpClientFactory.CreateClient("LinkChecker");
             client.Timeout = TimeSpan.FromSeconds(5);
-            client.DefaultRequestHeaders.UserAgent.ParseAdd("UmageAI.Optimizely.EditorPowerTools-LinkChecker/1.0");
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("EditorPowertools-LinkChecker/1.0");
 
             // Try HEAD first for efficiency
             var request = new HttpRequestMessage(HttpMethod.Head, entry.Record.Url);

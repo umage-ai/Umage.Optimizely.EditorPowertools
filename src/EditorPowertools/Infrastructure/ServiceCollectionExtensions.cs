@@ -168,7 +168,7 @@ public static class ServiceCollectionExtensions
         {
             options.Items.Add(new ModuleDetails
             {
-                Name = "UmageAI.Optimizely.EditorPowerTools"
+                Name = "EditorPowertools"
             });
         });
 

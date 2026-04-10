@@ -7,7 +7,7 @@ namespace UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit.Models;
 /// DDS-persisted record holding the ACL snapshot and issue flags for a single content item.
 /// One record per content item. Populated by SecurityAuditAnalyzer during the unified job.
 /// </summary>
-[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "UmageAI.Optimizely.EditorPowerTools_SecurityAudit")]
+[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "EditorPowertools_SecurityAudit")]
 public class SecurityAuditRecord : IDynamicData
 {
     public Identity Id { get; set; } = Identity.NewIdentity();

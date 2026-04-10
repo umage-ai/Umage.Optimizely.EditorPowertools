@@ -122,7 +122,7 @@ public class ManageChildrenService
         {
             try
             {
-                _contentRepository.MoveToWastebasket(new ContentReference(id), "UmageAI.Optimizely.EditorPowerTools");
+                _contentRepository.MoveToWastebasket(new ContentReference(id), "EditorPowertools");
                 result.Succeeded++;
             }
             catch (Exception ex)
