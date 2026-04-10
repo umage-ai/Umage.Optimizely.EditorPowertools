@@ -1,7 +1,7 @@
 using EPiServer;
 using EPiServer.Core;
 
-namespace EditorPowertools.Tools.CmsDoctor.Checks;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Checks;
 
 /// <summary>
 /// Checks for content not referenced by anything. Hooks into the scheduled job

@@ -5,11 +5,11 @@ using EPiServer.DataAbstraction;
 using EPiServer.Personalization.VisitorGroups;
 using EPiServer.Security;
 using EPiServer.Shell;
-using EditorPowertools.Helpers;
-using EditorPowertools.Tools.PersonalizationAudit;
+using UmageAI.Optimizely.EditorPowerTools.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Services.Analyzers;
+namespace UmageAI.Optimizely.EditorPowerTools.Services.Analyzers;
 
 /// <summary>
 /// Analyzer that finds visitor group usage in access rights, content areas, and XHTML fields.

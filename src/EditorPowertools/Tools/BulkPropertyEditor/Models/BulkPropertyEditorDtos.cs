@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.BulkPropertyEditor.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor.Models;
 
 public record ContentTypeListItem(int Id, string Name, string BaseType);
 

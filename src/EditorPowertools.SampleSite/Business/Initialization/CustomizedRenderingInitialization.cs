@@ -1,11 +1,11 @@
-using EditorPowertools.SampleSite.Business.Rendering;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Rendering;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
 using EPiServer.Web.Mvc;
 
-namespace EditorPowertools.SampleSite.Business.Initialization;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Initialization;
 
 /// <summary>
 /// Module for customizing templates and rendering.

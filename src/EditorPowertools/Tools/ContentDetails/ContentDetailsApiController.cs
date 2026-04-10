@@ -1,8 +1,8 @@
-using EditorPowertools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Tools.ContentDetails;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentDetails;
 
 /// <summary>
 /// API controller for Content Details widget data.

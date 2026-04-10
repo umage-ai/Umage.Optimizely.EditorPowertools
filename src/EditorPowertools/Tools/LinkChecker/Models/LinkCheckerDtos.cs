@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.LinkChecker.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker.Models;
 
 public class LinkCheckDto
 {

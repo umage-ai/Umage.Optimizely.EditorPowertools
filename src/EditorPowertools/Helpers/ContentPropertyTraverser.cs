@@ -1,6 +1,6 @@
 using EPiServer.Core;
 
-namespace EditorPowertools.Helpers;
+namespace UmageAI.Optimizely.EditorPowerTools.Helpers;
 
 /// <summary>
 /// A property found during content traversal, with its context (property path, owning content).

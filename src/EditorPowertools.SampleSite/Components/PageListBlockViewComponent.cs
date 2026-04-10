@@ -1,11 +1,11 @@
-using EditorPowertools.SampleSite.Business;
-using EditorPowertools.SampleSite.Models.Blocks;
-using EditorPowertools.SampleSite.Models.ViewModels;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 using EPiServer.Filters;
 using EPiServer.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.SampleSite.Components;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Components;
 
 public class PageListBlockViewComponent : BlockComponent<PageListBlock>
 {

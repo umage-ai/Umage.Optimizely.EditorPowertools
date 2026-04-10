@@ -1,13 +1,13 @@
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-namespace EditorPowertools.Tools.PersonalizationAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 
 /// <summary>
 /// DDS-persisted record holding a single personalization usage instance.
 /// Updated by the scheduled job that scans content for visitor group usage.
 /// </summary>
-[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "EditorPowertools_PersonalizationUsage")]
+[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true, StoreName = "UmageAI.Optimizely.EditorPowerTools_PersonalizationUsage")]
 public class PersonalizationUsageRecord : IDynamicData
 {
     public Identity Id { get; set; } = Identity.NewIdentity();

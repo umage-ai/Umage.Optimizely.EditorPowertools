@@ -3,7 +3,7 @@ using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
 
-namespace EditorPowertools.Tools.ContentImporter.Parsers;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Parsers;
 
 public class CsvFileParser : IFileParser
 {

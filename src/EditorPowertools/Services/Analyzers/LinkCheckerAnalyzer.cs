@@ -6,11 +6,11 @@ using EPiServer.DataAbstraction;
 using EPiServer.Framework.Localization;
 using EPiServer.Shell;
 using EPiServer.Web.Routing;
-using EditorPowertools.Helpers;
-using EditorPowertools.Tools.LinkChecker;
+using UmageAI.Optimizely.EditorPowerTools.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Services.Analyzers;
+namespace UmageAI.Optimizely.EditorPowerTools.Services.Analyzers;
 
 /// <summary>
 /// Analyzer that extracts links from content properties during Analyze()
@@ -360,7 +360,7 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
         {
             var client = _httpClientFactory.CreateClient("LinkChecker");
             client.Timeout = TimeSpan.FromSeconds(5);
-            client.DefaultRequestHeaders.UserAgent.ParseAdd("EditorPowertools-LinkChecker/1.0");
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("UmageAI.Optimizely.EditorPowerTools-LinkChecker/1.0");
 
             // Try HEAD first for efficiency
             var request = new HttpRequestMessage(HttpMethod.Head, entry.Record.Url);

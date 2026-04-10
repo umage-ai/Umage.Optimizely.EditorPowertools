@@ -2,7 +2,7 @@ using EPiServer.Filters;
 using EPiServer.Framework.Web;
 using EPiServer.ServiceLocation;
 
-namespace EditorPowertools.SampleSite.Business;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business;
 
 /// <summary>
 /// Extension methods for content

@@ -1,7 +1,7 @@
-using EditorPowertools.Tools.SecurityAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit.Models;
 using EPiServer.Data.Dynamic;
 
-namespace EditorPowertools.Tools.SecurityAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit;
 
 /// <summary>
 /// Thin DDS wrapper for SecurityAuditRecord CRUD operations.

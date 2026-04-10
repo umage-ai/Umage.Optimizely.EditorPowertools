@@ -1,9 +1,9 @@
-using EditorPowertools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using EPiServer.Personalization.VisitorGroups;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Tools.VisitorGroupTester;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.VisitorGroupTester;
 
 /// <summary>
 /// API controller for the Visitor Group Tester toolbar.

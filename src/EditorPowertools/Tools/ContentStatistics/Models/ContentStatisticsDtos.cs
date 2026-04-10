@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.ContentStatistics.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentStatistics.Models;
 
 /// <summary>
 /// Top-level response containing all dashboard data in one call.

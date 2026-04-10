@@ -1,6 +1,6 @@
 using EPiServer.Shell.ViewComposition;
 
-namespace EditorPowertools.Tools.ActiveEditors;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ActiveEditors;
 
 [Component]
 public class ActiveEditorsComponent : ComponentDefinitionBase

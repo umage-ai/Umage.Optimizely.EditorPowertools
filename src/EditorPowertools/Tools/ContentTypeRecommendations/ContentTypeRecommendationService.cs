@@ -1,9 +1,9 @@
-using EditorPowertools.Tools.ContentTypeRecommendations.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeRecommendations.Models;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 
-namespace EditorPowertools.Tools.ContentTypeRecommendations;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeRecommendations;
 
 public class ContentTypeRecommendationService
 {

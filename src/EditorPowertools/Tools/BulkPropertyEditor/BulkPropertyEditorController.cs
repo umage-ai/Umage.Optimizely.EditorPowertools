@@ -1,12 +1,12 @@
 using System.Text.Json;
-using EditorPowertools.Infrastructure;
-using EditorPowertools.Permissions;
-using EditorPowertools.Tools.BulkPropertyEditor.Models;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.BulkPropertyEditor;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor;
 
 /// <summary>
 /// API controller for Bulk Property Editor operations.

@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
-using EditorPowertools.Tools.ActiveEditors.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ActiveEditors.Models;
 
-namespace EditorPowertools.Tools.ActiveEditors;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ActiveEditors;
 
 public class ActiveEditorsService
 {

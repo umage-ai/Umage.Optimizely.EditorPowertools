@@ -1,8 +1,8 @@
-using EditorPowertools.Services;
+using UmageAI.Optimizely.EditorPowerTools.Services;
 using EPiServer.DataAbstraction;
 using EPiServer.Scheduler;
 
-namespace EditorPowertools.Tools.PersonalizationAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 
 /// <summary>
 /// Checks the status of the personalization analysis scheduled job and can trigger it.

@@ -1,11 +1,11 @@
 using System.Globalization;
-using EditorPowertools.SampleSite.Models.Pages;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 using EPiServer.Filters;
 using EPiServer.ServiceLocation;
 using EPiServer.Shell.Configuration;
 using EPiServer.Web;
 
-namespace EditorPowertools.SampleSite.Business;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business;
 
 [ServiceConfiguration(Lifecycle = ServiceInstanceScope.Singleton)]
 public class ContentLocator

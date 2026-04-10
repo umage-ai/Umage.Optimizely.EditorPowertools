@@ -1,15 +1,15 @@
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
-using EditorPowertools.Services;
-using EditorPowertools.Tests.Helpers;
-using EditorPowertools.Tools.ContentTypeAudit;
-using EditorPowertools.Tools.ContentTypeAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Services;
+using UmageAI.Optimizely.EditorPowerTools.Tests.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit.Models;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace EditorPowertools.Tests.Tools.ContentTypeAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tests.Tools.ContentTypeAudit;
 
 public class ContentTypeAuditServiceTests
 {

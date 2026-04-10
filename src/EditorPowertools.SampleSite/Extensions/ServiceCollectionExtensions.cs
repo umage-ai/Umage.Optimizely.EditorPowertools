@@ -1,11 +1,11 @@
-using EditorPowertools.SampleSite.Business;
-using EditorPowertools.SampleSite.Business.Channels;
-using EditorPowertools.SampleSite.Business.Rendering;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Channels;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Rendering;
 using EPiServer.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 
-namespace EditorPowertools.SampleSite.Extensions;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Extensions;
 
 public static class ServiceCollectionExtensions
 {

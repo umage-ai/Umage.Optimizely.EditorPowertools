@@ -1,6 +1,6 @@
 using EPiServer.Core;
 
-namespace EditorPowertools.Services;
+namespace UmageAI.Optimizely.EditorPowerTools.Services;
 
 /// <summary>
 /// Interface for pluggable content analyzers. Each analyzer is called once per content item

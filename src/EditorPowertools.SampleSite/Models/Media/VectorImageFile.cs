@@ -1,7 +1,7 @@
 using EPiServer.Framework.Blobs;
 using EPiServer.Framework.DataAnnotations;
 
-namespace EditorPowertools.SampleSite.Models.Media;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Media;
 
 [ContentType(GUID = "F522B459-EB27-462C-B216-989FC7FF9448")]
 [MediaDescriptor(ExtensionString = "svg")]

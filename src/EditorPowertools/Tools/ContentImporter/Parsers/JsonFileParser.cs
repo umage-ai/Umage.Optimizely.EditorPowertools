@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace EditorPowertools.Tools.ContentImporter.Parsers;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Parsers;
 
 public class JsonFileParser : IFileParser
 {

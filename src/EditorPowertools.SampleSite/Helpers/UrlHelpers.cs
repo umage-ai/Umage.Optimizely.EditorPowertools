@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.SampleSite.Helpers;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Helpers;
 
 public static class UrlHelpers
 {

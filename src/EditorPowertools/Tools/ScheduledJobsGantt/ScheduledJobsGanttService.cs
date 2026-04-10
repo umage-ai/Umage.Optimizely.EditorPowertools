@@ -1,9 +1,9 @@
 using EPiServer.DataAbstraction;
 using EPiServer.Scheduler;
-using EditorPowertools.Tools.ScheduledJobsGantt.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ScheduledJobsGantt.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.ScheduledJobsGantt;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ScheduledJobsGantt;
 
 public class ScheduledJobsGanttService
 {

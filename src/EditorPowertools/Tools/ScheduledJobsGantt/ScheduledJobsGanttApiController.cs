@@ -1,8 +1,8 @@
-using EditorPowertools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Tools.ScheduledJobsGantt;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ScheduledJobsGantt;
 
 /// <summary>
 /// API controller for Scheduled Jobs Gantt chart data.

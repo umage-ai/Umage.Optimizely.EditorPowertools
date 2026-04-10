@@ -1,9 +1,9 @@
-using EditorPowertools.Tools.ActiveEditors;
-using EditorPowertools.Tools.VisitorGroupTester;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ActiveEditors;
+using UmageAI.Optimizely.EditorPowerTools.Tools.VisitorGroupTester;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 
-namespace EditorPowertools.Infrastructure;
+namespace UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 
 public static class ApplicationBuilderExtensions
 {

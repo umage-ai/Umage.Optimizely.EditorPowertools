@@ -37,7 +37,7 @@ jobs:
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
-          name: CodeArt.Optimizely.EditorPowertools.${{ steps.version.outputs.VERSION }}
+          name: UmageAI.Optimizely.EditorPowerTools.${{ steps.version.outputs.VERSION }}
           path: ./nupkg/*.nupkg
 
       - name: Upload test results

@@ -1,7 +1,7 @@
 using EPiServer.DataAbstraction;
 using EPiServer.Scheduler;
 
-namespace EditorPowertools.Services;
+namespace UmageAI.Optimizely.EditorPowerTools.Services;
 
 /// <summary>
 /// Checks the status of the aggregation scheduled job and can trigger it.

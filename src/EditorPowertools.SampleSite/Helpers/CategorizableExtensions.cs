@@ -1,6 +1,6 @@
 using EPiServer.ServiceLocation;
 
-namespace EditorPowertools.SampleSite.Helpers;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Helpers;
 
 /// <summary>
 /// Provides extension methods for categorizable content

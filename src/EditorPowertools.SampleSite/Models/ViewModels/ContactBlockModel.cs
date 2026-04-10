@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using EditorPowertools.SampleSite.Models.Pages;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 using EPiServer.Web;
 using Microsoft.AspNetCore.Html;
 
-namespace EditorPowertools.SampleSite.Models.ViewModels;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 
 public class ContactBlockModel
 {

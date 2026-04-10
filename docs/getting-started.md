@@ -25,10 +25,10 @@ Then navigate to `https://localhost:5000/EPiServer/CMS` and log in.
 Add the package to your CMS site project:
 
 ```bash
-dotnet add package CodeArt.Optimizely.EditorPowertools
+dotnet add package UmageAI.Optimizely.EditorPowerTools
 ```
 
-Or via the NuGet Package Manager in Visual Studio, search for `CodeArt.Optimizely.EditorPowertools`.
+Or via the NuGet Package Manager in Visual Studio, search for `UmageAI.Optimizely.EditorPowerTools`.
 
 ## Step 2: Register in Startup.cs
 

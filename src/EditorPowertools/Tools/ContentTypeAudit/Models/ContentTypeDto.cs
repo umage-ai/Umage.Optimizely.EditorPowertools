@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.ContentTypeAudit.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit.Models;
 
 public class ContentTypeDto
 {

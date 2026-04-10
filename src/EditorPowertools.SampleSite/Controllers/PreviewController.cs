@@ -1,6 +1,6 @@
-using EditorPowertools.SampleSite.Business;
-using EditorPowertools.SampleSite.Models.Pages;
-using EditorPowertools.SampleSite.Models.ViewModels;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 using EPiServer.Framework.DataAnnotations;
 using EPiServer.Framework.Web;
 using EPiServer.Framework.Web.Mvc;
@@ -8,7 +8,7 @@ using EPiServer.Web;
 using EPiServer.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.SampleSite.Controllers;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Controllers;
 
 // Note: as the content area rendering on Alloy is customized we create ContentArea instances
 // which we render in the preview view in order to provide editors with a preview which is as

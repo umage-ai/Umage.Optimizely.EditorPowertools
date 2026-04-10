@@ -1,9 +1,9 @@
 using System.Text.Json;
 using EPiServer.Shell;
-using EditorPowertools.Tools.SecurityAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.SecurityAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit;
 
 /// <summary>
 /// Business logic layer for Security Audit. Reads from DDS via repository

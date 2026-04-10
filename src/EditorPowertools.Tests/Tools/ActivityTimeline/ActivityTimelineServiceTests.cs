@@ -2,13 +2,13 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAbstraction.Activities;
-using EditorPowertools.Tools.ActivityTimeline;
-using EditorPowertools.Tools.ActivityTimeline.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ActivityTimeline;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ActivityTimeline.Models;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace EditorPowertools.Tests.Tools.ActivityTimeline;
+namespace UmageAI.Optimizely.EditorPowerTools.Tests.Tools.ActivityTimeline;
 
 /// <summary>
 /// Unit tests for ActivityTimelineService.

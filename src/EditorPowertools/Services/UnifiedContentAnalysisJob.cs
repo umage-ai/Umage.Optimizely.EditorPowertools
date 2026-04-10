@@ -5,10 +5,10 @@ using EPiServer.PlugIn;
 using EPiServer.Scheduler;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Services;
+namespace UmageAI.Optimizely.EditorPowerTools.Services;
 
 [ScheduledPlugIn(
-    DisplayName = "[EditorPowertools] Content Analysis",
+    DisplayName = "[UmageAI.Optimizely.EditorPowerTools] Content Analysis",
     Description = "Unified job that traverses all content once and runs all registered analyzers (content type stats, personalization, link checking, etc.).",
     LanguagePath = "/editorpowertools/jobs/contentanalysis",
     SortIndex = 10000)]

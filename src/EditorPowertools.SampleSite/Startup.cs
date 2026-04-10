@@ -1,12 +1,12 @@
-using EditorPowertools.Infrastructure;
-using EditorPowertools.SampleSite.Extensions;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Extensions;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Scheduler;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
 
-namespace EditorPowertools.SampleSite;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite;
 
 public class Startup
 {

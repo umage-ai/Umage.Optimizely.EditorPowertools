@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using EPiServer.Web;
 
-namespace EditorPowertools.SampleSite.Models.Blocks;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
 
 /// <summary>
 /// Used to present contact information with a call-to-action link

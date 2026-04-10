@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace EditorPowertools.SampleSite.Models.Blocks;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
 
 /// <summary>
 /// Used to insert editorial content edited using a rich-text editor

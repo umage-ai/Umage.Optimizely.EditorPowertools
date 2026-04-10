@@ -3,7 +3,7 @@
 @{
     Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
     ViewData["Title"] = Loc.GetString("/editorpowertools/tools/activeeditors/title");
-    string ActionPath(string path) => Paths.ToResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), path);
+    string ActionPath(string path) => Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), path);
 }
 
 @section NavItems {
@@ -24,7 +24,7 @@
 @section Scripts {
     @* Temporarily hide AMD define so signalR exports to window.signalR instead of registering as a Dojo module *@
     <script>window.__eptDefine=window.define;window.define=undefined;</script>
-    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/signalr.min.js"))"></script>
+    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/signalr.min.js"))"></script>
     <script>window.define=window.__eptDefine;delete window.__eptDefine;</script>
-    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(EditorPowertools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/active-editors-overview.js"))"></script>
+    <script src="@(EPiServer.Shell.Paths.ToClientResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), "ClientResources/js/active-editors-overview.js"))"></script>
 }

@@ -1,6 +1,6 @@
-using EditorPowertools.SampleSite.Models.Pages;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 
-namespace EditorPowertools.SampleSite.Models.ViewModels;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 
 public class PreviewModel : PageViewModel<SitePageData>
 {

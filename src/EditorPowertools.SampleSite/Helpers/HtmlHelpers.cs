@@ -1,6 +1,6 @@
 using System.Text;
 using System.Text.Encodings.Web;
-using EditorPowertools.SampleSite.Business;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Business;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Mvc.Html;
 using EPiServer.Web.Routing;
@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace EditorPowertools.SampleSite.Helpers;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Helpers;
 
 public static class HtmlHelpers
 {

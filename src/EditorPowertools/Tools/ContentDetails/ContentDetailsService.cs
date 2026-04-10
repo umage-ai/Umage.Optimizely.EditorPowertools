@@ -3,10 +3,10 @@ using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Personalization.VisitorGroups;
 using EPiServer.Shell;
-using EditorPowertools.Tools.ContentDetails.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentDetails.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.ContentDetails;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentDetails;
 
 public class ContentDetailsService
 {

@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
-using EditorPowertools.Tools.ContentImporter.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Models;
 
-namespace EditorPowertools.Tools.ContentImporter;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter;
 
 public class ImportSession
 {

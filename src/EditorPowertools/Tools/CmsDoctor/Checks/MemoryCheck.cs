@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace EditorPowertools.Tools.CmsDoctor.Checks;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Checks;
 
 public class MemoryCheck : DoctorCheckBase
 {

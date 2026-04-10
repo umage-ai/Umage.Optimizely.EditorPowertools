@@ -1,8 +1,8 @@
 using EPiServer.Core;
-using EditorPowertools.Services;
-using EditorPowertools.Tools.CmsDoctor.Models;
+using UmageAI.Optimizely.EditorPowerTools.Services;
+using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
 
-namespace EditorPowertools.Tools.CmsDoctor;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor;
 
 /// <summary>
 /// Base class for health checks that need to traverse all content via the unified scheduled job.
@@ -55,7 +55,7 @@ public abstract class AnalyzerDoctorCheckBase : DoctorCheckBase, IContentAnalyze
                 CheckType = GetType().FullName ?? GetType().Name,
                 Group = Group,
                 Status = HealthStatus.NotChecked,
-                StatusText = L("/editorpowertools/cmsdoctor/runjobfirst", "Run the '[EditorPowertools] Content Analysis' scheduled job first."),
+                StatusText = L("/editorpowertools/cmsdoctor/runjobfirst", "Run the '[UmageAI.Optimizely.EditorPowerTools] Content Analysis' scheduled job first."),
                 Tags = Tags,
                 CanFix = false
             };

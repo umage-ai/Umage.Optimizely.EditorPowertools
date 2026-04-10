@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using EPiServer.Filters;
 
-namespace EditorPowertools.SampleSite.Models.Blocks;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
 
 /// <summary>
 /// Used to insert a list of pages, for example a news list

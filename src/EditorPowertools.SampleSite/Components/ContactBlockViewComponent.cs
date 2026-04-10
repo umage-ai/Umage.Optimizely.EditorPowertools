@@ -1,13 +1,13 @@
-using EditorPowertools.SampleSite.Models.Blocks;
-using EditorPowertools.SampleSite.Models.Pages;
-using EditorPowertools.SampleSite.Models.ViewModels;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 using EPiServer.Web;
 using EPiServer.Web.Mvc;
 using EPiServer.Web.Mvc.Html;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.SampleSite.Components;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Components;
 
 public class ContactBlockViewComponent : BlockComponent<ContactBlock>
 {

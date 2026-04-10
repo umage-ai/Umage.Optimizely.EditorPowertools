@@ -1,8 +1,8 @@
-using EditorPowertools.SampleSite.Models.Blocks;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
 using EPiServer.SpecializedProperties;
 using Microsoft.AspNetCore.Html;
 
-namespace EditorPowertools.SampleSite.Models.ViewModels;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.ViewModels;
 
 public class LayoutModel
 {

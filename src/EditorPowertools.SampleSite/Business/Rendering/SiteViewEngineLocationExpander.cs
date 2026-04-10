@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Razor;
 
-namespace EditorPowertools.SampleSite.Business.Rendering;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Rendering;
 
 public class SiteViewEngineLocationExpander : IViewLocationExpander
 {

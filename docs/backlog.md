@@ -187,7 +187,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Redirect Manager** - UI for managing URL redirects
 - [ ] **Sitemap Validator** - Validate sitemap entries against actual content
 
-## Forms Management (Separate NuGet: `CodeArt.Optimizely.EditorPowertools.Forms`)
+## Forms Management (Separate NuGet: `UmageAI.Optimizely.EditorPowerTools.Forms`)
 
 *Separate project/NuGet package with dependency on EPiServer.Forms.*
 

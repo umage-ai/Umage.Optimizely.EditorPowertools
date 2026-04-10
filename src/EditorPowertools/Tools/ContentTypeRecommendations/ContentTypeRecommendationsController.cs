@@ -1,6 +1,6 @@
-using EditorPowertools.Infrastructure;
-using EditorPowertools.Permissions;
-using EditorPowertools.Tools.ContentTypeRecommendations.Models;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeRecommendations.Models;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.Data;
@@ -8,7 +8,7 @@ using EPiServer.DataAbstraction;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Tools.ContentTypeRecommendations;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeRecommendations;
 
 /// <summary>
 /// API controller for Content Type Recommendations CRUD operations.

@@ -2,7 +2,7 @@ using EPiServer.Web;
 using Wangkanai.Detection.Models;
 using Wangkanai.Detection.Services;
 
-namespace EditorPowertools.SampleSite.Business.Channels;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Channels;
 
 /// <summary>
 /// Defines the 'Web' content channel

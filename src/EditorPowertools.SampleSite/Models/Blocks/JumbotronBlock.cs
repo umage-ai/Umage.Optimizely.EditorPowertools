@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using EPiServer.Web;
 
-namespace EditorPowertools.SampleSite.Models.Blocks;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
 
 /// <summary>
 /// Used for a primary message on a page, commonly used on start pages and landing pages

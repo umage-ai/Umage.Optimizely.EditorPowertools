@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace EditorPowertools.Tools.CmsDoctor.Checks;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Checks;
 
 public class VersionInfoCheck : DoctorCheckBase
 {

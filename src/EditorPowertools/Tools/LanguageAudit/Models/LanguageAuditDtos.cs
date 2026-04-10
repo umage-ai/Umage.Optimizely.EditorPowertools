@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.LanguageAudit.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.LanguageAudit.Models;
 
 public class LanguageOverviewDto
 {

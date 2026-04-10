@@ -1,6 +1,6 @@
 using EPiServer.ServiceLocation;
 
-namespace EditorPowertools.SampleSite.Business;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business;
 
 /// <summary>
 /// Provides extension methods for types intended to be used when working with page types

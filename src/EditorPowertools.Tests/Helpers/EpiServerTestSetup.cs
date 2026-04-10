@@ -2,7 +2,7 @@ using EPiServer.ServiceLocation;
 using EPiServer.Shell.Modules;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EditorPowertools.Tests.Helpers;
+namespace UmageAI.Optimizely.EditorPowerTools.Tests.Helpers;
 
 /// <summary>
 /// Sets up a minimal EPiServer ServiceLocator so that static helpers

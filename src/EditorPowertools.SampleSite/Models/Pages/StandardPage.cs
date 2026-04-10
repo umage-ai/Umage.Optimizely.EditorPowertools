@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace EditorPowertools.SampleSite.Models.Pages;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 
 /// <summary>
 /// Used for the pages mainly consisting of manually created content such as text, images, and blocks

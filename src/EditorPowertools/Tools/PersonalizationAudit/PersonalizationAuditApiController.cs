@@ -1,9 +1,9 @@
-using EditorPowertools.Infrastructure;
-using EditorPowertools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Tools.PersonalizationAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 
 /// <summary>
 /// API-only controller for Personalization Audit data endpoints.

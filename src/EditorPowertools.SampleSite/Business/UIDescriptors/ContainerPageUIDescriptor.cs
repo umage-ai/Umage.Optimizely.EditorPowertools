@@ -1,7 +1,7 @@
-using EditorPowertools.SampleSite.Models.Pages;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 using EPiServer.Shell;
 
-namespace EditorPowertools.SampleSite.Business.UIDescriptors;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.UIDescriptors;
 
 /// <summary>
 /// Describes how the UI should appear for <see cref="ContainerPage"/> content.

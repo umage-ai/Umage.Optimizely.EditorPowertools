@@ -1,4 +1,4 @@
-using EditorPowertools.Tools.ContentAudit.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit.Models;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
@@ -7,7 +7,7 @@ using EPiServer.Security;
 using EPiServer.Web.Routing;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.ContentAudit;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit;
 
 /// <summary>
 /// Default IContentAuditDataProvider: walks GetDescendents lazily, one item at a time.

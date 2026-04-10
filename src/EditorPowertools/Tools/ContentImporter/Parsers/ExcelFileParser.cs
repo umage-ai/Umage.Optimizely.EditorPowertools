@@ -1,7 +1,7 @@
 using System.Globalization;
 using OfficeOpenXml;
 
-namespace EditorPowertools.Tools.ContentImporter.Parsers;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Parsers;
 
 public class ExcelFileParser : IFileParser
 {

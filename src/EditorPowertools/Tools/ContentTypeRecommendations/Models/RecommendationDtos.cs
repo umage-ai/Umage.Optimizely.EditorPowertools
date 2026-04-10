@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.ContentTypeRecommendations.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeRecommendations.Models;
 
 public class RecommendationRuleDto
 {

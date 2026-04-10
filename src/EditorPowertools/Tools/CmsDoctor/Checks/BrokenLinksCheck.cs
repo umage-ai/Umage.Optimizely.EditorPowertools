@@ -1,6 +1,6 @@
-using EditorPowertools.Tools.LinkChecker;
+using UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker;
 
-namespace EditorPowertools.Tools.CmsDoctor.Checks;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Checks;
 
 /// <summary>
 /// Health check that reads from the Link Checker's DDS data.

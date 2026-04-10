@@ -1,10 +1,10 @@
 using System.Text.RegularExpressions;
 using EPiServer.Personalization.VisitorGroups;
 using EPiServer.Shell;
-using EditorPowertools.Tools.AudienceManager.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.AudienceManager;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager;
 
 public class AudienceManagerService
 {
@@ -59,7 +59,7 @@ public class AudienceManagerService
         try
         {
             var store = EPiServer.Data.Dynamic.DynamicDataStoreFactory.Instance
-                .GetStore("EditorPowertools_PersonalizationUsage");
+                .GetStore("UmageAI.Optimizely.EditorPowerTools_PersonalizationUsage");
 
             if (store == null)
                 return results;
@@ -108,7 +108,7 @@ public class AudienceManagerService
         try
         {
             var store = EPiServer.Data.Dynamic.DynamicDataStoreFactory.Instance
-                .GetStore("EditorPowertools_PersonalizationUsage");
+                .GetStore("UmageAI.Optimizely.EditorPowerTools_PersonalizationUsage");
 
             if (store == null)
                 return counts;

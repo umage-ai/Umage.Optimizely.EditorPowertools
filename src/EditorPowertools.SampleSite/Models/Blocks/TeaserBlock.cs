@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using EPiServer.Web;
 
-namespace EditorPowertools.SampleSite.Models.Blocks;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
 
 /// <summary>
 /// Used to provide a stylized entry point to a page on the site

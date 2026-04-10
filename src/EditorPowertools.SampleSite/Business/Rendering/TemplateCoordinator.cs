@@ -1,11 +1,11 @@
-using EditorPowertools.SampleSite.Controllers;
-using EditorPowertools.SampleSite.Models.Blocks;
-using EditorPowertools.SampleSite.Models.Pages;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Controllers;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Blocks;
+using UmageAI.Optimizely.EditorPowerTools.SampleSite.Models.Pages;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
 using EPiServer.Web.Mvc;
 
-namespace EditorPowertools.SampleSite.Business.Rendering;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite.Business.Rendering;
 
 [ServiceConfiguration(typeof(IViewTemplateModelRegistrator))]
 public class TemplateCoordinator : IViewTemplateModelRegistrator

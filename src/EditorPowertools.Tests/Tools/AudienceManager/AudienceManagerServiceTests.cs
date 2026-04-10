@@ -1,11 +1,11 @@
 using EPiServer.Personalization.VisitorGroups;
-using EditorPowertools.Tests.Helpers;
-using EditorPowertools.Tools.AudienceManager;
+using UmageAI.Optimizely.EditorPowerTools.Tests.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace EditorPowertools.Tests.Tools.AudienceManager;
+namespace UmageAI.Optimizely.EditorPowerTools.Tests.Tools.AudienceManager;
 
 public class AudienceManagerServiceTests
 {

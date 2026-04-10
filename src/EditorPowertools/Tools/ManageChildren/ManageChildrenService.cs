@@ -4,10 +4,10 @@ using EPiServer.DataAbstraction;
 using EPiServer.DataAccess;
 using EPiServer.Security;
 using EPiServer.Shell;
-using EditorPowertools.Tools.ManageChildren.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ManageChildren.Models;
 using Microsoft.Extensions.Logging;
 
-namespace EditorPowertools.Tools.ManageChildren;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ManageChildren;
 
 public class ManageChildrenService
 {
@@ -122,7 +122,7 @@ public class ManageChildrenService
         {
             try
             {
-                _contentRepository.MoveToWastebasket(new ContentReference(id), "EditorPowertools");
+                _contentRepository.MoveToWastebasket(new ContentReference(id), "UmageAI.Optimizely.EditorPowerTools");
                 result.Succeeded++;
             }
             catch (Exception ex)

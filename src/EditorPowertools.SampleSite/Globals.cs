@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace EditorPowertools.SampleSite;
+namespace UmageAI.Optimizely.EditorPowerTools.SampleSite;
 
 public class Globals
 {

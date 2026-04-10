@@ -1,7 +1,7 @@
 using EPiServer.DataAnnotations;
 using EPiServer.Security;
 
-namespace EditorPowertools.Permissions;
+namespace UmageAI.Optimizely.EditorPowerTools.Permissions;
 
 /// <summary>
 /// Defines EPiServer permission types for each tool.
@@ -13,65 +13,65 @@ namespace EditorPowertools.Permissions;
 public static class EditorPowertoolsPermissions
 {
     public static PermissionType ContentTypeAudit { get; } =
-        new("EditorPowertools", "ContentTypeAudit");
+        new("UmageAI.Optimizely.EditorPowerTools", "ContentTypeAudit");
 
     public static PermissionType PersonalizationUsageAudit { get; } =
-        new("EditorPowertools", "PersonalizationUsageAudit");
+        new("UmageAI.Optimizely.EditorPowerTools", "PersonalizationUsageAudit");
 
     public static PermissionType ContentTypeRecommendations { get; } =
-        new("EditorPowertools", "ContentTypeRecommendations");
+        new("UmageAI.Optimizely.EditorPowerTools", "ContentTypeRecommendations");
 
     public static PermissionType AudienceManager { get; } =
-        new("EditorPowertools", "AudienceManager");
+        new("UmageAI.Optimizely.EditorPowerTools", "AudienceManager");
 
     public static PermissionType ContentDetails { get; } =
-        new("EditorPowertools", "ContentDetails");
+        new("UmageAI.Optimizely.EditorPowerTools", "ContentDetails");
 
     public static PermissionType BrokenLinkChecker { get; } =
-        new("EditorPowertools", "BrokenLinkChecker");
+        new("UmageAI.Optimizely.EditorPowerTools", "BrokenLinkChecker");
 
     public static PermissionType OrphanedContentFinder { get; } =
-        new("EditorPowertools", "OrphanedContentFinder");
+        new("UmageAI.Optimizely.EditorPowerTools", "OrphanedContentFinder");
 
     public static PermissionType UnusedMediaCleaner { get; } =
-        new("EditorPowertools", "UnusedMediaCleaner");
+        new("UmageAI.Optimizely.EditorPowerTools", "UnusedMediaCleaner");
 
     public static PermissionType ContentExporter { get; } =
-        new("EditorPowertools", "ContentExporter");
+        new("UmageAI.Optimizely.EditorPowerTools", "ContentExporter");
 
     public static PermissionType BulkPropertyEditor { get; } =
-        new("EditorPowertools", "BulkPropertyEditor");
+        new("UmageAI.Optimizely.EditorPowerTools", "BulkPropertyEditor");
 
     public static PermissionType ScheduledJobsGantt { get; } =
-        new("EditorPowertools", "ScheduledJobsGantt");
+        new("UmageAI.Optimizely.EditorPowerTools", "ScheduledJobsGantt");
 
     public static PermissionType ActivityTimeline { get; } =
-        new("EditorPowertools", "ActivityTimeline");
+        new("UmageAI.Optimizely.EditorPowerTools", "ActivityTimeline");
 
     public static PermissionType ContentImporter { get; } =
-        new("EditorPowertools", "ContentImporter");
+        new("UmageAI.Optimizely.EditorPowerTools", "ContentImporter");
 
     public static PermissionType ManageChildren { get; } =
-        new("EditorPowertools", "ManageChildren");
+        new("UmageAI.Optimizely.EditorPowerTools", "ManageChildren");
 
     public static PermissionType ContentAudit { get; } =
-        new("EditorPowertools", "ContentAudit");
+        new("UmageAI.Optimizely.EditorPowerTools", "ContentAudit");
 
     public static PermissionType CmsDoctor { get; } =
-        new("EditorPowertools", "CmsDoctor");
+        new("UmageAI.Optimizely.EditorPowerTools", "CmsDoctor");
 
     public static PermissionType ActiveEditors { get; } =
-        new("EditorPowertools", "ActiveEditors");
+        new("UmageAI.Optimizely.EditorPowerTools", "ActiveEditors");
 
     public static PermissionType SecurityAudit { get; } =
-        new("EditorPowertools", "SecurityAudit");
+        new("UmageAI.Optimizely.EditorPowerTools", "SecurityAudit");
 
     public static PermissionType VisitorGroupTester { get; } =
-        new("EditorPowertools", "VisitorGroupTester");
+        new("UmageAI.Optimizely.EditorPowerTools", "VisitorGroupTester");
 
     public static PermissionType ContentStatistics { get; } =
-        new("EditorPowertools", "ContentStatistics");
+        new("UmageAI.Optimizely.EditorPowerTools", "ContentStatistics");
 
     public static PermissionType LanguageAudit { get; } =
-        new("EditorPowertools", "LanguageAudit");
+        new("UmageAI.Optimizely.EditorPowerTools", "LanguageAudit");
 }

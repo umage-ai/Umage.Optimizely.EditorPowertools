@@ -1,4 +1,4 @@
-namespace EditorPowertools.Tools.ScheduledJobsGantt.Models;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.ScheduledJobsGantt.Models;
 
 public class ScheduledJobDto
 {

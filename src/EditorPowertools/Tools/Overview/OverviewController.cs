@@ -1,14 +1,14 @@
-using EditorPowertools.Localization;
-using EditorPowertools.Permissions;
-using EditorPowertools.Tools.ContentTypeAudit;
+using UmageAI.Optimizely.EditorPowerTools.Localization;
+using UmageAI.Optimizely.EditorPowerTools.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EditorPowertools.Tools.Overview;
+namespace UmageAI.Optimizely.EditorPowerTools.Tools.Overview;
 
 /// <summary>
 /// Main controller for all Editor Powertools pages.
-/// Actions map to menu items via Paths.ToResource("EditorPowertools/{ActionName}").
+/// Actions map to menu items via Paths.ToResource("UmageAI.Optimizely.EditorPowerTools/{ActionName}").
 /// Each tool's business logic stays in its own service; this controller is thin.
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
