@@ -15,14 +15,14 @@ define([
         initialize: function () {
             this.inherited(arguments);
 
-            // Set API/hub base URLs (also set in _PowertoolsLayout for full-page tools)
-            if (!window.EPT_API_URL) window.EPT_API_URL = '/editorpowertools/api';
-            if (!window.EPT_HUB_URL) window.EPT_HUB_URL = '/editorpowertools/hubs';
+            // Set base URLs (also set in _PowertoolsLayout for full-page tools)
+            if (!window.EPT_BASE_URL) window.EPT_BASE_URL = '/episerver/EditorPowertools/';
+            if (!window.EPT_HUB_URL) window.EPT_HUB_URL = '/episerver/EditorPowertools/hubs';
 
             var self = this;
             try {
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", window.EPT_API_URL + "/features", false);
+                xhr.open("GET", window.EPT_BASE_URL + "FeaturesApi/GetFeatures", false);
                 xhr.send();
                 if (xhr.status === 200) {
                     var features = JSON.parse(xhr.responseText);

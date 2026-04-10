@@ -12,7 +12,7 @@
     function init() {
         EPT.showLoading(document.getElementById('ae-editors-panel'));
 
-        EPT.fetchJson(window.EPT_API_URL + '/features').then(function (features) {
+        EPT.fetchJson(window.EPT_BASE_URL + 'FeaturesApi/GetFeatures').then(function (features) {
             chatEnabled = features.activeEditorsChat !== false;
             startConnection();
         }).catch(function () {

@@ -2,7 +2,7 @@
  * Content Type Audit - Main UI
  */
 (function () {
-    const API = window.EPT_API_URL;
+    const API = window.EPT_BASE_URL + 'ContentTypeAuditApi';
     let allTypes = [];
     let tableInstance = null;
     let currentView = 'table';
@@ -17,8 +17,8 @@
         EPT.showLoading(document.getElementById('audit-content'));
         try {
             const [types, status] = await Promise.all([
-                EPT.fetchJson(`${API}/content-types`),
-                EPT.fetchJson(`${API}/aggregation-status`).catch(() => null)
+                EPT.fetchJson(`${API}/GetTypes`),
+                EPT.fetchJson(`${API}/GetAggregationStatus`).catch(() => null)
             ]);
             allTypes = types;
             jobStatus = status;
@@ -37,7 +37,7 @@
         const existing = document.getElementById('audit-job-alert');
         if (existing) existing.remove();
         if (!jobStatus) return;
-        const el = EPT.renderJobAlert(jobStatus, `${API}/aggregation-start`);
+        const el = EPT.renderJobAlert(jobStatus, `${API}/StartAggregationJob`);
         if (!el) return;
         el.id = 'audit-job-alert';
         const container = document.getElementById('audit-stats');
@@ -264,7 +264,7 @@
         EPT.showLoading(body);
 
         try {
-            const props = await EPT.fetchJson(`${API}/content-types/${type.id}/properties`);
+            const props = await EPT.fetchJson(`${API}/GetProperties/${type.id}`);
             body.innerHTML = ''; // Clear loading spinner
 
             if (props.length === 0) {
@@ -318,7 +318,7 @@
         EPT.showLoading(body);
 
         try {
-            const items = await EPT.fetchJson(`${API}/content-types/${type.id}/content`);
+            const items = await EPT.fetchJson(`${API}/GetContentOfType/${type.id}`);
             body.innerHTML = ''; // Clear loading spinner
 
             if (items.length === 0) {
@@ -390,7 +390,7 @@
         EPT.showLoading(body);
 
         try {
-            const refs = await EPT.fetchJson(`${API}/content/${content.contentId}/references`);
+            const refs = await EPT.fetchJson(`${API}/GetContentReferences/${content.contentId}`);
             body.innerHTML = ''; // Clear loading spinner
 
             if (refs.length === 0) {
@@ -445,7 +445,7 @@
         EPT.showLoading(body);
 
         try {
-            const tree = await EPT.fetchJson(`${API}/content-types/inheritance-tree`);
+            const tree = await EPT.fetchJson(`${API}/GetInheritanceTree`);
             body.innerHTML = '';
 
             if (tree.length === 0) {

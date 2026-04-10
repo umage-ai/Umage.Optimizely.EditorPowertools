@@ -2,7 +2,7 @@
  * Link Checker - Main UI
  */
 (function () {
-    const API = window.EPT_API_URL + '/link-checker';
+    const API = window.EPT_BASE_URL + 'LinkCheckerApi';
     let allLinks = [];
     let tableInstance = null;
     let jobStatus = null;
@@ -15,8 +15,8 @@
         EPT.showLoading(document.getElementById('linkchecker-content'));
         try {
             const [links, status] = await Promise.all([
-                EPT.fetchJson(`${API}/links`),
-                EPT.fetchJson(`${API}/job-status`).catch(() => null)
+                EPT.fetchJson(`${API}/GetLinks`),
+                EPT.fetchJson(`${API}/GetJobStatus`).catch(() => null)
             ]);
             allLinks = links || [];
             jobStatus = status;
@@ -34,7 +34,7 @@
         const existing = document.getElementById('lc-job-alert');
         if (existing) existing.remove();
         if (!jobStatus) return;
-        const el = EPT.renderJobAlert(jobStatus, `${API}/job-start`);
+        const el = EPT.renderJobAlert(jobStatus, `${API}/StartJob`);
         if (!el) return;
         el.id = 'lc-job-alert';
         const container = document.getElementById('linkchecker-stats');

@@ -2,7 +2,7 @@
  * Content Type Recommendations - Admin CRUD UI
  */
 (function () {
-    const API = window.EPT_API_URL + '/recommendations';
+    const API = window.EPT_BASE_URL + 'ContentTypeRecommendationsApi';
     let allRules = [];
     let allContentTypes = [];
 
@@ -12,8 +12,8 @@
 
         try {
             const [rules, types] = await Promise.all([
-                EPT.fetchJson(`${API}/rules`),
-                EPT.fetchJson(`${API}/content-types`)
+                EPT.fetchJson(`${API}/GetRules`),
+                EPT.fetchJson(`${API}/GetContentTypes`)
             ]);
             allRules = rules;
             allContentTypes = types;
@@ -304,7 +304,7 @@
                     contentTypesToSuggest: Array.from(selectedTypeIds)
                 };
 
-                await EPT.postJson(`${API}/rules`, request);
+                await EPT.postJson(`${API}/SaveRule`, request);
                 close();
                 await reload();
             } catch (err) {
@@ -321,7 +321,7 @@
         if (!confirm(EPT.s('recommendations.confirm_delete', 'Delete this rule?'))) return;
 
         try {
-            const resp = await fetch(`${API}/rules/${ruleId}`, {
+            const resp = await fetch(`${API}/DeleteRule/${ruleId}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
             });
@@ -336,7 +336,7 @@
 
     async function reload() {
         try {
-            allRules = await EPT.fetchJson(`${API}/rules`);
+            allRules = await EPT.fetchJson(`${API}/GetRules`);
             renderPage();
         } catch (err) {
             console.error('Failed to reload rules:', err);

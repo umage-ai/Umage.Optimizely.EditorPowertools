@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    var API = window.EPT_API_URL + '/content-audit';
+    var API = window.EPT_BASE_URL + 'ContentAuditApi';
     var PREFS_KEY = 'ContentAudit';
 
     // ---- Column definitions ----
@@ -113,7 +113,7 @@
             sortDirection: state.sortDirection
         };
         try {
-            fetch(window.EPT_API_URL + '/preferences/' + PREFS_KEY, {
+            fetch(window.EPT_BASE_URL + 'PreferencesApi/Save?id=' + PREFS_KEY, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
                 body: JSON.stringify(prefs)
@@ -122,7 +122,7 @@
     }, 1000);
 
     function loadPreferences() {
-        return fetch(window.EPT_API_URL + '/preferences/' + PREFS_KEY)
+        return fetch(window.EPT_BASE_URL + 'PreferencesApi/Get?id=' + PREFS_KEY)
             .then(function (r) { return r.ok ? r.json() : null; })
             .then(function (prefs) {
                 if (prefs && prefs.visibleColumns && prefs.visibleColumns.length > 0) {
@@ -157,7 +157,7 @@
         state.isLoading = true;
         renderLoadingState();
 
-        var url = API + '?' + buildQueryString();
+        var url = API + '/GetContent?' + buildQueryString();
         return fetch(url)
             .then(function (r) {
                 if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -657,7 +657,7 @@
             params.push('filters=' + encodeURIComponent(JSON.stringify(state.filters)));
         }
 
-        window.location.href = API + '/export?' + params.join('&');
+        window.location.href = API + '/Export?' + params.join('&');
     }
 
     // ---- Helpers ----

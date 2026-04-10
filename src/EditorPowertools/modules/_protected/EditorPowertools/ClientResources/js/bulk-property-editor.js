@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    var API = window.EPT_API_URL + '/bulk-editor';
+    var API = window.EPT_BASE_URL + 'BulkPropertyEditorApi';
 
     var state = {
         contentTypeId: null,
@@ -224,8 +224,8 @@
 
     function loadInitialData() {
         Promise.all([
-            apiFetch(API + '/content-types'),
-            apiFetch(API + '/languages'),
+            apiFetch(API + '/GetContentTypes'),
+            apiFetch(API + '/GetLanguages'),
             EPT.loadPreferences(PREFS_KEY)
         ]).then(function (results) {
             if (results[0].success) {
@@ -357,7 +357,7 @@
     }
 
     function loadColumns(contentTypeId) {
-        apiFetch(API + '/properties/' + contentTypeId)
+        apiFetch(API + '/GetProperties/' + contentTypeId)
             .then(function (result) {
                 if (result.success) {
                     state.availableColumns = result.properties;
@@ -404,7 +404,7 @@
             params.push('columns=' + encodeURIComponent(state.columns.join(',')));
         }
 
-        apiFetch(API + '/content?' + params.join('&'))
+        apiFetch(API + '/GetContent?' + params.join('&'))
             .then(function (result) {
                 state.isLoading = false;
                 if (result.success) {
@@ -941,7 +941,7 @@
 
         setBusy(true);
 
-        apiFetch(API + '/bulk-save', {
+        apiFetch(API + '/BulkSave', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'save', items: items })
@@ -975,7 +975,7 @@
                 language: state.language,
                 propertyChanges: changes
             }];
-            savePromise = apiFetch(API + '/bulk-save', {
+            savePromise = apiFetch(API + '/BulkSave', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ action: 'save', items: items })
@@ -986,7 +986,7 @@
 
         savePromise
             .then(function () {
-                return apiFetch(API + '/publish/' + contentId + '?language=' + encodeURIComponent(state.language), {
+                return apiFetch(API + '/Publish/' + contentId + '?language=' + encodeURIComponent(state.language), {
                     method: 'POST'
                 });
             })
@@ -1021,7 +1021,7 @@
 
         setBusy(true);
 
-        apiFetch(API + '/bulk-save', {
+        apiFetch(API + '/BulkSave', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'save', items: items })
@@ -1059,7 +1059,7 @@
 
         setBusy(true);
 
-        apiFetch(API + '/bulk-save', {
+        apiFetch(API + '/BulkSave', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'publish', items: items })

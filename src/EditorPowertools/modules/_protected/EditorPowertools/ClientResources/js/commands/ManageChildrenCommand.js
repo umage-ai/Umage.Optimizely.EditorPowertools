@@ -36,7 +36,7 @@ define([
             var self = this;
 
             // Load children and show management dialog inline
-            fetch(window.EPT_API_URL + "/manage-children/" + contentId)
+            fetch(window.EPT_BASE_URL + "ManageChildrenApi/GetChildren/" + contentId)
                 .then(function (r) { return r.json(); })
                 .then(function (items) {
                     self._showDialog(contentId, contentName, items);
@@ -152,7 +152,7 @@ define([
                               action.charAt(0).toUpperCase() + action.slice(1) + " " + selected.size + " items?";
                     if (!confirm(msg)) return;
 
-                    fetch(window.EPT_API_URL + "/manage-children/" + action, {
+                    fetch(window.EPT_BASE_URL + "ManageChildrenApi/" + (action === "publish" ? "BulkPublish" : action === "unpublish" ? "BulkUnpublish" : "BulkDelete"), {
                         method: "POST",
                         headers: { "Content-Type": "application/json", "X-Requested-With": "XMLHttpRequest" },
                         body: JSON.stringify({ parentContentId: parseInt(parentId), contentIds: Array.from(selected) })

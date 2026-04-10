@@ -1,8 +1,10 @@
 using System.Text;
 using UmageAI.Optimizely.EditorPowerTools.Configuration;
+using UmageAI.Optimizely.EditorPowerTools.Menu;
 using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using EPiServer.Core;
 using EPiServer.Editor;
+using EPiServer.Shell;
 using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -89,6 +91,9 @@ public class VisitorGroupTesterMiddleware
             }
         }
 
+        // Resolve the visitor groups API URL using the module path (avoids hardcoding)
+        var groupsUrl = Paths.ToResource(typeof(EditorPowertoolsMenuProvider), "VisitorGroupTesterApi/GetGroups");
+
         // Buffer the response to inject our toolbar
         var originalBody = context.Response.Body;
         using var bufferStream = new MemoryStream();
@@ -107,7 +112,7 @@ public class VisitorGroupTesterMiddleware
             // After _next(), Optimizely's routing pipeline has run and IContentRouteHelper
             // has the content reference for the current page — use it to build an edit URL.
             var pageEditUrl = ResolvePageEditUrl(context);
-            var toolbar = GetToolbarHtml(pageEditUrl);
+            var toolbar = GetToolbarHtml(pageEditUrl, groupsUrl);
             responseBody = responseBody.Replace("</body>", toolbar + "\n</body>", StringComparison.OrdinalIgnoreCase);
         }
 
@@ -147,9 +152,10 @@ public class VisitorGroupTesterMiddleware
         return false;
     }
 
-    private static string GetToolbarHtml(string? pageEditUrl = null)
+    private static string GetToolbarHtml(string? pageEditUrl = null, string? groupsUrl = null)
     {
         var safeEditUrl = System.Text.Encodings.Web.HtmlEncoder.Default.Encode(pageEditUrl ?? "");
+        var safeGroupsUrl = System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(groupsUrl ?? "/episerver/EditorPowertools/VisitorGroupTesterApi/GetGroups");
         return """
 <style>
 .ept-vgt-toggle {
@@ -349,7 +355,7 @@ public class VisitorGroupTesterMiddleware
     });
 
     // Fetch visitor groups
-    fetch('/editorpowertools/api/visitor-group-tester/groups', { credentials: 'same-origin' })
+    fetch('###GROUPS_URL###', { credentials: 'same-origin' })
         .then(function(r) { return r.ok ? r.json() : []; })
         .then(function(data) {
             groups = data || [];
@@ -494,7 +500,8 @@ public class VisitorGroupTesterMiddleware
     }
 })();
 </script>
-""".Replace("###EDIT_LINK###", string.IsNullOrEmpty(safeEditUrl)
+""".Replace("###GROUPS_URL###", safeGroupsUrl)
+       .Replace("###EDIT_LINK###", string.IsNullOrEmpty(safeEditUrl)
             ? ""
             : $"<a href=\"{safeEditUrl}\" target=\"_blank\" class=\"ept-vgt-edit-link\">&#9998; Edit this page in CMS</a>");
     }

@@ -222,7 +222,7 @@ const EPT = {
      */
     async loadPreferences(toolName) {
         try {
-            return await this.fetchJson(`${window.EPT_API_URL}/preferences/${encodeURIComponent(toolName)}`);
+            return await this.fetchJson(`${window.EPT_BASE_URL}PreferencesApi/Get?id=${encodeURIComponent(toolName)}`);
         } catch { return {}; }
     },
 
@@ -235,7 +235,7 @@ const EPT = {
         }
         if (!this._prefTimers) this._prefTimers = {};
         this._prefTimers[toolName] = setTimeout(() => {
-            fetch(`${window.EPT_API_URL}/preferences/${encodeURIComponent(toolName)}`, {
+            fetch(`${window.EPT_BASE_URL}PreferencesApi/Save?id=${encodeURIComponent(toolName)}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
                 body: JSON.stringify(prefs)

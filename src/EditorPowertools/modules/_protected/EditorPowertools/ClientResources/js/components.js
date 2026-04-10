@@ -5,7 +5,7 @@
  * Content Type Picker: EPT.contentTypePicker(opts) → Promise<{id, name, displayName}>
  */
 (function () {
-    const API = window.EPT_API_URL + '/components';
+    const API = window.EPT_BASE_URL + 'ComponentsApi';
 
     // ── Content Picker ─────────────────────────────────────────────
     /**
@@ -71,7 +71,7 @@
                 EPT.showLoading(resultsContainer);
 
                 try {
-                    const items = await EPT.fetchJson(`${API}/content/search?q=${encodeURIComponent(q)}&rootId=${rootId}`);
+                    const items = await EPT.fetchJson(`${API}/SearchContent?q=${encodeURIComponent(q)}&rootId=${rootId}`);
                     if (items.length === 0) {
                         EPT.showEmpty(resultsContainer, EPT.s('components.picker_noresults', 'No results found'));
                         return;
@@ -108,7 +108,7 @@
             async function loadTreeNode(container, parentId) {
                 EPT.showLoading(container);
                 try {
-                    const children = await EPT.fetchJson(`${API}/content/${parentId}/children`);
+                    const children = await EPT.fetchJson(`${API}/GetChildren/${parentId}`);
                     container.innerHTML = '';
                     if (children.length === 0) {
                         container.innerHTML = '<div class="ept-muted" style="padding:8px">No children</div>';
@@ -213,7 +213,7 @@
             // Load types
             EPT.showLoading(listContainer);
             try {
-                allTypes = await EPT.fetchJson(`${API}/content-types`);
+                allTypes = await EPT.fetchJson(`${API}/GetContentTypes`);
                 if (!opts.includeSystem) {
                     allTypes = allTypes.filter(t => !t.isSystemType);
                 }

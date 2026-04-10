@@ -2,8 +2,7 @@
  * Audience Manager - Main UI
  */
 (function () {
-    const API = window.EPT_API_URL + '/audience';
-    const EPT_BASE_URL = '/editorpowertools/';
+    const API = window.EPT_BASE_URL + 'AudienceManagerApi';
     let allGroups = [];
     let tableInstance = null;
 
@@ -15,7 +14,7 @@
     async function init() {
         EPT.showLoading(document.getElementById('audience-content'));
         try {
-            const groups = await EPT.fetchJson(`${API}/visitor-groups`);
+            const groups = await EPT.fetchJson(`${API}/GetVisitorGroups`);
             allGroups = groups;
             renderStats();
             renderToolbar();
@@ -76,7 +75,7 @@
                 ${EPT.s('audiencemanager.chk_hasstats', 'Has Statistics')}
             </label>
             <div class="ept-toolbar__spacer"></div>
-            <a href="${EPT_BASE_URL}EditorPowertools/PersonalizationAudit" class="ept-btn" title="View Personalization Usage">
+            <a href="${window.EPT_BASE_URL}EditorPowertools/PersonalizationAudit" class="ept-btn" title="View Personalization Usage">
                 ${EPT.icons.link} ${EPT.s('audiencemanager.lnk_personalizationaudit', 'Personalization Audit')}
             </a>
             <button class="ept-btn" id="audience-export" title="Export to CSV">${EPT.icons.download} ${EPT.s('audiencemanager.btn_export', 'Export')}</button>
@@ -233,7 +232,7 @@
         EPT.showLoading(body);
 
         try {
-            const criteria = await EPT.fetchJson(`${API}/visitor-groups/${group.id}/criteria`);
+            const criteria = await EPT.fetchJson(`${API}/GetCriteria/${group.id}`);
             body.innerHTML = '';
 
             if (criteria.length === 0) {
@@ -264,7 +263,7 @@
         EPT.showLoading(body);
 
         try {
-            const usages = await EPT.fetchJson(`${API}/visitor-groups/${group.id}/usages`);
+            const usages = await EPT.fetchJson(`${API}/GetUsages/${group.id}`);
             body.innerHTML = '';
 
             if (usages.length === 0) {
