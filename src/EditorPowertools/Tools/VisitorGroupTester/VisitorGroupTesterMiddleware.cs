@@ -1,6 +1,9 @@
 using System.Text;
 using UmageAI.Optimizely.EditorPowerTools.Configuration;
 using UmageAI.Optimizely.EditorPowerTools.Permissions;
+using EPiServer.Core;
+using EPiServer.Editor;
+using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -101,7 +104,10 @@ public class VisitorGroupTesterMiddleware
         if (contentType.Contains("text/html", StringComparison.OrdinalIgnoreCase) &&
             responseBody.Contains("</body>", StringComparison.OrdinalIgnoreCase))
         {
-            var toolbar = GetToolbarHtml();
+            // After _next(), Optimizely's routing pipeline has run and IContentRouteHelper
+            // has the content reference for the current page — use it to build an edit URL.
+            var pageEditUrl = ResolvePageEditUrl(context);
+            var toolbar = GetToolbarHtml(pageEditUrl);
             responseBody = responseBody.Replace("</body>", toolbar + "\n</body>", StringComparison.OrdinalIgnoreCase);
         }
 
@@ -109,6 +115,21 @@ public class VisitorGroupTesterMiddleware
         context.Response.Body = originalBody;
         context.Response.ContentLength = bytes.Length;
         await context.Response.Body.WriteAsync(bytes);
+    }
+
+    private static string? ResolvePageEditUrl(HttpContext context)
+    {
+        try
+        {
+            var routeHelper = context.RequestServices.GetService(typeof(IContentRouteHelper)) as IContentRouteHelper;
+            var contentLink = routeHelper?.ContentLink;
+            if (ContentReference.IsNullOrEmpty(contentLink)) return null;
+            return PageEditing.GetEditUrl(contentLink);
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -127,8 +148,9 @@ public class VisitorGroupTesterMiddleware
         return false;
     }
 
-    private static string GetToolbarHtml()
+    private static string GetToolbarHtml(string? pageEditUrl = null)
     {
+        var safeEditUrl = (pageEditUrl ?? "").Replace("'", "\\'");
         return """
 <style>
 .ept-vgt-toggle {
@@ -344,6 +366,7 @@ public class VisitorGroupTesterMiddleware
     var activeTab = 'groups';
     var inspectActive = false;
     var tooltip = null;
+    var PAGE_EDIT_URL = '###PAGE_EDIT_URL###';
 
     // Parse current visitor groups from query param or cookie
     function getActiveGroupIds() {
@@ -358,6 +381,12 @@ public class VisitorGroupTesterMiddleware
     }
 
     var activeGroupIds = new Set(getActiveGroupIds());
+
+    // Rewrite internal links to carry visitorgroupsByID so navigation persists the selection
+    if (activeGroupIds.size > 0) {
+        patchAllLinks();
+        startLinkObserver();
+    }
 
     // Toggle panel
     toggle.addEventListener('click', function() {
@@ -485,11 +514,59 @@ public class VisitorGroupTesterMiddleware
         return href;
     }
 
+    // ── Link Rewriting ────────────────────────────────────────────────
+    // Patch a single href: strip existing visitorgroupsByID and add current ids.
+    function patchHref(href, ids) {
+        if (!href) return href;
+        // Skip external origins
+        if (/^https?:\/\//.test(href) && !href.startsWith(window.location.origin)) return href;
+        // Skip non-navigating links
+        if (/^(\/\/|mailto:|tel:|javascript:|#)/.test(href)) return href;
+        // Skip CMS and EPT paths
+        if (/\/(episerver|editorpowertools)\//i.test(href)) return href;
+        // Strip existing param then re-add
+        var clean = href.replace(/([?&])visitorgroupsByID=[^&#]*/g, '$1')
+                        .replace(/[?&]$/, '').replace(/\?&/, '?').replace(/&&+/g, '&');
+        if (ids.length === 0) return clean;
+        var sep = clean.indexOf('?') >= 0 ? '&' : '?';
+        return clean + sep + 'visitorgroupsByID=' + ids.join('|');
+    }
+
+    function patchAllLinks() {
+        var ids = Array.from(activeGroupIds);
+        document.querySelectorAll('a[href]').forEach(function(a) {
+            var orig = a.getAttribute('href');
+            var next = patchHref(orig, ids);
+            if (next !== orig) a.setAttribute('href', next);
+        });
+    }
+
+    var linkObserver = null;
+    function startLinkObserver() {
+        if (linkObserver) return;
+        var ids = Array.from(activeGroupIds);
+        linkObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(function(m) {
+                m.addedNodes.forEach(function(node) {
+                    if (node.nodeType !== 1) return;
+                    var links = node.tagName === 'A' ? [node] : [];
+                    node.querySelectorAll && node.querySelectorAll('a[href]').forEach(function(a) { links.push(a); });
+                    links.forEach(function(a) {
+                        if (!a.getAttribute('href')) return;
+                        var orig = a.getAttribute('href');
+                        var next = patchHref(orig, ids);
+                        if (next !== orig) a.setAttribute('href', next);
+                    });
+                });
+            });
+        });
+        linkObserver.observe(document.documentElement, { childList: true, subtree: true });
+    }
+
     document.getElementById('ept-vgt-apply').addEventListener('click', function() {
         var ids = [];
         activeGroupIds.forEach(function(id) { ids.push(id); });
         setVgCookie(ids);
-        // Also use query param as fallback (works for single groups in some CMS versions)
         window.location.href = buildUrlWithGroups(ids);
     });
 
@@ -502,37 +579,33 @@ public class VisitorGroupTesterMiddleware
 
     // Inspector tab
     function renderInspector() {
-        var isPreview = /epieditmode=false/i.test(window.location.search);
-        var html = '<div style="padding: 16px;">' +
-            '<p style="margin: 0 0 12px; color: #94a3b8; font-size: 12px;">Hover over blocks to see their content ID and jump to edit mode.</p>' +
-            '<label class="ept-vgt-group" style="padding: 8px 0;">' +
+        var blockCount = document.querySelectorAll('[data-epi-block-id],[data-epi-content-link]').length;
+        var html = '<div style="padding: 16px;">';
+
+        // Always show "Edit this page" link — URL resolved server-side by the middleware
+        var editHref = PAGE_EDIT_URL || '/episerver/CMS/';
+        html += '<div style="margin-bottom:12px;">' +
+            '<a href="' + editHref + '" target="_blank" style="display:block;padding:7px 12px;background:#334155;border-radius:6px;color:#e2e8f0;text-decoration:none;font-size:12px;font-weight:600;text-align:center;">✏ Edit this page in CMS</a>' +
+            '</div>';
+
+        // Block inspector toggle
+        html += '<label class="ept-vgt-group" style="padding: 8px 0;">' +
             '<input type="checkbox" id="ept-vgt-inspect-toggle"' + (inspectActive ? ' checked' : '') + '>' +
-            '<span class="ept-vgt-group-name" style="font-weight: 600;">Enable Inspector</span>' +
+            '<span class="ept-vgt-group-name" style="font-weight: 600;">Block Inspector</span>' +
             '</label>';
-        if (!isPreview) {
-            html += '<div style="margin-top:12px;padding:10px;background:#0f172a;border-radius:6px;border:1px solid #334155;">' +
-                '<p style="margin:0 0 8px;font-size:11px;color:#94a3b8;">Inspector requires Preview Mode — Optimizely only adds block metadata to the HTML in preview.</p>' +
-                '<button id="ept-vgt-preview-btn" class="ept-vgt-btn ept-vgt-btn-primary" style="width:100%;font-size:12px;">Open in Preview Mode</button>' +
-                '</div>';
+
+        if (blockCount > 0) {
+            html += '<p style="margin:6px 0 0;font-size:11px;color:#4ade80;">✓ ' + blockCount + ' inspectable block' + (blockCount === 1 ? '' : 's') + ' found — hover to highlight</p>';
         } else {
-            var count = document.querySelectorAll('[data-epi-block-id],[data-epi-content-link]').length;
-            html += '<p style="margin:8px 0 0;font-size:11px;color:' + (count > 0 ? '#4ade80' : '#f87171') + ';">' +
-                (count > 0 ? '✓ ' + count + ' inspectable element' + (count === 1 ? '' : 's') + ' found' : '✗ No data-epi-* elements found on this page') +
-                '</p>';
+            html += '<div style="margin-top:8px;padding:10px;background:#0f172a;border-radius:6px;border:1px solid #334155;">' +
+                '<p style="margin:0;font-size:11px;color:#94a3b8;line-height:1.5;">' +
+                'Block-level inspection requires <code style="color:#60a5fa">data-epi-block-id</code> attributes in the HTML.<br><br>' +
+                'Add the EPT TagHelper to your block views: <code style="color:#60a5fa">ept-block="@Model"</code>' +
+                '</p></div>';
         }
+
         html += '</div>';
         body.innerHTML = html;
-
-        var previewBtn = document.getElementById('ept-vgt-preview-btn');
-        if (previewBtn) {
-            previewBtn.addEventListener('click', function() {
-                var href = window.location.href;
-                // Remove any existing epieditmode param first
-                href = href.replace(/([?&])epieditmode=[^&#]*/gi, '$1').replace(/[?&]$/, '').replace(/[?]&/, '?').replace(/&&+/g, '&');
-                var sep = href.indexOf('?') >= 0 ? '&' : '?';
-                window.location.href = href + sep + 'epieditmode=false';
-            });
-        }
 
         var toggleCb = document.getElementById('ept-vgt-inspect-toggle');
         if (toggleCb) {
@@ -660,6 +733,6 @@ public class VisitorGroupTesterMiddleware
     }
 })();
 </script>
-""";
+""".Replace("###PAGE_EDIT_URL###", safeEditUrl);
     }
 }
