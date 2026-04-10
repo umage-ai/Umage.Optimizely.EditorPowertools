@@ -333,6 +333,90 @@ const EPT = {
         var existing = document.getElementById('ept-help-drawer');
         if (existing) existing.remove();
     },
+
+    /**
+     * Format a date as a human-readable "X ago" string.
+     * @param {Date|string} date
+     * @returns {string}
+     */
+    timeAgo: function(date) {
+        var d = (date instanceof Date) ? date : new Date(date);
+        var diffMs = Date.now() - d.getTime();
+        var diffMins = Math.floor(diffMs / 60000);
+        if (diffMins < 1)  return EPT.s('shared.justnow', 'just now');
+        if (diffMins < 60) return diffMins + ' ' + EPT.s('shared.minutesago', 'minutes ago');
+        var diffHours = Math.floor(diffMins / 60);
+        if (diffHours < 24) return diffHours + ' ' + EPT.s('shared.hoursago', 'hours ago');
+        var diffDays = Math.floor(diffHours / 24);
+        return diffDays + ' ' + EPT.s('shared.daysago', 'days ago');
+    },
+
+    /**
+     * Render a job status alert bar.
+     * @param {{ isRunning: boolean, hasRun: boolean, lastRunUtc: string|null }} status
+     * @param {string} startUrl  Full URL to POST to start the job
+     * @returns {HTMLElement|null}  Alert element, or null if no alert needed
+     */
+    renderJobAlert: function(status, startUrl) {
+        var STALE_HOURS = 24;
+        var isStale = false;
+        if (status.hasRun && status.lastRunUtc) {
+            var diffH = (Date.now() - new Date(status.lastRunUtc).getTime()) / 3600000;
+            isStale = diffH > STALE_HOURS;
+        }
+
+        if (!status.isRunning && status.hasRun && !isStale) return null;  // fresh — no alert
+
+        var el = document.createElement('div');
+
+        if (status.isRunning) {
+            el.className = 'ept-alert ept-alert--info';
+            el.innerHTML =
+                '<span>' + EPT.s('shared.jobalert_running', 'The analysis job is currently running.') + '</span>' +
+                '<button class="ept-btn ept-btn--sm ept-job-alert-refresh">' +
+                    EPT.s('shared.refresh', 'Refresh') +
+                '</button>';
+            el.querySelector('.ept-job-alert-refresh').addEventListener('click', function() {
+                window.location.reload();
+            });
+            return el;
+        }
+
+        // Not run yet, or stale
+        el.className = 'ept-alert ept-alert--warning';
+        var msg = status.hasRun && status.lastRunUtc
+            ? EPT.s('shared.jobalert_stale', 'Statistics were updated') + ' ' + EPT.timeAgo(status.lastRunUtc) + '. ' + EPT.s('shared.jobalert_consider', 'Consider running the aggregation job.')
+            : EPT.s('shared.jobalert_never', 'The aggregation job has not run yet. Run it to populate statistics.');
+        el.innerHTML =
+            '<span>' + EPT.escHtml(msg) + '</span>' +
+            '<button class="ept-btn ept-btn--sm ept-job-alert-run">' +
+                EPT.s('shared.runnow', 'Run now') +
+            '</button>';
+
+        el.querySelector('.ept-job-alert-run').addEventListener('click', function() {
+            var btn = el.querySelector('.ept-job-alert-run');
+            btn.disabled = true;
+            fetch(startUrl, {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(function(resp) {
+                if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                el.className = 'ept-alert ept-alert--info';
+                el.innerHTML =
+                    '<span>' + EPT.s('shared.jobalert_started', 'Job started.') + '</span>' +
+                    '<button class="ept-btn ept-btn--sm ept-job-alert-refresh">' +
+                        EPT.s('shared.refresh', 'Refresh') +
+                    '</button>';
+                el.querySelector('.ept-job-alert-refresh').addEventListener('click', function() {
+                    window.location.reload();
+                });
+            }).catch(function() {
+                btn.disabled = false;
+            });
+        });
+
+        return el;
+    },
 };
 
 // Event delegation: open help drawer for any [data-ept-help] button.

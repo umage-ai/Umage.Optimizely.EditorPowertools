@@ -34,68 +34,14 @@
 
     // ── Job Status Alert ───────────────────────────────────────────
     function renderJobAlert() {
-        let existing = document.getElementById('audit-job-alert');
+        const existing = document.getElementById('audit-job-alert');
         if (existing) existing.remove();
-
         if (!jobStatus) return;
-
-        const el = document.createElement('div');
+        const el = EPT.renderJobAlert(jobStatus, `${API}/aggregation-start`);
+        if (!el) return;
         el.id = 'audit-job-alert';
-
-        const runBtn = `<button class="ept-btn ept-btn--sm" id="ept-run-job-btn" style="margin-left:8px">${EPT.s('contenttypeaudit.btn_runnow', 'Run now')}</button>`;
-
-        if (jobStatus.isRunning) {
-            el.className = 'ept-alert ept-alert--info';
-            el.innerHTML = `⏳ <strong>${EPT.s('contenttypeaudit.alert_running', 'Aggregation job is currently running. Content counts will be updated when it completes.')}</strong> <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('contenttypeaudit.btn_refresh', 'Refresh')}</button>`;
-        } else if (!jobStatus.hasRun) {
-            el.className = 'ept-alert ept-alert--warning';
-            el.innerHTML = `<strong>${EPT.s('contenttypeaudit.alert_notrun', 'Content statistics have not been collected yet. The "Content" column will show data after the aggregation job has been run.')}</strong> ${runBtn}`;
-        } else {
-            const ago = timeAgo(new Date(jobStatus.lastRunUtc));
-            const isOld = (Date.now() - new Date(jobStatus.lastRunUtc).getTime()) > 24 * 60 * 60 * 1000;
-            if (isOld) {
-                el.className = 'ept-alert ept-alert--warning';
-                el.innerHTML = EPT.s('contenttypeaudit.alert_old', 'Statistics were last updated {0}. Consider running the aggregation job for fresh data.').replace('{0}', '<strong>' + ago + '</strong>') + ' ' + runBtn;
-            } else {
-                return;
-            }
-        }
-
         const container = document.getElementById('audit-stats');
         container.parentNode.insertBefore(el, container);
-
-        // Wire up "Run now" button
-        const btn = document.getElementById('ept-run-job-btn');
-        if (btn) {
-            btn.addEventListener('click', async () => {
-                btn.disabled = true;
-                btn.textContent = EPT.s('contenttypeaudit.btn_starting', 'Starting...');
-                try {
-                    await EPT.postJson(`${API}/aggregation-start`);
-                    el.className = 'ept-alert ept-alert--info';
-                    el.innerHTML = `⏳ <strong>${EPT.s('contenttypeaudit.alert_started', 'Aggregation job has been started. Content counts will be updated when it completes.')}</strong> <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('contenttypeaudit.btn_refresh', 'Refresh')}</button>`;
-                } catch (err) {
-                    btn.textContent = EPT.s('contenttypeaudit.btn_failed', 'Failed');
-                    console.error('Failed to start job:', err);
-                }
-            });
-        }
-    }
-
-    function timeAgo(date) {
-        const diff = Date.now() - date.getTime();
-        const mins = Math.floor(diff / 60000);
-        if (mins < 60) return (mins === 1
-            ? EPT.s('contenttypeaudit.time_minuteago', '{0} minute ago').replace('{0}', mins)
-            : EPT.s('contenttypeaudit.time_minutesago', '{0} minutes ago').replace('{0}', mins));
-        const hours = Math.floor(mins / 60);
-        if (hours < 24) return (hours === 1
-            ? EPT.s('contenttypeaudit.time_hourago', '{0} hour ago').replace('{0}', hours)
-            : EPT.s('contenttypeaudit.time_hoursago', '{0} hours ago').replace('{0}', hours));
-        const days = Math.floor(hours / 24);
-        return (days === 1
-            ? EPT.s('contenttypeaudit.time_dayago', '{0} day ago').replace('{0}', days)
-            : EPT.s('contenttypeaudit.time_daysago', '{0} days ago').replace('{0}', days));
     }
 
     function getFiltered() {

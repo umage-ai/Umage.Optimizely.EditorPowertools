@@ -31,42 +31,14 @@
     }
 
     function renderJobAlert() {
-        let existing = document.getElementById('lc-job-alert');
+        const existing = document.getElementById('lc-job-alert');
         if (existing) existing.remove();
         if (!jobStatus) return;
-
-        const el = document.createElement('div');
+        const el = EPT.renderJobAlert(jobStatus, `${API}/job-start`);
+        if (!el) return;
         el.id = 'lc-job-alert';
-
-        const runBtn = `<button class="ept-btn ept-btn--sm" id="lc-run-job-btn" style="margin-left:8px">${EPT.s('linkchecker.btn_runnow', 'Run now')}</button>`;
-
-        if (jobStatus.isRunning) {
-            el.className = 'ept-alert ept-alert--info';
-            el.innerHTML = `<strong>${EPT.s('linkchecker.alert_running', 'Link checker job is currently running...')}</strong> Results will be updated when it completes. <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('linkchecker.btn_refresh', 'Refresh')}</button>`;
-        } else if (!jobStatus.hasRun) {
-            el.className = 'ept-alert ept-alert--warning';
-            el.innerHTML = `<strong>${EPT.s('linkchecker.alert_notrun', 'Link checker has not been run yet...')}</strong> Run the scheduled job to scan content for links. ${runBtn}`;
-        } else {
-            const ago = timeAgo(jobStatus.lastRunUtc);
-            el.className = 'ept-alert ept-alert--info';
-            el.innerHTML = EPT.s('linkchecker.alert_lastran', 'Link check last ran {0}.').replace('{0}', `<strong>${ago}</strong>`) + ` ${runBtn}`;
-        }
-
         const container = document.getElementById('linkchecker-stats');
         container.parentNode.insertBefore(el, container);
-
-        const btn = document.getElementById('lc-run-job-btn');
-        if (btn) {
-            btn.addEventListener('click', async () => {
-                btn.disabled = true;
-                btn.textContent = EPT.s('linkchecker.btn_starting', 'Starting...');
-                try {
-                    await EPT.postJson(`${API}/job-start`);
-                    el.className = 'ept-alert ept-alert--info';
-                    el.innerHTML = `<strong>${EPT.s('linkchecker.alert_started', 'Job started.')}</strong> <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('linkchecker.btn_refresh', 'Refresh')}</button>`;
-                } catch { btn.textContent = EPT.s('linkchecker.btn_failed', 'Failed'); }
-            });
-        }
     }
 
     function getFiltered() {

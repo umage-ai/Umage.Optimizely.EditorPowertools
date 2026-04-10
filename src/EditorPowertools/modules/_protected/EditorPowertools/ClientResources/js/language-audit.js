@@ -4,6 +4,7 @@
 (function () {
     const API = window.EPT_API_URL;
     let overview = null;
+    let jobStatus = null;
     let currentTab = 'overview';
     let staleThreshold = 30;
     let selectedLanguage = '';
@@ -11,7 +12,18 @@
     async function init() {
         EPT.showLoading(document.getElementById('lang-audit-content'));
         try {
-            overview = await EPT.fetchJson(`${API}/language-audit/overview`);
+            const [overviewResult, statusResult] = await Promise.allSettled([
+                EPT.fetchJson(`${API}/language-audit/overview`),
+                EPT.fetchJson(`${API}/aggregation-status`)
+            ]);
+            jobStatus = statusResult.status === 'fulfilled' ? statusResult.value : null;
+
+            if (overviewResult.status === 'rejected') {
+                renderNoDataBanner(overviewResult.reason.message);
+                return;
+            }
+            overview = overviewResult.value;
+
             if (!overview || (overview.totalContent === 0 && (!overview.enabledLanguages || overview.enabledLanguages.length === 0))) {
                 renderNoDataBanner();
                 return;
@@ -19,6 +31,7 @@
             if (overview.enabledLanguages && overview.enabledLanguages.length > 0) {
                 selectedLanguage = overview.enabledLanguages[0];
             }
+            renderJobAlert();
             renderTabs();
             renderOverview();
         } catch (err) {
@@ -26,27 +39,29 @@
         }
     }
 
+    function renderJobAlert() {
+        const existing = document.getElementById('lang-job-alert');
+        if (existing) existing.remove();
+        if (!jobStatus) return;
+        const el = EPT.renderJobAlert(jobStatus, `${API}/aggregation-start`);
+        if (!el) return;
+        el.id = 'lang-job-alert';
+        const tabs = document.getElementById('lang-audit-tabs');
+        tabs.parentNode.insertBefore(el, tabs);
+    }
+
     function renderNoDataBanner(errorMsg) {
         const content = document.getElementById('lang-audit-content');
-        content.innerHTML = `<div class="ept-banner" style="padding:24px;background:var(--ept-bg,#f8f9fa);border:1px solid var(--ept-border,#dee2e6);border-radius:6px;text-align:center;">
-            ${errorMsg ? `<p style="margin:0 0 12px 0;color:var(--ept-danger,#dc3545);">Error: ${escHtml(errorMsg)}</p>` : ''}
-            <p style="margin:0 0 12px 0;font-size:15px;">${EPT.s('languageaudit.banner_runjob', 'Run the [EditorPowertools] Content Analysis scheduled job to populate data.')}</p>
-            <button id="ept-lang-run-job-btn" class="ept-btn ept-btn--primary">${EPT.s('languageaudit.btn_runnow', 'Run now')}</button>
-        </div>`;
-        const btn = document.getElementById('ept-lang-run-job-btn');
-        if (btn) {
-            btn.addEventListener('click', async () => {
-                btn.disabled = true;
-                btn.textContent = EPT.s('shared.starting', 'Starting...');
-                try {
-                    await EPT.postJson(window.EPT_API_URL + '/language-audit/aggregation-start');
-                    btn.textContent = EPT.s('languageaudit.btn_started', 'Job started, please refresh in a few minutes.');
-                    btn.className = 'ept-btn';
-                } catch (e) {
-                    btn.textContent = EPT.s('languageaudit.btn_failed', 'Failed to start job');
-                }
-            });
+        if (errorMsg) {
+            content.innerHTML = '<div class="ept-empty"><p>Error: ' + escHtml(errorMsg) + '</p></div>';
+            return;
         }
+        content.innerHTML = '';
+        if (jobStatus) {
+            const alertEl = EPT.renderJobAlert(jobStatus, `${API}/aggregation-start`);
+            if (alertEl) { content.appendChild(alertEl); return; }
+        }
+        EPT.showEmpty(content, EPT.s('languageaudit.banner_runjob', 'Run the EditorPowertools Content Analysis scheduled job to populate data.'));
     }
 
     // ── Tabs ───────────────────────────────────────────────────────

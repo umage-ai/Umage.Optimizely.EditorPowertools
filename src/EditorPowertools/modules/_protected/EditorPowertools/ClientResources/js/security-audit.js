@@ -197,48 +197,18 @@
     }
 
     function renderStatusAlert() {
-        var el = document.getElementById('sa-status-alert');
-        if (!el) return;
-
-        if (!state.status || !state.status.hasData) {
-            el.innerHTML = '<div class="ept-banner" style="padding:24px;background:var(--ept-bg,#f8f9fa);border:1px solid var(--ept-border,#dee2e6);border-radius:6px;text-align:center;margin-bottom:16px;">' +
-                '<p style="margin:0 0 12px 0;font-size:15px;"><strong>' + EPT.s('securityaudit.banner_nodata', 'Security audit data not available.') + '</strong></p>' +
-                '<p style="margin:0 0 12px 0;">' + EPT.s('securityaudit.banner_runjob', 'Run the [EditorPowertools] Content Analysis scheduled job to analyze content permissions.') + '</p>' +
-                '<button class="ept-btn ept-btn--primary" id="sa-run-job-btn">' + EPT.s('securityaudit.btn_runnow', 'Run now') + '</button>' +
-                '</div>';
-            wireRunJobButton();
-            return;
-        }
-
-        if (state.status.lastAnalysis) {
-            var lastDate = new Date(state.status.lastAnalysis);
-            var isOld = (Date.now() - lastDate.getTime()) > 24 * 60 * 60 * 1000;
-            if (isOld) {
-                el.innerHTML = '<div class="ept-alert ept-alert--warning">' +
-                    EPT.s('securityaudit.alert_old', 'Security data was last analyzed {0}. Consider running the aggregation job for fresh data.').replace('{0}', '<strong>' + timeAgo(lastDate) + '</strong>') + ' ' +
-                    '<button class="ept-btn ept-btn--sm" id="sa-run-job-btn" style="margin-left:8px">' + EPT.s('securityaudit.btn_runnow', 'Run now') + '</button></div>';
-                wireRunJobButton();
-            } else {
-                el.innerHTML = '';
-            }
-        }
-    }
-
-    function wireRunJobButton() {
-        var btn = document.getElementById('sa-run-job-btn');
-        if (!btn) return;
-        btn.addEventListener('click', async function () {
-            btn.disabled = true;
-            btn.textContent = EPT.s('securityaudit.btn_starting', 'Starting...');
-            try {
-                await EPT.postJson(window.EPT_API_URL + '/security-audit/aggregation-start');
-                btn.parentElement.className = 'ept-alert ept-alert--info';
-                btn.parentElement.innerHTML = '<strong>' + EPT.s('securityaudit.banner_started', 'Aggregation job has been started. Data will update when it completes.') + '</strong> ' +
-                    '<button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">' + EPT.s('securityaudit.btn_refresh', 'Refresh') + '</button>';
-            } catch (err) {
-                btn.textContent = EPT.s('securityaudit.btn_failed', 'Failed');
-            }
-        });
+        var container = document.getElementById('sa-status-alert');
+        if (!container) return;
+        container.innerHTML = '';
+        if (!state.status) return;
+        // Map security-audit status shape to standard job alert shape
+        var mapped = {
+            isRunning: false,
+            hasRun: state.status.hasData,
+            lastRunUtc: state.status.lastAnalysis
+        };
+        var alertEl = EPT.renderJobAlert(mapped, window.EPT_API_URL + '/security-audit/aggregation-start');
+        if (alertEl) container.appendChild(alertEl);
     }
 
     function renderStats() {

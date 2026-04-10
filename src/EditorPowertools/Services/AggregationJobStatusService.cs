@@ -59,10 +59,11 @@ public class AggregationJobStatusService
 
     private ScheduledJob? FindJob()
     {
+        // Use the fully-qualified type name so we never accidentally match an orphaned
+        // entry left in the scheduler DB from a previous namespace (e.g. after a rename).
+        var fqn = typeof(UnifiedContentAnalysisJob).FullName!;
         return _jobRepository.List()
-            .FirstOrDefault(j =>
-                j.TypeName?.Contains("UnifiedContentAnalysisJob", StringComparison.OrdinalIgnoreCase) == true
-                || j.TypeName?.Contains("ContentTypeStatisticsJob", StringComparison.OrdinalIgnoreCase) == true);
+            .FirstOrDefault(j => j.TypeName?.Contains(fqn, StringComparison.OrdinalIgnoreCase) == true);
     }
 }
 

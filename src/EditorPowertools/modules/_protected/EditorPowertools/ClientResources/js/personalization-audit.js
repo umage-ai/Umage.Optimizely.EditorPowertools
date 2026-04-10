@@ -36,63 +36,14 @@
 
     // ── Job Status Alert ───────────────────────────────────────────
     function renderJobAlert() {
-        let existing = document.getElementById('pers-job-alert');
+        const existing = document.getElementById('pers-job-alert');
         if (existing) existing.remove();
-
         if (!jobStatus) return;
-
-        const el = document.createElement('div');
+        const el = EPT.renderJobAlert(jobStatus, `${API}/job-start`);
+        if (!el) return;
         el.id = 'pers-job-alert';
-
-        const runBtn = `<button class="ept-btn ept-btn--sm" id="ept-pers-run-job-btn" style="margin-left:8px">${EPT.s('personalizationaudit.btn_runnow', 'Run now')}</button>`;
-
-        if (jobStatus.isRunning) {
-            el.className = 'ept-alert ept-alert--info';
-            el.innerHTML = `<strong>${EPT.s('personalizationaudit.alert_running', 'Personalization analysis job is currently running. Results will be updated when it completes.')}</strong> <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('personalizationaudit.btn_refresh', 'Refresh')}</button>`;
-        } else if (!jobStatus.hasRun) {
-            el.className = 'ept-alert ept-alert--warning';
-            el.innerHTML = `<strong>${EPT.s('personalizationaudit.alert_notrun', 'Personalization usage has not been analyzed yet.')}</strong> Run the analysis job to scan content for audience usage. ${runBtn}`;
-        } else {
-            const ago = timeAgo(new Date(jobStatus.lastRunUtc));
-            const isOld = (Date.now() - new Date(jobStatus.lastRunUtc).getTime()) > 24 * 60 * 60 * 1000;
-            if (isOld) {
-                el.className = 'ept-alert ept-alert--warning';
-                el.innerHTML = EPT.s('personalizationaudit.alert_old', 'Analysis was last run {0}. Consider running the job again for fresh data.').replace('{0}', `<strong>${ago}</strong>`) + ` ${runBtn}`;
-            } else {
-                el.className = 'ept-alert ept-alert--info';
-                el.innerHTML = EPT.s('personalizationaudit.alert_lastrun', 'Analysis was last run {0}.').replace('{0}', `<strong>${ago}</strong>`) + ` ${runBtn}`;
-            }
-        }
-
         const container = document.getElementById('personalization-stats');
         container.parentNode.insertBefore(el, container);
-
-        // Wire up "Run now" button
-        const btn = document.getElementById('ept-pers-run-job-btn');
-        if (btn) {
-            btn.addEventListener('click', async () => {
-                btn.disabled = true;
-                btn.textContent = EPT.s('personalizationaudit.btn_starting', 'Starting...');
-                try {
-                    await EPT.postJson(`${API}/job-start`);
-                    el.className = 'ept-alert ept-alert--info';
-                    el.innerHTML = `<strong>${EPT.s('personalizationaudit.alert_jobstarted', 'Personalization analysis job has been started. Results will be updated when it completes.')}</strong> <button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">${EPT.s('personalizationaudit.btn_refresh', 'Refresh')}</button>`;
-                } catch (err) {
-                    btn.textContent = EPT.s('shared.failed', 'Failed');
-                    console.error('Failed to start job:', err);
-                }
-            });
-        }
-    }
-
-    function timeAgo(date) {
-        const diff = Date.now() - date.getTime();
-        const mins = Math.floor(diff / 60000);
-        if (mins < 60) return `${mins} minute${mins !== 1 ? 's' : ''} ago`;
-        const hours = Math.floor(mins / 60);
-        if (hours < 24) return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
-        const days = Math.floor(hours / 24);
-        return `${days} day${days !== 1 ? 's' : ''} ago`;
     }
 
     function getFiltered() {

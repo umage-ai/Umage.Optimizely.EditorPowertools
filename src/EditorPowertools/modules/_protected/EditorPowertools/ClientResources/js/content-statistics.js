@@ -6,6 +6,7 @@
 
     var API_URL = window.EPT_API_URL + '/content-statistics/dashboard';
     var CMS_URL = window.EPT_CMS_URL || '';
+    var jobStatus = null;
 
     var CHART_COLORS = [
         '#4e79a7', '#f28e2b', '#e15759', '#76b7b2',
@@ -23,19 +24,22 @@
     }
 
     async function loadDashboard() {
-        var data;
-        try {
-            data = await EPT.fetchJson(API_URL);
-        } catch (err) {
+        var results = await Promise.allSettled([
+            EPT.fetchJson(API_URL),
+            EPT.fetchJson(window.EPT_API_URL + '/aggregation-status')
+        ]);
+        jobStatus = results[1].status === 'fulfilled' ? results[1].value : null;
+
+        if (results[0].status === 'rejected') {
             root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
                 '<p style="color:var(--ept-danger)">' + EPT.s('contentstatistics.error_load', 'Failed to load statistics from API.') + '</p>' +
-                renderRunJobBanner() +
                 '</div></div>';
-            wireRunJobButton();
+            prependJobAlert();
             return;
         }
+
         try {
-            render(data);
+            render(results[0].value);
         } catch (err) {
             console.error('[EditorPowertools] Content Statistics render error:', err);
             root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
@@ -45,27 +49,11 @@
         }
     }
 
-    function renderRunJobBanner() {
-        return '<div class="ept-banner" style="margin-top:16px;padding:16px;background:var(--ept-bg,#f8f9fa);border:1px solid var(--ept-border,#dee2e6);border-radius:6px;text-align:center;">' +
-            EPT.s('contentstatistics.banner_runjob', 'Run the [EditorPowertools] Content Analysis scheduled job to populate data.') + ' ' +
-            '<button id="ept-run-job-btn" class="ept-btn ept-btn--primary" style="margin-left:8px;">' + EPT.s('contentstatistics.btn_runnow', 'Run now') + '</button>' +
-            '</div>';
-    }
-
-    function wireRunJobButton() {
-        var btn = document.getElementById('ept-run-job-btn');
-        if (!btn) return;
-        btn.addEventListener('click', async function () {
-            btn.disabled = true;
-            btn.textContent = EPT.s('contentstatistics.btn_starting', 'Starting...');
-            try {
-                await EPT.postJson(window.EPT_API_URL + '/content-statistics/aggregation-start');
-                btn.textContent = EPT.s('contentstatistics.btn_jobstarted', 'Job started, please refresh in a few minutes.');
-                btn.className = 'ept-btn';
-            } catch (e) {
-                btn.textContent = EPT.s('contentstatistics.btn_jobfailed', 'Failed to start job');
-            }
-        });
+    function prependJobAlert() {
+        if (!jobStatus) return;
+        var alertEl = EPT.renderJobAlert(jobStatus, window.EPT_API_URL + '/content-statistics/aggregation-start');
+        if (!alertEl) return;
+        root.insertBefore(alertEl, root.firstChild);
     }
 
     function render(data) {
@@ -75,9 +63,8 @@
         if (!data || !data.summary) {
             root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
                 '<p style="text-align:center;color:var(--ept-muted,#888);">' + EPT.s('contentstatistics.empty_nodata', 'No statistics data available yet.') + '</p>' +
-                renderRunJobBanner() +
                 '</div></div>';
-            wireRunJobButton();
+            prependJobAlert();
             return;
         }
 
@@ -125,6 +112,7 @@
         }
 
         injectStyles();
+        prependJobAlert();
     }
 
     // ── Summary Cards ────────────────────────────────────────────
