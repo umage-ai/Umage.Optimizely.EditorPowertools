@@ -12,7 +12,6 @@ namespace UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit;
 /// The page view is served by EditorPowertoolsController.SecurityAudit().
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
-[Route("editorpowertools/api/security-audit")]
 public class SecurityAuditApiController : Controller
 {
     private readonly SecurityAuditService _service;
@@ -31,7 +30,7 @@ public class SecurityAuditApiController : Controller
 
     // --- Content Tree View ---
 
-    [HttpGet("tree/children")]
+    [HttpGet]
     public IActionResult GetChildren([FromQuery] int parentId = 0)
     {
         if (!HasAccess()) return Forbid();
@@ -40,29 +39,29 @@ public class SecurityAuditApiController : Controller
         return Ok(children);
     }
 
-    [HttpGet("tree/node/{contentId:int}")]
-    public IActionResult GetNodeDetail(int contentId)
+    [HttpGet]
+    public IActionResult GetNodeDetail(int id)
     {
         if (!HasAccess()) return Forbid();
 
-        var node = _service.GetNodeDetail(contentId);
+        var node = _service.GetNodeDetail(id);
         if (node == null) return NotFound();
 
         return Ok(node);
     }
 
-    [HttpGet("tree/path/{contentId:int}")]
-    public IActionResult GetPathToContent(int contentId)
+    [HttpGet]
+    public IActionResult GetPathToContent(int id)
     {
         if (!HasAccess()) return Forbid();
 
-        var path = _service.GetPathToContent(contentId);
+        var path = _service.GetPathToContent(id);
         return Ok(path);
     }
 
     // --- Role/User Explorer ---
 
-    [HttpGet("roles")]
+    [HttpGet]
     public IActionResult GetRoles()
     {
         if (!HasAccess()) return Forbid();
@@ -71,9 +70,9 @@ public class SecurityAuditApiController : Controller
         return Ok(roles);
     }
 
-    [HttpGet("roles/{name}/content")]
+    [HttpGet]
     public IActionResult GetContentForRole(
-        string name,
+        [FromQuery] string id,
         [FromQuery] string entityType = "Role",
         [FromQuery] string? access = null,
         [FromQuery] int page = 1,
@@ -81,13 +80,13 @@ public class SecurityAuditApiController : Controller
     {
         if (!HasAccess()) return Forbid();
 
-        var result = _service.GetContentForRoleOrUser(name, entityType, access, page, pageSize);
+        var result = _service.GetContentForRoleOrUser(id, entityType, access, page, pageSize);
         return Ok(result);
     }
 
     // --- Issues Dashboard ---
 
-    [HttpGet("issues/summary")]
+    [HttpGet]
     public IActionResult GetIssuesSummary()
     {
         if (!HasAccess()) return Forbid();
@@ -96,7 +95,7 @@ public class SecurityAuditApiController : Controller
         return Ok(summary);
     }
 
-    [HttpGet("issues")]
+    [HttpGet]
     public IActionResult GetIssues(
         [FromQuery] string? type = null,
         [FromQuery] string? severity = null,
@@ -111,7 +110,7 @@ public class SecurityAuditApiController : Controller
 
     // --- Utility ---
 
-    [HttpGet("status")]
+    [HttpGet]
     public IActionResult GetStatus()
     {
         if (!HasAccess()) return Forbid();
@@ -127,7 +126,7 @@ public class SecurityAuditApiController : Controller
         });
     }
 
-    [HttpPost("aggregation-start")]
+    [HttpPost]
     [RequireAjax]
     public async Task<IActionResult> StartAggregationJob()
     {
@@ -143,7 +142,7 @@ public class SecurityAuditApiController : Controller
         return Ok(new { success = true, started = true });
     }
 
-    [HttpPost("export")]
+    [HttpPost]
     [RequireAjax]
     public IActionResult Export()
     {

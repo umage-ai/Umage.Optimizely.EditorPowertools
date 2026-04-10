@@ -29,7 +29,6 @@ public class ContentTypeAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content-types")]
     public IActionResult GetTypes()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -42,7 +41,6 @@ public class ContentTypeAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content-types/{id}/properties")]
     public IActionResult GetProperties(int id)
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -55,7 +53,6 @@ public class ContentTypeAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content-types/{id}/content")]
     public IActionResult GetContentOfType(int id)
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -68,7 +65,6 @@ public class ContentTypeAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content/{id}/references")]
     public IActionResult GetContentReferences(int id)
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -81,7 +77,6 @@ public class ContentTypeAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content-types/inheritance-tree")]
     public IActionResult GetInheritanceTree()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -94,7 +89,6 @@ public class ContentTypeAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/aggregation-status")]
     public IActionResult GetAggregationStatus()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -107,7 +101,6 @@ public class ContentTypeAuditApiController : Controller
     }
 
     [HttpPost]
-    [Route("editorpowertools/api/aggregation-start")]
     public async Task<IActionResult> StartAggregationJob()
     {
         if (!_accessChecker.HasAccess(HttpContext,

@@ -22,7 +22,6 @@ public class ScheduledJobsGanttApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/jobs-gantt/jobs")]
     public IActionResult GetJobs()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -35,7 +34,6 @@ public class ScheduledJobsGanttApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/jobs-gantt/executions")]
     public async Task<IActionResult> GetExecutions([FromQuery] DateTime from, [FromQuery] DateTime to)
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -51,7 +49,6 @@ public class ScheduledJobsGanttApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/jobs-gantt/gantt-data")]
     public async Task<IActionResult> GetGanttData([FromQuery] DateTime from, [FromQuery] DateTime to)
     {
         if (!_accessChecker.HasAccess(HttpContext,

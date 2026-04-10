@@ -10,7 +10,6 @@ namespace UmageAI.Optimizely.EditorPowerTools.Components;
 /// API endpoints for reusable UI components (content picker, content type picker, etc.).
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
-[Route("editorpowertools/api/components")]
 public class ComponentsApiController : Controller
 {
     private readonly IContentLoader _contentLoader;
@@ -32,7 +31,7 @@ public class ComponentsApiController : Controller
     /// <summary>
     /// Get a content node with basic info (for tree root or navigation).
     /// </summary>
-    [HttpGet("content/{id}")]
+    [HttpGet]
     public IActionResult GetContent(int id)
     {
         var contentRef = id == 0 ? ContentReference.RootPage : new ContentReference(id);
@@ -45,7 +44,7 @@ public class ComponentsApiController : Controller
     /// <summary>
     /// Get children of a content node (for lazy-loading the tree).
     /// </summary>
-    [HttpGet("content/{id}/children")]
+    [HttpGet]
     public IActionResult GetChildren(int id)
     {
         var contentRef = id == 0 ? ContentReference.RootPage : new ContentReference(id);
@@ -61,7 +60,7 @@ public class ComponentsApiController : Controller
     /// <summary>
     /// Search content by name. Returns up to 50 results.
     /// </summary>
-    [HttpGet("content/search")]
+    [HttpGet]
     public IActionResult SearchContent([FromQuery] string q, [FromQuery] int rootId = 0)
     {
         if (string.IsNullOrWhiteSpace(q) || q.Length < 2)
@@ -97,7 +96,7 @@ public class ComponentsApiController : Controller
     /// <summary>
     /// Get all content types (for content type picker).
     /// </summary>
-    [HttpGet("content-types")]
+    [HttpGet]
     public IActionResult GetContentTypes([FromQuery] string? q)
     {
         var types = _contentTypeRepository.List()

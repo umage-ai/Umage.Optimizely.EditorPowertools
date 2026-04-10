@@ -29,7 +29,6 @@ public class ContentStatisticsApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content-statistics/dashboard")]
     public IActionResult GetDashboard()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -42,7 +41,6 @@ public class ContentStatisticsApiController : Controller
     }
 
     [HttpPost]
-    [Route("editorpowertools/api/content-statistics/aggregation-start")]
     public async Task<IActionResult> StartAggregationJob()
     {
         if (!_accessChecker.HasAccess(HttpContext,

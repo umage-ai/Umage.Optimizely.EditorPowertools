@@ -36,7 +36,6 @@ public class ContentTypeRecommendationsApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/recommendations/rules")]
     public IActionResult GetRules()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -49,7 +48,6 @@ public class ContentTypeRecommendationsApiController : Controller
     }
 
     [HttpPost]
-    [Route("editorpowertools/api/recommendations/rules")]
     public IActionResult SaveRule([FromBody] SaveRuleRequest request)
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -72,8 +70,7 @@ public class ContentTypeRecommendationsApiController : Controller
     }
 
     [HttpDelete]
-    [Route("editorpowertools/api/recommendations/rules/{id}")]
-    public IActionResult DeleteRule(string id)
+    public IActionResult DeleteRule([FromQuery] string id)
     {
         if (!_accessChecker.HasAccess(HttpContext,
             nameof(Configuration.FeatureToggles.ContentTypeRecommendations),
@@ -90,7 +87,6 @@ public class ContentTypeRecommendationsApiController : Controller
     /// to integrate directly with the CMS "create content" dialog.
     /// </summary>
     [HttpGet]
-    [Route("editorpowertools/api/recommendations/evaluate")]
     public IActionResult EvaluateRules([FromQuery] int parentId)
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -107,7 +103,6 @@ public class ContentTypeRecommendationsApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/recommendations/content-types")]
     public IActionResult GetContentTypes()
     {
         if (!_accessChecker.HasAccess(HttpContext,
