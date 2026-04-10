@@ -58,7 +58,6 @@ public class GetDescendentsContentAuditProvider : IContentAuditDataProvider
         var items = new List<ContentAuditRow>();
         int matchesFound = 0;
         int targetSkip  = (request.Page - 1) * request.PageSize;
-        bool hasMore    = false;
 
         foreach (var contentRef in allRefs)
         {
@@ -81,7 +80,7 @@ public class GetDescendentsContentAuditProvider : IContentAuditDataProvider
 
             matchesFound++;
 
-            if (matchesFound <= targetSkip) continue;        // still in the skip zone
+            if (matchesFound <= targetSkip) continue;  // still in the skip zone
 
             if (items.Count < request.PageSize)
             {
@@ -89,8 +88,7 @@ public class GetDescendentsContentAuditProvider : IContentAuditDataProvider
             }
             else
             {
-                hasMore = true;
-                break;   // got one extra — we know there's a next page
+                break;  // got a full page — stop scanning
             }
         }
 
