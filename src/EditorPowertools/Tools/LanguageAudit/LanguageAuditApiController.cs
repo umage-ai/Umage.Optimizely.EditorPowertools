@@ -1,5 +1,6 @@
 using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
+using EditorPowertools.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,13 +16,16 @@ public class LanguageAuditApiController : Controller
 {
     private readonly LanguageAuditService _service;
     private readonly FeatureAccessChecker _accessChecker;
+    private readonly AggregationJobStatusService _aggregationJobService;
 
     public LanguageAuditApiController(
         LanguageAuditService service,
-        FeatureAccessChecker accessChecker)
+        FeatureAccessChecker accessChecker,
+        AggregationJobStatusService aggregationJobService)
     {
         _service = service;
         _accessChecker = accessChecker;
+        _aggregationJobService = aggregationJobService;
     }
 
     [HttpGet]
@@ -98,6 +102,22 @@ public class LanguageAuditApiController : Controller
 
         var items = _service.ExportTranslationQueue(targetLanguage);
         return Ok(items);
+    }
+
+    [HttpPost]
+    [Route("editorpowertools/api/language-audit/aggregation-start")]
+    public async Task<IActionResult> StartAggregationJob()
+    {
+        if (!HasAccess()) return Forbid();
+
+        var result = await _aggregationJobService.StartJobAsync();
+        if (!result.Started)
+        {
+            return result.Reason == "already_running"
+                ? Conflict(new { success = false, message = "Job is already running." })
+                : StatusCode(503, new { success = false, message = "Job not found in scheduler." });
+        }
+        return Ok(new { success = true, started = true });
     }
 
     private bool HasAccess()

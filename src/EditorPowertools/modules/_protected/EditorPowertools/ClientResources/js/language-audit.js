@@ -39,7 +39,7 @@
                 btn.disabled = true;
                 btn.textContent = EPT.s('shared.starting', 'Starting...');
                 try {
-                    await EPT.postJson(window.EPT_API_URL + '/aggregation-start');
+                    await EPT.postJson(window.EPT_API_URL + '/language-audit/aggregation-start');
                     btn.textContent = EPT.s('languageaudit.btn_started', 'Job started, please refresh in a few minutes.');
                     btn.className = 'ept-btn';
                 } catch (e) {

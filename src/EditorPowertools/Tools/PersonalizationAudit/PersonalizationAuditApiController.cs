@@ -75,7 +75,13 @@ public class PersonalizationAuditApiController : Controller
             EditorPowertoolsPermissions.PersonalizationUsageAudit))
             return Forbid();
 
-        var started = await _jobStatusService.StartJobAsync();
-        return Ok(new { started });
+        var result = await _jobStatusService.StartJobAsync();
+        if (!result.Started)
+        {
+            return result.Reason == "already_running"
+                ? Conflict(new { success = false, message = "Job is already running." })
+                : StatusCode(503, new { success = false, message = "Job not found in scheduler. Ensure the site has been restarted after installing the plugin." });
+        }
+        return Ok(new { success = true, started = true });
     }
 }

@@ -231,7 +231,7 @@
             btn.disabled = true;
             btn.textContent = EPT.s('securityaudit.btn_starting', 'Starting...');
             try {
-                await EPT.postJson(window.EPT_API_URL + '/aggregation-start');
+                await EPT.postJson(window.EPT_API_URL + '/security-audit/aggregation-start');
                 btn.parentElement.className = 'ept-alert ept-alert--info';
                 btn.parentElement.innerHTML = '<strong>' + EPT.s('securityaudit.banner_started', 'Aggregation job has been started. Data will update when it completes.') + '</strong> ' +
                     '<button class="ept-btn ept-btn--sm" onclick="location.reload()" style="margin-left:8px">' + EPT.s('securityaudit.btn_refresh', 'Refresh') + '</button>';

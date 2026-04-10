@@ -1,6 +1,7 @@
 using System.Text;
 using EditorPowertools.Infrastructure;
 using EditorPowertools.Permissions;
+using EditorPowertools.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,13 +17,16 @@ public class SecurityAuditApiController : Controller
 {
     private readonly SecurityAuditService _service;
     private readonly FeatureAccessChecker _accessChecker;
+    private readonly AggregationJobStatusService _aggregationJobService;
 
     public SecurityAuditApiController(
         SecurityAuditService service,
-        FeatureAccessChecker accessChecker)
+        FeatureAccessChecker accessChecker,
+        AggregationJobStatusService aggregationJobService)
     {
         _service = service;
         _accessChecker = accessChecker;
+        _aggregationJobService = aggregationJobService;
     }
 
     // --- Content Tree View ---
@@ -121,6 +125,22 @@ public class SecurityAuditApiController : Controller
             TotalIssues = summary.TotalIssues,
             HasData = lastAnalysis.HasValue
         });
+    }
+
+    [HttpPost("aggregation-start")]
+    [RequireAjax]
+    public async Task<IActionResult> StartAggregationJob()
+    {
+        if (!HasAccess()) return Forbid();
+
+        var result = await _aggregationJobService.StartJobAsync();
+        if (!result.Started)
+        {
+            return result.Reason == "already_running"
+                ? Conflict(new { success = false, message = "Job is already running." })
+                : StatusCode(503, new { success = false, message = "Job not found in scheduler." });
+        }
+        return Ok(new { success = true, started = true });
     }
 
     [HttpPost("export")]

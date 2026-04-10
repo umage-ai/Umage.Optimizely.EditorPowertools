@@ -59,7 +59,7 @@
             btn.disabled = true;
             btn.textContent = EPT.s('contentstatistics.btn_starting', 'Starting...');
             try {
-                await EPT.postJson(window.EPT_API_URL + '/aggregation-start');
+                await EPT.postJson(window.EPT_API_URL + '/content-statistics/aggregation-start');
                 btn.textContent = EPT.s('contentstatistics.btn_jobstarted', 'Job started, please refresh in a few minutes.');
                 btn.className = 'ept-btn';
             } catch (e) {

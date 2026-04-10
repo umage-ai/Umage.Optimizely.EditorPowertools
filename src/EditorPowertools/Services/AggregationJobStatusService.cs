@@ -42,19 +42,19 @@ public class AggregationJobStatusService
     }
 
     /// <summary>
-    /// Starts the aggregation job. Returns true if started successfully.
+    /// Starts the aggregation job. Returns a JobStartResult indicating success or reason for failure.
     /// </summary>
-    public async Task<bool> StartJobAsync()
+    public async Task<JobStartResult> StartJobAsync()
     {
         var job = FindJob();
         if (job == null)
-            return false;
+            return new JobStartResult(false, "not_found");
 
         if (job.IsRunning)
-            return false;
+            return new JobStartResult(false, "already_running");
 
         await _jobExecutor.StartAsync(job);
-        return true;
+        return new JobStartResult(true);
     }
 
     private ScheduledJob? FindJob()
@@ -74,3 +74,5 @@ public class AggregationJobStatus
     public bool JobExists { get; set; }
     public int TypeCount { get; set; }
 }
+
+public record JobStartResult(bool Started, string? Reason = null);

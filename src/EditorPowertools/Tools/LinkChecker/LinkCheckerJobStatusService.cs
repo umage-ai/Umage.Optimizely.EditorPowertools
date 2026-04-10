@@ -1,3 +1,4 @@
+using EditorPowertools.Services;
 using EPiServer.DataAbstraction;
 using EPiServer.Scheduler;
 
@@ -43,19 +44,19 @@ public class LinkCheckerJobStatusService
     }
 
     /// <summary>
-    /// Starts the link checker job. Returns true if started successfully.
+    /// Starts the link checker job. Returns a JobStartResult indicating success or reason for failure.
     /// </summary>
-    public async Task<bool> StartJobAsync()
+    public async Task<JobStartResult> StartJobAsync()
     {
         var job = FindJob();
         if (job == null)
-            return false;
+            return new JobStartResult(false, "not_found");
 
         if (job.IsRunning)
-            return false;
+            return new JobStartResult(false, "already_running");
 
         await _jobExecutor.StartAsync(job);
-        return true;
+        return new JobStartResult(true);
     }
 
     private ScheduledJob? FindJob()
