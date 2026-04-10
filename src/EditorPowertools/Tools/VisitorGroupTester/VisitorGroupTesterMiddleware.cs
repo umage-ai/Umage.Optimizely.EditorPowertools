@@ -331,11 +331,11 @@ public class VisitorGroupTesterMiddleware
 
     // Parse current visitor groups from query param or cookie
     function getActiveGroupIds() {
-        // Check query param first (takes precedence)
+        // Check query param first (takes precedence) — Optimizely uses | as separator
         var params = new URLSearchParams(window.location.search);
         var val = params.get('visitorgroupsByID');
-        if (val) return val.split(',').filter(function(s) { return s.trim(); });
-        // Fall back to cookie
+        if (val) return val.split('|').filter(function(s) { return s.trim(); });
+        // Fall back to cookie (Optimizely uses comma-separated GUIDs in cookie)
         var match = document.cookie.match(/ImpersonatedVisitorGroupsById=([^;]*)/);
         if (match && match[1]) return match[1].split(',').filter(function(s) { return s.trim(); });
         return [];
@@ -446,21 +446,16 @@ public class VisitorGroupTesterMiddleware
     function setVgCookie(ids) {
         // Optimizely reads impersonated visitor groups from cookie
         // Cookie name: ImpersonatedVisitorGroupsById
-        // Value: comma-separated GUIDs
+        // Value: pipe-separated GUIDs (same format as visitorgroupsByID query param)
         if (ids.length > 0) {
-            document.cookie = 'ImpersonatedVisitorGroupsById=' + ids.join(',') + ';path=/';
+            document.cookie = 'ImpersonatedVisitorGroupsById=' + ids.join('|') + ';path=/';
         } else {
             document.cookie = 'ImpersonatedVisitorGroupsById=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT';
         }
     }
 
-    function getVgCookie() {
-        var match = document.cookie.match(/ImpersonatedVisitorGroupsById=([^;]*)/);
-        return match ? match[1].split(',').filter(function(s) { return s.length > 0; }) : [];
-    }
-
     function buildUrlWithGroups(ids) {
-        // Pure string manipulation — avoid URL/URLSearchParams which encode commas
+        // Pure string manipulation — avoid URLSearchParams which would percent-encode | characters
         var href = window.location.href;
         // Remove existing visitorgroupsByID param
         href = href.replace(/([?&])visitorgroupsByID=[^&#]*/g, '$1');
@@ -468,7 +463,8 @@ public class VisitorGroupTesterMiddleware
         href = href.replace(/[?&]$/, '').replace(/[?]&/, '?').replace(/&&+/g, '&');
         if (ids.length > 0) {
             var sep = href.indexOf('?') >= 0 ? '&' : '?';
-            return href + sep + 'visitorgroupsByID=' + ids.join(',');
+            // Optimizely expects pipe-separated GUIDs: visitorgroupsByID=guid1|guid2
+            return href + sep + 'visitorgroupsByID=' + ids.join('|');
         }
         return href;
     }
