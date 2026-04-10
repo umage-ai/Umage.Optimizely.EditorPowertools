@@ -1,6 +1,9 @@
 # EditorPowertools
 
-A collection of power tools for Optimizely CMS 12 editors and admins. Distributed as the NuGet package `CodeArt.Optimizely.EditorPowertools`.
+[![NuGet](https://img.shields.io/nuget/v/UmageAI.Optimizely.EditorPowerTools)](https://www.nuget.org/packages/UmageAI.Optimizely.EditorPowerTools/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+A collection of power tools for Optimizely CMS 12 editors and admins. Distributed as the NuGet package `UmageAI.Optimizely.EditorPowerTools`.
 
 ![Overview Dashboard](docs/screenshots/01-overview.png)
 
@@ -133,7 +136,7 @@ Power Content Details widget, Manage Children dialog, and Visitor Group Tester i
 ## Installation
 
 ```
-dotnet add package CodeArt.Optimizely.EditorPowertools
+dotnet add package UmageAI.Optimizely.EditorPowerTools
 ```
 
 ### Registration
@@ -176,8 +179,8 @@ Or configure via `appsettings.json`:
 
 ```json
 {
-  "CodeArt": {
-    "EditorPowertools": {
+  "UmageAI": {
+    "EditorPowerTools": {
       "authorizedRoles": ["WebAdmins", "Administrators"],
       "checkPermissionForEachFeature": true,
       "features": {
@@ -237,4 +240,4 @@ See [docs/coding-guidelines.md](docs/coding-guidelines.md) for architecture patt
 
 ## License
 
-Proprietary - CodeArt.dk
+[MIT](LICENSE) - Copyright (c) 2026 Allan Thraen / UmageAI

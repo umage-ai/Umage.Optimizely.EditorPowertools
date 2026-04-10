@@ -94,12 +94,12 @@ services.AddEditorPowertools(options =>
 
 ## Step 3: Configure via appsettings.json (Optional)
 
-Instead of (or in addition to) code-based configuration, you can use `appsettings.json`. Settings are read from the `CodeArt:EditorPowertools` section:
+Instead of (or in addition to) code-based configuration, you can use `appsettings.json`. Settings are read from the `UmageAI:EditorPowerTools` section:
 
 ```json
 {
-  "CodeArt": {
-    "EditorPowertools": {
+  "UmageAI": {
+    "EditorPowerTools": {
       "authorizedRoles": ["WebAdmins", "Administrators"],
       "checkPermissionForEachFeature": false,
       "features": {
