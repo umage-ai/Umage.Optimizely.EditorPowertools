@@ -1,0 +1,69 @@
+@using EPiServer.Framework.Web.Resources
+@using EPiServer.Shell
+@using EPiServer.Shell.Navigation
+@using System.Text.Json
+@addTagHelper *, EPiServer.Cms.Shell.UI
+@inject UmageAI.Optimizely.EditorPowerTools.Localization.UiStringsProvider UiStrings
+@inject LocalizationService Loc
+@{
+    var title = ViewData["Title"]?.ToString() ?? "Editor Powertools";
+    // For controller routes (menu links, page navigation)
+    string ActionPath(string path) => Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), path);
+    // For static files (CSS, JS) served from the module's ClientResources folder
+    string ClientResource(string path) => Paths.ToClientResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), path);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@title - Editor Powertools</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+    @* CMS Shell styles - makes the page look like part of the CMS *@
+    @ClientResources.RenderResources("ShellCore")
+    @ClientResources.RenderResources("ShellCoreLightTheme")
+
+    <link rel="stylesheet" href="@ClientResource("ClientResources/css/editorpowertools.css")" />
+    @RenderSection("Styles", required: false)
+</head>
+<body class="Sleek">
+    @* CMS 13 top navigation bar - replaces @Html.CreatePlatformNavigationMenu() *@
+    <platform-navigation />
+
+    @* epi-navigation--no-padding replaces @Html.ApplyPlatformNavigation() *@
+    <div class="epi-navigation--no-padding">
+        <div class="ept-shell">
+            <header class="ept-header">
+                <a href="@ActionPath("EditorPowertools/Overview")" class="ept-header__logo">
+                    <svg class="ept-header__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    </svg>
+                    Editor Powertools
+                </a>
+                <nav class="ept-header__nav">
+                    @RenderSection("NavItems", required: false)
+                </nav>
+                <a href="@ActionPath("EditorPowertools/About")" class="ept-header__about">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    @Loc.GetString("/editorpowertools/menu/about")
+                </a>
+            </header>
+            <main class="ept-main">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <div id="ept-dialog-container"></div>
+    <script>
+        window.EPT_BASE_URL = '@Html.Raw(Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), ""))';
+        window.EPT_HUB_URL = '@Html.Raw(Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), "hubs"))';
+        window.EPT_CMS_URL = '@Html.Raw(Paths.ToResource("CMS", ""))';
+        window.EPT_ADMIN_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.Admin", "default"))';
+        window.EPT_VG_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.VisitorGroups", "ManageVisitorGroups"))';
+        window.EPT_STRINGS = @Html.Raw(JsonSerializer.Serialize(UiStrings.GetAll()));
+    </script>
+    <script src="@ClientResource("ClientResources/js/editorpowertools.js")"></script>
+    <script src="@ClientResource("ClientResources/js/components.js")"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

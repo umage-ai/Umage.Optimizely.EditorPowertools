@@ -180,7 +180,8 @@ public class PersonalizationAnalyzer : IContentAnalyzer
                         }
                     }
                 }
-                // XhtmlString personalization
+#if !OPTIMIZELY_CMS13
+                // XhtmlString personalization — PersonalizedContentFragment.GetRoles() removed in CMS 13
                 else if (prop.Value is XhtmlString xhtml)
                 {
                     foreach (var fragment in xhtml.Fragments)
@@ -214,6 +215,7 @@ public class PersonalizationAnalyzer : IContentAnalyzer
                         }
                     }
                 }
+#endif
                 // Nested block properties (IContentData that isn't ContentArea or XhtmlString)
                 else if (prop.Value is IContentData nestedData && nestedData is IContent nestedContentItem)
                 {
