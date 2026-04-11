@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/EditorPowertools.SampleSite/EditorPowertools.SampleSite.csproj" />
+    <Project Path="src/EditorPowertools.SampleSiteCms13/EditorPowertools.SampleSiteCms13.csproj" />
     <Project Path="src/EditorPowertools/EditorPowertools.csproj" />
   </Folder>
 </Solution>
