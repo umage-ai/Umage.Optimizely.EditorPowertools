@@ -80,6 +80,13 @@ modulesbin/
 
 # Sample site modules (copied during build, not source)
 /src/EditorPowertools.SampleSite/modules/
+/src/EditorPowertools.SampleSiteCms13/modules/
+
+# NuGet-deployed module zips (not source files)
+/src/EditorPowertools/modules/_protected/Profile/
+/src/EditorPowertools/modules/_protected/Settings/
+/src/EditorPowertools/modules/_protected/TinyMce/
+/src/EditorPowertools.Tests/modules/
 
 # Local settings
 appsettings.local.json

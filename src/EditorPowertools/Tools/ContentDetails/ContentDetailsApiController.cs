@@ -23,7 +23,7 @@ public class ContentDetailsApiController : Controller
     }
 
     [HttpGet]
-    public IActionResult GetDetails([FromQuery] int id)
+    public IActionResult GetDetails(int id)
     {
         if (!_accessChecker.HasAccess(HttpContext,
             nameof(Configuration.FeatureToggles.ContentDetails),

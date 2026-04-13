@@ -2,7 +2,7 @@
 @using EPiServer.Shell
 @using EPiServer.Shell.Navigation
 @using System.Text.Json
-@addTagHelper *, EPiServer.Cms.Shell.UI
+@addTagHelper *, EPiServer.Shell.UI
 @inject UmageAI.Optimizely.EditorPowerTools.Localization.UiStringsProvider UiStrings
 @inject LocalizationService Loc
 @{
@@ -26,11 +26,12 @@
     @RenderSection("Styles", required: false)
 </head>
 <body class="Sleek">
-    @* CMS 13 top navigation bar - replaces @Html.CreatePlatformNavigationMenu() *@
-    <platform-navigation />
+    @* CMS 13 navigation bar — TagHelper from EPiServer.Shell.UI.
+       Outputs the navigation root div + loads navigation.bundle.js/css. *@
+    <platform-navigation render-navigation="true" />
 
-    @* epi-navigation--no-padding replaces @Html.ApplyPlatformNavigation() *@
-    <div class="epi-navigation--no-padding">
+    @* Content wrapper — renders as <div class="epi-pn-navigation--fixed-adjust"> *@
+    <platform-navigation-wrapper render-navigation="true">
         <div class="ept-shell">
             <header class="ept-header">
                 <a href="@ActionPath("EditorPowertools/Overview")" class="ept-header__logo">
@@ -51,7 +52,7 @@
                 @RenderBody()
             </main>
         </div>
-    </div>
+    </platform-navigation-wrapper>
 
     <div id="ept-dialog-container"></div>
     <script>

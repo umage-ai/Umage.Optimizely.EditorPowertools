@@ -21,6 +21,14 @@ public class VisitorGroupTesterMiddleware
 {
     private readonly RequestDelegate _next;
 
+    // Derived once from EPT's own module path: takes the first segment of the virtual path
+    // (e.g. "/EPiServer" on CMS 12, "/Optimizely" on CMS 13) — no hardcoded strings needed.
+    private static readonly Lazy<string> _shellRoot = new(() =>
+    {
+        var eptPath = Paths.ToResource(typeof(EditorPowertoolsMenuProvider), "");
+        return "/" + eptPath.TrimStart('/').Split('/')[0];
+    });
+
     public VisitorGroupTesterMiddleware(RequestDelegate next)
     {
         _next = next;
@@ -35,10 +43,10 @@ public class VisitorGroupTesterMiddleware
             return;
         }
 
-        // Skip API, CMS shell, and static asset requests — only inject on public site
+        // Skip CMS shell/module paths and static asset requests — only inject on public site.
+        // _shellRoot covers all Optimizely module paths (EPT included) regardless of CMS version.
         var path = context.Request.Path.Value ?? "";
-        if (path.StartsWith("/episerver", StringComparison.OrdinalIgnoreCase) ||
-            path.StartsWith("/editorpowertools", StringComparison.OrdinalIgnoreCase) ||
+        if (path.StartsWith(_shellRoot.Value, StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/api/", StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/util/", StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/globalassets", StringComparison.OrdinalIgnoreCase) ||
@@ -102,6 +110,17 @@ public class VisitorGroupTesterMiddleware
         await _next(context);
 
         bufferStream.Seek(0, SeekOrigin.Begin);
+
+        // If the response is compressed, don't try to read/modify it as text — just pass it through
+        var encoding = context.Response.Headers["Content-Encoding"].ToString();
+        if (!string.IsNullOrEmpty(encoding))
+        {
+            context.Response.Body = originalBody;
+            bufferStream.Seek(0, SeekOrigin.Begin);
+            await bufferStream.CopyToAsync(context.Response.Body);
+            return;
+        }
+
         var responseBody = await new StreamReader(bufferStream).ReadToEndAsync();
 
         // Only inject into HTML responses
