@@ -145,6 +145,7 @@
     padding: var(--ept-space-lg);
     width: 100%;
     min-width: 0;
+    position: relative;
 }
 
 /* ── Page Header ────────────────────────────────────────────────── */
@@ -1123,21 +1124,21 @@ td.bpe-editing select {
 
 /* ===== Watermark ===== */
 .ept-watermark {
-    position: fixed;
-    bottom: 14px;
-    right: 16px;
-    z-index: 10;
-    opacity: 0.28;
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    z-index: 5;
+    opacity: 0.25;
     transition: opacity 0.2s;
     text-decoration: none;
     display: block;
     line-height: 0;
 }
 .ept-watermark:hover {
-    opacity: 0.6;
+    opacity: 0.55;
 }
 .ept-watermark svg {
-    width: 88px;
+    width: 100px;
     height: auto;
     display: block;
 }
