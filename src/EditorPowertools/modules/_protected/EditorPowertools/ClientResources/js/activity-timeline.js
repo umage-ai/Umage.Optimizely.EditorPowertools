@@ -359,7 +359,7 @@
         EPT.showLoading(dialog.body);
 
         var url = API + '/CompareVersions?contentId=' + contentId + '&versionId=' + versionId;
-        if (language) url += '?language=' + encodeURIComponent(language);
+        if (language) url += '&language=' + encodeURIComponent(language);
 
         EPT.fetchJson(url).then(function (result) {
             if (!result.hasPrevious) {
