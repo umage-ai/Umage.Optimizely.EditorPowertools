@@ -357,7 +357,7 @@
     }
 
     function loadColumns(contentTypeId) {
-        apiFetch(API + '/GetProperties/' + contentTypeId)
+        apiFetch(API + '/GetProperties?id=' + contentTypeId)
             .then(function (result) {
                 if (result.success) {
                     state.availableColumns = result.properties;
@@ -986,7 +986,7 @@
 
         savePromise
             .then(function () {
-                return apiFetch(API + '/Publish/' + contentId + '?language=' + encodeURIComponent(state.language), {
+                return apiFetch(API + '/Publish?id=' + contentId + '&language=' + encodeURIComponent(state.language), {
                     method: 'POST'
                 });
             })

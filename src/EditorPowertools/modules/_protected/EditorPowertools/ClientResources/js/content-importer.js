@@ -656,7 +656,7 @@
 
     function pollProgress() {
         state.pollTimer = setInterval(function () {
-            fetchJson(API + '/GetProgress/' + state.sessionId)
+            fetchJson(API + '/GetProgress?id=' + state.sessionId)
                 .then(function (progress) {
                     state.importProgress = progress;
                     renderProgress(progress);
