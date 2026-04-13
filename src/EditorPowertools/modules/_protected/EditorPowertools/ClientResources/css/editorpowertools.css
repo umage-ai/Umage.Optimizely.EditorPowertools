@@ -1120,3 +1120,25 @@ td.bpe-editing select {
     max-width: 260px;
     word-break: break-word;
 }
+
+/* ===== Watermark ===== */
+.ept-watermark {
+    position: fixed;
+    bottom: 14px;
+    right: 16px;
+    z-index: 10;
+    opacity: 0.28;
+    transition: opacity 0.2s;
+    text-decoration: none;
+    display: block;
+    line-height: 0;
+}
+.ept-watermark:hover {
+    opacity: 0.6;
+}
+.ept-watermark svg {
+    width: 88px;
+    height: auto;
+    display: block;
+}
+
