@@ -286,9 +286,21 @@ public class ContentImporterService
                 try
                 {
                     var row = session.Rows[i];
-                    var contentId = CreateContentFromRow(ct, parentRef, culture, row, mapping, i);
+                    var rowWarnings = new List<string>();
+                    var contentId = CreateContentFromRow(ct, parentRef, culture, row, mapping, i, rowWarnings);
                     if (contentId > 0)
                         progress.CreatedContentIds.Add(contentId);
+                    foreach (var w in rowWarnings)
+                        progress.Warnings.Add(new ImportWarning { RowIndex = i + 1, Message = w });
+                }
+                catch (EPiServer.Core.AccessDeniedException ex)
+                {
+                    progress.Errors.Add(new ImportError
+                    {
+                        RowIndex = i + 1,
+                        Message = "Access denied: you do not have permission to publish content at the target location."
+                    });
+                    _logger.LogWarning(ex, "Access denied saving row {RowIndex}", i + 1);
                 }
                 catch (Exception ex)
                 {
@@ -319,7 +331,8 @@ public class ContentImporterService
         CultureInfo culture,
         Dictionary<string, string> row,
         ImportMappingRequest mapping,
-        int rowIndex)
+        int rowIndex,
+        List<string> rowWarnings)
     {
         var content = _contentRepository.GetDefault<IContent>(parentRef, contentType.ID, culture);
 
@@ -381,6 +394,7 @@ public class ContentImporterService
             }
             catch (Exception ex)
             {
+                rowWarnings.Add($"Could not set property '{propMapping.TargetProperty}': {ex.Message}");
                 _logger.LogWarning(ex, "Failed to set property {Property} on row {Row}",
                     propMapping.TargetProperty, rowIndex + 1);
             }
@@ -408,6 +422,7 @@ public class ContentImporterService
                 }
                 catch (Exception ex)
                 {
+                    rowWarnings.Add($"Could not create inline blocks for property '{blockMapping.TargetProperty}': {ex.Message}");
                     _logger.LogWarning(ex, "Failed to create inline blocks for {Property} on row {Row}",
                         blockMapping.TargetProperty, rowIndex + 1);
                 }
@@ -428,6 +443,7 @@ public class ContentImporterService
                 }
                 catch (Exception ex)
                 {
+                    rowWarnings.Add($"Could not download image for property '{imgMapping.TargetProperty}' from '{imgUrl}': {ex.Message}");
                     _logger.LogWarning(ex, "Failed to download image for {Property} from {Url} on row {Row}",
                         imgMapping.TargetProperty, imgUrl, rowIndex + 1);
                 }
@@ -562,6 +578,24 @@ public class ContentImporterService
         if (typeName.Contains("XhtmlString", StringComparison.OrdinalIgnoreCase))
         {
             prop.Value = new XhtmlString(value);
+            return;
+        }
+
+        // PropertyList<T> expects an IList/IEnumerable — split semicolon-separated values
+        // Check using reflection so we cover PropertyList<string>, PropertyList<int>, etc.
+        var propType = prop.GetType();
+        if (propType.IsGenericType && propType.GetGenericTypeDefinition() == typeof(PropertyList<>))
+        {
+            var itemType = propType.GetGenericArguments()[0];
+            var parts = value.Split(';').Select(v => v.Trim()).Where(v => v.Length > 0);
+            var listType = typeof(List<>).MakeGenericType(itemType);
+            var list = (System.Collections.IList)Activator.CreateInstance(listType)!;
+            foreach (var part in parts)
+            {
+                object? item = itemType == typeof(string) ? part : Convert.ChangeType(part, itemType, CultureInfo.InvariantCulture);
+                list.Add(item);
+            }
+            prop.Value = list;
             return;
         }
 

@@ -676,22 +676,39 @@
 
         var html = '<div class="ept-importer-progress">';
         html += '<div class="ept-importer-progress-bar"><div class="ept-importer-progress-fill" style="width:' + pct + '%"></div></div>';
-        html += '<div style="margin-top:8px;font-size:14px"><strong>' + progress.processed + '</strong> / ' + progress.total + ' items (' + pct + '%)</div>';
+        html += '<div style="margin-top:8px;font-size:14px"><strong>' + progress.processed + '</strong> / ' + progress.total + ' items (' + pct + '%)';
+
+        var errorCount = (progress.errors && progress.errors.length) ? progress.errors.length : 0;
+        var warnCount = (progress.warnings && progress.warnings.length) ? progress.warnings.length : 0;
+        if (errorCount > 0) html += ' &nbsp;<span style="color:var(--ept-danger);font-weight:600">' + errorCount + ' error' + (errorCount !== 1 ? 's' : '') + '</span>';
+        if (warnCount > 0) html += ' &nbsp;<span style="color:var(--ept-warning,#b45309);font-weight:600">' + warnCount + ' warning' + (warnCount !== 1 ? 's' : '') + '</span>';
+        html += '</div>';
 
         if (progress.status === 'completed') {
-            html += '<div class="ept-alert ept-alert--success" style="margin-top:12px">Import completed! Created ' + progress.createdContentIds.length + ' content items.</div>';
+            var successMsg = 'Import completed! Created ' + progress.createdContentIds.length + ' content item' + (progress.createdContentIds.length !== 1 ? 's' : '') + '.';
+            if (errorCount > 0) successMsg += ' ' + errorCount + ' row' + (errorCount !== 1 ? 's' : '') + ' failed.';
+            html += '<div class="ept-alert ept-alert--' + (errorCount > 0 ? 'warning' : 'success') + '" style="margin-top:12px">' + successMsg + '</div>';
             html += '<button class="ept-btn ept-btn--primary" id="new-import-btn" style="margin-top:8px">' + EPT.s('contentimporter.btn_startover', 'Start Over') + '</button>';
         } else if (progress.status === 'failed') {
             html += '<div class="ept-alert ept-alert--danger" style="margin-top:12px">Import failed.</div>';
         }
 
-        if (progress.errors && progress.errors.length > 0) {
-            html += '<div style="margin-top:12px"><strong>Errors (' + progress.errors.length + '):</strong></div>';
-            html += '<div style="max-height:200px;overflow-y:auto;font-size:12px;margin-top:4px">';
+        if (errorCount > 0) {
+            html += '<details style="margin-top:12px"><summary style="cursor:pointer;font-weight:600;color:var(--ept-danger)">Errors (' + errorCount + ')</summary>';
+            html += '<div style="max-height:200px;overflow-y:auto;font-size:12px;margin-top:4px;padding:4px 0">';
             for (var e = 0; e < progress.errors.length; e++) {
                 html += '<div style="padding:2px 0;color:var(--ept-danger)">Row ' + progress.errors[e].rowIndex + ': ' + escHtml(progress.errors[e].message) + '</div>';
             }
-            html += '</div>';
+            html += '</div></details>';
+        }
+
+        if (warnCount > 0) {
+            html += '<details style="margin-top:8px"><summary style="cursor:pointer;font-weight:600;color:var(--ept-warning,#b45309)">Warnings (' + warnCount + ')</summary>';
+            html += '<div style="max-height:200px;overflow-y:auto;font-size:12px;margin-top:4px;padding:4px 0">';
+            for (var w = 0; w < progress.warnings.length; w++) {
+                html += '<div style="padding:2px 0;color:var(--ept-warning,#b45309)">Row ' + progress.warnings[w].rowIndex + ': ' + escHtml(progress.warnings[w].message) + '</div>';
+            }
+            html += '</div></details>';
         }
 
         html += '</div>';

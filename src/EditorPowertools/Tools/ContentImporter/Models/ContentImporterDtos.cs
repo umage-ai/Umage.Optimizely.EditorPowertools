@@ -96,10 +96,17 @@ public class ImportProgress
     public int Processed { get; set; }
     public int Total { get; set; }
     public List<ImportError> Errors { get; set; } = new();
+    public List<ImportWarning> Warnings { get; set; } = new();
     public List<int> CreatedContentIds { get; set; } = new();
 }
 
 public class ImportError
+{
+    public int RowIndex { get; set; }
+    public string Message { get; set; } = string.Empty;
+}
+
+public class ImportWarning
 {
     public int RowIndex { get; set; }
     public string Message { get; set; } = string.Empty;
