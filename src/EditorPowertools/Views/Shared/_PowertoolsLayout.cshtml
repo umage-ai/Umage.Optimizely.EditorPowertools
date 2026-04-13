@@ -54,8 +54,7 @@
     <div id="ept-dialog-container"></div>
     <script>
         window.EPT_BASE_URL = '@Html.Raw(Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), ""))';
-        window.EPT_API_URL = '/editorpowertools/api';
-        window.EPT_HUB_URL = '/editorpowertools/hubs';
+        window.EPT_HUB_URL = '@Html.Raw(Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), "hubs"))';
         window.EPT_CMS_URL = '@Html.Raw(Paths.ToResource("CMS", ""))';
         window.EPT_ADMIN_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.Admin", "default"))';
         window.EPT_VG_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.VisitorGroups", "ManageVisitorGroups"))';

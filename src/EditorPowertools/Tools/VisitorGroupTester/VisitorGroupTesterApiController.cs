@@ -24,7 +24,6 @@ public class VisitorGroupTesterApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/visitor-group-tester/groups")]
     public IActionResult GetGroups()
     {
         if (!_accessChecker.HasAccess(HttpContext,

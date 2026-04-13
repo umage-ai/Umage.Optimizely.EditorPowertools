@@ -23,7 +23,6 @@ public class AudienceManagerApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/audience/visitor-groups")]
     public IActionResult GetVisitorGroups()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -36,8 +35,7 @@ public class AudienceManagerApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/audience/visitor-groups/{id}/criteria")]
-    public IActionResult GetCriteria(Guid id)
+    public IActionResult GetCriteria([FromQuery] Guid id)
     {
         if (!_accessChecker.HasAccess(HttpContext,
             nameof(Configuration.FeatureToggles.AudienceManager),
@@ -49,8 +47,7 @@ public class AudienceManagerApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/audience/visitor-groups/{id}/usages")]
-    public IActionResult GetUsages(Guid id)
+    public IActionResult GetUsages([FromQuery] Guid id)
     {
         if (!_accessChecker.HasAccess(HttpContext,
             nameof(Configuration.FeatureToggles.AudienceManager),

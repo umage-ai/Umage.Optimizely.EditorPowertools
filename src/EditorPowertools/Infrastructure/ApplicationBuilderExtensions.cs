@@ -1,3 +1,5 @@
+using EPiServer.Shell;
+using UmageAI.Optimizely.EditorPowerTools.Menu;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ActiveEditors;
 using UmageAI.Optimizely.EditorPowerTools.Tools.VisitorGroupTester;
 using Microsoft.AspNetCore.Builder;
@@ -15,7 +17,18 @@ public static class ApplicationBuilderExtensions
 
     public static IEndpointRouteBuilder MapEditorPowertools(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapHub<ActiveEditorsHub>("/editorpowertools/hubs/active-editors");
+        // Register conventional route at the module's virtual path so all API controllers
+        // are accessible at {modulePath}/{controller}/{action}/{id?} without hardcoded prefixes.
+        var basePath = Paths.ToResource(typeof(EditorPowertoolsMenuProvider), "")
+            .TrimStart('/').TrimEnd('/');
+        endpoints.MapControllerRoute(
+            name: "EditorPowertoolsDefault",
+            pattern: $"{basePath}/{{controller}}/{{action}}/{{id?}}");
+
+        // Hub path is now module-path-aware
+        endpoints.MapHub<ActiveEditorsHub>(
+            Paths.ToResource(typeof(EditorPowertoolsMenuProvider), "hubs/active-editors"));
+
         return endpoints;
     }
 }

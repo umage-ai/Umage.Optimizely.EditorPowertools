@@ -2,7 +2,7 @@
  * Language Audit - Main UI
  */
 (function () {
-    const API = window.EPT_API_URL;
+    const API = window.EPT_BASE_URL + 'LanguageAuditApi';
     let overview = null;
     let jobStatus = null;
     let currentTab = 'overview';
@@ -13,8 +13,8 @@
         EPT.showLoading(document.getElementById('lang-audit-content'));
         try {
             const [overviewResult, statusResult] = await Promise.allSettled([
-                EPT.fetchJson(`${API}/language-audit/overview`),
-                EPT.fetchJson(`${API}/aggregation-status`)
+                EPT.fetchJson(`${API}/GetOverview`),
+                EPT.fetchJson(`${API}/GetAggregationStatus`)
             ]);
             jobStatus = statusResult.status === 'fulfilled' ? statusResult.value : null;
 
@@ -43,7 +43,7 @@
         const existing = document.getElementById('lang-job-alert');
         if (existing) existing.remove();
         if (!jobStatus) return;
-        const el = EPT.renderJobAlert(jobStatus, `${API}/aggregation-start`);
+        const el = EPT.renderJobAlert(jobStatus, `${API}/StartAggregationJob`);
         if (!el) return;
         el.id = 'lang-job-alert';
         const tabs = document.getElementById('lang-audit-tabs');
@@ -191,7 +191,7 @@
         stats.innerHTML = '';
 
         try {
-            const data = await EPT.fetchJson(`${API}/language-audit/missing?language=${encodeURIComponent(selectedLanguage)}`);
+            const data = await EPT.fetchJson(`${API}/GetMissingTranslations?language=${encodeURIComponent(selectedLanguage)}`);
             content.innerHTML = '';
 
             stats.innerHTML = `
@@ -247,7 +247,7 @@
         EPT.showLoading(content);
 
         try {
-            const tree = await EPT.fetchJson(`${API}/language-audit/coverage-tree?language=${encodeURIComponent(selectedLanguage)}`);
+            const tree = await EPT.fetchJson(`${API}/GetCoverageTree?language=${encodeURIComponent(selectedLanguage)}`);
             content.innerHTML = '';
 
             if (tree.length === 0) {
@@ -383,7 +383,7 @@
         stats.innerHTML = '';
 
         try {
-            let url = `${API}/language-audit/stale?thresholdDays=${threshold}`;
+            let url = `${API}/GetStaleTranslations?thresholdDays=${threshold}`;
             if (lang) url += `&language=${encodeURIComponent(lang)}`;
 
             const data = await EPT.fetchJson(url);
@@ -483,7 +483,7 @@
         stats.innerHTML = '';
 
         try {
-            let url = `${API}/language-audit/queue?targetLanguage=${encodeURIComponent(targetLang)}&page=${queuePage}&pageSize=${queuePageSize}`;
+            let url = `${API}/GetTranslationQueue?targetLanguage=${encodeURIComponent(targetLang)}&page=${queuePage}&pageSize=${queuePageSize}`;
             if (contentType) url += `&contentType=${encodeURIComponent(contentType)}`;
 
             const result = await EPT.fetchJson(url);
@@ -575,7 +575,7 @@
     async function exportQueue() {
         const targetLang = document.getElementById('lang-queue-target')?.value || selectedLanguage;
         try {
-            const data = await EPT.fetchJson(`${API}/language-audit/export?targetLanguage=${encodeURIComponent(targetLang)}`);
+            const data = await EPT.fetchJson(`${API}/ExportTranslationQueue?targetLanguage=${encodeURIComponent(targetLang)}`);
             const columns = [
                 { key: 'contentId', label: 'Content ID' },
                 { key: 'contentName', label: 'Name' },

@@ -285,8 +285,8 @@ public class GetDescendentsContentAuditProvider : IContentAuditDataProvider
             foreach (PropertyData prop in content.Property)
             {
                 if (prop.Value is ContentArea ca &&
-                    ca.FilteredItems != null &&
-                    ca.FilteredItems.Any(i => i.AllowedRoles != null && i.AllowedRoles.Any()))
+                    ca.Items != null &&
+                    ca.Items.Any(i => i.AllowedRoles != null && i.AllowedRoles.Any()))
                     return true;
             }
         }

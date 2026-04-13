@@ -28,7 +28,6 @@ public class PersonalizationAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/personalization/usages")]
     public IActionResult GetUsages()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -41,7 +40,6 @@ public class PersonalizationAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/personalization/visitor-groups")]
     public IActionResult GetVisitorGroups()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -54,7 +52,6 @@ public class PersonalizationAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/personalization/job-status")]
     public IActionResult GetJobStatus()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -67,7 +64,6 @@ public class PersonalizationAuditApiController : Controller
     }
 
     [HttpPost]
-    [Route("editorpowertools/api/personalization/job-start")]
     public async Task<IActionResult> StartJob()
     {
         if (!_accessChecker.HasAccess(HttpContext,

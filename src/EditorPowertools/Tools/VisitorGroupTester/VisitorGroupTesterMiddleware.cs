@@ -1,8 +1,10 @@
 using System.Text;
 using UmageAI.Optimizely.EditorPowerTools.Configuration;
+using UmageAI.Optimizely.EditorPowerTools.Menu;
 using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using EPiServer.Core;
 using EPiServer.Editor;
+using EPiServer.Shell;
 using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +21,14 @@ public class VisitorGroupTesterMiddleware
 {
     private readonly RequestDelegate _next;
 
+    // Derived once from EPT's own module path: takes the first segment of the virtual path
+    // (e.g. "/EPiServer" on CMS 12, "/Optimizely" on CMS 13) — no hardcoded strings needed.
+    private static readonly Lazy<string> _shellRoot = new(() =>
+    {
+        var eptPath = Paths.ToResource(typeof(EditorPowertoolsMenuProvider), "");
+        return "/" + eptPath.TrimStart('/').Split('/')[0];
+    });
+
     public VisitorGroupTesterMiddleware(RequestDelegate next)
     {
         _next = next;
@@ -33,10 +43,10 @@ public class VisitorGroupTesterMiddleware
             return;
         }
 
-        // Skip API, CMS shell, and static asset requests — only inject on public site
+        // Skip CMS shell/module paths and static asset requests — only inject on public site.
+        // _shellRoot covers all Optimizely module paths (EPT included) regardless of CMS version.
         var path = context.Request.Path.Value ?? "";
-        if (path.StartsWith("/episerver", StringComparison.OrdinalIgnoreCase) ||
-            path.StartsWith("/editorpowertools", StringComparison.OrdinalIgnoreCase) ||
+        if (path.StartsWith(_shellRoot.Value, StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/api/", StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/util/", StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/globalassets", StringComparison.OrdinalIgnoreCase) ||
@@ -89,6 +99,9 @@ public class VisitorGroupTesterMiddleware
             }
         }
 
+        // Resolve the visitor groups API URL using the module path (avoids hardcoding)
+        var groupsUrl = Paths.ToResource(typeof(EditorPowertoolsMenuProvider), "VisitorGroupTesterApi/GetGroups");
+
         // Buffer the response to inject our toolbar
         var originalBody = context.Response.Body;
         using var bufferStream = new MemoryStream();
@@ -97,6 +110,17 @@ public class VisitorGroupTesterMiddleware
         await _next(context);
 
         bufferStream.Seek(0, SeekOrigin.Begin);
+
+        // If the response is compressed, don't try to read/modify it as text — just pass it through
+        var encoding = context.Response.Headers["Content-Encoding"].ToString();
+        if (!string.IsNullOrEmpty(encoding))
+        {
+            context.Response.Body = originalBody;
+            bufferStream.Seek(0, SeekOrigin.Begin);
+            await bufferStream.CopyToAsync(context.Response.Body);
+            return;
+        }
+
         var responseBody = await new StreamReader(bufferStream).ReadToEndAsync();
 
         // Only inject into HTML responses
@@ -107,7 +131,7 @@ public class VisitorGroupTesterMiddleware
             // After _next(), Optimizely's routing pipeline has run and IContentRouteHelper
             // has the content reference for the current page — use it to build an edit URL.
             var pageEditUrl = ResolvePageEditUrl(context);
-            var toolbar = GetToolbarHtml(pageEditUrl);
+            var toolbar = GetToolbarHtml(pageEditUrl, groupsUrl);
             responseBody = responseBody.Replace("</body>", toolbar + "\n</body>", StringComparison.OrdinalIgnoreCase);
         }
 
@@ -147,9 +171,10 @@ public class VisitorGroupTesterMiddleware
         return false;
     }
 
-    private static string GetToolbarHtml(string? pageEditUrl = null)
+    private static string GetToolbarHtml(string? pageEditUrl = null, string? groupsUrl = null)
     {
         var safeEditUrl = System.Text.Encodings.Web.HtmlEncoder.Default.Encode(pageEditUrl ?? "");
+        var safeGroupsUrl = System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(groupsUrl ?? "/episerver/EditorPowertools/VisitorGroupTesterApi/GetGroups");
         return """
 <style>
 .ept-vgt-toggle {
@@ -349,7 +374,7 @@ public class VisitorGroupTesterMiddleware
     });
 
     // Fetch visitor groups
-    fetch('/editorpowertools/api/visitor-group-tester/groups', { credentials: 'same-origin' })
+    fetch('###GROUPS_URL###', { credentials: 'same-origin' })
         .then(function(r) { return r.ok ? r.json() : []; })
         .then(function(data) {
             groups = data || [];
@@ -494,7 +519,8 @@ public class VisitorGroupTesterMiddleware
     }
 })();
 </script>
-""".Replace("###EDIT_LINK###", string.IsNullOrEmpty(safeEditUrl)
+""".Replace("###GROUPS_URL###", safeGroupsUrl)
+       .Replace("###EDIT_LINK###", string.IsNullOrEmpty(safeEditUrl)
             ? ""
             : $"<a href=\"{safeEditUrl}\" target=\"_blank\" class=\"ept-vgt-edit-link\">&#9998; Edit this page in CMS</a>");
     }

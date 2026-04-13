@@ -1,17 +1,26 @@
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.Framework.Localization;
+#if !OPTIMIZELY_CMS13
 using EPiServer.PlugIn;
+#endif
 using EPiServer.Scheduler;
 using Microsoft.Extensions.Logging;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Services;
 
+#if OPTIMIZELY_CMS13
+[ScheduledJobAttribute(
+    DisplayName = "[EditorPowertools] Content Analysis",
+    Description = "Unified job that traverses all content once and runs all registered analyzers (content type stats, personalization, link checking, etc.).",
+    LanguagePath = "/editorpowertools/jobs/contentanalysis")]
+#else
 [ScheduledPlugIn(
     DisplayName = "[EditorPowertools] Content Analysis",
     Description = "Unified job that traverses all content once and runs all registered analyzers (content type stats, personalization, link checking, etc.).",
     LanguagePath = "/editorpowertools/jobs/contentanalysis",
     SortIndex = 10000)]
+#endif
 public class UnifiedContentAnalysisJob : ScheduledJobBase
 {
     private readonly IContentRepository _contentRepository;

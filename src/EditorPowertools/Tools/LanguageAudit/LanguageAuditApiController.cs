@@ -29,7 +29,6 @@ public class LanguageAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/language-audit/overview")]
     public IActionResult GetOverview()
     {
         if (!HasAccess()) return Forbid();
@@ -39,7 +38,6 @@ public class LanguageAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/language-audit/missing")]
     public IActionResult GetMissingTranslations([FromQuery] string language, [FromQuery] int? parentId = null)
     {
         if (!HasAccess()) return Forbid();
@@ -52,7 +50,6 @@ public class LanguageAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/language-audit/coverage-tree")]
     public IActionResult GetCoverageTree([FromQuery] string language)
     {
         if (!HasAccess()) return Forbid();
@@ -65,7 +62,6 @@ public class LanguageAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/language-audit/stale")]
     public IActionResult GetStaleTranslations([FromQuery] int thresholdDays = 30, [FromQuery] string? language = null)
     {
         if (!HasAccess()) return Forbid();
@@ -75,7 +71,6 @@ public class LanguageAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/language-audit/queue")]
     public IActionResult GetTranslationQueue(
         [FromQuery] string targetLanguage,
         [FromQuery] string? contentType = null,
@@ -92,7 +87,6 @@ public class LanguageAuditApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/language-audit/export")]
     public IActionResult ExportTranslationQueue([FromQuery] string targetLanguage)
     {
         if (!HasAccess()) return Forbid();
@@ -105,7 +99,6 @@ public class LanguageAuditApiController : Controller
     }
 
     [HttpPost]
-    [Route("editorpowertools/api/language-audit/aggregation-start")]
     public async Task<IActionResult> StartAggregationJob()
     {
         if (!HasAccess()) return Forbid();

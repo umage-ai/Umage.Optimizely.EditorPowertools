@@ -6,20 +6,31 @@ using EPiServer.Core;
 using EPiServer.Data.Dynamic;
 using EPiServer.DataAccess;
 using EPiServer.Framework.Blobs;
+#if !OPTIMIZELY_CMS13
 using EPiServer.PlugIn;
+#endif
 using EPiServer.Scheduler;
 using EPiServer.Security;
+#if !OPTIMIZELY_CMS13
 using EPiServer.Web;
+#endif
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit;
 
+#if OPTIMIZELY_CMS13
+[ScheduledJobAttribute(
+    DisplayName    = "[EditorPowertools] Content Audit Export",
+    Description    = "Generates a Content Audit export file and saves it to the CMS media library.",
+    LanguagePath   = "/editorpowertools/jobs/contentauditexport")]
+#else
 [ScheduledPlugIn(
     DisplayName    = "[EditorPowertools] Content Audit Export",
     Description    = "Generates a Content Audit export file and saves it to the CMS media library.",
     LanguagePath   = "/editorpowertools/jobs/contentauditexport",
     SortIndex      = 10001)]
+#endif
 public class ContentAuditExportJob : ScheduledJobBase
 {
     private readonly IContentAuditDataProvider _provider;
@@ -165,7 +176,11 @@ public class ContentAuditExportJob : ScheduledJobBase
     private ContentReference EnsureReportFolder()
     {
         var folderName = _options.ContentAudit.ReportFolderName;
+#if OPTIMIZELY_CMS13
+        var globalAssets = ContentReference.GlobalBlockFolder;
+#else
         var globalAssets = SiteDefinition.Current.GlobalAssetsRoot;
+#endif
 
         var existing = _contentRepository
             .GetChildren<ContentFolder>(globalAssets)

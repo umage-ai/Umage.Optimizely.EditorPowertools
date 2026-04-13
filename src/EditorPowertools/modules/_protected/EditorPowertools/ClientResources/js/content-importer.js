@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    var API = window.EPT_API_URL + '/content-importer';
+    var API = window.EPT_BASE_URL + 'ContentImporterApi';
     var root = document.getElementById('content-importer-root');
     if (!root) return;
 
@@ -125,7 +125,7 @@
         var formData = new FormData();
         formData.append('file', file);
 
-        fetch(API + '/upload', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: formData })
+        fetch(API + '/Upload', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: formData })
             .then(function (r) {
                 if (!r.ok) return r.json().then(function (e) { throw new Error(e.error || 'Upload failed'); });
                 return r.json();
@@ -238,7 +238,7 @@
     }
 
     function loadContentTypes(filter) {
-        var url = API + '/content-types' + (filter ? '?filter=' + filter : '');
+        var url = API + '/GetContentTypes' + (filter ? '?filter=' + filter : '');
         fetchJson(url).then(function (types) {
             state.contentTypes = types;
             var select = document.getElementById('ct-select');
@@ -252,7 +252,7 @@
     }
 
     function loadLanguages() {
-        fetchJson(API + '/languages').then(function (langs) {
+        fetchJson(API + '/GetLanguages').then(function (langs) {
             state.languages = langs;
             var select = document.getElementById('lang-select');
             var html = '';
@@ -288,7 +288,7 @@
         root.innerHTML = html;
         bindNav();
 
-        fetchJson(API + '/content-types/' + state.targetContentTypeId).then(function (ct) {
+        fetchJson(API + '/GetContentType/' + state.targetContentTypeId).then(function (ct) {
             state.targetContentType = ct;
             renderMappingFields(ct);
         });
@@ -457,7 +457,7 @@
     function loadBlockTypesIntoSelect(select, propName, blockIndex) {
         var loadTypes = _blockTypesCache
             ? Promise.resolve(_blockTypesCache)
-            : fetchJson(API + '/block-types').then(function (types) { _blockTypesCache = types; return types; });
+            : fetchJson(API + '/GetBlockTypes').then(function (types) { _blockTypesCache = types; return types; });
 
         loadTypes.then(function (types) {
             var html = '<option value="">' + EPT.s('contentimporter.opt_selectblocktype', '-- Select block type --') + '</option>';
@@ -476,7 +476,7 @@
     }
 
     function loadBlockTypePropertiesInto(container, propName, blockIndex, blockTypeId) {
-        fetchJson(API + '/content-types/' + blockTypeId).then(function (bt) {
+        fetchJson(API + '/GetContentType/' + blockTypeId).then(function (bt) {
             var cols = state.columns.map(function (c) { return c.name; });
             var bid = propName + '-' + blockIndex;
             var html = '<div style="margin-top:4px;padding:8px;background:var(--ept-bg);border-radius:4px;font-size:11px">';
@@ -592,7 +592,7 @@
             mappings: state.mappings
         };
 
-        postJson(API + '/dry-run', request)
+        postJson(API + '/DryRun', request)
             .then(function (result) {
                 state.dryRunResult = result;
                 var body = document.getElementById('dryrun-body');
@@ -644,7 +644,7 @@
         html += '<div class="ept-card__body" id="exec-body"><div class="ept-loading"><div class="ept-spinner"></div><p>Starting import...</p></div></div></div>';
         root.innerHTML = html;
 
-        postJson(API + '/execute', { sessionId: state.sessionId })
+        postJson(API + '/Execute', { sessionId: state.sessionId })
             .then(function () {
                 pollProgress();
             })
@@ -656,7 +656,7 @@
 
     function pollProgress() {
         state.pollTimer = setInterval(function () {
-            fetchJson(API + '/progress/' + state.sessionId)
+            fetchJson(API + '/GetProgress/' + state.sessionId)
                 .then(function (progress) {
                     state.importProgress = progress;
                     renderProgress(progress);

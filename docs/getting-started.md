@@ -1,24 +1,35 @@
 # Getting Started with EditorPowertools
 
-This guide walks you through installing and configuring the EditorPowertools plugin for Optimizely CMS 12.
+This guide walks you through installing and configuring the EditorPowertools plugin for Optimizely CMS 12 and CMS 13.
 
-## Local Development (Sample Site)
+## Local Development (Sample Sites)
 
-The sample site comes with a pre-configured admin user:
-- **Username:** `Admin`
-- **Password:** `EP!Z3rver`
+Two sample sites are included — one for each CMS version. See [Local Development Guide](local-development.md) for setup instructions including how to unzip the pre-built database and blobs.
+
+**CMS 12 sample site (Alloy / .NET 8):**
 
 ```bash
 dotnet run --project src/EditorPowertools.SampleSite
 ```
 
-Then navigate to `https://localhost:5000/EPiServer/CMS` and log in.
+Navigate to `https://localhost:5000/EPiServer/CMS` and log in.
+
+**CMS 13 sample site (Alloy / .NET 10):**
+
+```bash
+dotnet run --project src/EditorPowertools.SampleSiteCms13
+```
+
+Navigate to `https://localhost:5010/Optimizely/CMS` and log in.
 
 ## Prerequisites
 
-- **.NET 8 SDK** or later
-- **Optimizely CMS 12** (EPiServer.CMS 12.29.0 or later)
-- An Optimizely CMS 12 site project
+- **.NET 8 SDK** — for Optimizely CMS 12
+- **.NET 10 SDK** — for Optimizely CMS 13
+- **Optimizely CMS 12** (EPiServer.CMS 12.29.0 or later) or **Optimizely CMS 13**
+- An Optimizely CMS 12 or CMS 13 site project
+
+The NuGet package targets both `net8.0` and `net10.0` and works with both CMS versions from a single package.
 
 ## Step 1: Install the NuGet Package
 

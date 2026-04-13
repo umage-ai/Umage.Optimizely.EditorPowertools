@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    var API = window.EPT_API_URL + '/cms-doctor';
+    var API = window.EPT_BASE_URL + 'CmsDoctorApi';
     var root = document.getElementById('cms-doctor-root');
     if (!root) return;
 
@@ -217,7 +217,7 @@
             runBtn.onclick = function () {
                 runBtn.textContent = EPT.s('cmsdoctor.btn_running', 'Running...');
                 runBtn.disabled = true;
-                postJson(API + '/run/' + encodeURIComponent(check.checkType)).then(function (result) {
+                postJson(API + '/RunCheck?id=' + encodeURIComponent(check.checkType)).then(function (result) {
                     document.body.removeChild(overlay);
                     loadDashboard();
                     // Re-open with updated result
@@ -235,7 +235,7 @@
                 if (!confirm(EPT.s('cmsdoctor.confirm_applyfix', 'Apply fix for this check?'))) return;
                 fixBtn.textContent = EPT.s('cmsdoctor.btn_fixing', 'Fixing...');
                 fixBtn.disabled = true;
-                postJson(API + '/fix/' + encodeURIComponent(check.checkType)).then(function () {
+                postJson(API + '/FixCheck?id=' + encodeURIComponent(check.checkType)).then(function () {
                     document.body.removeChild(overlay);
                     loadDashboard();
                 });
@@ -258,7 +258,7 @@
         document.getElementById('run-all').onclick = function () {
             state.loading = true;
             render();
-            postJson(API + '/run-all').then(function (dashboard) {
+            postJson(API + '/RunAll').then(function (dashboard) {
                 state.dashboard = dashboard;
                 state.loading = false;
                 render();
@@ -272,7 +272,7 @@
                 var type = this.getAttribute('data-type');
                 this.textContent = '...';
                 this.disabled = true;
-                postJson(API + '/run/' + encodeURIComponent(type)).then(function () { loadDashboard(); });
+                postJson(API + '/RunCheck?id=' + encodeURIComponent(type)).then(function () { loadDashboard(); });
             };
         }
 
@@ -283,7 +283,7 @@
                 var type = this.getAttribute('data-type');
                 if (!confirm(EPT.s('cmsdoctor.confirm_fix', 'Apply fix?'))) return;
                 this.disabled = true;
-                postJson(API + '/fix/' + encodeURIComponent(type)).then(function () { loadDashboard(); });
+                postJson(API + '/FixCheck?id=' + encodeURIComponent(type)).then(function () { loadDashboard(); });
             };
         }
 
@@ -300,7 +300,7 @@
         for (var d = 0; d < dismissBtns.length; d++) {
             dismissBtns[d].onclick = function (e) {
                 e.stopPropagation();
-                postJson(API + '/dismiss/' + encodeURIComponent(this.getAttribute('data-type'))).then(function () { loadDashboard(); });
+                postJson(API + '/DismissCheck?id=' + encodeURIComponent(this.getAttribute('data-type'))).then(function () { loadDashboard(); });
             };
         }
 
@@ -308,7 +308,7 @@
         for (var r = 0; r < restoreBtns.length; r++) {
             restoreBtns[r].onclick = function (e) {
                 e.stopPropagation();
-                postJson(API + '/restore/' + encodeURIComponent(this.getAttribute('data-type'))).then(function () { loadDashboard(); });
+                postJson(API + '/RestoreCheck?id=' + encodeURIComponent(this.getAttribute('data-type'))).then(function () { loadDashboard(); });
             };
         }
 
@@ -322,7 +322,7 @@
     }
 
     function loadDashboard() {
-        fetchJson(API + '/dashboard').then(function (d) {
+        fetchJson(API + '/GetDashboard').then(function (d) {
             state.dashboard = d;
             render();
         });

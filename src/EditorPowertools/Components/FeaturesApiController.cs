@@ -11,7 +11,6 @@ namespace UmageAI.Optimizely.EditorPowerTools.Components;
 /// Used by the client-side module initializer to conditionally register commands.
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
-[Route("editorpowertools/api")]
 public class FeaturesApiController : Controller
 {
     private readonly FeatureAccessChecker _accessChecker;
@@ -21,7 +20,7 @@ public class FeaturesApiController : Controller
         _accessChecker = accessChecker;
     }
 
-    [HttpGet("features")]
+    [HttpGet]
     public IActionResult GetFeatures()
     {
         return Ok(new

@@ -28,7 +28,6 @@ public class LinkCheckerApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/link-checker/links")]
     public IActionResult GetLinks([FromQuery] bool brokenOnly = false)
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -41,7 +40,6 @@ public class LinkCheckerApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/link-checker/stats")]
     public IActionResult GetStats()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -54,7 +52,6 @@ public class LinkCheckerApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/link-checker/job-status")]
     public IActionResult GetJobStatus()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -67,7 +64,6 @@ public class LinkCheckerApiController : Controller
     }
 
     [HttpPost]
-    [Route("editorpowertools/api/link-checker/job-start")]
     public async Task<IActionResult> StartJob()
     {
         if (!_accessChecker.HasAccess(HttpContext,

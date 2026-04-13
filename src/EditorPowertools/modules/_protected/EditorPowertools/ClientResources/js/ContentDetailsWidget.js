@@ -114,7 +114,7 @@ define([
             var container = this.containerNode;
             container.innerHTML = '<div class="ept-cd-loading">' + EPT.s('shared.loading', 'Loading...') + '</div>';
             var self = this;
-            fetch(window.EPT_API_URL + "/content-details/" + contentId)
+            fetch(window.EPT_BASE_URL + "ContentDetailsApi/GetDetails/" + contentId)
                 .then(function (r) {
                     if (!r.ok) throw new Error("HTTP " + r.status);
                     return r.json();

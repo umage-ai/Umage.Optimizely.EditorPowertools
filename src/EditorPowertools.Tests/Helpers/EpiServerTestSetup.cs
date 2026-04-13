@@ -1,6 +1,7 @@
 using EPiServer.ServiceLocation;
 using EPiServer.Shell.Modules;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tests.Helpers;
 
@@ -23,7 +24,12 @@ public static class EpiServerTestSetup
             if (_initialized) return;
 
             var services = new ServiceCollection();
+            services.AddLogging();
+#if OPTIMIZELY_CMS13
+            services.AddSingleton<ModuleTable>();
+#else
             services.AddSingleton(new ModuleTable());
+#endif
             var provider = services.BuildServiceProvider();
 
             ServiceLocator.SetServiceProvider(provider);

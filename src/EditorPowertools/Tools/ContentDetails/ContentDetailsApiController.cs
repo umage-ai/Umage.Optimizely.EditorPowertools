@@ -23,15 +23,14 @@ public class ContentDetailsApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content-details/{contentId:int}")]
-    public IActionResult GetDetails(int contentId)
+    public IActionResult GetDetails(int id)
     {
         if (!_accessChecker.HasAccess(HttpContext,
             nameof(Configuration.FeatureToggles.ContentDetails),
             EditorPowertoolsPermissions.ContentDetails))
             return Forbid();
 
-        var details = _service.GetDetails(contentId);
+        var details = _service.GetDetails(id);
         if (details == null)
             return NotFound();
 

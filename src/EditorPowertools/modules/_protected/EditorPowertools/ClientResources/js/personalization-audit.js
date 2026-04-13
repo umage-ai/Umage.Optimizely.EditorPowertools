@@ -2,7 +2,7 @@
  * Personalization Audit - Main UI
  */
 (function () {
-    const API = window.EPT_API_URL + '/personalization';
+    const API = window.EPT_BASE_URL + 'PersonalizationAuditApi';
     let allUsages = [];
     let allVisitorGroups = [];
     let tableInstance = null;
@@ -17,9 +17,9 @@
         EPT.showLoading(document.getElementById('personalization-content'));
         try {
             const [usages, groups, status] = await Promise.all([
-                EPT.fetchJson(`${API}/usages`),
-                EPT.fetchJson(`${API}/visitor-groups`),
-                EPT.fetchJson(`${API}/job-status`).catch(() => null)
+                EPT.fetchJson(`${API}/GetUsages`),
+                EPT.fetchJson(`${API}/GetVisitorGroups`),
+                EPT.fetchJson(`${API}/GetJobStatus`).catch(() => null)
             ]);
             allUsages = usages;
             allVisitorGroups = groups;
@@ -39,7 +39,7 @@
         const existing = document.getElementById('pers-job-alert');
         if (existing) existing.remove();
         if (!jobStatus) return;
-        const el = EPT.renderJobAlert(jobStatus, `${API}/job-start`);
+        const el = EPT.renderJobAlert(jobStatus, `${API}/StartJob`);
         if (!el) return;
         el.id = 'pers-job-alert';
         const container = document.getElementById('personalization-stats');

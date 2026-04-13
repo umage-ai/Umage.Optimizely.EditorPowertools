@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    var API = window.EPT_API_URL + '/manage-children';
+    var API = window.EPT_BASE_URL + 'ManageChildrenApi';
     var root = document.getElementById('manage-children-root');
     if (!root) return;
 
@@ -144,7 +144,7 @@
         bindEvents();
 
         // Load parent info
-        fetchJson(API + '/parent/' + state.parentId).then(function (info) {
+        fetchJson(API + '/GetParent/' + state.parentId).then(function (info) {
             document.getElementById('parent-info').innerHTML =
                 EPT.s('managechildren.lbl_childrenof', 'Children of {0} ({1}, ID: {2})').replace('{0}', '<strong>' + escHtml(info.name) + '</strong>').replace('{1}', escHtml(info.contentTypeName)).replace('{2}', info.contentId);
         }).catch(function () {});
@@ -204,10 +204,10 @@
         }
 
         // Bulk action buttons
-        bindAction('btn-publish', 'publish', EPT.s('managechildren.confirm_publishall', 'Publish all {0} children?').replace('{0}', state.selected.size));
-        bindAction('btn-unpublish', 'unpublish', EPT.s('managechildren.confirm_unpublishall', 'Unpublish all {0} children?').replace('{0}', state.selected.size));
-        bindAction('btn-trash', 'delete', EPT.s('managechildren.confirm_movetotrash', 'Move {0} items to trash?').replace('{0}', state.selected.size));
-        bindAction('btn-delete', 'delete-permanently', EPT.s('managechildren.confirm_delete', 'Delete {0} selected item(s)? This cannot be undone.').replace('{0}', state.selected.size));
+        bindAction('btn-publish', 'BulkPublish', EPT.s('managechildren.confirm_publishall', 'Publish all {0} children?').replace('{0}', state.selected.size));
+        bindAction('btn-unpublish', 'BulkUnpublish', EPT.s('managechildren.confirm_unpublishall', 'Unpublish all {0} children?').replace('{0}', state.selected.size));
+        bindAction('btn-trash', 'BulkDelete', EPT.s('managechildren.confirm_movetotrash', 'Move {0} items to trash?').replace('{0}', state.selected.size));
+        bindAction('btn-delete', 'BulkDeletePermanently', EPT.s('managechildren.confirm_delete', 'Delete {0} selected item(s)? This cannot be undone.').replace('{0}', state.selected.size));
 
         // Move button
         var moveBtn = document.getElementById('btn-move');
@@ -216,7 +216,7 @@
                 if (state.selected.size === 0) return;
                 EPT.contentPicker({ title: EPT.s('managechildren.dlg_selecttarget', 'Select Target Location') }).then(function (sel) {
                     if (!sel) return;
-                    postJson(API + '/move', {
+                    postJson(API + '/BulkMove', {
                         parentContentId: state.parentId,
                         contentIds: Array.from(state.selected),
                         targetParentId: sel.id
@@ -270,7 +270,7 @@
         state.loading = true;
         render();
 
-        var url = API + '/' + state.parentId;
+        var url = API + '/GetChildren/' + state.parentId;
         if (state.sortBy) url += '?sortBy=' + state.sortBy + '&sortDesc=' + state.sortDesc;
 
         fetchJson(url).then(function (items) {

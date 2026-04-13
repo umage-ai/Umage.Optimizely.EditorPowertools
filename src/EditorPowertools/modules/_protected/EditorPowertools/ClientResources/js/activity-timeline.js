@@ -2,7 +2,7 @@
  * Activity Timeline - Main UI
  */
 (function () {
-    var API = window.EPT_API_URL + '/activity';
+    var API = window.EPT_BASE_URL + 'ActivityTimelineApi';
     var urlParams = new URLSearchParams(window.location.search);
     var state = {
         activities: [],
@@ -29,9 +29,9 @@
     function init() {
         EPT.showLoading(document.getElementById('timeline-content'));
         Promise.all([
-            EPT.fetchJson(API + '/stats').catch(function () { return null; }),
-            EPT.fetchJson(API + '/users').catch(function () { return []; }),
-            EPT.fetchJson(API + '/content-types').catch(function () { return []; })
+            EPT.fetchJson(API + '/GetStats').catch(function () { return null; }),
+            EPT.fetchJson(API + '/GetUsers').catch(function () { return []; }),
+            EPT.fetchJson(API + '/GetContentTypes').catch(function () { return []; })
         ]).then(function (results) {
             var stats = results[0];
             var users = results[1];
@@ -175,7 +175,7 @@
             EPT.showLoading(contentEl);
         }
 
-        var url = API + '/timeline?skip=' + state.skip + '&take=' + state.take;
+        var url = API + '/GetTimeline?skip=' + state.skip + '&take=' + state.take;
         if (state.contentId) url += '&contentId=' + encodeURIComponent(state.contentId);
         if (state.user) url += '&user=' + encodeURIComponent(state.user);
         if (state.action) url += '&action=' + encodeURIComponent(state.action);
@@ -358,7 +358,7 @@
         var dialog = EPT.openDialog(EPT.s('activitytimeline.dlg_versioncomparison', 'Version Comparison'), { wide: true });
         EPT.showLoading(dialog.body);
 
-        var url = API + '/compare/' + contentId + '/' + versionId;
+        var url = API + '/CompareVersions?contentId=' + contentId + '&versionId=' + versionId;
         if (language) url += '?language=' + encodeURIComponent(language);
 
         EPT.fetchJson(url).then(function (result) {

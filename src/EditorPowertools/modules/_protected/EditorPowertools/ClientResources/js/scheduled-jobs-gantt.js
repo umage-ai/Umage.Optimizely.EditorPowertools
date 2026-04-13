@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    var API_BASE = window.EPT_API_URL + '/jobs-gantt/';
+    var API_BASE = window.EPT_BASE_URL + 'ScheduledJobsGanttApi/';
 
     var ROW_HEIGHT = 36;
     var ROW_GAP = 2;
@@ -70,7 +70,7 @@
 
         try {
             var range = getFetchRange();
-            var url = API_BASE + 'gantt-data?from=' +
+            var url = API_BASE + 'GetGanttData?from=' +
                 range.from.toISOString() + '&to=' + range.to.toISOString();
 
             var data = await EPT.fetchJson(url);

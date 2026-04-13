@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    var API_URL = window.EPT_API_URL + '/content-statistics/dashboard';
+    var API_URL = window.EPT_BASE_URL + 'ContentStatisticsApi/GetDashboard';
     var CMS_URL = window.EPT_CMS_URL || '';
     var jobStatus = null;
 
@@ -26,7 +26,7 @@
     async function loadDashboard() {
         var results = await Promise.allSettled([
             EPT.fetchJson(API_URL),
-            EPT.fetchJson(window.EPT_API_URL + '/aggregation-status')
+            EPT.fetchJson(window.EPT_BASE_URL + 'ContentStatisticsApi/GetAggregationStatus')
         ]);
         jobStatus = results[1].status === 'fulfilled' ? results[1].value : null;
 
@@ -51,7 +51,7 @@
 
     function prependJobAlert() {
         if (!jobStatus) return;
-        var alertEl = EPT.renderJobAlert(jobStatus, window.EPT_API_URL + '/content-statistics/aggregation-start');
+        var alertEl = EPT.renderJobAlert(jobStatus, window.EPT_BASE_URL + 'ContentStatisticsApi/StartAggregationJob');
         if (!alertEl) return;
         root.insertBefore(alertEl, root.firstChild);
     }

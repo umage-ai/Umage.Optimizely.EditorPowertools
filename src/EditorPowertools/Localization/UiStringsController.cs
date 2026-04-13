@@ -14,7 +14,6 @@ public class UiStringsController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/ui-strings")]
     public IActionResult GetAll()
     {
         // Access is gated by [Authorize(Policy = "codeart:editorpowertools")].

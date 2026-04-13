@@ -11,7 +11,6 @@ namespace UmageAI.Optimizely.EditorPowerTools.Components;
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
 [RequireAjax]
-[Route("editorpowertools/api/preferences")]
 public class PreferencesApiController : Controller
 {
     private readonly UserPreferencesService _preferencesService;
@@ -23,27 +22,27 @@ public class PreferencesApiController : Controller
         _accessChecker = accessChecker;
     }
 
-    [HttpGet("{toolName}")]
-    public IActionResult Get(string toolName)
+    [HttpGet]
+    public IActionResult Get([FromQuery] string id)
     {
-        if (!_accessChecker.IsFeatureEnabled(toolName))
+        if (!_accessChecker.IsFeatureEnabled(id))
             return Forbid();
 
         var username = HttpContext.User.Identity?.Name;
         if (string.IsNullOrEmpty(username))
             return Unauthorized();
 
-        var json = _preferencesService.Get(username, toolName);
+        var json = _preferencesService.Get(username, id);
         if (json == null)
             return Ok(new { });
 
         return Content(json, "application/json");
     }
 
-    [HttpPost("{toolName}")]
-    public async Task<IActionResult> Save(string toolName)
+    [HttpPost]
+    public async Task<IActionResult> Save([FromQuery] string id)
     {
-        if (!_accessChecker.IsFeatureEnabled(toolName))
+        if (!_accessChecker.IsFeatureEnabled(id))
             return Forbid();
 
         var username = HttpContext.User.Identity?.Name;
@@ -53,7 +52,7 @@ public class PreferencesApiController : Controller
         using var reader = new StreamReader(Request.Body);
         var json = await reader.ReadToEndAsync();
 
-        _preferencesService.Save(username, toolName, json);
+        _preferencesService.Save(username, id, json);
         return Ok(new { success = true });
     }
 }

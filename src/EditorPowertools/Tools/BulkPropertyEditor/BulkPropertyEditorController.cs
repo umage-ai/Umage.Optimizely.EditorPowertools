@@ -14,7 +14,6 @@ namespace UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor;
 /// </summary>
 [Authorize(Policy = "codeart:editorpowertools")]
 [RequireAjax]
-[Route("editorpowertools/api/bulk-editor")]
 public class BulkPropertyEditorApiController : Controller
 {
     private readonly BulkPropertyEditorService _service;
@@ -31,7 +30,7 @@ public class BulkPropertyEditorApiController : Controller
         _logger = logger;
     }
 
-    [HttpGet("content-types")]
+    [HttpGet]
     public IActionResult GetContentTypes()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -51,7 +50,7 @@ public class BulkPropertyEditorApiController : Controller
         }
     }
 
-    [HttpGet("languages")]
+    [HttpGet]
     public IActionResult GetLanguages()
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -71,8 +70,8 @@ public class BulkPropertyEditorApiController : Controller
         }
     }
 
-    [HttpGet("properties/{contentTypeId}")]
-    public IActionResult GetProperties(int contentTypeId)
+    [HttpGet]
+    public IActionResult GetProperties([FromQuery] int id)
     {
         if (!_accessChecker.HasAccess(HttpContext,
             nameof(Configuration.FeatureToggles.BulkPropertyEditor),
@@ -81,17 +80,17 @@ public class BulkPropertyEditorApiController : Controller
 
         try
         {
-            List<PropertyColumnInfo> properties = _service.GetProperties(contentTypeId);
+            List<PropertyColumnInfo> properties = _service.GetProperties(id);
             return Ok(new { success = true, properties });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to get properties for content type {ContentTypeId}", contentTypeId);
+            _logger.LogError(ex, "Failed to get properties for content type {ContentTypeId}", id);
             return StatusCode(500, new { success = false, message = "Failed to get properties." });
         }
     }
 
-    [HttpGet("content")]
+    [HttpGet]
     public async Task<IActionResult> GetContent(
         [FromQuery] int contentTypeId,
         [FromQuery] string language = "en",
@@ -153,8 +152,8 @@ public class BulkPropertyEditorApiController : Controller
         }
     }
 
-    [HttpGet("references/{contentId}")]
-    public async Task<IActionResult> GetReferences(int contentId)
+    [HttpGet]
+    public async Task<IActionResult> GetReferences([FromQuery] int id)
     {
         if (!_accessChecker.HasAccess(HttpContext,
             nameof(Configuration.FeatureToggles.BulkPropertyEditor),
@@ -163,17 +162,17 @@ public class BulkPropertyEditorApiController : Controller
 
         try
         {
-            List<ContentReferenceInfo> references = await _service.GetReferencesAsync(contentId);
+            List<ContentReferenceInfo> references = await _service.GetReferencesAsync(id);
             return Ok(new { success = true, references });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to get references for content {ContentId}", contentId);
+            _logger.LogError(ex, "Failed to get references for content {ContentId}", id);
             return StatusCode(500, new { success = false, message = "Failed to get references." });
         }
     }
 
-    [HttpPost("save")]
+    [HttpPost]
     public async Task<IActionResult> Save([FromBody] InlineEditRequest request)
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -194,8 +193,8 @@ public class BulkPropertyEditorApiController : Controller
         }
     }
 
-    [HttpPost("publish/{contentId}")]
-    public async Task<IActionResult> Publish(int contentId, [FromQuery] string language = "en")
+    [HttpPost]
+    public async Task<IActionResult> Publish([FromQuery] int id, [FromQuery] string language = "en")
     {
         if (!_accessChecker.HasAccess(HttpContext,
             nameof(Configuration.FeatureToggles.BulkPropertyEditor),
@@ -204,18 +203,18 @@ public class BulkPropertyEditorApiController : Controller
 
         try
         {
-            await _service.PublishAsync(contentId, language);
+            await _service.PublishAsync(id, language);
             return Ok(new { success = true, message = "Content published." });
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to publish content {ContentId} for language {Language}",
-                contentId, language);
+                id, language);
             return StatusCode(500, new { success = false, message = "Failed to publish content." });
         }
     }
 
-    [HttpPost("bulk-save")]
+    [HttpPost]
     public async Task<IActionResult> BulkSave([FromBody] BulkSaveRequest request)
     {
         if (!_accessChecker.HasAccess(HttpContext,

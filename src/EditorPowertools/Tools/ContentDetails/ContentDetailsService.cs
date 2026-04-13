@@ -117,7 +117,7 @@ public class ContentDetailsService
 
             if (prop.Value is ContentArea contentArea)
             {
-                foreach (var item in contentArea.FilteredItems ?? Enumerable.Empty<ContentAreaItem>())
+                foreach (var item in contentArea.Items ?? Enumerable.Empty<ContentAreaItem>())
                 {
                     if (ContentReference.IsNullOrEmpty(item.ContentLink) || !seen.Add(item.ContentLink.ID))
                         continue;
@@ -275,7 +275,7 @@ public class ContentDetailsService
 
             if (prop.Value is ContentArea contentArea)
             {
-                var items = (contentArea.FilteredItems ?? Enumerable.Empty<ContentAreaItem>()).ToList();
+                var items = (contentArea.Items ?? Enumerable.Empty<ContentAreaItem>()).ToList();
                 if (items.Count == 0) continue;
 
                 var propNode = new TreePropertyNodeDto
@@ -609,7 +609,7 @@ public class ContentDetailsService
     {
         if (value == null) return null;
         if (value is ContentArea ca)
-            return $"[{ca.FilteredItems?.Count() ?? 0} items]";
+            return $"[{ca.Items?.Count() ?? 0} items]";
         var s = value.ToString();
         return string.IsNullOrEmpty(s) ? null : s;
     }

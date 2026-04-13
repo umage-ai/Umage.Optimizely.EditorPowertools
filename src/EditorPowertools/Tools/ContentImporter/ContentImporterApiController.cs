@@ -27,7 +27,6 @@ public class ContentImporterApiController : Controller
         EditorPowertoolsPermissions.ContentImporter);
 
     [HttpPost]
-    [Route("editorpowertools/api/content-importer/upload")]
     public IActionResult Upload(IFormFile file)
     {
         if (!HasAccess()) return Forbid();
@@ -44,7 +43,6 @@ public class ContentImporterApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content-importer/content-types")]
     public IActionResult GetContentTypes([FromQuery] string? filter = null)
     {
         if (!HasAccess()) return Forbid();
@@ -52,7 +50,6 @@ public class ContentImporterApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content-importer/content-types/{id:int}")]
     public IActionResult GetContentType(int id)
     {
         if (!HasAccess()) return Forbid();
@@ -61,7 +58,6 @@ public class ContentImporterApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content-importer/block-types")]
     public IActionResult GetBlockTypes()
     {
         if (!HasAccess()) return Forbid();
@@ -69,7 +65,6 @@ public class ContentImporterApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content-importer/languages")]
     public IActionResult GetLanguages()
     {
         if (!HasAccess()) return Forbid();
@@ -77,7 +72,6 @@ public class ContentImporterApiController : Controller
     }
 
     [HttpPost]
-    [Route("editorpowertools/api/content-importer/dry-run")]
     public IActionResult DryRun([FromBody] ImportMappingRequest request)
     {
         if (!HasAccess()) return Forbid();
@@ -93,7 +87,6 @@ public class ContentImporterApiController : Controller
     }
 
     [HttpPost]
-    [Route("editorpowertools/api/content-importer/execute")]
     public IActionResult Execute([FromBody] ImportExecuteRequest request)
     {
         if (!HasAccess()) return Forbid();
@@ -109,11 +102,10 @@ public class ContentImporterApiController : Controller
     }
 
     [HttpGet]
-    [Route("editorpowertools/api/content-importer/progress/{sessionId:guid}")]
-    public IActionResult GetProgress(Guid sessionId)
+    public IActionResult GetProgress([FromQuery] Guid id)
     {
         if (!HasAccess()) return Forbid();
-        var progress = _service.GetProgress(sessionId);
+        var progress = _service.GetProgress(id);
         return progress == null ? NotFound() : Ok(progress);
     }
 }
