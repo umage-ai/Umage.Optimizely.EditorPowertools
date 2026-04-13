@@ -2,7 +2,8 @@
 
 ## Prerequisites
 
-- .NET 8 SDK
+- .NET 8 SDK (for CMS 12 sample site)
+- .NET 10 SDK (for CMS 13 sample site)
 - SQL Server LocalDB (included with Visual Studio, or install separately)
 - A code editor (VS Code, Visual Studio, Rider)
 
@@ -15,9 +16,9 @@ git clone https://github.com/CodeArtDK/EditorPowertools.git
 cd EditorPowertools
 ```
 
-### 2. Set up the sample site database and blobs
+### 2. Set up the CMS 12 sample site (Alloy / .NET 8)
 
-The sample site (Alloy demo) ships with a pre-built database and media blobs as zip files in `App_Data`. Unzip them before running:
+The CMS 12 sample site ships with a pre-built database and media blobs as zip files in `App_Data`. Unzip them before running:
 
 ```bash
 cd src/EditorPowertools.SampleSite/App_Data
@@ -30,7 +31,7 @@ This creates:
 - `EditorPowertools.SampleSite.mdf` and `EditorPowertools.SampleSite_log.ldf` - SQL Server LocalDB database files
 - `blobs/` - Media files (images, videos) used by the demo content
 
-### 3. Build and run
+Then build and run:
 
 ```bash
 dotnet build
@@ -39,24 +40,40 @@ dotnet run --project src/EditorPowertools.SampleSite
 
 The site starts at **https://localhost:5000/**
 
-### 4. Log in
+Log in at https://localhost:5000/EPiServer/CMS. The sample site uses `AddAdminUserRegistration()` — create an admin user with any password on first visit.
 
-Navigate to https://localhost:5000/EPiServer/CMS and use:
-
-| | |
-|---|---|
-| **URL** | https://localhost:5000/EPiServer/CMS |
-| **Username** | Admin |
-| **Password** | (set on first login via the admin registration page) |
-
-The sample site uses `AddAdminUserRegistration()` which presents a registration form on first visit. Create an admin user with any password you choose.
-
-### 5. Access Editor Powertools
-
-After logging in, find **Editor Powertools** in the top navigation menu (under the global menu). Or navigate directly:
+After logging in, find **Editor Powertools** in the top navigation menu. Or navigate directly:
 
 - **Overview**: https://localhost:5000/EPiServer/EditorPowertools/EditorPowertools/Overview
-- **Content Type Audit**: https://localhost:5000/EPiServer/EditorPowertools/EditorPowertools/ContentTypeAudit
+
+### 3. Set up the CMS 13 sample site (Alloy / .NET 10)
+
+The CMS 13 sample site also ships with a pre-built database and media blobs. Unzip them:
+
+```bash
+cd src/EditorPowertools.SampleSiteCms13/App_Data
+unzip -o database.zip
+unzip -o blobs.zip
+cd ../../..
+```
+
+This creates:
+- `EditorPowertools.SampleSiteCms13.mdf` and `EditorPowertools.SampleSiteCms13_log.ldf` - LocalDB database files
+- `blobs/` - Media files used by the demo content
+
+Then run:
+
+```bash
+dotnet run --project src/EditorPowertools.SampleSiteCms13
+```
+
+The site starts at **https://localhost:5010/**
+
+Log in at https://localhost:5010/Optimizely/CMS (the shell URL changed in CMS 13). The site uses `AddAdminUserRegistration()` — create an admin user on first visit.
+
+After logging in, find **Editor Powertools** in the top navigation menu. Or navigate directly:
+
+- **Overview**: https://localhost:5010/Optimizely/EditorPowertools/EditorPowertools/Overview
 
 ## Project Structure
 
@@ -98,10 +115,16 @@ EditorPowertools/
           js/ContentDetailsWidget.js      # Dojo AMD widget for assets panel
         module.config                     # Optimizely module configuration
 
-    EditorPowertools.SampleSite/         # Alloy demo site for development
+    EditorPowertools.SampleSite/         # Alloy demo site for CMS 12 / .NET 8
       App_Data/                          # Database + blobs (unzip first)
       Models/                            # Alloy content types
       Business/                          # Site-specific code
+      Views/                             # Site templates
+      Startup.cs                         # Site configuration
+
+    EditorPowertools.SampleSiteCms13/    # Alloy demo site for CMS 13 / .NET 10
+      App_Data/                          # Database + blobs (unzip first)
+      Models/                            # Alloy content types
       Views/                             # Site templates
       Startup.cs                         # Site configuration
 
@@ -152,10 +175,10 @@ All tools use the shared design system in `editorpowertools.css`. CSS classes ar
 ## Troubleshooting
 
 ### Database not found
-Make sure you unzipped `database.zip` in `App_Data/`. The connection string uses LocalDB with `AttachDbFilename`.
+Make sure you unzipped `database.zip` in the appropriate `App_Data/` folder (CMS 12: `EditorPowertools.SampleSite/App_Data/`, CMS 13: `EditorPowertools.SampleSiteCms13/App_Data/`). The connection string uses LocalDB with `AttachDbFilename`.
 
 ### Blobs/images missing
-Unzip `blobs.zip` in `App_Data/`.
+Unzip `blobs.zip` in the appropriate `App_Data/` folder.
 
 ### JS/CSS changes not showing
 The Razor SDK embeds static files at build time. Restart the site after changing files in `ClientResources/`.

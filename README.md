@@ -3,7 +3,7 @@
 [![NuGet](https://img.shields.io/nuget/v/UmageAI.Optimizely.EditorPowerTools)](https://www.nuget.org/packages/UmageAI.Optimizely.EditorPowerTools/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A collection of power tools for Optimizely CMS 12 editors and admins. Distributed as the NuGet package `UmageAI.Optimizely.EditorPowerTools`.
+A collection of power tools for Optimizely CMS 12 and CMS 13 editors and admins. Distributed as the NuGet package `UmageAI.Optimizely.EditorPowerTools`.
 
 ![Overview Dashboard](docs/screenshots/01-overview.png)
 
@@ -227,7 +227,7 @@ Run these from the CMS admin Scheduled Jobs page, or trigger them from each tool
 
 ## Tech Stack
 
-- .NET 8 / C# / Optimizely CMS 12 (EPiServer.CMS 12.29.0, EPiServer.CMS.UI.Core)
+- .NET 8 / .NET 10 / C# / Optimizely CMS 12 and CMS 13 (single multi-targeting NuGet package)
 - Vanilla JavaScript (no framework dependencies)
 - Razor SDK class library with embedded views and static assets
 - DynamicDataStore (DDS) for persistence
