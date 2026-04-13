@@ -698,20 +698,23 @@
         }
 
         if (errorCount > 0) {
+            var maxShow = 100;
+            var errStart = Math.max(0, progress.errors.length - maxShow);
             html += '<details open style="margin-top:12px"><summary style="cursor:pointer;font-weight:600;color:var(--ept-danger)">Errors (' + errorCount + ')</summary>';
-            html += '<div style="max-height:200px;overflow-y:auto;font-size:12px;margin-top:4px;padding:4px 0">';
-            var errStart = Math.max(0, progress.errors.length - 50); // show last 50 during run
+            html += '<div style="max-height:220px;overflow-y:auto;font-size:12px;margin-top:4px;padding:4px 0">';
+            if (errStart > 0) html += '<div style="color:var(--ept-text-muted);padding:2px 0">... ' + errStart + ' earlier errors not shown ...</div>';
             for (var e = errStart; e < progress.errors.length; e++) {
                 html += '<div style="padding:2px 0;color:var(--ept-danger)">Row ' + progress.errors[e].rowIndex + ': ' + escHtml(progress.errors[e].message) + '</div>';
             }
-            if (errStart > 0) html = html.replace('<div style="max-height:200px', '<div data-truncated="' + errStart + '" style="max-height:200px');
             html += '</div></details>';
         }
 
         if (warnCount > 0) {
+            var maxShowW = 100;
+            var warnStart = Math.max(0, progress.warnings.length - maxShowW);
             html += '<details open style="margin-top:8px"><summary style="cursor:pointer;font-weight:600;color:var(--ept-warning,#b45309)">Warnings (' + warnCount + ')</summary>';
-            html += '<div style="max-height:200px;overflow-y:auto;font-size:12px;margin-top:4px;padding:4px 0">';
-            var warnStart = Math.max(0, progress.warnings.length - 50);
+            html += '<div style="max-height:220px;overflow-y:auto;font-size:12px;margin-top:4px;padding:4px 0">';
+            if (warnStart > 0) html += '<div style="color:var(--ept-text-muted);padding:2px 0">... ' + warnStart + ' earlier warnings not shown ...</div>';
             for (var w = warnStart; w < progress.warnings.length; w++) {
                 html += '<div style="padding:2px 0;color:var(--ept-warning,#b45309)">Row ' + progress.warnings[w].rowIndex + ': ' + escHtml(progress.warnings[w].message) + '</div>';
             }

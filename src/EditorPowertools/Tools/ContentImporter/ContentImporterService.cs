@@ -403,7 +403,7 @@ public class ContentImporterService
         // Save content first as draft to get a content link for the asset folder
         var hasDeferred = deferredImageMappings.Count > 0 || deferredBlockMappings.Count > 0;
         var initialSaveAction = hasDeferred ? SaveAction.Save : (mapping.PublishAfterImport ? SaveAction.Publish : SaveAction.Save);
-        var saved = _contentRepository.Save(content, initialSaveAction, AccessLevel.Publish);
+        var saved = _contentRepository.Save(content, initialSaveAction, AccessLevel.NoAccess);
 
         // Handle deferred mappings (images + inline blocks) — content exists now
         if (hasDeferred)
@@ -450,7 +450,7 @@ public class ContentImporterService
             }
 
             var finalAction = mapping.PublishAfterImport ? SaveAction.Publish : SaveAction.Save;
-            saved = _contentRepository.Save(writableContent, finalAction | SaveAction.ForceCurrentVersion, AccessLevel.Publish);
+            saved = _contentRepository.Save(writableContent, finalAction | SaveAction.ForceCurrentVersion, AccessLevel.NoAccess);
         }
 
         return saved.ID;
@@ -509,7 +509,7 @@ public class ContentImporterService
         }
         imageMedia.BinaryData = blob;
 
-        return _contentRepository.Save(imageMedia, SaveAction.Publish, AccessLevel.Publish);
+        return _contentRepository.Save(imageMedia, SaveAction.Publish, AccessLevel.NoAccess);
     }
 
     private void ApplyBuiltInProperties(IContent content, List<PropertyMapping> mappings, Dictionary<string, string> row)
@@ -722,7 +722,7 @@ public class ContentImporterService
                 }
             }
 
-            var savedBlock = _contentRepository.Save(block, SaveAction.Save, AccessLevel.Publish);
+            var savedBlock = _contentRepository.Save(block, SaveAction.Save, AccessLevel.NoAccess);
             contentArea.Items.Add(new ContentAreaItem { ContentLink = savedBlock });
         }
 
