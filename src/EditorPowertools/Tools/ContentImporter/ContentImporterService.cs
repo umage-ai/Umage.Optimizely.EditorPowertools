@@ -581,25 +581,75 @@ public class ContentImporterService
             return;
         }
 
-        // PropertyList<T> expects an IList/IEnumerable — split semicolon-separated values
-        // Check using reflection so we cover PropertyList<string>, PropertyList<int>, etc.
-        var propType = prop.GetType();
-        if (propType.IsGenericType && propType.GetGenericTypeDefinition() == typeof(PropertyList<>))
+        // PropertyList<T> expects IList<T>. Optimizely always uses a concrete subclass
+        // (e.g. PropertyStringList : PropertyList<string>) so we must walk the base type
+        // chain to find PropertyList<T> — a direct IsGenericType check on the leaf type fails.
+        var itemType = GetPropertyListItemType(prop);
+        if (itemType != null)
         {
-            var itemType = propType.GetGenericArguments()[0];
-            var parts = value.Split(';').Select(v => v.Trim()).Where(v => v.Length > 0);
-            var listType = typeof(List<>).MakeGenericType(itemType);
-            var list = (System.Collections.IList)Activator.CreateInstance(listType)!;
-            foreach (var part in parts)
-            {
-                object? item = itemType == typeof(string) ? part : Convert.ChangeType(part, itemType, CultureInfo.InvariantCulture);
-                list.Add(item);
-            }
-            prop.Value = list;
+            prop.Value = ParseListValue(value, itemType);
             return;
         }
 
         prop.Value = ConvertValue(value, typeName);
+    }
+
+    /// <summary>
+    /// Walks the type hierarchy of <paramref name="prop"/> to find the T in PropertyList&lt;T&gt;.
+    /// Returns null if the property is not a PropertyList.
+    /// </summary>
+    private static Type? GetPropertyListItemType(PropertyData prop)
+    {
+        var t = prop.GetType();
+        while (t != null && t != typeof(object))
+        {
+            if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(PropertyList<>))
+                return t.GetGenericArguments()[0];
+            t = t.BaseType;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Converts a raw string value into a List&lt;T&gt; suitable for PropertyList&lt;T&gt;.
+    /// Accepts JSON arrays (["a","b"]) or delimited strings (auto-detects ; | ,).
+    /// </summary>
+    private static System.Collections.IList ParseListValue(string value, Type itemType)
+    {
+        var listType = typeof(List<>).MakeGenericType(itemType);
+        var list = (System.Collections.IList)Activator.CreateInstance(listType)!;
+
+        // Try JSON array first (value starts with '[')
+        if (value.TrimStart().StartsWith("[", StringComparison.Ordinal))
+        {
+            try
+            {
+                var strings = System.Text.Json.JsonSerializer.Deserialize<string[]>(value);
+                if (strings != null)
+                {
+                    foreach (var s in strings)
+                    {
+                        var item = itemType == typeof(string)
+                            ? (object)s
+                            : Convert.ChangeType(s, itemType, CultureInfo.InvariantCulture);
+                        list.Add(item);
+                    }
+                    return list;
+                }
+            }
+            catch { /* fall through to delimiter split */ }
+        }
+
+        // Auto-detect delimiter: prefer ';', then '|', then ','
+        var sep = value.Contains(';') ? ';' : value.Contains('|') ? '|' : ',';
+        foreach (var part in value.Split(sep).Select(v => v.Trim()).Where(v => v.Length > 0))
+        {
+            var item = itemType == typeof(string)
+                ? (object)part
+                : Convert.ChangeType(part, itemType, CultureInfo.InvariantCulture);
+            list.Add(item);
+        }
+        return list;
     }
 
     private static object? ConvertValue(string value, string typeName)

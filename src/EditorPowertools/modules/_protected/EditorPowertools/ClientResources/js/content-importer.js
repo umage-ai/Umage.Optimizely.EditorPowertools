@@ -676,12 +676,16 @@
 
         var html = '<div class="ept-importer-progress">';
         html += '<div class="ept-importer-progress-bar"><div class="ept-importer-progress-fill" style="width:' + pct + '%"></div></div>';
-        html += '<div style="margin-top:8px;font-size:14px"><strong>' + progress.processed + '</strong> / ' + progress.total + ' items (' + pct + '%)';
+        html += '<div style="margin-top:8px;font-size:14px"><strong>' + progress.processed + '</strong> / ' + progress.total + ' rows (' + pct + '%)';
 
         var errorCount = (progress.errors && progress.errors.length) ? progress.errors.length : 0;
         var warnCount = (progress.warnings && progress.warnings.length) ? progress.warnings.length : 0;
         if (errorCount > 0) html += ' &nbsp;<span style="color:var(--ept-danger);font-weight:600">' + errorCount + ' error' + (errorCount !== 1 ? 's' : '') + '</span>';
         if (warnCount > 0) html += ' &nbsp;<span style="color:var(--ept-warning,#b45309);font-weight:600">' + warnCount + ' warning' + (warnCount !== 1 ? 's' : '') + '</span>';
+
+        if (progress.status === 'running' && progress.processed < progress.total) {
+            html += ' &nbsp;<span style="color:var(--ept-text-secondary);font-size:12px">processing row ' + (progress.processed + 1) + '...</span>';
+        }
         html += '</div>';
 
         if (progress.status === 'completed') {
@@ -694,18 +698,21 @@
         }
 
         if (errorCount > 0) {
-            html += '<details style="margin-top:12px"><summary style="cursor:pointer;font-weight:600;color:var(--ept-danger)">Errors (' + errorCount + ')</summary>';
+            html += '<details open style="margin-top:12px"><summary style="cursor:pointer;font-weight:600;color:var(--ept-danger)">Errors (' + errorCount + ')</summary>';
             html += '<div style="max-height:200px;overflow-y:auto;font-size:12px;margin-top:4px;padding:4px 0">';
-            for (var e = 0; e < progress.errors.length; e++) {
+            var errStart = Math.max(0, progress.errors.length - 50); // show last 50 during run
+            for (var e = errStart; e < progress.errors.length; e++) {
                 html += '<div style="padding:2px 0;color:var(--ept-danger)">Row ' + progress.errors[e].rowIndex + ': ' + escHtml(progress.errors[e].message) + '</div>';
             }
+            if (errStart > 0) html = html.replace('<div style="max-height:200px', '<div data-truncated="' + errStart + '" style="max-height:200px');
             html += '</div></details>';
         }
 
         if (warnCount > 0) {
-            html += '<details style="margin-top:8px"><summary style="cursor:pointer;font-weight:600;color:var(--ept-warning,#b45309)">Warnings (' + warnCount + ')</summary>';
+            html += '<details open style="margin-top:8px"><summary style="cursor:pointer;font-weight:600;color:var(--ept-warning,#b45309)">Warnings (' + warnCount + ')</summary>';
             html += '<div style="max-height:200px;overflow-y:auto;font-size:12px;margin-top:4px;padding:4px 0">';
-            for (var w = 0; w < progress.warnings.length; w++) {
+            var warnStart = Math.max(0, progress.warnings.length - 50);
+            for (var w = warnStart; w < progress.warnings.length; w++) {
                 html += '<div style="padding:2px 0;color:var(--ept-warning,#b45309)">Row ' + progress.warnings[w].rowIndex + ': ' + escHtml(progress.warnings[w].message) + '</div>';
             }
             html += '</div></details>';
