@@ -25,7 +25,8 @@
         mappings: [],
         dryRunResult: null,
         importProgress: null,
-        pollTimer: null
+        pollTimer: null,
+        rowFilters: []  // [{column, operator, value}]
     };
 
     // ── Helpers ──
@@ -146,24 +147,87 @@
     }
 
     // ── Step 2: Preview ──
+    function applyFiltersToRows(rows) {
+        if (!state.rowFilters.length) return rows;
+        return rows.filter(function (row) {
+            return state.rowFilters.every(function (f) {
+                var v = (row[f.column] || '').toLowerCase();
+                var fv = (f.value || '').toLowerCase();
+                switch (f.operator) {
+                    case 'equals':     return v === fv;
+                    case 'not_equals': return v !== fv;
+                    case 'contains':   return v.indexOf(fv) !== -1;
+                    case 'not_empty':  return v.trim() !== '';
+                    case 'is_empty':   return v.trim() === '';
+                    default:           return true;
+                }
+            });
+        });
+    }
+
     function renderPreview() {
+        var cols = state.columns.map(function (c) { return c.name; });
+        var filteredSample = applyFiltersToRows(state.sampleRows);
+        var colSelect = '<select class="ept-input" style="flex:2;min-width:120px"><option value="">— column —</option>' +
+            cols.map(function (c) { return '<option value="' + escHtml(c) + '">' + escHtml(c) + '</option>'; }).join('') + '</select>';
+        var opSelect = function (selOp) {
+            return '<select class="ept-input" style="flex:1.4;min-width:110px">' +
+                ['equals','not_equals','contains','not_empty','is_empty'].map(function (op) {
+                    return '<option value="' + op + '"' + (selOp === op ? ' selected' : '') + '>' +
+                        {equals:'Equals',not_equals:'Not equals',contains:'Contains',not_empty:'Not empty',is_empty:'Is empty'}[op] + '</option>';
+                }).join('') + '</select>';
+        };
+
         var html = renderStepBar();
         html += '<div class="ept-card"><div class="ept-card__header"><div class="ept-card__title">' +
             escHtml(state.fileName) + ' &middot; ' + EPT.s('contentimporter.lbl_rows', '{0} rows').replace('{0}', state.totalRowCount) + ' &middot; ' +
             EPT.s('contentimporter.lbl_columns', '{0} columns').replace('{0}', state.columns.length) + '</div></div>';
-        html += '<div class="ept-card__body ept-card__body--flush">';
+        html += '<div class="ept-card__body">';
 
-        // Data table
-        var cols = state.columns.map(function (c) { return c.name; });
-        html += '<div style="overflow-x:auto"><table class="ept-table"><thead><tr>';
-        for (var c = 0; c < cols.length; c++) {
-            html += '<th>' + escHtml(cols[c]) + '</th>';
+        // Filter section
+        html += '<div style="margin-bottom:16px"><div style="font-weight:600;font-size:13px;margin-bottom:8px">Row filters <span style="font-weight:400;color:var(--ept-text-secondary);font-size:12px">(optional — limit which rows are imported)</span></div>';
+        html += '<div id="importer-filters">';
+        if (state.rowFilters.length === 0) {
+            html += '<div style="color:var(--ept-text-muted);font-size:13px;margin-bottom:8px">No filters — all ' + state.totalRowCount + ' rows will be imported.</div>';
+        } else {
+            for (var fi = 0; fi < state.rowFilters.length; fi++) {
+                var f = state.rowFilters[fi];
+                var needsValue = f.operator !== 'not_empty' && f.operator !== 'is_empty';
+                html += '<div style="display:flex;gap:8px;align-items:center;margin-bottom:6px" data-fi="' + fi + '">';
+                html += '<select class="ept-input fi-col" style="flex:2;min-width:120px">' +
+                    cols.map(function (c) { return '<option value="' + escHtml(c) + '"' + (f.column === c ? ' selected' : '') + '>' + escHtml(c) + '</option>'; }).join('') +
+                    '</select>';
+                html += '<select class="ept-input fi-op" style="flex:1.4;min-width:110px">' +
+                    ['equals','not_equals','contains','not_empty','is_empty'].map(function (op) {
+                        return '<option value="' + op + '"' + (f.operator === op ? ' selected' : '') + '>' +
+                            {equals:'Equals',not_equals:'Not equals',contains:'Contains',not_empty:'Not empty',is_empty:'Is empty'}[op] + '</option>';
+                    }).join('') + '</select>';
+                html += '<input class="ept-input fi-val" type="text" value="' + escHtml(f.value) + '" placeholder="value" style="flex:2;' + (needsValue ? '' : 'display:none;') + '">';
+                html += '<button class="ept-btn ept-btn--ghost fi-remove" style="flex-shrink:0" data-fi="' + fi + '">&times;</button>';
+                html += '</div>';
+            }
+            // Show sample match count
+            var matchCount = filteredSample.length;
+            var totalSample = state.sampleRows.length;
+            html += '<div style="font-size:12px;color:var(--ept-text-secondary);margin-top:4px">';
+            html += matchCount + ' of ' + totalSample + ' sample rows match';
+            if (totalSample < state.totalRowCount) html += ' (sample only — actual count shown in dry run)';
+            html += '</div>';
         }
+        html += '</div>';
+        html += '<button class="ept-btn ept-btn--ghost" id="add-filter-btn" style="margin-top:8px;font-size:12px">+ Add filter</button>';
+        html += '</div>';
+
+        // Data table (sample)
+        html += '<div style="font-size:12px;color:var(--ept-text-muted);margin-bottom:6px">Sample preview (first ' + state.sampleRows.length + ' rows)</div>';
+        html += '<div style="overflow-x:auto"><table class="ept-table"><thead><tr>';
+        for (var c = 0; c < cols.length; c++) html += '<th>' + escHtml(cols[c]) + '</th>';
         html += '</tr></thead><tbody>';
-        for (var r = 0; r < state.sampleRows.length; r++) {
-            html += '<tr>';
+        var displayRows = filteredSample.length > 0 ? filteredSample : state.sampleRows;
+        for (var r = 0; r < displayRows.length; r++) {
+            html += '<tr' + (filteredSample.length > 0 && state.rowFilters.length > 0 ? '' : '') + '>';
             for (var c2 = 0; c2 < cols.length; c2++) {
-                var val = state.sampleRows[r][cols[c2]] || '';
+                var val = displayRows[r][cols[c2]] || '';
                 html += '<td>' + escHtml(val.length > 60 ? val.substring(0, 60) + '...' : val) + '</td>';
             }
             html += '</tr>';
@@ -173,6 +237,31 @@
         html += '</div></div>';
         html += renderNav(1, 3);
         root.innerHTML = html;
+
+        // Bind filter events
+        document.getElementById('add-filter-btn').onclick = function () {
+            state.rowFilters.push({ column: cols[0] || '', operator: 'equals', value: '' });
+            renderPreview();
+        };
+        var filterRows = document.querySelectorAll('#importer-filters [data-fi]');
+        filterRows.forEach(function (row) {
+            var fi2 = parseInt(row.getAttribute('data-fi'), 10);
+            row.querySelector('.fi-col').onchange = function () {
+                state.rowFilters[fi2].column = this.value;
+                renderPreview();
+            };
+            row.querySelector('.fi-op').onchange = function () {
+                state.rowFilters[fi2].operator = this.value;
+                renderPreview();
+            };
+            var valInput = row.querySelector('.fi-val');
+            if (valInput) valInput.oninput = function () { state.rowFilters[fi2].value = this.value; renderPreview(); };
+            row.querySelector('.fi-remove').onclick = function () {
+                state.rowFilters.splice(fi2, 1);
+                renderPreview();
+            };
+        });
+
         bindNav();
     }
 
@@ -589,7 +678,8 @@
             language: state.language,
             publishAfterImport: state.publishAfterImport,
             nameSourceColumn: state.nameSourceColumn,
-            mappings: state.mappings
+            mappings: state.mappings,
+            rowFilters: state.rowFilters
         };
 
         postJson(API + '/DryRun', request)

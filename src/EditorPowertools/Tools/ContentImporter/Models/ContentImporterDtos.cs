@@ -50,6 +50,15 @@ public class ImportMappingRequest
     /// <summary>Property name to use for the content Name (required).</summary>
     public string? NameSourceColumn { get; set; }
     public List<PropertyMapping> Mappings { get; set; } = new();
+    public List<RowFilterItem> RowFilters { get; set; } = new();
+}
+
+public class RowFilterItem
+{
+    public string Column { get; set; } = string.Empty;
+    /// <summary>"equals", "not_equals", "contains", "not_empty", "is_empty"</summary>
+    public string Operator { get; set; } = "equals";
+    public string Value { get; set; } = string.Empty;
 }
 
 public class PropertyMapping

@@ -191,16 +191,18 @@ public class ContentImporterService
         var ct = _contentTypeRepository.Load(request.TargetContentTypeId)
             ?? throw new InvalidOperationException("Content type not found");
 
+        var filteredRows = ApplyRowFilters(session.Rows, request.RowFilters).ToList();
+
         var response = new DryRunResponse
         {
             SessionId = request.SessionId,
-            TotalCount = session.Rows.Count
+            TotalCount = filteredRows.Count
         };
 
-        var previewCount = Math.Min(session.Rows.Count, 20);
+        var previewCount = Math.Min(filteredRows.Count, 20);
         for (var i = 0; i < previewCount; i++)
         {
-            var row = session.Rows[i];
+            var row = filteredRows[i];
             var preview = new PreviewItem { RowIndex = i + 1, Warnings = new() };
 
             // Resolve name
@@ -278,14 +280,17 @@ public class ContentImporterService
                 return;
             }
 
+            var filteredRows = ApplyRowFilters(session.Rows, mapping.RowFilters).ToList();
+            progress.Total = filteredRows.Count;
+
             var parentRef = new ContentReference(mapping.ParentContentId);
             var culture = new CultureInfo(mapping.Language);
 
-            for (var i = 0; i < session.Rows.Count; i++)
+            for (var i = 0; i < filteredRows.Count; i++)
             {
                 try
                 {
-                    var row = session.Rows[i];
+                    var row = filteredRows[i];
                     var rowWarnings = new List<string>();
                     var contentId = CreateContentFromRow(ct, parentRef, culture, row, mapping, i, rowWarnings);
                     if (contentId > 0)
@@ -592,6 +597,30 @@ public class ContentImporterService
         }
 
         prop.Value = ConvertValue(value, typeName);
+    }
+
+    private static IEnumerable<Dictionary<string, string>> ApplyRowFilters(
+        IEnumerable<Dictionary<string, string>> rows,
+        List<RowFilterItem>? filters)
+    {
+        if (filters == null || filters.Count == 0) return rows;
+        return rows.Where(row => filters.All(f => RowMatchesFilter(row, f)));
+    }
+
+    private static bool RowMatchesFilter(Dictionary<string, string> row, RowFilterItem filter)
+    {
+        row.TryGetValue(filter.Column, out var value);
+        value ??= string.Empty;
+
+        return filter.Operator switch
+        {
+            "equals" => string.Equals(value, filter.Value, StringComparison.OrdinalIgnoreCase),
+            "not_equals" => !string.Equals(value, filter.Value, StringComparison.OrdinalIgnoreCase),
+            "contains" => value.Contains(filter.Value, StringComparison.OrdinalIgnoreCase),
+            "not_empty" => !string.IsNullOrWhiteSpace(value),
+            "is_empty" => string.IsNullOrWhiteSpace(value),
+            _ => true
+        };
     }
 
     /// <summary>
