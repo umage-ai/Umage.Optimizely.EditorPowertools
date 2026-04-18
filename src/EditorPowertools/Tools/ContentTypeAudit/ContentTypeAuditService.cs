@@ -4,6 +4,7 @@ using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Shell;
 using EPiServer.Web.Routing;
+using UmageAI.Optimizely.EditorPowerTools.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Helpers;
 using UmageAI.Optimizely.EditorPowerTools.Services;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit.Models;
@@ -19,6 +20,7 @@ public class ContentTypeAuditService
     private readonly IContentSoftLinkRepository _softLinkRepository;
     private readonly IPropertyDefinitionRepository _propertyDefinitionRepository;
     private readonly ContentTypeStatisticsRepository _statisticsRepository;
+    private readonly IContentTypeMetadataProvider _metadataProvider;
     private readonly ILogger<ContentTypeAuditService> _logger;
 
     public ContentTypeAuditService(
@@ -28,6 +30,7 @@ public class ContentTypeAuditService
         IContentSoftLinkRepository softLinkRepository,
         IPropertyDefinitionRepository propertyDefinitionRepository,
         ContentTypeStatisticsRepository statisticsRepository,
+        IContentTypeMetadataProvider metadataProvider,
         ILogger<ContentTypeAuditService> logger)
     {
         _contentTypeRepository = contentTypeRepository;
@@ -36,6 +39,7 @@ public class ContentTypeAuditService
         _softLinkRepository = softLinkRepository;
         _propertyDefinitionRepository = propertyDefinitionRepository;
         _statisticsRepository = statisticsRepository;
+        _metadataProvider = metadataProvider;
         _logger = logger;
     }
 
@@ -258,8 +262,9 @@ public class ContentTypeAuditService
         };
     }
 
-    private static ContentTypeDto MapToDto(ContentType ct, ContentTypeStatisticsRecord? stats)
+    private ContentTypeDto MapToDto(ContentType ct, ContentTypeStatisticsRecord? stats)
     {
+        var metadata = _metadataProvider.Get(ct);
         return new ContentTypeDto
         {
             Id = ct.ID,
@@ -284,7 +289,10 @@ public class ContentTypeAuditService
             PublishedCount = stats?.PublishedCount,
             ReferencedCount = stats?.ReferencedCount,
             UnreferencedCount = stats?.UnreferencedCount,
-            StatisticsUpdated = stats?.LastUpdated
+            StatisticsUpdated = stats?.LastUpdated,
+            IsContract = CmsFeatureFlags.ContractsAvailable ? metadata.IsContract : (bool?)null,
+            CompositionBehaviors = CmsFeatureFlags.ContractsAvailable ? metadata.CompositionBehaviors.ToArray() : null,
+            Contracts = CmsFeatureFlags.ContractsAvailable ? metadata.Contracts.ToArray() : null
         };
     }
 
