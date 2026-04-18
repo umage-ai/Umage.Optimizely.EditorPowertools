@@ -511,6 +511,7 @@
           <opt_both>Abschnitt &amp; Element</opt_both>
           <opt_plain>Einfacher Block</opt_plain>
           <panel_appliedcontracts>Angewendete Verträge</panel_appliedcontracts>
+          <tip_viewcontract>Vertragsdetails anzeigen</tip_viewcontract>
           <stat_showing>Angezeigt</stat_showing>
           <lbl_search>Typen suchen... (oder eigenschaft:name)</lbl_search>
           <opt_allbases>Alle Basistypen</opt_allbases>

@@ -511,6 +511,7 @@
           <opt_both>セクション＆要素</opt_both>
           <opt_plain>標準ブロック</opt_plain>
           <panel_appliedcontracts>適用された契約</panel_appliedcontracts>
+          <tip_viewcontract>コントラクトの詳細を表示</tip_viewcontract>
           <stat_showing>表示中</stat_showing>
           <lbl_search>タイプを検索...（または property:名前）</lbl_search>
           <opt_allbases>すべての基底タイプ</opt_allbases>

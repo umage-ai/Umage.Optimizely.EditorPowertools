@@ -511,6 +511,7 @@
           <opt_both>Sectie &amp; element</opt_both>
           <opt_plain>Standaardblok</opt_plain>
           <panel_appliedcontracts>Toegepaste contracten</panel_appliedcontracts>
+          <tip_viewcontract>Contractdetails weergeven</tip_viewcontract>
           <stat_showing>Weergegeven</stat_showing>
           <lbl_search>Typen zoeken... (of eigenschap:naam)</lbl_search>
           <opt_allbases>Alle basistypen</opt_allbases>

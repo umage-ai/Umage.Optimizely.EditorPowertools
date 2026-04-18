@@ -511,6 +511,7 @@
           <opt_both>区块和元素</opt_both>
           <opt_plain>普通区块</opt_plain>
           <panel_appliedcontracts>已应用合约</panel_appliedcontracts>
+          <tip_viewcontract>查看合约详情</tip_viewcontract>
           <stat_showing>显示</stat_showing>
           <lbl_search>搜索类型...（或 property:名称）</lbl_search>
           <opt_allbases>所有基类型</opt_allbases>

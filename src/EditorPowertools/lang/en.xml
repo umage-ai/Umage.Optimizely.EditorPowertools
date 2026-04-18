@@ -513,6 +513,7 @@
           <opt_both>Both section &amp; element</opt_both>
           <opt_plain>Plain block</opt_plain>
           <panel_appliedcontracts>Applied contracts</panel_appliedcontracts>
+          <tip_viewcontract>View contract details</tip_viewcontract>
           <lbl_search>Search types... (or property:name)</lbl_search>
           <opt_allbases>All base types</opt_allbases>
           <chk_showsystem>Show system types</chk_showsystem>

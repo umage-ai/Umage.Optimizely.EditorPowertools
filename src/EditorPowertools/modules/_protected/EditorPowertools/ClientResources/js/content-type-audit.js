@@ -322,14 +322,27 @@
             if (type.contracts && type.contracts.length > 0) {
                 const panel = document.createElement('div');
                 panel.style.cssText = 'padding:12px 16px;border-bottom:1px solid var(--ept-border,#e5e7eb)';
-                const itemsHtml = type.contracts.map(c => {
-                    const label = escHtml(c.displayName || c.name);
-                    return `<span class="ept-badge ept-badge--primary" style="margin:2px 4px 2px 0">${label}</span>`;
-                }).join('');
-                panel.innerHTML = `
-                    <div style="font-weight:600;margin-bottom:6px">${EPT.s('contenttypeaudit.panel_appliedcontracts', 'Applied contracts')}</div>
-                    <div>${itemsHtml}</div>
-                `;
+                const label = document.createElement('div');
+                label.style.cssText = 'font-weight:600;margin-bottom:6px';
+                label.textContent = EPT.s('contenttypeaudit.panel_appliedcontracts', 'Applied contracts');
+                panel.appendChild(label);
+
+                const chipRow = document.createElement('div');
+                type.contracts.forEach(c => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'ept-badge ept-badge--primary';
+                    btn.style.cssText = 'margin:2px 4px 2px 0; cursor:pointer; border:none;';
+                    btn.textContent = c.displayName || c.name;
+                    btn.title = EPT.s('contenttypeaudit.tip_viewcontract', 'View contract details');
+                    btn.addEventListener('click', () => {
+                        close();
+                        const fullType = allTypes.find(t => t.id === c.id);
+                        showProperties(fullType || c);
+                    });
+                    chipRow.appendChild(btn);
+                });
+                panel.appendChild(chipRow);
                 body.appendChild(panel);
             }
 

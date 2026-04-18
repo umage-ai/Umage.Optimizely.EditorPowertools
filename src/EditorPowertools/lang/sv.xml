@@ -511,6 +511,7 @@
           <opt_both>Både sektion &amp; element</opt_both>
           <opt_plain>Vanligt block</opt_plain>
           <panel_appliedcontracts>Tillämpade kontrakt</panel_appliedcontracts>
+          <tip_viewcontract>Visa kontraktsdetaljer</tip_viewcontract>
           <stat_showing>Visar</stat_showing>
           <lbl_search>Sök typer... (eller egenskap:namn)</lbl_search>
           <opt_allbases>Alla bastyper</opt_allbases>

@@ -511,6 +511,7 @@
           <opt_both>Section et élément</opt_both>
           <opt_plain>Bloc simple</opt_plain>
           <panel_appliedcontracts>Contrats appliqués</panel_appliedcontracts>
+          <tip_viewcontract>Voir les détails du contrat</tip_viewcontract>
           <stat_showing>Affichage</stat_showing>
           <lbl_search>Rechercher des types... (ou propriété:nom)</lbl_search>
           <opt_allbases>Tous les types de base</opt_allbases>

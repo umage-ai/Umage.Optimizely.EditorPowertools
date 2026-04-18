@@ -511,6 +511,7 @@
           <opt_both>Osio &amp; elementti</opt_both>
           <opt_plain>Tavallinen lohko</opt_plain>
           <panel_appliedcontracts>Sovelletut sopimukset</panel_appliedcontracts>
+          <tip_viewcontract>Näytä sopimuksen tiedot</tip_viewcontract>
           <stat_showing>Näytetään</stat_showing>
           <lbl_search>Hae tyyppejä... (tai ominaisuus:nimi)</lbl_search>
           <opt_allbases>Kaikki perustyypit</opt_allbases>
