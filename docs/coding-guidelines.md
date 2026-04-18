@@ -369,3 +369,15 @@ _userPreferencesService.Save(username, "BulkPropertyEditor", jsonString);
 - Razor class library (SDK: `Microsoft.NET.Sdk.Razor`) for embedded views and static files.
 - Minimum dependency: `EPiServer.CMS` only.
 - Registered as a protected module via `ProtectedModuleOptions`.
+
+## Multi-targeting Optimizely CMS 12 and CMS 13
+
+This project multi-targets CMS 12 (.NET 8) and CMS 13 (.NET 10). The detailed rules live in the root `CLAUDE.md`; the short summary for contributors:
+
+- `.csproj` multi-targets `net8.0;net10.0` with per-TFM package references (`EPiServer.CMS 12.*` for net8.0, `EPiServer.CMS 13.*` for net10.0).
+- Compile symbols `OPTIMIZELY_CMS12` / `OPTIMIZELY_CMS13` are defined per-TFM.
+- CMS-version-specific types live under `Cms12/` / `Cms13/` folders. Compile-conditions in the csproj exclude the wrong folder per TFM.
+- Shared services access version-specific metadata only through the `IContentTypeMetadataProvider` abstraction in `Abstractions/` — they NEVER use `#if` blocks directly.
+- A single `CmsFeatureFlags.ContractsAvailable` constant in `Abstractions/CmsFeatureFlags.cs` is the only `#if` block in shared code.
+- New public DTO fields that apply only to CMS 13 are declared as nullable so the CMS 12 build serializes them as absent. The JS detects CMS 13 features by checking `nullableField != null`, not a separate flag.
+- Tests multi-target the same way; use `#if OPTIMIZELY_CMS13` inside test files to gate assertions that reference CMS 13-only types.

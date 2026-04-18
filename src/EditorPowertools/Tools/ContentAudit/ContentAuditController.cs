@@ -55,6 +55,8 @@ public class ContentAuditApiController : Controller
         [FromQuery] string? mainTypeFilter = null,
         [FromQuery] string? quickFilter = null,
         [FromQuery] string? columns = null,
+        [FromQuery] string? contractFilter = null,
+        [FromQuery] string? compositionFilter = null,
         CancellationToken ct = default)
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -87,7 +89,9 @@ public class ContentAuditApiController : Controller
                 Filters = parsedFilters,
                 MainTypeFilter = mainTypeFilter,
                 QuickFilter = quickFilter,
-                Columns = parsedColumns
+                Columns = parsedColumns,
+                ContractFilter = contractFilter,
+                CompositionFilter = compositionFilter
             };
 
             ContentAuditResponse response = _service.GetContent(request, ct);
@@ -119,6 +123,8 @@ public class ContentAuditApiController : Controller
         [FromQuery] string? sortBy = null,
         [FromQuery] string sortDirection = "asc",
         [FromQuery] string? columns = null,
+        [FromQuery] string? contractFilter = null,
+        [FromQuery] string? compositionFilter = null,
         CancellationToken ct = default)
     {
         if (!_accessChecker.HasAccess(HttpContext,
@@ -148,7 +154,9 @@ public class ContentAuditApiController : Controller
                 QuickFilter = quickFilter,
                 SortBy = sortBy,
                 SortDirection = sortDirection,
-                Columns = parsedColumns
+                Columns = parsedColumns,
+                ContractFilter = contractFilter,
+                CompositionFilter = compositionFilter
             };
 
             var allRows = _service.GetAllMatchingRows(request, ct).ToList();
@@ -193,7 +201,9 @@ public class ContentAuditApiController : Controller
         [FromQuery] string? mainTypeFilter = null,
         [FromQuery] string? quickFilter = null,
         [FromQuery] string? search = null,
-        [FromQuery] string? filters = null)
+        [FromQuery] string? filters = null,
+        [FromQuery] string? contractFilter = null,
+        [FromQuery] string? compositionFilter = null)
     {
         if (!_accessChecker.HasAccess(HttpContext,
                 nameof(Configuration.FeatureToggles.ContentAudit),
@@ -205,16 +215,18 @@ public class ContentAuditApiController : Controller
             var requestId = Guid.NewGuid();
             var record = new ContentAuditExportJobRequest
             {
-                RequestId      = requestId,
-                RequestedBy    = User.Identity?.Name ?? "unknown",
-                RequestedAt    = DateTime.UtcNow,
-                Format         = format,
-                Columns        = columns,
-                MainTypeFilter = mainTypeFilter,
-                QuickFilter    = quickFilter,
-                Search         = search,
-                FiltersJson    = filters,
-                Status         = "Pending"
+                RequestId         = requestId,
+                RequestedBy       = User.Identity?.Name ?? "unknown",
+                RequestedAt       = DateTime.UtcNow,
+                Format            = format,
+                Columns           = columns,
+                MainTypeFilter    = mainTypeFilter,
+                QuickFilter       = quickFilter,
+                Search            = search,
+                FiltersJson       = filters,
+                ContractFilter    = contractFilter,
+                CompositionFilter = compositionFilter,
+                Status            = "Pending"
             };
 
             var store = GetStore();

@@ -22,7 +22,9 @@
         isLoading: false,
         selectAll: false,
         contentTypes: [],
-        languages: []
+        languages: [],
+        // CMS 13: 'types' | 'contracts'. Only visible when any content type has isContract != null.
+        activeTab: 'types'
     };
 
     var pendingEditAfterPageChange = null;
@@ -143,9 +145,20 @@
         });
     }
 
+    // CMS 13 feature detection: any content type has an isContract flag (non-null) exposed by the backend.
+    function hasCms13Data() {
+        return state.contentTypes.some(function (t) { return t.isContract != null; });
+    }
+
     function renderShell() {
         root.innerHTML =
             '<div class="bpe-alert" id="bpeAlert"></div>' +
+
+            // CMS 13: Tabs for filtering content types vs contracts (hidden on CMS 12)
+            '<div class="ept-tabs" id="bpeTabs" style="display: none;">' +
+            '<button type="button" class="ept-tab" data-tab="types">' + EPT.s('bulkeditor.tab_types', 'Content types') + '</button>' +
+            '<button type="button" class="ept-tab" data-tab="contracts">' + EPT.s('bulkeditor.tab_contracts', 'Contracts') + '</button>' +
+            '</div>' +
 
             // Toolbar
             '<div class="ept-toolbar" id="bpeToolbar">' +
@@ -163,11 +176,17 @@
             '</label>' +
             '</div>' +
 
+            // CMS 13: Composition badges for the currently selected type
+            '<div id="bpeCompositionInfo" style="display:none; margin: 4px 0 8px 0;"></div>' +
+
             // Filter bar
             '<div class="bpe-filter-bar" id="bpeFilterBar">' +
             '<div id="bpeFilters"></div>' +
             '<button type="button" class="ept-btn ept-btn--primary ept-btn--sm" id="bpeApplyFilters" style="margin-top: 8px;">' + EPT.s('bulkeditor.btn_applyfilters', 'Apply Filters') + '</button>' +
             '</div>' +
+
+            // CMS 13: Contract expansion preview note (populated when resolvedTypes is returned)
+            '<div id="bpeExpansionNote" style="display:none;"></div>' +
 
             // Table area
             '<div class="ept-card" id="bpeTableCard">' +
@@ -200,6 +219,26 @@
             '</div>' +
             '</div>';
 
+        // CMS 13: Tab click handlers
+        var tabsEl = document.getElementById('bpeTabs');
+        if (tabsEl) {
+            tabsEl.querySelectorAll('.ept-tab').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var tab = btn.getAttribute('data-tab');
+                    if (tab && tab !== state.activeTab) {
+                        state.activeTab = tab;
+                        // Clear current selection when switching tabs — the previously selected
+                        // type may not belong to the new tab.
+                        var sel = document.getElementById('bpeContentType');
+                        if (sel) sel.value = '';
+                        if (state.contentTypeId) changeContentType('');
+                        renderContentTypeDropdown();
+                        updateTabsActive();
+                    }
+                });
+            });
+        }
+
         // Bind events
         document.getElementById('bpeContentType').addEventListener('change', function () { changeContentType(this.value); });
         document.getElementById('bpeLanguage').addEventListener('change', function () { changeLanguage(this.value); });
@@ -230,6 +269,8 @@
         ]).then(function (results) {
             if (results[0].success) {
                 state.contentTypes = results[0].contentTypes;
+                // Start on 'types' tab by default. If the saved preference points to a contract,
+                // the tab is switched later once prefs are applied.
                 renderContentTypeDropdown();
             }
             if (results[1].success) {
@@ -253,6 +294,14 @@
             if (prefs.contentTypeId) {
                 var ctSel = document.getElementById('bpeContentType');
                 if (ctSel) {
+                    // CMS 13: switch to the correct tab if the saved type is a contract.
+                    if (hasCms13Data()) {
+                        var savedCt = state.contentTypes.find(function (t) { return t.id === prefs.contentTypeId; });
+                        if (savedCt && savedCt.isContract) {
+                            state.activeTab = 'contracts';
+                            renderContentTypeDropdown();
+                        }
+                    }
                     ctSel.value = prefs.contentTypeId;
                     // Trigger content type change which loads columns and content
                     state.contentTypeId = prefs.contentTypeId;
@@ -265,13 +314,40 @@
         });
     }
 
+    function updateTabsActive() {
+        var tabsEl = document.getElementById('bpeTabs');
+        if (!tabsEl) return;
+        tabsEl.querySelectorAll('.ept-tab').forEach(function (btn) {
+            if (btn.getAttribute('data-tab') === state.activeTab) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
     function renderContentTypeDropdown() {
         var sel = document.getElementById('bpeContentType');
         var html = '<option value="">' + EPT.s('bulkeditor.opt_selecttype', '-- Select content type --') + '</option>';
 
+        // CMS 13: show tabs and filter dropdown by active tab
+        var cms13 = hasCms13Data();
+        var tabsEl = document.getElementById('bpeTabs');
+        if (tabsEl) {
+            tabsEl.style.display = cms13 ? '' : 'none';
+        }
+        if (cms13) updateTabsActive();
+
+        // Filter contentTypes by the active tab when CMS 13 data is available.
+        var visibleTypes = cms13
+            ? (state.activeTab === 'contracts'
+                ? state.contentTypes.filter(function (t) { return t.isContract; })
+                : state.contentTypes.filter(function (t) { return !t.isContract; }))
+            : state.contentTypes;
+
         // Group by base type
         var groups = {};
-        state.contentTypes.forEach(function (ct) {
+        visibleTypes.forEach(function (ct) {
             var base = ct.baseType || 'Other';
             if (!groups[base]) groups[base] = [];
             groups[base].push(ct);
@@ -284,12 +360,66 @@
             html += '<optgroup label="' + escapeHtml(groupName) + 's">';
             items.sort(function (a, b) { return a.name.localeCompare(b.name); });
             items.forEach(function (ct) {
-                html += '<option value="' + ct.id + '">' + escapeHtml(ct.name) + '</option>';
+                // Options cannot contain HTML, so append composition markers as text.
+                var suffix = '';
+                if (ct.compositionBehaviors) {
+                    var marks = [];
+                    if (ct.compositionBehaviors.indexOf('SectionEnabled') >= 0) {
+                        marks.push(EPT.s('bulkeditor.badge_section', 'Section'));
+                    }
+                    if (ct.compositionBehaviors.indexOf('ElementEnabled') >= 0) {
+                        marks.push(EPT.s('bulkeditor.badge_element', 'Element'));
+                    }
+                    if (marks.length > 0) suffix = ' (' + marks.join(', ') + ')';
+                }
+                html += '<option value="' + ct.id + '">' + escapeHtml(ct.name + suffix) + '</option>';
             });
             html += '</optgroup>';
         });
 
         sel.innerHTML = html;
+
+        // Preserve selected value if still present in filtered list
+        if (state.contentTypeId) {
+            sel.value = String(state.contentTypeId);
+        }
+
+        renderCompositionInfo();
+    }
+
+    // CMS 13: Show composition badges (Section / Element) for the currently selected content type
+    // as real HTML pills rendered under the toolbar.
+    function renderCompositionInfo() {
+        var container = document.getElementById('bpeCompositionInfo');
+        if (!container) return;
+        container.innerHTML = '';
+        if (!hasCms13Data() || !state.contentTypeId) {
+            container.style.display = 'none';
+            return;
+        }
+        var ct = null;
+        for (var i = 0; i < state.contentTypes.length; i++) {
+            if (state.contentTypes[i].id === state.contentTypeId) { ct = state.contentTypes[i]; break; }
+        }
+        if (!ct || !ct.compositionBehaviors || ct.compositionBehaviors.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+        var html = '';
+        if (ct.compositionBehaviors.indexOf('SectionEnabled') >= 0) {
+            html += '<span class="ept-badge ept-badge--success" style="margin-right:4px">' +
+                escapeHtml(EPT.s('bulkeditor.badge_section', 'Section')) + '</span>';
+        }
+        if (ct.compositionBehaviors.indexOf('ElementEnabled') >= 0) {
+            html += '<span class="ept-badge ept-badge--success" style="margin-right:4px">' +
+                escapeHtml(EPT.s('bulkeditor.badge_element', 'Element')) + '</span>';
+        }
+        if (html) {
+            container.innerHTML = html;
+            container.style.display = '';
+        } else {
+            container.style.display = 'none';
+        }
     }
 
     function renderLanguageDropdown() {
@@ -317,6 +447,8 @@
             renderFilterBar();
             renderColumnPicker();
             renderPendingBar();
+            renderCompositionInfo();
+            renderExpansionNote(null);
             return;
         }
 
@@ -327,6 +459,7 @@
         state.pendingChanges = {};
         renderFilterBar();
         renderPendingBar();
+        renderCompositionInfo();
 
         // Detect base type for auto-enabling references
         var sel = document.getElementById('bpeContentType');
@@ -409,6 +542,7 @@
                 state.isLoading = false;
                 if (result.success) {
                     state.data = result.data;
+                    renderExpansionNote(result.data);
                     renderTable(result.data);
                     renderPagination(result.data.totalCount, result.data.page, result.data.pageSize);
                 } else {
@@ -419,6 +553,31 @@
                 state.isLoading = false;
                 showAlert('Failed to load content: ' + err.message, false);
             });
+    }
+
+    // CMS 13: Render the contract expansion preview note. Cleared when no expansion.
+    function renderExpansionNote(data) {
+        var noteEl = document.getElementById('bpeExpansionNote');
+        if (!noteEl) return;
+        noteEl.innerHTML = '';
+        noteEl.style.display = 'none';
+
+        if (!data || !data.resolvedTypes || data.resolvedTypes.length === 0) return;
+
+        var labels = data.resolvedTypes
+            .map(function (id) {
+                for (var i = 0; i < state.contentTypes.length; i++) {
+                    if (state.contentTypes[i].id === id) return state.contentTypes[i].name;
+                }
+                return null;
+            })
+            .filter(function (n) { return !!n; });
+
+        if (labels.length === 0) return;
+
+        noteEl.textContent = EPT.s('bulkeditor.note_expansion', 'Contract expands to') + ': ' + labels.join(', ');
+        noteEl.style.cssText = 'padding:8px 12px; margin:8px 0; background:var(--ept-primary-light,#e0f2fe); border-left:3px solid var(--ept-primary,#0284c7); border-radius:4px; font-size:13px;';
+        noteEl.style.display = '';
     }
 
     // ---- Render table ----

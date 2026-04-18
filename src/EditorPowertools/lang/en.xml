@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>Open in edit mode</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>Contracts</filter_contract>
+          <filter_composition>Composition</filter_composition>
+          <any>Any</any>
+          <include>Include</include>
+          <exclude>Exclude</exclude>
+          <only>Contracts only</only>
+          <section>Section</section>
+          <element>Element</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>Overview</tab_overview>
@@ -500,9 +509,20 @@
           <btn_failed>Failed</btn_failed>
           <stat_contenttypes>Content Types</stat_contenttypes>
           <stat_systemtypes>System Types</stat_systemtypes>
-          <stat_orphaned>Orphaned</stat_orphaned>
+          <stat_codeless>Code-less</stat_codeless>
+          <stat_contracts>Contracts</stat_contracts>
           <stat_unused>Unused (0 content)</stat_unused>
           <stat_showing>Showing</stat_showing>
+          <opt_allkinds>All kinds</opt_allkinds>
+          <opt_contractsonly>Contract types only</opt_contractsonly>
+          <opt_noncontract>Non-contract types</opt_noncontract>
+          <opt_anycomposition>Any composition</opt_anycomposition>
+          <opt_sectiononly>Section-enabled</opt_sectiononly>
+          <opt_elementonly>Element-enabled</opt_elementonly>
+          <opt_both>Both section &amp; element</opt_both>
+          <opt_plain>Plain block</opt_plain>
+          <panel_appliedcontracts>Applied contracts</panel_appliedcontracts>
+          <tip_viewcontract>View contract details</tip_viewcontract>
           <lbl_search>Search types... (or property:name)</lbl_search>
           <opt_allbases>All base types</opt_allbases>
           <chk_showsystem>Show system types</chk_showsystem>
@@ -516,7 +536,10 @@
           <col_content>Content</col_content>
           <opt_all>All</opt_all>
           <badge_system>System</badge_system>
-          <badge_orphaned>Orphaned</badge_orphaned>
+          <badge_codeless>Code-less</badge_codeless>
+          <badge_contract>Contract</badge_contract>
+          <badge_section>Section</badge_section>
+          <badge_element>Element</badge_element>
           <dlg_properties>Properties: {0}</dlg_properties>
           <dlg_content>Content: {0}</dlg_content>
           <dlg_references>References to: {0}</dlg_references>
@@ -526,7 +549,7 @@
           <empty_notree>No inheritance data available</empty_notree>
           <legend_inherited>Inherited</legend_inherited>
           <legend_defined>Defined</legend_defined>
-          <legend_orphaneddesc>Orphaned (not in code)</legend_orphaneddesc>
+          <legend_codelessdesc>Code-less (not in code)</legend_codelessdesc>
           <col_propname>Name</col_propname>
           <col_proptype>Type</col_proptype>
           <col_proptab>Tab</col_proptab>
@@ -537,7 +560,7 @@
           <col_proporigin>Origin</col_proporigin>
           <origin_defined>Defined</origin_defined>
           <origin_inherited>Inherited</origin_inherited>
-          <origin_orphaned>Orphaned</origin_orphaned>
+          <origin_codeless>Code-less</origin_codeless>
           <col_contentid>ID</col_contentid>
           <col_contentname>Name</col_contentname>
           <col_contentlang>Lang</col_contentlang>
@@ -684,6 +707,11 @@
           <lbl_refs>{0} refs</lbl_refs>
           <btn_browse>Browse...</btn_browse>
           <dlg_selectcontent>Select Content</dlg_selectcontent>
+          <tab_types>Content types</tab_types>
+          <tab_contracts>Contracts</tab_contracts>
+          <badge_section>Section</badge_section>
+          <badge_element>Element</badge_element>
+          <note_expansion>Contract expands to</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
@@ -703,7 +731,12 @@
           <stat_pages>Pages</stat_pages>
           <stat_blocks>Blocks</stat_blocks>
           <stat_media>Media</stat_media>
+          <stat_contracts>Contracts</stat_contracts>
           <stat_avgversions>Avg Versions</stat_avgversions>
+          <panel_blockbreakdown>Block breakdown</panel_blockbreakdown>
+          <bb_sections>Sections</bb_sections>
+          <bb_elements>Elements</bb_elements>
+          <bb_plain>Plain blocks</bb_plain>
           <chart_label_total>total</chart_label_total>
           <chart_tooltip_items>{0} items</chart_tooltip_items>
           <chart_label_days>{0} days</chart_label_days>

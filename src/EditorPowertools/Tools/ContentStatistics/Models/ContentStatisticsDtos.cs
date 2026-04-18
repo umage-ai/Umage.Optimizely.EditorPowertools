@@ -7,6 +7,7 @@ public class ContentStatisticsDashboardDto
 {
     public SummaryStatsDto Summary { get; set; } = new();
     public IReadOnlyList<ContentTypeDistributionDto> TypeDistribution { get; set; } = [];
+    public BlockBreakdownDto? BlockBreakdown { get; set; }
     public IReadOnlyList<ContentCreationMonthDto> CreationOverTime { get; set; } = [];
     public IReadOnlyList<StaleContentDto> StaleContent { get; set; } = [];
     public IReadOnlyList<EditorActivityDto> TopEditors { get; set; } = [];
@@ -18,6 +19,8 @@ public class SummaryStatsDto
     public int TotalPages { get; set; }
     public int TotalBlocks { get; set; }
     public int TotalMedia { get; set; }
+    // CMS 13 only — null on CMS 12
+    public int? TotalContracts { get; set; }
     public double AverageVersionsPerItem { get; set; }
     public DateTime? LastAnalyzed { get; set; }
 }
@@ -50,4 +53,11 @@ public class EditorActivityDto
     public int EditCount { get; set; }
     public int PublishCount { get; set; }
     public DateTime? LastActive { get; set; }
+}
+
+public class BlockBreakdownDto
+{
+    public int Sections { get; set; }
+    public int Elements { get; set; }
+    public int Plain { get; set; }
 }

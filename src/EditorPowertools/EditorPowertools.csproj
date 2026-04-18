@@ -38,6 +38,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Test project instantiates internal metadata-provider classes directly. -->
+    <InternalsVisibleTo Include="EditorPowertools.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
@@ -71,6 +76,14 @@
     <Content Include="Views\Shared\Cms13\_PowertoolsLayout.cshtml">
       <Link>Views\Shared\_PowertoolsLayout.cshtml</Link>
     </Content>
+  </ItemGroup>
+
+  <!-- Version-specific compile folders -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <Compile Remove="Cms13\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <Compile Remove="Cms12\**\*.cs" />
   </ItemGroup>
 
   <!-- Include README, icon, and BOTH .targets files in the NuGet package -->

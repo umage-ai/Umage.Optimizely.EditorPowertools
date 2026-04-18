@@ -31,6 +31,13 @@ Navigate to `https://localhost:5010/Optimizely/CMS` and log in.
 
 The NuGet package targets both `net8.0` and `net10.0` and works with both CMS versions from a single package.
 
+### Runtime requirements
+
+- **Optimizely CMS 12** — requires .NET 8.
+- **Optimizely CMS 13** — requires .NET 10.
+
+The NuGet package ships both target frameworks. Your host project's target framework picks the correct build automatically.
+
 ## Step 1: Install the NuGet Package
 
 Add the package to your CMS site project:

@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>Abrir en modo edición</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>Contratos</filter_contract>
+          <filter_composition>Composición</filter_composition>
+          <any>Cualquiera</any>
+          <include>Incluir</include>
+          <exclude>Excluir</exclude>
+          <only>Solo contratos</only>
+          <section>Sección</section>
+          <element>Elemento</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>Vista general</tab_overview>
@@ -499,8 +508,19 @@
           <btn_failed>Error</btn_failed>
           <stat_contenttypes>Tipos de contenido</stat_contenttypes>
           <stat_systemtypes>Tipos de sistema</stat_systemtypes>
-          <stat_orphaned>Huérfanos</stat_orphaned>
+          <stat_codeless>Sin código</stat_codeless>
+          <stat_contracts>Contratos</stat_contracts>
           <stat_unused>Sin uso (0 contenido)</stat_unused>
+          <opt_allkinds>Todas las clases</opt_allkinds>
+          <opt_contractsonly>Solo tipos contrato</opt_contractsonly>
+          <opt_noncontract>Tipos no contrato</opt_noncontract>
+          <opt_anycomposition>Cualquier composición</opt_anycomposition>
+          <opt_sectiononly>Solo sección</opt_sectiononly>
+          <opt_elementonly>Solo elemento</opt_elementonly>
+          <opt_both>Sección y elemento</opt_both>
+          <opt_plain>Bloque simple</opt_plain>
+          <panel_appliedcontracts>Contratos aplicados</panel_appliedcontracts>
+          <tip_viewcontract>Ver detalles del contrato</tip_viewcontract>
           <stat_showing>Mostrando</stat_showing>
           <lbl_search>Buscar tipos... (o propiedad:nombre)</lbl_search>
           <opt_allbases>Todos los tipos base</opt_allbases>
@@ -515,7 +535,12 @@
           <col_content>Contenido</col_content>
           <opt_all>Todos</opt_all>
           <badge_system>Sistema</badge_system>
-          <badge_orphaned>Huérfano</badge_orphaned>
+          <badge_codeless>Sin código</badge_codeless>
+          <badge_contract>Contrato</badge_contract>
+          <badge_section>Sección</badge_section>
+          <badge_element>Elemento</badge_element>
+          <legend_codelessdesc>Sin código (no está en el código)</legend_codelessdesc>
+          <origin_codeless>Sin código</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>La tarea del verificador de enlaces está en ejecución. Los resultados se actualizarán al finalizar.</alert_running>
@@ -579,6 +604,11 @@
           <btn_saveall>Guardar todo</btn_saveall>
           <btn_publishall>Publicar todo</btn_publishall>
           <confirm_discard>¿Descartar todos los cambios pendientes?</confirm_discard>
+          <tab_types>Tipos de contenido</tab_types>
+          <tab_contracts>Contratos</tab_contracts>
+          <badge_section>Sección</badge_section>
+          <badge_element>Elemento</badge_element>
+          <note_expansion>El contrato se expande a</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Ejecute la tarea programada [EditorPowertools] Análisis de contenido para poblar los datos.</banner_runjob>
@@ -598,6 +628,11 @@
           <stat_pages>Páginas</stat_pages>
           <stat_blocks>Bloques</stat_blocks>
           <stat_media>Medios</stat_media>
+          <stat_contracts>Contratos</stat_contracts>
+          <panel_blockbreakdown>Desglose de bloques</panel_blockbreakdown>
+          <bb_sections>Secciones</bb_sections>
+          <bb_elements>Elementos</bb_elements>
+          <bb_plain>Bloques simples</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>Actividades hoy</stat_today>

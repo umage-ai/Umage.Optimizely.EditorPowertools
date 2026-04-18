@@ -1,4 +1,5 @@
 using System.Globalization;
+using UmageAI.Optimizely.EditorPowerTools.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor.Models;
 using EPiServer;
 using EPiServer.Core;
@@ -16,6 +17,7 @@ public class BulkPropertyEditorService
     private readonly IContentRepository _contentRepository;
     private readonly IContentModelUsage _contentModelUsage;
     private readonly ILanguageBranchRepository _languageBranchRepository;
+    private readonly IContentTypeMetadataProvider _metadataProvider;
     private readonly ILogger<BulkPropertyEditorService> _logger;
 
     public BulkPropertyEditorService(
@@ -23,25 +25,67 @@ public class BulkPropertyEditorService
         IContentRepository contentRepository,
         IContentModelUsage contentModelUsage,
         ILanguageBranchRepository languageBranchRepository,
+        IContentTypeMetadataProvider metadataProvider,
         ILogger<BulkPropertyEditorService> logger)
     {
         _contentTypeRepository = contentTypeRepository;
         _contentRepository = contentRepository;
         _contentModelUsage = contentModelUsage;
         _languageBranchRepository = languageBranchRepository;
+        _metadataProvider = metadataProvider;
         _logger = logger;
     }
 
     public List<ContentTypeListItem> GetContentTypes()
     {
         return _contentTypeRepository.List()
-            .Where(ct => ct.ModelType != null)
-            .Select(ct => new ContentTypeListItem(
-                ct.ID,
-                ct.LocalizedName ?? ct.Name,
-                GetBaseType(ct.ModelType)))
+            .Where(ct => ct.ModelType != null || _metadataProvider.Get(ct).IsContract)
+            .Select(ct =>
+            {
+                var m = _metadataProvider.Get(ct);
+                return new ContentTypeListItem(
+                    ct.ID,
+                    ct.LocalizedName ?? ct.Name,
+                    GetBaseType(ct.ModelType),
+                    CmsFeatureFlags.ContractsAvailable ? (bool?)m.IsContract : null,
+                    CmsFeatureFlags.ContractsAvailable ? m.CompositionBehaviors.ToArray() : null);
+            })
             .OrderBy(ct => ct.Name)
             .ToList();
+    }
+
+    public IReadOnlyList<int> ResolveTargetTypes(IEnumerable<int> requestedIds)
+    {
+        var requested = requestedIds?.Distinct().ToList() ?? new List<int>();
+        if (!CmsFeatureFlags.ContractsAvailable || requested.Count == 0)
+            return requested;
+
+        var all = _contentTypeRepository.List().ToList();
+        var byId = all.ToDictionary(ct => ct.ID);
+        var result = new HashSet<int>();
+
+        foreach (var id in requested)
+        {
+            if (!byId.TryGetValue(id, out var ct)) continue;
+            var metadata = _metadataProvider.Get(ct);
+
+            if (metadata.IsContract)
+            {
+                // Expand: every non-contract type whose Contracts includes this one.
+                foreach (var candidate in all)
+                {
+                    var cm = _metadataProvider.Get(candidate);
+                    if (!cm.IsContract && cm.Contracts.Any(c => c.Id == id))
+                        result.Add(candidate.ID);
+                }
+            }
+            else
+            {
+                result.Add(id);
+            }
+        }
+
+        return result.ToList();
     }
 
     public List<LanguageInfo> GetLanguages()
@@ -76,10 +120,18 @@ public class BulkPropertyEditorService
 
     public Task<ContentFilterResponse> GetContentAsync(ContentFilterRequest request)
     {
+        // ResolvedTypes signals contract expansion to the UI. Null = no expansion happened
+        // (the resolved set is just the single requested id, as on CMS 12). Non-null = the
+        // requested id is a contract, expanded to these concrete content-type ids.
+        var resolvedTypes = ResolveTargetTypes(new[] { request.ContentTypeId });
+        var resolvedSignal = (resolvedTypes.Count == 1 && resolvedTypes[0] == request.ContentTypeId)
+            ? null
+            : resolvedTypes.ToArray();
+
         ContentType? contentType = _contentTypeRepository.Load(request.ContentTypeId);
         if (contentType == null)
         {
-            return Task.FromResult(new ContentFilterResponse([], 0, request.Page, request.PageSize, 0));
+            return Task.FromResult(new ContentFilterResponse([], 0, request.Page, request.PageSize, 0, resolvedSignal));
         }
 
         IList<ContentUsage> usages = _contentModelUsage.ListContentOfContentType(contentType);
@@ -146,7 +198,7 @@ public class BulkPropertyEditorService
             .Select(content => BuildContentItemRow(content, request))
             .ToList();
 
-        ContentFilterResponse response = new(rows, totalCount, request.Page, request.PageSize, totalPages);
+        ContentFilterResponse response = new(rows, totalCount, request.Page, request.PageSize, totalPages, resolvedSignal);
         return Task.FromResult(response);
     }
 

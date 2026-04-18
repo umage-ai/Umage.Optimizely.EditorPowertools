@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>Öppna i redigeringsläge</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>Kontrakt</filter_contract>
+          <filter_composition>Komposition</filter_composition>
+          <any>Valfri</any>
+          <include>Inkludera</include>
+          <exclude>Exkludera</exclude>
+          <only>Endast kontrakt</only>
+          <section>Sektion</section>
+          <element>Element</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>Översikt</tab_overview>
@@ -499,8 +508,19 @@
           <btn_failed>Misslyckades</btn_failed>
           <stat_contenttypes>Innehållstyper</stat_contenttypes>
           <stat_systemtypes>Systemtyper</stat_systemtypes>
-          <stat_orphaned>Föräldralösa</stat_orphaned>
+          <stat_codeless>Kodlös</stat_codeless>
+          <stat_contracts>Kontrakt</stat_contracts>
           <stat_unused>Oanvända (0 innehåll)</stat_unused>
+          <opt_allkinds>Alla typer</opt_allkinds>
+          <opt_contractsonly>Endast kontrakttyper</opt_contractsonly>
+          <opt_noncontract>Icke-kontrakttyper</opt_noncontract>
+          <opt_anycomposition>Valfri komposition</opt_anycomposition>
+          <opt_sectiononly>Endast sektion</opt_sectiononly>
+          <opt_elementonly>Endast element</opt_elementonly>
+          <opt_both>Både sektion &amp; element</opt_both>
+          <opt_plain>Vanligt block</opt_plain>
+          <panel_appliedcontracts>Tillämpade kontrakt</panel_appliedcontracts>
+          <tip_viewcontract>Visa kontraktsdetaljer</tip_viewcontract>
           <stat_showing>Visar</stat_showing>
           <lbl_search>Sök typer... (eller egenskap:namn)</lbl_search>
           <opt_allbases>Alla bastyper</opt_allbases>
@@ -515,7 +535,12 @@
           <col_content>Innehåll</col_content>
           <opt_all>Alla</opt_all>
           <badge_system>System</badge_system>
-          <badge_orphaned>Föräldralös</badge_orphaned>
+          <badge_codeless>Kodlös</badge_codeless>
+          <badge_contract>Kontrakt</badge_contract>
+          <badge_section>Sektion</badge_section>
+          <badge_element>Element</badge_element>
+          <legend_codelessdesc>Kodlös (inte i koden)</legend_codelessdesc>
+          <origin_codeless>Kodlös</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>Länkkontrolljobbet körs för närvarande. Resultaten uppdateras när det är klart.</alert_running>
@@ -579,6 +604,11 @@
           <btn_saveall>Spara alla</btn_saveall>
           <btn_publishall>Publicera alla</btn_publishall>
           <confirm_discard>Kassera alla väntande ändringar?</confirm_discard>
+          <tab_types>Innehållstyper</tab_types>
+          <tab_contracts>Kontrakt</tab_contracts>
+          <badge_section>Sektion</badge_section>
+          <badge_element>Element</badge_element>
+          <note_expansion>Kontrakt utökas till</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Kör det schemalagda jobbet [EditorPowertools] Innehållsanalys för att fylla i data.</banner_runjob>
@@ -598,6 +628,11 @@
           <stat_pages>Sidor</stat_pages>
           <stat_blocks>Block</stat_blocks>
           <stat_media>Media</stat_media>
+          <stat_contracts>Kontrakt</stat_contracts>
+          <panel_blockbreakdown>Blockfördelning</panel_blockbreakdown>
+          <bb_sections>Sektioner</bb_sections>
+          <bb_elements>Element</bb_elements>
+          <bb_plain>Vanliga block</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>Aktiviteter idag</stat_today>

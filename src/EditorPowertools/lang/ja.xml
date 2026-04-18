@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>編集モードで開く</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>コントラクト</filter_contract>
+          <filter_composition>構成</filter_composition>
+          <any>すべて</any>
+          <include>含める</include>
+          <exclude>除外</exclude>
+          <only>コントラクトのみ</only>
+          <section>セクション</section>
+          <element>要素</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>概要</tab_overview>
@@ -499,8 +508,19 @@
           <btn_failed>失敗</btn_failed>
           <stat_contenttypes>コンテンツタイプ数</stat_contenttypes>
           <stat_systemtypes>システムタイプ数</stat_systemtypes>
-          <stat_orphaned>孤立</stat_orphaned>
+          <stat_codeless>コードなし</stat_codeless>
+          <stat_contracts>コントラクト</stat_contracts>
           <stat_unused>未使用（コンテンツ0件）</stat_unused>
+          <opt_allkinds>すべての種類</opt_allkinds>
+          <opt_contractsonly>コントラクトのみ</opt_contractsonly>
+          <opt_noncontract>コントラクト以外</opt_noncontract>
+          <opt_anycomposition>任意の構成</opt_anycomposition>
+          <opt_sectiononly>セクションのみ</opt_sectiononly>
+          <opt_elementonly>要素のみ</opt_elementonly>
+          <opt_both>セクション＆要素</opt_both>
+          <opt_plain>標準ブロック</opt_plain>
+          <panel_appliedcontracts>適用された契約</panel_appliedcontracts>
+          <tip_viewcontract>コントラクトの詳細を表示</tip_viewcontract>
           <stat_showing>表示中</stat_showing>
           <lbl_search>タイプを検索...（または property:名前）</lbl_search>
           <opt_allbases>すべての基底タイプ</opt_allbases>
@@ -515,7 +535,12 @@
           <col_content>コンテンツ</col_content>
           <opt_all>すべて</opt_all>
           <badge_system>システム</badge_system>
-          <badge_orphaned>孤立</badge_orphaned>
+          <badge_codeless>コードなし</badge_codeless>
+          <badge_contract>コントラクト</badge_contract>
+          <badge_section>セクション</badge_section>
+          <badge_element>要素</badge_element>
+          <legend_codelessdesc>コードなし (コードに存在しない)</legend_codelessdesc>
+          <origin_codeless>コードなし</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>リンクチェッカージョブが実行中です。完了すると結果が更新されます。</alert_running>
@@ -579,6 +604,11 @@
           <btn_saveall>すべて保存</btn_saveall>
           <btn_publishall>すべて公開</btn_publishall>
           <confirm_discard>保留中のすべての変更を破棄しますか？</confirm_discard>
+          <tab_types>コンテンツタイプ</tab_types>
+          <tab_contracts>コントラクト</tab_contracts>
+          <badge_section>セクション</badge_section>
+          <badge_element>要素</badge_element>
+          <note_expansion>コントラクトは次に展開されます</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>[EditorPowertools] コンテンツ分析スケジュールジョブを実行してデータを生成してください。</banner_runjob>
@@ -598,6 +628,11 @@
           <stat_pages>ページ数</stat_pages>
           <stat_blocks>ブロック数</stat_blocks>
           <stat_media>メディア数</stat_media>
+          <stat_contracts>コントラクト</stat_contracts>
+          <panel_blockbreakdown>ブロック内訳</panel_blockbreakdown>
+          <bb_sections>セクション</bb_sections>
+          <bb_elements>要素</bb_elements>
+          <bb_plain>標準ブロック</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>本日のアクティビティ数</stat_today>

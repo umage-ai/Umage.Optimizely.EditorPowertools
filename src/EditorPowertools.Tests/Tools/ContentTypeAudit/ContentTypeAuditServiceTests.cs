@@ -1,6 +1,7 @@
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
+using UmageAI.Optimizely.EditorPowerTools.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Services;
 using UmageAI.Optimizely.EditorPowerTools.Tests.Helpers;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit;
@@ -39,6 +40,7 @@ public class ContentTypeAuditServiceTests
             _softLinkRepo.Object,
             _propertyDefinitionRepo.Object,
             _statisticsRepo.Object,
+            Mock.Of<IContentTypeMetadataProvider>(p => p.Get(It.IsAny<ContentType>()) == ContentTypeMetadata.Empty),
             logger.Object);
     }
 
@@ -168,7 +170,7 @@ public class ContentTypeAuditServiceTests
 
         var result = _service.GetAllContentTypes().ToList();
 
-        result[0].IsOrphaned.Should().BeTrue();
+        result[0].IsCodeless.Should().BeTrue();
     }
 
     [Fact]
@@ -181,6 +183,44 @@ public class ContentTypeAuditServiceTests
         var result = _service.GetAllContentTypes().ToList();
 
         result[0].IsSystemType.Should().BeTrue();
+    }
+
+    [Fact]
+    public void GetAllContentTypes_PopulatesMetadataFromProvider()
+    {
+        var ct = CreateContentType(42, "Promo", "Promo Block", "Blocks");
+        _contentTypeRepo.Setup(r => r.List()).Returns(new[] { ct });
+        _statisticsRepo.Setup(r => r.GetAll())
+            .Returns(Array.Empty<ContentTypeStatisticsRecord>());
+
+        var metadataProvider = new Mock<IContentTypeMetadataProvider>();
+        metadataProvider.Setup(p => p.Get(ct))
+            .Returns(new ContentTypeMetadata(
+                IsContract: false,
+                Contracts: new[] { new ContractRef(7, Guid.Empty, "IHasSeo", "HasSeo") },
+                CompositionBehaviors: new[] { "SectionEnabled" }));
+
+        var service = new ContentTypeAuditService(
+            _contentTypeRepo.Object,
+            _contentModelUsage.Object,
+            _contentLoader.Object,
+            _softLinkRepo.Object,
+            _propertyDefinitionRepo.Object,
+            _statisticsRepo.Object,
+            metadataProvider.Object,
+            Mock.Of<ILogger<ContentTypeAuditService>>());
+
+        var dtos = service.GetAllContentTypes().ToList();
+
+#if OPTIMIZELY_CMS13
+        dtos.Single().IsContract.Should().BeFalse();
+        dtos.Single().CompositionBehaviors.Should().ContainSingle().Which.Should().Be("SectionEnabled");
+        dtos.Single().Contracts.Should().ContainSingle().Which.Name.Should().Be("IHasSeo");
+#else
+        dtos.Single().IsContract.Should().BeNull();
+        dtos.Single().CompositionBehaviors.Should().BeNull();
+        dtos.Single().Contracts.Should().BeNull();
+#endif
     }
 
     // --- GetProperties ---

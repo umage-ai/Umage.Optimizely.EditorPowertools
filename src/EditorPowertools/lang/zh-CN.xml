@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>在编辑模式下打开</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>合约</filter_contract>
+          <filter_composition>构成</filter_composition>
+          <any>任意</any>
+          <include>包含</include>
+          <exclude>排除</exclude>
+          <only>仅合约</only>
+          <section>区块</section>
+          <element>元素</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>概览</tab_overview>
@@ -499,8 +508,19 @@
           <btn_failed>失败</btn_failed>
           <stat_contenttypes>内容类型</stat_contenttypes>
           <stat_systemtypes>系统类型</stat_systemtypes>
-          <stat_orphaned>孤立</stat_orphaned>
+          <stat_codeless>无代码</stat_codeless>
+          <stat_contracts>合约</stat_contracts>
           <stat_unused>未使用（0个内容）</stat_unused>
+          <opt_allkinds>所有类型</opt_allkinds>
+          <opt_contractsonly>仅合约类型</opt_contractsonly>
+          <opt_noncontract>非合约类型</opt_noncontract>
+          <opt_anycomposition>任意组合</opt_anycomposition>
+          <opt_sectiononly>仅区块</opt_sectiononly>
+          <opt_elementonly>仅元素</opt_elementonly>
+          <opt_both>区块和元素</opt_both>
+          <opt_plain>普通区块</opt_plain>
+          <panel_appliedcontracts>已应用合约</panel_appliedcontracts>
+          <tip_viewcontract>查看合约详情</tip_viewcontract>
           <stat_showing>显示</stat_showing>
           <lbl_search>搜索类型...（或 property:名称）</lbl_search>
           <opt_allbases>所有基类型</opt_allbases>
@@ -515,7 +535,12 @@
           <col_content>内容</col_content>
           <opt_all>全部</opt_all>
           <badge_system>系统</badge_system>
-          <badge_orphaned>孤立</badge_orphaned>
+          <badge_codeless>无代码</badge_codeless>
+          <badge_contract>合约</badge_contract>
+          <badge_section>区块</badge_section>
+          <badge_element>元素</badge_element>
+          <legend_codelessdesc>无代码 (不在代码中)</legend_codelessdesc>
+          <origin_codeless>无代码</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>链接检查任务正在运行。完成后将更新结果。</alert_running>
@@ -579,6 +604,11 @@
           <btn_saveall>全部保存</btn_saveall>
           <btn_publishall>全部发布</btn_publishall>
           <confirm_discard>放弃所有待保存的更改？</confirm_discard>
+          <tab_types>内容类型</tab_types>
+          <tab_contracts>合约</tab_contracts>
+          <badge_section>区块</badge_section>
+          <badge_element>元素</badge_element>
+          <note_expansion>合约扩展到</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>请运行 [EditorPowertools] 内容分析计划任务以填充数据。</banner_runjob>
@@ -598,6 +628,11 @@
           <stat_pages>页面</stat_pages>
           <stat_blocks>块</stat_blocks>
           <stat_media>媒体</stat_media>
+          <stat_contracts>合约</stat_contracts>
+          <panel_blockbreakdown>区块明细</panel_blockbreakdown>
+          <bb_sections>区块</bb_sections>
+          <bb_elements>元素</bb_elements>
+          <bb_plain>普通区块</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>今日活动</stat_today>

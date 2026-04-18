@@ -4,6 +4,7 @@ using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Shell;
 using EPiServer.Web.Routing;
+using UmageAI.Optimizely.EditorPowerTools.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Helpers;
 using UmageAI.Optimizely.EditorPowerTools.Services;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit.Models;
@@ -19,6 +20,7 @@ public class ContentTypeAuditService
     private readonly IContentSoftLinkRepository _softLinkRepository;
     private readonly IPropertyDefinitionRepository _propertyDefinitionRepository;
     private readonly ContentTypeStatisticsRepository _statisticsRepository;
+    private readonly IContentTypeMetadataProvider _metadataProvider;
     private readonly ILogger<ContentTypeAuditService> _logger;
 
     public ContentTypeAuditService(
@@ -28,6 +30,7 @@ public class ContentTypeAuditService
         IContentSoftLinkRepository softLinkRepository,
         IPropertyDefinitionRepository propertyDefinitionRepository,
         ContentTypeStatisticsRepository statisticsRepository,
+        IContentTypeMetadataProvider metadataProvider,
         ILogger<ContentTypeAuditService> logger)
     {
         _contentTypeRepository = contentTypeRepository;
@@ -36,6 +39,7 @@ public class ContentTypeAuditService
         _softLinkRepository = softLinkRepository;
         _propertyDefinitionRepository = propertyDefinitionRepository;
         _statisticsRepository = statisticsRepository;
+        _metadataProvider = metadataProvider;
         _logger = logger;
     }
 
@@ -83,7 +87,7 @@ public class ContentTypeAuditService
             {
                 PropertyOrigin origin;
                 if (!pd.ExistsOnModel)
-                    origin = PropertyOrigin.Orphaned;
+                    origin = PropertyOrigin.Codeless;
                 else if (inheritedNames.Contains(pd.Name))
                     origin = PropertyOrigin.Inherited;
                 else
@@ -240,6 +244,7 @@ public class ContentTypeAuditService
         Dictionary<int, ContentTypeStatisticsRecord> statistics)
     {
         statistics.TryGetValue(contentType.ID, out var stats);
+        var metadata = _metadataProvider.Get(contentType);
 
         var children = allTypes
             .Where(t => t.ModelType?.BaseType == contentType.ModelType)
@@ -253,13 +258,16 @@ public class ContentTypeAuditService
             Name = contentType.Name,
             DisplayName = contentType.DisplayName,
             ContentCount = stats?.ContentCount,
-            IsOrphaned = contentType.ModelType == null,
+            IsCodeless = contentType.ModelType == null,
+            IsContract = CmsFeatureFlags.ContractsAvailable ? (bool?)metadata.IsContract : null,
+            CompositionBehaviors = CmsFeatureFlags.ContractsAvailable ? metadata.CompositionBehaviors.ToArray() : null,
             Children = children
         };
     }
 
-    private static ContentTypeDto MapToDto(ContentType ct, ContentTypeStatisticsRecord? stats)
+    private ContentTypeDto MapToDto(ContentType ct, ContentTypeStatisticsRecord? stats)
     {
+        var metadata = _metadataProvider.Get(ct);
         return new ContentTypeDto
         {
             Id = ct.ID,
@@ -275,7 +283,7 @@ public class ContentTypeAuditService
             EditUrl = $"{Paths.ToResource("EPiServer.Cms.UI.Admin", "default")}#/ContentType/{ct.GUID}",
             PropertyCount = ct.PropertyDefinitions.Count,
             IsSystemType = IsSystemType(ct),
-            IsOrphaned = ct.ModelType == null,
+            IsCodeless = ct.ModelType == null,
             IconUrl = GetIconUrl(ct),
             Created = ct.Created,
             Saved = ct.Saved,
@@ -284,7 +292,10 @@ public class ContentTypeAuditService
             PublishedCount = stats?.PublishedCount,
             ReferencedCount = stats?.ReferencedCount,
             UnreferencedCount = stats?.UnreferencedCount,
-            StatisticsUpdated = stats?.LastUpdated
+            StatisticsUpdated = stats?.LastUpdated,
+            IsContract = CmsFeatureFlags.ContractsAvailable ? metadata.IsContract : (bool?)null,
+            CompositionBehaviors = CmsFeatureFlags.ContractsAvailable ? metadata.CompositionBehaviors.ToArray() : null,
+            Contracts = CmsFeatureFlags.ContractsAvailable ? metadata.Contracts.ToArray() : null
         };
     }
 

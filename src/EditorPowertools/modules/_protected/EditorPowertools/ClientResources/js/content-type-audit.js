@@ -12,6 +12,8 @@
     let showSystem = false;
     let baseFilter = '';
     let searchQuery = '';
+    let kindFilter = '';        // '' | 'contract' | 'non-contract'
+    let compositionFilter = ''; // '' | 'section' | 'element' | 'both' | 'plain'
 
     async function init() {
         EPT.showLoading(document.getElementById('audit-content'));
@@ -48,6 +50,16 @@
         return allTypes.filter(t => {
             if (!showSystem && t.isSystemType) return false;
             if (baseFilter && t.base !== baseFilter) return false;
+            if (kindFilter === 'contract' && !t.isContract) return false;
+            if (kindFilter === 'non-contract' && t.isContract) return false;
+            if (compositionFilter) {
+                const has = (name) => t.compositionBehaviors?.includes(name);
+                if (compositionFilter === 'section' && !has('SectionEnabled')) return false;
+                if (compositionFilter === 'element' && !has('ElementEnabled')) return false;
+                if (compositionFilter === 'both' && !(has('SectionEnabled') && has('ElementEnabled'))) return false;
+                if (compositionFilter === 'plain' &&
+                    (has('SectionEnabled') || has('ElementEnabled'))) return false;
+            }
             if (searchQuery) {
                 const q = searchQuery.toLowerCase();
                 if (q.startsWith('property:')) return false;
@@ -66,22 +78,26 @@
         const filtered = getFiltered();
         const total = allTypes.filter(t => !t.isSystemType).length;
         const system = allTypes.filter(t => t.isSystemType).length;
-        const orphaned = allTypes.filter(t => t.isOrphaned).length;
+        const orphaned = allTypes.filter(t => t.isCodeless).length;
         const hasStats = allTypes.some(t => t.statisticsUpdated != null);
         const unused = hasStats ? filtered.filter(t => t.contentCount === 0).length : null;
+        const hasCms13 = allTypes.some(t => t.isContract != null);
+        const contracts = hasCms13 ? allTypes.filter(t => t.isContract).length : null;
 
         const el = document.getElementById('audit-stats');
         el.innerHTML = `
             <div class="ept-stat"><div class="ept-stat__value">${total}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_contenttypes', 'Content Types')}</div></div>
             <div class="ept-stat"><div class="ept-stat__value">${system}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_systemtypes', 'System Types')}</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${orphaned}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_orphaned', 'Orphaned')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${orphaned}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_codeless', 'Code-less')}</div></div>
             ${unused != null ? `<div class="ept-stat"><div class="ept-stat__value">${unused}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_unused', 'Unused (0 content)')}</div></div>` : ''}
+            ${contracts != null ? `<div class="ept-stat"><div class="ept-stat__value">${contracts}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_contracts', 'Contracts')}</div></div>` : ''}
             <div class="ept-stat"><div class="ept-stat__value">${filtered.length}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_showing', 'Showing')}</div></div>
         `;
     }
 
     function renderToolbar() {
         const bases = [...new Set(allTypes.map(t => t.base))].sort();
+        const hasCms13 = allTypes.some(t => t.isContract != null);
 
         const toolbar = document.getElementById('audit-toolbar');
         toolbar.innerHTML = `
@@ -93,6 +109,19 @@
                 <option value="">${EPT.s('contenttypeaudit.opt_allbases', 'All base types')}</option>
                 ${bases.map(b => `<option value="${b}">${b} (${allTypes.filter(t => t.base === b).length})</option>`).join('')}
             </select>
+            ${hasCms13 ? `
+            <select id="audit-kind-filter" class="ept-select">
+                <option value="">${EPT.s('contenttypeaudit.opt_allkinds', 'All kinds')}</option>
+                <option value="contract">${EPT.s('contenttypeaudit.opt_contractsonly', 'Contract types only')}</option>
+                <option value="non-contract">${EPT.s('contenttypeaudit.opt_noncontract', 'Non-contract types')}</option>
+            </select>
+            <select id="audit-composition-filter" class="ept-select">
+                <option value="">${EPT.s('contenttypeaudit.opt_anycomposition', 'Any composition')}</option>
+                <option value="section">${EPT.s('contenttypeaudit.opt_sectiononly', 'Section-enabled')}</option>
+                <option value="element">${EPT.s('contenttypeaudit.opt_elementonly', 'Element-enabled')}</option>
+                <option value="both">${EPT.s('contenttypeaudit.opt_both', 'Both section &amp; element')}</option>
+                <option value="plain">${EPT.s('contenttypeaudit.opt_plain', 'Plain block')}</option>
+            </select>` : ''}
             <label class="ept-toggle">
                 <input type="checkbox" id="audit-show-system" ${showSystem ? 'checked' : ''} />
                 ${EPT.s('contenttypeaudit.chk_showsystem', 'Show system types')}
@@ -111,6 +140,19 @@
 
         document.getElementById('audit-base-filter').addEventListener('change', (e) => {
             baseFilter = e.target.value;
+            renderStats();
+            if (currentView === 'table') renderTable();
+        });
+
+        const kindEl = document.getElementById('audit-kind-filter');
+        if (kindEl) kindEl.addEventListener('change', (e) => {
+            kindFilter = e.target.value;
+            renderStats();
+            if (currentView === 'table') renderTable();
+        });
+        const compEl = document.getElementById('audit-composition-filter');
+        if (compEl) compEl.addEventListener('change', (e) => {
+            compositionFilter = e.target.value;
             renderStats();
             if (currentView === 'table') renderTable();
         });
@@ -163,7 +205,7 @@
             defaultSort: 'name',
             rowClass: (r) => {
                 if (r.isSystemType) return 'ept-row--system';
-                if (r.isOrphaned) return 'ept-row--orphaned';
+                if (r.isCodeless) return 'ept-row--orphaned';
                 return '';
             }
         });
@@ -216,7 +258,16 @@
         const name = r.displayName || r.name;
         const badges = [];
         if (r.isSystemType) badges.push(`<span class="ept-badge ept-badge--default">${EPT.s('contenttypeaudit.badge_system', 'System')}</span>`);
-        else if (r.isOrphaned) badges.push(`<span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.badge_orphaned', 'Orphaned')}</span>`);
+        else if (r.isCodeless) badges.push(`<span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.badge_codeless', 'Code-less')}</span>`);
+        if (r.isContract) {
+            badges.push(`<span class="ept-badge ept-badge--primary">${EPT.s('contenttypeaudit.badge_contract', 'Contract')}</span>`);
+        }
+        if (r.compositionBehaviors?.includes('SectionEnabled')) {
+            badges.push(`<span class="ept-badge ept-badge--success">${EPT.s('contenttypeaudit.badge_section', 'Section')}</span>`);
+        }
+        if (r.compositionBehaviors?.includes('ElementEnabled')) {
+            badges.push(`<span class="ept-badge ept-badge--success">${EPT.s('contenttypeaudit.badge_element', 'Element')}</span>`);
+        }
         return `<div>
             <strong>${escHtml(name)}</strong>
             ${r.displayName && r.displayName !== r.name ? `<span class="ept-muted"> (${escHtml(r.name)})</span>` : ''}
@@ -267,6 +318,34 @@
             const props = await EPT.fetchJson(`${API}/GetProperties/${type.id}`);
             body.innerHTML = ''; // Clear loading spinner
 
+            // Applied Contracts panel (CMS 13 only, when present)
+            if (type.contracts && type.contracts.length > 0) {
+                const panel = document.createElement('div');
+                panel.style.cssText = 'padding:12px 16px;border-bottom:1px solid var(--ept-border,#e5e7eb)';
+                const label = document.createElement('div');
+                label.style.cssText = 'font-weight:600;margin-bottom:6px';
+                label.textContent = EPT.s('contenttypeaudit.panel_appliedcontracts', 'Applied contracts');
+                panel.appendChild(label);
+
+                const chipRow = document.createElement('div');
+                type.contracts.forEach(c => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'ept-badge ept-badge--primary';
+                    btn.style.cssText = 'margin:2px 4px 2px 0; cursor:pointer; border:none;';
+                    btn.textContent = c.displayName || c.name;
+                    btn.title = EPT.s('contenttypeaudit.tip_viewcontract', 'View contract details');
+                    btn.addEventListener('click', () => {
+                        close();
+                        const fullType = allTypes.find(t => t.id === c.id);
+                        showProperties(fullType || c);
+                    });
+                    chipRow.appendChild(btn);
+                });
+                panel.appendChild(chipRow);
+                body.appendChild(panel);
+            }
+
             if (props.length === 0) {
                 EPT.showEmpty(body, EPT.s('contenttypeaudit.empty_noproperties', 'No properties defined'));
                 return;
@@ -277,7 +356,7 @@
             legend.innerHTML = `
                 <span class="ept-badge ept-badge--success">${EPT.s('contenttypeaudit.legend_inherited', 'Inherited')}</span>
                 <span class="ept-badge ept-badge--default">${EPT.s('contenttypeaudit.legend_defined', 'Defined')}</span>
-                <span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.legend_orphaneddesc', 'Orphaned (not in code)')}</span>
+                <span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.legend_codelessdesc', 'Code-less (not in code)')}</span>
             `;
             body.appendChild(legend);
 
@@ -291,7 +370,7 @@
                 { key: 'languageSpecific', label: EPT.s('contenttypeaudit.col_proplanguage', 'Language'), render: (r) => r.languageSpecific ? '✓' : '' },
                 {
                     key: 'origin', label: EPT.s('contenttypeaudit.col_proporigin', 'Origin'), render: (r) => {
-                        const label = r.origin === 0 ? EPT.s('contenttypeaudit.origin_defined', 'Defined') : r.origin === 1 ? EPT.s('contenttypeaudit.origin_inherited', 'Inherited') : EPT.s('contenttypeaudit.origin_orphaned', 'Orphaned');
+                        const label = r.origin === 0 ? EPT.s('contenttypeaudit.origin_defined', 'Defined') : r.origin === 1 ? EPT.s('contenttypeaudit.origin_inherited', 'Inherited') : EPT.s('contenttypeaudit.origin_codeless', 'Code-less');
                         const cls = r.origin === 0 ? 'default' : r.origin === 1 ? 'success' : 'danger';
                         return `<span class="ept-badge ept-badge--${cls}">${label}</span>`;
                     }
@@ -494,8 +573,17 @@
             const label = document.createElement('span');
             label.className = 'ept-tree__label';
             label.textContent = node.displayName || node.name;
-            if (node.isOrphaned) {
-                label.innerHTML += ` <span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.badge_orphaned', 'Orphaned')}</span>`;
+            if (node.isCodeless) {
+                label.innerHTML += ` <span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.badge_codeless', 'Code-less')}</span>`;
+            }
+            if (node.isContract) {
+                label.innerHTML += ` <span class="ept-badge ept-badge--primary">${EPT.s('contenttypeaudit.badge_contract', 'Contract')}</span>`;
+            }
+            if (node.compositionBehaviors?.includes('SectionEnabled')) {
+                label.innerHTML += ` <span class="ept-badge ept-badge--success">${EPT.s('contenttypeaudit.badge_section', 'Section')}</span>`;
+            }
+            if (node.compositionBehaviors?.includes('ElementEnabled')) {
+                label.innerHTML += ` <span class="ept-badge ept-badge--success">${EPT.s('contenttypeaudit.badge_element', 'Element')}</span>`;
             }
             label.title = EPT.s('contenttypeaudit.title_viewcontent', 'Click to view content of this type');
             label.addEventListener('click', () => {
@@ -546,7 +634,7 @@
             { key: 'publishedCount', label: 'Published' },
             { key: 'referencedCount', label: 'Referenced' },
             { key: 'unreferencedCount', label: 'Unreferenced' },
-            { key: 'isOrphaned', label: 'Orphaned' },
+            { key: 'isCodeless', label: 'Code-less' },
             { key: 'isSystemType', label: 'System Type' },
             { key: 'modelType', label: 'Model Type' },
             { key: 'description', label: 'Description' },

@@ -96,4 +96,5 @@ appsettings.local.json
 .playwright-mcp/
 *.png
 .claude/worktrees/
+.worktrees/
 !src/EditorPowertools/icon.png

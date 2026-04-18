@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>Avaa muokkaustilassa</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>Sopimukset</filter_contract>
+          <filter_composition>Koostumus</filter_composition>
+          <any>Mikä tahansa</any>
+          <include>Sisällytä</include>
+          <exclude>Poissulje</exclude>
+          <only>Vain sopimukset</only>
+          <section>Osio</section>
+          <element>Elementti</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>Yleiskatsaus</tab_overview>
@@ -499,8 +508,19 @@
           <btn_failed>Epäonnistui</btn_failed>
           <stat_contenttypes>Sisältötyypit</stat_contenttypes>
           <stat_systemtypes>Järjestelmätyypit</stat_systemtypes>
-          <stat_orphaned>Orvot</stat_orphaned>
+          <stat_codeless>Koodittomat</stat_codeless>
+          <stat_contracts>Sopimukset</stat_contracts>
           <stat_unused>Käyttämättömät (0 sisältöä)</stat_unused>
+          <opt_allkinds>Kaikki tyypit</opt_allkinds>
+          <opt_contractsonly>Vain sopimustyypit</opt_contractsonly>
+          <opt_noncontract>Ei-sopimustyypit</opt_noncontract>
+          <opt_anycomposition>Mikä tahansa koostumus</opt_anycomposition>
+          <opt_sectiononly>Vain osio</opt_sectiononly>
+          <opt_elementonly>Vain elementti</opt_elementonly>
+          <opt_both>Osio &amp; elementti</opt_both>
+          <opt_plain>Tavallinen lohko</opt_plain>
+          <panel_appliedcontracts>Sovelletut sopimukset</panel_appliedcontracts>
+          <tip_viewcontract>Näytä sopimuksen tiedot</tip_viewcontract>
           <stat_showing>Näytetään</stat_showing>
           <lbl_search>Hae tyyppejä... (tai ominaisuus:nimi)</lbl_search>
           <opt_allbases>Kaikki perustyypit</opt_allbases>
@@ -515,7 +535,12 @@
           <col_content>Sisältö</col_content>
           <opt_all>Kaikki</opt_all>
           <badge_system>Järjestelmä</badge_system>
-          <badge_orphaned>Orpo</badge_orphaned>
+          <badge_codeless>Koodittomat</badge_codeless>
+          <badge_contract>Sopimus</badge_contract>
+          <badge_section>Osio</badge_section>
+          <badge_element>Elementti</badge_element>
+          <legend_codelessdesc>Koodittomat (ei koodissa)</legend_codelessdesc>
+          <origin_codeless>Koodittomat</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>Linkkien tarkistuksen tehtävä on parhaillaan käynnissä. Tulokset päivitetään kun se valmistuu.</alert_running>
@@ -579,6 +604,11 @@
           <btn_saveall>Tallenna kaikki</btn_saveall>
           <btn_publishall>Julkaise kaikki</btn_publishall>
           <confirm_discard>Hylätäänkö kaikki odottavat muutokset?</confirm_discard>
+          <tab_types>Sisältötyypit</tab_types>
+          <tab_contracts>Sopimukset</tab_contracts>
+          <badge_section>Osio</badge_section>
+          <badge_element>Elementti</badge_element>
+          <note_expansion>Sopimus laajenee</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Suorita ajastettu tehtävä [EditorPowertools] Sisältöanalyysi tietojen täyttämiseksi.</banner_runjob>
@@ -598,6 +628,11 @@
           <stat_pages>Sivut</stat_pages>
           <stat_blocks>Lohkot</stat_blocks>
           <stat_media>Media</stat_media>
+          <stat_contracts>Sopimukset</stat_contracts>
+          <panel_blockbreakdown>Lohkojen jaottelu</panel_blockbreakdown>
+          <bb_sections>Osiot</bb_sections>
+          <bb_elements>Elementit</bb_elements>
+          <bb_plain>Tavalliset lohkot</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>Toimintaa tänään</stat_today>

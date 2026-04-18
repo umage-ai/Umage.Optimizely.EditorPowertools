@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>Im Bearbeitungsmodus öffnen</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>Verträge</filter_contract>
+          <filter_composition>Komposition</filter_composition>
+          <any>Beliebig</any>
+          <include>Einschließen</include>
+          <exclude>Ausschließen</exclude>
+          <only>Nur Verträge</only>
+          <section>Abschnitt</section>
+          <element>Element</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>Übersicht</tab_overview>
@@ -499,8 +508,19 @@
           <btn_failed>Fehlgeschlagen</btn_failed>
           <stat_contenttypes>Inhaltstypen</stat_contenttypes>
           <stat_systemtypes>Systemtypen</stat_systemtypes>
-          <stat_orphaned>Verwaist</stat_orphaned>
+          <stat_codeless>Ohne Code</stat_codeless>
+          <stat_contracts>Verträge</stat_contracts>
           <stat_unused>Nicht verwendet (0 Inhalte)</stat_unused>
+          <opt_allkinds>Alle Arten</opt_allkinds>
+          <opt_contractsonly>Nur Vertragstypen</opt_contractsonly>
+          <opt_noncontract>Nicht-Vertragstypen</opt_noncontract>
+          <opt_anycomposition>Beliebige Komposition</opt_anycomposition>
+          <opt_sectiononly>Nur Abschnitt</opt_sectiononly>
+          <opt_elementonly>Nur Element</opt_elementonly>
+          <opt_both>Abschnitt &amp; Element</opt_both>
+          <opt_plain>Einfacher Block</opt_plain>
+          <panel_appliedcontracts>Angewendete Verträge</panel_appliedcontracts>
+          <tip_viewcontract>Vertragsdetails anzeigen</tip_viewcontract>
           <stat_showing>Angezeigt</stat_showing>
           <lbl_search>Typen suchen... (oder eigenschaft:name)</lbl_search>
           <opt_allbases>Alle Basistypen</opt_allbases>
@@ -515,7 +535,12 @@
           <col_content>Inhalt</col_content>
           <opt_all>Alle</opt_all>
           <badge_system>System</badge_system>
-          <badge_orphaned>Verwaist</badge_orphaned>
+          <badge_codeless>Ohne Code</badge_codeless>
+          <badge_contract>Vertrag</badge_contract>
+          <badge_section>Abschnitt</badge_section>
+          <badge_element>Element</badge_element>
+          <legend_codelessdesc>Ohne Code (nicht im Code)</legend_codelessdesc>
+          <origin_codeless>Ohne Code</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>Linkprüfungsauftrag wird derzeit ausgeführt. Ergebnisse werden nach Abschluss aktualisiert.</alert_running>
@@ -579,6 +604,11 @@
           <btn_saveall>Alle speichern</btn_saveall>
           <btn_publishall>Alle veröffentlichen</btn_publishall>
           <confirm_discard>Alle ausstehenden Änderungen verwerfen?</confirm_discard>
+          <tab_types>Inhaltstypen</tab_types>
+          <tab_contracts>Verträge</tab_contracts>
+          <badge_section>Abschnitt</badge_section>
+          <badge_element>Element</badge_element>
+          <note_expansion>Vertrag erweitert sich zu</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Führen Sie den geplanten Auftrag [EditorPowertools] Inhaltsanalyse aus, um Daten zu befüllen.</banner_runjob>
@@ -598,6 +628,11 @@
           <stat_pages>Seiten</stat_pages>
           <stat_blocks>Blöcke</stat_blocks>
           <stat_media>Medien</stat_media>
+          <stat_contracts>Verträge</stat_contracts>
+          <panel_blockbreakdown>Block-Aufschlüsselung</panel_blockbreakdown>
+          <bb_sections>Abschnitte</bb_sections>
+          <bb_elements>Elemente</bb_elements>
+          <bb_plain>Normale Blöcke</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>Aktivitäten heute</stat_today>

@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>Åpne i redigeringsmodus</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>Kontrakter</filter_contract>
+          <filter_composition>Komposisjon</filter_composition>
+          <any>Enhver</any>
+          <include>Inkluder</include>
+          <exclude>Ekskluder</exclude>
+          <only>Bare kontrakter</only>
+          <section>Seksjon</section>
+          <element>Element</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>Oversikt</tab_overview>
@@ -499,8 +508,19 @@
           <btn_failed>Mislyktes</btn_failed>
           <stat_contenttypes>Innholdstyper</stat_contenttypes>
           <stat_systemtypes>Systemtyper</stat_systemtypes>
-          <stat_orphaned>Foreldreløse</stat_orphaned>
+          <stat_codeless>Kodeløs</stat_codeless>
+          <stat_contracts>Kontrakter</stat_contracts>
           <stat_unused>Ubrukte (0 innhold)</stat_unused>
+          <opt_allkinds>Alle typer</opt_allkinds>
+          <opt_contractsonly>Bare kontraktstyper</opt_contractsonly>
+          <opt_noncontract>Ikke-kontraktstyper</opt_noncontract>
+          <opt_anycomposition>Enhver komposisjon</opt_anycomposition>
+          <opt_sectiononly>Bare seksjon</opt_sectiononly>
+          <opt_elementonly>Bare element</opt_elementonly>
+          <opt_both>Både seksjon &amp; element</opt_both>
+          <opt_plain>Vanlig blokk</opt_plain>
+          <panel_appliedcontracts>Anvendte kontrakter</panel_appliedcontracts>
+          <tip_viewcontract>Vis kontraktdetaljer</tip_viewcontract>
           <stat_showing>Viser</stat_showing>
           <lbl_search>Søk typer... (eller egenskap:navn)</lbl_search>
           <opt_allbases>Alle basistyper</opt_allbases>
@@ -515,7 +535,12 @@
           <col_content>Innhold</col_content>
           <opt_all>Alle</opt_all>
           <badge_system>System</badge_system>
-          <badge_orphaned>Foreldreløs</badge_orphaned>
+          <badge_codeless>Kodeløs</badge_codeless>
+          <badge_contract>Kontrakt</badge_contract>
+          <badge_section>Seksjon</badge_section>
+          <badge_element>Element</badge_element>
+          <legend_codelessdesc>Kodeløs (ikke i kode)</legend_codelessdesc>
+          <origin_codeless>Kodeløs</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>Lenkesjekk-jobb kjører for øyeblikket. Resultater oppdateres når det er fullført.</alert_running>
@@ -579,6 +604,11 @@
           <btn_saveall>Lagre alle</btn_saveall>
           <btn_publishall>Publiser alle</btn_publishall>
           <confirm_discard>Forkast alle ventende endringer?</confirm_discard>
+          <tab_types>Innholdstyper</tab_types>
+          <tab_contracts>Kontrakter</tab_contracts>
+          <badge_section>Seksjon</badge_section>
+          <badge_element>Element</badge_element>
+          <note_expansion>Kontrakten utvides til</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Kjør det planlagte jobbet [EditorPowertools] Innholdsanalyse for å fylle inn data.</banner_runjob>
@@ -598,6 +628,11 @@
           <stat_pages>Sider</stat_pages>
           <stat_blocks>Blokker</stat_blocks>
           <stat_media>Media</stat_media>
+          <stat_contracts>Kontrakter</stat_contracts>
+          <panel_blockbreakdown>Blokkoversikt</panel_blockbreakdown>
+          <bb_sections>Seksjoner</bb_sections>
+          <bb_elements>Elementer</bb_elements>
+          <bb_plain>Vanlige blokker</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>Aktiviteter i dag</stat_today>

@@ -2,6 +2,7 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Shell;
+using UmageAI.Optimizely.EditorPowerTools.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Services;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentStatistics.Models;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ public class ContentStatisticsService
     private readonly IContentVersionRepository _versionRepository;
     private readonly IContentTypeRepository _contentTypeRepository;
     private readonly ContentTypeStatisticsRepository _statisticsRepository;
+    private readonly IContentTypeMetadataProvider _metadataProvider;
     private readonly ILogger<ContentStatisticsService> _logger;
 
     public ContentStatisticsService(
@@ -21,12 +23,14 @@ public class ContentStatisticsService
         IContentVersionRepository versionRepository,
         IContentTypeRepository contentTypeRepository,
         ContentTypeStatisticsRepository statisticsRepository,
+        IContentTypeMetadataProvider metadataProvider,
         ILogger<ContentStatisticsService> logger)
     {
         _contentRepository = contentRepository;
         _versionRepository = versionRepository;
         _contentTypeRepository = contentTypeRepository;
         _statisticsRepository = statisticsRepository;
+        _metadataProvider = metadataProvider;
         _logger = logger;
     }
 
@@ -42,6 +46,7 @@ public class ContentStatisticsService
         // Build summary and distribution from pre-computed stats
         var summary = BuildSummary(allStats, contentTypeMap);
         var distribution = BuildTypeDistribution(allStats, contentTypeMap);
+        var blockBreakdown = BuildBlockBreakdown(allStats, contentTypeMap);
 
         // Scan content for creation-over-time, staleness, and editor activity
         var descendants = _contentRepository.GetDescendents(ContentReference.RootPage).ToList();
@@ -54,6 +59,7 @@ public class ContentStatisticsService
         {
             Summary = summary,
             TypeDistribution = distribution,
+            BlockBreakdown = blockBreakdown,
             CreationOverTime = creationOverTime,
             StaleContent = staleContent,
             TopEditors = topEditors
@@ -68,6 +74,7 @@ public class ContentStatisticsService
         var totalPages = 0;
         var totalBlocks = 0;
         var totalMedia = 0;
+        var totalContracts = 0;
         DateTime? lastAnalyzed = null;
 
         foreach (var stat in allStats)
@@ -80,12 +87,16 @@ public class ContentStatisticsService
             if (!contentTypeMap.TryGetValue(stat.ContentTypeId, out var ct))
                 continue;
 
+            var metadata = _metadataProvider.Get(ct);
             var baseType = ct.Base.ToString();
-            if (baseType == "Page")
+
+            if (CmsFeatureFlags.ContractsAvailable && metadata.IsContract)
+                totalContracts += stat.ContentCount;
+            else if (baseType == "Page")
                 totalPages += stat.ContentCount;
             else if (baseType == "Block")
                 totalBlocks += stat.ContentCount;
-            else if (baseType == "Media")
+            else if (baseType == "Media" || baseType == "Image" || baseType == "Video")
                 totalMedia += stat.ContentCount;
         }
 
@@ -98,6 +109,7 @@ public class ContentStatisticsService
             TotalPages = totalPages,
             TotalBlocks = totalBlocks,
             TotalMedia = totalMedia,
+            TotalContracts = CmsFeatureFlags.ContractsAvailable ? totalContracts : (int?)null,
             AverageVersionsPerItem = averageVersions,
             LastAnalyzed = lastAnalyzed
         };
@@ -132,7 +144,7 @@ public class ContentStatisticsService
         return counted > 0 ? Math.Round((double)totalVersions / counted, 1) : 0;
     }
 
-    private static IReadOnlyList<ContentTypeDistributionDto> BuildTypeDistribution(
+    private IReadOnlyList<ContentTypeDistributionDto> BuildTypeDistribution(
         List<ContentTypeStatisticsRecord> allStats,
         Dictionary<int, ContentType> contentTypeMap)
     {
@@ -141,6 +153,7 @@ public class ContentStatisticsService
             ["Pages"] = 0,
             ["Blocks"] = 0,
             ["Media"] = 0,
+            ["Contracts"] = 0,
             ["Other"] = 0
         };
 
@@ -152,14 +165,18 @@ public class ContentStatisticsService
                 continue;
             }
 
+            var metadata = _metadataProvider.Get(ct);
             var baseType = ct.Base.ToString();
-            var category = baseType switch
-            {
-                "Page" => "Pages",
-                "Block" => "Blocks",
-                "Media" => "Media",
-                _ => "Other"
-            };
+
+            var category = (CmsFeatureFlags.ContractsAvailable && metadata.IsContract)
+                ? "Contracts"
+                : baseType switch
+                {
+                    "Page" => "Pages",
+                    "Block" => "Blocks",
+                    "Media" or "Image" or "Video" => "Media",
+                    _ => "Other"
+                };
             categories[category] += stat.ContentCount;
         }
 
@@ -173,6 +190,32 @@ public class ContentStatisticsService
             .OrderByDescending(d => d.Count)
             .ToList();
     }
+
+#pragma warning disable CS0162 // Unreachable code — CmsFeatureFlags.ContractsAvailable is a compile-time constant per TFM.
+    private BlockBreakdownDto? BuildBlockBreakdown(
+        List<ContentTypeStatisticsRecord> allStats,
+        Dictionary<int, ContentType> contentTypeMap)
+    {
+        if (!CmsFeatureFlags.ContractsAvailable) return null;
+
+        int sections = 0, elements = 0, plain = 0;
+        foreach (var stat in allStats)
+        {
+            if (!contentTypeMap.TryGetValue(stat.ContentTypeId, out var ct)) continue;
+            if (ct.Base.ToString() != "Block") continue;
+
+            var m = _metadataProvider.Get(ct);
+            var hasSection = m.CompositionBehaviors.Contains("SectionEnabled");
+            var hasElement = m.CompositionBehaviors.Contains("ElementEnabled");
+
+            if (hasSection) sections += stat.ContentCount;
+            if (hasElement) elements += stat.ContentCount;
+            if (!hasSection && !hasElement) plain += stat.ContentCount;
+        }
+
+        return new BlockBreakdownDto { Sections = sections, Elements = elements, Plain = plain };
+    }
+#pragma warning restore CS0162
 
     private IReadOnlyList<ContentCreationMonthDto> BuildCreationOverTime(
         List<ContentReference> descendants)
