@@ -614,6 +614,11 @@
           <stat_pages>Sider</stat_pages>
           <stat_blocks>Blokker</stat_blocks>
           <stat_media>Media</stat_media>
+          <stat_contracts>Kontrakter</stat_contracts>
+          <panel_blockbreakdown>Blokkoversikt</panel_blockbreakdown>
+          <bb_sections>Seksjoner</bb_sections>
+          <bb_elements>Elementer</bb_elements>
+          <bb_plain>Vanlige blokker</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>Aktiviteter i dag</stat_today>

@@ -614,6 +614,11 @@
           <stat_pages>ページ数</stat_pages>
           <stat_blocks>ブロック数</stat_blocks>
           <stat_media>メディア数</stat_media>
+          <stat_contracts>コントラクト</stat_contracts>
+          <panel_blockbreakdown>ブロック内訳</panel_blockbreakdown>
+          <bb_sections>セクション</bb_sections>
+          <bb_elements>要素</bb_elements>
+          <bb_plain>標準ブロック</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>本日のアクティビティ数</stat_today>

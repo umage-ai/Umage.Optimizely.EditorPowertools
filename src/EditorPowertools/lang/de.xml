@@ -614,6 +614,11 @@
           <stat_pages>Seiten</stat_pages>
           <stat_blocks>Blöcke</stat_blocks>
           <stat_media>Medien</stat_media>
+          <stat_contracts>Verträge</stat_contracts>
+          <panel_blockbreakdown>Block-Aufschlüsselung</panel_blockbreakdown>
+          <bb_sections>Abschnitte</bb_sections>
+          <bb_elements>Elemente</bb_elements>
+          <bb_plain>Normale Blöcke</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>Aktivitäten heute</stat_today>

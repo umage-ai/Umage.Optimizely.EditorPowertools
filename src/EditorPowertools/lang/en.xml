@@ -717,7 +717,12 @@
           <stat_pages>Pages</stat_pages>
           <stat_blocks>Blocks</stat_blocks>
           <stat_media>Media</stat_media>
+          <stat_contracts>Contracts</stat_contracts>
           <stat_avgversions>Avg Versions</stat_avgversions>
+          <panel_blockbreakdown>Block breakdown</panel_blockbreakdown>
+          <bb_sections>Sections</bb_sections>
+          <bb_elements>Elements</bb_elements>
+          <bb_plain>Plain blocks</bb_plain>
           <chart_label_total>total</chart_label_total>
           <chart_tooltip_items>{0} items</chart_tooltip_items>
           <chart_label_days>{0} days</chart_label_days>

@@ -614,6 +614,11 @@
           <stat_pages>Sivut</stat_pages>
           <stat_blocks>Lohkot</stat_blocks>
           <stat_media>Media</stat_media>
+          <stat_contracts>Sopimukset</stat_contracts>
+          <panel_blockbreakdown>Lohkojen jaottelu</panel_blockbreakdown>
+          <bb_sections>Osiot</bb_sections>
+          <bb_elements>Elementit</bb_elements>
+          <bb_plain>Tavalliset lohkot</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>Toimintaa tänään</stat_today>

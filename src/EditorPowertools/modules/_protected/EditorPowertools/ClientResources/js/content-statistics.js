@@ -93,6 +93,11 @@
             barCard.body.innerHTML = '<p class="ept-empty-msg">' + EPT.s('contentstatistics.empty_nocreation', 'No creation data available.') + '</p>';
         }
 
+        // Block breakdown (CMS 13 only — null on CMS 12)
+        if (data.blockBreakdown) {
+            renderBlockBreakdown(data.blockBreakdown);
+        }
+
         // Stale content (horizontal bars)
         var staleCard = createCard(EPT.s('contentstatistics.chart_staleness', 'Oldest Content (by Last Modified)'));
         root.appendChild(staleCard.card);
@@ -123,6 +128,9 @@
         stats.appendChild(statCard(EPT.s('contentstatistics.stat_pages', 'Pages'), s.totalPages));
         stats.appendChild(statCard(EPT.s('contentstatistics.stat_blocks', 'Blocks'), s.totalBlocks));
         stats.appendChild(statCard(EPT.s('contentstatistics.stat_media', 'Media'), s.totalMedia));
+        if (s.totalContracts != null) {
+            stats.appendChild(statCard(EPT.s('contentstatistics.stat_contracts', 'Contracts'), s.totalContracts));
+        }
         stats.appendChild(statCard(EPT.s('contentstatistics.stat_avgversions', 'Avg Versions'), s.averageVersionsPerItem));
         root.appendChild(stats);
     }
@@ -136,6 +144,30 @@
         d.appendChild(v);
         d.appendChild(l);
         return d;
+    }
+
+    // ── Block Breakdown Panel (CMS 13 only) ──────────────────────
+
+    function renderBlockBreakdown(bb) {
+        var card = createCard(EPT.s('contentstatistics.panel_blockbreakdown', 'Block breakdown'));
+        var rows = [
+            { label: EPT.s('contentstatistics.bb_sections', 'Sections'), value: bb.sections },
+            { label: EPT.s('contentstatistics.bb_elements', 'Elements'), value: bb.elements },
+            { label: EPT.s('contentstatistics.bb_plain', 'Plain blocks'), value: bb.plain }
+        ];
+        var ul = el('ul', { className: 'cst-bb-list' });
+        for (var i = 0; i < rows.length; i++) {
+            var li = el('li', { className: 'cst-bb-row' });
+            var label = el('span');
+            label.textContent = rows[i].label;
+            var val = el('strong');
+            val.textContent = formatNumber(rows[i].value);
+            li.appendChild(label);
+            li.appendChild(val);
+            ul.appendChild(li);
+        }
+        card.body.appendChild(ul);
+        root.appendChild(card.card);
     }
 
     // ── Donut Chart ──────────────────────────────────────────────
@@ -472,6 +504,9 @@
             '.cst-legend__item { display: flex; align-items: center; gap: 8px; font-size: 13px; }',
             '.cst-legend__swatch { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }',
             '.cst-bar-scroll { overflow-x: auto; padding: 8px 0; }',
+            '.cst-bb-list { list-style: none; padding: 0; margin: 0; }',
+            '.cst-bb-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--ept-border, #eee); font-size: 13px; }',
+            '.cst-bb-row:last-child { border-bottom: none; }',
             '.ept-empty-msg { color: var(--ept-muted, #888); font-style: italic; text-align: center; padding: 24px 0; }'
         ].join('\n');
         document.head.appendChild(style);

@@ -614,6 +614,11 @@
           <stat_pages>页面</stat_pages>
           <stat_blocks>块</stat_blocks>
           <stat_media>媒体</stat_media>
+          <stat_contracts>合约</stat_contracts>
+          <panel_blockbreakdown>区块明细</panel_blockbreakdown>
+          <bb_sections>区块</bb_sections>
+          <bb_elements>元素</bb_elements>
+          <bb_plain>普通区块</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>今日活动</stat_today>

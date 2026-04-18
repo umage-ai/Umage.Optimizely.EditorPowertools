@@ -614,6 +614,11 @@
           <stat_pages>Pagina's</stat_pages>
           <stat_blocks>Blokken</stat_blocks>
           <stat_media>Media</stat_media>
+          <stat_contracts>Contracten</stat_contracts>
+          <panel_blockbreakdown>Blokverdeling</panel_blockbreakdown>
+          <bb_sections>Secties</bb_sections>
+          <bb_elements>Elementen</bb_elements>
+          <bb_plain>Standaardblokken</bb_plain>
         </contentstatistics>
         <activitytimeline>
           <stat_today>Activiteiten vandaag</stat_today>
