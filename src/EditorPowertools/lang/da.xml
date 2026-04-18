@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>Åbn i redigeringstilstand</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>Kontrakter</filter_contract>
+          <filter_composition>Komposition</filter_composition>
+          <any>Enhver</any>
+          <include>Inkluder</include>
+          <exclude>Udeluk</exclude>
+          <only>Kun kontrakter</only>
+          <section>Sektion</section>
+          <element>Element</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>Oversigt</tab_overview>

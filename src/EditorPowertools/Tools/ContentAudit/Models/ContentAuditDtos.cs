@@ -11,6 +11,8 @@ public class ContentAuditRequest
     public string? MainTypeFilter { get; set; }
     public string? QuickFilter { get; set; }
     public List<string>? Columns { get; set; }
+    public string? ContractFilter { get; set; }    // null | "include" | "exclude" | "only"
+    public string? CompositionFilter { get; set; } // null | "section" | "element"
 }
 
 public class ContentAuditFilter
@@ -63,6 +65,8 @@ public class ContentAuditExportRequest
     public string? SortBy { get; set; }
     public string SortDirection { get; set; } = "asc";
     public List<string>? Columns { get; set; }
+    public string? ContractFilter { get; set; }    // null | "include" | "exclude" | "only"
+    public string? CompositionFilter { get; set; } // null | "section" | "element"
 }
 
 /// <summary>
@@ -90,6 +94,8 @@ public class ContentAuditExportJobRequest
     public string? QuickFilter { get; set; }
     public string? Search { get; set; }
     public string? FiltersJson { get; set; }   // JSON-serialized List<ContentAuditFilter>
+    public string? ContractFilter { get; set; }    // null | "include" | "exclude" | "only"
+    public string? CompositionFilter { get; set; } // null | "section" | "element"
     public string Status { get; set; } = "Pending"; // Pending | Running | Completed | Failed
     public string? ResultContentId { get; set; }    // ContentLink.ID of the generated media file
     public string? ErrorMessage { get; set; }

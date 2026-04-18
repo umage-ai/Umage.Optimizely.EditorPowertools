@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>Openen in bewerkingsmodus</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>Contracten</filter_contract>
+          <filter_composition>Compositie</filter_composition>
+          <any>Elke</any>
+          <include>Inclusief</include>
+          <exclude>Uitsluiten</exclude>
+          <only>Alleen contracten</only>
+          <section>Sectie</section>
+          <element>Element</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>Overzicht</tab_overview>

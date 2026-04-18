@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>Avaa muokkaustilassa</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>Sopimukset</filter_contract>
+          <filter_composition>Koostumus</filter_composition>
+          <any>Mikä tahansa</any>
+          <include>Sisällytä</include>
+          <exclude>Poissulje</exclude>
+          <only>Vain sopimukset</only>
+          <section>Osio</section>
+          <element>Elementti</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>Yleiskatsaus</tab_overview>

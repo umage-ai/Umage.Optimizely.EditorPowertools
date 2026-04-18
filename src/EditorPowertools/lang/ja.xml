@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>編集モードで開く</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>コントラクト</filter_contract>
+          <filter_composition>構成</filter_composition>
+          <any>すべて</any>
+          <include>含める</include>
+          <exclude>除外</exclude>
+          <only>コントラクトのみ</only>
+          <section>セクション</section>
+          <element>要素</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>概要</tab_overview>

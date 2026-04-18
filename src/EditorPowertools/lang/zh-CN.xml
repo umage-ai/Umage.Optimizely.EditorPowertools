@@ -406,6 +406,15 @@
           <fmt_csv>CSV (.csv)</fmt_csv>
           <fmt_json>JSON (.json)</fmt_json>
           <cell_openeditmode>在编辑模式下打开</cell_openeditmode>
+          <filter_cms13>CMS 13</filter_cms13>
+          <filter_contract>合约</filter_contract>
+          <filter_composition>构成</filter_composition>
+          <any>任意</any>
+          <include>包含</include>
+          <exclude>排除</exclude>
+          <only>仅合约</only>
+          <section>区块</section>
+          <element>元素</element>
         </contentaudit>
         <languageaudit>
           <tab_overview>概览</tab_overview>

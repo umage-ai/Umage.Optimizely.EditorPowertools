@@ -33,7 +33,7 @@ namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit;
 #endif
 public class ContentAuditExportJob : ScheduledJobBase
 {
-    private readonly IContentAuditDataProvider _provider;
+    private readonly ContentAuditService _service;
     private readonly ContentAuditExportRenderer _renderer;
     private readonly IContentRepository _contentRepository;
     private readonly IBlobFactory _blobFactory;
@@ -43,7 +43,7 @@ public class ContentAuditExportJob : ScheduledJobBase
     private bool _stopSignaled;
 
     public ContentAuditExportJob(
-        IContentAuditDataProvider provider,
+        ContentAuditService service,
         ContentAuditExportRenderer renderer,
         IContentRepository contentRepository,
         IBlobFactory blobFactory,
@@ -51,7 +51,7 @@ public class ContentAuditExportJob : ScheduledJobBase
         IOptions<EditorPowertoolsOptions> options,
         ILogger<ContentAuditExportJob> logger)
     {
-        _provider        = provider;
+        _service         = service;
         _renderer        = renderer;
         _contentRepository = contentRepository;
         _blobFactory     = blobFactory;
@@ -116,7 +116,7 @@ public class ContentAuditExportJob : ScheduledJobBase
     {
         var exportRequest = BuildExportRequest(jobRequest);
         var ct = _stopSignaled ? new CancellationToken(true) : CancellationToken.None;
-        var rows = _provider.GetAllRows(exportRequest, ct);
+        var rows = _service.GetAllMatchingRows(exportRequest, ct);
 
         string ext    = _renderer.GetExtension(jobRequest.Format);
         string mime   = _renderer.GetContentType(jobRequest.Format);
@@ -164,12 +164,14 @@ public class ContentAuditExportJob : ScheduledJobBase
 
         return new ContentAuditExportRequest
         {
-            Format         = jobRequest.Format,
-            Columns        = columns,
-            MainTypeFilter = jobRequest.MainTypeFilter,
-            QuickFilter    = jobRequest.QuickFilter,
-            Search         = jobRequest.Search,
-            Filters        = filters
+            Format            = jobRequest.Format,
+            Columns           = columns,
+            MainTypeFilter    = jobRequest.MainTypeFilter,
+            QuickFilter       = jobRequest.QuickFilter,
+            Search            = jobRequest.Search,
+            Filters           = filters,
+            ContractFilter    = jobRequest.ContractFilter,
+            CompositionFilter = jobRequest.CompositionFilter
         };
     }
 
