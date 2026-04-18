@@ -1,6 +1,6 @@
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Parsers;
 using FluentAssertions;
-using OfficeOpenXml;
+using ClosedXML.Excel;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tests.Tools.ContentImporter.Parsers;
 
@@ -8,14 +8,14 @@ public class ExcelFileParserTests
 {
     private readonly ExcelFileParser _parser = new();
 
-    private static Stream CreateExcelStream(Action<ExcelWorksheet> configure)
+    private static Stream CreateExcelStream(Action<IXLWorksheet> configure)
     {
         var stream = new MemoryStream();
-        using (var package = new ExcelPackage())
+        using (var wb = new XLWorkbook())
         {
-            var worksheet = package.Workbook.Worksheets.Add("Sheet1");
-            configure(worksheet);
-            package.SaveAs(stream);
+            var ws = wb.Worksheets.Add("Sheet1");
+            configure(ws);
+            wb.SaveAs(stream);
         }
         stream.Position = 0;
         return stream;
@@ -24,10 +24,10 @@ public class ExcelFileParserTests
     private static Stream CreateEmptyExcelStream()
     {
         var stream = new MemoryStream();
-        using (var package = new ExcelPackage())
+        using (var wb = new XLWorkbook())
         {
-            package.Workbook.Worksheets.Add("Sheet1");
-            package.SaveAs(stream);
+            wb.Worksheets.Add("Sheet1");
+            wb.SaveAs(stream);
         }
         stream.Position = 0;
         return stream;
@@ -55,15 +55,15 @@ public class ExcelFileParserTests
     {
         using var stream = CreateExcelStream(ws =>
         {
-            ws.Cells[1, 1].Value = "Name";
-            ws.Cells[1, 2].Value = "Age";
-            ws.Cells[1, 3].Value = "City";
-            ws.Cells[2, 1].Value = "Alice";
-            ws.Cells[2, 2].Value = 30;
-            ws.Cells[2, 3].Value = "Stockholm";
-            ws.Cells[3, 1].Value = "Bob";
-            ws.Cells[3, 2].Value = 25;
-            ws.Cells[3, 3].Value = "Gothenburg";
+            ws.Cell(1, 1).Value = "Name";
+            ws.Cell(1, 2).Value = "Age";
+            ws.Cell(1, 3).Value = "City";
+            ws.Cell(2, 1).Value = "Alice";
+            ws.Cell(2, 2).Value = 30;
+            ws.Cell(2, 3).Value = "Stockholm";
+            ws.Cell(3, 1).Value = "Bob";
+            ws.Cell(3, 2).Value = 25;
+            ws.Cell(3, 3).Value = "Gothenburg";
         });
 
         var result = _parser.Parse(stream, "test.xlsx");
@@ -96,8 +96,8 @@ public class ExcelFileParserTests
     {
         using var stream = CreateExcelStream(ws =>
         {
-            ws.Cells[1, 1].Value = "Name";
-            ws.Cells[1, 2].Value = "Age";
+            ws.Cell(1, 1).Value = "Name";
+            ws.Cell(1, 2).Value = "Age";
         });
 
         var result = _parser.Parse(stream, "headeronly.xlsx");
@@ -113,12 +113,12 @@ public class ExcelFileParserTests
     {
         using var stream = CreateExcelStream(ws =>
         {
-            ws.Cells[1, 1].Value = "Name";
-            ws.Cells[1, 2].Value = null; // empty header
-            ws.Cells[1, 3].Value = "City";
-            ws.Cells[2, 1].Value = "Alice";
-            ws.Cells[2, 2].Value = "Extra";
-            ws.Cells[2, 3].Value = "Stockholm";
+            ws.Cell(1, 1).Value = "Name";
+            // Column 2 header intentionally left blank
+            ws.Cell(1, 3).Value = "City";
+            ws.Cell(2, 1).Value = "Alice";
+            ws.Cell(2, 2).Value = "Extra";
+            ws.Cell(2, 3).Value = "Stockholm";
         });
 
         var result = _parser.Parse(stream, "defaults.xlsx");
@@ -134,13 +134,13 @@ public class ExcelFileParserTests
     {
         using var stream = CreateExcelStream(ws =>
         {
-            ws.Cells[1, 1].Value = "Name";
-            ws.Cells[1, 2].Value = "Age";
-            ws.Cells[2, 1].Value = "Alice";
-            ws.Cells[2, 2].Value = 30;
+            ws.Cell(1, 1).Value = "Name";
+            ws.Cell(1, 2).Value = "Age";
+            ws.Cell(2, 1).Value = "Alice";
+            ws.Cell(2, 2).Value = 30;
             // Row 3 is completely empty but within dimension due to row 4
-            ws.Cells[4, 1].Value = "Bob";
-            ws.Cells[4, 2].Value = 25;
+            ws.Cell(4, 1).Value = "Bob";
+            ws.Cell(4, 2).Value = 25;
         });
 
         var result = _parser.Parse(stream, "gaps.xlsx");
@@ -157,8 +157,8 @@ public class ExcelFileParserTests
     {
         using var stream = CreateExcelStream(ws =>
         {
-            ws.Cells[1, 1].Value = "Value";
-            ws.Cells[2, 1].Value = 42.5;
+            ws.Cell(1, 1).Value = "Value";
+            ws.Cell(2, 1).Value = 42.5;
         });
 
         var result = _parser.Parse(stream, "numbers.xlsx");

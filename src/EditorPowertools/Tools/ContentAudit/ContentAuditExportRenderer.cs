@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit.Models;
-using OfficeOpenXml;
+using ClosedXML.Excel;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentAudit;
 
@@ -13,32 +13,49 @@ public class ContentAuditExportRenderer
 {
     public byte[] RenderXlsx(IEnumerable<ContentAuditRow> rows, List<string> columns)
     {
-        using var package = new ExcelPackage();
-        var ws = package.Workbook.Worksheets.Add("Content Audit");
+        using var wb = new XLWorkbook();
+        var ws = wb.Worksheets.Add("Content Audit");
 
         for (int c = 0; c < columns.Count; c++)
         {
-            ws.Cells[1, c + 1].Value = GetColumnLabel(columns[c]);
-            ws.Cells[1, c + 1].Style.Font.Bold = true;
+            var headerCell = ws.Cell(1, c + 1);
+            headerCell.Value = GetColumnLabel(columns[c]);
+            headerCell.Style.Font.Bold = true;
         }
 
         int r = 2;
         foreach (var row in rows)
         {
             for (int c = 0; c < columns.Count; c++)
-                ws.Cells[r, c + 1].Value = GetCellValue(row, columns[c]);
+                ws.Cell(r, c + 1).Value = ToCellValue(GetCellValue(row, columns[c]));
             r++;
         }
 
         for (int c = 1; c <= columns.Count; c++)
         {
-            ws.Column(c).AutoFit();
+            ws.Column(c).AdjustToContents();
             if (ws.Column(c).Width > 50)
                 ws.Column(c).Width = 50;
         }
 
-        return package.GetAsByteArray();
+        using var ms = new MemoryStream();
+        wb.SaveAs(ms);
+        return ms.ToArray();
     }
+
+    private static XLCellValue ToCellValue(object? value) => value switch
+    {
+        null            => Blank.Value,
+        string s        => s,
+        bool b          => b,
+        int i           => i,
+        long l          => l,
+        double d        => d,
+        decimal m       => m,
+        DateTime dt     => dt,
+        TimeSpan ts     => ts,
+        _               => value.ToString() ?? string.Empty
+    };
 
     public byte[] RenderCsv(IEnumerable<ContentAuditRow> rows, List<string> columns)
     {

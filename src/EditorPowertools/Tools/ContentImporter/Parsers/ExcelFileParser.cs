@@ -1,5 +1,5 @@
 using System.Globalization;
-using OfficeOpenXml;
+using ClosedXML.Excel;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Parsers;
 
@@ -11,13 +11,13 @@ public class ExcelFileParser : IFileParser
 
     public ParseResult Parse(Stream stream, string fileName)
     {
-        using var package = new ExcelPackage(stream);
-        var worksheet = package.Workbook.Worksheets.FirstOrDefault();
-        if (worksheet == null)
+        using var wb = new XLWorkbook(stream);
+        var ws = wb.Worksheets.FirstOrDefault();
+        if (ws == null)
             return new ParseResult(new List<string>(), new List<Dictionary<string, string>>());
 
-        var rowCount = worksheet.Dimension?.Rows ?? 0;
-        var colCount = worksheet.Dimension?.Columns ?? 0;
+        var rowCount = ws.LastRowUsed()?.RowNumber() ?? 0;
+        var colCount = ws.LastColumnUsed()?.ColumnNumber() ?? 0;
 
         if (rowCount == 0 || colCount == 0)
             return new ParseResult(new List<string>(), new List<Dictionary<string, string>>());
@@ -26,7 +26,7 @@ public class ExcelFileParser : IFileParser
         var columns = new List<string>();
         for (var col = 1; col <= colCount; col++)
         {
-            var header = worksheet.Cells[1, col].Text?.Trim();
+            var header = ws.Cell(1, col).GetString().Trim();
             columns.Add(string.IsNullOrEmpty(header) ? $"Column{col}" : header);
         }
 
@@ -39,10 +39,7 @@ public class ExcelFileParser : IFileParser
 
             for (var col = 1; col <= colCount; col++)
             {
-                var cellValue = worksheet.Cells[row, col].Value;
-                var value = cellValue is IFormattable f
-                    ? f.ToString(null, CultureInfo.InvariantCulture)
-                    : cellValue?.ToString() ?? "";
+                var value = ReadCellInvariant(ws.Cell(row, col));
                 rowData[columns[col - 1]] = value;
                 if (!string.IsNullOrWhiteSpace(value)) hasData = true;
             }
@@ -51,5 +48,19 @@ public class ExcelFileParser : IFileParser
         }
 
         return new ParseResult(columns, rows);
+    }
+
+    // Reads a cell as an invariant-culture string so numeric / date values
+    // serialize consistently regardless of the host machine's culture.
+    private static string ReadCellInvariant(IXLCell cell)
+    {
+        var v = cell.Value;
+        if (v.IsBlank) return "";
+        if (v.IsNumber) return v.GetNumber().ToString(CultureInfo.InvariantCulture);
+        if (v.IsDateTime) return v.GetDateTime().ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
+        if (v.IsBoolean) return v.GetBoolean() ? "true" : "false";
+        if (v.IsTimeSpan) return v.GetTimeSpan().ToString("c", CultureInfo.InvariantCulture);
+        if (v.IsError) return "";
+        return v.GetText();
     }
 }

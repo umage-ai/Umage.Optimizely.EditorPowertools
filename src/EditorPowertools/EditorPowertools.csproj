@@ -65,21 +65,7 @@
   <!-- Packages compatible with both TFMs -->
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="33.1.0" />
-    <PackageReference Include="EPPlusFree" Version="4.5.3.8" />
-  </ItemGroup>
-
-  <!--
-    Transitive-security pins: EPPlusFree 4.5.3.8 pulls old System.Drawing.Common 4.7.0
-    (critical: GHSA-rxg9-xrhp-64gj) and, on net8.0, System.IO.Packaging 6.0.0
-    (high: GHSA-f32c-w444-8ppv). Override to patched versions per-TFM.
-    On net10.0, EPiServer.CMS 13 already brings in System.IO.Packaging 10.0.x, so no pin needed.
-  -->
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
-    <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-    <PackageReference Include="System.Drawing.Common" Version="10.0.0" />
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
   </ItemGroup>
 
   <!-- Localization language files (Optimizely XML format) -->
