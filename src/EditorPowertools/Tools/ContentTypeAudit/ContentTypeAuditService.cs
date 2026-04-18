@@ -83,7 +83,7 @@ public class ContentTypeAuditService
             {
                 PropertyOrigin origin;
                 if (!pd.ExistsOnModel)
-                    origin = PropertyOrigin.Orphaned;
+                    origin = PropertyOrigin.Codeless;
                 else if (inheritedNames.Contains(pd.Name))
                     origin = PropertyOrigin.Inherited;
                 else
@@ -253,7 +253,7 @@ public class ContentTypeAuditService
             Name = contentType.Name,
             DisplayName = contentType.DisplayName,
             ContentCount = stats?.ContentCount,
-            IsOrphaned = contentType.ModelType == null,
+            IsCodeless = contentType.ModelType == null,
             Children = children
         };
     }
@@ -275,7 +275,7 @@ public class ContentTypeAuditService
             EditUrl = $"{Paths.ToResource("EPiServer.Cms.UI.Admin", "default")}#/ContentType/{ct.GUID}",
             PropertyCount = ct.PropertyDefinitions.Count,
             IsSystemType = IsSystemType(ct),
-            IsOrphaned = ct.ModelType == null,
+            IsCodeless = ct.ModelType == null,
             IconUrl = GetIconUrl(ct),
             Created = ct.Created,
             Saved = ct.Saved,

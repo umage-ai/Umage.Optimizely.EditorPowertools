@@ -1,3 +1,5 @@
+using UmageAI.Optimizely.EditorPowerTools.Abstractions;
+
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit.Models;
 
 public class ContentTypeDto
@@ -15,7 +17,7 @@ public class ContentTypeDto
     public string? EditUrl { get; set; }
     public int PropertyCount { get; set; }
     public bool IsSystemType { get; set; }
-    public bool IsOrphaned { get; set; }
+    public bool IsCodeless { get; set; }
     public string? IconUrl { get; set; }
     public DateTime? Created { get; set; }
     public DateTime? Saved { get; set; }
@@ -27,6 +29,11 @@ public class ContentTypeDto
     public int? ReferencedCount { get; set; }
     public int? UnreferencedCount { get; set; }
     public DateTime? StatisticsUpdated { get; set; }
+
+    // CMS 13 metadata — null on CMS 12, populated on CMS 13
+    public bool? IsContract { get; set; }
+    public string[]? CompositionBehaviors { get; set; }
+    public ContractRef[]? Contracts { get; set; }
 }
 
 public class PropertyDefinitionDto
@@ -41,7 +48,7 @@ public class PropertyDefinitionDto
     public bool LanguageSpecific { get; set; }
     public bool ExistsOnModel { get; set; }
 
-    /// <summary>Code-defined, inherited from parent, or orphaned (only in DB).</summary>
+    /// <summary>Code-defined, inherited from parent, or code-less (only in DB).</summary>
     public PropertyOrigin Origin { get; set; }
 }
 
@@ -53,8 +60,8 @@ public enum PropertyOrigin
     /// <summary>Inherited from a parent type's model class.</summary>
     Inherited,
 
-    /// <summary>Exists in database but not on the model (orphaned).</summary>
-    Orphaned
+    /// <summary>Exists in database but not on the model (code-less).</summary>
+    Codeless
 }
 
 public class ContentUsageDto
@@ -84,6 +91,6 @@ public class ContentTypeTreeNodeDto
     public string Name { get; set; } = string.Empty;
     public string? DisplayName { get; set; }
     public int? ContentCount { get; set; }
-    public bool IsOrphaned { get; set; }
+    public bool IsCodeless { get; set; }
     public List<ContentTypeTreeNodeDto> Children { get; set; } = new();
 }

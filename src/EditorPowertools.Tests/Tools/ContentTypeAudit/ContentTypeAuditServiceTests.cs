@@ -168,7 +168,7 @@ public class ContentTypeAuditServiceTests
 
         var result = _service.GetAllContentTypes().ToList();
 
-        result[0].IsOrphaned.Should().BeTrue();
+        result[0].IsCodeless.Should().BeTrue();
     }
 
     [Fact]
