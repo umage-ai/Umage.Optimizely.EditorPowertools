@@ -39,7 +39,7 @@ public class BulkPropertyEditorService
     public List<ContentTypeListItem> GetContentTypes()
     {
         return _contentTypeRepository.List()
-            .Where(ct => ct.ModelType != null)
+            .Where(ct => ct.ModelType != null || _metadataProvider.Get(ct).IsContract)
             .Select(ct =>
             {
                 var m = _metadataProvider.Get(ct);
@@ -120,6 +120,9 @@ public class BulkPropertyEditorService
 
     public Task<ContentFilterResponse> GetContentAsync(ContentFilterRequest request)
     {
+        // ResolvedTypes signals contract expansion to the UI. Null = no expansion happened
+        // (the resolved set is just the single requested id, as on CMS 12). Non-null = the
+        // requested id is a contract, expanded to these concrete content-type ids.
         var resolvedTypes = ResolveTargetTypes(new[] { request.ContentTypeId });
         var resolvedSignal = (resolvedTypes.Count == 1 && resolvedTypes[0] == request.ContentTypeId)
             ? null
