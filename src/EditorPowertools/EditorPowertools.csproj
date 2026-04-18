@@ -13,8 +13,8 @@
     <Company>UmageAI</Company>
     <Description>A collection of power tools for Optimizely CMS 12 and CMS 13 editors and admins. Includes Content Type Audit, Activity Timeline, Bulk Property Editor, Scheduled Jobs Gantt, Link Checker, Active Editors with real-time chat, and more.</Description>
     <PackageTags>Optimizely;CMS;EPiServer;Editor;Tools;Admin;Audit;PowerTools</PackageTags>
-    <PackageProjectUrl>https://github.com/UmageAI/EditorPowerTools</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/UmageAI/EditorPowerTools</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/umage-ai/Umage.Optimizely.EditorPowertools</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/umage-ai/Umage.Optimizely.EditorPowertools</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
