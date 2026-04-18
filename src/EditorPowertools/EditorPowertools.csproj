@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Test project instantiates internal metadata-provider classes directly. -->
     <InternalsVisibleTo Include="EditorPowertools.Tests" />
   </ItemGroup>
 

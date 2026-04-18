@@ -56,5 +56,48 @@ public class ContentTypeMetadataProviderTests
         result.CompositionBehaviors.Should().ContainSingle().Which.Should().Be("SectionEnabled");
         result.Contracts.Should().BeEmpty();
     }
+
+    [Fact]
+    public void Cms13Provider_ProjectsContractsAndFiltersMissingReferences()
+    {
+        var resolvedGuid = Guid.NewGuid();
+        var danglingGuid = Guid.NewGuid();
+
+        var resolvedContract = new ContentType
+        {
+            ID = 42,
+            GUID = resolvedGuid,
+            Name = "IMyContract",
+            DisplayName = "My Contract",
+        };
+
+        var repo = new Mock<IContentTypeRepository>();
+        repo.Setup(r => r.Load(resolvedGuid)).Returns(resolvedContract);
+        repo.Setup(r => r.Load(danglingGuid)).Returns((ContentType?)null);
+
+        var provider = new Cms13ContentTypeMetadataProvider(repo.Object);
+
+        var resolvedRef = new ContentTypeReference();
+        typeof(ContentTypeReference).GetProperty("GUID")!.SetValue(resolvedRef, resolvedGuid);
+        var danglingRef = new ContentTypeReference();
+        typeof(ContentTypeReference).GetProperty("GUID")!.SetValue(danglingRef, danglingGuid);
+
+        var ct = new ContentType { ID = 1, Name = "Test" };
+        typeof(ContentType).GetProperty("CompositionBehaviors")!
+            .SetValue(ct, Array.Empty<CompositionBehavior>());
+        typeof(ContentType).GetProperty("IsContract")!
+            .SetValue(ct, false);
+        typeof(ContentType).GetProperty("Contracts")!
+            .SetValue(ct, new[] { resolvedRef, danglingRef });
+
+        var result = provider.Get(ct);
+
+        result.Contracts.Should().ContainSingle();
+        var only = result.Contracts[0];
+        only.Id.Should().Be(42);
+        only.Guid.Should().Be(resolvedGuid);
+        only.Name.Should().Be("IMyContract");
+        only.DisplayName.Should().Be("My Contract");
+    }
 #endif
 }
