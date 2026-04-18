@@ -58,11 +58,14 @@ jobs:
         run: dotnet test src/EditorPowertools.Tests/EditorPowertools.Tests.csproj -c Release --logger "trx;LogFileName=test-results.trx"
 
       - name: Pack with release notes
+        # PackageReleaseNotes is multi-line, so we pass it via an environment
+        # variable (which MSBuild reads as a property) instead of -p:... on the
+        # command line, where newlines would be re-split into separate args.
         run: |
+          export PackageReleaseNotes="$(cat release-notes.md)"
           dotnet pack src/EditorPowertools/EditorPowertools.csproj \
             -c Release \
             -p:Version=${{ steps.version.outputs.VERSION }} \
-            -p:PackageReleaseNotes="$(cat release-notes.md)" \
             --no-build -o ./nupkg
 
       - name: Upload package artifact
