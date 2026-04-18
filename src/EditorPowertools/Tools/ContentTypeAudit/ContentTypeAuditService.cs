@@ -244,6 +244,7 @@ public class ContentTypeAuditService
         Dictionary<int, ContentTypeStatisticsRecord> statistics)
     {
         statistics.TryGetValue(contentType.ID, out var stats);
+        var metadata = _metadataProvider.Get(contentType);
 
         var children = allTypes
             .Where(t => t.ModelType?.BaseType == contentType.ModelType)
@@ -258,6 +259,8 @@ public class ContentTypeAuditService
             DisplayName = contentType.DisplayName,
             ContentCount = stats?.ContentCount,
             IsCodeless = contentType.ModelType == null,
+            IsContract = CmsFeatureFlags.ContractsAvailable ? (bool?)metadata.IsContract : null,
+            CompositionBehaviors = CmsFeatureFlags.ContractsAvailable ? metadata.CompositionBehaviors.ToArray() : null,
             Children = children
         };
     }

@@ -92,5 +92,10 @@ public class ContentTypeTreeNodeDto
     public string? DisplayName { get; set; }
     public int? ContentCount { get; set; }
     public bool IsCodeless { get; set; }
+
+    // CMS 13 metadata — null on CMS 12
+    public bool? IsContract { get; set; }
+    public string[]? CompositionBehaviors { get; set; }
+
     public List<ContentTypeTreeNodeDto> Children { get; set; } = new();
 }
