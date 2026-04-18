@@ -1,6 +1,11 @@
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor.Models;
 
-public record ContentTypeListItem(int Id, string Name, string BaseType);
+public record ContentTypeListItem(
+    int Id,
+    string Name,
+    string BaseType,
+    bool? IsContract = null,
+    string[]? CompositionBehaviors = null);
 
 public record LanguageInfo(string Code, string Name, bool IsDefault);
 
@@ -31,7 +36,8 @@ public record ContentFilterResponse(
     int TotalCount,
     int Page,
     int PageSize,
-    int TotalPages);
+    int TotalPages,
+    int[]? ResolvedTypes = null);
 
 public record ContentItemRow(
     int ContentId,
