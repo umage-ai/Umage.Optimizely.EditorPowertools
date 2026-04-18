@@ -500,7 +500,7 @@
           <btn_failed>Failed</btn_failed>
           <stat_contenttypes>Content Types</stat_contenttypes>
           <stat_systemtypes>System Types</stat_systemtypes>
-          <stat_orphaned>Orphaned</stat_orphaned>
+          <stat_codeless>Code-less</stat_codeless>
           <stat_unused>Unused (0 content)</stat_unused>
           <stat_showing>Showing</stat_showing>
           <lbl_search>Search types... (or property:name)</lbl_search>
@@ -516,7 +516,7 @@
           <col_content>Content</col_content>
           <opt_all>All</opt_all>
           <badge_system>System</badge_system>
-          <badge_orphaned>Orphaned</badge_orphaned>
+          <badge_codeless>Code-less</badge_codeless>
           <dlg_properties>Properties: {0}</dlg_properties>
           <dlg_content>Content: {0}</dlg_content>
           <dlg_references>References to: {0}</dlg_references>
@@ -526,7 +526,7 @@
           <empty_notree>No inheritance data available</empty_notree>
           <legend_inherited>Inherited</legend_inherited>
           <legend_defined>Defined</legend_defined>
-          <legend_orphaneddesc>Orphaned (not in code)</legend_orphaneddesc>
+          <legend_codelessdesc>Code-less (not in code)</legend_codelessdesc>
           <col_propname>Name</col_propname>
           <col_proptype>Type</col_proptype>
           <col_proptab>Tab</col_proptab>
@@ -537,7 +537,7 @@
           <col_proporigin>Origin</col_proporigin>
           <origin_defined>Defined</origin_defined>
           <origin_inherited>Inherited</origin_inherited>
-          <origin_orphaned>Orphaned</origin_orphaned>
+          <origin_codeless>Code-less</origin_codeless>
           <col_contentid>ID</col_contentid>
           <col_contentname>Name</col_contentname>
           <col_contentlang>Lang</col_contentlang>

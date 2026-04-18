@@ -66,7 +66,7 @@
         const filtered = getFiltered();
         const total = allTypes.filter(t => !t.isSystemType).length;
         const system = allTypes.filter(t => t.isSystemType).length;
-        const orphaned = allTypes.filter(t => t.isOrphaned).length;
+        const orphaned = allTypes.filter(t => t.isCodeless).length;
         const hasStats = allTypes.some(t => t.statisticsUpdated != null);
         const unused = hasStats ? filtered.filter(t => t.contentCount === 0).length : null;
 
@@ -74,7 +74,7 @@
         el.innerHTML = `
             <div class="ept-stat"><div class="ept-stat__value">${total}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_contenttypes', 'Content Types')}</div></div>
             <div class="ept-stat"><div class="ept-stat__value">${system}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_systemtypes', 'System Types')}</div></div>
-            <div class="ept-stat"><div class="ept-stat__value">${orphaned}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_orphaned', 'Orphaned')}</div></div>
+            <div class="ept-stat"><div class="ept-stat__value">${orphaned}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_codeless', 'Code-less')}</div></div>
             ${unused != null ? `<div class="ept-stat"><div class="ept-stat__value">${unused}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_unused', 'Unused (0 content)')}</div></div>` : ''}
             <div class="ept-stat"><div class="ept-stat__value">${filtered.length}</div><div class="ept-stat__label">${EPT.s('contenttypeaudit.stat_showing', 'Showing')}</div></div>
         `;
@@ -163,7 +163,7 @@
             defaultSort: 'name',
             rowClass: (r) => {
                 if (r.isSystemType) return 'ept-row--system';
-                if (r.isOrphaned) return 'ept-row--orphaned';
+                if (r.isCodeless) return 'ept-row--orphaned';
                 return '';
             }
         });
@@ -216,7 +216,7 @@
         const name = r.displayName || r.name;
         const badges = [];
         if (r.isSystemType) badges.push(`<span class="ept-badge ept-badge--default">${EPT.s('contenttypeaudit.badge_system', 'System')}</span>`);
-        else if (r.isOrphaned) badges.push(`<span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.badge_orphaned', 'Orphaned')}</span>`);
+        else if (r.isCodeless) badges.push(`<span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.badge_codeless', 'Code-less')}</span>`);
         return `<div>
             <strong>${escHtml(name)}</strong>
             ${r.displayName && r.displayName !== r.name ? `<span class="ept-muted"> (${escHtml(r.name)})</span>` : ''}
@@ -277,7 +277,7 @@
             legend.innerHTML = `
                 <span class="ept-badge ept-badge--success">${EPT.s('contenttypeaudit.legend_inherited', 'Inherited')}</span>
                 <span class="ept-badge ept-badge--default">${EPT.s('contenttypeaudit.legend_defined', 'Defined')}</span>
-                <span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.legend_orphaneddesc', 'Orphaned (not in code)')}</span>
+                <span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.legend_codelessdesc', 'Code-less (not in code)')}</span>
             `;
             body.appendChild(legend);
 
@@ -291,7 +291,7 @@
                 { key: 'languageSpecific', label: EPT.s('contenttypeaudit.col_proplanguage', 'Language'), render: (r) => r.languageSpecific ? '✓' : '' },
                 {
                     key: 'origin', label: EPT.s('contenttypeaudit.col_proporigin', 'Origin'), render: (r) => {
-                        const label = r.origin === 0 ? EPT.s('contenttypeaudit.origin_defined', 'Defined') : r.origin === 1 ? EPT.s('contenttypeaudit.origin_inherited', 'Inherited') : EPT.s('contenttypeaudit.origin_orphaned', 'Orphaned');
+                        const label = r.origin === 0 ? EPT.s('contenttypeaudit.origin_defined', 'Defined') : r.origin === 1 ? EPT.s('contenttypeaudit.origin_inherited', 'Inherited') : EPT.s('contenttypeaudit.origin_codeless', 'Code-less');
                         const cls = r.origin === 0 ? 'default' : r.origin === 1 ? 'success' : 'danger';
                         return `<span class="ept-badge ept-badge--${cls}">${label}</span>`;
                     }
@@ -494,8 +494,8 @@
             const label = document.createElement('span');
             label.className = 'ept-tree__label';
             label.textContent = node.displayName || node.name;
-            if (node.isOrphaned) {
-                label.innerHTML += ` <span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.badge_orphaned', 'Orphaned')}</span>`;
+            if (node.isCodeless) {
+                label.innerHTML += ` <span class="ept-badge ept-badge--danger">${EPT.s('contenttypeaudit.badge_codeless', 'Code-less')}</span>`;
             }
             label.title = EPT.s('contenttypeaudit.title_viewcontent', 'Click to view content of this type');
             label.addEventListener('click', () => {
@@ -546,7 +546,7 @@
             { key: 'publishedCount', label: 'Published' },
             { key: 'referencedCount', label: 'Referenced' },
             { key: 'unreferencedCount', label: 'Unreferenced' },
-            { key: 'isOrphaned', label: 'Orphaned' },
+            { key: 'isCodeless', label: 'Code-less' },
             { key: 'isSystemType', label: 'System Type' },
             { key: 'modelType', label: 'Model Type' },
             { key: 'description', label: 'Description' },

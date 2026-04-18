@@ -499,7 +499,7 @@
           <btn_failed>Epäonnistui</btn_failed>
           <stat_contenttypes>Sisältötyypit</stat_contenttypes>
           <stat_systemtypes>Järjestelmätyypit</stat_systemtypes>
-          <stat_orphaned>Orvot</stat_orphaned>
+          <stat_codeless>Koodittomat</stat_codeless>
           <stat_unused>Käyttämättömät (0 sisältöä)</stat_unused>
           <stat_showing>Näytetään</stat_showing>
           <lbl_search>Hae tyyppejä... (tai ominaisuus:nimi)</lbl_search>
@@ -515,7 +515,9 @@
           <col_content>Sisältö</col_content>
           <opt_all>Kaikki</opt_all>
           <badge_system>Järjestelmä</badge_system>
-          <badge_orphaned>Orpo</badge_orphaned>
+          <badge_codeless>Koodittomat</badge_codeless>
+          <legend_codelessdesc>Koodittomat (ei koodissa)</legend_codelessdesc>
+          <origin_codeless>Koodittomat</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>Linkkien tarkistuksen tehtävä on parhaillaan käynnissä. Tulokset päivitetään kun se valmistuu.</alert_running>

@@ -499,7 +499,7 @@
           <btn_failed>Error</btn_failed>
           <stat_contenttypes>Tipos de contenido</stat_contenttypes>
           <stat_systemtypes>Tipos de sistema</stat_systemtypes>
-          <stat_orphaned>Huérfanos</stat_orphaned>
+          <stat_codeless>Sin código</stat_codeless>
           <stat_unused>Sin uso (0 contenido)</stat_unused>
           <stat_showing>Mostrando</stat_showing>
           <lbl_search>Buscar tipos... (o propiedad:nombre)</lbl_search>
@@ -515,7 +515,9 @@
           <col_content>Contenido</col_content>
           <opt_all>Todos</opt_all>
           <badge_system>Sistema</badge_system>
-          <badge_orphaned>Huérfano</badge_orphaned>
+          <badge_codeless>Sin código</badge_codeless>
+          <legend_codelessdesc>Sin código (no está en el código)</legend_codelessdesc>
+          <origin_codeless>Sin código</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>La tarea del verificador de enlaces está en ejecución. Los resultados se actualizarán al finalizar.</alert_running>

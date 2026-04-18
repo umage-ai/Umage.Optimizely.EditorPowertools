@@ -499,7 +499,7 @@
           <btn_failed>Fehlgeschlagen</btn_failed>
           <stat_contenttypes>Inhaltstypen</stat_contenttypes>
           <stat_systemtypes>Systemtypen</stat_systemtypes>
-          <stat_orphaned>Verwaist</stat_orphaned>
+          <stat_codeless>Ohne Code</stat_codeless>
           <stat_unused>Nicht verwendet (0 Inhalte)</stat_unused>
           <stat_showing>Angezeigt</stat_showing>
           <lbl_search>Typen suchen... (oder eigenschaft:name)</lbl_search>
@@ -515,7 +515,9 @@
           <col_content>Inhalt</col_content>
           <opt_all>Alle</opt_all>
           <badge_system>System</badge_system>
-          <badge_orphaned>Verwaist</badge_orphaned>
+          <badge_codeless>Ohne Code</badge_codeless>
+          <legend_codelessdesc>Ohne Code (nicht im Code)</legend_codelessdesc>
+          <origin_codeless>Ohne Code</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>Linkprüfungsauftrag wird derzeit ausgeführt. Ergebnisse werden nach Abschluss aktualisiert.</alert_running>

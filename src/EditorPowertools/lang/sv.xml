@@ -499,7 +499,7 @@
           <btn_failed>Misslyckades</btn_failed>
           <stat_contenttypes>Innehållstyper</stat_contenttypes>
           <stat_systemtypes>Systemtyper</stat_systemtypes>
-          <stat_orphaned>Föräldralösa</stat_orphaned>
+          <stat_codeless>Kodlös</stat_codeless>
           <stat_unused>Oanvända (0 innehåll)</stat_unused>
           <stat_showing>Visar</stat_showing>
           <lbl_search>Sök typer... (eller egenskap:namn)</lbl_search>
@@ -515,7 +515,9 @@
           <col_content>Innehåll</col_content>
           <opt_all>Alla</opt_all>
           <badge_system>System</badge_system>
-          <badge_orphaned>Föräldralös</badge_orphaned>
+          <badge_codeless>Kodlös</badge_codeless>
+          <legend_codelessdesc>Kodlös (inte i koden)</legend_codelessdesc>
+          <origin_codeless>Kodlös</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>Länkkontrolljobbet körs för närvarande. Resultaten uppdateras när det är klart.</alert_running>

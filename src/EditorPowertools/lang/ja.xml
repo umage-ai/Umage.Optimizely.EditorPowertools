@@ -499,7 +499,7 @@
           <btn_failed>失敗</btn_failed>
           <stat_contenttypes>コンテンツタイプ数</stat_contenttypes>
           <stat_systemtypes>システムタイプ数</stat_systemtypes>
-          <stat_orphaned>孤立</stat_orphaned>
+          <stat_codeless>コードなし</stat_codeless>
           <stat_unused>未使用（コンテンツ0件）</stat_unused>
           <stat_showing>表示中</stat_showing>
           <lbl_search>タイプを検索...（または property:名前）</lbl_search>
@@ -515,7 +515,9 @@
           <col_content>コンテンツ</col_content>
           <opt_all>すべて</opt_all>
           <badge_system>システム</badge_system>
-          <badge_orphaned>孤立</badge_orphaned>
+          <badge_codeless>コードなし</badge_codeless>
+          <legend_codelessdesc>コードなし (コードに存在しない)</legend_codelessdesc>
+          <origin_codeless>コードなし</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>リンクチェッカージョブが実行中です。完了すると結果が更新されます。</alert_running>

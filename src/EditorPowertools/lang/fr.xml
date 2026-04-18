@@ -499,7 +499,7 @@
           <btn_failed>Échec</btn_failed>
           <stat_contenttypes>Types de contenu</stat_contenttypes>
           <stat_systemtypes>Types système</stat_systemtypes>
-          <stat_orphaned>Orphelins</stat_orphaned>
+          <stat_codeless>Sans code</stat_codeless>
           <stat_unused>Inutilisé (0 contenu)</stat_unused>
           <stat_showing>Affichage</stat_showing>
           <lbl_search>Rechercher des types... (ou propriété:nom)</lbl_search>
@@ -515,7 +515,9 @@
           <col_content>Contenu</col_content>
           <opt_all>Tout</opt_all>
           <badge_system>Système</badge_system>
-          <badge_orphaned>Orphelin</badge_orphaned>
+          <badge_codeless>Sans code</badge_codeless>
+          <legend_codelessdesc>Sans code (pas dans le code)</legend_codelessdesc>
+          <origin_codeless>Sans code</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>La tâche de vérification des liens est en cours d'exécution. Les résultats seront mis à jour à la fin.</alert_running>

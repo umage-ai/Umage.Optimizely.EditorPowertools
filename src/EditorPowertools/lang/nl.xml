@@ -499,7 +499,7 @@
           <btn_failed>Mislukt</btn_failed>
           <stat_contenttypes>Inhoudstypen</stat_contenttypes>
           <stat_systemtypes>Systeemtypen</stat_systemtypes>
-          <stat_orphaned>Verweesd</stat_orphaned>
+          <stat_codeless>Codeloos</stat_codeless>
           <stat_unused>Ongebruikt (0 inhoud)</stat_unused>
           <stat_showing>Weergegeven</stat_showing>
           <lbl_search>Typen zoeken... (of eigenschap:naam)</lbl_search>
@@ -515,7 +515,9 @@
           <col_content>Inhoud</col_content>
           <opt_all>Alle</opt_all>
           <badge_system>Systeem</badge_system>
-          <badge_orphaned>Verweesd</badge_orphaned>
+          <badge_codeless>Codeloos</badge_codeless>
+          <legend_codelessdesc>Codeloos (niet in code)</legend_codelessdesc>
+          <origin_codeless>Codeloos</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>Linkcontrole-taak wordt momenteel uitgevoerd. Resultaten worden bijgewerkt wanneer het klaar is.</alert_running>

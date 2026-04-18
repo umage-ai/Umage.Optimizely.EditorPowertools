@@ -499,7 +499,7 @@
           <btn_failed>Mislykkedes</btn_failed>
           <stat_contenttypes>Indholdstyper</stat_contenttypes>
           <stat_systemtypes>Systemtyper</stat_systemtypes>
-          <stat_orphaned>Forældreløse</stat_orphaned>
+          <stat_codeless>Kodeløs</stat_codeless>
           <stat_unused>Ubrugte (0 indhold)</stat_unused>
           <stat_showing>Viser</stat_showing>
           <lbl_search>Søg typer... (eller egenskab:navn)</lbl_search>
@@ -515,7 +515,9 @@
           <col_content>Indhold</col_content>
           <opt_all>Alle</opt_all>
           <badge_system>System</badge_system>
-          <badge_orphaned>Forældreløs</badge_orphaned>
+          <badge_codeless>Kodeløs</badge_codeless>
+          <legend_codelessdesc>Kodeløs (ikke i kode)</legend_codelessdesc>
+          <origin_codeless>Kodeløs</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>Linkkontrol-job kører i øjeblikket. Resultater opdateres, når det er fuldført.</alert_running>

@@ -499,7 +499,7 @@
           <btn_failed>Mislyktes</btn_failed>
           <stat_contenttypes>Innholdstyper</stat_contenttypes>
           <stat_systemtypes>Systemtyper</stat_systemtypes>
-          <stat_orphaned>Foreldreløse</stat_orphaned>
+          <stat_codeless>Kodeløs</stat_codeless>
           <stat_unused>Ubrukte (0 innhold)</stat_unused>
           <stat_showing>Viser</stat_showing>
           <lbl_search>Søk typer... (eller egenskap:navn)</lbl_search>
@@ -515,7 +515,9 @@
           <col_content>Innhold</col_content>
           <opt_all>Alle</opt_all>
           <badge_system>System</badge_system>
-          <badge_orphaned>Foreldreløs</badge_orphaned>
+          <badge_codeless>Kodeløs</badge_codeless>
+          <legend_codelessdesc>Kodeløs (ikke i kode)</legend_codelessdesc>
+          <origin_codeless>Kodeløs</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>Lenkesjekk-jobb kjører for øyeblikket. Resultater oppdateres når det er fullført.</alert_running>

@@ -499,7 +499,7 @@
           <btn_failed>失败</btn_failed>
           <stat_contenttypes>内容类型</stat_contenttypes>
           <stat_systemtypes>系统类型</stat_systemtypes>
-          <stat_orphaned>孤立</stat_orphaned>
+          <stat_codeless>无代码</stat_codeless>
           <stat_unused>未使用（0个内容）</stat_unused>
           <stat_showing>显示</stat_showing>
           <lbl_search>搜索类型...（或 property:名称）</lbl_search>
@@ -515,7 +515,9 @@
           <col_content>内容</col_content>
           <opt_all>全部</opt_all>
           <badge_system>系统</badge_system>
-          <badge_orphaned>孤立</badge_orphaned>
+          <badge_codeless>无代码</badge_codeless>
+          <legend_codelessdesc>无代码 (不在代码中)</legend_codelessdesc>
+          <origin_codeless>无代码</origin_codeless>
         </contenttypeaudit>
         <linkchecker>
           <alert_running>链接检查任务正在运行。完成后将更新结果。</alert_running>
