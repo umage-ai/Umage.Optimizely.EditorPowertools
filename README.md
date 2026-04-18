@@ -133,6 +133,17 @@ Power Content Details widget, Manage Children dialog, and Visitor Group Tester i
 
 ![CMS Edit Mode](docs/screenshots/14-cms-edit-mode.png)
 
+## CMS 13 support
+
+EditorPowertools is multi-targeted: the same NuGet package supports both Optimizely CMS 12 (.NET 8) and CMS 13 (.NET 10). CMS 13 unlocks the following additional capabilities:
+
+- **Content Type Audit** — Contract / Section / Element badges, Kind and Composition filters, Contracts summary stat, and an "Applied contracts" detail panel with drill-through to each contract.
+- **Content Statistics** — Contracts summary card and block breakdown (Sections / Elements / Plain blocks).
+- **Bulk Property Editor** — pick a Contract in the type selector to apply changes across every content type implementing it; expansion preview shows which concrete types are affected.
+- **Content Audit** — filter by Contract membership (Include / Exclude / Contracts only) and Composition (Section / Element).
+
+The user-facing term "Orphaned" (content type in DB with no matching .NET class) is renamed to "Code-less" across the UI. See [docs/cms13-support.md](docs/cms13-support.md) for details.
+
 ## Installation
 
 ```
