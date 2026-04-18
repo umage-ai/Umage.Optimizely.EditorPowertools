@@ -1,3 +1,4 @@
+using UmageAI.Optimizely.EditorPowerTools.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Configuration;
 using UmageAI.Optimizely.EditorPowerTools.Localization;
 using UmageAI.Optimizely.EditorPowerTools.Permissions;
@@ -64,6 +65,12 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<FeatureAccessChecker>();
         services.AddSingleton<ContentTypeStatisticsRepository>();
         services.AddSingleton<UserPreferencesService>();
+
+#if OPTIMIZELY_CMS13
+        services.AddSingleton<IContentTypeMetadataProvider, Cms13.Cms13ContentTypeMetadataProvider>();
+#else
+        services.AddSingleton<IContentTypeMetadataProvider, Cms12.Cms12ContentTypeMetadataProvider>();
+#endif
 
         // Tool services
         services.AddTransient<ContentTypeAuditService>();
