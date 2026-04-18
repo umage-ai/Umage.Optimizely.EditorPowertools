@@ -595,6 +595,11 @@
           <btn_saveall>Lagre alle</btn_saveall>
           <btn_publishall>Publiser alle</btn_publishall>
           <confirm_discard>Forkast alle ventende endringer?</confirm_discard>
+          <tab_types>Innholdstyper</tab_types>
+          <tab_contracts>Kontrakter</tab_contracts>
+          <badge_section>Seksjon</badge_section>
+          <badge_element>Element</badge_element>
+          <note_expansion>Kontrakten utvides til</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Kjør det planlagte jobbet [EditorPowertools] Innholdsanalyse for å fylle inn data.</banner_runjob>

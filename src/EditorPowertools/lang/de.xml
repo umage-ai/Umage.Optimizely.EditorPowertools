@@ -595,6 +595,11 @@
           <btn_saveall>Alle speichern</btn_saveall>
           <btn_publishall>Alle veröffentlichen</btn_publishall>
           <confirm_discard>Alle ausstehenden Änderungen verwerfen?</confirm_discard>
+          <tab_types>Inhaltstypen</tab_types>
+          <tab_contracts>Verträge</tab_contracts>
+          <badge_section>Abschnitt</badge_section>
+          <badge_element>Element</badge_element>
+          <note_expansion>Vertrag erweitert sich zu</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Führen Sie den geplanten Auftrag [EditorPowertools] Inhaltsanalyse aus, um Daten zu befüllen.</banner_runjob>

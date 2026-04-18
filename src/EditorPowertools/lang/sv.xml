@@ -595,6 +595,11 @@
           <btn_saveall>Spara alla</btn_saveall>
           <btn_publishall>Publicera alla</btn_publishall>
           <confirm_discard>Kassera alla väntande ändringar?</confirm_discard>
+          <tab_types>Innehållstyper</tab_types>
+          <tab_contracts>Kontrakt</tab_contracts>
+          <badge_section>Sektion</badge_section>
+          <badge_element>Element</badge_element>
+          <note_expansion>Kontrakt utökas till</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Kör det schemalagda jobbet [EditorPowertools] Innehållsanalys för att fylla i data.</banner_runjob>

@@ -595,6 +595,11 @@
           <btn_saveall>Guardar todo</btn_saveall>
           <btn_publishall>Publicar todo</btn_publishall>
           <confirm_discard>¿Descartar todos los cambios pendientes?</confirm_discard>
+          <tab_types>Tipos de contenido</tab_types>
+          <tab_contracts>Contratos</tab_contracts>
+          <badge_section>Sección</badge_section>
+          <badge_element>Elemento</badge_element>
+          <note_expansion>El contrato se expande a</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Ejecute la tarea programada [EditorPowertools] Análisis de contenido para poblar los datos.</banner_runjob>

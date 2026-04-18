@@ -595,6 +595,11 @@
           <btn_saveall>Tallenna kaikki</btn_saveall>
           <btn_publishall>Julkaise kaikki</btn_publishall>
           <confirm_discard>Hylätäänkö kaikki odottavat muutokset?</confirm_discard>
+          <tab_types>Sisältötyypit</tab_types>
+          <tab_contracts>Sopimukset</tab_contracts>
+          <badge_section>Osio</badge_section>
+          <badge_element>Elementti</badge_element>
+          <note_expansion>Sopimus laajenee</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Suorita ajastettu tehtävä [EditorPowertools] Sisältöanalyysi tietojen täyttämiseksi.</banner_runjob>

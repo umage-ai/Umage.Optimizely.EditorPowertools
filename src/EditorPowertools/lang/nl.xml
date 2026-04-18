@@ -595,6 +595,11 @@
           <btn_saveall>Alles opslaan</btn_saveall>
           <btn_publishall>Alles publiceren</btn_publishall>
           <confirm_discard>Alle openstaande wijzigingen verwerpen?</confirm_discard>
+          <tab_types>Inhoudstypen</tab_types>
+          <tab_contracts>Contracten</tab_contracts>
+          <badge_section>Sectie</badge_section>
+          <badge_element>Element</badge_element>
+          <note_expansion>Contract breidt uit naar</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Voer de geplande taak [EditorPowertools] Inhoudsanalyse uit om gegevens te vullen.</banner_runjob>

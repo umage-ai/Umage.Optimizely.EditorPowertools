@@ -595,6 +595,11 @@
           <btn_saveall>すべて保存</btn_saveall>
           <btn_publishall>すべて公開</btn_publishall>
           <confirm_discard>保留中のすべての変更を破棄しますか？</confirm_discard>
+          <tab_types>コンテンツタイプ</tab_types>
+          <tab_contracts>コントラクト</tab_contracts>
+          <badge_section>セクション</badge_section>
+          <badge_element>要素</badge_element>
+          <note_expansion>コントラクトは次に展開されます</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>[EditorPowertools] コンテンツ分析スケジュールジョブを実行してデータを生成してください。</banner_runjob>

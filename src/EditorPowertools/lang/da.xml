@@ -595,6 +595,11 @@
           <btn_saveall>Gem alle</btn_saveall>
           <btn_publishall>Publicér alle</btn_publishall>
           <confirm_discard>Kassér alle afventende ændringer?</confirm_discard>
+          <tab_types>Indholdstyper</tab_types>
+          <tab_contracts>Kontrakter</tab_contracts>
+          <badge_section>Sektion</badge_section>
+          <badge_element>Element</badge_element>
+          <note_expansion>Kontrakt udvides til</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Kør det planlagte job [EditorPowertools] Indholdsanalyse for at udfylde data.</banner_runjob>

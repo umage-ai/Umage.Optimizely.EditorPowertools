@@ -698,6 +698,11 @@
           <lbl_refs>{0} refs</lbl_refs>
           <btn_browse>Browse...</btn_browse>
           <dlg_selectcontent>Select Content</dlg_selectcontent>
+          <tab_types>Content types</tab_types>
+          <tab_contracts>Contracts</tab_contracts>
+          <badge_section>Section</badge_section>
+          <badge_element>Element</badge_element>
+          <note_expansion>Contract expands to</note_expansion>
         </bulkeditor>
         <contentstatistics>
           <banner_runjob>Run the [EditorPowertools] Content Analysis scheduled job to populate data.</banner_runjob>
