@@ -97,4 +97,5 @@ appsettings.local.json
 *.png
 .claude/worktrees/
 .worktrees/
+.chunkhound/
 !src/EditorPowertools/icon.png

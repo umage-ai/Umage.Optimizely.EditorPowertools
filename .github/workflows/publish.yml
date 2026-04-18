@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  # Required for gh release create/upload.
+  contents: write
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
@@ -12,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
@@ -27,6 +33,21 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
 
+      - name: Generate release notes from merged PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # GitHub auto-generates notes from PR titles between this tag and
+          # the previous tag. Saved to release-notes.md so the same content
+          # can be embedded in the .nupkg AND used as the GitHub release body.
+          gh api repos/${{ github.repository }}/releases/generate-notes \
+            -f tag_name=${{ github.ref_name }} \
+            -f target_commitish=${{ github.sha }} \
+            --jq .body > release-notes.md
+          echo "::group::Release notes"
+          cat release-notes.md
+          echo "::endgroup::"
+
       - name: Restore
         run: dotnet restore src/EditorPowertools/EditorPowertools.csproj && dotnet restore src/EditorPowertools.Tests/EditorPowertools.Tests.csproj
 
@@ -36,8 +57,13 @@ jobs:
       - name: Test
         run: dotnet test src/EditorPowertools.Tests/EditorPowertools.Tests.csproj -c Release --logger "trx;LogFileName=test-results.trx"
 
-      - name: Pack
-        run: dotnet pack src/EditorPowertools/EditorPowertools.csproj -c Release -p:Version=${{ steps.version.outputs.VERSION }} --no-build -o ./nupkg
+      - name: Pack with release notes
+        run: |
+          dotnet pack src/EditorPowertools/EditorPowertools.csproj \
+            -c Release \
+            -p:Version=${{ steps.version.outputs.VERSION }} \
+            -p:PackageReleaseNotes="$(cat release-notes.md)" \
+            --no-build -o ./nupkg
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
@@ -51,3 +77,16 @@ jobs:
         with:
           name: test-results
           path: src/EditorPowertools.Tests/TestResults/*.trx
+
+      - name: Create or update GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Create release with auto-generated notes if one doesn't already
+          # exist. If it does (e.g. manually created first), preserve its body.
+          gh release create ${{ github.ref_name }} \
+            --title "${{ github.ref_name }}" \
+            --notes-file release-notes.md \
+            2>/dev/null || echo "Release ${{ github.ref_name }} already exists; preserving existing body."
+          # Always attach the .nupkg as a release asset (overwrite if re-run).
+          gh release upload ${{ github.ref_name }} ./nupkg/*.nupkg --clobber
