@@ -500,7 +500,17 @@
           <stat_contenttypes>Innehållstyper</stat_contenttypes>
           <stat_systemtypes>Systemtyper</stat_systemtypes>
           <stat_codeless>Kodlös</stat_codeless>
+          <stat_contracts>Kontrakt</stat_contracts>
           <stat_unused>Oanvända (0 innehåll)</stat_unused>
+          <opt_allkinds>Alla typer</opt_allkinds>
+          <opt_contractsonly>Endast kontrakttyper</opt_contractsonly>
+          <opt_noncontract>Icke-kontrakttyper</opt_noncontract>
+          <opt_anycomposition>Valfri komposition</opt_anycomposition>
+          <opt_sectiononly>Endast sektion</opt_sectiononly>
+          <opt_elementonly>Endast element</opt_elementonly>
+          <opt_both>Både sektion &amp; element</opt_both>
+          <opt_plain>Vanligt block</opt_plain>
+          <panel_appliedcontracts>Tillämpade kontrakt</panel_appliedcontracts>
           <stat_showing>Visar</stat_showing>
           <lbl_search>Sök typer... (eller egenskap:namn)</lbl_search>
           <opt_allbases>Alla bastyper</opt_allbases>
@@ -516,6 +526,9 @@
           <opt_all>Alla</opt_all>
           <badge_system>System</badge_system>
           <badge_codeless>Kodlös</badge_codeless>
+          <badge_contract>Kontrakt</badge_contract>
+          <badge_section>Sektion</badge_section>
+          <badge_element>Element</badge_element>
           <legend_codelessdesc>Kodlös (inte i koden)</legend_codelessdesc>
           <origin_codeless>Kodlös</origin_codeless>
         </contenttypeaudit>

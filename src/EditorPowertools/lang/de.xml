@@ -500,7 +500,17 @@
           <stat_contenttypes>Inhaltstypen</stat_contenttypes>
           <stat_systemtypes>Systemtypen</stat_systemtypes>
           <stat_codeless>Ohne Code</stat_codeless>
+          <stat_contracts>Verträge</stat_contracts>
           <stat_unused>Nicht verwendet (0 Inhalte)</stat_unused>
+          <opt_allkinds>Alle Arten</opt_allkinds>
+          <opt_contractsonly>Nur Vertragstypen</opt_contractsonly>
+          <opt_noncontract>Nicht-Vertragstypen</opt_noncontract>
+          <opt_anycomposition>Beliebige Komposition</opt_anycomposition>
+          <opt_sectiononly>Nur Abschnitt</opt_sectiononly>
+          <opt_elementonly>Nur Element</opt_elementonly>
+          <opt_both>Abschnitt &amp; Element</opt_both>
+          <opt_plain>Einfacher Block</opt_plain>
+          <panel_appliedcontracts>Angewendete Verträge</panel_appliedcontracts>
           <stat_showing>Angezeigt</stat_showing>
           <lbl_search>Typen suchen... (oder eigenschaft:name)</lbl_search>
           <opt_allbases>Alle Basistypen</opt_allbases>
@@ -516,6 +526,9 @@
           <opt_all>Alle</opt_all>
           <badge_system>System</badge_system>
           <badge_codeless>Ohne Code</badge_codeless>
+          <badge_contract>Vertrag</badge_contract>
+          <badge_section>Abschnitt</badge_section>
+          <badge_element>Element</badge_element>
           <legend_codelessdesc>Ohne Code (nicht im Code)</legend_codelessdesc>
           <origin_codeless>Ohne Code</origin_codeless>
         </contenttypeaudit>

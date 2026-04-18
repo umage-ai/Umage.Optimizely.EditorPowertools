@@ -500,7 +500,17 @@
           <stat_contenttypes>Types de contenu</stat_contenttypes>
           <stat_systemtypes>Types système</stat_systemtypes>
           <stat_codeless>Sans code</stat_codeless>
+          <stat_contracts>Contrats</stat_contracts>
           <stat_unused>Inutilisé (0 contenu)</stat_unused>
+          <opt_allkinds>Tous les types</opt_allkinds>
+          <opt_contractsonly>Contrats uniquement</opt_contractsonly>
+          <opt_noncontract>Types non-contrat</opt_noncontract>
+          <opt_anycomposition>Toute composition</opt_anycomposition>
+          <opt_sectiononly>Section uniquement</opt_sectiononly>
+          <opt_elementonly>Élément uniquement</opt_elementonly>
+          <opt_both>Section et élément</opt_both>
+          <opt_plain>Bloc simple</opt_plain>
+          <panel_appliedcontracts>Contrats appliqués</panel_appliedcontracts>
           <stat_showing>Affichage</stat_showing>
           <lbl_search>Rechercher des types... (ou propriété:nom)</lbl_search>
           <opt_allbases>Tous les types de base</opt_allbases>
@@ -516,6 +526,9 @@
           <opt_all>Tout</opt_all>
           <badge_system>Système</badge_system>
           <badge_codeless>Sans code</badge_codeless>
+          <badge_contract>Contrat</badge_contract>
+          <badge_section>Section</badge_section>
+          <badge_element>Élément</badge_element>
           <legend_codelessdesc>Sans code (pas dans le code)</legend_codelessdesc>
           <origin_codeless>Sans code</origin_codeless>
         </contenttypeaudit>

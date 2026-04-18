@@ -500,7 +500,17 @@
           <stat_contenttypes>Inhoudstypen</stat_contenttypes>
           <stat_systemtypes>Systeemtypen</stat_systemtypes>
           <stat_codeless>Codeloos</stat_codeless>
+          <stat_contracts>Contracten</stat_contracts>
           <stat_unused>Ongebruikt (0 inhoud)</stat_unused>
+          <opt_allkinds>Alle typen</opt_allkinds>
+          <opt_contractsonly>Alleen contracttypen</opt_contractsonly>
+          <opt_noncontract>Niet-contracttypen</opt_noncontract>
+          <opt_anycomposition>Elke compositie</opt_anycomposition>
+          <opt_sectiononly>Alleen sectie</opt_sectiononly>
+          <opt_elementonly>Alleen element</opt_elementonly>
+          <opt_both>Sectie &amp; element</opt_both>
+          <opt_plain>Standaardblok</opt_plain>
+          <panel_appliedcontracts>Toegepaste contracten</panel_appliedcontracts>
           <stat_showing>Weergegeven</stat_showing>
           <lbl_search>Typen zoeken... (of eigenschap:naam)</lbl_search>
           <opt_allbases>Alle basistypen</opt_allbases>
@@ -516,6 +526,9 @@
           <opt_all>Alle</opt_all>
           <badge_system>Systeem</badge_system>
           <badge_codeless>Codeloos</badge_codeless>
+          <badge_contract>Contract</badge_contract>
+          <badge_section>Sectie</badge_section>
+          <badge_element>Element</badge_element>
           <legend_codelessdesc>Codeloos (niet in code)</legend_codelessdesc>
           <origin_codeless>Codeloos</origin_codeless>
         </contenttypeaudit>

@@ -500,7 +500,17 @@
           <stat_contenttypes>内容类型</stat_contenttypes>
           <stat_systemtypes>系统类型</stat_systemtypes>
           <stat_codeless>无代码</stat_codeless>
+          <stat_contracts>合约</stat_contracts>
           <stat_unused>未使用（0个内容）</stat_unused>
+          <opt_allkinds>所有类型</opt_allkinds>
+          <opt_contractsonly>仅合约类型</opt_contractsonly>
+          <opt_noncontract>非合约类型</opt_noncontract>
+          <opt_anycomposition>任意组合</opt_anycomposition>
+          <opt_sectiononly>仅区块</opt_sectiononly>
+          <opt_elementonly>仅元素</opt_elementonly>
+          <opt_both>区块和元素</opt_both>
+          <opt_plain>普通区块</opt_plain>
+          <panel_appliedcontracts>已应用合约</panel_appliedcontracts>
           <stat_showing>显示</stat_showing>
           <lbl_search>搜索类型...（或 property:名称）</lbl_search>
           <opt_allbases>所有基类型</opt_allbases>
@@ -516,6 +526,9 @@
           <opt_all>全部</opt_all>
           <badge_system>系统</badge_system>
           <badge_codeless>无代码</badge_codeless>
+          <badge_contract>合约</badge_contract>
+          <badge_section>区块</badge_section>
+          <badge_element>元素</badge_element>
           <legend_codelessdesc>无代码 (不在代码中)</legend_codelessdesc>
           <origin_codeless>无代码</origin_codeless>
         </contenttypeaudit>

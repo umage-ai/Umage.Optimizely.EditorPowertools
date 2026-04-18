@@ -500,7 +500,17 @@
           <stat_contenttypes>Indholdstyper</stat_contenttypes>
           <stat_systemtypes>Systemtyper</stat_systemtypes>
           <stat_codeless>Kodeløs</stat_codeless>
+          <stat_contracts>Kontrakter</stat_contracts>
           <stat_unused>Ubrugte (0 indhold)</stat_unused>
+          <opt_allkinds>Alle typer</opt_allkinds>
+          <opt_contractsonly>Kun kontrakttyper</opt_contractsonly>
+          <opt_noncontract>Ikke-kontrakttyper</opt_noncontract>
+          <opt_anycomposition>Enhver komposition</opt_anycomposition>
+          <opt_sectiononly>Kun sektion</opt_sectiononly>
+          <opt_elementonly>Kun element</opt_elementonly>
+          <opt_both>Både sektion &amp; element</opt_both>
+          <opt_plain>Almindelig blok</opt_plain>
+          <panel_appliedcontracts>Anvendte kontrakter</panel_appliedcontracts>
           <stat_showing>Viser</stat_showing>
           <lbl_search>Søg typer... (eller egenskab:navn)</lbl_search>
           <opt_allbases>Alle basistyper</opt_allbases>
@@ -516,6 +526,9 @@
           <opt_all>Alle</opt_all>
           <badge_system>System</badge_system>
           <badge_codeless>Kodeløs</badge_codeless>
+          <badge_contract>Kontrakt</badge_contract>
+          <badge_section>Sektion</badge_section>
+          <badge_element>Element</badge_element>
           <legend_codelessdesc>Kodeløs (ikke i kode)</legend_codelessdesc>
           <origin_codeless>Kodeløs</origin_codeless>
         </contenttypeaudit>

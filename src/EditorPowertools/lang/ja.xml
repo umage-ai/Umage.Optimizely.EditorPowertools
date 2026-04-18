@@ -500,7 +500,17 @@
           <stat_contenttypes>コンテンツタイプ数</stat_contenttypes>
           <stat_systemtypes>システムタイプ数</stat_systemtypes>
           <stat_codeless>コードなし</stat_codeless>
+          <stat_contracts>コントラクト</stat_contracts>
           <stat_unused>未使用（コンテンツ0件）</stat_unused>
+          <opt_allkinds>すべての種類</opt_allkinds>
+          <opt_contractsonly>コントラクトのみ</opt_contractsonly>
+          <opt_noncontract>コントラクト以外</opt_noncontract>
+          <opt_anycomposition>任意の構成</opt_anycomposition>
+          <opt_sectiononly>セクションのみ</opt_sectiononly>
+          <opt_elementonly>要素のみ</opt_elementonly>
+          <opt_both>セクション＆要素</opt_both>
+          <opt_plain>標準ブロック</opt_plain>
+          <panel_appliedcontracts>適用された契約</panel_appliedcontracts>
           <stat_showing>表示中</stat_showing>
           <lbl_search>タイプを検索...（または property:名前）</lbl_search>
           <opt_allbases>すべての基底タイプ</opt_allbases>
@@ -516,6 +526,9 @@
           <opt_all>すべて</opt_all>
           <badge_system>システム</badge_system>
           <badge_codeless>コードなし</badge_codeless>
+          <badge_contract>コントラクト</badge_contract>
+          <badge_section>セクション</badge_section>
+          <badge_element>要素</badge_element>
           <legend_codelessdesc>コードなし (コードに存在しない)</legend_codelessdesc>
           <origin_codeless>コードなし</origin_codeless>
         </contenttypeaudit>

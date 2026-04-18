@@ -500,7 +500,17 @@
           <stat_contenttypes>Sisältötyypit</stat_contenttypes>
           <stat_systemtypes>Järjestelmätyypit</stat_systemtypes>
           <stat_codeless>Koodittomat</stat_codeless>
+          <stat_contracts>Sopimukset</stat_contracts>
           <stat_unused>Käyttämättömät (0 sisältöä)</stat_unused>
+          <opt_allkinds>Kaikki tyypit</opt_allkinds>
+          <opt_contractsonly>Vain sopimustyypit</opt_contractsonly>
+          <opt_noncontract>Ei-sopimustyypit</opt_noncontract>
+          <opt_anycomposition>Mikä tahansa koostumus</opt_anycomposition>
+          <opt_sectiononly>Vain osio</opt_sectiononly>
+          <opt_elementonly>Vain elementti</opt_elementonly>
+          <opt_both>Osio &amp; elementti</opt_both>
+          <opt_plain>Tavallinen lohko</opt_plain>
+          <panel_appliedcontracts>Sovelletut sopimukset</panel_appliedcontracts>
           <stat_showing>Näytetään</stat_showing>
           <lbl_search>Hae tyyppejä... (tai ominaisuus:nimi)</lbl_search>
           <opt_allbases>Kaikki perustyypit</opt_allbases>
@@ -516,6 +526,9 @@
           <opt_all>Kaikki</opt_all>
           <badge_system>Järjestelmä</badge_system>
           <badge_codeless>Koodittomat</badge_codeless>
+          <badge_contract>Sopimus</badge_contract>
+          <badge_section>Osio</badge_section>
+          <badge_element>Elementti</badge_element>
           <legend_codelessdesc>Koodittomat (ei koodissa)</legend_codelessdesc>
           <origin_codeless>Koodittomat</origin_codeless>
         </contenttypeaudit>

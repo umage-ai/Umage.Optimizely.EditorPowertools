@@ -501,8 +501,18 @@
           <stat_contenttypes>Content Types</stat_contenttypes>
           <stat_systemtypes>System Types</stat_systemtypes>
           <stat_codeless>Code-less</stat_codeless>
+          <stat_contracts>Contracts</stat_contracts>
           <stat_unused>Unused (0 content)</stat_unused>
           <stat_showing>Showing</stat_showing>
+          <opt_allkinds>All kinds</opt_allkinds>
+          <opt_contractsonly>Contract types only</opt_contractsonly>
+          <opt_noncontract>Non-contract types</opt_noncontract>
+          <opt_anycomposition>Any composition</opt_anycomposition>
+          <opt_sectiononly>Section-enabled</opt_sectiononly>
+          <opt_elementonly>Element-enabled</opt_elementonly>
+          <opt_both>Both section &amp; element</opt_both>
+          <opt_plain>Plain block</opt_plain>
+          <panel_appliedcontracts>Applied contracts</panel_appliedcontracts>
           <lbl_search>Search types... (or property:name)</lbl_search>
           <opt_allbases>All base types</opt_allbases>
           <chk_showsystem>Show system types</chk_showsystem>
@@ -517,6 +527,9 @@
           <opt_all>All</opt_all>
           <badge_system>System</badge_system>
           <badge_codeless>Code-less</badge_codeless>
+          <badge_contract>Contract</badge_contract>
+          <badge_section>Section</badge_section>
+          <badge_element>Element</badge_element>
           <dlg_properties>Properties: {0}</dlg_properties>
           <dlg_content>Content: {0}</dlg_content>
           <dlg_references>References to: {0}</dlg_references>
