@@ -1,11 +1,10 @@
 # EditorPowertools
 
-[![NuGet](https://img.shields.io/nuget/v/UmageAI.Optimizely.EditorPowerTools)](https://www.nuget.org/packages/UmageAI.Optimizely.EditorPowerTools/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A collection of power tools for Optimizely CMS 12 and CMS 13 editors and admins. Distributed as the NuGet package `UmageAI.Optimizely.EditorPowerTools`.
 
-![Overview Dashboard](docs/screenshots/01-overview.png)
+![Overview Dashboard](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/01-overview.png)
 
 ## Tools
 
@@ -54,67 +53,67 @@ Tools are grouped in the navigation menu for easy access.
 ### Overview Dashboard
 The main dashboard showing all available tools with quick-access cards.
 
-![Overview](docs/screenshots/01-overview.png)
+![Overview](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/01-overview.png)
 
 ### Content Type Audit
 Audit all content types with usage counts, property details (inherited, defined, orphaned), and inheritance tree visualization. Includes CSV export and drill-down dialogs.
 
-![Content Type Audit](docs/screenshots/02-content-type-audit.png)
+![Content Type Audit](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/02-content-type-audit.png)
 
 ### Personalization Audit
 Discover where visitor groups (audiences) are used across the site, including access rights, content areas, and XHTML fields.
 
-![Personalization Audit](docs/screenshots/03-personalization-audit.png)
+![Personalization Audit](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/03-personalization-audit.png)
 
 ### Audience Manager
 Enhanced visitor group management with search, category filtering, criteria details, and usage statistics.
 
-![Audience Manager](docs/screenshots/04-audience-manager.png)
+![Audience Manager](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/04-audience-manager.png)
 
 ### Activity Timeline
 Full timeline of editorial activities with dual-column layout, comments, version comparison, and infinite scroll.
 
-![Activity Timeline](docs/screenshots/05-activity-timeline.png)
+![Activity Timeline](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/05-activity-timeline.png)
 
 ### Scheduled Jobs Gantt
 Interactive Gantt chart of scheduled job execution history with zoom, scroll, duration display, and planned future runs.
 
-![Scheduled Jobs Gantt](docs/screenshots/06-scheduled-jobs-gantt.png)
+![Scheduled Jobs Gantt](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/06-scheduled-jobs-gantt.png)
 
 ### Bulk Property Editor
 Inline-edit property values across multiple content items with filtering, sorting, pagination, and bulk save/publish.
 
-![Bulk Property Editor](docs/screenshots/07-bulk-property-editor.png)
+![Bulk Property Editor](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/07-bulk-property-editor.png)
 
 ### CMS Doctor
 Pluggable health check dashboard with grouped checks, status indicators, and auto-fix capabilities.
 
-![CMS Doctor](docs/screenshots/08-cms-doctor.png)
+![CMS Doctor](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/08-cms-doctor.png)
 
 ### Link Audit
 Scan content for broken internal and external links with status codes, friendly URLs, and easy navigation to edit mode.
 
-![Link Audit](docs/screenshots/09-link-checker.png)
+![Link Audit](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/09-link-checker.png)
 
 ### Active Editors
 Real-time editor presence awareness showing who is editing what, with team chat and CMS notifications via SignalR.
 
-![Active Editors](docs/screenshots/10-active-editors.png)
+![Active Editors](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/10-active-editors.png)
 
 ### Content Importer
 Import content from CSV, Excel, or JSON with field mapping, preview, validation, and dry-run mode.
 
-![Content Importer](docs/screenshots/11-content-importer.png)
+![Content Importer](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/11-content-importer.png)
 
 ### Content Audit
 Comprehensive content inventory with configurable columns, multi-column filtering, sorting, and Excel/CSV export.
 
-![Content Audit](docs/screenshots/12-content-audit.png)
+![Content Audit](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/12-content-audit.png)
 
 ### Content Type Recommendations
 Define rules for which content types are suggested when creating content under specific parent pages. Hooks into the CMS create dialog via `IContentTypeAdvisor`.
 
-![Content Type Recommendations](docs/screenshots/13-content-type-recommendations.png)
+![Content Type Recommendations](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/13-content-type-recommendations.png)
 
 ### Content Statistics
 Dashboard with content counts, type distribution, publishing trends, and storage metrics.
@@ -131,7 +130,7 @@ Floating toolbar on the public site for testing personalization rules and inspec
 ### CMS Edit Mode Integration
 Power Content Details widget, Manage Children dialog, and Visitor Group Tester integrated directly into the CMS edit mode interface.
 
-![CMS Edit Mode](docs/screenshots/14-cms-edit-mode.png)
+![CMS Edit Mode](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/14-cms-edit-mode.png)
 
 ## CMS 13 support
 
