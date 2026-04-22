@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <languages>
   <language name="Suomi" id="fi">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <description>Editor Powertools</description>
+            <permissions>
+              <ContentTypeAudit>Pääsy Sisältötyyppi-auditointiin — tarkastele sisältötyyppien määrityksiä, ominaisuuksia ja periytymistä.</ContentTypeAudit>
+              <PersonalizationUsageAudit>Pääsy Personoinnin auditointiin — etsi, missä kävijäryhmiä käytetään sisällössä.</PersonalizationUsageAudit>
+              <ContentTypeRecommendations>Pääsy Sisältötyyppien suosituksiin — tekoälyavusteisia ehdotuksia sisältötyyppimuutoksiin.</ContentTypeRecommendations>
+              <AudienceManager>Pääsy Yleisönhallintaan — selaa ja hallinnoi kävijäryhmiä käyttötiedoilla.</AudienceManager>
+              <ContentDetails>Pääsy Power Content Details -widgetiin resurssipaneelissa.</ContentDetails>
+              <BrokenLinkChecker>Pääsy Linkkien auditointiin — etsi sisällöstä rikkinäisiä sisäisiä ja ulkoisia linkkejä.</BrokenLinkChecker>
+              <ContentExporter>Pääsy Sisällön vientiin — vie sisältöpuun rakenteita.</ContentExporter>
+              <BulkPropertyEditor>Pääsy Massaominaisuus-editoriin — muokkaa ominaisuuksia useassa sisältökohteessa kerralla.</BulkPropertyEditor>
+              <ScheduledJobsGantt>Pääsy Ajoitettujen töiden Ganttiin — interaktiivinen Gantt-kaavio töiden suorituksesta.</ScheduledJobsGantt>
+              <ActivityTimeline>Pääsy Toiminta-aikajanaan — kronologinen syöte toimituksellisesta aktiivisuudesta sivustolla.</ActivityTimeline>
+              <ContentImporter>Pääsy Sisällön tuontiin — tuo sisältöä CSV-, Excel- tai JSON-tiedostosta.</ContentImporter>
+              <ManageChildren>Pääsy Lasten hallintaan — massaoperaatioita alisisältökohteisiin.</ManageChildren>
+              <ContentAudit>Pääsy Sisällön auditointiin — kattava sisältöinventaario suodattimin ja vienti.</ContentAudit>
+              <CmsDoctor>Pääsy CMS Doctor -työkaluun — aja CMS-asennuksen terveystarkistuksia.</CmsDoctor>
+              <ActiveEditors>Pääsy Aktiivisiin toimittajiin — näe kuka on paikalla ja tee yhteistyötä chatin ja ilmoitusten kautta.</ActiveEditors>
+              <SecurityAudit>Pääsy Tietoturva-auditointiin — analysoi käyttöoikeuksia ja tunnista oikeusongelmat.</SecurityAudit>
+              <VisitorGroupTester>Pääsy Kävijäryhmien testaukseen — testaa personointia kelluvalla työkalupalkilla julkisessa sivustossa.</VisitorGroupTester>
+              <ContentStatistics>Pääsy Sisältötilastojen koontinäyttöön — sisältömäärät, tyyppijakauma ja julkaisutrendit.</ContentStatistics>
+              <LanguageAudit>Pääsy Kielten auditointiin — analysoi käännöskattavuutta ja etsi puuttuvia käännöksiä.</LanguageAudit>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
     <editorpowertools>
       <!-- Päävalikko -->
       <menu>

@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <languages>
   <language name="简体中文" id="zh-CN">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <description>Editor Powertools</description>
+            <permissions>
+              <ContentTypeAudit>访问内容类型审计工具 — 查看内容类型定义、属性和继承关系。</ContentTypeAudit>
+              <PersonalizationUsageAudit>访问个性化审计工具 — 查找访客组在内容中使用的位置。</PersonalizationUsageAudit>
+              <ContentTypeRecommendations>访问内容类型推荐工具 — AI 辅助的内容类型变更建议。</ContentTypeRecommendations>
+              <AudienceManager>访问受众管理器 — 浏览和管理访客组及其使用数据。</AudienceManager>
+              <ContentDetails>访问资源面板中的 Power Content Details 小组件。</ContentDetails>
+              <BrokenLinkChecker>访问链接审计工具 — 扫描内容中的损坏内部和外部链接。</BrokenLinkChecker>
+              <ContentExporter>访问内容导出工具 — 导出内容树结构。</ContentExporter>
+              <BulkPropertyEditor>访问批量属性编辑器 — 跨多个内容项内联编辑属性。</BulkPropertyEditor>
+              <ScheduledJobsGantt>访问计划任务甘特图 — 任务执行历史的交互式甘特图。</ScheduledJobsGantt>
+              <ActivityTimeline>访问活动时间线 — 站点上编辑活动的时间顺序信息流。</ActivityTimeline>
+              <ContentImporter>访问内容导入工具 — 从 CSV、Excel 或 JSON 导入内容。</ContentImporter>
+              <ManageChildren>访问子项管理工具 — 对子内容项执行批量操作。</ManageChildren>
+              <ContentAudit>访问内容审计工具 — 带过滤器和导出功能的全面内容清单。</ContentAudit>
+              <CmsDoctor>访问 CMS 医生 — 对 CMS 安装执行健康检查。</CmsDoctor>
+              <ActiveEditors>访问活跃编辑器 — 查看在线用户并通过聊天和通知协作。</ActiveEditors>
+              <SecurityAudit>访问安全审计工具 — 分析访问权限并识别权限问题。</SecurityAudit>
+              <VisitorGroupTester>访问访客组测试器 — 从公开站点的浮动工具栏测试个性化。</VisitorGroupTester>
+              <ContentStatistics>访问内容统计仪表板 — 内容数量、类型分布和发布趋势。</ContentStatistics>
+              <LanguageAudit>访问语言审计工具 — 分析翻译覆盖范围并找出缺失的翻译。</LanguageAudit>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
     <editorpowertools>
       <!-- 主菜单 -->
       <menu>

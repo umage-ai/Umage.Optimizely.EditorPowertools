@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <languages>
   <language name="Español" id="es">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <description>Editor Powertools</description>
+            <permissions>
+              <ContentTypeAudit>Acceso a la Auditoría de tipos de contenido — revise definiciones, propiedades y herencia de tipos de contenido.</ContentTypeAudit>
+              <PersonalizationUsageAudit>Acceso a la Auditoría de personalización — encuentre dónde se usan los grupos de visitantes en el contenido.</PersonalizationUsageAudit>
+              <ContentTypeRecommendations>Acceso a Recomendaciones de tipos de contenido — sugerencias asistidas por IA para cambios en tipos de contenido.</ContentTypeRecommendations>
+              <AudienceManager>Acceso al Gestor de audiencias — explore y gestione grupos de visitantes con datos de uso.</AudienceManager>
+              <ContentDetails>Acceso al widget Power Content Details en el panel de recursos.</ContentDetails>
+              <BrokenLinkChecker>Acceso a la Auditoría de enlaces — analice el contenido en busca de enlaces internos y externos rotos.</BrokenLinkChecker>
+              <ContentExporter>Acceso al Exportador de contenido — exporte estructuras del árbol de contenido.</ContentExporter>
+              <BulkPropertyEditor>Acceso al Editor masivo de propiedades — edite propiedades en línea en múltiples contenidos.</BulkPropertyEditor>
+              <ScheduledJobsGantt>Acceso al Gantt de trabajos programados — diagrama de Gantt interactivo del historial de ejecución de trabajos.</ScheduledJobsGantt>
+              <ActivityTimeline>Acceso a la Línea de tiempo de actividad — flujo cronológico de la actividad editorial en el sitio.</ActivityTimeline>
+              <ContentImporter>Acceso al Importador de contenido — importe contenido desde CSV, Excel o JSON.</ContentImporter>
+              <ManageChildren>Acceso a Gestionar subelementos — operaciones masivas sobre contenidos hijos.</ManageChildren>
+              <ContentAudit>Acceso a la Auditoría de contenido — inventario completo de contenido con filtros y exportación.</ContentAudit>
+              <CmsDoctor>Acceso al CMS Doctor — ejecute comprobaciones de salud sobre la instalación del CMS.</CmsDoctor>
+              <ActiveEditors>Acceso a Editores activos — vea quién está en línea y colabore mediante chat y notificaciones.</ActiveEditors>
+              <SecurityAudit>Acceso a la Auditoría de seguridad — analice derechos de acceso e identifique problemas de permisos.</SecurityAudit>
+              <VisitorGroupTester>Acceso al Probador de grupos de visitantes — pruebe la personalización desde una barra flotante en el sitio público.</VisitorGroupTester>
+              <ContentStatistics>Acceso al Panel de estadísticas de contenido — recuentos, distribución por tipo y tendencias de publicación.</ContentStatistics>
+              <LanguageAudit>Acceso a la Auditoría de idiomas — analice la cobertura de traducción y encuentre traducciones faltantes.</LanguageAudit>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
     <editorpowertools>
       <!-- Menú principal -->
       <menu>

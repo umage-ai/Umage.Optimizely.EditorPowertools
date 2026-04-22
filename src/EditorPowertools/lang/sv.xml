@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <languages>
   <language name="Svenska" id="sv">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <description>Editor Powertools</description>
+            <permissions>
+              <ContentTypeAudit>Åtkomst till Innehållstyp-granskning — granska innehållstypsdefinitioner, egenskaper och arv.</ContentTypeAudit>
+              <PersonalizationUsageAudit>Åtkomst till Personaliseringsgranskning — hitta var besöksgrupper används i innehållet.</PersonalizationUsageAudit>
+              <ContentTypeRecommendations>Åtkomst till Innehållstyp-rekommendationer — AI-assisterade förslag på innehållstypsändringar.</ContentTypeRecommendations>
+              <AudienceManager>Åtkomst till Målgruppshanterare — bläddra och hantera besöksgrupper med användningsdata.</AudienceManager>
+              <ContentDetails>Åtkomst till Power Content Details-widgeten i tillgångspanelen.</ContentDetails>
+              <BrokenLinkChecker>Åtkomst till Länkgranskning — sök innehåll efter brutna interna och externa länkar.</BrokenLinkChecker>
+              <ContentExporter>Åtkomst till Innehållsexport — exportera innehållsträdstrukturer.</ContentExporter>
+              <BulkPropertyEditor>Åtkomst till Bulk-egenskapsredigerare — inline-redigera egenskaper över flera innehållsposter.</BulkPropertyEditor>
+              <ScheduledJobsGantt>Åtkomst till Gantt för schemalagda jobb — interaktivt Gantt-diagram över jobbkörningar.</ScheduledJobsGantt>
+              <ActivityTimeline>Åtkomst till Aktivitetstidslinje — kronologiskt flöde av redaktionell aktivitet på webbplatsen.</ActivityTimeline>
+              <ContentImporter>Åtkomst till Innehållsimport — importera innehåll från CSV, Excel eller JSON.</ContentImporter>
+              <ManageChildren>Åtkomst till Hantera barn — massåtgärder på underordnade innehållsposter.</ManageChildren>
+              <ContentAudit>Åtkomst till Innehållsgranskning — omfattande innehållsinventering med filter och export.</ContentAudit>
+              <CmsDoctor>Åtkomst till CMS Doctor — kör hälsokontroller på CMS-installationen.</CmsDoctor>
+              <ActiveEditors>Åtkomst till Aktiva redaktörer — se vem som är online och samarbeta via chatt och aviseringar.</ActiveEditors>
+              <SecurityAudit>Åtkomst till Säkerhetsgranskning — analysera åtkomsträttigheter och identifiera behörighetsproblem.</SecurityAudit>
+              <VisitorGroupTester>Åtkomst till Besöksgrupptest — testa personalisering från ett flytande verktygsfält på den offentliga webbplatsen.</VisitorGroupTester>
+              <ContentStatistics>Åtkomst till Innehållsstatistik-dashboard — innehållsantal, typfördelning och publiceringstrender.</ContentStatistics>
+              <LanguageAudit>Åtkomst till Språkgranskning — analysera översättningstäckning och hitta saknade översättningar.</LanguageAudit>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
     <editorpowertools>
       <!-- Huvudmeny -->
       <menu>

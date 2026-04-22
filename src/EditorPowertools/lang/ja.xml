@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <languages>
   <language name="日本語" id="ja">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <description>Editor Powertools</description>
+            <permissions>
+              <ContentTypeAudit>コンテンツタイプ監査ツールへのアクセス — コンテンツタイプの定義、プロパティ、継承を確認します。</ContentTypeAudit>
+              <PersonalizationUsageAudit>パーソナライゼーション監査ツールへのアクセス — 訪問者グループがコンテンツのどこで使用されているかを確認します。</PersonalizationUsageAudit>
+              <ContentTypeRecommendations>コンテンツタイプ推奨ツールへのアクセス — コンテンツタイプの変更に対するAI支援の提案。</ContentTypeRecommendations>
+              <AudienceManager>オーディエンスマネージャーへのアクセス — 使用データ付きで訪問者グループを閲覧・管理します。</AudienceManager>
+              <ContentDetails>アセットパネルのPower Content Detailsウィジェットへのアクセス。</ContentDetails>
+              <BrokenLinkChecker>リンク監査ツールへのアクセス — コンテンツ内の壊れた内部および外部リンクをスキャンします。</BrokenLinkChecker>
+              <ContentExporter>コンテンツエクスポーターへのアクセス — コンテンツツリー構造をエクスポートします。</ContentExporter>
+              <BulkPropertyEditor>一括プロパティエディターへのアクセス — 複数のコンテンツアイテムでプロパティをインライン編集します。</BulkPropertyEditor>
+              <ScheduledJobsGantt>スケジュールジョブのガントチャートへのアクセス — ジョブ実行履歴のインタラクティブなガントチャート。</ScheduledJobsGantt>
+              <ActivityTimeline>アクティビティタイムラインへのアクセス — サイト上の編集活動の時系列フィード。</ActivityTimeline>
+              <ContentImporter>コンテンツインポーターへのアクセス — CSV、Excel、JSONからコンテンツをインポートします。</ContentImporter>
+              <ManageChildren>子コンテンツ管理へのアクセス — 子コンテンツアイテムへの一括操作。</ManageChildren>
+              <ContentAudit>コンテンツ監査ツールへのアクセス — フィルターとエクスポート機能付きの包括的なコンテンツインベントリ。</ContentAudit>
+              <CmsDoctor>CMSドクターへのアクセス — CMSインストール全体のヘルスチェックを実行します。</CmsDoctor>
+              <ActiveEditors>アクティブエディターへのアクセス — オンラインのユーザーを確認し、チャットと通知で共同作業します。</ActiveEditors>
+              <SecurityAudit>セキュリティ監査ツールへのアクセス — アクセス権を分析し、権限の問題を特定します。</SecurityAudit>
+              <VisitorGroupTester>訪問者グループテスターへのアクセス — 公開サイトのフローティングツールバーからパーソナライゼーションをテストします。</VisitorGroupTester>
+              <ContentStatistics>コンテンツ統計ダッシュボードへのアクセス — コンテンツ数、タイプ別分布、公開トレンド。</ContentStatistics>
+              <LanguageAudit>言語監査ツールへのアクセス — 翻訳カバレッジを分析し、不足している翻訳を見つけます。</LanguageAudit>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
     <editorpowertools>
       <!-- メインメニュー -->
       <menu>

@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <languages>
   <language name="English" id="en">
+    <!--
+      Optimizely looks up friendly names for PermissionTypes under this path.
+      /admin/permissiontype/groups/{Category}/description             -> category heading
+      /admin/permissiontype/groups/{Category}/permissions/{Name}      -> permission description
+      Element names MUST match the PermissionType(category, name) args in EditorPowertoolsPermissions.cs.
+    -->
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <description>Editor Powertools</description>
+            <permissions>
+              <ContentTypeAudit>Access the Content Type Audit tool — review content type definitions, properties, and inheritance.</ContentTypeAudit>
+              <PersonalizationUsageAudit>Access the Personalization Audit tool — find where visitor groups are used across content.</PersonalizationUsageAudit>
+              <ContentTypeRecommendations>Access the Content Type Recommendations tool — AI-assisted suggestions for content type changes.</ContentTypeRecommendations>
+              <AudienceManager>Access the Audience Manager tool — browse and manage visitor groups with usage data.</AudienceManager>
+              <ContentDetails>Access the Power Content Details assets-panel widget.</ContentDetails>
+              <BrokenLinkChecker>Access the Link Audit tool — scan content for broken internal and external links.</BrokenLinkChecker>
+              <ContentExporter>Access the Content Exporter tool — export content tree structures.</ContentExporter>
+              <BulkPropertyEditor>Access the Bulk Property Editor — inline-edit properties across multiple content items.</BulkPropertyEditor>
+              <ScheduledJobsGantt>Access the Scheduled Jobs Gantt — interactive Gantt chart of scheduled-job execution history.</ScheduledJobsGantt>
+              <ActivityTimeline>Access the Activity Timeline — chronological feed of editorial activity across the site.</ActivityTimeline>
+              <ContentImporter>Access the Content Importer — import content from CSV, Excel, or JSON.</ContentImporter>
+              <ManageChildren>Access the Manage Children tool — bulk operations on child content items.</ManageChildren>
+              <ContentAudit>Access the Content Audit tool — comprehensive content inventory with filters and export.</ContentAudit>
+              <CmsDoctor>Access the CMS Doctor — run health checks across the CMS installation.</CmsDoctor>
+              <ActiveEditors>Access the Active Editors tool — see who is online and collaborate via chat and notifications.</ActiveEditors>
+              <SecurityAudit>Access the Security Audit tool — analyze access rights and identify permission issues.</SecurityAudit>
+              <VisitorGroupTester>Access the Visitor Group Tester — test personalization from a floating toolbar on the public site.</VisitorGroupTester>
+              <ContentStatistics>Access the Content Statistics dashboard — content counts, type distribution, and publishing trends.</ContentStatistics>
+              <LanguageAudit>Access the Language Audit tool — analyze translation coverage and find missing translations.</LanguageAudit>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
     <editorpowertools>
       <!-- Main menu -->
       <menu>

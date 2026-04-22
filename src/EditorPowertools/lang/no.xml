@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <languages>
   <language name="Norsk" id="no">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <description>Editor Powertools</description>
+            <permissions>
+              <ContentTypeAudit>Tilgang til Innholdstype-revisjon — gjennomgå innholdstypedefinisjoner, egenskaper og arv.</ContentTypeAudit>
+              <PersonalizationUsageAudit>Tilgang til Personaliseringsrevisjon — finn hvor besøksgrupper brukes på tvers av innholdet.</PersonalizationUsageAudit>
+              <ContentTypeRecommendations>Tilgang til Innholdstype-anbefalinger — AI-assisterte forslag til innholdstypeendringer.</ContentTypeRecommendations>
+              <AudienceManager>Tilgang til Målgruppebehandler — bla og administrer besøksgrupper med bruksdata.</AudienceManager>
+              <ContentDetails>Tilgang til Power Content Details-widgeten i aktivapanelet.</ContentDetails>
+              <BrokenLinkChecker>Tilgang til Linkrevisjon — skann innhold for brutte interne og eksterne lenker.</BrokenLinkChecker>
+              <ContentExporter>Tilgang til Innholdseksport — eksporter innholdstrestrukturer.</ContentExporter>
+              <BulkPropertyEditor>Tilgang til Bulk-egenskapsredigerer — rediger egenskaper inline på tvers av flere innholdselementer.</BulkPropertyEditor>
+              <ScheduledJobsGantt>Tilgang til Gantt for planlagte jobber — interaktivt Gantt-diagram over jobbkjøringer.</ScheduledJobsGantt>
+              <ActivityTimeline>Tilgang til Aktivitetstidslinje — kronologisk feed over redaksjonell aktivitet på nettstedet.</ActivityTimeline>
+              <ContentImporter>Tilgang til Innholdsimport — importer innhold fra CSV, Excel eller JSON.</ContentImporter>
+              <ManageChildren>Tilgang til Håndter barn — masseoperasjoner på underordnede innholdselementer.</ManageChildren>
+              <ContentAudit>Tilgang til Innholdsrevisjon — omfattende innholdsinventar med filtre og eksport.</ContentAudit>
+              <CmsDoctor>Tilgang til CMS Doctor — kjør helsesjekker på CMS-installasjonen.</CmsDoctor>
+              <ActiveEditors>Tilgang til Aktive redaktører — se hvem som er online og samarbeid via chat og varsler.</ActiveEditors>
+              <SecurityAudit>Tilgang til Sikkerhetsrevisjon — analyser tilgangsrettigheter og identifiser rettighetsproblemer.</SecurityAudit>
+              <VisitorGroupTester>Tilgang til Besøksgruppe-test — test personalisering fra en flytende verktøylinje på det offentlige nettstedet.</VisitorGroupTester>
+              <ContentStatistics>Tilgang til Innholdsstatistikk-dashbord — innholdstall, typefordeling og publiseringstrender.</ContentStatistics>
+              <LanguageAudit>Tilgang til Språkrevisjon — analyser oversettelsesdekning og finn manglende oversettelser.</LanguageAudit>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
     <editorpowertools>
       <!-- Hovedmeny -->
       <menu>

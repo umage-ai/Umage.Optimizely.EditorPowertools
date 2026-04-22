@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <languages>
   <language name="Nederlands" id="nl">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <description>Editor Powertools</description>
+            <permissions>
+              <ContentTypeAudit>Toegang tot Content Type Audit — bekijk definities, eigenschappen en overerving van content types.</ContentTypeAudit>
+              <PersonalizationUsageAudit>Toegang tot Personalisatie-audit — vind waar bezoekersgroepen in content worden gebruikt.</PersonalizationUsageAudit>
+              <ContentTypeRecommendations>Toegang tot Content Type-aanbevelingen — AI-ondersteunde suggesties voor content type-wijzigingen.</ContentTypeRecommendations>
+              <AudienceManager>Toegang tot Audience Manager — blader door en beheer bezoekersgroepen met gebruiksgegevens.</AudienceManager>
+              <ContentDetails>Toegang tot de Power Content Details-widget in het assets-paneel.</ContentDetails>
+              <BrokenLinkChecker>Toegang tot Link Audit — scan content op gebroken interne en externe links.</BrokenLinkChecker>
+              <ContentExporter>Toegang tot Content Exporter — exporteer contentboomstructuren.</ContentExporter>
+              <BulkPropertyEditor>Toegang tot Bulk Property Editor — bewerk eigenschappen inline over meerdere content-items.</BulkPropertyEditor>
+              <ScheduledJobsGantt>Toegang tot Gantt voor geplande taken — interactief Gantt-diagram van taakuitvoeringsgeschiedenis.</ScheduledJobsGantt>
+              <ActivityTimeline>Toegang tot Activiteitstijdlijn — chronologische feed van redactionele activiteit op de site.</ActivityTimeline>
+              <ContentImporter>Toegang tot Content Importer — importeer content vanuit CSV, Excel of JSON.</ContentImporter>
+              <ManageChildren>Toegang tot Onderliggende items beheren — bulkbewerkingen op onderliggende content-items.</ManageChildren>
+              <ContentAudit>Toegang tot Content Audit — uitgebreid content-inventaris met filters en export.</ContentAudit>
+              <CmsDoctor>Toegang tot CMS Doctor — voer gezondheidscontroles uit op de CMS-installatie.</CmsDoctor>
+              <ActiveEditors>Toegang tot Actieve redacteuren — zie wie online is en werk samen via chat en meldingen.</ActiveEditors>
+              <SecurityAudit>Toegang tot Security Audit — analyseer toegangsrechten en identificeer rechtenproblemen.</SecurityAudit>
+              <VisitorGroupTester>Toegang tot Visitor Group Tester — test personalisatie vanuit een zwevende werkbalk op de publieke site.</VisitorGroupTester>
+              <ContentStatistics>Toegang tot Content Statistieken-dashboard — content-aantallen, typeverdeling en publicatietrends.</ContentStatistics>
+              <LanguageAudit>Toegang tot Language Audit — analyseer vertalingsdekking en vind ontbrekende vertalingen.</LanguageAudit>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
     <editorpowertools>
       <!-- Hoofdmenu -->
       <menu>
