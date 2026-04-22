@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using EPiServer.Personalization.VisitorGroups;
 using EPiServer.Shell;
 using UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager.Models;
+using UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 using Microsoft.Extensions.Logging;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager;
@@ -9,15 +10,18 @@ namespace UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager;
 public class AudienceManagerService
 {
     private readonly IVisitorGroupRepository _visitorGroupRepository;
+    private readonly PersonalizationUsageRepository _usageRepository;
     private readonly ILogger<AudienceManagerService> _logger;
 
     private static readonly Regex CategoryPattern = new(@"^\[([^\]]+)\]\s*(.+)$", RegexOptions.Compiled);
 
     public AudienceManagerService(
         IVisitorGroupRepository visitorGroupRepository,
+        PersonalizationUsageRepository usageRepository,
         ILogger<AudienceManagerService> logger)
     {
         _visitorGroupRepository = visitorGroupRepository;
+        _usageRepository = usageRepository;
         _logger = logger;
     }
 
@@ -50,55 +54,31 @@ public class AudienceManagerService
 
     /// <summary>
     /// Gets usage records for a specific visitor group from the PersonalizationUsage DDS store.
-    /// Returns empty if the store doesn't exist (personalization job hasn't been run yet).
+    /// Returns empty if no records exist (personalization job hasn't been run yet).
     /// </summary>
     public IEnumerable<VisitorGroupUsageDto> GetUsages(Guid visitorGroupId)
     {
-        var results = new List<VisitorGroupUsageDto>();
-
         try
         {
-            var store = EPiServer.Data.Dynamic.DynamicDataStoreFactory.Instance
-                .GetStore("EditorPowertools_PersonalizationUsage");
-
-            if (store == null)
-                return results;
-
-            var idString = visitorGroupId.ToString();
-            var items = store.Items<object>().ToList();
-
-            // Query using dynamic access since we don't have the type reference
-            foreach (dynamic item in items)
-            {
-                try
+            return _usageRepository
+                .GetByVisitorGroup(visitorGroupId.ToString())
+                .Select(r => new VisitorGroupUsageDto
                 {
-                    string? itemVisitorGroupId = item.VisitorGroupId?.ToString();
-                    if (string.Equals(itemVisitorGroupId, idString, StringComparison.OrdinalIgnoreCase))
-                    {
-                        results.Add(new VisitorGroupUsageDto
-                        {
-                            ContentId = (int)(item.ContentId ?? 0),
-                            ContentName = (string)(item.ContentName ?? "[Unknown]"),
-                            PropertyName = (string?)item.PropertyName,
-                            UsageType = (string?)item.UsageType,
-                            EditUrl = item.ContentId != null
-                                ? $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{item.ContentId}"
-                                : null
-                        });
-                    }
-                }
-                catch
-                {
-                    // Skip items that don't match the expected schema
-                }
-            }
+                    ContentId = r.ContentId,
+                    ContentName = string.IsNullOrEmpty(r.ContentName) ? "[Unknown]" : r.ContentName,
+                    PropertyName = r.PropertyName,
+                    UsageType = r.UsageType,
+                    EditUrl = r.ContentId != 0
+                        ? $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{r.ContentId}"
+                        : null
+                })
+                .ToList();
         }
         catch (Exception ex)
         {
             _logger.LogDebug(ex, "PersonalizationUsage DDS store not available");
+            return Enumerable.Empty<VisitorGroupUsageDto>();
         }
-
-        return results;
     }
 
     private Dictionary<Guid, int> GetUsageCountsByVisitorGroupId()
@@ -107,26 +87,12 @@ public class AudienceManagerService
 
         try
         {
-            var store = EPiServer.Data.Dynamic.DynamicDataStoreFactory.Instance
-                .GetStore("EditorPowertools_PersonalizationUsage");
-
-            if (store == null)
-                return counts;
-
-            foreach (dynamic item in store.Items<object>())
+            foreach (var record in _usageRepository.GetAll())
             {
-                try
+                if (Guid.TryParse(record.VisitorGroupId, out var vgId))
                 {
-                    string? visitorGroupIdStr = item.VisitorGroupId?.ToString();
-                    if (visitorGroupIdStr != null && Guid.TryParse(visitorGroupIdStr, out var vgId))
-                    {
-                        counts.TryGetValue(vgId, out var count);
-                        counts[vgId] = count + 1;
-                    }
-                }
-                catch
-                {
-                    // Skip items that don't match the expected schema
+                    counts.TryGetValue(vgId, out var count);
+                    counts[vgId] = count + 1;
                 }
             }
         }
