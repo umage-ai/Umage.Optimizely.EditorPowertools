@@ -1,7 +1,7 @@
 # EditorPowertools
 
 An Optimizely CMS 12 plugin providing a collection of power tools for editors and admins.
-Distributed as NuGet package `CodeArt.Optimizely.EditorPowertools`.
+Distributed as NuGet package `UmageAI.Optimizely.EditorPowerTools`.
 
 ## Project Structure
 
@@ -22,6 +22,14 @@ Distributed as NuGet package `CodeArt.Optimizely.EditorPowertools`.
 dotnet build                                           # Build solution
 dotnet run --project src/EditorPowertools.SampleSite   # Run sample site
 ```
+
+## Release & distribution
+
+- Pushing a tag matching `v*` triggers `.github/workflows/publish.yml`, which builds, tests (both TFMs), packs, and **attaches the `.nupkg` to a GitHub release**. Example: `git tag -a v0.7.0 -m "..." && git push origin v0.7.0`.
+- **Distribution channel is the Optimizely NuGet feed**, which pulls from the GitHub release — **we do not push to nuget.org directly**. Don't suggest a nuget.org push step.
+- Version numbers come from the tag name (the workflow strips the leading `v`). Stick to `vMAJOR.MINOR.PATCH` (preview variants like `v0.1.0-preview.5` exist in the history but aren't the current pattern).
+- If a tag-triggered run fails before the publish step, the tag is safe to delete + recreate at a new commit — no package got out. (Tag delete is destructive on shared state, so confirm first.)
+- Pre-release local verification: `dotnet test` (no `--no-build` — that flag silently uses stale test DLLs and can miss compile errors introduced by signature changes; `--no-build` burned us once already).
 
 ## Optimizely Module Integration Reference
 
