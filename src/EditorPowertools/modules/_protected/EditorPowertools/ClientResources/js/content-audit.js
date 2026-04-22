@@ -271,27 +271,30 @@
 
         html += '</div>';
 
-        // CMS 13 filter row (cosmetic on CMS 12 — backend short-circuits via CmsFeatureFlags.ContractsAvailable)
-        html += '<div class="ept-toolbar" style="flex-wrap:wrap;gap:8px;padding-top:0;">';
-        html += '<fieldset class="ept-filter-group" style="margin:0;padding:4px 10px;border:1px solid var(--ept-border,#e5e7eb);border-radius:4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">';
-        html += '<legend style="font-weight:600;padding:0 4px;font-size:0.8em">' + EPT.s('contentaudit.filter_cms13', 'CMS 13') + '</legend>';
-        html += '<label style="margin:0;display:inline-flex;align-items:center;gap:4px;font-size:0.9em">';
-        html += EPT.s('contentaudit.filter_contract', 'Contracts') + ':';
-        html += '<select id="ca-contract-filter" class="ept-select" style="width:auto">';
-        html += '<option value=""' + (state.contractFilter === '' ? ' selected' : '') + '>' + EPT.s('contentaudit.any', 'Any') + '</option>';
-        html += '<option value="include"' + (state.contractFilter === 'include' ? ' selected' : '') + '>' + EPT.s('contentaudit.include', 'Include') + '</option>';
-        html += '<option value="exclude"' + (state.contractFilter === 'exclude' ? ' selected' : '') + '>' + EPT.s('contentaudit.exclude', 'Exclude') + '</option>';
-        html += '<option value="only"' + (state.contractFilter === 'only' ? ' selected' : '') + '>' + EPT.s('contentaudit.only', 'Contracts only') + '</option>';
-        html += '</select></label>';
-        html += '<label style="margin:0;display:inline-flex;align-items:center;gap:4px;font-size:0.9em">';
-        html += EPT.s('contentaudit.filter_composition', 'Composition') + ':';
-        html += '<select id="ca-composition-filter" class="ept-select" style="width:auto">';
-        html += '<option value=""' + (state.compositionFilter === '' ? ' selected' : '') + '>' + EPT.s('contentaudit.any', 'Any') + '</option>';
-        html += '<option value="section"' + (state.compositionFilter === 'section' ? ' selected' : '') + '>' + EPT.s('contentaudit.section', 'Section') + '</option>';
-        html += '<option value="element"' + (state.compositionFilter === 'element' ? ' selected' : '') + '>' + EPT.s('contentaudit.element', 'Element') + '</option>';
-        html += '</select></label>';
-        html += '</fieldset>';
-        html += '</div>';
+        // CMS 13-only filter row — backend short-circuits on CMS 12 via CmsFeatureFlags.ContractsAvailable,
+        // so hiding it here avoids exposing UI that does nothing.
+        if (window.EPT_CMS13) {
+            html += '<div class="ept-toolbar" style="flex-wrap:wrap;gap:8px;padding-top:0;">';
+            html += '<fieldset class="ept-filter-group" style="margin:0;padding:4px 10px;border:1px solid var(--ept-border,#e5e7eb);border-radius:4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">';
+            html += '<legend style="font-weight:600;padding:0 4px;font-size:0.8em">' + EPT.s('contentaudit.filter_cms13', 'CMS 13') + '</legend>';
+            html += '<label style="margin:0;display:inline-flex;align-items:center;gap:4px;font-size:0.9em">';
+            html += EPT.s('contentaudit.filter_contract', 'Contracts') + ':';
+            html += '<select id="ca-contract-filter" class="ept-select" style="width:auto">';
+            html += '<option value=""' + (state.contractFilter === '' ? ' selected' : '') + '>' + EPT.s('contentaudit.any', 'Any') + '</option>';
+            html += '<option value="include"' + (state.contractFilter === 'include' ? ' selected' : '') + '>' + EPT.s('contentaudit.include', 'Include') + '</option>';
+            html += '<option value="exclude"' + (state.contractFilter === 'exclude' ? ' selected' : '') + '>' + EPT.s('contentaudit.exclude', 'Exclude') + '</option>';
+            html += '<option value="only"' + (state.contractFilter === 'only' ? ' selected' : '') + '>' + EPT.s('contentaudit.only', 'Contracts only') + '</option>';
+            html += '</select></label>';
+            html += '<label style="margin:0;display:inline-flex;align-items:center;gap:4px;font-size:0.9em">';
+            html += EPT.s('contentaudit.filter_composition', 'Composition') + ':';
+            html += '<select id="ca-composition-filter" class="ept-select" style="width:auto">';
+            html += '<option value=""' + (state.compositionFilter === '' ? ' selected' : '') + '>' + EPT.s('contentaudit.any', 'Any') + '</option>';
+            html += '<option value="section"' + (state.compositionFilter === 'section' ? ' selected' : '') + '>' + EPT.s('contentaudit.section', 'Section') + '</option>';
+            html += '<option value="element"' + (state.compositionFilter === 'element' ? ' selected' : '') + '>' + EPT.s('contentaudit.element', 'Element') + '</option>';
+            html += '</select></label>';
+            html += '</fieldset>';
+            html += '</div>';
+        }
 
         // Active filters display
         if (state.filters.length > 0) {

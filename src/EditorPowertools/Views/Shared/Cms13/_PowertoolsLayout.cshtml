@@ -62,6 +62,7 @@
         window.EPT_ADMIN_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.Admin", "default"))';
         window.EPT_VG_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.VisitorGroups", "ManageVisitorGroups"))';
         window.EPT_STRINGS = @Html.Raw(JsonSerializer.Serialize(UiStrings.GetAll()));
+        window.EPT_CMS13 = true;
     </script>
     <script src="@ClientResource("ClientResources/js/editorpowertools.js")"></script>
     <script src="@ClientResource("ClientResources/js/components.js")"></script>
