@@ -30,12 +30,6 @@ public static class EditorPowertoolsPermissions
     public static PermissionType BrokenLinkChecker { get; } =
         new("EditorPowertools", "BrokenLinkChecker");
 
-    public static PermissionType OrphanedContentFinder { get; } =
-        new("EditorPowertools", "OrphanedContentFinder");
-
-    public static PermissionType UnusedMediaCleaner { get; } =
-        new("EditorPowertools", "UnusedMediaCleaner");
-
     public static PermissionType ContentExporter { get; } =
         new("EditorPowertools", "ContentExporter");
 

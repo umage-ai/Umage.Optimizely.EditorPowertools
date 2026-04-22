@@ -12,8 +12,6 @@ public class FeatureToggles
     public bool AudienceManager { get; set; } = true;
     public bool ContentDetails { get; set; } = true;
     public bool BrokenLinkChecker { get; set; } = true;
-    public bool OrphanedContentFinder { get; set; } = true;
-    public bool UnusedMediaCleaner { get; set; } = true;
     public bool ContentExporter { get; set; } = true;
     public bool BulkPropertyEditor { get; set; } = true;
     public bool ScheduledJobsGantt { get; set; } = true;

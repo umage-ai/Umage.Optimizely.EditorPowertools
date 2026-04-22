@@ -83,8 +83,6 @@ All features are **enabled by default** (`true`). Set a feature to `false` to di
 | `LanguageAudit` | `languageAudit` | Language Audit | Analyze translation coverage, find missing translations, and identify stale content. |
 | `SecurityAudit` | `securityAudit` | Security Audit | Review access rights, find overly permissive settings, and audit role assignments. |
 | `VisitorGroupTester` | `visitorGroupTester` | Visitor Group Tester | Floating toolbar on public site for testing personalization and inspecting content. |
-| `OrphanedContentFinder` | `orphanedContentFinder` | Orphaned Content Finder | Find content not linked from anywhere. |
-| `UnusedMediaCleaner` | `unusedMediaCleaner` | Unused Media Cleaner | Find unused media files. |
 | `ContentExporter` | `contentExporter` | Content Exporter | Export content tree structures. |
 | `BulkPropertyEditor` | `bulkPropertyEditor` | Bulk Property Editor | Inline-edit properties across multiple content items. |
 | `ScheduledJobsGantt` | `scheduledJobsGantt` | Scheduled Jobs Gantt | Interactive Gantt chart of job execution history. |
