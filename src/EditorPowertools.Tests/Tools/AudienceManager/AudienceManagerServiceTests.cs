@@ -1,6 +1,7 @@
 using EPiServer.Personalization.VisitorGroups;
 using UmageAI.Optimizely.EditorPowerTools.Tests.Helpers;
 using UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager;
+using UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -17,7 +18,10 @@ public class AudienceManagerServiceTests
         EpiServerTestSetup.EnsureInitialized();
         _visitorGroupRepo = new Mock<IVisitorGroupRepository>();
         var logger = new Mock<ILogger<AudienceManagerService>>();
-        _service = new AudienceManagerService(_visitorGroupRepo.Object, logger.Object);
+        // Real repository: tests don't assert on usage counts, and the service
+        // swallows DDS-not-available exceptions, so this is safe without a DDS fixture.
+        var usageRepo = new PersonalizationUsageRepository();
+        _service = new AudienceManagerService(_visitorGroupRepo.Object, usageRepo, logger.Object);
     }
 
     private static VisitorGroup CreateVisitorGroup(
