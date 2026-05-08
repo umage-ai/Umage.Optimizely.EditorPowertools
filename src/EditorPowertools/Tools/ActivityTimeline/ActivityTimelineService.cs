@@ -14,6 +14,7 @@ public class ActivityTimelineService
     private readonly IContentVersionRepository _versionRepository;
     private readonly IContentRepository _contentRepository;
     private readonly IContentTypeRepository _contentTypeRepository;
+    private readonly ILanguageBranchRepository _languageBranchRepository;
     private readonly ILogger<ActivityTimelineService> _logger;
 
     /// <summary>
@@ -33,12 +34,14 @@ public class ActivityTimelineService
         IContentVersionRepository versionRepository,
         IContentRepository contentRepository,
         IContentTypeRepository contentTypeRepository,
+        ILanguageBranchRepository languageBranchRepository,
         ILogger<ActivityTimelineService> logger)
     {
         _activityQueryService = activityQueryService;
         _versionRepository = versionRepository;
         _contentRepository = contentRepository;
         _contentTypeRepository = contentTypeRepository;
+        _languageBranchRepository = languageBranchRepository;
         _logger = logger;
     }
 
@@ -368,6 +371,20 @@ public class ActivityTimelineService
             .Select(ct => ct.DisplayName ?? ct.Name)
             .Where(n => !string.IsNullOrWhiteSpace(n))
             .OrderBy(n => n);
+    }
+
+    /// <summary>
+    /// Languages enabled on the site, used to populate the timeline's language filter dropdown.
+    /// </summary>
+    public IEnumerable<LanguageOptionDto> GetEnabledLanguages()
+    {
+        return _languageBranchRepository.ListEnabled()
+            .Select(lb => new LanguageOptionDto
+            {
+                Code = lb.LanguageID,
+                DisplayName = lb.Name
+            })
+            .OrderBy(l => l.DisplayName);
     }
 
     private ActivityDto? MapActivity(Activity activity, Dictionary<int, ContentType> contentTypeCache)

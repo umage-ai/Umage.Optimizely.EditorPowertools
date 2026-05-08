@@ -803,6 +803,7 @@
           <opt_previouslypublished>Previously published</opt_previouslypublished>
           <opt_comment>Comments</opt_comment>
           <opt_allcontenttypes>All content types</opt_allcontenttypes>
+          <opt_alllanguages>All languages</opt_alllanguages>
           <btn_filter>Filter</btn_filter>
           <btn_clear>Clear</btn_clear>
           <banner_showingfor>Showing timeline for {0}</banner_showingfor>

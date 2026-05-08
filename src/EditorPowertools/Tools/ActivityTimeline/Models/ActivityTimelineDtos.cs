@@ -54,6 +54,12 @@ public class ActivityStatsDto
     public int DraftsToday { get; set; }
 }
 
+public class LanguageOptionDto
+{
+    public string Code { get; set; } = string.Empty;
+    public string DisplayName { get; set; } = string.Empty;
+}
+
 public class VersionComparisonDto
 {
     public bool HasPrevious { get; set; }

@@ -31,6 +31,7 @@ public class ActivityTimelineServiceTests
     private readonly Mock<IContentVersionRepository> _versionRepo = new();
     private readonly Mock<IContentRepository> _contentRepo = new();
     private readonly Mock<IContentTypeRepository> _contentTypeRepo = new();
+    private readonly Mock<ILanguageBranchRepository> _languageBranchRepo = new();
     private readonly Mock<ILogger<ActivityTimelineService>> _logger = new();
 
     private ActivityTimelineService CreateService()
@@ -45,6 +46,7 @@ public class ActivityTimelineServiceTests
             _versionRepo.Object,
             _contentRepo.Object,
             _contentTypeRepo.Object,
+            _languageBranchRepo.Object,
             _logger.Object);
     }
 

@@ -107,4 +107,16 @@ public class ActivityTimelineApiController : Controller
         var types = _service.GetDistinctContentTypes();
         return Ok(types);
     }
+
+    [HttpGet]
+    public IActionResult GetLanguages()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ActivityTimeline),
+            EditorPowertoolsPermissions.ActivityTimeline))
+            return Forbid();
+
+        var languages = _service.GetEnabledLanguages();
+        return Ok(languages);
+    }
 }
