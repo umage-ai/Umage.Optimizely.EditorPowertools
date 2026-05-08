@@ -1,25 +1,21 @@
-using EPiServer;
 using EPiServer.Core;
-using EPiServer.DataAbstraction;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Checks;
 
-public class DraftContentCheck : DoctorCheckBase
+/// <summary>
+/// Counts content that has never been published or that's been a draft for more than
+/// three months. Hooks the unified analysis job — the previous implementation walked
+/// the full content tree on every dashboard click via <c>GetDescendents</c>, which is
+/// not allowed on a live request path.
+/// </summary>
+public class DraftContentCheck : AnalyzerDoctorCheckBase
 {
-    private readonly IContentRepository _contentRepository;
-    private readonly IContentLoader _contentLoader;
-    private readonly IContentVersionRepository _versionRepository;
     private const string Prefix = "/editorpowertools/cmsdoctor/checks/draftcontentcheck/";
+    private static readonly TimeSpan StaleDraftThreshold = TimeSpan.FromDays(90);
 
-    public DraftContentCheck(
-        IContentRepository contentRepository,
-        IContentLoader contentLoader,
-        IContentVersionRepository versionRepository)
-    {
-        _contentRepository = contentRepository;
-        _contentLoader = contentLoader;
-        _versionRepository = versionRepository;
-    }
+    private int _neverPublished;
+    private int _staleDrafts;
+    private DateTime _staleCutoff;
 
     public override string Name => L(Prefix + "name", "Stale Drafts");
     public override string Description => L(Prefix + "description", "Checks for draft content that has never been published or has old unpublished changes.");
@@ -27,41 +23,42 @@ public class DraftContentCheck : DoctorCheckBase
     public override int SortOrder => 40;
     public override string[] Tags => new[] { "EditorUX", "Maintenance" };
 
-    public override Models.DoctorCheckResult PerformCheck()
+    protected override void OnInitialize()
     {
-        var allContent = _contentRepository.GetDescendents(ContentReference.RootPage).Take(1000).ToList();
-        var neverPublished = 0;
-        var staleDrafts = 0;
-        var cutoff = DateTime.Now.AddMonths(-3);
+        _neverPublished = 0;
+        _staleDrafts = 0;
+        _staleCutoff = DateTime.Now - StaleDraftThreshold;
+    }
 
-        foreach (var contentRef in allContent)
+    protected override void OnAnalyze(IContent content, ContentReference contentRef)
+    {
+        if (content is not IVersionable versionable) return;
+
+        if (versionable.Status == VersionStatus.NotCreated ||
+            (versionable.Status != VersionStatus.Published && versionable.StartPublish == null))
         {
-            try
-            {
-                if (!_contentLoader.TryGet<IContent>(contentRef, out var content)) continue;
-                if (content is not IVersionable versionable) continue;
-
-                if (versionable.Status == VersionStatus.NotCreated ||
-                    (versionable.Status != VersionStatus.Published && versionable.StartPublish == null))
-                {
-                    neverPublished++;
-                }
-                else if (versionable.Status == VersionStatus.CheckedOut &&
-                         content is IChangeTrackable trackable &&
-                         trackable.Changed < cutoff)
-                {
-                    staleDrafts++;
-                }
-            }
-            catch { }
+            _neverPublished++;
+            return;
         }
 
-        var total = neverPublished + staleDrafts;
+        if (versionable.Status == VersionStatus.CheckedOut &&
+            content is IChangeTrackable trackable &&
+            trackable.Changed < _staleCutoff)
+        {
+            _staleDrafts++;
+        }
+    }
+
+    protected override Models.DoctorCheckResult EvaluateResults()
+    {
+        var total = _neverPublished + _staleDrafts;
         if (total == 0)
             return Ok(L(Prefix + "ok", "No stale drafts found."));
 
-        var details = string.Format(L(Prefix + "details", "Never published: {0}, Stale drafts (>3 months): {1}"),
-            neverPublished, staleDrafts);
+        var details = string.Format(
+            L(Prefix + "details", "Never published: {0}, Stale drafts (>3 months): {1}. Last analyzed: {2}"),
+            _neverPublished, _staleDrafts, LastAnalyzed?.ToString("g") ?? "N/A");
+
         if (total > 50)
             return Warning(
                 string.Format(L(Prefix + "warning", "{0} stale content items found. Consider reviewing and cleaning up."), total),
