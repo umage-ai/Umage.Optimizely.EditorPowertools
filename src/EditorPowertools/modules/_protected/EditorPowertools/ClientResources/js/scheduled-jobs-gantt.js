@@ -243,9 +243,11 @@
             if (!job.isEnabled) nameEl.style.color = 'var(--ept-text-muted)';
             row.appendChild(nameEl);
 
-            row.addEventListener('click', function () {
-                window.open((window.EPT_ADMIN_URL || '') + '#/ScheduledJobs', '_blank');
-            });
+            row.addEventListener('click', (function (jobId) {
+                return function () {
+                    window.open((window.EPT_ADMIN_URL || '') + '#/ScheduledJobs/detailScheduledJob/' + jobId, '_blank');
+                };
+            })(job.id));
 
             jobCol.appendChild(row);
         });
@@ -485,10 +487,12 @@
                 hideTooltip();
             });
 
-            // Click to open job admin
-            bar.addEventListener('click', function () {
-                window.open((window.EPT_ADMIN_URL || '') + '#/ScheduledJobs', '_blank');
-            });
+            // Click to open this job's admin detail page
+            bar.addEventListener('click', (function (jobId) {
+                return function () {
+                    window.open((window.EPT_ADMIN_URL || '') + '#/ScheduledJobs/detailScheduledJob/' + jobId, '_blank');
+                };
+            })(exec.jobId));
 
             barsArea.appendChild(bar);
         });

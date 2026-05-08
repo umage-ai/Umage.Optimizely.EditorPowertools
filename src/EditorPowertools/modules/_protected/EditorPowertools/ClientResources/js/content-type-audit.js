@@ -602,7 +602,7 @@
             const editBtn = document.createElement('a');
             editBtn.className = 'ept-btn ept-btn--sm ept-btn--icon';
             editBtn.title = EPT.s('contenttypeaudit.title_edittype', 'Edit content type');
-            editBtn.href = `${window.EPT_ADMIN_URL}#/ContentType/${node.id}`;
+            editBtn.href = `${window.EPT_ADMIN_URL}#/ContentTypes/edit-content-type/${node.id}`;
             editBtn.target = '_blank';
             editBtn.innerHTML = EPT.icons.edit;
             editBtn.style.marginLeft = '4px';

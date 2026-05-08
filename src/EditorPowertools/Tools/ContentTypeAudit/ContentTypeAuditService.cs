@@ -280,7 +280,7 @@ public class ContentTypeAuditService
             ModelType = ct.ModelTypeString,
             ParentTypeName = ct.ModelType?.BaseType?.Name,
             DefaultController = ct.DefaultMvcController?.Name,
-            EditUrl = $"{EditorPowertoolsShellPaths.AdminDefault()}#/ContentType/{ct.GUID}",
+            EditUrl = $"{EditorPowertoolsShellPaths.AdminDefault()}#/ContentTypes/edit-content-type/{ct.ID}",
             PropertyCount = ct.PropertyDefinitions.Count,
             IsSystemType = IsSystemType(ct),
             IsCodeless = ct.ModelType == null,
