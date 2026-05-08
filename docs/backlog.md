@@ -141,6 +141,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Cache Inspector** - View and manage CMS cache entries
 - [ ] **Content Type Diff** - Compare content types between environments
 - [ ] **Environment Info Panel** - CMS version, loaded assemblies, config summary
+- [ ] **Ghost Content Type Cleanup** - Delete a specific content type and every content item based on it, but only when the type is "ghosted" — present in the database but no longer defined in code (no matching CLR type registered with the model assembly). Gated behind an explicit destructive-action permission and a multi-step confirm: list affected content with breadcrumb + count, require a typed-name confirmation, and run inside a single transaction so it's all-or-nothing. Should also remove related artifacts (soft-link entries, scheduled job references, version history). Useful after major refactors that leave orphan types from previous app generations. Audit-log every deletion.
 
 ## Content Calendar
 
