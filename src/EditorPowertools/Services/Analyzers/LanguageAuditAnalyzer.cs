@@ -3,8 +3,8 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Framework.Localization;
-using EPiServer.Shell;
 using UmageAI.Optimizely.EditorPowerTools.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Tools.LanguageAudit;
 using Microsoft.Extensions.Logging;
 
@@ -70,7 +70,7 @@ public class LanguageAuditAnalyzer : IContentAnalyzer
             var masterLanguage = localizable.MasterLanguage?.Name ?? string.Empty;
             var breadcrumb = content.GetBreadcrumb();
             var language = localizable.Language?.Name ?? masterLanguage;
-            var editUrl = $"{Paths.ToResource("CMS", "")}#/content/{contentRef.ID}/language/{language}";
+            var editUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#/content/{contentRef.ID}/language/{language}";
 
             // Get all versions for this content item
             var versions = _contentVersionRepository.List(contentRef).ToList();

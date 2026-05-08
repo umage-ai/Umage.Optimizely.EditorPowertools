@@ -181,7 +181,9 @@ public class VisitorGroupTesterMiddleware
     private static string GetToolbarHtml(string? pageEditUrl = null, string? groupsUrl = null)
     {
         var safeEditUrl = System.Text.Encodings.Web.HtmlEncoder.Default.Encode(pageEditUrl ?? "");
-        var safeGroupsUrl = System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(groupsUrl ?? "/episerver/EditorPowertools/VisitorGroupTesterApi/GetGroups");
+        // groupsUrl is resolved via Paths.ToResource(typeof(EditorPowertoolsMenuProvider), ...)
+        // which works on any shell mount. The empty-string fallback is just defensive.
+        var safeGroupsUrl = System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(groupsUrl ?? string.Empty);
         return """
 <style>
 .ept-vgt-toggle {

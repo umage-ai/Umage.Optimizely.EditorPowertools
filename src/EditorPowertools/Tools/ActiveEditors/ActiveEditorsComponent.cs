@@ -1,3 +1,4 @@
+using EPiServer.Shell;
 using EPiServer.Shell.ViewComposition;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.ActiveEditors;
@@ -9,7 +10,7 @@ public class ActiveEditorsComponent : ComponentDefinitionBase
         : base("editorpowertools/ActiveEditorsWidget")
     {
         Categories = new[] { "content" };
-        PlugInAreas = new[] { "/episerver/cms/assets" };
+        PlugInAreas = new[] { PlugInArea.Assets };
         LanguagePath = "/editorpowertools/components/activeeditors";
         SortOrder = 190;
     }

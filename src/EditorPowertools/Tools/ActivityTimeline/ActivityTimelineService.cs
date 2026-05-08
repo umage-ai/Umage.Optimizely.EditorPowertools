@@ -2,7 +2,7 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAbstraction.Activities;
-using EPiServer.Shell;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ActivityTimeline.Models;
 using Microsoft.Extensions.Logging;
 
@@ -188,7 +188,7 @@ public class ActivityTimelineService
                     User = version.SavedBy ?? string.Empty,
                     TimestampUtc = version.Saved,
                     Language = lang,
-                    EditUrl = $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{contentRef.ID}&viewsetting=viewlanguage:///{lang}",
+                    EditUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#context=epi.cms.contentdata:///{contentRef.ID}&viewsetting=viewlanguage:///{lang}",
                     HasPreviousVersion = hasPrevious
                 });
             }
@@ -478,7 +478,7 @@ public class ActivityTimelineService
                     User = changedBy,
                     TimestampUtc = changed,
                     Language = null,
-                    EditUrl = contentId > 0 ? $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{contentId}" : null,
+                    EditUrl = contentId > 0 ? $"{EditorPowertoolsShellPaths.CmsRoot()}#context=epi.cms.contentdata:///{contentId}" : null,
                     HasPreviousVersion = false,
                     Message = messageText
                 });

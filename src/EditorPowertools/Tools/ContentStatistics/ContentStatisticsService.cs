@@ -1,7 +1,7 @@
 using System.Text.Json;
 using EPiServer.DataAbstraction;
-using EPiServer.Shell;
 using UmageAI.Optimizely.EditorPowerTools.Abstractions;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Services;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentStatistics.Models;
 using Microsoft.Extensions.Logging;
@@ -221,7 +221,7 @@ public class ContentStatisticsService
                     ContentTypeName = i.ContentTypeName,
                     LastModified = i.LastModified,
                     DaysSinceModified = (int)(now - i.LastModified).TotalDays,
-                    EditUrl = $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{i.ContentId}"
+                    EditUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#context=epi.cms.contentdata:///{i.ContentId}"
                 })
                 .ToList();
         }

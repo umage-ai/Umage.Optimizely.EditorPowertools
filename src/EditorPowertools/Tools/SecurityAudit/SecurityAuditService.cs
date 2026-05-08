@@ -1,5 +1,5 @@
 using System.Text.Json;
-using EPiServer.Shell;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit.Models;
 using Microsoft.Extensions.Logging;
 
@@ -141,7 +141,7 @@ public class SecurityAuditService
                 !string.Equals(matchingEntry.Access, accessLevelFilter, StringComparison.OrdinalIgnoreCase))
                 continue;
 
-            var editUrl = $"{Paths.ToResource("CMS", "")}#/content/{record.ContentId}";
+            var editUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#/content/{record.ContentId}";
 
             items.Add(new RoleExplorerItemDto
             {
@@ -184,7 +184,7 @@ public class SecurityAuditService
 
         foreach (var record in records)
         {
-            var editUrl = $"{Paths.ToResource("CMS", "")}#/content/{record.ContentId}";
+            var editUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#/content/{record.ContentId}";
             AddIssuesForRecord(record, editUrl, issues);
         }
 

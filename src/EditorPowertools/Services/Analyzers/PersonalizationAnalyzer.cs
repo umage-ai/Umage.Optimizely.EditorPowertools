@@ -4,8 +4,8 @@ using EPiServer.Core.Html.StringParsing;
 using EPiServer.DataAbstraction;
 using EPiServer.Personalization.VisitorGroups;
 using EPiServer.Security;
-using EPiServer.Shell;
 using UmageAI.Optimizely.EditorPowerTools.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 using Microsoft.Extensions.Logging;
 
@@ -67,7 +67,7 @@ public class PersonalizationAnalyzer : IContentAnalyzer
         var contentTypeName = contentType?.DisplayName ?? contentType?.Name;
         var language = (content as ILocalizable)?.Language?.Name;
         var breadcrumb = content.GetBreadcrumb();
-        var editUrl = $"{Paths.ToResource("CMS", "")}#/content/{contentRef.ID}/language/{language}";
+        var editUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#/content/{contentRef.ID}/language/{language}";
 
         // 1. Check access rights for visitor groups
         CheckAccessRights(content, contentRef, contentTypeName, language, breadcrumb, editUrl);

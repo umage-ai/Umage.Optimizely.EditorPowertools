@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using EPiServer.Personalization.VisitorGroups;
-using EPiServer.Shell;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager.Models;
 using UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 using Microsoft.Extensions.Logging;
@@ -69,7 +69,7 @@ public class AudienceManagerService
                     PropertyName = r.PropertyName,
                     UsageType = r.UsageType,
                     EditUrl = r.ContentId != 0
-                        ? $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{r.ContentId}"
+                        ? $"{EditorPowertoolsShellPaths.CmsRoot()}#context=epi.cms.contentdata:///{r.ContentId}"
                         : null
                 })
                 .ToList();
@@ -126,7 +126,7 @@ public class AudienceManagerService
                 TypeName = CleanCriterionTypeName(c.TypeName),
                 Description = null
             }).ToList() ?? new List<CriterionDto>(),
-            EditUrl = $"{EPiServer.Shell.Paths.ToResource("EPiServer.Cms.UI.VisitorGroups", "ManageVisitorGroups")}#/group/{group.Id}",
+            EditUrl = $"{EditorPowertoolsShellPaths.ManageVisitorGroups()}#/group/{group.Id}",
             UsageCount = hasUsageData ? usageCount : null
         };
     }
