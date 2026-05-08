@@ -64,6 +64,7 @@ public static class ServiceCollectionExtensions
         // Core services
         services.AddSingleton<FeatureAccessChecker>();
         services.AddSingleton<ContentTypeStatisticsRepository>();
+        services.AddSingleton<ContentDashboardSnapshotRepository>();
         services.AddSingleton<UserPreferencesService>();
 
 #if OPTIMIZELY_CMS13
@@ -158,6 +159,7 @@ public static class ServiceCollectionExtensions
 
         // Unified content analysis (pluggable analyzers)
         services.AddTransient<IContentAnalyzer, ContentTypeStatisticsAnalyzer>();
+        services.AddTransient<IContentAnalyzer, ContentDashboardAnalyzer>();
         services.AddTransient<IContentAnalyzer, PersonalizationAnalyzer>();
         services.AddTransient<IContentAnalyzer, LinkCheckerAnalyzer>();
         services.AddTransient<IContentAnalyzer, SecurityAuditAnalyzer>();
