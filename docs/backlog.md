@@ -52,6 +52,8 @@ Tools carried over from the old project (re-implemented with new UI) and new add
   - Cache hit ratios
   - Configuration issues (missing settings, deprecated features)
 
+- [ ] **Database Table Size Probe** - CMS Doctor check that runs a small set of read-only SQL queries against the EPiServer DB to surface per-table row counts and disk size, with thresholds that flag tables which are unusually large for a CMS of that scale. Examples worth alerting on: `tblBigTable` (DDS rows — leaks from removed addons), `tblWorkContent` (version history that's never been trimmed), `tblPropertyDefinition` history, `tblScheduledJobLog` (job history that grew because nobody pruned), Find/Search index tables. Output: name, row count, MB on disk, "expected order of magnitude" baseline, and a one-line interpretation when it's outside that. Read-only DB access only, never writes; runs from the analysis job (results cached) so the live page is just a DDS read. Don't ship destructive cleanup as part of this — link to docs / scheduled-jobs that handle the cleanup.
+
 ## Content Tools
 
 - [ ] **Content Audit** - Comprehensive content inventory with configurable columns, filters, and Excel export. Inspired by the NTI export (75K+ items, 5 sheets). Must handle large sites with server-side pagination.
