@@ -126,6 +126,15 @@ public class SecurityAuditApiController : Controller
         });
     }
 
+    [HttpGet]
+    public IActionResult GetAggregationStatus()
+    {
+        if (!HasAccess()) return Forbid();
+
+        var status = _aggregationJobService.GetStatus();
+        return Ok(status);
+    }
+
     [HttpPost]
     [RequireAjax]
     public async Task<IActionResult> StartAggregationJob()
