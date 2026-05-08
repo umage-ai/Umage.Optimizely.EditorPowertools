@@ -111,22 +111,29 @@ public class VisitorGroupTesterMiddleware
 
         bufferStream.Seek(0, SeekOrigin.Begin);
 
-        // If the response is compressed, don't try to read/modify it as text — just pass it through
+        // Compressed response: pass bytes through unchanged.
         var encoding = context.Response.Headers["Content-Encoding"].ToString();
         if (!string.IsNullOrEmpty(encoding))
         {
             context.Response.Body = originalBody;
-            bufferStream.Seek(0, SeekOrigin.Begin);
             await bufferStream.CopyToAsync(context.Response.Body);
             return;
         }
 
-        var responseBody = await new StreamReader(bufferStream).ReadToEndAsync();
-
-        // Only inject into HTML responses
+        // Non-HTML response (PNG, JSON, font, anything binary): never decode as UTF-8 —
+        // StreamReader+ReadToEnd → Encoding.UTF8.GetBytes silently corrupts non-text bytes
+        // (invalid UTF-8 sequences become 0xFFFD). Stream the buffered bytes through unchanged.
         var contentType = context.Response.ContentType ?? "";
-        if (contentType.Contains("text/html", StringComparison.OrdinalIgnoreCase) &&
-            responseBody.Contains("</body>", StringComparison.OrdinalIgnoreCase))
+        if (!contentType.Contains("text/html", StringComparison.OrdinalIgnoreCase))
+        {
+            context.Response.Body = originalBody;
+            await bufferStream.CopyToAsync(context.Response.Body);
+            return;
+        }
+
+        // HTML path: read as text, inject the toolbar if a </body> tag is present, write back.
+        var responseBody = await new StreamReader(bufferStream).ReadToEndAsync();
+        if (responseBody.Contains("</body>", StringComparison.OrdinalIgnoreCase))
         {
             // After _next(), Optimizely's routing pipeline has run and IContentRouteHelper
             // has the content reference for the current page — use it to build an edit URL.
