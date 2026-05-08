@@ -188,9 +188,11 @@
             state.activities = state.activities.concat(result.activities);
             state.totalCount = result.totalCount;
             state.hasMore = result.hasMore;
+            state.truncated = !!result.truncated;
             state.skip += result.activities.length;
             state.isLoading = false;
             renderContentBanner();
+            renderTruncatedNotice();
             renderTimeline(reset);
         }).catch(function (err) {
             state.isLoading = false;
@@ -204,6 +206,27 @@
     function loadMore() {
         if (!state.hasMore || state.isLoading) return;
         loadActivities(false);
+    }
+
+    // ── Truncated-results Notice ──────────────────────────────────
+    function renderTruncatedNotice() {
+        var existing = document.getElementById('tl-truncated-notice');
+        if (!state.truncated) {
+            if (existing) existing.remove();
+            return;
+        }
+        if (existing) return;
+
+        var notice = document.createElement('div');
+        notice.id = 'tl-truncated-notice';
+        notice.className = 'ept-alert ept-alert--warning';
+        notice.innerHTML = '<span>' +
+            EPT.s('activitytimeline.notice_truncated',
+                'Showing recent activity only — the full version history was too large to load. Narrow the date range or pick a content type to see more.') +
+            '</span>';
+
+        var contentEl = document.getElementById('timeline-content');
+        contentEl.parentNode.insertBefore(notice, contentEl);
     }
 
     // ── Render Timeline ────────────────────────────────────────────

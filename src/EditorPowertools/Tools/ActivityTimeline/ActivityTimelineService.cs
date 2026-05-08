@@ -30,6 +30,13 @@ public class ActivityTimelineService
         _logger = logger;
     }
 
+    /// <summary>
+    /// Hard cap on versions accumulated during a full-tree scan. Beyond this we stop
+    /// loading more and flag the response as truncated. A real fix replaces this with
+    /// lazy enumeration; this is the safety net.
+    /// </summary>
+    private const int MaxVersionsScanned = 20000;
+
     public ActivityTimelineResponse GetActivities(ActivityFilterRequest request)
     {
         var statusFilters = GetStatusFilters(request.Action);
@@ -37,6 +44,7 @@ public class ActivityTimelineService
         // When filtering by a single content item, skip the full tree scan
         List<ContentReference> allDescendants;
         var allVersions = new List<ContentVersion>();
+        var truncated = false;
 
         if (request.ContentId.HasValue)
         {
@@ -70,8 +78,20 @@ public class ActivityTimelineService
                 {
                     _logger.LogDebug(ex, "Could not list versions for {ContentRef}", contentRef);
                 }
+
+                if (allVersions.Count >= MaxVersionsScanned)
+                {
+                    truncated = true;
+                    break;
+                }
             }
         }
+
+        // Build a per-(contentId+language) lookup so the hasPrevious check below is O(1)
+        // instead of an N+1 round trip to _versionRepository.List per mapped version.
+        var versionsByContentLang = allVersions
+            .GroupBy(v => (v.ContentLink.ID, v.LanguageBranch ?? string.Empty))
+            .ToDictionary(g => g.Key, g => g.OrderByDescending(v => v.Saved).ToList());
 
         // Apply filters
         var filtered = allVersions.AsEnumerable();
@@ -151,13 +171,12 @@ public class ActivityTimelineService
                         contentTypeName = ct.DisplayName ?? ct.Name;
                 }
 
-                // Check if there's a previous version
-                var contentVersions = _versionRepository.List(contentRef, version.LanguageBranch);
-                var hasPrevious = contentVersions
-                    .OrderByDescending(v => v.Saved)
-                    .Any(v => v.Saved < version.Saved);
-
                 var lang = version.LanguageBranch ?? string.Empty;
+
+                // Has-previous check uses the in-memory snapshot built above — was an N+1
+                // per-version round trip to _versionRepository.List in the previous version.
+                var hasPrevious = versionsByContentLang.TryGetValue((version.ContentLink.ID, lang), out var sameContentLangVersions)
+                    && sameContentLangVersions.Any(v => v.Saved < version.Saved);
 
                 activities.Add(new ActivityDto
                 {
@@ -207,7 +226,8 @@ public class ActivityTimelineService
             Activities = paged,
             TotalCount = totalCount,
             HasMore = request.Skip + request.Take < totalCount,
-            ContentName = filteredContentName
+            ContentName = filteredContentName,
+            Truncated = truncated
         };
     }
 

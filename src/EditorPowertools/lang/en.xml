@@ -826,6 +826,7 @@
           <col_newvalue>New Value</col_newvalue>
           <lbl_empty>(empty)</lbl_empty>
           <empty_noactivities>No activities found matching the current filters.</empty_noactivities>
+          <notice_truncated>Showing recent activity only — the full version history was too large to load. Narrow the date range or pick a content type to see more.</notice_truncated>
           <lbl_loadingmore>Loading more...</lbl_loadingmore>
           <time_justnow>Just now</time_justnow>
           <time_minuteago>{0} minute ago</time_minuteago>

@@ -36,6 +36,8 @@ public class ActivityTimelineResponse
     public bool HasMore { get; set; }
     /// <summary>When filtering by a single content item, the name of that item.</summary>
     public string? ContentName { get; set; }
+    /// <summary>True when the version scan was capped — total/results are a lower bound. Tell the user to narrow filters.</summary>
+    public bool Truncated { get; set; }
 }
 
 public class ActivityStatsDto
