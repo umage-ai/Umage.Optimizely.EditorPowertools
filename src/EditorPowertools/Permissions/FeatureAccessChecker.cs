@@ -39,11 +39,22 @@ public class FeatureAccessChecker
     /// <summary>
     /// Checks if the user has permission for a specific feature.
     /// Returns true if CheckPermissionForEachFeature is false (skip per-user checks).
+    /// Users in EditorPowertoolsOptions.AuthorizedRoles bypass per-feature permission checks.
     /// </summary>
     public bool HasPermission(HttpContext context, PermissionType permissionType)
     {
         if (!_options.Value.CheckPermissionForEachFeature)
             return true;
+
+        var roles = _options.Value.AuthorizedRoles;
+        if (roles is { Length: > 0 } && context.User.Identity?.IsAuthenticated == true)
+        {
+            foreach (var role in roles)
+            {
+                if (context.User.IsInRole(role))
+                    return true;
+            }
+        }
 
         return _permissionService.IsPermitted(context.User, permissionType);
     }
