@@ -85,6 +85,8 @@ public class ActivityTimelineService
             if (request.ToUtc.HasValue && version.Saved > request.ToUtc.Value) continue;
             if (!string.IsNullOrWhiteSpace(request.User) &&
                 !string.Equals(version.SavedBy, request.User, StringComparison.OrdinalIgnoreCase)) continue;
+            if (!string.IsNullOrWhiteSpace(request.Language) &&
+                !string.Equals(version.LanguageBranch, request.Language, StringComparison.OrdinalIgnoreCase)) continue;
 
             var contentRef = version.ContentLink.ToReferenceWithoutVersion();
             var lang = version.LanguageBranch ?? string.Empty;
@@ -189,6 +191,7 @@ public class ActivityTimelineService
             if (matchingContentTypeId.HasValue && !MatchesContentType(activity, matchingContentTypeId.Value))
                 continue;
             if (!MatchesActionFilter(dto.Action, request.Action)) continue;
+            if (!MatchesLanguageFilter(dto.Language, request.Language)) continue;
             dtos.Add(dto);
         }
 
@@ -507,6 +510,12 @@ public class ActivityTimelineService
     {
         if (string.IsNullOrWhiteSpace(requestedAction)) return true;
         return string.Equals(mappedAction, requestedAction, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool MatchesLanguageFilter(string? activityLanguage, string? requestedLanguage)
+    {
+        if (string.IsNullOrWhiteSpace(requestedLanguage)) return true;
+        return string.Equals(activityLanguage, requestedLanguage, StringComparison.OrdinalIgnoreCase);
     }
 
     private static string MapVersionStatus(VersionStatus status) => status switch

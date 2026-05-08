@@ -27,6 +27,12 @@ public class ActivityFilterRequest
     public DateTime? ToUtc { get; set; }
     /// <summary>When set, filters to a single content item's history.</summary>
     public int? ContentId { get; set; }
+    /// <summary>
+    /// Two-letter language code (e.g. "en", "sv"). Filtered post-query because
+    /// IActivityQueryService doesn't expose a language predicate — applied per
+    /// activity by comparing ContentActivity.Language.Name.
+    /// </summary>
+    public string? Language { get; set; }
 }
 
 public class ActivityTimelineResponse
