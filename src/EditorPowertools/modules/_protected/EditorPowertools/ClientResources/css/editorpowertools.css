@@ -489,6 +489,20 @@
 }
 
 /* ── Overview Tool Cards ────────────────────────────────────────── */
+.ept-tool-group-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ept-muted, #555);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin: var(--ept-space-lg) 0 var(--ept-space-sm) 0;
+    padding-bottom: var(--ept-space-xs, .35rem);
+    border-bottom: 1px solid var(--ept-border);
+}
+.ept-tool-group-heading:first-of-type {
+    margin-top: var(--ept-space-md);
+}
+
 .ept-tool-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

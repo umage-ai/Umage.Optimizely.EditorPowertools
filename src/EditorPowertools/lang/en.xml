@@ -131,6 +131,12 @@
         <overview>
           <title>Overview</title>
           <description>Dashboard overview of all Editor Powertools features.</description>
+          <group>
+            <contenteditorial>Content &amp; Editorial</contenteditorial>
+            <auditsanalysis>Audits &amp; Analysis</auditsanalysis>
+            <forms>Forms</forms>
+            <configurationadmin>Configuration &amp; Admin</configurationadmin>
+          </group>
         </overview>
         <about>
           <title>About Editor Powertools</title>

@@ -1,0 +1,27 @@
+@inject LocalizationService Loc
+@{
+    Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
+    ViewData["Title"] = Loc.GetString("/editorpowertools/tools/formsoverview/title");
+    string FormsResource(string path) => Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Forms.Menu.EditorPowertoolsFormsMenuProvider), path);
+    string BaseResource(string path) => Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), path);
+}
+
+@section NavItems {
+    <a href="@BaseResource("EditorPowertools/Overview")">@Loc.GetString("/editorpowertools/menu/overview")</a>
+    <a href="@FormsResource("EditorPowertoolsForms/SubmissionsTimeline")">@Loc.GetString("/editorpowertools/menu/submissionstimeline")</a>
+}
+
+<div class="ept-page-header">
+    <h1>@Loc.GetString("/editorpowertools/tools/formsoverview/title")</h1>
+    <p>@Loc.GetString("/editorpowertools/tools/formsoverview/description")</p>
+</div>
+
+<div id="ept-forms-overview-root"></div>
+
+<script>
+    window.EPT_FORMS_BASE_URL = '@Html.Raw(Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Forms.Menu.EditorPowertoolsFormsMenuProvider), ""))';
+</script>
+@section Scripts {
+    <link rel="stylesheet" href="@Paths.ToClientResource(typeof(UmageAI.Optimizely.EditorPowerTools.Forms.Menu.EditorPowertoolsFormsMenuProvider), "ClientResources/css/editorpowertools-forms.css")" />
+    <script src="@Paths.ToClientResource(typeof(UmageAI.Optimizely.EditorPowerTools.Forms.Menu.EditorPowertoolsFormsMenuProvider), "ClientResources/js/forms-overview.js")"></script>
+}

@@ -13,8 +13,9 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="EPiServer.CMS" Version="13.0.1" />
-    <PackageReference Include="EPiServer.Cms.UI.AspNetIdentity" Version="13.0.1" />
+    <PackageReference Include="EPiServer.CMS" Version="13.0.2" />
+    <PackageReference Include="EPiServer.Cms.UI.AspNetIdentity" Version="13.0.2" />
+    <PackageReference Include="EPiServer.Forms" Version="6.*" />
     <PackageReference Include="Wangkanai.Detection" Version="8.7.0" />
   </ItemGroup>
 
@@ -24,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EditorPowertools\EditorPowertools.csproj" />
+    <ProjectReference Include="..\EditorPowertools.Forms\EditorPowertools.Forms.csproj" />
   </ItemGroup>
 
   <!-- Copy module files from the addon project during build (dev only, NuGet handles this via .targets) -->
@@ -34,6 +36,16 @@
     <Copy
       SourceFiles="@(EditorPowertoolsModuleFiles)"
       DestinationFiles="@(EditorPowertoolsModuleFiles->'$(MSBuildProjectDirectory)\modules\_protected\EditorPowertools\%(RecursiveDir)%(Filename)%(Extension)')"
+      SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="CopyEditorPowertoolsFormsModuleFiles" BeforeTargets="Build">
+    <ItemGroup>
+      <EditorPowertoolsFormsModuleFiles Include="..\EditorPowertools.Forms\modules\_protected\EditorPowertoolsForms\**\*" />
+    </ItemGroup>
+    <Copy
+      SourceFiles="@(EditorPowertoolsFormsModuleFiles)"
+      DestinationFiles="@(EditorPowertoolsFormsModuleFiles->'$(MSBuildProjectDirectory)\modules\_protected\EditorPowertoolsForms\%(RecursiveDir)%(Filename)%(Extension)')"
       SkipUnchangedFiles="true" />
   </Target>
 </Project>

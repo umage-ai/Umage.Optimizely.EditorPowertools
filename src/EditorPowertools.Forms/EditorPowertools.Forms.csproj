@@ -1,0 +1,117 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <RootNamespace>UmageAI.Optimizely.EditorPowerTools.Forms</RootNamespace>
+    <AssemblyName>EditorPowertools.Forms</AssemblyName>
+
+    <!-- NuGet package properties -->
+    <PackageId>UmageAI.Optimizely.EditorPowerTools.Forms</PackageId>
+    <Version>0.1.0-local</Version>
+    <Authors>UmageAI</Authors>
+    <Company>UmageAI</Company>
+    <Description>Optimizely Forms add-on for UmageAI Editor Powertools. Adds tools to inventory forms, audit usage, retention and submissions across the site. Supports Optimizely CMS 12 and CMS 13.</Description>
+    <PackageTags>Optimizely;CMS;EPiServer;Forms;Editor;Tools;Admin;Audit;PowerTools</PackageTags>
+    <PackageProjectUrl>https://github.com/umage-ai/Umage.Optimizely.EditorPowertools</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/umage-ai/Umage.Optimizely.EditorPowertools</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <!-- Compile-time version symbols -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <DefineConstants>$(DefineConstants);OPTIMIZELY_CMS12</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <DefineConstants>$(DefineConstants);OPTIMIZELY_CMS13</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="EPiServer" />
+    <Using Include="EPiServer.Core" />
+    <Using Include="EPiServer.DataAbstraction" />
+    <Using Include="EPiServer.DataAnnotations" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <!--
+    Reference the base library by ProjectReference during dev. `dotnet pack` converts
+    this to a NuGet <dependency> on UmageAI.Optimizely.EditorPowerTools at the same version,
+    so consumers automatically pull in the base package.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\EditorPowertools\EditorPowertools.csproj" />
+  </ItemGroup>
+
+  <!-- CMS 12 / CMS 13 conditional package references -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="EPiServer.CMS" Version="12.*" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.*" />
+    <PackageReference Include="EPiServer.Forms" Version="5.*" />
+    <PackageReference Include="EPiServer.Forms.UI" Version="5.*" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <PackageReference Include="EPiServer.CMS" Version="13.*" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="13.*" />
+    <PackageReference Include="EPiServer.Forms" Version="6.*" />
+    <PackageReference Include="EPiServer.Forms.UI" Version="6.*" />
+  </ItemGroup>
+
+  <!-- Localization language files -->
+  <ItemGroup>
+    <EmbeddedResource Include="lang\*.xml" />
+  </ItemGroup>
+
+  <!-- Version-specific compile folders -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <Compile Remove="Cms13\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <Compile Remove="Cms12\**\*.cs" />
+  </ItemGroup>
+
+  <!-- Include README, icon and BOTH .targets files in the NuGet package -->
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    <None Include="..\EditorPowertools\icon.png" Pack="true" PackagePath="" />
+    <None Include="build\net8.0\UmageAI.Optimizely.EditorPowerTools.Forms.targets" Pack="true" PackagePath="build\net8.0\" />
+    <None Include="build\net10.0\UmageAI.Optimizely.EditorPowerTools.Forms.targets" Pack="true" PackagePath="build\net10.0\" />
+  </ItemGroup>
+
+  <!--
+    Forms module zip: created during build, packed as contentFiles with BuildAction=None.
+    The .targets file copies it to the consuming project's modules/_protected/ on first build.
+  -->
+  <Target Name="CreateFormsModuleZip" BeforeTargets="Build">
+    <MakeDir Directories="$(IntermediateOutputPath)module-zip" />
+    <ZipDirectory SourceDirectory="modules\_protected\EditorPowertoolsForms" DestinationFile="$(IntermediateOutputPath)module-zip\EditorPowertoolsForms.zip" Overwrite="true" />
+  </Target>
+
+  <ItemGroup>
+    <Content Include="$(IntermediateOutputPath)module-zip\EditorPowertoolsForms.zip" Pack="true" PackagePath="contentFiles\any\any\modules\_protected\EditorPowertoolsForms" BuildAction="None" CopyToPublishDirectory="Never" CopyToOutputDirectory="Never">
+      <Link>EditorPowertoolsForms.zip</Link>
+    </Content>
+  </ItemGroup>
+
+  <!-- Exclude the source modules/_protected folder from build output -->
+  <ItemGroup>
+    <Content Remove="modules\_protected\**" />
+    <None Remove="modules\_protected\**" />
+  </ItemGroup>
+
+  <!-- Keep source files visible in IDE -->
+  <ItemGroup>
+    <None Include="modules\_protected\EditorPowertoolsForms\**\*" />
+  </ItemGroup>
+
+</Project>

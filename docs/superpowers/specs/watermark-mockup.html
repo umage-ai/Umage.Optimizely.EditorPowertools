@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Watermark Style Options</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #1e1e2e;
+    color: #cdd6f4;
+    padding: 32px;
+    min-height: 100vh;
+  }
+
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #cdd6f4; letter-spacing: -0.3px; }
+  .intro { font-size: 13px; color: #6c7086; margin-bottom: 32px; }
+
+  .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+  .option-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #6c7086;
+    margin-bottom: 10px;
+  }
+  .option-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #cdd6f4;
+    margin-bottom: 4px;
+  }
+  .option-desc {
+    font-size: 12px;
+    color: #6c7086;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  /* Simulated CMS tool panel */
+  .tool-panel {
+    background: #181825;
+    border: 1px solid #313244;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    height: 320px;
+  }
+
+  .tool-header {
+    background: #1e1e2e;
+    border-bottom: 1px solid #313244;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tool-header-icon {
+    width: 18px; height: 18px;
+    background: #313244;
+    border-radius: 4px;
+  }
+  .tool-header-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #cdd6f4;
+  }
+  .tool-header-sub {
+    font-size: 11px;
+    color: #6c7086;
+    margin-left: auto;
+  }
+
+  .tool-body { padding: 16px; }
+
+  /* Fake table rows */
+  .fake-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #26263a;
+    font-size: 12px;
+  }
+  .fake-row:last-child { border-bottom: none; }
+  .fake-cell-wide { flex: 2; height: 10px; background: #313244; border-radius: 3px; }
+  .fake-cell { flex: 1; height: 10px; background: #26263a; border-radius: 3px; }
+  .fake-badge {
+    width: 48px; height: 16px;
+    background: #313244;
+    border-radius: 99px;
+    flex-shrink: 0;
+  }
+  .fake-badge.green { background: rgba(166,227,161,0.15); }
+  .fake-badge.yellow { background: rgba(249,226,175,0.12); }
+
+  /* ── Variant A: Ghost text only ── */
+  .badge-a {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    color: #cdd6f4;
+    opacity: 0.28;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .badge-a:hover { opacity: 0.6; }
+  .badge-a .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* ── Variant B: Pill badge ── */
+  .badge-b {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(49, 50, 68, 0.7);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 99px;
+    padding: 4px 10px 4px 7px;
+    text-decoration: none;
+    opacity: 0.55;
+    transition: opacity 0.2s, border-color 0.2s;
+    backdrop-filter: blur(4px);
+  }
+  .badge-b:hover { opacity: 0.9; border-color: rgba(255,255,255,0.15); }
+  .badge-b svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .badge-b span { font-size: 10px; font-weight: 600; color: #cdd6f4; letter-spacing: 0.3px; white-space: nowrap; }
+
+  /* ── Variant C: Wordmark chip ── */
+  .badge-c {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(30, 30, 46, 0.85);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 5px 10px;
+    text-decoration: none;
+    opacity: 0.65;
+    transition: opacity 0.2s, border-color 0.2s, box-shadow 0.2s;
+    backdrop-filter: blur(6px);
+  }
+  .badge-c:hover { opacity: 1; border-color: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+  .badge-c .made-by { font-size: 9px; color: #6c7086; letter-spacing: 0.4px; text-transform: uppercase; }
+  .badge-c .wordmark { font-size: 11px; font-weight: 700; color: #cdd6f4; letter-spacing: -0.2px; }
+</style>
+</head>
+<body>
+
+<h1>umage.ai watermark — style options</h1>
+<p class="intro">Each panel simulates a live tool. Badge is bottom-right. Hover to see the interaction state.</p>
+
+<div class="options">
+
+  <!-- Option A -->
+  <div>
+    <div class="option-label">Option A</div>
+    <div class="option-title">Ghost text</div>
+    <div class="option-desc">Bare minimum. Just "umage.ai" text at ~28% opacity. Invisible unless you know to look for it.</div>
+    <div class="tool-panel">
+      <div class="tool-header">
+        <div class="tool-header-icon"></div>
+        <div class="tool-header-title">Content Type Audit</div>
+        <div class="tool-header-sub">247 types</div>
+      </div>
+      <div class="tool-body">
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge green"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge yellow"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge green"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge green"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge yellow"></div></div>
+      </div>
+      <a class="badge-a" href="#" title="Powered by umage.ai">
+        <span class="dot"></span>
+        umage.ai
+      </a>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div>
+    <div class="option-label">Option B</div>
+    <div class="option-title">Pill badge</div>
+    <div class="option-desc">Small pill with the wrench icon + "umage.ai". Semi-transparent background. Readable but unobtrusive.</div>
+    <div class="tool-panel">
+      <div class="tool-header">
+        <div class="tool-header-icon"></div>
+        <div class="tool-header-title">Content Type Audit</div>
+        <div class="tool-header-sub">247 types</div>
+      </div>
+      <div class="tool-body">
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge green"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge yellow"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge green"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge green"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge yellow"></div></div>
+      </div>
+      <a class="badge-b" href="#" title="Powered by umage.ai">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#cdd6f4" stroke-width="2.5">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
+        <span>umage.ai</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div>
+    <div class="option-label">Option C</div>
+    <div class="option-title">Wordmark chip</div>
+    <div class="option-desc">Rounded chip with "Powered by" label above "umage.ai". Most legible, closest to a proper brand credit.</div>
+    <div class="tool-panel">
+      <div class="tool-header">
+        <div class="tool-header-icon"></div>
+        <div class="tool-header-title">Content Type Audit</div>
+        <div class="tool-header-sub">247 types</div>
+      </div>
+      <div class="tool-body">
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge green"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge yellow"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge green"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge green"></div></div>
+        <div class="fake-row"><div class="fake-cell-wide"></div><div class="fake-cell"></div><div class="fake-badge yellow"></div></div>
+      </div>
+      <a class="badge-c" href="#" title="Powered by umage.ai">
+        <div>
+          <div class="made-by">Powered by</div>
+          <div class="wordmark">umage.ai</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
