@@ -678,6 +678,7 @@
           <opt_previouslypublished>Aiemmin julkaistu</opt_previouslypublished>
           <opt_comment>Kommentit</opt_comment>
           <opt_allcontenttypes>Kaikki sisältötyypit</opt_allcontenttypes>
+          <opt_alllanguages>Kaikki kielet</opt_alllanguages>
           <btn_filter>Suodata</btn_filter>
           <btn_clear>Tyhjennä</btn_clear>
           <banner_showingfor>Näytetään aikajana kohteelle {0}</banner_showingfor>

@@ -678,6 +678,7 @@
           <opt_previouslypublished>Tidligere publiceret</opt_previouslypublished>
           <opt_comment>Kommentarer</opt_comment>
           <opt_allcontenttypes>Alle indholdstyper</opt_allcontenttypes>
+          <opt_alllanguages>Alle sprog</opt_alllanguages>
           <btn_filter>Filtrer</btn_filter>
           <btn_clear>Ryd</btn_clear>
           <banner_showingfor>Viser tidslinje for {0}</banner_showingfor>

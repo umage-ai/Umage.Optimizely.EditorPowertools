@@ -678,6 +678,7 @@
           <opt_previouslypublished>Précédemment publié</opt_previouslypublished>
           <opt_comment>Commentaires</opt_comment>
           <opt_allcontenttypes>Tous les types de contenu</opt_allcontenttypes>
+          <opt_alllanguages>Toutes les langues</opt_alllanguages>
           <btn_filter>Filtrer</btn_filter>
           <btn_clear>Effacer</btn_clear>
           <banner_showingfor>Affichage de la chronologie pour {0}</banner_showingfor>
