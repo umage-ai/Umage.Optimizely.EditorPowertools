@@ -67,7 +67,7 @@ public class PersonalizationAnalyzer : IContentAnalyzer
         var contentTypeName = contentType?.DisplayName ?? contentType?.Name;
         var language = (content as ILocalizable)?.Language?.Name;
         var breadcrumb = content.GetBreadcrumb();
-        var editUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#/content/{contentRef.ID}/language/{language}";
+        var editUrl = EditorPowertoolsShellPaths.ContentEditUrl(contentRef.ID, language);
 
         // 1. Check access rights for visitor groups
         CheckAccessRights(content, contentRef, contentTypeName, language, breadcrumb, editUrl);

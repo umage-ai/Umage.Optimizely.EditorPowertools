@@ -137,7 +137,7 @@ public class SecurityAuditService
                 !string.Equals(matchingEntry.Access, accessLevelFilter, StringComparison.OrdinalIgnoreCase))
                 continue;
 
-            var editUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#/content/{record.ContentId}";
+            var editUrl = EditorPowertoolsShellPaths.ContentEditUrl(record.ContentId);
 
             items.Add(new RoleExplorerItemDto
             {
@@ -180,7 +180,7 @@ public class SecurityAuditService
 
         foreach (var record in records)
         {
-            var editUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#/content/{record.ContentId}";
+            var editUrl = EditorPowertoolsShellPaths.ContentEditUrl(record.ContentId);
             AddIssuesForRecord(record, editUrl, issues);
         }
 

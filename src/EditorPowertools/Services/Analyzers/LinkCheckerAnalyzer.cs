@@ -63,7 +63,7 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
         var contentTypeName = contentType?.DisplayName ?? contentType?.Name;
         var language = (content as ILocalizable)?.Language?.Name;
         var breadcrumb = content.GetBreadcrumb();
-        var editUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#/content/{contentRef.ID}/language/{language}";
+        var editUrl = EditorPowertoolsShellPaths.ContentEditUrl(contentRef.ID, language);
 
         ExtractLinksFromContent(content, contentRef, contentTypeName, breadcrumb, editUrl);
     }
@@ -229,7 +229,7 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
                         {
                             pageNames.Add(owner.Name);
                             var friendlyUrl = _urlResolver.GetUrl(owner.ContentLink);
-                            var ownerEditUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#/content/{owner.ContentLink.ID}";
+                            var ownerEditUrl = EditorPowertoolsShellPaths.ContentEditUrl(owner.ContentLink.ID);
                             pageUrls.Add($"{owner.Name}|{friendlyUrl ?? ""}|{ownerEditUrl}");
                         }
                     }

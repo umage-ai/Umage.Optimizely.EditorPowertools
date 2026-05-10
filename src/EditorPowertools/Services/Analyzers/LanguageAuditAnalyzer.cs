@@ -70,7 +70,7 @@ public class LanguageAuditAnalyzer : IContentAnalyzer
             var masterLanguage = localizable.MasterLanguage?.Name ?? string.Empty;
             var breadcrumb = content.GetBreadcrumb();
             var language = localizable.Language?.Name ?? masterLanguage;
-            var editUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#/content/{contentRef.ID}/language/{language}";
+            var editUrl = EditorPowertoolsShellPaths.ContentEditUrl(contentRef.ID, language);
 
             // Get all versions for this content item
             var versions = _contentVersionRepository.List(contentRef).ToList();

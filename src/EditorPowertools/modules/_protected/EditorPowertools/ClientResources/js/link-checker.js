@@ -114,7 +114,8 @@
                 if (r.linkType === 'External') {
                     html += `<a href="${escHtml(r.url)}" target="_blank" title="${escHtml(r.url)}">${escHtml(truncated)}</a>`;
                 } else if (r.targetContentId) {
-                    html += `<a href="${window.EPT_CMS_URL || ''}#/content/${r.targetContentId}" target="_blank" title="${escHtml(displayUrl)}">${escHtml(truncated)}</a>`;
+                    const cmsUrl = (window.EPT_CMS_URL || '') + '#context=epi.cms.contentdata:///' + r.targetContentId;
+                    html += `<a href="${escHtml(cmsUrl)}" target="_blank" title="${escHtml(displayUrl)}">${escHtml(truncated)}</a>`;
                 } else {
                     html += `<span title="${escHtml(r.url)}">${escHtml(truncated)}</span>`;
                 }

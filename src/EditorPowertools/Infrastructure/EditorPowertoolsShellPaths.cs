@@ -23,4 +23,17 @@ internal static class EditorPowertoolsShellPaths
 
     /// <summary>Manage-visitor-groups page in the CMS UI.</summary>
     public static string ManageVisitorGroups() => Paths.ToResource("EPiServer.Cms.UI.VisitorGroups", "ManageVisitorGroups");
+
+    /// <summary>
+    /// Deep link into the CMS edit UI for a specific content item.
+    /// The hash format <c>#context=epi.cms.contentdata:///{id}</c> is what the edit-mode SPA
+    /// actually consumes — the older <c>#/content/{id}</c> shape never resolved and was a known bug.
+    /// </summary>
+    public static string ContentEditUrl(int contentId, string? language = null)
+    {
+        var url = $"{CmsRoot()}#context=epi.cms.contentdata:///{contentId}";
+        if (!string.IsNullOrEmpty(language))
+            url += $"&viewsetting=viewlanguage:///{language}";
+        return url;
+    }
 }
