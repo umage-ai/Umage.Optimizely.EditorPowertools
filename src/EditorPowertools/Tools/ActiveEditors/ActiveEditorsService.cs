@@ -11,6 +11,7 @@ public class ActiveEditorsService
     private readonly ConcurrentDictionary<string, DateTime> _lastChatTime = new();
     private readonly ConcurrentDictionary<string, DateTime> _lastNotifyTime = new();
     private readonly ConcurrentDictionary<string, DateTime> _lastHeartbeatTime = new();
+    private readonly ConcurrentDictionary<string, DateTime> _lastUpdateContextTime = new();
     private DateTime _todayDate = DateTime.UtcNow.Date;
     private const int MaxChatHistory = 100;
     private static readonly TimeSpan StaleTimeout = TimeSpan.FromSeconds(90);
@@ -36,6 +37,7 @@ public class ActiveEditorsService
         _lastChatTime.TryRemove(connectionId, out _);
         _lastNotifyTime.TryRemove(connectionId, out _);
         _lastHeartbeatTime.TryRemove(connectionId, out _);
+        _lastUpdateContextTime.TryRemove(connectionId, out _);
     }
 
     public bool IsRateLimited(ConcurrentDictionary<string, DateTime> tracker, string connectionId, TimeSpan cooldown)
@@ -55,6 +57,14 @@ public class ActiveEditorsService
 
     public bool IsHeartbeatRateLimited(string connectionId) =>
         IsRateLimited(_lastHeartbeatTime, connectionId, TimeSpan.FromSeconds(10));
+
+    /// <summary>
+    /// UpdateContext broadcasts a presence frame to every connected client, so we cap
+    /// it per-connection to prevent a noisy or hostile client from amplifying load.
+    /// 1s is well below normal navigation cadence.
+    /// </summary>
+    public bool IsUpdateContextRateLimited(string connectionId) =>
+        IsRateLimited(_lastUpdateContextTime, connectionId, TimeSpan.FromSeconds(1));
 
     public void UpdateContext(string connectionId, int? contentId, string? contentName, string action)
     {

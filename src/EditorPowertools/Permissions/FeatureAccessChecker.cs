@@ -66,4 +66,23 @@ public class FeatureAccessChecker
     {
         return IsFeatureEnabled(featureName) && HasPermission(context, permissionType);
     }
+
+    /// <summary>
+    /// Full access check by feature name only — looks up the matching <see cref="PermissionType"/>
+    /// on <see cref="EditorPowertoolsPermissions"/> by name. Used for endpoints that get the
+    /// feature name from the caller (preferences, components) and would otherwise have to
+    /// pass <see cref="HasPermission"/> a hard-coded permission per call.
+    /// Returns false if no matching permission is registered (fail closed).
+    /// </summary>
+    public bool HasAccess(HttpContext context, string featureName)
+    {
+        if (!IsFeatureEnabled(featureName))
+            return false;
+
+        var prop = typeof(EditorPowertoolsPermissions).GetProperty(featureName);
+        if (prop == null || prop.GetValue(null) is not PermissionType permission)
+            return false;
+
+        return HasPermission(context, permission);
+    }
 }
