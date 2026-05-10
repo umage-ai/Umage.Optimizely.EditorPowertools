@@ -1,11 +1,17 @@
+@using System.Reflection
 @using EPiServer.Framework.Localization
 @using EPiServer.Shell
 @inject LocalizationService Loc
 @{
     Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
     ViewData["Title"] = Loc.GetString("/editorpowertools/tools/about/title");
-    var version = typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider).Assembly.GetName().Version;
-    var versionString = version != null ? $"v{version.Major}.{version.Minor}.{version.Build}" : "";
+    // Read InformationalVersion rather than AssemblyVersion: it defaults to $(Version) in the SDK,
+    // so the workflow's `-p:Version=X.Y.Z` reaches it without needing explicit AssemblyVersion overrides.
+    // AssemblyVersion was returning 0.1.0 (the csproj fallback) on packages built with -p:Version.
+    var info = typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider).Assembly
+        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+    var rawVersion = info?.Split('+')[0]; // drop SourceLink "+commitsha" suffix if present
+    var versionString = !string.IsNullOrEmpty(rawVersion) ? $"v{rawVersion}" : "";
 }
 
 @section Styles {

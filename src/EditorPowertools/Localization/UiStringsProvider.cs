@@ -429,6 +429,7 @@ public class UiStringsProvider(LocalizationService loc)
             opt_previouslypublished = S("activitytimeline/opt_previouslypublished"),
             opt_comment = S("activitytimeline/opt_comment"),
             opt_allcontenttypes = S("activitytimeline/opt_allcontenttypes"),
+            opt_alllanguages = S("activitytimeline/opt_alllanguages"),
             btn_filter = S("activitytimeline/btn_filter"),
             btn_clear = S("activitytimeline/btn_clear"),
             banner_showingfor = S("activitytimeline/banner_showingfor"),

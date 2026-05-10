@@ -1,3 +1,4 @@
+using EPiServer.Shell;
 using EPiServer.Shell.ViewComposition;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentDetails;
@@ -12,7 +13,7 @@ public class ContentDetailsComponent : ComponentDefinitionBase
         : base("editorpowertools/ContentDetailsWidget")
     {
         Categories = new[] { "content" };
-        PlugInAreas = new[] { "/episerver/cms/assets" };
+        PlugInAreas = new[] { PlugInArea.Assets };
         LanguagePath = "/editorpowertools/components/contentdetails";
         SortOrder = 200;
     }

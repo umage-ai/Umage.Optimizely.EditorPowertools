@@ -241,9 +241,13 @@ public class SecurityAuditAnalyzer : IContentAnalyzer
             foreach (var record in allRecords)
             {
                 var subtreeCount = ComputeSubtreeIssues(record.ContentId);
-                if (subtreeCount > 0)
+                var hasChildren = childrenByParent.ContainsKey(record.ContentId);
+
+                // Save when either flag changes vs the in-memory record we just loaded.
+                if (subtreeCount != record.SubtreeIssueCount || hasChildren != record.HasChildren)
                 {
                     record.SubtreeIssueCount = subtreeCount;
+                    record.HasChildren = hasChildren;
                     _repository.SaveOrUpdate(record);
                 }
             }

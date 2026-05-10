@@ -82,7 +82,7 @@ All features are **enabled by default** (`true`). Set a feature to `false` to di
 | `ContentStatistics` | `contentStatistics` | Content Statistics | Dashboard with content counts, type distribution, and publishing trends. |
 | `LanguageAudit` | `languageAudit` | Language Audit | Analyze translation coverage, find missing translations, and identify stale content. |
 | `SecurityAudit` | `securityAudit` | Security Audit | Review access rights, find overly permissive settings, and audit role assignments. |
-| `VisitorGroupTester` | `visitorGroupTester` | Visitor Group Tester | Floating toolbar on public site for testing personalization and inspecting content. |
+| `VisitorGroupTester` | `visitorGroupTester` | Visitor Group Tester | Floating toolbar on public site for testing personalization and inspecting content. **Setting this to `false` also skips registering `VisitorGroupTesterMiddleware` entirely** — recommended on high-traffic sites that don't use the tester, since the middleware otherwise buffers HTML responses for authenticated editor requests. Anonymous and non-editor traffic is unaffected either way (the middleware bails before buffering for those). |
 | `ContentExporter` | `contentExporter` | Content Exporter | Export content tree structures. |
 | `BulkPropertyEditor` | `bulkPropertyEditor` | Bulk Property Editor | Inline-edit properties across multiple content items. |
 | `ScheduledJobsGantt` | `scheduledJobsGantt` | Scheduled Jobs Gantt | Interactive Gantt chart of job execution history. |

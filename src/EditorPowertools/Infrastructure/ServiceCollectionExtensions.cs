@@ -64,6 +64,7 @@ public static class ServiceCollectionExtensions
         // Core services
         services.AddSingleton<FeatureAccessChecker>();
         services.AddSingleton<ContentTypeStatisticsRepository>();
+        services.AddSingleton<ContentDashboardSnapshotRepository>();
         services.AddSingleton<UserPreferencesService>();
 
 #if OPTIMIZELY_CMS13
@@ -117,7 +118,6 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IDoctorCheck, ContentTypeCheck>();
         services.AddTransient<IDoctorCheck, OrphanedPropertyCheck>();
         services.AddTransient<IDoctorCheck, ScheduledJobsCheck>();
-        services.AddTransient<IDoctorCheck, DraftContentCheck>();
         services.AddTransient<IDoctorCheck, VersionInfoCheck>();
         services.AddTransient<IDoctorCheck, MemoryCheck>();
         services.AddTransient<IDoctorCheck, BrokenLinksCheck>();
@@ -130,6 +130,9 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<UnusedContentCheck>();
         services.AddSingleton<IDoctorCheck>(sp => sp.GetRequiredService<UnusedContentCheck>());
         services.AddSingleton<IContentAnalyzer>(sp => sp.GetRequiredService<UnusedContentCheck>());
+        services.AddSingleton<DraftContentCheck>();
+        services.AddSingleton<IDoctorCheck>(sp => sp.GetRequiredService<DraftContentCheck>());
+        services.AddSingleton<IContentAnalyzer>(sp => sp.GetRequiredService<DraftContentCheck>());
 
         // Content Audit
         services.AddTransient<ContentAuditService>();
@@ -158,6 +161,7 @@ public static class ServiceCollectionExtensions
 
         // Unified content analysis (pluggable analyzers)
         services.AddTransient<IContentAnalyzer, ContentTypeStatisticsAnalyzer>();
+        services.AddTransient<IContentAnalyzer, ContentDashboardAnalyzer>();
         services.AddTransient<IContentAnalyzer, PersonalizationAnalyzer>();
         services.AddTransient<IContentAnalyzer, LinkCheckerAnalyzer>();
         services.AddTransient<IContentAnalyzer, SecurityAuditAnalyzer>();

@@ -111,22 +111,29 @@ public class VisitorGroupTesterMiddleware
 
         bufferStream.Seek(0, SeekOrigin.Begin);
 
-        // If the response is compressed, don't try to read/modify it as text — just pass it through
+        // Compressed response: pass bytes through unchanged.
         var encoding = context.Response.Headers["Content-Encoding"].ToString();
         if (!string.IsNullOrEmpty(encoding))
         {
             context.Response.Body = originalBody;
-            bufferStream.Seek(0, SeekOrigin.Begin);
             await bufferStream.CopyToAsync(context.Response.Body);
             return;
         }
 
-        var responseBody = await new StreamReader(bufferStream).ReadToEndAsync();
-
-        // Only inject into HTML responses
+        // Non-HTML response (PNG, JSON, font, anything binary): never decode as UTF-8 —
+        // StreamReader+ReadToEnd → Encoding.UTF8.GetBytes silently corrupts non-text bytes
+        // (invalid UTF-8 sequences become 0xFFFD). Stream the buffered bytes through unchanged.
         var contentType = context.Response.ContentType ?? "";
-        if (contentType.Contains("text/html", StringComparison.OrdinalIgnoreCase) &&
-            responseBody.Contains("</body>", StringComparison.OrdinalIgnoreCase))
+        if (!contentType.Contains("text/html", StringComparison.OrdinalIgnoreCase))
+        {
+            context.Response.Body = originalBody;
+            await bufferStream.CopyToAsync(context.Response.Body);
+            return;
+        }
+
+        // HTML path: read as text, inject the toolbar if a </body> tag is present, write back.
+        var responseBody = await new StreamReader(bufferStream).ReadToEndAsync();
+        if (responseBody.Contains("</body>", StringComparison.OrdinalIgnoreCase))
         {
             // After _next(), Optimizely's routing pipeline has run and IContentRouteHelper
             // has the content reference for the current page — use it to build an edit URL.
@@ -174,7 +181,9 @@ public class VisitorGroupTesterMiddleware
     private static string GetToolbarHtml(string? pageEditUrl = null, string? groupsUrl = null)
     {
         var safeEditUrl = System.Text.Encodings.Web.HtmlEncoder.Default.Encode(pageEditUrl ?? "");
-        var safeGroupsUrl = System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(groupsUrl ?? "/episerver/EditorPowertools/VisitorGroupTesterApi/GetGroups");
+        // groupsUrl is resolved via Paths.ToResource(typeof(EditorPowertoolsMenuProvider), ...)
+        // which works on any shell mount. The empty-string fallback is just defensive.
+        var safeGroupsUrl = System.Text.Encodings.Web.JavaScriptEncoder.Default.Encode(groupsUrl ?? string.Empty);
         return """
 <style>
 .ept-vgt-toggle {

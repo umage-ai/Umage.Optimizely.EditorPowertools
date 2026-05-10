@@ -3,7 +3,7 @@ using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAccess;
 using EPiServer.Security;
-using EPiServer.Shell;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ManageChildren.Models;
 using Microsoft.Extensions.Logging;
 
@@ -35,7 +35,7 @@ public class ManageChildrenService
             parentRef,
             new LoaderOptions { LanguageLoaderOption.FallbackWithMaster() });
 
-        var cmsPath = Paths.ToResource("CMS", "");
+        var cmsPath = EditorPowertoolsShellPaths.CmsRoot();
 
         var items = children.Select(c =>
         {

@@ -17,11 +17,13 @@
         contentType: '',
         fromDate: '',
         toDate: '',
+        language: '',
         contentId: urlParams.get('contentId') || '',
         contentName: '',
         // Filter options
         users: [],
-        contentTypes: []
+        contentTypes: [],
+        languages: []
     };
 
     var observer = null;
@@ -31,14 +33,13 @@
         Promise.all([
             EPT.fetchJson(API + '/GetStats').catch(function () { return null; }),
             EPT.fetchJson(API + '/GetUsers').catch(function () { return []; }),
-            EPT.fetchJson(API + '/GetContentTypes').catch(function () { return []; })
+            EPT.fetchJson(API + '/GetContentTypes').catch(function () { return []; }),
+            EPT.fetchJson(API + '/GetLanguages').catch(function () { return []; })
         ]).then(function (results) {
-            var stats = results[0];
-            var users = results[1];
-            var contentTypes = results[2];
-            state.users = users;
-            state.contentTypes = contentTypes;
-            renderStats(stats);
+            state.users = results[1];
+            state.contentTypes = results[2];
+            state.languages = results[3];
+            renderStats(results[0]);
             renderToolbar();
             loadActivities(true);
         }).catch(function (err) {
@@ -85,10 +86,20 @@
             typeOpts += '<option value="' + escHtml(t) + '">' + escHtml(t) + '</option>';
         });
 
+        var languageMarkup = '';
+        if (state.languages && state.languages.length > 1) {
+            var langOpts = '<option value="">' + EPT.s('activitytimeline.opt_alllanguages', 'All languages') + '</option>';
+            state.languages.forEach(function (l) {
+                langOpts += '<option value="' + escHtml(l.code) + '">' + escHtml(l.displayName) + '</option>';
+            });
+            languageMarkup = '<select id="tl-filter-language" class="ept-select">' + langOpts + '</select>';
+        }
+
         el.innerHTML =
             '<select id="tl-filter-user" class="ept-select">' + userOpts + '</select>' +
             '<select id="tl-filter-action" class="ept-select">' + actionOpts + '</select>' +
             '<select id="tl-filter-type" class="ept-select">' + typeOpts + '</select>' +
+            languageMarkup +
             '<input type="date" id="tl-filter-from" class="ept-input" placeholder="From" title="From date" />' +
             '<input type="date" id="tl-filter-to" class="ept-input" placeholder="To" title="To date" />' +
             '<button id="tl-filter-apply" class="ept-btn ept-btn--primary">' + EPT.s('activitytimeline.btn_filter', 'Filter') + '</button>' +
@@ -104,6 +115,8 @@
         state.contentType = document.getElementById('tl-filter-type').value;
         state.fromDate = document.getElementById('tl-filter-from').value;
         state.toDate = document.getElementById('tl-filter-to').value;
+        var langEl = document.getElementById('tl-filter-language');
+        state.language = langEl ? langEl.value : '';
         loadActivities(true);
     }
 
@@ -113,11 +126,14 @@
         document.getElementById('tl-filter-type').value = '';
         document.getElementById('tl-filter-from').value = '';
         document.getElementById('tl-filter-to').value = '';
+        var langEl = document.getElementById('tl-filter-language');
+        if (langEl) langEl.value = '';
         state.user = '';
         state.action = '';
         state.contentType = '';
         state.fromDate = '';
         state.toDate = '';
+        state.language = '';
         state.contentId = '';
         state.contentName = '';
         var banner = document.getElementById('content-filter-banner');
@@ -182,15 +198,18 @@
         if (state.contentType) url += '&contentType=' + encodeURIComponent(state.contentType);
         if (state.fromDate) url += '&from=' + encodeURIComponent(state.fromDate + 'T00:00:00Z');
         if (state.toDate) url += '&to=' + encodeURIComponent(state.toDate + 'T23:59:59Z');
+        if (state.language) url += '&language=' + encodeURIComponent(state.language);
 
         EPT.fetchJson(url).then(function (result) {
             if (result.contentName) state.contentName = result.contentName;
             state.activities = state.activities.concat(result.activities);
             state.totalCount = result.totalCount;
             state.hasMore = result.hasMore;
+            state.truncated = !!result.truncated;
             state.skip += result.activities.length;
             state.isLoading = false;
             renderContentBanner();
+            renderTruncatedNotice();
             renderTimeline(reset);
         }).catch(function (err) {
             state.isLoading = false;
@@ -204,6 +223,27 @@
     function loadMore() {
         if (!state.hasMore || state.isLoading) return;
         loadActivities(false);
+    }
+
+    // ── Truncated-results Notice ──────────────────────────────────
+    function renderTruncatedNotice() {
+        var existing = document.getElementById('tl-truncated-notice');
+        if (!state.truncated) {
+            if (existing) existing.remove();
+            return;
+        }
+        if (existing) return;
+
+        var notice = document.createElement('div');
+        notice.id = 'tl-truncated-notice';
+        notice.className = 'ept-alert ept-alert--warning';
+        notice.innerHTML = '<span>' +
+            EPT.s('activitytimeline.notice_truncated',
+                'Showing recent activity only — the full version history was too large to load. Narrow the date range or pick a content type to see more.') +
+            '</span>';
+
+        var contentEl = document.getElementById('timeline-content');
+        contentEl.parentNode.insertBefore(notice, contentEl);
     }
 
     // ── Render Timeline ────────────────────────────────────────────

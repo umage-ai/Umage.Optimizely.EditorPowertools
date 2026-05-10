@@ -678,6 +678,7 @@
           <opt_previouslypublished>曾经发布</opt_previouslypublished>
           <opt_comment>评论</opt_comment>
           <opt_allcontenttypes>所有内容类型</opt_allcontenttypes>
+          <opt_alllanguages>所有语言</opt_alllanguages>
           <btn_filter>筛选</btn_filter>
           <btn_clear>清除</btn_clear>
           <banner_showingfor>正在显示 {0} 的时间线</banner_showingfor>

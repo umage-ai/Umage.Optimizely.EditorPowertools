@@ -25,7 +25,7 @@ public class PreferencesApiController : Controller
     [HttpGet]
     public IActionResult Get([FromQuery] string id)
     {
-        if (!_accessChecker.IsFeatureEnabled(id))
+        if (!_accessChecker.HasAccess(HttpContext, id))
             return Forbid();
 
         var username = HttpContext.User.Identity?.Name;
@@ -42,7 +42,7 @@ public class PreferencesApiController : Controller
     [HttpPost]
     public async Task<IActionResult> Save([FromQuery] string id)
     {
-        if (!_accessChecker.IsFeatureEnabled(id))
+        if (!_accessChecker.HasAccess(HttpContext, id))
             return Forbid();
 
         var username = HttpContext.User.Identity?.Name;

@@ -26,42 +26,42 @@ public class LanguageAuditService
     /// </summary>
     public LanguageOverviewDto GetOverview()
     {
-        var records = _repository.GetAll().ToList();
         var enabledLanguages = _languageBranchRepository.ListEnabled()
             .Select(lb => lb.LanguageID)
             .ToList();
 
-        var totalContent = records.Count;
-        var languageStats = new List<LanguageStatDto>();
+        // One pass: parse each record's languages + JSON details exactly once.
+        var enriched = LoadEnriched();
+        var totalContent = enriched.Count;
 
+        var languageStats = new List<LanguageStatDto>(enabledLanguages.Count);
         foreach (var lang in enabledLanguages)
         {
-            var withLang = records.Where(r =>
-                r.AvailableLanguages.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                    .Any(l => string.Equals(l.Trim(), lang, StringComparison.OrdinalIgnoreCase)))
-                .ToList();
-
+            var withLangCount = 0;
             var publishedCount = 0;
-            foreach (var record in withLang)
+            foreach (var item in enriched)
             {
-                var details = ParseLanguageDetails(record.LanguageDetailsJson);
-                var langDetail = details.FirstOrDefault(d =>
-                    string.Equals(d.Lang, lang, StringComparison.OrdinalIgnoreCase));
-                if (langDetail != null && string.Equals(langDetail.Status, "Published", StringComparison.OrdinalIgnoreCase))
-                    publishedCount++;
+                if (!item.LanguageSet.Contains(lang)) continue;
+                withLangCount++;
+                if (item.PublishedLanguageSet.Contains(lang)) publishedCount++;
             }
 
             languageStats.Add(new LanguageStatDto
             {
                 Language = lang,
-                TotalContent = withLang.Count,
+                TotalContent = withLangCount,
                 PublishedCount = publishedCount,
-                CoveragePercent = totalContent > 0 ? Math.Round(100.0 * withLang.Count / totalContent, 1) : 0
+                CoveragePercent = totalContent > 0 ? Math.Round(100.0 * withLangCount / totalContent, 1) : 0
             });
         }
 
-        var missingCount = records.Count(r => r.IsMissingTranslations);
-        var staleCount = records.Count(r => r.StalestTranslationDays > 30);
+        var missingCount = 0;
+        var staleCount = 0;
+        foreach (var item in enriched)
+        {
+            if (item.Record.IsMissingTranslations) missingCount++;
+            if (item.Record.StalestTranslationDays > 30) staleCount++;
+        }
 
         return new LanguageOverviewDto
         {
@@ -79,62 +79,62 @@ public class LanguageAuditService
     /// </summary>
     public List<MissingTranslationDto> GetMissingTranslations(string language, int? parentId = null)
     {
-        var records = _repository.GetAll().ToList();
+        var enriched = LoadEnriched();
+        var result = new List<MissingTranslationDto>();
 
-        var missing = records.Where(r =>
+        foreach (var item in enriched)
         {
-            if (parentId.HasValue && r.ParentContentId != parentId.Value)
-                return false;
+            if (parentId.HasValue && item.Record.ParentContentId != parentId.Value) continue;
+            if (item.LanguageSet.Contains(language)) continue;
 
-            var langs = r.AvailableLanguages.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                .Select(l => l.Trim());
-            return !langs.Any(l => string.Equals(l, language, StringComparison.OrdinalIgnoreCase));
-        })
-        .Select(r => new MissingTranslationDto
-        {
-            ContentId = r.ContentId,
-            ContentName = r.ContentName,
-            ContentTypeName = r.ContentTypeName,
-            Breadcrumb = r.Breadcrumb,
-            MasterLanguage = r.MasterLanguage,
-            AvailableLanguages = r.AvailableLanguages.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                .Select(l => l.Trim()).ToList(),
-            EditUrl = r.EditUrl
-        })
-        .OrderBy(r => r.Breadcrumb)
-        .ToList();
+            var r = item.Record;
+            result.Add(new MissingTranslationDto
+            {
+                ContentId = r.ContentId,
+                ContentName = r.ContentName,
+                ContentTypeName = r.ContentTypeName,
+                Breadcrumb = r.Breadcrumb,
+                MasterLanguage = r.MasterLanguage,
+                AvailableLanguages = item.LanguageList,
+                EditUrl = r.EditUrl
+            });
+        }
 
-        return missing;
+        result.Sort((a, b) => string.Compare(a.Breadcrumb, b.Breadcrumb, StringComparison.Ordinal));
+        return result;
     }
 
     /// <summary>
     /// Gets content tree nodes with coverage stats per language (for hierarchical view).
+    /// One bottom-up pass — descendant totals are accumulated as we recurse, so each
+    /// subtree is visited exactly once instead of three times.
     /// </summary>
     public List<LanguageCoverageNodeDto> GetCoverageTree(string language)
     {
-        var records = _repository.GetAll().ToList();
-        var enabledLanguages = _languageBranchRepository.ListEnabled()
-            .Select(lb => lb.LanguageID).ToList();
+        var enriched = LoadEnriched();
 
-        // Group by parent for tree building
-        var byParent = records.GroupBy(r => r.ParentContentId)
-            .ToDictionary(g => g.Key, g => g.ToList());
+        var byParent = new Dictionary<int, List<EnrichedRecord>>();
+        foreach (var item in enriched)
+        {
+            if (!byParent.TryGetValue(item.Record.ParentContentId, out var list))
+            {
+                list = new List<EnrichedRecord>();
+                byParent[item.Record.ParentContentId] = list;
+            }
+            list.Add(item);
+        }
 
-        // Find root-level groups (content whose parent is not in our records)
-        var allIds = records.Select(r => r.ContentId).ToHashSet();
+        var allIds = new HashSet<int>(enriched.Select(e => e.Record.ContentId));
         var rootParents = byParent.Keys.Where(pid => !allIds.Contains(pid)).OrderBy(p => p).ToList();
 
         var result = new List<LanguageCoverageNodeDto>();
         foreach (var parentId in rootParents)
         {
-            if (byParent.TryGetValue(parentId, out var children))
+            if (!byParent.TryGetValue(parentId, out var children)) continue;
+            foreach (var child in children)
             {
-                foreach (var child in children)
-                {
-                    var node = BuildCoverageNode(child, language, byParent);
-                    if (node != null)
-                        result.Add(node);
-                }
+                var (node, _, _) = BuildCoverageNode(child, language, byParent);
+                if (node != null) result.Add(node);
             }
         }
 
@@ -146,53 +146,48 @@ public class LanguageAuditService
     /// </summary>
     public List<StaleTranslationDto> GetStaleTranslations(int thresholdDays = 30, string? language = null)
     {
-        var records = _repository.GetAll()
-            .Where(r => r.StalestTranslationDays >= thresholdDays)
-            .ToList();
-
+        var enriched = LoadEnriched();
         var result = new List<StaleTranslationDto>();
 
-        foreach (var record in records)
+        foreach (var item in enriched)
         {
-            var details = ParseLanguageDetails(record.LanguageDetailsJson);
-            var masterDetail = details.FirstOrDefault(d =>
-                string.Equals(d.Lang, record.MasterLanguage, StringComparison.OrdinalIgnoreCase));
+            var record = item.Record;
+            if (record.StalestTranslationDays < thresholdDays) continue;
 
+            var masterDetail = FindDetail(item.Details, record.MasterLanguage);
             if (masterDetail == null || !DateTime.TryParse(masterDetail.LastModified, out var masterDate))
                 continue;
 
-            foreach (var detail in details)
+            foreach (var detail in item.Details)
             {
                 if (string.Equals(detail.Lang, record.MasterLanguage, StringComparison.OrdinalIgnoreCase))
                     continue;
-
                 if (language != null && !string.Equals(detail.Lang, language, StringComparison.OrdinalIgnoreCase))
                     continue;
-
                 if (!DateTime.TryParse(detail.LastModified, out var otherDate))
                     continue;
 
                 var daysBehind = (int)(masterDate - otherDate).TotalDays;
-                if (daysBehind >= thresholdDays)
+                if (daysBehind < thresholdDays) continue;
+
+                result.Add(new StaleTranslationDto
                 {
-                    result.Add(new StaleTranslationDto
-                    {
-                        ContentId = record.ContentId,
-                        ContentName = record.ContentName,
-                        ContentTypeName = record.ContentTypeName,
-                        Breadcrumb = record.Breadcrumb,
-                        MasterLanguage = record.MasterLanguage,
-                        MasterLastModified = masterDate,
-                        OtherLanguage = detail.Lang,
-                        OtherLastModified = otherDate,
-                        DaysBehind = daysBehind,
-                        EditUrl = record.EditUrl
-                    });
-                }
+                    ContentId = record.ContentId,
+                    ContentName = record.ContentName,
+                    ContentTypeName = record.ContentTypeName,
+                    Breadcrumb = record.Breadcrumb,
+                    MasterLanguage = record.MasterLanguage,
+                    MasterLastModified = masterDate,
+                    OtherLanguage = detail.Lang,
+                    OtherLastModified = otherDate,
+                    DaysBehind = daysBehind,
+                    EditUrl = record.EditUrl
+                });
             }
         }
 
-        return result.OrderByDescending(r => r.DaysBehind).ToList();
+        result.Sort((a, b) => b.DaysBehind.CompareTo(a.DaysBehind));
+        return result;
     }
 
     /// <summary>
@@ -204,30 +199,22 @@ public class LanguageAuditService
         int page = 1,
         int pageSize = 50)
     {
-        var records = _repository.GetAll().ToList();
+        var enriched = LoadEnriched();
+        var items = new List<TranslationQueueItemDto>();
 
-        // Filter to content missing the target language
-        var missing = records.Where(r =>
+        foreach (var item in enriched)
         {
-            var langs = r.AvailableLanguages.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                .Select(l => l.Trim());
-            return !langs.Any(l => string.Equals(l, targetLanguage, StringComparison.OrdinalIgnoreCase));
-        });
+            if (item.LanguageSet.Contains(targetLanguage)) continue;
 
-        if (!string.IsNullOrEmpty(contentType))
-        {
-            missing = missing.Where(r =>
-                string.Equals(r.ContentTypeName, contentType, StringComparison.OrdinalIgnoreCase));
-        }
+            var r = item.Record;
+            if (!string.IsNullOrEmpty(contentType) &&
+                !string.Equals(r.ContentTypeName, contentType, StringComparison.OrdinalIgnoreCase))
+                continue;
 
-        var items = missing.Select(r =>
-        {
-            var details = ParseLanguageDetails(r.LanguageDetailsJson);
-            var masterDetail = details.FirstOrDefault(d =>
-                string.Equals(d.Lang, r.MasterLanguage, StringComparison.OrdinalIgnoreCase));
+            var masterDetail = FindDetail(item.Details, r.MasterLanguage);
             DateTime.TryParse(masterDetail?.LastModified, out var masterModified);
 
-            return new TranslationQueueItemDto
+            items.Add(new TranslationQueueItemDto
             {
                 ContentId = r.ContentId,
                 ContentName = r.ContentName,
@@ -235,13 +222,12 @@ public class LanguageAuditService
                 Breadcrumb = r.Breadcrumb,
                 MasterLanguage = r.MasterLanguage,
                 MasterLastModified = masterModified,
-                AvailableLanguages = r.AvailableLanguages.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(l => l.Trim()).ToList(),
+                AvailableLanguages = item.LanguageList,
                 EditUrl = r.EditUrl
-            };
-        })
-        .OrderByDescending(r => r.MasterLastModified)
-        .ToList();
+            });
+        }
+
+        items.Sort((a, b) => b.MasterLastModified.CompareTo(a.MasterLastModified));
 
         var totalCount = items.Count;
         var paged = items.Skip((page - 1) * pageSize).Take(pageSize).ToList();
@@ -265,73 +251,96 @@ public class LanguageAuditService
         return result.Items;
     }
 
-    private LanguageCoverageNodeDto? BuildCoverageNode(
-        LanguageAuditRecord record,
+    /// <summary>
+    /// Returns (Node, totalDescendants, descendantsWithLanguage) so each subtree is visited once
+    /// instead of being re-walked once per CountDescendants and once per CountDescendantsWithLanguage.
+    /// </summary>
+    private (LanguageCoverageNodeDto? Node, int Total, int WithLang) BuildCoverageNode(
+        EnrichedRecord item,
         string language,
-        Dictionary<int, List<LanguageAuditRecord>> byParent)
+        Dictionary<int, List<EnrichedRecord>> byParent)
     {
-        var langs = record.AvailableLanguages.Split(',', StringSplitOptions.RemoveEmptyEntries)
-            .Select(l => l.Trim()).ToList();
-        var hasLanguage = langs.Any(l => string.Equals(l, language, StringComparison.OrdinalIgnoreCase));
-
+        var hasLanguage = item.LanguageSet.Contains(language);
         var children = new List<LanguageCoverageNodeDto>();
-        if (byParent.TryGetValue(record.ContentId, out var childRecords))
+        var totalDescendants = 0;
+        var descendantsWithLanguage = 0;
+
+        if (byParent.TryGetValue(item.Record.ContentId, out var childItems))
         {
-            foreach (var child in childRecords)
+            foreach (var child in childItems)
             {
-                var childNode = BuildCoverageNode(child, language, byParent);
-                if (childNode != null)
-                    children.Add(childNode);
+                var (childNode, childTotal, childWith) = BuildCoverageNode(child, language, byParent);
+                totalDescendants += 1 + childTotal;
+                descendantsWithLanguage += (child.LanguageSet.Contains(language) ? 1 : 0) + childWith;
+                if (childNode != null) children.Add(childNode);
             }
         }
 
-        // Count total descendants and how many have the target language
-        var totalDescendants = CountDescendants(record.ContentId, byParent);
-        var withLanguageCount = CountDescendantsWithLanguage(record.ContentId, language, byParent);
-
-        return new LanguageCoverageNodeDto
+        var node = new LanguageCoverageNodeDto
         {
-            ContentId = record.ContentId,
-            ContentName = record.ContentName,
+            ContentId = item.Record.ContentId,
+            ContentName = item.Record.ContentName,
             HasLanguage = hasLanguage,
             TotalChildren = totalDescendants,
-            ChildrenWithLanguage = withLanguageCount,
-            CoveragePercent = totalDescendants > 0 ? Math.Round(100.0 * withLanguageCount / totalDescendants, 1) : (hasLanguage ? 100 : 0),
+            ChildrenWithLanguage = descendantsWithLanguage,
+            CoveragePercent = totalDescendants > 0
+                ? Math.Round(100.0 * descendantsWithLanguage / totalDescendants, 1)
+                : (hasLanguage ? 100 : 0),
             Children = children.Count > 0 ? children : null
         };
+        return (node, totalDescendants, descendantsWithLanguage);
     }
 
-    private int CountDescendants(int contentId, Dictionary<int, List<LanguageAuditRecord>> byParent)
+    /// <summary>
+    /// Loads every record once and pre-computes the language set, the language list,
+    /// the parsed language details, and the published-language set so callers don't
+    /// re-split / re-deserialise the same fields on every iteration.
+    /// </summary>
+    private List<EnrichedRecord> LoadEnriched()
     {
-        if (!byParent.TryGetValue(contentId, out var children))
-            return 0;
-
-        var count = children.Count;
-        foreach (var child in children)
-            count += CountDescendants(child.ContentId, byParent);
-        return count;
-    }
-
-    private int CountDescendantsWithLanguage(int contentId, string language,
-        Dictionary<int, List<LanguageAuditRecord>> byParent)
-    {
-        if (!byParent.TryGetValue(contentId, out var children))
-            return 0;
-
-        var count = 0;
-        foreach (var child in children)
+        var records = _repository.GetAll();
+        var result = new List<EnrichedRecord>();
+        foreach (var r in records)
         {
-            var langs = child.AvailableLanguages.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                .Select(l => l.Trim());
-            if (langs.Any(l => string.Equals(l, language, StringComparison.OrdinalIgnoreCase)))
-                count++;
-            count += CountDescendantsWithLanguage(child.ContentId, language, byParent);
+            var langList = r.AvailableLanguages
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(l => l.Trim())
+                .Where(l => l.Length > 0)
+                .ToList();
+
+            var details = ParseLanguageDetails(r.LanguageDetailsJson);
+
+            var publishedSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var d in details)
+            {
+                if (string.Equals(d.Status, "Published", StringComparison.OrdinalIgnoreCase))
+                    publishedSet.Add(d.Lang);
+            }
+
+            result.Add(new EnrichedRecord(
+                r,
+                langList,
+                new HashSet<string>(langList, StringComparer.OrdinalIgnoreCase),
+                publishedSet,
+                details));
         }
-        return count;
+        return result;
+    }
+
+    private static LanguageDetailParsed? FindDetail(List<LanguageDetailParsed> details, string lang)
+    {
+        foreach (var d in details)
+        {
+            if (string.Equals(d.Lang, lang, StringComparison.OrdinalIgnoreCase))
+                return d;
+        }
+        return null;
     }
 
     private static List<LanguageDetailParsed> ParseLanguageDetails(string json)
     {
+        if (string.IsNullOrEmpty(json) || json == "[]")
+            return new List<LanguageDetailParsed>();
         try
         {
             return JsonSerializer.Deserialize<List<LanguageDetailParsed>>(json,
@@ -343,7 +352,14 @@ public class LanguageAuditService
         }
     }
 
-    private class LanguageDetailParsed
+    private sealed record EnrichedRecord(
+        LanguageAuditRecord Record,
+        List<string> LanguageList,
+        HashSet<string> LanguageSet,
+        HashSet<string> PublishedLanguageSet,
+        List<LanguageDetailParsed> Details);
+
+    private sealed class LanguageDetailParsed
     {
         public string Lang { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
