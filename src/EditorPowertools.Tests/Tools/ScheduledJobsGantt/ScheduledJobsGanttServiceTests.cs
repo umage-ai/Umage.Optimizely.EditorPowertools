@@ -27,11 +27,13 @@ public class ScheduledJobsGanttServiceTests
         ScheduledIntervalType intervalType = ScheduledIntervalType.Hours,
         int intervalLength = 1,
         DateTime? nextExecution = null,
-        DateTime? lastExecution = null)
+        DateTime? lastExecution = null,
+        string? typeName = null)
     {
         var job = new ScheduledJob();
         job.ID = id;
         job.Name = name;
+        job.TypeName = typeName ?? string.Empty;
         job.IsEnabled = isEnabled;
         job.IsRunning = isRunning;
         job.IntervalType = intervalType;
@@ -106,6 +108,25 @@ public class ScheduledJobsGanttServiceTests
         var result = svc.GetAllJobs().ToList();
 
         result.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void GetAllJobs_PopulatesTypeName_ForDuplicateNameDisambiguation()
+    {
+        var id1 = Guid.NewGuid();
+        var id2 = Guid.NewGuid();
+        var job1 = CreateJob(id1, "Gist Sync", typeName: "Foo.Old.GistSyncJob, Foo");
+        var job2 = CreateJob(id2, "Gist Sync", typeName: "Foo.New.GistSyncJob, Foo");
+
+        SetupJobs(job1, job2);
+
+        var svc = CreateService();
+        var result = svc.GetAllJobs().ToList();
+
+        result.Should().HaveCount(2);
+        result.Should().AllSatisfy(j => j.Name.Should().Be("Gist Sync"));
+        result.Select(j => j.TypeName).Should().BeEquivalentTo(
+            new[] { "Foo.Old.GistSyncJob, Foo", "Foo.New.GistSyncJob, Foo" });
     }
 
     // ===================================================================
