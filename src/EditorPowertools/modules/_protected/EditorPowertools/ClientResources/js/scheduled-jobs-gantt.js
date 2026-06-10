@@ -7,7 +7,9 @@
     var API_BASE = window.EPT_BASE_URL + 'ScheduledJobsGanttApi/';
 
     var ROW_HEIGHT = 36;
-    var ROW_GAP = 2;
+    // ROW_GAP must stay 0: the left label column stacks rows in normal flow with no gap,
+    // so any non-zero stride here would drift bars below their labels (compounds per row).
+    var ROW_GAP = 0;
     var HEADER_HEIGHT = 50;
     var JOB_COL_WIDTH = 240;
     var MIN_BAR_WIDTH = 4;
@@ -210,13 +212,19 @@
         jobColHeader.textContent = EPT.s('gantt.col_job', 'Job') + ' (' + state.jobs.length + ')';
         jobCol.appendChild(jobColHeader);
 
+        // Count name collisions so duplicates can show a disambiguating subtitle
+        var nameCounts = {};
+        state.jobs.forEach(function (j) {
+            nameCounts[j.name] = (nameCounts[j.name] || 0) + 1;
+        });
+
         // Job name rows
         var jobRows = document.createElement('div');
         jobRows.className = 'gantt-job-rows';
         state.jobs.forEach(function (job, i) {
             var row = document.createElement('div');
             row.className = 'gantt-job-row';
-            row.style.cssText = 'height:' + ROW_HEIGHT + 'px;display:flex;align-items:center;padding:0 12px;gap:6px;' +
+            row.style.cssText = 'box-sizing:border-box;height:' + ROW_HEIGHT + 'px;display:flex;align-items:center;padding:0 12px;gap:6px;' +
                 'border-bottom:1px solid var(--ept-border-light);cursor:pointer;font-size:12px;' +
                 (i % 2 === 0 ? '' : 'background:var(--ept-bg);');
 
@@ -235,13 +243,31 @@
             }
             row.appendChild(dot);
 
+            var hasDupName = nameCounts[job.name] > 1 && job.typeName;
+            var nameWrap = document.createElement('span');
+            nameWrap.className = 'gantt-job-name';
+            nameWrap.style.cssText = 'overflow:hidden;flex:1;min-width:0;' +
+                (hasDupName ? 'display:flex;flex-direction:column;justify-content:center;line-height:1.2;' : '');
+
             var nameEl = document.createElement('span');
-            nameEl.className = 'gantt-job-name';
-            nameEl.style.cssText = 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;';
+            nameEl.style.cssText = 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
             nameEl.textContent = job.name;
             nameEl.title = job.name;
             if (!job.isEnabled) nameEl.style.color = 'var(--ept-text-muted)';
-            row.appendChild(nameEl);
+            nameWrap.appendChild(nameEl);
+
+            if (hasDupName) {
+                // typeName is "Fully.Qualified.TypeName, AssemblyName" — take the bare type name
+                // (last dot-segment before the comma), falling back to the raw value if unsplittable.
+                var parts = job.typeName.split(',')[0].split('.');
+                var shortType = parts[parts.length - 1].trim() || job.typeName;
+                var subEl = document.createElement('span');
+                subEl.style.cssText = 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;color:var(--ept-text-muted);';
+                subEl.textContent = shortType;
+                subEl.title = job.typeName;
+                nameWrap.appendChild(subEl);
+            }
+            row.appendChild(nameWrap);
 
             row.addEventListener('click', (function (jobId) {
                 return function () {
@@ -396,7 +422,7 @@
         // Draw row backgrounds
         state.jobs.forEach(function (job, i) {
             var rowBg = document.createElement('div');
-            rowBg.style.cssText = 'position:absolute;left:0;right:0;' +
+            rowBg.style.cssText = 'box-sizing:border-box;position:absolute;left:0;right:0;' +
                 'top:' + (i * (ROW_HEIGHT + ROW_GAP)) + 'px;height:' + ROW_HEIGHT + 'px;' +
                 (i % 2 === 0 ? '' : 'background:var(--ept-bg);') +
                 'border-bottom:1px solid var(--ept-border-light);';
