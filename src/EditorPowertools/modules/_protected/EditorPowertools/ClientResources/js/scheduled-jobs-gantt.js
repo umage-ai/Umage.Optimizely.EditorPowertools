@@ -257,10 +257,10 @@
             nameWrap.appendChild(nameEl);
 
             if (hasDupName) {
-                var shortType = job.typeName.split(/[.,]/)[0].trim();
-                // If typeName is "FullyQualified.Namespace.TypeName, AssemblyName" take the last namespace segment
+                // typeName is "Fully.Qualified.TypeName, AssemblyName" — take the bare type name
+                // (last dot-segment before the comma), falling back to the raw value if unsplittable.
                 var parts = job.typeName.split(',')[0].split('.');
-                shortType = parts[parts.length - 1] || shortType;
+                var shortType = parts[parts.length - 1].trim() || job.typeName;
                 var subEl = document.createElement('span');
                 subEl.style.cssText = 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;color:var(--ept-text-muted);';
                 subEl.textContent = shortType;
