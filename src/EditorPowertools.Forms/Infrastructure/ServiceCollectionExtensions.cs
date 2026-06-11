@@ -37,7 +37,7 @@ public static class ServiceCollectionExtensions
             .Configure(configureOptions);
 
         services.AddSingleton<FormsFeatureAccessChecker>();
-        services.AddTransient<FormsAggregationService>();
+        services.AddTransient<IFormsAggregationService, FormsAggregationService>();
         // Broadcaster is a singleton because it hooks the static FormsEvents
         // exactly once and fans out to many SSE clients. AddHostedService keeps
         // it alive for the app lifetime and disposes cleanly on shutdown so the
@@ -50,6 +50,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IDoctorCheck, UnusedFormsCheck>();
         services.AddTransient<IDoctorCheck, NoNotificationHandlerCheck>();
         services.AddTransient<IDoctorCheck, PiiIndefiniteRetentionCheck>();
+        services.AddTransient<IDoctorCheck, DuplicateFieldsCheck>();
 
         // Plug into the base Overview without the base library having to know
         // about Forms. Each descriptor is filtered by its feature toggle.

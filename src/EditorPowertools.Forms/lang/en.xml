@@ -63,6 +63,14 @@
           <tip_open>Open form in CMS edit mode</tip_open>
           <tip_edit>Open form in CMS edit mode</tip_edit>
           <tip_usage>Show where this form is used</tip_usage>
+          <risk_only>Privacy risks only</risk_only>
+          <flag_privacy>Privacy risk</flag_privacy>
+          <flag_privacy_live>Privacy risk — live data</flag_privacy_live>
+          <flag_privacy_tip>Captures personal data and stores submissions on the default (indefinite) retention policy.</flag_privacy_tip>
+          <flag_privacy_live_tip>Published form that already holds submissions of personal data on the default (indefinite) retention policy — old personal data is likely retained.</flag_privacy_live_tip>
+          <flag_pii_fields>Personal-data fields:</flag_pii_fields>
+          <flag_duplicate>Duplicate fields</flag_duplicate>
+          <flag_duplicate_tip>These field labels appear more than once and collide in the submission data:</flag_duplicate_tip>
         </formsoverview>
         <submissionstimeline>
           <events>submissions</events>
@@ -123,6 +131,14 @@
             <details>{0}</details>
             <andmore>(and {0} more)</andmore>
           </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Forms With Duplicate Fields</name>
+            <description>Finds forms with two or more input fields that share the same label, producing ambiguous submission columns.</description>
+            <ok>No form has duplicate field labels.</ok>
+            <found>{0} forms have duplicate field labels.</found>
+            <examples>Examples: {0}</examples>
+            <andmore>(and {0} more)</andmore>
+          </duplicatefieldscheck>
         </checks>
       </cmsdoctor>
     </editorpowertools>

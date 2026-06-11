@@ -20,7 +20,7 @@ namespace UmageAI.Optimizely.EditorPowerTools.Forms.Services;
 /// Aggregates form metadata, submission counts and usage information.
 /// Used by the Forms Overview and Submissions Timeline tools.
 /// </summary>
-public class FormsAggregationService
+public class FormsAggregationService : IFormsAggregationService
 {
     private readonly IContentModelUsage _contentModelUsage;
     private readonly IContentTypeRepository _contentTypeRepository;
@@ -86,14 +86,11 @@ public class FormsAggregationService
 
                 var formIden = new FormIdentity(formGuid, lang);
 
-                // Field count: top-level items in the form's ElementsArea ContentArea.
-                // Use `Items` (not `FilteredItems` — obsolete in CMS 13) since we need
-                // a true total irrespective of the current user's access rights.
-                var fieldCount = 0;
-                if (formBlock.ElementsArea != null)
-                {
-                    fieldCount = formBlock.ElementsArea.Items?.Count ?? 0;
-                }
+                // Single pass over the form's elements: total field count, duplicate
+                // input-field labels (ambiguous submission columns), and PII-shaped
+                // fields. Uses `Items` (not `FilteredItems` — obsolete in CMS 13) so the
+                // total is independent of the current user's access rights.
+                var scan = ScanElements(formBlock);
 
                 // Submission count + last submission. Use a wide date window so we
                 // catch everything; finalizedOnly:false counts partials too.
@@ -121,9 +118,13 @@ public class FormsAggregationService
                     Language = lang,
                     Breadcrumb = contentRef.GetBreadcrumb(),
                     EditUrl = BuildEditUrl(contentRef.ID, lang),
-                    FieldCount = fieldCount,
+                    FieldCount = scan.FieldCount,
                     SubmissionCount = submissionCount,
                     LastSubmissionUtc = lastSubmission,
+                    IsPublished = IsPublished(formContent),
+                    StoresSubmissionData = formBlock.AllowToStoreSubmissionData,
+                    DuplicateFieldLabels = scan.DuplicateLabels,
+                    PiiFieldLabels = scan.PiiLabels,
                     UsageCount = usageCount,
                     Usage = usageList,
                     PartialRetentionPolicy = partial,
@@ -281,24 +282,7 @@ public class FormsAggregationService
                     || string.Equals(partial, "EPiServer.RetentionPolicy.Default", StringComparison.OrdinalIgnoreCase)
                     || string.Equals(final, "EPiServer.RetentionPolicy.Default", StringComparison.OrdinalIgnoreCase);
 
-                var pii = new List<string>();
-                if (formBlock.ElementsArea?.Items != null)
-                {
-                    foreach (var item in formBlock.ElementsArea.Items)
-                    {
-                        if (item?.ContentLink == null) continue;
-                        if (!_contentLoader.TryGet<IContent>(item.ContentLink.ToReferenceWithoutVersion(), out var element))
-                            continue;
-                        var elementType = _contentTypeRepository.Load(element.ContentTypeID);
-                        var typeName = elementType?.Name ?? element.GetType().Name;
-                        var label = element.Name ?? string.Empty;
-
-                        if (LooksLikePii(typeName, label, out var hint))
-                        {
-                            pii.Add(string.IsNullOrEmpty(label) ? hint : $"{label} ({hint})");
-                        }
-                    }
-                }
+                var pii = ScanElements(formBlock).PiiLabels;
 
                 if (pii.Count > 0)
                 {
@@ -323,34 +307,62 @@ public class FormsAggregationService
     }
 
     /// <summary>
-    /// Curated keyword + element-type heuristics for PII detection. Errs on the
-    /// side of false positives — the CMS Doctor check is advisory.
+    /// Element type names that are structural / display / navigation rather than
+    /// data inputs. Excluded from duplicate-label detection so two paragraphs or
+    /// step headers sharing a caption don't read as "duplicate fields".
     /// </summary>
-    private static readonly string[] _piiLabelKeywords = new[]
+    private static readonly HashSet<string> _nonInputElementTypes = new(StringComparer.OrdinalIgnoreCase)
     {
-        "email", "e-mail", "mail", "phone", "tel", "mobile", "address", "street",
-        "city", "zip", "postal", "country", "name", "first name", "last name",
-        "surname", "fullname", "full name", "ssn", "social security",
-        "dob", "birth", "birthday", "birthdate", "passport", "id number",
-        "national id", "credit card", "iban", "ip", "ip address", "linkedin",
-        "facebook", "twitter", "navn", "adresse", "telefon", "fødselsdag"
+        "ParagraphTextElementBlock", "RichTextElementBlock", "ImageElementBlock",
+        "FormStepBlock", "SubmitButtonElementBlock", "ResetButtonElementBlock",
+        "NextButtonElementBlock", "PreviousButtonElementBlock"
     };
 
-    private static bool LooksLikePii(string elementTypeName, string label, out string hint)
+    /// <summary>
+    /// Single pass over a form's elements. Returns the total field count, the set
+    /// of duplicate input-field labels (ambiguous submission columns), and the
+    /// PII-shaped field labels. Loading each element once keeps GetForms and
+    /// AnalyzePii consistent and avoids walking the ElementsArea twice.
+    /// </summary>
+    private (int FieldCount, List<string> DuplicateLabels, List<string> PiiLabels) ScanElements(FormContainerBlock formBlock)
     {
-        // High-confidence content-type-based hits.
-        if (string.Equals(elementTypeName, "FileUploadElementBlock", StringComparison.OrdinalIgnoreCase))
-        { hint = "file upload"; return true; }
+        var fieldCount = 0;
+        var piiLabels = new List<string>();
+        var labelCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var labelOrder = new List<string>();
 
-        var l = (label ?? string.Empty).ToLowerInvariant();
-        foreach (var kw in _piiLabelKeywords)
+        if (formBlock.ElementsArea?.Items != null)
         {
-            if (l.Contains(kw)) { hint = kw; return true; }
+            foreach (var item in formBlock.ElementsArea.Items)
+            {
+                fieldCount++;
+                if (item?.ContentLink == null) continue;
+                if (!_contentLoader.TryGet<IContent>(item.ContentLink.ToReferenceWithoutVersion(), out var element))
+                    continue;
+
+                var elementType = _contentTypeRepository.Load(element.ContentTypeID);
+                var typeName = elementType?.Name ?? element.GetType().Name;
+                var label = element.Name ?? string.Empty;
+
+                // Duplicate detection: only real input fields, only non-empty labels.
+                if (!string.IsNullOrWhiteSpace(label) && !_nonInputElementTypes.Contains(typeName))
+                {
+                    if (!labelCounts.ContainsKey(label)) labelOrder.Add(label);
+                    labelCounts[label] = labelCounts.TryGetValue(label, out var n) ? n + 1 : 1;
+                }
+
+                if (FormsPiiHeuristics.LooksLikePii(typeName, label, out var hint))
+                    piiLabels.Add(string.IsNullOrEmpty(label) ? hint : $"{label} ({hint})");
+            }
         }
 
-        hint = string.Empty;
-        return false;
+        var duplicateLabels = labelOrder.Where(l => labelCounts[l] > 1).ToList();
+        return (fieldCount, duplicateLabels, piiLabels);
     }
+
+    /// <summary>True when the content has a published version (best-effort).</summary>
+    private static bool IsPublished(IContent content)
+        => content is not IVersionable versionable || versionable.Status == VersionStatus.Published;
 
     /// <summary>
     /// Returns a lightweight list of forms suitable for a filter dropdown on

@@ -39,6 +39,11 @@
     <Using Include="EPiServer.DataAnnotations" />
   </ItemGroup>
 
+  <!-- Expose internal heuristics to the Forms test project for direct unit testing. -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="EditorPowertools.Tests.Forms" />
+  </ItemGroup>
+
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>

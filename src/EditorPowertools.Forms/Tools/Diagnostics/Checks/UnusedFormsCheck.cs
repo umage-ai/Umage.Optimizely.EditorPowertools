@@ -10,10 +10,10 @@ namespace UmageAI.Optimizely.EditorPowerTools.Forms.Tools.Diagnostics.Checks;
 /// </summary>
 public class UnusedFormsCheck : DoctorCheckBase
 {
-    private readonly FormsAggregationService _forms;
+    private readonly IFormsAggregationService _forms;
     private const string Prefix = "/editorpowertools/cmsdoctor/checks/unusedformscheck/";
 
-    public UnusedFormsCheck(FormsAggregationService forms)
+    public UnusedFormsCheck(IFormsAggregationService forms)
     {
         _forms = forms;
     }

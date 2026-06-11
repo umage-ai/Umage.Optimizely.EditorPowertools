@@ -10,10 +10,10 @@ namespace UmageAI.Optimizely.EditorPowerTools.Forms.Tools.Diagnostics.Checks;
 /// </summary>
 public class NoNotificationHandlerCheck : DoctorCheckBase
 {
-    private readonly FormsAggregationService _forms;
+    private readonly IFormsAggregationService _forms;
     private const string Prefix = "/editorpowertools/cmsdoctor/checks/nonotificationhandlercheck/";
 
-    public NoNotificationHandlerCheck(FormsAggregationService forms)
+    public NoNotificationHandlerCheck(IFormsAggregationService forms)
     {
         _forms = forms;
     }

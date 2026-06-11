@@ -16,6 +16,38 @@ public class FormSummaryDto
     public int SubmissionCount { get; set; }
     public DateTime? LastSubmissionUtc { get; set; }
 
+    /// <summary>True if the form has a published (live) version.</summary>
+    public bool IsPublished { get; set; }
+
+    /// <summary>True if the form is configured to persist submission data (AllowToStoreSubmissionData).</summary>
+    public bool StoresSubmissionData { get; set; }
+
+    /// <summary>Input fields whose label appears more than once on the same form
+    /// (their submission columns collide / are ambiguous). Empty when none.</summary>
+    public List<string> DuplicateFieldLabels { get; set; } = new();
+
+    /// <summary>Convenience flag — true when <see cref="DuplicateFieldLabels"/> is non-empty.</summary>
+    public bool HasDuplicateFields => DuplicateFieldLabels.Count > 0;
+
+    /// <summary>Labels of fields that look like they capture personal / GDPR-sensitive data.</summary>
+    public List<string> PiiFieldLabels { get; set; } = new();
+
+    /// <summary>True when the form captures at least one PII-shaped field.</summary>
+    public bool CapturesPii => PiiFieldLabels.Count > 0;
+
+    /// <summary>
+    /// True when this form is a privacy/GDPR risk worth flagging: it captures
+    /// PII-shaped fields AND stores submission data AND runs on the default
+    /// (effectively indefinite) retention policy. When the form is also published
+    /// and already has submissions, that personal data is very likely sitting in
+    /// storage forever — see <see cref="PrivacyRiskIsLive"/>.
+    /// </summary>
+    public bool PrivacyRisk => CapturesPii && StoresSubmissionData && UsesDefaultRetention;
+
+    /// <summary>True when a <see cref="PrivacyRisk"/> form is published and already
+    /// holds submissions — i.e. old personal data most likely already exists.</summary>
+    public bool PrivacyRiskIsLive => PrivacyRisk && IsPublished && SubmissionCount > 0;
+
     /// <summary>Number of pages/blocks that reference this form.</summary>
     public int UsageCount { get; set; }
 

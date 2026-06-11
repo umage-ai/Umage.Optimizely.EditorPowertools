@@ -17,7 +17,7 @@ namespace UmageAI.Optimizely.EditorPowerTools.Forms.Tools.FormsOverview;
 [RequireAjax]
 public class FormsApiController : Controller
 {
-    private readonly FormsAggregationService _service;
+    private readonly IFormsAggregationService _service;
     private readonly FormsFeatureAccessChecker _accessChecker;
     private readonly SubmissionsBroadcaster _broadcaster;
 
@@ -27,7 +27,7 @@ public class FormsApiController : Controller
     };
 
     public FormsApiController(
-        FormsAggregationService service,
+        IFormsAggregationService service,
         FormsFeatureAccessChecker accessChecker,
         SubmissionsBroadcaster broadcaster)
     {

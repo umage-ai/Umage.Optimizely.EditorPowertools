@@ -134,6 +134,13 @@
 }
 .ept-badge--neutral { background: #eef0f3; color: #555; }
 .ept-badge--success { background: #e3f5e3; color: #1e6b2c; }
+.ept-badge--warning { background: #fff3d9; color: #8a5d00; }
+.ept-badge--danger  { background: #fde7e7; color: #a11; }
+
+/* Risk flags shown under a form name in the overview */
+.ept-form-flags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
+.ept-form-flags .ept-badge { cursor: help; display: inline-flex; align-items: center; gap: 3px; }
+.ept-form-flags .ept-badge svg { width: 11px; height: 11px; }
 
 /* ── Submissions Timeline ────────────────────────────────────────── */
 .ept-timeline {

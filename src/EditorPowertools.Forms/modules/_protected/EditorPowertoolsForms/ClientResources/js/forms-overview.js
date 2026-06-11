@@ -16,6 +16,7 @@
         retention: 'all',           // 'all' | 'default' | 'custom'
         handlerFilter: 'all',       // 'all' | 'with' | 'without'
         usageOnly: false,
+        riskOnly: false,            // privacy/GDPR risks only
         sortBy: 'lastSubmission',
         sortDir: 'desc',
         expandedUsage: new Set(),   // contentIds whose usage panel is expanded
@@ -62,6 +63,10 @@
                     <input type="checkbox" id="ept-forms-usage-only" ${state.usageOnly ? 'checked' : ''} />
                     ${EPT.s('formsoverview.usage_only', 'Only forms used somewhere')}
                 </label>
+                <label class="ept-checkbox">
+                    <input type="checkbox" id="ept-forms-risk-only" ${state.riskOnly ? 'checked' : ''} />
+                    ${EPT.s('formsoverview.risk_only', 'Privacy risks only')}
+                </label>
             </div>
         `;
         card.appendChild(toolbar);
@@ -97,6 +102,10 @@
             state.usageOnly = e.target.checked;
             render();
         });
+        document.getElementById('ept-forms-risk-only').addEventListener('change', e => {
+            state.riskOnly = e.target.checked;
+            render();
+        });
     }
 
     function applyFilters(list) {
@@ -114,6 +123,7 @@
         if (state.handlerFilter === 'with') out = out.filter(r => r.hasEmailHandler || r.hasWebhookHandler);
         if (state.handlerFilter === 'without') out = out.filter(r => !r.hasEmailHandler && !r.hasWebhookHandler);
         if (state.usageOnly) out = out.filter(r => (r.usageCount || 0) > 0);
+        if (state.riskOnly) out = out.filter(r => r.privacyRisk);
 
         const dir = state.sortDir === 'asc' ? 1 : -1;
         out = out.slice().sort((a, b) => {
@@ -191,6 +201,7 @@
                 <a href="${escAttr(r.editUrl)}" class="ept-link" title="${EPT.s('formsoverview.tip_open', 'Open form in CMS edit mode')}">${esc(r.name || '(unnamed)')}</a>
             </div>
             ${r.breadcrumb ? `<div class="ept-muted ept-small">${esc(r.breadcrumb)}</div>` : ''}
+            ${buildFlags(r)}
         `;
         tr.appendChild(tdName);
 
@@ -291,6 +302,31 @@
         return tr;
     }
 
+    // Warning badges shown under a form name: privacy/GDPR risk and duplicate fields.
+    function buildFlags(r) {
+        const flags = [];
+        if (r.privacyRisk) {
+            const live = r.privacyRiskIsLive;
+            const label = live
+                ? EPT.s('formsoverview.flag_privacy_live', 'Privacy risk — live data')
+                : EPT.s('formsoverview.flag_privacy', 'Privacy risk');
+            const tipBase = live
+                ? EPT.s('formsoverview.flag_privacy_live_tip', 'Published form that already holds submissions of personal data on the default (indefinite) retention policy.')
+                : EPT.s('formsoverview.flag_privacy_tip', 'Captures personal data and stores submissions on the default (indefinite) retention policy.');
+            const fields = r.piiFieldLabels || [];
+            const tip = tipBase + (fields.length
+                ? ' ' + EPT.s('formsoverview.flag_pii_fields', 'Personal-data fields:') + ' ' + fields.join(', ')
+                : '');
+            flags.push(`<span class="ept-badge ${live ? 'ept-badge--danger' : 'ept-badge--warning'}" title="${escAttr(tip)}">${svgIcon('warn')}${esc(label)}</span>`);
+        }
+        if (r.hasDuplicateFields) {
+            const dups = r.duplicateFieldLabels || [];
+            const dtip = EPT.s('formsoverview.flag_duplicate_tip', 'These field labels appear more than once and collide in the submission data:') + ' ' + dups.join(', ');
+            flags.push(`<span class="ept-badge ept-badge--warning" title="${escAttr(dtip)}">${svgIcon('duplicate')}${esc(EPT.s('formsoverview.flag_duplicate', 'Duplicate fields'))}</span>`);
+        }
+        return flags.length ? `<div class="ept-form-flags">${flags.join('')}</div>` : '';
+    }
+
     // ── helpers ─────────────────────────────────────────────────────
     function el(tag, opts) {
         const e = document.createElement(tag);
@@ -334,6 +370,10 @@
                 return '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
             case 'usage':
                 return '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>';
+            case 'warn':
+                return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+            case 'duplicate':
+                return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
         }
         return '';
     }
