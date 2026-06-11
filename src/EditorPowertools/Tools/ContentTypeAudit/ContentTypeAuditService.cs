@@ -2,10 +2,10 @@ using System.Reflection;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
-using EPiServer.Shell;
 using EPiServer.Web.Routing;
 using UmageAI.Optimizely.EditorPowerTools.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Services;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit.Models;
 using Microsoft.Extensions.Logging;
@@ -148,7 +148,7 @@ public class ContentTypeAuditService
                     Name = usage.Name ?? "[No name]",
                     Language = lang,
                     Breadcrumb = contentRef.GetBreadcrumb(),
-                    EditUrl = $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{contentRef.ID}&viewsetting=viewlanguage:///{lang}",
+                    EditUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#context=epi.cms.contentdata:///{contentRef.ID}&viewsetting=viewlanguage:///{lang}",
                     IsPublished = isPublished,
                     ReferenceCount = referenceCount
                 });
@@ -209,7 +209,7 @@ public class ContentTypeAuditService
                 OwnerTypeName = ownerTypeName,
                 Language = ownerLang,
                 PropertyName = link.OwnerPropertyDefinition?.Name,
-                EditUrl = $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{link.OwnerContentLink.ID}&viewsetting=viewlanguage:///{ownerLang}"
+                EditUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#context=epi.cms.contentdata:///{link.OwnerContentLink.ID}&viewsetting=viewlanguage:///{ownerLang}"
             });
         }
 
@@ -280,7 +280,7 @@ public class ContentTypeAuditService
             ModelType = ct.ModelTypeString,
             ParentTypeName = ct.ModelType?.BaseType?.Name,
             DefaultController = ct.DefaultMvcController?.Name,
-            EditUrl = $"{Paths.ToResource("EPiServer.Cms.UI.Admin", "default")}#/ContentType/{ct.GUID}",
+            EditUrl = $"{EditorPowertoolsShellPaths.AdminDefault()}#/ContentTypes/edit-content-type/{ct.ID}",
             PropertyCount = ct.PropertyDefinitions.Count,
             IsSystemType = IsSystemType(ct),
             IsCodeless = ct.ModelType == null,

@@ -678,6 +678,7 @@
           <opt_previouslypublished>以前に公開済み</opt_previouslypublished>
           <opt_comment>コメント</opt_comment>
           <opt_allcontenttypes>すべてのコンテンツタイプ</opt_allcontenttypes>
+          <opt_alllanguages>すべての言語</opt_alllanguages>
           <btn_filter>フィルター</btn_filter>
           <btn_clear>クリア</btn_clear>
           <banner_showingfor>{0} のタイムラインを表示中</banner_showingfor>

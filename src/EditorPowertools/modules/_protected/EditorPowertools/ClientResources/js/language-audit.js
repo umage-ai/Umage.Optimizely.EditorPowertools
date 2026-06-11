@@ -58,7 +58,7 @@
         }
         content.innerHTML = '';
         if (jobStatus) {
-            const alertEl = EPT.renderJobAlert(jobStatus, `${API}/aggregation-start`);
+            const alertEl = EPT.renderJobAlert(jobStatus, `${API}/StartAggregationJob`);
             if (alertEl) { content.appendChild(alertEl); return; }
         }
         EPT.showEmpty(content, EPT.s('languageaudit.banner_runjob', 'Run the EditorPowertools Content Analysis scheduled job to populate data.'));

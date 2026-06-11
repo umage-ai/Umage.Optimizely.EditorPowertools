@@ -1,8 +1,7 @@
-using EPiServer;
-using EPiServer.Core;
+using System.Text.Json;
 using EPiServer.DataAbstraction;
-using EPiServer.Shell;
 using UmageAI.Optimizely.EditorPowerTools.Abstractions;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Services;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentStatistics.Models;
 using Microsoft.Extensions.Logging;
@@ -11,49 +10,46 @@ namespace UmageAI.Optimizely.EditorPowerTools.Tools.ContentStatistics;
 
 public class ContentStatisticsService
 {
-    private readonly IContentRepository _contentRepository;
-    private readonly IContentVersionRepository _versionRepository;
     private readonly IContentTypeRepository _contentTypeRepository;
     private readonly ContentTypeStatisticsRepository _statisticsRepository;
+    private readonly ContentDashboardSnapshotRepository _snapshotRepository;
     private readonly IContentTypeMetadataProvider _metadataProvider;
     private readonly ILogger<ContentStatisticsService> _logger;
 
     public ContentStatisticsService(
-        IContentRepository contentRepository,
-        IContentVersionRepository versionRepository,
         IContentTypeRepository contentTypeRepository,
         ContentTypeStatisticsRepository statisticsRepository,
+        ContentDashboardSnapshotRepository snapshotRepository,
         IContentTypeMetadataProvider metadataProvider,
         ILogger<ContentStatisticsService> logger)
     {
-        _contentRepository = contentRepository;
-        _versionRepository = versionRepository;
         _contentTypeRepository = contentTypeRepository;
         _statisticsRepository = statisticsRepository;
+        _snapshotRepository = snapshotRepository;
         _metadataProvider = metadataProvider;
         _logger = logger;
     }
 
     /// <summary>
-    /// Aggregates all dashboard data in a single call.
+    /// Aggregates all dashboard data in a single call. All sections come from data the
+    /// unified content analysis job pre-computes — totals/distribution/blockBreakdown
+    /// from <see cref="ContentTypeStatisticsRepository"/>, and creation-over-time / stale
+    /// content / top editors / average versions from <see cref="ContentDashboardSnapshotRepository"/>.
+    /// If the job has never run the snapshot is empty; the dashboard renders empty sections
+    /// and the run-now alert tells the user to run the job.
     /// </summary>
     public ContentStatisticsDashboardDto GetDashboard()
     {
         var allStats = _statisticsRepository.GetAll().ToList();
-        var contentTypes = _contentTypeRepository.List().ToList();
-        var contentTypeMap = contentTypes.ToDictionary(ct => ct.ID);
+        var contentTypeMap = _contentTypeRepository.List().ToDictionary(ct => ct.ID);
+        var snapshot = _snapshotRepository.GetCurrent();
 
-        // Build summary and distribution from pre-computed stats
-        var summary = BuildSummary(allStats, contentTypeMap);
+        var summary = BuildSummary(allStats, contentTypeMap, snapshot?.AverageVersionsPerItem ?? 0);
         var distribution = BuildTypeDistribution(allStats, contentTypeMap);
         var blockBreakdown = BuildBlockBreakdown(allStats, contentTypeMap);
-
-        // Scan content for creation-over-time, staleness, and editor activity
-        var descendants = _contentRepository.GetDescendents(ContentReference.RootPage).ToList();
-
-        var creationOverTime = BuildCreationOverTime(descendants);
-        var staleContent = BuildStaleContent(descendants, contentTypeMap);
-        var topEditors = BuildEditorActivity(descendants);
+        var creationOverTime = BuildCreationOverTime(snapshot);
+        var staleContent = BuildStaleContent(snapshot);
+        var topEditors = BuildTopEditors(snapshot);
 
         return new ContentStatisticsDashboardDto
         {
@@ -68,7 +64,8 @@ public class ContentStatisticsService
 
     private SummaryStatsDto BuildSummary(
         List<ContentTypeStatisticsRecord> allStats,
-        Dictionary<int, ContentType> contentTypeMap)
+        Dictionary<int, ContentType> contentTypeMap,
+        double averageVersionsPerItem)
     {
         var totalContent = 0;
         var totalPages = 0;
@@ -100,9 +97,6 @@ public class ContentStatisticsService
                 totalMedia += stat.ContentCount;
         }
 
-        // Compute average versions per item from a sample
-        var averageVersions = ComputeAverageVersions();
-
         return new SummaryStatsDto
         {
             TotalContent = totalContent,
@@ -110,38 +104,9 @@ public class ContentStatisticsService
             TotalBlocks = totalBlocks,
             TotalMedia = totalMedia,
             TotalContracts = CmsFeatureFlags.ContractsAvailable ? totalContracts : (int?)null,
-            AverageVersionsPerItem = averageVersions,
+            AverageVersionsPerItem = averageVersionsPerItem,
             LastAnalyzed = lastAnalyzed
         };
-    }
-
-    private double ComputeAverageVersions()
-    {
-        // Sample up to 200 content items for average version count
-        var descendants = _contentRepository.GetDescendents(ContentReference.RootPage)
-            .Take(200)
-            .ToList();
-
-        if (descendants.Count == 0) return 0;
-
-        var totalVersions = 0;
-        var counted = 0;
-
-        foreach (var contentRef in descendants)
-        {
-            try
-            {
-                var versions = _versionRepository.List(contentRef);
-                totalVersions += versions.Count();
-                counted++;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogDebug(ex, "Could not list versions for {ContentRef}", contentRef);
-            }
-        }
-
-        return counted > 0 ? Math.Round((double)totalVersions / counted, 1) : 0;
     }
 
     private IReadOnlyList<ContentTypeDistributionDto> BuildTypeDistribution(
@@ -217,142 +182,79 @@ public class ContentStatisticsService
     }
 #pragma warning restore CS0162
 
-    private IReadOnlyList<ContentCreationMonthDto> BuildCreationOverTime(
-        List<ContentReference> descendants)
+    private IReadOnlyList<ContentCreationMonthDto> BuildCreationOverTime(ContentDashboardSnapshotRecord? snapshot)
     {
-        var cutoff = DateTime.UtcNow.AddMonths(-12);
-        var monthlyCounts = new Dictionary<string, int>();
+        if (string.IsNullOrEmpty(snapshot?.CreationByMonthJson))
+            return Array.Empty<ContentCreationMonthDto>();
 
-        // Pre-fill 12 months
-        for (var i = 11; i >= 0; i--)
+        try
         {
-            var date = DateTime.UtcNow.AddMonths(-i);
-            var key = date.ToString("yyyy-MM");
-            monthlyCounts[key] = 0;
+            var dict = JsonSerializer.Deserialize<Dictionary<string, int>>(snapshot.CreationByMonthJson)
+                       ?? new Dictionary<string, int>();
+            return dict
+                .OrderBy(kv => kv.Key)
+                .Select(kv => new ContentCreationMonthDto { Month = kv.Key, Count = kv.Value })
+                .ToList();
         }
-
-        foreach (var contentRef in descendants)
+        catch (Exception ex)
         {
-            try
-            {
-                if (!_contentRepository.TryGet<IContent>(contentRef, out var content))
-                    continue;
-
-                if (content is IChangeTrackable trackable && trackable.Created >= cutoff)
-                {
-                    var key = trackable.Created.ToString("yyyy-MM");
-                    if (monthlyCounts.ContainsKey(key))
-                        monthlyCounts[key]++;
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogDebug(ex, "Could not load content {ContentRef}", contentRef);
-            }
+            _logger.LogWarning(ex, "Failed to deserialise CreationByMonthJson from dashboard snapshot.");
+            return Array.Empty<ContentCreationMonthDto>();
         }
-
-        return monthlyCounts
-            .OrderBy(kv => kv.Key)
-            .Select(kv => new ContentCreationMonthDto
-            {
-                Month = kv.Key,
-                Count = kv.Value
-            })
-            .ToList();
     }
 
-    private IReadOnlyList<StaleContentDto> BuildStaleContent(
-        List<ContentReference> descendants,
-        Dictionary<int, ContentType> contentTypeMap)
+    private IReadOnlyList<StaleContentDto> BuildStaleContent(ContentDashboardSnapshotRecord? snapshot)
     {
-        var items = new List<(IContent Content, DateTime LastModified)>();
+        if (string.IsNullOrEmpty(snapshot?.StaleContentJson))
+            return Array.Empty<StaleContentDto>();
 
-        foreach (var contentRef in descendants)
+        try
         {
-            try
-            {
-                if (!_contentRepository.TryGet<IContent>(contentRef, out var content))
-                    continue;
-
-                // Only include pages for staleness analysis
-                if (content is not PageData)
-                    continue;
-
-                var lastModified = (content as IChangeTrackable)?.Changed ?? DateTime.MinValue;
-                items.Add((content, lastModified));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogDebug(ex, "Could not load content {ContentRef}", contentRef);
-            }
-        }
-
-        return items
-            .OrderBy(i => i.LastModified)
-            .Take(20)
-            .Select(i =>
-            {
-                var ct = contentTypeMap.GetValueOrDefault(i.Content.ContentTypeID);
-                return new StaleContentDto
+            var items = JsonSerializer.Deserialize<List<StaleContentSnapshotItem>>(snapshot.StaleContentJson)
+                        ?? new List<StaleContentSnapshotItem>();
+            var now = DateTime.UtcNow;
+            return items
+                .Select(i => new StaleContentDto
                 {
-                    ContentId = i.Content.ContentLink.ID,
-                    Name = i.Content.Name ?? "[No name]",
-                    ContentTypeName = ct?.DisplayName ?? ct?.Name ?? "Unknown",
+                    ContentId = i.ContentId,
+                    Name = i.Name,
+                    ContentTypeName = i.ContentTypeName,
                     LastModified = i.LastModified,
-                    DaysSinceModified = (int)(DateTime.UtcNow - i.LastModified).TotalDays,
-                    EditUrl = $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{i.Content.ContentLink.ID}"
-                };
-            })
-            .ToList();
+                    DaysSinceModified = (int)(now - i.LastModified).TotalDays,
+                    EditUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#context=epi.cms.contentdata:///{i.ContentId}"
+                })
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to deserialise StaleContentJson from dashboard snapshot.");
+            return Array.Empty<StaleContentDto>();
+        }
     }
 
-    private IReadOnlyList<EditorActivityDto> BuildEditorActivity(
-        List<ContentReference> descendants)
+    private IReadOnlyList<EditorActivityDto> BuildTopEditors(ContentDashboardSnapshotRecord? snapshot)
     {
-        var editorStats = new Dictionary<string, (int EditCount, int PublishCount, DateTime LastActive)>(
-            StringComparer.OrdinalIgnoreCase);
+        if (string.IsNullOrEmpty(snapshot?.TopEditorsJson))
+            return Array.Empty<EditorActivityDto>();
 
-        foreach (var contentRef in descendants)
+        try
         {
-            try
-            {
-                var versions = _versionRepository.List(contentRef);
-                foreach (var version in versions)
+            var items = JsonSerializer.Deserialize<List<EditorActivitySnapshotItem>>(snapshot.TopEditorsJson)
+                        ?? new List<EditorActivitySnapshotItem>();
+            return items
+                .Select(i => new EditorActivityDto
                 {
-                    var user = version.SavedBy;
-                    if (string.IsNullOrEmpty(user)) continue;
-
-                    if (!editorStats.TryGetValue(user, out var existing))
-                    {
-                        existing = (0, 0, DateTime.MinValue);
-                    }
-
-                    var editCount = existing.EditCount + 1;
-                    var publishCount = existing.PublishCount +
-                        (version.Status == VersionStatus.Published ? 1 : 0);
-                    var lastActive = version.Saved > existing.LastActive
-                        ? version.Saved
-                        : existing.LastActive;
-
-                    editorStats[user] = (editCount, publishCount, lastActive);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogDebug(ex, "Could not list versions for {ContentRef}", contentRef);
-            }
+                    Username = i.Username,
+                    EditCount = i.EditCount,
+                    PublishCount = i.PublishCount,
+                    LastActive = i.LastActive
+                })
+                .ToList();
         }
-
-        return editorStats
-            .OrderByDescending(kv => kv.Value.EditCount)
-            .Take(10)
-            .Select(kv => new EditorActivityDto
-            {
-                Username = kv.Key,
-                EditCount = kv.Value.EditCount,
-                PublishCount = kv.Value.PublishCount,
-                LastActive = kv.Value.LastActive != DateTime.MinValue ? kv.Value.LastActive : null
-            })
-            .ToList();
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to deserialise TopEditorsJson from dashboard snapshot.");
+            return Array.Empty<EditorActivityDto>();
+        }
     }
 }

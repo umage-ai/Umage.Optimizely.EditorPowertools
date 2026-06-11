@@ -4,6 +4,7 @@ public class ScheduledJobDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
+    public string? TypeName { get; set; }
     public bool IsEnabled { get; set; }
     public bool IsRunning { get; set; }
     public DateTime? NextExecution { get; set; }

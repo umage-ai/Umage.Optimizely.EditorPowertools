@@ -678,6 +678,7 @@
           <opt_previouslypublished>Eerder gepubliceerd</opt_previouslypublished>
           <opt_comment>Reacties</opt_comment>
           <opt_allcontenttypes>Alle inhoudstypen</opt_allcontenttypes>
+          <opt_alllanguages>Alle talen</opt_alllanguages>
           <btn_filter>Filteren</btn_filter>
           <btn_clear>Wissen</btn_clear>
           <banner_showingfor>Tijdlijn weergeven voor {0}</banner_showingfor>

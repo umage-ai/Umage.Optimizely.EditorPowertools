@@ -51,6 +51,8 @@ public class ActiveEditorsHub : Hub
 
     public async Task UpdateContext(int? contentId, string? contentName, string action)
     {
+        if (_service.IsUpdateContextRateLimited(Context.ConnectionId)) return;
+
         var previousEditors = contentId.HasValue
             ? _service.GetEditorsOnContent(contentId.Value, Context.ConnectionId)
             : new List<EditorPresenceDto>();

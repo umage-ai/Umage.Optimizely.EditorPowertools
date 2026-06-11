@@ -678,6 +678,7 @@
           <opt_previouslypublished>Tidigare publicerat</opt_previouslypublished>
           <opt_comment>Kommentarer</opt_comment>
           <opt_allcontenttypes>Alla innehållstyper</opt_allcontenttypes>
+          <opt_alllanguages>Alla språk</opt_alllanguages>
           <btn_filter>Filtrera</btn_filter>
           <btn_clear>Rensa</btn_clear>
           <banner_showingfor>Visar tidslinje för {0}</banner_showingfor>

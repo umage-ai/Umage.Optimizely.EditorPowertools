@@ -43,6 +43,7 @@ public class SecurityAuditRepository
             existing.ChildMorePermissive = record.ChildMorePermissive;
             existing.IssueCount = record.IssueCount;
             existing.SubtreeIssueCount = record.SubtreeIssueCount;
+            existing.HasChildren = record.HasChildren;
             existing.LastUpdated = record.LastUpdated;
             store.Save(existing);
         }

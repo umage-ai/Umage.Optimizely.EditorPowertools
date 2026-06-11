@@ -98,6 +98,15 @@ public class LanguageAuditApiController : Controller
         return Ok(items);
     }
 
+    [HttpGet]
+    public IActionResult GetAggregationStatus()
+    {
+        if (!HasAccess()) return Forbid();
+
+        var status = _aggregationJobService.GetStatus();
+        return Ok(status);
+    }
+
     [HttpPost]
     public async Task<IActionResult> StartAggregationJob()
     {

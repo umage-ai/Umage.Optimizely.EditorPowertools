@@ -52,6 +52,8 @@ Tools carried over from the old project (re-implemented with new UI) and new add
   - Cache hit ratios
   - Configuration issues (missing settings, deprecated features)
 
+- [ ] **Database Table Size Probe** - CMS Doctor check that runs a small set of read-only SQL queries against the EPiServer DB to surface per-table row counts and disk size, with thresholds that flag tables which are unusually large for a CMS of that scale. Examples worth alerting on: `tblBigTable` (DDS rows — leaks from removed addons), `tblWorkContent` (version history that's never been trimmed), `tblPropertyDefinition` history, `tblScheduledJobLog` (job history that grew because nobody pruned), Find/Search index tables. Output: name, row count, MB on disk, "expected order of magnitude" baseline, and a one-line interpretation when it's outside that. Read-only DB access only, never writes; runs from the analysis job (results cached) so the live page is just a DDS read. Don't ship destructive cleanup as part of this — link to docs / scheduled-jobs that handle the cleanup.
+
 ## Content Tools
 
 - [ ] **Content Audit** - Comprehensive content inventory with configurable columns, filters, and Excel export. Inspired by the NTI export (75K+ items, 5 sheets). Must handle large sites with server-side pagination.
@@ -105,7 +107,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Content Tree Exporter** - Export content tree structure to CSV
 - [ ] **Missing Alt Text Report** - Find images missing alt text
 - [x] **Link Checker** - Comprehensive link health monitoring.
-  - [ ] **Bug: Link Checker URLs incorrect** - Links shown in the Link Checker tool are not resolving to correct URLs. Needs investigation and fix.
+  - [x] **Bug: Link Checker URLs incorrect** - Fixed: was using `#/content/{id}` hash (a route the CMS edit-mode SPA never exposed). Switched all `editUrl`-style strings to `#context=epi.cms.contentdata:///{id}` via a centralized `EditorPowertoolsShellPaths.ContentEditUrl` helper. Same root cause was lurking in PersonalizationAnalyzer, LanguageAuditAnalyzer, and SecurityAuditService — all fixed.
 - [ ] **Content Statistics** - Dashboards showing content type distribution, content creation over time, content age analysis (oldest content), editor activity statistics, top 10 most active editors (per language). Some graphs can appear on the overview page.
 - [ ] **Content Audit Scalability** - Current ContentAuditService loads all content into memory via GetDescendents which won't scale to 75K+ items. Refactor to use streaming/batched enumeration, or pre-compute data via the unified scheduled job and serve from DDS. Consider using IContentRepository.GetDescendents with batched loading and server-side cursor pagination.
 - [ ] **Content Quality Health Checks** - CMS Doctor checks that leverage content statistics: stale content ratio (not updated in X months), content freshness score, publish frequency trends, content coverage gaps. Depends on Content Statistics tool for aggregated data. Scheduled job crawls all content to catalog internal and external (outbound) links. Checks link status (200/301/404/timeout/etc.), tracks history over time. UI shows broken links with filters by status code, content type, internal/external. Links to affected content items for easy fixing. Uses the shared aggregation scheduled job for link discovery, with a separate background check for outbound URL validation.
@@ -141,6 +143,7 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [ ] **Cache Inspector** - View and manage CMS cache entries
 - [ ] **Content Type Diff** - Compare content types between environments
 - [ ] **Environment Info Panel** - CMS version, loaded assemblies, config summary
+- [ ] **Ghost Content Type Cleanup** - Delete a specific content type and every content item based on it, but only when the type is "ghosted" — present in the database but no longer defined in code (no matching CLR type registered with the model assembly). Gated behind an explicit destructive-action permission and a multi-step confirm: list affected content with breadcrumb + count, require a typed-name confirmation, and run inside a single transaction so it's all-or-nothing. Should also remove related artifacts (soft-link entries, scheduled job references, version history). Useful after major refactors that leave orphan types from previous app generations. Audit-log every deletion.
 
 ## Content Calendar
 
@@ -236,11 +239,11 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 - [x] **Fix XSS in filter dropdowns** - Escape attribute values in `<option>` elements in audience-manager.js and content-type-audit.js.
 
 **Medium — Data exposure & hardening:**
-- [ ] **Add CSRF protection** - Add `[ValidateAntiForgeryToken]` or verify Optimizely's global CSRF middleware covers all POST/DELETE endpoints.
+- [x] **Add CSRF protection** - Audited: every POST/DELETE/PUT action is covered by `[RequireAjax]` (X-Requested-With header check, the project's standard CSRF mitigation). 11 controllers protect at class level; SecurityAudit and ContentAudit annotate the individual write methods.
 - [x] **Fix exception message exposure** - Return generic error messages in BulkPropertyEditorController and ContentImporterApiController instead of `ex.Message`.
-- [ ] **Add SignalR rate limiting** - Implement per-connection rate limiting on chat, heartbeat, and notification hub methods.
-- [ ] **Fix iframe sandbox** - Change empty `sandbox=""` to `sandbox="allow-same-origin"` in activity-timeline.js version comparison.
-- [ ] **Add PreferencesApiController feature checks** - Inject FeatureAccessChecker and validate tool access.
+- [x] **Add SignalR rate limiting** - Per-connection cooldowns on chat (2s), notify (5s), heartbeat (10s), and now UpdateContext (1s — closes the broadcast amplification gap).
+- [x] **Fix iframe sandbox** - `sandbox="allow-same-origin"` already in place in activity-timeline.js version comparison.
+- [x] **Add PreferencesApiController feature checks** - Now calls `HasAccess(HttpContext, id)` (full feature + permission check) instead of `IsFeatureEnabled` only.
 - [ ] **Documentation with Screenshots** - Comprehensive documentation of every component with screenshots: installation guide, configuration options, each tool's UI and features, API reference, permission setup. Suitable for the NuGet package README and a docs site.
 - [ ] **In-edit-mode tool documentation** - Contextual help/documentation panel accessible from within the CMS edit mode. Each tool should have a brief description, use-case guidance, and tips visible without leaving the CMS. Could be a collapsible help section at the top of each tool page, or a dedicated help panel triggered by a "?" icon.
 - [x] **Unit Tests** - Unit test project covering all services, parsers, and API controllers. 162 tests with Moq and FluentAssertions covering ActiveEditors, file parsers, LinkChecker, CmsDoctor, ActivityTimeline, ScheduledJobsGantt, ContentTypeAudit, and AudienceManager.

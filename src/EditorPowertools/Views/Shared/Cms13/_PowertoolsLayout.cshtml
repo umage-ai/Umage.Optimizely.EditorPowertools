@@ -2,6 +2,7 @@
 @using EPiServer.Shell
 @using EPiServer.Shell.Navigation
 @using System.Text.Json
+@using UmageAI.Optimizely.EditorPowerTools.Infrastructure
 @addTagHelper *, EPiServer.Shell.UI
 @inject UmageAI.Optimizely.EditorPowerTools.Localization.UiStringsProvider UiStrings
 @inject LocalizationService Loc
@@ -58,9 +59,9 @@
     <script>
         window.EPT_BASE_URL = '@Html.Raw(Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), ""))';
         window.EPT_HUB_URL = '@Html.Raw(Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), "hubs"))';
-        window.EPT_CMS_URL = '@Html.Raw(Paths.ToResource("CMS", ""))';
-        window.EPT_ADMIN_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.Admin", "default"))';
-        window.EPT_VG_URL = '@Html.Raw(Paths.ToResource("EPiServer.Cms.UI.VisitorGroups", "ManageVisitorGroups"))';
+        window.EPT_CMS_URL = '@Html.Raw(EditorPowertoolsShellPaths.CmsRoot())';
+        window.EPT_ADMIN_URL = '@Html.Raw(EditorPowertoolsShellPaths.AdminDefault())';
+        window.EPT_VG_URL = '@Html.Raw(EditorPowertoolsShellPaths.ManageVisitorGroups())';
         window.EPT_STRINGS = @Html.Raw(JsonSerializer.Serialize(UiStrings.GetAll()));
         window.EPT_CMS13 = true;
     </script>

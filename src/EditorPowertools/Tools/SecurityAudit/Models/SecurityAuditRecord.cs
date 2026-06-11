@@ -42,5 +42,12 @@ public class SecurityAuditRecord : IDynamicData
     /// </summary>
     public int SubtreeIssueCount { get; set; }
 
+    /// <summary>
+    /// True if any other record's ParentContentId equals this record's ContentId.
+    /// Computed during Complete() so the tree-loading endpoints can return per-node
+    /// "expandable" markers without scanning the whole DDS table on every click.
+    /// </summary>
+    public bool HasChildren { get; set; }
+
     public DateTime LastUpdated { get; set; }
 }

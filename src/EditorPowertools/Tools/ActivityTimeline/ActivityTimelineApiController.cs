@@ -32,7 +32,8 @@ public class ActivityTimelineApiController : Controller
         [FromQuery] string? contentType = null,
         [FromQuery] DateTime? from = null,
         [FromQuery] DateTime? to = null,
-        [FromQuery] int? contentId = null)
+        [FromQuery] int? contentId = null,
+        [FromQuery] string? language = null)
     {
         if (!_accessChecker.HasAccess(HttpContext,
             nameof(Configuration.FeatureToggles.ActivityTimeline),
@@ -48,7 +49,8 @@ public class ActivityTimelineApiController : Controller
             ContentTypeName = contentType,
             FromUtc = from,
             ToUtc = to,
-            ContentId = contentId
+            ContentId = contentId,
+            Language = language
         };
 
         var result = _service.GetActivities(request);
@@ -104,5 +106,17 @@ public class ActivityTimelineApiController : Controller
 
         var types = _service.GetDistinctContentTypes();
         return Ok(types);
+    }
+
+    [HttpGet]
+    public IActionResult GetLanguages()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ActivityTimeline),
+            EditorPowertoolsPermissions.ActivityTimeline))
+            return Forbid();
+
+        var languages = _service.GetEnabledLanguages();
+        return Ok(languages);
     }
 }

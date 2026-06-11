@@ -2,7 +2,7 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.Personalization.VisitorGroups;
-using EPiServer.Shell;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentDetails.Models;
 using Microsoft.Extensions.Logging;
 
@@ -546,7 +546,7 @@ public class ContentDetailsService
                 if (i + 1 < allVersions.Count && versionContents[i] != null && versionContents[i + 1] != null)
                 {
                     dto.ChangedProperties = DiffProperties(versionContents[i + 1]!, versionContents[i]!);
-                    dto.CompareUrl = $"{Paths.ToResource("CMS", "")}#context=epi.cms.contentdata:///{contentRef.ID}" +
+                    dto.CompareUrl = $"{EditorPowertoolsShellPaths.CmsRoot()}#context=epi.cms.contentdata:///{contentRef.ID}" +
                         $"&viewsetting=epi.cms.contentediting///compare/{allVersions[i + 1].ContentLink.WorkID}/{ver.ContentLink.WorkID}";
                 }
 

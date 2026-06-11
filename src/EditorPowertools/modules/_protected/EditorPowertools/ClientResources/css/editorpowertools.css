@@ -151,6 +151,12 @@
 /* ── Page Header ────────────────────────────────────────────────── */
 .ept-page-header {
     margin-bottom: var(--ept-space-lg);
+    /* Reserve room at the right for the absolute umage.ai watermark in .ept-main
+       so right-aligned actions (e.g. CMS Doctor's "Run all" button) don't overlap. */
+    padding-right: 130px;
+}
+@media (max-width: 600px) {
+    .ept-page-header { padding-right: 0; }
 }
 
 .ept-page-header h1 {

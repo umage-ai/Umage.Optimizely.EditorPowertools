@@ -4,8 +4,8 @@ using EPiServer.Core.Html.StringParsing;
 using EPiServer.DataAbstraction;
 using EPiServer.Personalization.VisitorGroups;
 using EPiServer.Security;
-using EPiServer.Shell;
 using UmageAI.Optimizely.EditorPowerTools.Helpers;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 using Microsoft.Extensions.Logging;
 
@@ -67,14 +67,20 @@ public class PersonalizationAnalyzer : IContentAnalyzer
         var contentTypeName = contentType?.DisplayName ?? contentType?.Name;
         var language = (content as ILocalizable)?.Language?.Name;
         var breadcrumb = content.GetBreadcrumb();
-        var editUrl = $"{Paths.ToResource("CMS", "")}#/content/{contentRef.ID}/language/{language}";
+        var editUrl = EditorPowertoolsShellPaths.ContentEditUrl(contentRef.ID, language);
 
         // 1. Check access rights for visitor groups
         CheckAccessRights(content, contentRef, contentTypeName, language, breadcrumb, editUrl);
 
-        // 2. Check properties for ContentArea and XhtmlString personalization
-        CheckProperties(content, contentRef, contentTypeName, language, breadcrumb, editUrl, string.Empty, null, null);
+        // 2. Check properties for ContentArea and XhtmlString personalization.
+        // Track visited content links to prevent stack overflow on circular block references.
+        var visited = new HashSet<int>();
+        if (!ContentReference.IsNullOrEmpty(contentRef))
+            visited.Add(contentRef.ID);
+        CheckProperties(content, contentRef, contentTypeName, language, breadcrumb, editUrl, string.Empty, null, null, visited, 0);
     }
+
+    private const int MaxRecursionDepth = 32;
 
     public void Complete()
     {
@@ -121,8 +127,15 @@ public class PersonalizationAnalyzer : IContentAnalyzer
 
     private void CheckProperties(IContent content, ContentReference contentRef, string? contentTypeName,
         string? language, string breadcrumb, string editUrl, string propertyPrefix,
-        int? parentContentId, string? parentContentName)
+        int? parentContentId, string? parentContentName,
+        HashSet<int> visitedContentIds, int depth)
     {
+        if (depth >= MaxRecursionDepth)
+        {
+            _logger.LogWarning("Personalization analyzer hit max recursion depth ({Depth}) while scanning {ContentLink}; skipping deeper nested blocks.", depth, contentRef);
+            return;
+        }
+
         foreach (var prop in content.Property)
         {
             var propertyName = string.IsNullOrEmpty(propertyPrefix) ? prop.Name : $"{propertyPrefix}.{prop.Name}";
@@ -162,6 +175,10 @@ public class PersonalizationAnalyzer : IContentAnalyzer
                         // Check nested blocks
                         if (item.ContentLink != null && !ContentReference.IsNullOrEmpty(item.ContentLink))
                         {
+                            // Skip if we've already walked this block on the current path — guards against circular references.
+                            if (!visitedContentIds.Add(item.ContentLink.ID))
+                                continue;
+
                             try
                             {
                                 if (_contentLoader.TryGet<IContent>(item.ContentLink, out var nestedContent)
@@ -170,12 +187,18 @@ public class PersonalizationAnalyzer : IContentAnalyzer
                                     CheckProperties(nestedContent, contentRef, contentTypeName,
                                         language, breadcrumb, editUrl, propertyName,
                                         parentContentId ?? contentRef.ID,
-                                        parentContentName ?? content.Name);
+                                        parentContentName ?? content.Name,
+                                        visitedContentIds, depth + 1);
                                 }
                             }
                             catch (Exception ex)
                             {
                                 _logger.LogWarning(ex, "Error checking nested block {ContentLink}", item.ContentLink);
+                            }
+                            finally
+                            {
+                                // Allow this block to be visited via other branches (sibling content areas).
+                                visitedContentIds.Remove(item.ContentLink.ID);
                             }
                         }
                     }
@@ -216,13 +239,15 @@ public class PersonalizationAnalyzer : IContentAnalyzer
                     }
                 }
 #endif
-                // Nested block properties (IContentData that isn't ContentArea or XhtmlString)
+                // Nested block properties (IContentData that isn't ContentArea or XhtmlString).
+                // Inline blocks have no stable ContentLink — depth limit alone bounds the walk.
                 else if (prop.Value is IContentData nestedData && nestedData is IContent nestedContentItem)
                 {
                     CheckProperties(nestedContentItem, contentRef, contentTypeName,
                         language, breadcrumb, editUrl, propertyName,
                         parentContentId ?? contentRef.ID,
-                        parentContentName ?? content.Name);
+                        parentContentName ?? content.Name,
+                        visitedContentIds, depth + 1);
                 }
             }
             catch (Exception ex)

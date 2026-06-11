@@ -1,6 +1,7 @@
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
+using UmageAI.Optimizely.EditorPowerTools.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,17 +14,17 @@ namespace UmageAI.Optimizely.EditorPowerTools.Components;
 public class ComponentsApiController : Controller
 {
     private readonly IContentLoader _contentLoader;
-    private readonly IContentRepository _contentRepository;
     private readonly IContentTypeRepository _contentTypeRepository;
+    private readonly IContentSearchProvider? _searchProvider;
 
     public ComponentsApiController(
         IContentLoader contentLoader,
-        IContentRepository contentRepository,
-        IContentTypeRepository contentTypeRepository)
+        IContentTypeRepository contentTypeRepository,
+        IContentSearchProvider? searchProvider = null)
     {
         _contentLoader = contentLoader;
-        _contentRepository = contentRepository;
         _contentTypeRepository = contentTypeRepository;
+        _searchProvider = searchProvider;
     }
 
     // ── Content Tree ───────────────────────────────────────────────
@@ -58,7 +59,12 @@ public class ComponentsApiController : Controller
     }
 
     /// <summary>
-    /// Search content by name. Returns up to 50 results.
+    /// Search content by name. Returns up to 50 results — but only when a host project
+    /// has registered an IContentSearchProvider (e.g. via the EditorPowertools.Graph
+    /// add-on). Without one, returns an empty array; the picker UI then shows its
+    /// "no results" empty state and editors fall back to tree navigation. Walking the
+    /// content tree on every keystroke (the previous implementation) is not allowed
+    /// on a live request path.
     /// </summary>
     [HttpGet]
     public IActionResult SearchContent([FromQuery] string q, [FromQuery] int rootId = 0)
@@ -66,28 +72,27 @@ public class ComponentsApiController : Controller
         if (string.IsNullOrWhiteSpace(q) || q.Length < 2)
             return Ok(Array.Empty<object>());
 
-        var root = rootId == 0 ? ContentReference.RootPage : new ContentReference(rootId);
-        var results = new List<object>();
+        if (_searchProvider == null)
+            return Ok(Array.Empty<object>());
 
+        var root = rootId == 0 ? null : new ContentReference(rootId);
+        IEnumerable<ContentSearchHit> hits;
         try
         {
-            var descendants = _contentRepository.GetDescendents(root);
-            foreach (var descRef in descendants.Take(2000))
-            {
-                if (results.Count >= 50) break;
-
-                if (_contentLoader.TryGet<IContent>(descRef, out var content) &&
-                    content.Name.Contains(q, StringComparison.OrdinalIgnoreCase))
-                {
-                    results.Add(MapContent(content));
-                }
-            }
+            hits = _searchProvider.Search(q, root, maxResults: 50);
         }
         catch
         {
-            // Fallback: return empty on error
+            return Ok(Array.Empty<object>());
         }
 
+        var results = hits.Select(h => (object)new
+        {
+            Id = h.ContentId,
+            h.Name,
+            h.TypeName,
+            h.HasChildren
+        }).ToList();
         return Ok(results);
     }
 

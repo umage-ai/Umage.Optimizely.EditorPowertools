@@ -153,7 +153,7 @@
             },
             {
                 key: 'visitorGroupName', label: EPT.s('personalizationaudit.col_groups', 'Visitor Groups'), render: (r) => {
-                    return `<a href="${window.EPT_VG_URL || '/EPiServer/EPiServer.Cms.UI.VisitorGroups/ManageVisitorGroups'}#/group/${encodeURIComponent(r.visitorGroupId)}" target="_blank" style="color:inherit;text-decoration:none"><strong>${escHtml(r.visitorGroupName)}</strong> <span style="opacity:.4;display:inline-block;width:14px;height:14px;vertical-align:middle">${EPT.icons.link}</span></a>`;
+                    return `<a href="${window.EPT_VG_URL || ''}#/group/${encodeURIComponent(r.visitorGroupId)}" target="_blank" style="color:inherit;text-decoration:none"><strong>${escHtml(r.visitorGroupName)}</strong> <span style="opacity:.4;display:inline-block;width:14px;height:14px;vertical-align:middle">${EPT.icons.link}</span></a>`;
                 }
             },
             {

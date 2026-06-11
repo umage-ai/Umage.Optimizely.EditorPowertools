@@ -1,5 +1,5 @@
 using System.Text.Json;
-using EPiServer.Shell;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit.Models;
 using Microsoft.Extensions.Logging;
 
@@ -32,6 +32,8 @@ public class SecurityAuditService
     /// <summary>
     /// Returns top-level children of a node for lazy tree loading.
     /// parentContentId = 0 returns root-level content.
+    /// HasChildren is read from the pre-computed flag on each record (set by the analyzer's
+    /// Complete() phase) so this call no longer scans every record on every tree expand.
     /// </summary>
     public List<ContentPermissionNodeDto> GetChildren(int parentContentId)
     {
@@ -42,11 +44,8 @@ public class SecurityAuditService
         {
             children = _repository.GetByParent(1).ToList(); // ContentReference.RootPage
         }
-        var allRecords = _repository.GetAll().ToList();
-        var childLookup = allRecords.GroupBy(r => r.ParentContentId)
-            .ToDictionary(g => g.Key, g => true);
 
-        return children.Select(r => MapToNodeDto(r, childLookup.ContainsKey(r.ContentId))).ToList();
+        return children.Select(r => MapToNodeDto(r, r.HasChildren)).ToList();
     }
 
     /// <summary>
@@ -57,10 +56,7 @@ public class SecurityAuditService
         var record = _repository.GetByContentId(contentId);
         if (record == null) return null;
 
-        var allRecords = _repository.GetAll().ToList();
-        var hasChildren = allRecords.Any(r => r.ParentContentId == contentId);
-
-        return MapToNodeDto(record, hasChildren);
+        return MapToNodeDto(record, record.HasChildren);
     }
 
     /// <summary>
@@ -141,7 +137,7 @@ public class SecurityAuditService
                 !string.Equals(matchingEntry.Access, accessLevelFilter, StringComparison.OrdinalIgnoreCase))
                 continue;
 
-            var editUrl = $"{Paths.ToResource("CMS", "")}#/content/{record.ContentId}";
+            var editUrl = EditorPowertoolsShellPaths.ContentEditUrl(record.ContentId);
 
             items.Add(new RoleExplorerItemDto
             {
@@ -184,7 +180,7 @@ public class SecurityAuditService
 
         foreach (var record in records)
         {
-            var editUrl = $"{Paths.ToResource("CMS", "")}#/content/{record.ContentId}";
+            var editUrl = EditorPowertoolsShellPaths.ContentEditUrl(record.ContentId);
             AddIssuesForRecord(record, editUrl, issues);
         }
 

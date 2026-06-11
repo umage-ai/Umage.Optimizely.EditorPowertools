@@ -30,7 +30,8 @@
         issuesPage: 1,
         issuesResult: null,
         // Status
-        status: null
+        status: null,
+        jobStatus: null
     };
 
     var PAGE_SIZE = 50;
@@ -123,20 +124,24 @@
 
         try {
             // Load preferences and status in parallel
-            var prefs, statusData;
+            var prefs, statusData, jobStatusData;
             try {
                 var results = await Promise.all([
                     EPT.loadPreferences('SecurityAudit'),
-                    EPT.fetchJson(API + '/GetStatus').catch(function () { return null; })
+                    EPT.fetchJson(API + '/GetStatus').catch(function () { return null; }),
+                    EPT.fetchJson(API + '/GetAggregationStatus').catch(function () { return null; })
                 ]);
                 prefs = results[0];
                 statusData = results[1];
+                jobStatusData = results[2];
             } catch (e) {
                 prefs = {};
                 statusData = null;
+                jobStatusData = null;
             }
 
             state.status = statusData;
+            state.jobStatus = jobStatusData;
 
             // Restore preferences
             if (prefs.activeTab) state.activeTab = prefs.activeTab;
@@ -146,6 +151,7 @@
             if (prefs.issueSeverityFilter) state.issueSeverityFilter = prefs.issueSeverityFilter;
 
             renderShell();
+            renderJobAlert();
             switchTab(state.activeTab);
         } catch (err) {
             root.innerHTML = '<div class="ept-empty"><p>Error loading Security Audit: ' + escHtml(err.message) + '</p></div>';
@@ -163,6 +169,17 @@
     }
 
     // ── Shell (tabs + stats + content area) ───────────────────────
+    function renderJobAlert() {
+        if (!state.jobStatus) return;
+        var alertEl = EPT.renderJobAlert(state.jobStatus, API + '/StartAggregationJob');
+        if (!alertEl) return;
+        var host = document.getElementById('sa-status-alert');
+        if (host) {
+            host.innerHTML = '';
+            host.appendChild(alertEl);
+        }
+    }
+
     function renderShell() {
         var html = '';
 

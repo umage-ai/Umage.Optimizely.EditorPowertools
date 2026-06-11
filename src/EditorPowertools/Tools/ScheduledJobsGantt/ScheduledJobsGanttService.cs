@@ -32,6 +32,7 @@ public class ScheduledJobsGanttService
         {
             Id = job.ID,
             Name = job.Name,
+            TypeName = job.TypeName,
             IsEnabled = job.IsEnabled,
             IsRunning = job.IsRunning,
             NextExecution = job.NextExecution,

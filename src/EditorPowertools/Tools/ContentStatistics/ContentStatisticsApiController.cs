@@ -40,6 +40,18 @@ public class ContentStatisticsApiController : Controller
         return Ok(dashboard);
     }
 
+    [HttpGet]
+    public IActionResult GetAggregationStatus()
+    {
+        if (!_accessChecker.HasAccess(HttpContext,
+            nameof(Configuration.FeatureToggles.ContentStatistics),
+            EditorPowertoolsPermissions.ContentStatistics))
+            return Forbid();
+
+        var status = _aggregationJobService.GetStatus();
+        return Ok(status);
+    }
+
     [HttpPost]
     public async Task<IActionResult> StartAggregationJob()
     {

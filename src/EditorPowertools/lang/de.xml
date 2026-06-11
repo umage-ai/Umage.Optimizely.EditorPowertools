@@ -678,6 +678,7 @@
           <opt_previouslypublished>Zuvor veröffentlicht</opt_previouslypublished>
           <opt_comment>Kommentare</opt_comment>
           <opt_allcontenttypes>Alle Inhaltstypen</opt_allcontenttypes>
+          <opt_alllanguages>Alle Sprachen</opt_alllanguages>
           <btn_filter>Filtern</btn_filter>
           <btn_clear>Löschen</btn_clear>
           <banner_showingfor>Zeitachse für {0} anzeigen</banner_showingfor>
