@@ -63,6 +63,14 @@
           <tip_open>Formular im CMS-Bearbeitungsmodus öffnen</tip_open>
           <tip_edit>Formular im CMS-Bearbeitungsmodus öffnen</tip_edit>
           <tip_usage>Anzeigen, wo dieses Formular verwendet wird</tip_usage>
+          <risk_only>Nur Datenschutzrisiken</risk_only>
+          <flag_privacy>Datenschutzrisiko</flag_privacy>
+          <flag_privacy_live>Datenschutzrisiko — aktive Daten</flag_privacy_live>
+          <flag_privacy_tip>Erfasst personenbezogene Daten und speichert Einsendungen mit der Standardaufbewahrungsrichtlinie (unbegrenzt).</flag_privacy_tip>
+          <flag_privacy_live_tip>Veröffentlichtes Formular, das bereits Einsendungen mit personenbezogenen Daten mit der Standardaufbewahrungsrichtlinie (unbegrenzt) enthält — alte personenbezogene Daten werden wahrscheinlich aufbewahrt.</flag_privacy_live_tip>
+          <flag_pii_fields>Felder mit personenbezogenen Daten:</flag_pii_fields>
+          <flag_duplicate>Doppelte Felder</flag_duplicate>
+          <flag_duplicate_tip>Diese Feldbeschriftungen kommen mehr als einmal vor und kollidieren in den Einsendungsdaten:</flag_duplicate_tip>
         </formsoverview>
         <submissionstimeline>
           <events>Einsendungen</events>
@@ -123,6 +131,14 @@
             <details>{0}</details>
             <andmore>(und {0} weitere)</andmore>
           </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Formulare mit doppelten Feldern</name>
+            <description>Findet Formulare mit zwei oder mehr Eingabefeldern, die dieselbe Beschriftung teilen, wodurch mehrdeutige Einsendungsspalten entstehen.</description>
+            <ok>Kein Formular hat doppelte Feldbeschriftungen.</ok>
+            <found>{0} Formulare haben doppelte Feldbeschriftungen.</found>
+            <examples>Beispiele: {0}</examples>
+            <andmore>(und {0} weitere)</andmore>
+          </duplicatefieldscheck>
         </checks>
       </cmsdoctor>
     </editorpowertools>

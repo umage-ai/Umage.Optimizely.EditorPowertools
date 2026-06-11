@@ -63,6 +63,14 @@
           <tip_open>Avaa lomake CMS:n muokkaustilassa</tip_open>
           <tip_edit>Avaa lomake CMS:n muokkaustilassa</tip_edit>
           <tip_usage>Näytä, missä tätä lomaketta käytetään</tip_usage>
+          <risk_only>Vain tietosuojariskit</risk_only>
+          <flag_privacy>Tietosuojariski</flag_privacy>
+          <flag_privacy_live>Tietosuojariski — aktiiviset tiedot</flag_privacy_live>
+          <flag_privacy_tip>Kerää henkilötietoja ja tallentaa lähetykset oletuskäytännöllä (rajoittamaton säilytys).</flag_privacy_tip>
+          <flag_privacy_live_tip>Julkaistu lomake, joka sisältää jo henkilötietoja sisältäviä lähetyksiä oletuskäytännöllä (rajoittamaton säilytys) — vanhat henkilötiedot säilyvät todennäköisesti.</flag_privacy_live_tip>
+          <flag_pii_fields>Henkilötietokentät:</flag_pii_fields>
+          <flag_duplicate>Päällekkäiset kentät</flag_duplicate>
+          <flag_duplicate_tip>Nämä kenttien nimet esiintyvät useammin kuin kerran ja menevät päällekkäin lähetystiedoissa:</flag_duplicate_tip>
         </formsoverview>
         <submissionstimeline>
           <events>lähetystä</events>
@@ -123,6 +131,14 @@
             <details>{0}</details>
             <andmore>(ja {0} lisää)</andmore>
           </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Lomakkeet, joissa on päällekkäisiä kenttiä</name>
+            <description>Etsii lomakkeet, joissa on kaksi tai useampia syöttökenttiä, joilla on sama nimi, mikä aiheuttaa moniselitteisiä lähetyssarakkeita.</description>
+            <ok>Yhdelläkään lomakkeella ei ole päällekkäisiä kenttien nimiä.</ok>
+            <found>{0} lomakkeella on päällekkäisiä kenttien nimiä.</found>
+            <examples>Esimerkkejä: {0}</examples>
+            <andmore>(ja {0} lisää)</andmore>
+          </duplicatefieldscheck>
         </checks>
       </cmsdoctor>
     </editorpowertools>

@@ -63,6 +63,14 @@
           <tip_open>Åbn formular i CMS-redigeringstilstand</tip_open>
           <tip_edit>Åbn formular i CMS-redigeringstilstand</tip_edit>
           <tip_usage>Vis hvor denne formular bruges</tip_usage>
+          <risk_only>Kun privatlivsrisici</risk_only>
+          <flag_privacy>Privatlivsrisiko</flag_privacy>
+          <flag_privacy_live>Privatlivsrisiko — aktive data</flag_privacy_live>
+          <flag_privacy_tip>Indsamler persondata og gemmer indsendelser med standardpolitikken (ubestemt opbevaring).</flag_privacy_tip>
+          <flag_privacy_live_tip>Publiceret formular, der allerede indeholder indsendelser med persondata på standardpolitikken (ubestemt opbevaring) — gamle persondata bliver sandsynligvis bevaret.</flag_privacy_live_tip>
+          <flag_pii_fields>Persondatafelter:</flag_pii_fields>
+          <flag_duplicate>Duplikerede felter</flag_duplicate>
+          <flag_duplicate_tip>Disse feltetiketter optræder mere end én gang og kolliderer i indsendelsesdataene:</flag_duplicate_tip>
         </formsoverview>
         <submissionstimeline>
           <events>indsendelser</events>
@@ -123,6 +131,14 @@
             <details>{0}</details>
             <andmore>(og {0} flere)</andmore>
           </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Formularer med duplikerede felter</name>
+            <description>Finder formularer med to eller flere inputfelter, der deler samme etiket, hvilket giver tvetydige indsendelseskolonner.</description>
+            <ok>Ingen formular har duplikerede feltetiketter.</ok>
+            <found>{0} formularer har duplikerede feltetiketter.</found>
+            <examples>Eksempler: {0}</examples>
+            <andmore>(og {0} flere)</andmore>
+          </duplicatefieldscheck>
         </checks>
       </cmsdoctor>
     </editorpowertools>

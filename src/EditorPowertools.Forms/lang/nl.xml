@@ -63,6 +63,14 @@
           <tip_open>Formulier openen in CMS-bewerkingsmodus</tip_open>
           <tip_edit>Formulier openen in CMS-bewerkingsmodus</tip_edit>
           <tip_usage>Toon waar dit formulier wordt gebruikt</tip_usage>
+          <risk_only>Alleen privacyrisico's</risk_only>
+          <flag_privacy>Privacyrisico</flag_privacy>
+          <flag_privacy_live>Privacyrisico — actieve gegevens</flag_privacy_live>
+          <flag_privacy_tip>Legt persoonsgegevens vast en slaat inzendingen op met het standaardbewaarbeleid (onbeperkt).</flag_privacy_tip>
+          <flag_privacy_live_tip>Gepubliceerd formulier dat al inzendingen met persoonsgegevens bevat met het standaardbewaarbeleid (onbeperkt) — oude persoonsgegevens worden waarschijnlijk bewaard.</flag_privacy_live_tip>
+          <flag_pii_fields>Velden met persoonsgegevens:</flag_pii_fields>
+          <flag_duplicate>Dubbele velden</flag_duplicate>
+          <flag_duplicate_tip>Deze veldlabels komen meer dan eens voor en botsen in de inzendingsgegevens:</flag_duplicate_tip>
         </formsoverview>
         <submissionstimeline>
           <events>inzendingen</events>
@@ -123,6 +131,14 @@
             <details>{0}</details>
             <andmore>(en nog {0})</andmore>
           </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Formulieren met dubbele velden</name>
+            <description>Vindt formulieren met twee of meer invoervelden die hetzelfde label delen, wat dubbelzinnige inzendingskolommen oplevert.</description>
+            <ok>Geen enkel formulier heeft dubbele veldlabels.</ok>
+            <found>{0} formulieren hebben dubbele veldlabels.</found>
+            <examples>Voorbeelden: {0}</examples>
+            <andmore>(en nog {0})</andmore>
+          </duplicatefieldscheck>
         </checks>
       </cmsdoctor>
     </editorpowertools>

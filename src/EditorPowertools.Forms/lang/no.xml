@@ -63,6 +63,14 @@
           <tip_open>Åpne skjema i CMS-redigeringsmodus</tip_open>
           <tip_edit>Åpne skjema i CMS-redigeringsmodus</tip_edit>
           <tip_usage>Vis hvor dette skjemaet brukes</tip_usage>
+          <risk_only>Kun personvernrisikoer</risk_only>
+          <flag_privacy>Personvernrisiko</flag_privacy>
+          <flag_privacy_live>Personvernrisiko — aktive data</flag_privacy_live>
+          <flag_privacy_tip>Samler inn persondata og lagrer innsendinger med standardpolicyen (ubestemt oppbevaring).</flag_privacy_tip>
+          <flag_privacy_live_tip>Publisert skjema som allerede inneholder innsendinger med persondata med standardpolicyen (ubestemt oppbevaring) — gamle persondata blir sannsynligvis beholdt.</flag_privacy_live_tip>
+          <flag_pii_fields>Persondatafelter:</flag_pii_fields>
+          <flag_duplicate>Dupliserte felter</flag_duplicate>
+          <flag_duplicate_tip>Disse feltetikettene forekommer mer enn én gang og kolliderer i innsendingsdataene:</flag_duplicate_tip>
         </formsoverview>
         <submissionstimeline>
           <events>innsendinger</events>
@@ -123,6 +131,14 @@
             <details>{0}</details>
             <andmore>(og {0} til)</andmore>
           </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Skjemaer med dupliserte felter</name>
+            <description>Finner skjemaer med to eller flere inndatafelter som deler samme etikett, noe som gir tvetydige innsendingskolonner.</description>
+            <ok>Ingen skjemaer har dupliserte feltetiketter.</ok>
+            <found>{0} skjemaer har dupliserte feltetiketter.</found>
+            <examples>Eksempler: {0}</examples>
+            <andmore>(og {0} til)</andmore>
+          </duplicatefieldscheck>
         </checks>
       </cmsdoctor>
     </editorpowertools>

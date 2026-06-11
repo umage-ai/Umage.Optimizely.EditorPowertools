@@ -63,6 +63,14 @@
           <tip_open>CMS の編集モードでフォームを開く</tip_open>
           <tip_edit>CMS の編集モードでフォームを開く</tip_edit>
           <tip_usage>このフォームの使用箇所を表示</tip_usage>
+          <risk_only>プライバシーリスクのみ</risk_only>
+          <flag_privacy>プライバシーリスク</flag_privacy>
+          <flag_privacy_live>プライバシーリスク — 実データ</flag_privacy_live>
+          <flag_privacy_tip>個人データを収集し、送信を標準（無期限）の保持ポリシーで保存しています。</flag_privacy_tip>
+          <flag_privacy_live_tip>公開済みのフォームで、標準（無期限）の保持ポリシーですでに個人データの送信を保持しています — 古い個人データが残存している可能性が高いです。</flag_privacy_live_tip>
+          <flag_pii_fields>個人データフィールド:</flag_pii_fields>
+          <flag_duplicate>重複フィールド</flag_duplicate>
+          <flag_duplicate_tip>これらのフィールドラベルは複数回出現し、送信データ内で衝突します:</flag_duplicate_tip>
         </formsoverview>
         <submissionstimeline>
           <events>送信</events>
@@ -123,6 +131,14 @@
             <details>{0}</details>
             <andmore>（他{0}件）</andmore>
           </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>重複フィールドのあるフォーム</name>
+            <description>同じラベルを共有する2つ以上の入力フィールドを持ち、あいまいな送信列を生成するフォームを検出します。</description>
+            <ok>フィールドラベルが重複しているフォームはありません。</ok>
+            <found>{0}個のフォームでフィールドラベルが重複しています。</found>
+            <examples>例：{0}</examples>
+            <andmore>（他{0}件）</andmore>
+          </duplicatefieldscheck>
         </checks>
       </cmsdoctor>
     </editorpowertools>

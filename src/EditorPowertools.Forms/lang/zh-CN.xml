@@ -63,6 +63,14 @@
           <tip_open>在 CMS 编辑模式中打开表单</tip_open>
           <tip_edit>在 CMS 编辑模式中打开表单</tip_edit>
           <tip_usage>显示此表单的使用位置</tip_usage>
+          <risk_only>仅隐私风险</risk_only>
+          <flag_privacy>隐私风险</flag_privacy>
+          <flag_privacy_live>隐私风险 — 实时数据</flag_privacy_live>
+          <flag_privacy_tip>捕获个人数据，并以默认（无限期）保留策略存储提交。</flag_privacy_tip>
+          <flag_privacy_live_tip>已发布的表单，其已以默认（无限期）保留策略保存了包含个人数据的提交 — 旧的个人数据很可能被保留。</flag_privacy_live_tip>
+          <flag_pii_fields>个人数据字段：</flag_pii_fields>
+          <flag_duplicate>重复字段</flag_duplicate>
+          <flag_duplicate_tip>这些字段标签出现多次，并在提交数据中发生冲突：</flag_duplicate_tip>
         </formsoverview>
         <submissionstimeline>
           <events>提交</events>
@@ -123,6 +131,14 @@
             <details>{0}</details>
             <andmore>（还有 {0} 个）</andmore>
           </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>含重复字段的表单</name>
+            <description>查找具有两个或更多共享相同标签的输入字段的表单，这会产生有歧义的提交列。</description>
+            <ok>没有表单存在重复的字段标签。</ok>
+            <found>{0} 个表单存在重复的字段标签。</found>
+            <examples>示例：{0}</examples>
+            <andmore>（还有 {0} 个）</andmore>
+          </duplicatefieldscheck>
         </checks>
       </cmsdoctor>
     </editorpowertools>

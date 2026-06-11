@@ -63,6 +63,14 @@
           <tip_open>Abrir formulario en modo de edición del CMS</tip_open>
           <tip_edit>Abrir formulario en modo de edición del CMS</tip_edit>
           <tip_usage>Mostrar dónde se utiliza este formulario</tip_usage>
+          <risk_only>Solo riesgos de privacidad</risk_only>
+          <flag_privacy>Riesgo de privacidad</flag_privacy>
+          <flag_privacy_live>Riesgo de privacidad — datos activos</flag_privacy_live>
+          <flag_privacy_tip>Captura datos personales y almacena los envíos con la política de retención predeterminada (indefinida).</flag_privacy_tip>
+          <flag_privacy_live_tip>Formulario publicado que ya contiene envíos de datos personales con la política de retención predeterminada (indefinida); es probable que se conserven datos personales antiguos.</flag_privacy_live_tip>
+          <flag_pii_fields>Campos de datos personales:</flag_pii_fields>
+          <flag_duplicate>Campos duplicados</flag_duplicate>
+          <flag_duplicate_tip>Estas etiquetas de campo aparecen más de una vez y colisionan en los datos de los envíos:</flag_duplicate_tip>
         </formsoverview>
         <submissionstimeline>
           <events>envíos</events>
@@ -123,6 +131,14 @@
             <details>{0}</details>
             <andmore>(y {0} más)</andmore>
           </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Formularios con campos duplicados</name>
+            <description>Encuentra los formularios con dos o más campos de entrada que comparten la misma etiqueta, lo que produce columnas de envío ambiguas.</description>
+            <ok>Ningún formulario tiene etiquetas de campo duplicadas.</ok>
+            <found>{0} formularios tienen etiquetas de campo duplicadas.</found>
+            <examples>Ejemplos: {0}</examples>
+            <andmore>(y {0} más)</andmore>
+          </duplicatefieldscheck>
         </checks>
       </cmsdoctor>
     </editorpowertools>

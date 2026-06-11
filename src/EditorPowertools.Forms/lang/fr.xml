@@ -63,6 +63,14 @@
           <tip_open>Ouvrir le formulaire en mode édition du CMS</tip_open>
           <tip_edit>Ouvrir le formulaire en mode édition du CMS</tip_edit>
           <tip_usage>Afficher où ce formulaire est utilisé</tip_usage>
+          <risk_only>Risques de confidentialité uniquement</risk_only>
+          <flag_privacy>Risque de confidentialité</flag_privacy>
+          <flag_privacy_live>Risque de confidentialité — données actives</flag_privacy_live>
+          <flag_privacy_tip>Capture des données personnelles et stocke les soumissions avec la politique de conservation par défaut (indéfinie).</flag_privacy_tip>
+          <flag_privacy_live_tip>Formulaire publié qui contient déjà des soumissions de données personnelles avec la politique de conservation par défaut (indéfinie) — les anciennes données personnelles sont probablement conservées.</flag_privacy_live_tip>
+          <flag_pii_fields>Champs de données personnelles :</flag_pii_fields>
+          <flag_duplicate>Champs en double</flag_duplicate>
+          <flag_duplicate_tip>Ces libellés de champ apparaissent plusieurs fois et entrent en collision dans les données de soumission :</flag_duplicate_tip>
         </formsoverview>
         <submissionstimeline>
           <events>soumissions</events>
@@ -123,6 +131,14 @@
             <details>{0}</details>
             <andmore>(et {0} de plus)</andmore>
           </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Formulaires avec des champs en double</name>
+            <description>Recherche les formulaires comportant au moins deux champs de saisie partageant le même libellé, ce qui produit des colonnes de soumission ambiguës.</description>
+            <ok>Aucun formulaire n'a de libellés de champ en double.</ok>
+            <found>{0} formulaires ont des libellés de champ en double.</found>
+            <examples>Exemples : {0}</examples>
+            <andmore>(et {0} de plus)</andmore>
+          </duplicatefieldscheck>
         </checks>
       </cmsdoctor>
     </editorpowertools>

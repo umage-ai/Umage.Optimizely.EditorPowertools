@@ -63,6 +63,14 @@
           <tip_open>Öppna formulär i CMS-redigeringsläge</tip_open>
           <tip_edit>Öppna formulär i CMS-redigeringsläge</tip_edit>
           <tip_usage>Visa var detta formulär används</tip_usage>
+          <risk_only>Endast integritetsrisker</risk_only>
+          <flag_privacy>Integritetsrisk</flag_privacy>
+          <flag_privacy_live>Integritetsrisk — aktiva data</flag_privacy_live>
+          <flag_privacy_tip>Samlar in personuppgifter och lagrar inskickningar med standardpolicyn (obestämd lagring).</flag_privacy_tip>
+          <flag_privacy_live_tip>Publicerat formulär som redan innehåller inskickningar med personuppgifter med standardpolicyn (obestämd lagring) — gamla personuppgifter bevaras sannolikt.</flag_privacy_live_tip>
+          <flag_pii_fields>Personuppgiftsfält:</flag_pii_fields>
+          <flag_duplicate>Dubblettfält</flag_duplicate>
+          <flag_duplicate_tip>Dessa fältetiketter förekommer mer än en gång och kolliderar i inskickningsdatan:</flag_duplicate_tip>
         </formsoverview>
         <submissionstimeline>
           <events>inskickningar</events>
@@ -123,6 +131,14 @@
             <details>{0}</details>
             <andmore>(och {0} till)</andmore>
           </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Formulär med dubblettfält</name>
+            <description>Hittar formulär med två eller flera inmatningsfält som delar samma etikett, vilket ger tvetydiga inskickningskolumner.</description>
+            <ok>Inget formulär har dubbletter av fältetiketter.</ok>
+            <found>{0} formulär har dubbletter av fältetiketter.</found>
+            <examples>Exempel: {0}</examples>
+            <andmore>(och {0} till)</andmore>
+          </duplicatefieldscheck>
         </checks>
       </cmsdoctor>
     </editorpowertools>
