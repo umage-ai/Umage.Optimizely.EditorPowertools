@@ -143,6 +143,48 @@ EditorPowertools is multi-targeted: the same NuGet package supports both Optimiz
 
 The user-facing term "Orphaned" (content type in DB with no matching .NET class) is renamed to "Code-less" across the UI. See [docs/cms13-support.md](docs/cms13-support.md) for details.
 
+## Forms add-on (separate package)
+
+Optimizely Forms tooling ships as a separate, optional NuGet package — `UmageAI.Optimizely.EditorPowerTools.Forms` — so only sites that use [Optimizely Forms](https://docs.developers.optimizely.com/content-management-system/docs/optimizely-forms) take the extra dependency. It also multi-targets CMS 12 (.NET 8) and CMS 13 (.NET 10), and depends on the base package.
+
+| Tool | Description |
+|------|-------------|
+| **Forms Overview** | Inventory of every Optimizely Form on the site — submission counts, last activity, field counts, where each form is used (incoming references), notification handlers (email/webhook), and retention policy. Flags **duplicate field labels** and **privacy/GDPR risks** (forms that capture personal data, store submissions, and run on the default indefinite retention policy — elevated when the form is live with existing submissions). Filter by retention, handlers, usage, or privacy risk. |
+| **Submissions Timeline** | Cross-form, chronological feed of recent submissions, linked back to the form that received them. Optional **live mode** streams new submissions as they arrive (Server-Sent Events). Filter by form, date range, and finalized/partial. |
+
+It also contributes four checks to the base **CMS Doctor** dashboard: *Unused Forms*, *Forms Without Notification Handlers*, *PII Stored Indefinitely*, and *Forms With Duplicate Fields*.
+
+### Installation
+
+```
+dotnet add package UmageAI.Optimizely.EditorPowerTools.Forms
+```
+
+Register it **after** the base package:
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddEditorPowertools(/* ... */);
+    services.AddEditorPowertoolsForms(); // Forms add-on
+}
+
+public void Configure(IApplicationBuilder app)
+{
+    app.UseEditorPowertools();
+    app.UseEditorPowertoolsForms();
+
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapContent();
+        endpoints.MapEditorPowertools();
+        endpoints.MapEditorPowertoolsForms(); // Required: maps the Forms tool endpoints
+    });
+}
+```
+
+The Forms tools honour the same permission model as the base package and add their own feature toggles (bound from `CodeArt:EditorPowertools:Forms`) and per-tool permissions (`FormsOverview`, `SubmissionsTimeline`).
+
 ## Installation
 
 ```
