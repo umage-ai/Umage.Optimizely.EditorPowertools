@@ -194,13 +194,13 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 
 *Separate project/NuGet package with dependency on EPiServer.Forms.*
 
-- [ ] **Form Manager** - Comprehensive form management tool:
-  - List all forms on the site with property counts
-  - Detect forms with duplicate properties
-  - Track which forms are used the most (submission counts)
-  - List recent form submissions
-  - GDPR data audit: identify where old personal data exists
-  - GDPR cleanup: tools to purge old form submission data based on age/form
+- **Form Manager** - Comprehensive form management tool:
+  - [x] List all forms on the site with property counts *(Forms Overview tool)*
+  - [x] Detect forms with duplicate properties *(duplicate-field detection + `DuplicateFieldsCheck`)*
+  - [x] Track which forms are used the most (submission counts) *(Forms Overview: submission counts, usage, sortable)*
+  - [x] List recent form submissions *(Submissions Timeline tool, incl. live SSE)*
+  - [x] GDPR data audit: identify where old personal data exists *(PII detection + privacy-risk flag: captures PII + stores data + default retention, elevated when live with submissions; `PiiIndefiniteRetentionCheck`)*
+  - [ ] GDPR cleanup: tools to purge old form submission data based on age/form *(deferred — destructive; needs its own design pass for permissions/confirmation/audit)*
 
 ---
 
