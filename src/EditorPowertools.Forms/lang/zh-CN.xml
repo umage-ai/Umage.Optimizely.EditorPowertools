@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="简体中文" id="zh-CN">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <FormsOverview>访问表单概览工具 — 所有 Optimizely Forms 的清单，包含提交、字段、使用情况和保留策略。</FormsOverview>
+              <SubmissionsTimeline>访问提交时间线 — 跨表单的最近表单提交的时间顺序信息流。</SubmissionsTimeline>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <formsoverview>表单概览</formsoverview>
+        <submissionstimeline>提交时间线</submissionstimeline>
+      </menu>
+      <tools>
+        <formsoverview>
+          <title>表单概览</title>
+          <description>站点上的每个 Optimizely Form，包含提交数量、最近活动、每个表单的使用位置以及适用的保留策略。</description>
+        </formsoverview>
+        <submissionstimeline>
+          <title>提交时间线</title>
+          <description>整个站点最近的表单提交，按时间顺序排列并链接回接收它们的表单。</description>
+        </submissionstimeline>
+      </tools>
+      <ui>
+        <formsoverview>
+          <forms_label>个表单</forms_label>
+          <filter_placeholder>按名称或位置筛选…</filter_placeholder>
+          <retention_all>任意保留</retention_all>
+          <retention_default>仅默认保留</retention_default>
+          <retention_default_short>默认</retention_default_short>
+          <retention_custom>仅自定义保留</retention_custom>
+          <retention_custom_short>自定义</retention_custom_short>
+          <handler_all>任意处理程序</handler_all>
+          <handler_with>含邮件/webhook</handler_with>
+          <handler_without>无通知处理程序</handler_without>
+          <handler_email_tip>已配置邮件通知</handler_email_tip>
+          <handler_webhook_tip>已配置 webhook</handler_webhook_tip>
+          <handler_none>—</handler_none>
+          <usage_only>仅在某处使用的表单</usage_only>
+          <empty>没有表单符合当前筛选条件。</empty>
+          <error_load>加载表单失败。</error_load>
+          <col_name>表单</col_name>
+          <col_fields>字段</col_fields>
+          <col_submissions>提交</col_submissions>
+          <col_last>最近提交</col_last>
+          <col_usage>使用于</col_usage>
+          <col_handlers>处理程序</col_handlers>
+          <col_retention>保留</col_retention>
+          <no_submissions>无提交</no_submissions>
+          <unused>未使用</unused>
+          <more>个</more>
+          <retention_partial>部分：</retention_partial>
+          <retention_final>已完成：</retention_final>
+          <btn_edit>编辑</btn_edit>
+          <btn_usage>使用于</btn_usage>
+          <tip_open>在 CMS 编辑模式中打开表单</tip_open>
+          <tip_edit>在 CMS 编辑模式中打开表单</tip_edit>
+          <tip_usage>显示此表单的使用位置</tip_usage>
+        </formsoverview>
+        <submissionstimeline>
+          <events>提交</events>
+          <range_7>最近 7 天</range_7>
+          <range_30>最近 30 天</range_30>
+          <range_90>最近 90 天</range_90>
+          <range_365>最近一年</range_365>
+          <filter_placeholder>按表单名称筛选…</filter_placeholder>
+          <form_filter_tip>按表单筛选</form_filter_tip>
+          <all_forms>所有表单</all_forms>
+          <finalized_only>仅已完成</finalized_only>
+          <empty>在所选范围内未找到提交。</empty>
+          <error_load>加载提交时间线失败。</error_load>
+          <finalized>已完成</finalized>
+          <partial>部分</partial>
+          <btn_details>详情</btn_details>
+          <btn_view>查看</btn_view>
+          <tip_details>显示提交数据</tip_details>
+          <tip_view>在 CMS 中打开此表单的提交视图</tip_view>
+          <loading_details>正在加载详情…</loading_details>
+          <no_data>此提交未捕获任何数据。</no_data>
+          <live>实时</live>
+          <live_tip>在新提交到达时进行流式传输</live_tip>
+          <submission_id>提交 ID</submission_id>
+          <meta_when>提交时间</meta_when>
+          <meta_user>用户</meta_user>
+          <meta_language>语言</meta_language>
+          <meta_page>页面</meta_page>
+          <anonymous>匿名</anonymous>
+        </submissionstimeline>
+      </ui>
+      <cmsdoctor>
+        <groups>
+          <forms>表单</forms>
+        </groups>
+        <checks>
+          <unusedformscheck>
+            <name>未使用的表单</name>
+            <description>查找站点上未被任何内容引用的 Optimizely Forms。</description>
+            <ok>每个表单都至少被一个页面或块引用。</ok>
+            <found>{0} 个表单未在站点上的任何位置使用。</found>
+            <examples>示例：{0}</examples>
+            <andmore>（还有 {0} 个）</andmore>
+          </unusedformscheck>
+          <nonotificationhandlercheck>
+            <name>无通知处理程序的表单</name>
+            <description>查找接收提交但未配置邮件或 webhook 处理程序的表单。</description>
+            <ok>每个接收提交的表单都至少有一个通知处理程序。</ok>
+            <found>{0} 个表单有提交但没有邮件/webhook 处理程序。</found>
+            <examples>示例：{0}</examples>
+            <andmore>（还有 {0} 个）</andmore>
+          </nonotificationhandlercheck>
+          <piiindefiniteretentioncheck>
+            <name>无限期存储的 PII</name>
+            <description>查找以默认（实际上是无限期）保留策略捕获个人数据的表单。</description>
+            <ok>没有包含 PII 类字段的表单以默认保留策略存储。</ok>
+            <found>{0} 个表单以默认（无限期）保留策略捕获 PII 类字段。请审查 GDPR／隐私合规性。</found>
+            <details>{0}</details>
+            <andmore>（还有 {0} 个）</andmore>
+          </piiindefiniteretentioncheck>
+        </checks>
+      </cmsdoctor>
+    </editorpowertools>
+  </language>
+</languages>

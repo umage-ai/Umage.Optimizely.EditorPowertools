@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Suomi" id="fi">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <FormsOverview>Pääsy Lomakeyhteenvetoon — luettelo kaikista Optimizely Forms -lomakkeista, joista näkyvät lähetykset, kentät, käyttö ja säilytyskäytäntö.</FormsOverview>
+              <SubmissionsTimeline>Pääsy Lähetysten aikajanaan — lomakerajat ylittävä kronologinen syöte viimeisimmistä lomakelähetyksistä.</SubmissionsTimeline>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <formsoverview>Lomakeyhteenveto</formsoverview>
+        <submissionstimeline>Lähetysten aikajana</submissionstimeline>
+      </menu>
+      <tools>
+        <formsoverview>
+          <title>Lomakeyhteenveto</title>
+          <description>Jokainen sivuston Optimizely Form -lomake, sis. lähetysten määrän, viimeisimmän toiminnan, kunkin lomakkeen käyttöpaikat ja sovellettavan säilytyskäytännön.</description>
+        </formsoverview>
+        <submissionstimeline>
+          <title>Lähetysten aikajana</title>
+          <description>Viimeisimmät lomakelähetykset koko sivustolta, järjestettynä kronologisesti ja linkitettynä takaisin lomakkeeseen, joka ne vastaanotti.</description>
+        </submissionstimeline>
+      </tools>
+      <ui>
+        <formsoverview>
+          <forms_label>lomaketta</forms_label>
+          <filter_placeholder>Suodata nimen tai sijainnin mukaan…</filter_placeholder>
+          <retention_all>Mikä tahansa säilytys</retention_all>
+          <retention_default>Vain oletussäilytys</retention_default>
+          <retention_default_short>Oletus</retention_default_short>
+          <retention_custom>Vain mukautettu säilytys</retention_custom>
+          <retention_custom_short>Mukautettu</retention_custom_short>
+          <handler_all>Mitkä tahansa käsittelijät</handler_all>
+          <handler_with>Sähköposti/webhook</handler_with>
+          <handler_without>Ei ilmoituskäsittelijää</handler_without>
+          <handler_email_tip>Sähköposti-ilmoitus määritetty</handler_email_tip>
+          <handler_webhook_tip>Webhook määritetty</handler_webhook_tip>
+          <handler_none>—</handler_none>
+          <usage_only>Vain jossain käytössä olevat lomakkeet</usage_only>
+          <empty>Yksikään lomake ei vastaa nykyisiä suodattimia.</empty>
+          <error_load>Lomakkeiden lataaminen epäonnistui.</error_load>
+          <col_name>Lomake</col_name>
+          <col_fields>Kentät</col_fields>
+          <col_submissions>Lähetykset</col_submissions>
+          <col_last>Viimeisin lähetys</col_last>
+          <col_usage>Käytössä</col_usage>
+          <col_handlers>Käsittelijät</col_handlers>
+          <col_retention>Säilytys</col_retention>
+          <no_submissions>ei lähetyksiä</no_submissions>
+          <unused>käyttämätön</unused>
+          <more>lisää</more>
+          <retention_partial>Osittainen:</retention_partial>
+          <retention_final>Viimeistelty:</retention_final>
+          <btn_edit>Muokkaa</btn_edit>
+          <btn_usage>Käytössä</btn_usage>
+          <tip_open>Avaa lomake CMS:n muokkaustilassa</tip_open>
+          <tip_edit>Avaa lomake CMS:n muokkaustilassa</tip_edit>
+          <tip_usage>Näytä, missä tätä lomaketta käytetään</tip_usage>
+        </formsoverview>
+        <submissionstimeline>
+          <events>lähetystä</events>
+          <range_7>Viimeiset 7 päivää</range_7>
+          <range_30>Viimeiset 30 päivää</range_30>
+          <range_90>Viimeiset 90 päivää</range_90>
+          <range_365>Viimeinen vuosi</range_365>
+          <filter_placeholder>Suodata lomakkeen nimen mukaan…</filter_placeholder>
+          <form_filter_tip>Suodata lomakkeen mukaan</form_filter_tip>
+          <all_forms>Kaikki lomakkeet</all_forms>
+          <finalized_only>Vain viimeistellyt</finalized_only>
+          <empty>Valitulta aikaväliltä ei löytynyt lähetyksiä.</empty>
+          <error_load>Lähetysten aikajanan lataaminen epäonnistui.</error_load>
+          <finalized>viimeistelty</finalized>
+          <partial>osittainen</partial>
+          <btn_details>Tiedot</btn_details>
+          <btn_view>Näytä</btn_view>
+          <tip_details>Näytä lähetyksen tiedot</tip_details>
+          <tip_view>Avaa tämän lomakkeen lähetysnäkymä CMS:ssä</tip_view>
+          <loading_details>Ladataan tietoja…</loading_details>
+          <no_data>Tälle lähetykselle ei tallennettu tietoja.</no_data>
+          <live>Live</live>
+          <live_tip>Suoratoista uudet lähetykset sitä mukaa kun niitä saapuu</live_tip>
+          <submission_id>Lähetyksen tunnus</submission_id>
+          <meta_when>Lähetetty</meta_when>
+          <meta_user>Käyttäjä</meta_user>
+          <meta_language>Kieli</meta_language>
+          <meta_page>Sivu</meta_page>
+          <anonymous>nimetön</anonymous>
+        </submissionstimeline>
+      </ui>
+      <cmsdoctor>
+        <groups>
+          <forms>Lomakkeet</forms>
+        </groups>
+        <checks>
+          <unusedformscheck>
+            <name>Käyttämättömät lomakkeet</name>
+            <description>Etsii Optimizely Forms -lomakkeet, joihin sivuston sisältö ei viittaa.</description>
+            <ok>Jokaiseen lomakkeeseen viitataan vähintään yhdeltä sivulta tai lohkosta.</ok>
+            <found>{0} lomaketta ei käytetä missään sivustolla.</found>
+            <examples>Esimerkkejä: {0}</examples>
+            <andmore>(ja {0} lisää)</andmore>
+          </unusedformscheck>
+          <nonotificationhandlercheck>
+            <name>Lomakkeet ilman ilmoituskäsittelijää</name>
+            <description>Etsii lomakkeet, jotka vastaanottavat lähetyksiä mutta joille ei ole määritetty sähköposti- tai webhook-käsittelijää.</description>
+            <ok>Jokaisella lähetyksiä vastaanottavalla lomakkeella on vähintään yksi ilmoituskäsittelijä.</ok>
+            <found>{0} lomakkeella on lähetyksiä mutta ei sähköposti-/webhook-käsittelijää.</found>
+            <examples>Esimerkkejä: {0}</examples>
+            <andmore>(ja {0} lisää)</andmore>
+          </nonotificationhandlercheck>
+          <piiindefiniteretentioncheck>
+            <name>PII tallennettu toistaiseksi</name>
+            <description>Etsii lomakkeet, jotka keräävät henkilötietoja oletussäilytyskäytännöllä (käytännössä rajoittamaton aika).</description>
+            <ok>Yhtäkään PII-tyyppisiä kenttiä sisältävää lomaketta ei säilytetä oletussäilytyskäytännöllä.</ok>
+            <found>{0} lomaketta kerää PII-tyyppisiä kenttiä oletussäilytyskäytännöllä (rajoittamaton aika). Tarkista GDPR-/tietosuojavaatimusten täyttyminen.</found>
+            <details>{0}</details>
+            <andmore>(ja {0} lisää)</andmore>
+          </piiindefiniteretentioncheck>
+        </checks>
+      </cmsdoctor>
+    </editorpowertools>
+  </language>
+</languages>

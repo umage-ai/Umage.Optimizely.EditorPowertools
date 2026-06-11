@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Deutsch" id="de">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <FormsOverview>Zugriff auf Formularübersicht — Inventar aller Optimizely Forms mit Einsendungen, Feldern, Nutzung und Aufbewahrungsrichtlinie.</FormsOverview>
+              <SubmissionsTimeline>Zugriff auf Einsendungs-Timeline — formularübergreifender chronologischer Feed der jüngsten Formulareinsendungen.</SubmissionsTimeline>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <formsoverview>Formularübersicht</formsoverview>
+        <submissionstimeline>Einsendungs-Timeline</submissionstimeline>
+      </menu>
+      <tools>
+        <formsoverview>
+          <title>Formularübersicht</title>
+          <description>Jedes Optimizely Form auf der Website, mit Anzahl der Einsendungen, letzter Aktivität, wo jedes Formular verwendet wird und welche Aufbewahrungsrichtlinie gilt.</description>
+        </formsoverview>
+        <submissionstimeline>
+          <title>Einsendungs-Timeline</title>
+          <description>Die jüngsten Formulareinsendungen über die gesamte Website hinweg, chronologisch geordnet und mit dem Formular verknüpft, das sie empfangen hat.</description>
+        </submissionstimeline>
+      </tools>
+      <ui>
+        <formsoverview>
+          <forms_label>Formulare</forms_label>
+          <filter_placeholder>Nach Name oder Speicherort filtern…</filter_placeholder>
+          <retention_all>Beliebige Aufbewahrung</retention_all>
+          <retention_default>Nur Standardaufbewahrung</retention_default>
+          <retention_default_short>Standard</retention_default_short>
+          <retention_custom>Nur benutzerdefinierte Aufbewahrung</retention_custom>
+          <retention_custom_short>Benutzerdefiniert</retention_custom_short>
+          <handler_all>Beliebige Handler</handler_all>
+          <handler_with>Mit E-Mail/Webhook</handler_with>
+          <handler_without>Kein Benachrichtigungs-Handler</handler_without>
+          <handler_email_tip>E-Mail-Benachrichtigung konfiguriert</handler_email_tip>
+          <handler_webhook_tip>Webhook konfiguriert</handler_webhook_tip>
+          <handler_none>—</handler_none>
+          <usage_only>Nur Formulare, die irgendwo verwendet werden</usage_only>
+          <empty>Keine Formulare entsprechen den aktuellen Filtern.</empty>
+          <error_load>Formulare konnten nicht geladen werden.</error_load>
+          <col_name>Formular</col_name>
+          <col_fields>Felder</col_fields>
+          <col_submissions>Einsendungen</col_submissions>
+          <col_last>Letzte Einsendung</col_last>
+          <col_usage>Verwendet auf</col_usage>
+          <col_handlers>Handler</col_handlers>
+          <col_retention>Aufbewahrung</col_retention>
+          <no_submissions>keine Einsendungen</no_submissions>
+          <unused>ungenutzt</unused>
+          <more>weitere</more>
+          <retention_partial>Teilweise:</retention_partial>
+          <retention_final>Abgeschlossen:</retention_final>
+          <btn_edit>Bearbeiten</btn_edit>
+          <btn_usage>Verwendet auf</btn_usage>
+          <tip_open>Formular im CMS-Bearbeitungsmodus öffnen</tip_open>
+          <tip_edit>Formular im CMS-Bearbeitungsmodus öffnen</tip_edit>
+          <tip_usage>Anzeigen, wo dieses Formular verwendet wird</tip_usage>
+        </formsoverview>
+        <submissionstimeline>
+          <events>Einsendungen</events>
+          <range_7>Letzte 7 Tage</range_7>
+          <range_30>Letzte 30 Tage</range_30>
+          <range_90>Letzte 90 Tage</range_90>
+          <range_365>Letztes Jahr</range_365>
+          <filter_placeholder>Nach Formularnamen filtern…</filter_placeholder>
+          <form_filter_tip>Nach Formular filtern</form_filter_tip>
+          <all_forms>Alle Formulare</all_forms>
+          <finalized_only>Nur abgeschlossene</finalized_only>
+          <empty>Keine Einsendungen im ausgewählten Zeitraum gefunden.</empty>
+          <error_load>Einsendungs-Timeline konnte nicht geladen werden.</error_load>
+          <finalized>abgeschlossen</finalized>
+          <partial>teilweise</partial>
+          <btn_details>Details</btn_details>
+          <btn_view>Anzeigen</btn_view>
+          <tip_details>Einsendungsdaten anzeigen</tip_details>
+          <tip_view>Einsendungsansicht dieses Formulars im CMS öffnen</tip_view>
+          <loading_details>Details werden geladen…</loading_details>
+          <no_data>Keine Daten für diese Einsendung erfasst.</no_data>
+          <live>Live</live>
+          <live_tip>Neue Einsendungen streamen, sobald sie eintreffen</live_tip>
+          <submission_id>Einsendungs-ID</submission_id>
+          <meta_when>Eingesendet</meta_when>
+          <meta_user>Benutzer</meta_user>
+          <meta_language>Sprache</meta_language>
+          <meta_page>Seite</meta_page>
+          <anonymous>anonym</anonymous>
+        </submissionstimeline>
+      </ui>
+      <cmsdoctor>
+        <groups>
+          <forms>Formulare</forms>
+        </groups>
+        <checks>
+          <unusedformscheck>
+            <name>Ungenutzte Formulare</name>
+            <description>Findet Optimizely Forms, die von keinem Inhalt auf der Website referenziert werden.</description>
+            <ok>Jedes Formular wird von mindestens einer Seite oder einem Block referenziert.</ok>
+            <found>{0} Formulare werden nirgendwo auf der Website verwendet.</found>
+            <examples>Beispiele: {0}</examples>
+            <andmore>(und {0} weitere)</andmore>
+          </unusedformscheck>
+          <nonotificationhandlercheck>
+            <name>Formulare ohne Benachrichtigungs-Handler</name>
+            <description>Findet Formulare, die Einsendungen erhalten, aber keinen E-Mail- oder Webhook-Handler konfiguriert haben.</description>
+            <ok>Jedes Formular, das Einsendungen erhält, hat mindestens einen Benachrichtigungs-Handler.</ok>
+            <found>{0} Formulare haben Einsendungen, aber keinen E-Mail-/Webhook-Handler.</found>
+            <examples>Beispiele: {0}</examples>
+            <andmore>(und {0} weitere)</andmore>
+          </nonotificationhandlercheck>
+          <piiindefiniteretentioncheck>
+            <name>PII unbegrenzt gespeichert</name>
+            <description>Findet Formulare, die personenbezogene Daten mit der Standardaufbewahrungsrichtlinie (faktisch unbegrenzt) erfassen.</description>
+            <ok>Keine Formulare mit PII-ähnlichen Feldern werden mit der Standardaufbewahrungsrichtlinie gespeichert.</ok>
+            <found>{0} Formulare erfassen PII-ähnliche Felder mit der Standardaufbewahrungsrichtlinie (unbegrenzt). Auf DSGVO-/Datenschutzkonformität prüfen.</found>
+            <details>{0}</details>
+            <andmore>(und {0} weitere)</andmore>
+          </piiindefiniteretentioncheck>
+        </checks>
+      </cmsdoctor>
+    </editorpowertools>
+  </language>
+</languages>
