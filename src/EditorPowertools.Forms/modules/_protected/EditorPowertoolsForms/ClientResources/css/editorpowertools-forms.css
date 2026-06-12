@@ -1,0 +1,355 @@
+/* Editor Powertools — Forms add-on styles
+   Reuses the base library's design tokens; only adds elements specific to
+   the Forms tools (handler icons, retention detail block, usage expand panel,
+   submission timeline). */
+
+/* ── Toolbar ─────────────────────────────────────────────────────── */
+.ept-forms-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ept-space-md, 1rem);
+    flex-wrap: wrap;
+}
+.ept-forms-toolbar__counts {
+    font-size: 0.95rem;
+    color: var(--ept-text-muted, #555);
+}
+.ept-forms-toolbar__filters {
+    display: flex;
+    align-items: center;
+    gap: var(--ept-space-sm, .5rem);
+    flex-wrap: wrap;
+}
+.ept-forms-toolbar__filters .ept-input { min-width: 180px; }
+
+.ept-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.875rem;
+    user-select: none;
+}
+
+/* ── Forms Overview table cells ──────────────────────────────────── */
+.ept-form-name { font-weight: 500; }
+
+.ept-handler-cell {
+    white-space: nowrap;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.ept-handler-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: var(--ept-surface-hover, #eef2f7);
+    color: var(--ept-text-muted, #555);
+    border: 1px solid var(--ept-border, #d6dce3);
+}
+.ept-handler-icon--email { color: #1d6cb1; background: #e6f0fb; border-color: #c3dcf3; }
+.ept-handler-icon--webhook { color: #6b3aa3; background: #f1eafb; border-color: #d9c4ee; }
+.ept-handler-icon__count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 14px;
+    height: 14px;
+    padding: 0 3px;
+    border-radius: 8px;
+    background: var(--ept-text, #333);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 14px;
+    text-align: center;
+}
+
+.ept-retention-detail {
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+.ept-form-actions {
+    white-space: nowrap;
+    text-align: right;
+}
+.ept-form-actions .ept-btn {
+    margin-left: 4px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.ept-form-actions .ept-btn[disabled] {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+/* ── Where-used expand panel ─────────────────────────────────────── */
+.ept-usage-panel-row td {
+    background: var(--ept-surface-hover, #f7f9fc);
+    border-top: none !important;
+    padding: 0 !important;
+}
+.ept-usage-panel {
+    padding: 12px 16px 14px 24px;
+    border-left: 3px solid var(--ept-primary, #1d6cb1);
+}
+.ept-usage-panel ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 6px 16px;
+}
+.ept-usage-panel li {
+    padding: 2px 0;
+    line-height: 1.5;
+}
+
+.ept-empty-state {
+    padding: 2.5rem 1rem;
+    text-align: center;
+    color: var(--ept-text-muted, #888);
+}
+
+.ept-small { font-size: 0.78rem; }
+.ept-muted { color: var(--ept-text-muted, #888); }
+
+.ept-badge {
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+.ept-badge--neutral { background: #eef0f3; color: #555; }
+.ept-badge--success { background: #e3f5e3; color: #1e6b2c; }
+.ept-badge--warning { background: #fff3d9; color: #8a5d00; }
+.ept-badge--danger  { background: #fde7e7; color: #a11; }
+
+/* Risk flags shown under a form name in the overview */
+.ept-form-flags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
+.ept-form-flags .ept-badge { cursor: help; display: inline-flex; align-items: center; gap: 3px; }
+.ept-form-flags .ept-badge svg { width: 11px; height: 11px; }
+
+/* ── Submissions Timeline ────────────────────────────────────────── */
+.ept-timeline {
+    padding: 0.5rem 1rem 1rem 1rem;
+}
+.ept-timeline__day {
+    margin: 1rem 0 0.5rem 0;
+    font-weight: 600;
+    color: var(--ept-text-muted, #444);
+    border-bottom: 1px solid var(--ept-border, #e3e6ea);
+    padding-bottom: 0.25rem;
+    position: sticky;
+    top: 0;
+    background: var(--ept-surface, #fff);
+    z-index: 1;
+}
+.ept-timeline__item {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 0.75rem;
+    padding: 0.45rem 0.25rem;
+    border-left: 3px solid #d0d4d8;
+    padding-left: 0.75rem;
+    margin-left: 0.5rem;
+    align-items: center;
+    transition: background-color .2s;
+}
+.ept-timeline__item:hover {
+    background: var(--ept-surface-hover, #f7f9fc);
+}
+.ept-timeline__item.is-finalized { border-left-color: #2c8a3a; }
+.ept-timeline__item.is-partial { border-left-color: #b8b8b8; }
+.ept-timeline__item.is-new {
+    animation: ept-flash 1.6s ease-out;
+}
+@keyframes ept-flash {
+    0% { background: #fff8c4; }
+    100% { background: transparent; }
+}
+
+.ept-live-indicator {
+    color: #aaa;
+    font-size: 0.85rem;
+    line-height: 1;
+    transition: color .2s;
+}
+.ept-live-indicator.is-on {
+    color: #d22;
+    animation: ept-pulse 1.4s ease-in-out infinite;
+}
+@keyframes ept-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .35; }
+}
+.ept-timeline__time {
+    font-variant-numeric: tabular-nums;
+    color: var(--ept-text-muted, #666);
+    font-size: 0.85rem;
+}
+.ept-timeline__body {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ept-timeline__actions {
+    display: flex;
+    gap: 4px;
+    white-space: nowrap;
+}
+.ept-timeline__details-wrap {
+    display: block;
+    grid-template-columns: none;
+    padding: 0 12px 16px 56px; /* align with timeline left rail */
+    border-left: 3px solid transparent;
+    margin-left: 0.5rem;
+    background: transparent;
+}
+.ept-timeline__details-wrap:hover { background: transparent; }
+
+/* ── Submission detail card ────────────────────────────────────── */
+.ept-submission-card {
+    background: var(--ept-surface, #fff);
+    border: 1px solid var(--ept-border, #d6dce3);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    overflow: hidden;
+}
+.ept-submission-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: linear-gradient(180deg, #f5f7fa 0%, #eef2f7 100%);
+    border-bottom: 1px solid var(--ept-border, #d6dce3);
+    gap: 12px;
+}
+.ept-submission-card__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+.ept-submission-card__id {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    color: var(--ept-text-muted, #777);
+    user-select: all;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.ept-submission-card__meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    padding: 8px 14px;
+    background: #fbfcfe;
+    border-bottom: 1px solid var(--ept-border, #d6dce3);
+}
+.ept-submission-card__meta-cell {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 12px 6px 0;
+    border-right: 1px solid #eef0f3;
+    min-width: 0;
+}
+.ept-submission-card__meta-cell:last-child { border-right: none; }
+.ept-submission-card__meta-icon {
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background: var(--ept-surface-hover, #eef2f7);
+    color: var(--ept-text-muted, #555);
+    margin-top: 2px;
+}
+.ept-submission-card__meta-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.ept-submission-card__meta-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--ept-text-muted, #888);
+}
+.ept-submission-card__meta-value {
+    font-size: 0.875rem;
+    color: var(--ept-text, #222);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ept-submission-card__body {
+    padding: 0;
+}
+.ept-submission-card__loading {
+    padding: 18px 16px;
+    color: var(--ept-text-muted, #888);
+}
+
+.ept-submission-fields {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+.ept-submission-fields tr { border-bottom: 1px solid #f0f2f5; }
+.ept-submission-fields tr:last-child { border-bottom: none; }
+.ept-submission-fields__label {
+    text-align: left;
+    width: 28%;
+    min-width: 160px;
+    max-width: 280px;
+    padding: 8px 14px;
+    background: #fafbfd;
+    color: var(--ept-text-muted, #555);
+    font-weight: 600;
+    vertical-align: top;
+    border-right: 1px solid #f0f2f5;
+}
+.ept-submission-fields__format {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-top: 2px;
+}
+.ept-submission-fields__value {
+    padding: 8px 14px;
+    color: var(--ept-text, #222);
+    word-break: break-word;
+    vertical-align: top;
+}
+.ept-submission-fields__value.is-empty { color: var(--ept-text-muted, #aaa); }
+.ept-submission-fields__pre {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.825rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.5;
+}

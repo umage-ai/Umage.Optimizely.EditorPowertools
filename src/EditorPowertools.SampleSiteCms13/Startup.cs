@@ -5,6 +5,7 @@ using EPiServer.DependencyInjection;
 using EPiServer.Scheduler;
 using EPiServer.Web.Routing;
 using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.Forms.Infrastructure;
 
 namespace EditorPowertools.SampleSiteCms13;
 
@@ -28,7 +29,12 @@ public class Startup(IWebHostEnvironment webHostingEnvironment)
             .AddAdminUserRegistration()
             .AddEmbeddedLocalization<Startup>();
 
+        // EPiServer.Forms 6.x (CMS 13) dropped the InitializableModule self-registration
+        // that 5.x shipped with, so the host must call services.AddForms() explicitly.
+        services.AddForms();
+
         services.AddEditorPowertools();
+        services.AddEditorPowertoolsForms();
 
         // Required by Wangkanai.Detection
         services.AddDetection();
@@ -57,11 +63,13 @@ public class Startup(IWebHostEnvironment webHostingEnvironment)
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseEditorPowertools();
+        app.UseEditorPowertoolsForms();
 
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapContent();
             endpoints.MapEditorPowertools();
+            endpoints.MapEditorPowertoolsForms();
         });
     }
 }

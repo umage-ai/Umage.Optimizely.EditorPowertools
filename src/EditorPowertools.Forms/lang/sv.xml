@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Svenska" id="sv">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <FormsOverview>Åtkomst till Formuläröversikt — inventering av alla Optimizely Forms med inskickningar, fält, användning och lagringspolicy.</FormsOverview>
+              <SubmissionsTimeline>Åtkomst till Inskickningstidslinje — kronologiskt flöde över formulär av de senaste formulärinskickningarna.</SubmissionsTimeline>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <formsoverview>Formuläröversikt</formsoverview>
+        <submissionstimeline>Inskickningstidslinje</submissionstimeline>
+      </menu>
+      <tools>
+        <formsoverview>
+          <title>Formuläröversikt</title>
+          <description>Varje Optimizely Form på webbplatsen, med antal inskickningar, senaste aktivitet, var varje formulär används och vilken lagringspolicy som gäller.</description>
+        </formsoverview>
+        <submissionstimeline>
+          <title>Inskickningstidslinje</title>
+          <description>De senaste formulärinskickningarna över hela webbplatsen, ordnade kronologiskt och länkade tillbaka till formuläret som tog emot dem.</description>
+        </submissionstimeline>
+      </tools>
+      <ui>
+        <formsoverview>
+          <forms_label>formulär</forms_label>
+          <filter_placeholder>Filtrera efter namn eller plats…</filter_placeholder>
+          <retention_all>Valfri lagring</retention_all>
+          <retention_default>Endast standardlagring</retention_default>
+          <retention_default_short>Standard</retention_default_short>
+          <retention_custom>Endast anpassad lagring</retention_custom>
+          <retention_custom_short>Anpassad</retention_custom_short>
+          <handler_all>Valfria hanterare</handler_all>
+          <handler_with>Med e-post/webhook</handler_with>
+          <handler_without>Ingen aviseringshanterare</handler_without>
+          <handler_email_tip>E-postavisering konfigurerad</handler_email_tip>
+          <handler_webhook_tip>Webhook konfigurerad</handler_webhook_tip>
+          <handler_none>—</handler_none>
+          <usage_only>Endast formulär som används någonstans</usage_only>
+          <empty>Inga formulär matchar de aktuella filtren.</empty>
+          <error_load>Det gick inte att läsa in formulär.</error_load>
+          <col_name>Formulär</col_name>
+          <col_fields>Fält</col_fields>
+          <col_submissions>Inskickningar</col_submissions>
+          <col_last>Senaste inskickning</col_last>
+          <col_usage>Används på</col_usage>
+          <col_handlers>Hanterare</col_handlers>
+          <col_retention>Lagring</col_retention>
+          <no_submissions>inga inskickningar</no_submissions>
+          <unused>oanvänd</unused>
+          <more>fler</more>
+          <retention_partial>Delvis:</retention_partial>
+          <retention_final>Slutförd:</retention_final>
+          <btn_edit>Redigera</btn_edit>
+          <btn_usage>Används på</btn_usage>
+          <tip_open>Öppna formulär i CMS-redigeringsläge</tip_open>
+          <tip_edit>Öppna formulär i CMS-redigeringsläge</tip_edit>
+          <tip_usage>Visa var detta formulär används</tip_usage>
+          <risk_only>Endast integritetsrisker</risk_only>
+          <flag_privacy>Integritetsrisk</flag_privacy>
+          <flag_privacy_live>Integritetsrisk — aktiva data</flag_privacy_live>
+          <flag_privacy_tip>Samlar in personuppgifter och lagrar inskickningar med standardpolicyn (obestämd lagring).</flag_privacy_tip>
+          <flag_privacy_live_tip>Publicerat formulär som redan innehåller inskickningar med personuppgifter med standardpolicyn (obestämd lagring) — gamla personuppgifter bevaras sannolikt.</flag_privacy_live_tip>
+          <flag_pii_fields>Personuppgiftsfält:</flag_pii_fields>
+          <flag_duplicate>Dubblettfält</flag_duplicate>
+          <flag_duplicate_tip>Dessa fältetiketter förekommer mer än en gång och kolliderar i inskickningsdatan:</flag_duplicate_tip>
+        </formsoverview>
+        <submissionstimeline>
+          <events>inskickningar</events>
+          <range_7>Senaste 7 dagarna</range_7>
+          <range_30>Senaste 30 dagarna</range_30>
+          <range_90>Senaste 90 dagarna</range_90>
+          <range_365>Senaste året</range_365>
+          <filter_placeholder>Filtrera efter formulärnamn…</filter_placeholder>
+          <form_filter_tip>Filtrera efter formulär</form_filter_tip>
+          <all_forms>Alla formulär</all_forms>
+          <finalized_only>Endast slutförda</finalized_only>
+          <empty>Inga inskickningar hittades i det valda intervallet.</empty>
+          <error_load>Det gick inte att läsa in inskickningstidslinjen.</error_load>
+          <finalized>slutförd</finalized>
+          <partial>delvis</partial>
+          <btn_details>Detaljer</btn_details>
+          <btn_view>Visa</btn_view>
+          <tip_details>Visa inskickningsdata</tip_details>
+          <tip_view>Öppna detta formulärs inskickningsvy i CMS</tip_view>
+          <loading_details>Läser in detaljer…</loading_details>
+          <no_data>Inga data registrerade för denna inskickning.</no_data>
+          <live>Live</live>
+          <live_tip>Strömma nya inskickningar allteftersom de kommer in</live_tip>
+          <submission_id>Inskicknings-ID</submission_id>
+          <meta_when>Inskickad</meta_when>
+          <meta_user>Användare</meta_user>
+          <meta_language>Språk</meta_language>
+          <meta_page>Sida</meta_page>
+          <anonymous>anonym</anonymous>
+        </submissionstimeline>
+      </ui>
+      <cmsdoctor>
+        <groups>
+          <forms>Formulär</forms>
+        </groups>
+        <checks>
+          <unusedformscheck>
+            <name>Oanvända formulär</name>
+            <description>Hittar Optimizely Forms som inte refereras av något innehåll på webbplatsen.</description>
+            <ok>Varje formulär refereras från minst en sida eller ett block.</ok>
+            <found>{0} formulär används inte någonstans på webbplatsen.</found>
+            <examples>Exempel: {0}</examples>
+            <andmore>(och {0} till)</andmore>
+          </unusedformscheck>
+          <nonotificationhandlercheck>
+            <name>Formulär utan aviseringshanterare</name>
+            <description>Hittar formulär som tar emot inskickningar men inte har någon e-post- eller webhook-hanterare konfigurerad.</description>
+            <ok>Varje formulär som tar emot inskickningar har minst en aviseringshanterare.</ok>
+            <found>{0} formulär har inskickningar men ingen e-post-/webhook-hanterare.</found>
+            <examples>Exempel: {0}</examples>
+            <andmore>(och {0} till)</andmore>
+          </nonotificationhandlercheck>
+          <piiindefiniteretentioncheck>
+            <name>PII lagras på obestämd tid</name>
+            <description>Hittar formulär som samlar in personuppgifter med standardlagringspolicyn (i praktiken på obestämd tid).</description>
+            <ok>Inga formulär med PII-liknande fält lagras med standardlagringspolicyn.</ok>
+            <found>{0} formulär samlar in PII-liknande fält med standardlagringspolicyn (obestämd tid). Granska för GDPR-/integritetsefterlevnad.</found>
+            <details>{0}</details>
+            <andmore>(och {0} till)</andmore>
+          </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Formulär med dubblettfält</name>
+            <description>Hittar formulär med två eller flera inmatningsfält som delar samma etikett, vilket ger tvetydiga inskickningskolumner.</description>
+            <ok>Inget formulär har dubbletter av fältetiketter.</ok>
+            <found>{0} formulär har dubbletter av fältetiketter.</found>
+            <examples>Exempel: {0}</examples>
+            <andmore>(och {0} till)</andmore>
+          </duplicatefieldscheck>
+        </checks>
+      </cmsdoctor>
+    </editorpowertools>
+  </language>
+</languages>

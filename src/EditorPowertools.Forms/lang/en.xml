@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="English" id="en">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <FormsOverview>Access the Forms Overview tool — inventory of all Optimizely Forms with submissions, fields, usage and retention policy.</FormsOverview>
+              <SubmissionsTimeline>Access the Submissions Timeline — cross-form chronological feed of recent form submissions.</SubmissionsTimeline>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <formsoverview>Forms Overview</formsoverview>
+        <submissionstimeline>Submissions Timeline</submissionstimeline>
+      </menu>
+      <tools>
+        <formsoverview>
+          <title>Forms Overview</title>
+          <description>Every Optimizely Form on the site, with submission counts, last activity, where each form is used, and which retention policy applies.</description>
+        </formsoverview>
+        <submissionstimeline>
+          <title>Submissions Timeline</title>
+          <description>The most recent form submissions across the entire site, ordered chronologically and linked back to the form that received them.</description>
+        </submissionstimeline>
+      </tools>
+      <ui>
+        <formsoverview>
+          <forms_label>forms</forms_label>
+          <filter_placeholder>Filter by name or location…</filter_placeholder>
+          <retention_all>Any retention</retention_all>
+          <retention_default>Default retention only</retention_default>
+          <retention_default_short>Default</retention_default_short>
+          <retention_custom>Custom retention only</retention_custom>
+          <retention_custom_short>Custom</retention_custom_short>
+          <handler_all>Any handlers</handler_all>
+          <handler_with>With email/webhook</handler_with>
+          <handler_without>No notification handler</handler_without>
+          <handler_email_tip>Email notification configured</handler_email_tip>
+          <handler_webhook_tip>Webhook configured</handler_webhook_tip>
+          <handler_none>—</handler_none>
+          <usage_only>Only forms used somewhere</usage_only>
+          <empty>No forms match the current filters.</empty>
+          <error_load>Failed to load forms.</error_load>
+          <col_name>Form</col_name>
+          <col_fields>Fields</col_fields>
+          <col_submissions>Submissions</col_submissions>
+          <col_last>Last submission</col_last>
+          <col_usage>Used on</col_usage>
+          <col_handlers>Handlers</col_handlers>
+          <col_retention>Retention</col_retention>
+          <no_submissions>no submissions</no_submissions>
+          <unused>unused</unused>
+          <more>more</more>
+          <retention_partial>Partial:</retention_partial>
+          <retention_final>Finalized:</retention_final>
+          <btn_edit>Edit</btn_edit>
+          <btn_usage>Used on</btn_usage>
+          <tip_open>Open form in CMS edit mode</tip_open>
+          <tip_edit>Open form in CMS edit mode</tip_edit>
+          <tip_usage>Show where this form is used</tip_usage>
+          <risk_only>Privacy risks only</risk_only>
+          <flag_privacy>Privacy risk</flag_privacy>
+          <flag_privacy_live>Privacy risk — live data</flag_privacy_live>
+          <flag_privacy_tip>Captures personal data and stores submissions on the default (indefinite) retention policy.</flag_privacy_tip>
+          <flag_privacy_live_tip>Published form that already holds submissions of personal data on the default (indefinite) retention policy — old personal data is likely retained.</flag_privacy_live_tip>
+          <flag_pii_fields>Personal-data fields:</flag_pii_fields>
+          <flag_duplicate>Duplicate fields</flag_duplicate>
+          <flag_duplicate_tip>These field labels appear more than once and collide in the submission data:</flag_duplicate_tip>
+        </formsoverview>
+        <submissionstimeline>
+          <events>submissions</events>
+          <range_7>Last 7 days</range_7>
+          <range_30>Last 30 days</range_30>
+          <range_90>Last 90 days</range_90>
+          <range_365>Last year</range_365>
+          <filter_placeholder>Filter by form name…</filter_placeholder>
+          <form_filter_tip>Filter by form</form_filter_tip>
+          <all_forms>All forms</all_forms>
+          <finalized_only>Finalized only</finalized_only>
+          <empty>No submissions found in the selected range.</empty>
+          <error_load>Failed to load submissions timeline.</error_load>
+          <finalized>finalized</finalized>
+          <partial>partial</partial>
+          <btn_details>Details</btn_details>
+          <btn_view>View</btn_view>
+          <tip_details>Show submission data</tip_details>
+          <tip_view>Open this form's submission view in CMS</tip_view>
+          <loading_details>Loading details…</loading_details>
+          <no_data>No data captured for this submission.</no_data>
+          <live>Live</live>
+          <live_tip>Stream new submissions as they arrive</live_tip>
+          <submission_id>Submission ID</submission_id>
+          <meta_when>Submitted</meta_when>
+          <meta_user>User</meta_user>
+          <meta_language>Language</meta_language>
+          <meta_page>Page</meta_page>
+          <anonymous>anonymous</anonymous>
+        </submissionstimeline>
+      </ui>
+      <cmsdoctor>
+        <groups>
+          <forms>Forms</forms>
+        </groups>
+        <checks>
+          <unusedformscheck>
+            <name>Unused Forms</name>
+            <description>Finds Optimizely Forms that are not referenced by any content on the site.</description>
+            <ok>Every form is referenced from at least one page or block.</ok>
+            <found>{0} forms are not used anywhere on the site.</found>
+            <examples>Examples: {0}</examples>
+            <andmore>(and {0} more)</andmore>
+          </unusedformscheck>
+          <nonotificationhandlercheck>
+            <name>Forms Without Notification Handlers</name>
+            <description>Finds forms that receive submissions but have no email or webhook handler configured.</description>
+            <ok>Every form that receives submissions has at least one notification handler.</ok>
+            <found>{0} forms have submissions but no email/webhook handler.</found>
+            <examples>Examples: {0}</examples>
+            <andmore>(and {0} more)</andmore>
+          </nonotificationhandlercheck>
+          <piiindefiniteretentioncheck>
+            <name>PII Stored Indefinitely</name>
+            <description>Finds forms that capture personal data on the default (effectively indefinite) retention policy.</description>
+            <ok>No forms with PII-shaped fields are stored on the default retention policy.</ok>
+            <found>{0} forms capture PII-shaped fields on the default (indefinite) retention policy. Review for GDPR / privacy compliance.</found>
+            <details>{0}</details>
+            <andmore>(and {0} more)</andmore>
+          </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Forms With Duplicate Fields</name>
+            <description>Finds forms with two or more input fields that share the same label, producing ambiguous submission columns.</description>
+            <ok>No form has duplicate field labels.</ok>
+            <found>{0} forms have duplicate field labels.</found>
+            <examples>Examples: {0}</examples>
+            <andmore>(and {0} more)</andmore>
+          </duplicatefieldscheck>
+        </checks>
+      </cmsdoctor>
+    </editorpowertools>
+  </language>
+</languages>

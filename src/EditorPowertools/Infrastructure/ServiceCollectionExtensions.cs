@@ -174,6 +174,11 @@ public static class ServiceCollectionExtensions
         // UI strings provider for JS localization
         services.AddScoped<UiStringsProvider>();
 
+        // Built-in tool descriptors for the Overview dashboard. Third-party
+        // add-ons (e.g. EditorPowertools.Forms) register additional
+        // IPowertoolDescriptor entries via DI.
+        services.AddBuiltInPowertoolDescriptors();
+
         // Register as a protected module
         services.Configure<ProtectedModuleOptions>(options =>
         {

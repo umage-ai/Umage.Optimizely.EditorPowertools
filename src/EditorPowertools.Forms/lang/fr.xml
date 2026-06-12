@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Français" id="fr">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <FormsOverview>Accès à la Vue d'ensemble des formulaires — inventaire de tous les Optimizely Forms avec les soumissions, les champs, l'utilisation et la politique de conservation.</FormsOverview>
+              <SubmissionsTimeline>Accès au Fil des soumissions — flux chronologique inter-formulaires des soumissions de formulaires récentes.</SubmissionsTimeline>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <formsoverview>Vue d'ensemble des formulaires</formsoverview>
+        <submissionstimeline>Fil des soumissions</submissionstimeline>
+      </menu>
+      <tools>
+        <formsoverview>
+          <title>Vue d'ensemble des formulaires</title>
+          <description>Chaque Optimizely Form du site, avec le nombre de soumissions, la dernière activité, les emplacements où chaque formulaire est utilisé et la politique de conservation qui s'applique.</description>
+        </formsoverview>
+        <submissionstimeline>
+          <title>Fil des soumissions</title>
+          <description>Les soumissions de formulaires les plus récentes sur l'ensemble du site, classées par ordre chronologique et reliées au formulaire qui les a reçues.</description>
+        </submissionstimeline>
+      </tools>
+      <ui>
+        <formsoverview>
+          <forms_label>formulaires</forms_label>
+          <filter_placeholder>Filtrer par nom ou emplacement…</filter_placeholder>
+          <retention_all>Toute conservation</retention_all>
+          <retention_default>Conservation par défaut uniquement</retention_default>
+          <retention_default_short>Par défaut</retention_default_short>
+          <retention_custom>Conservation personnalisée uniquement</retention_custom>
+          <retention_custom_short>Personnalisée</retention_custom_short>
+          <handler_all>Tous les gestionnaires</handler_all>
+          <handler_with>Avec e-mail/webhook</handler_with>
+          <handler_without>Aucun gestionnaire de notification</handler_without>
+          <handler_email_tip>Notification par e-mail configurée</handler_email_tip>
+          <handler_webhook_tip>Webhook configuré</handler_webhook_tip>
+          <handler_none>—</handler_none>
+          <usage_only>Uniquement les formulaires utilisés quelque part</usage_only>
+          <empty>Aucun formulaire ne correspond aux filtres actuels.</empty>
+          <error_load>Échec du chargement des formulaires.</error_load>
+          <col_name>Formulaire</col_name>
+          <col_fields>Champs</col_fields>
+          <col_submissions>Soumissions</col_submissions>
+          <col_last>Dernière soumission</col_last>
+          <col_usage>Utilisé sur</col_usage>
+          <col_handlers>Gestionnaires</col_handlers>
+          <col_retention>Conservation</col_retention>
+          <no_submissions>aucune soumission</no_submissions>
+          <unused>inutilisé</unused>
+          <more>de plus</more>
+          <retention_partial>Partielle :</retention_partial>
+          <retention_final>Finalisée :</retention_final>
+          <btn_edit>Modifier</btn_edit>
+          <btn_usage>Utilisé sur</btn_usage>
+          <tip_open>Ouvrir le formulaire en mode édition du CMS</tip_open>
+          <tip_edit>Ouvrir le formulaire en mode édition du CMS</tip_edit>
+          <tip_usage>Afficher où ce formulaire est utilisé</tip_usage>
+          <risk_only>Risques de confidentialité uniquement</risk_only>
+          <flag_privacy>Risque de confidentialité</flag_privacy>
+          <flag_privacy_live>Risque de confidentialité — données actives</flag_privacy_live>
+          <flag_privacy_tip>Capture des données personnelles et stocke les soumissions avec la politique de conservation par défaut (indéfinie).</flag_privacy_tip>
+          <flag_privacy_live_tip>Formulaire publié qui contient déjà des soumissions de données personnelles avec la politique de conservation par défaut (indéfinie) — les anciennes données personnelles sont probablement conservées.</flag_privacy_live_tip>
+          <flag_pii_fields>Champs de données personnelles :</flag_pii_fields>
+          <flag_duplicate>Champs en double</flag_duplicate>
+          <flag_duplicate_tip>Ces libellés de champ apparaissent plusieurs fois et entrent en collision dans les données de soumission :</flag_duplicate_tip>
+        </formsoverview>
+        <submissionstimeline>
+          <events>soumissions</events>
+          <range_7>7 derniers jours</range_7>
+          <range_30>30 derniers jours</range_30>
+          <range_90>90 derniers jours</range_90>
+          <range_365>Dernière année</range_365>
+          <filter_placeholder>Filtrer par nom de formulaire…</filter_placeholder>
+          <form_filter_tip>Filtrer par formulaire</form_filter_tip>
+          <all_forms>Tous les formulaires</all_forms>
+          <finalized_only>Finalisées uniquement</finalized_only>
+          <empty>Aucune soumission trouvée dans la plage sélectionnée.</empty>
+          <error_load>Échec du chargement du fil des soumissions.</error_load>
+          <finalized>finalisée</finalized>
+          <partial>partielle</partial>
+          <btn_details>Détails</btn_details>
+          <btn_view>Voir</btn_view>
+          <tip_details>Afficher les données de la soumission</tip_details>
+          <tip_view>Ouvrir la vue des soumissions de ce formulaire dans le CMS</tip_view>
+          <loading_details>Chargement des détails…</loading_details>
+          <no_data>Aucune donnée capturée pour cette soumission.</no_data>
+          <live>Direct</live>
+          <live_tip>Diffuser les nouvelles soumissions à mesure qu'elles arrivent</live_tip>
+          <submission_id>ID de soumission</submission_id>
+          <meta_when>Soumis</meta_when>
+          <meta_user>Utilisateur</meta_user>
+          <meta_language>Langue</meta_language>
+          <meta_page>Page</meta_page>
+          <anonymous>anonyme</anonymous>
+        </submissionstimeline>
+      </ui>
+      <cmsdoctor>
+        <groups>
+          <forms>Formulaires</forms>
+        </groups>
+        <checks>
+          <unusedformscheck>
+            <name>Formulaires inutilisés</name>
+            <description>Recherche les Optimizely Forms qui ne sont référencés par aucun contenu du site.</description>
+            <ok>Chaque formulaire est référencé depuis au moins une page ou un bloc.</ok>
+            <found>{0} formulaires ne sont utilisés nulle part sur le site.</found>
+            <examples>Exemples : {0}</examples>
+            <andmore>(et {0} de plus)</andmore>
+          </unusedformscheck>
+          <nonotificationhandlercheck>
+            <name>Formulaires sans gestionnaire de notification</name>
+            <description>Recherche les formulaires qui reçoivent des soumissions mais n'ont aucun gestionnaire e-mail ou webhook configuré.</description>
+            <ok>Chaque formulaire qui reçoit des soumissions possède au moins un gestionnaire de notification.</ok>
+            <found>{0} formulaires ont des soumissions mais aucun gestionnaire e-mail/webhook.</found>
+            <examples>Exemples : {0}</examples>
+            <andmore>(et {0} de plus)</andmore>
+          </nonotificationhandlercheck>
+          <piiindefiniteretentioncheck>
+            <name>PII conservées indéfiniment</name>
+            <description>Recherche les formulaires qui capturent des données personnelles avec la politique de conservation par défaut (de fait indéfinie).</description>
+            <ok>Aucun formulaire comportant des champs de type PII n'est conservé avec la politique de conservation par défaut.</ok>
+            <found>{0} formulaires capturent des champs de type PII avec la politique de conservation par défaut (indéfinie). À examiner pour la conformité RGPD / confidentialité.</found>
+            <details>{0}</details>
+            <andmore>(et {0} de plus)</andmore>
+          </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Formulaires avec des champs en double</name>
+            <description>Recherche les formulaires comportant au moins deux champs de saisie partageant le même libellé, ce qui produit des colonnes de soumission ambiguës.</description>
+            <ok>Aucun formulaire n'a de libellés de champ en double.</ok>
+            <found>{0} formulaires ont des libellés de champ en double.</found>
+            <examples>Exemples : {0}</examples>
+            <andmore>(et {0} de plus)</andmore>
+          </duplicatefieldscheck>
+        </checks>
+      </cmsdoctor>
+    </editorpowertools>
+  </language>
+</languages>

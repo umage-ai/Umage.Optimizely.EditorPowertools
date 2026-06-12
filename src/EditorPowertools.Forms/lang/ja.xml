@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="日本語" id="ja">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <FormsOverview>フォーム概要ツールへのアクセス — すべての Optimizely Forms の送信、フィールド、使用状況、保持ポリシーのインベントリ。</FormsOverview>
+              <SubmissionsTimeline>送信タイムラインへのアクセス — フォームをまたいだ最近のフォーム送信の時系列フィード。</SubmissionsTimeline>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <formsoverview>フォーム概要</formsoverview>
+        <submissionstimeline>送信タイムライン</submissionstimeline>
+      </menu>
+      <tools>
+        <formsoverview>
+          <title>フォーム概要</title>
+          <description>サイト上のすべての Optimizely Form を、送信数、最終アクティビティ、各フォームの使用箇所、適用される保持ポリシーとともに表示します。</description>
+        </formsoverview>
+        <submissionstimeline>
+          <title>送信タイムライン</title>
+          <description>サイト全体の最新のフォーム送信を時系列順に表示し、それらを受け取ったフォームへのリンクを提供します。</description>
+        </submissionstimeline>
+      </tools>
+      <ui>
+        <formsoverview>
+          <forms_label>フォーム</forms_label>
+          <filter_placeholder>名前または場所で絞り込み…</filter_placeholder>
+          <retention_all>すべての保持</retention_all>
+          <retention_default>標準保持のみ</retention_default>
+          <retention_default_short>標準</retention_default_short>
+          <retention_custom>カスタム保持のみ</retention_custom>
+          <retention_custom_short>カスタム</retention_custom_short>
+          <handler_all>すべてのハンドラー</handler_all>
+          <handler_with>メール/Webhook あり</handler_with>
+          <handler_without>通知ハンドラーなし</handler_without>
+          <handler_email_tip>メール通知が設定済み</handler_email_tip>
+          <handler_webhook_tip>Webhook が設定済み</handler_webhook_tip>
+          <handler_none>—</handler_none>
+          <usage_only>どこかで使用されているフォームのみ</usage_only>
+          <empty>現在のフィルターに一致するフォームがありません。</empty>
+          <error_load>フォームの読み込みに失敗しました。</error_load>
+          <col_name>フォーム</col_name>
+          <col_fields>フィールド</col_fields>
+          <col_submissions>送信数</col_submissions>
+          <col_last>最終送信</col_last>
+          <col_usage>使用箇所</col_usage>
+          <col_handlers>ハンドラー</col_handlers>
+          <col_retention>保持</col_retention>
+          <no_submissions>送信なし</no_submissions>
+          <unused>未使用</unused>
+          <more>件</more>
+          <retention_partial>部分:</retention_partial>
+          <retention_final>確定:</retention_final>
+          <btn_edit>編集</btn_edit>
+          <btn_usage>使用箇所</btn_usage>
+          <tip_open>CMS の編集モードでフォームを開く</tip_open>
+          <tip_edit>CMS の編集モードでフォームを開く</tip_edit>
+          <tip_usage>このフォームの使用箇所を表示</tip_usage>
+          <risk_only>プライバシーリスクのみ</risk_only>
+          <flag_privacy>プライバシーリスク</flag_privacy>
+          <flag_privacy_live>プライバシーリスク — 実データ</flag_privacy_live>
+          <flag_privacy_tip>個人データを収集し、送信を標準（無期限）の保持ポリシーで保存しています。</flag_privacy_tip>
+          <flag_privacy_live_tip>公開済みのフォームで、標準（無期限）の保持ポリシーですでに個人データの送信を保持しています — 古い個人データが残存している可能性が高いです。</flag_privacy_live_tip>
+          <flag_pii_fields>個人データフィールド:</flag_pii_fields>
+          <flag_duplicate>重複フィールド</flag_duplicate>
+          <flag_duplicate_tip>これらのフィールドラベルは複数回出現し、送信データ内で衝突します:</flag_duplicate_tip>
+        </formsoverview>
+        <submissionstimeline>
+          <events>送信</events>
+          <range_7>過去7日間</range_7>
+          <range_30>過去30日間</range_30>
+          <range_90>過去90日間</range_90>
+          <range_365>過去1年間</range_365>
+          <filter_placeholder>フォーム名で絞り込み…</filter_placeholder>
+          <form_filter_tip>フォームで絞り込み</form_filter_tip>
+          <all_forms>すべてのフォーム</all_forms>
+          <finalized_only>確定済みのみ</finalized_only>
+          <empty>選択した範囲に送信が見つかりませんでした。</empty>
+          <error_load>送信タイムラインの読み込みに失敗しました。</error_load>
+          <finalized>確定</finalized>
+          <partial>部分</partial>
+          <btn_details>詳細</btn_details>
+          <btn_view>表示</btn_view>
+          <tip_details>送信データを表示</tip_details>
+          <tip_view>CMS でこのフォームの送信ビューを開く</tip_view>
+          <loading_details>詳細を読み込み中…</loading_details>
+          <no_data>この送信のデータは記録されていません。</no_data>
+          <live>ライブ</live>
+          <live_tip>新しい送信を到着次第ストリーミングします</live_tip>
+          <submission_id>送信ID</submission_id>
+          <meta_when>送信日時</meta_when>
+          <meta_user>ユーザー</meta_user>
+          <meta_language>言語</meta_language>
+          <meta_page>ページ</meta_page>
+          <anonymous>匿名</anonymous>
+        </submissionstimeline>
+      </ui>
+      <cmsdoctor>
+        <groups>
+          <forms>フォーム</forms>
+        </groups>
+        <checks>
+          <unusedformscheck>
+            <name>未使用フォーム</name>
+            <description>サイト上のどのコンテンツからも参照されていない Optimizely Forms を検出します。</description>
+            <ok>すべてのフォームが少なくとも1つのページまたはブロックから参照されています。</ok>
+            <found>{0}個のフォームがサイト上のどこでも使用されていません。</found>
+            <examples>例：{0}</examples>
+            <andmore>（他{0}件）</andmore>
+          </unusedformscheck>
+          <nonotificationhandlercheck>
+            <name>通知ハンドラーのないフォーム</name>
+            <description>送信を受け取っているが、メールまたは Webhook ハンドラーが設定されていないフォームを検出します。</description>
+            <ok>送信を受け取るすべてのフォームに少なくとも1つの通知ハンドラーがあります。</ok>
+            <found>{0}個のフォームに送信があるが、メール/Webhook ハンドラーがありません。</found>
+            <examples>例：{0}</examples>
+            <andmore>（他{0}件）</andmore>
+          </nonotificationhandlercheck>
+          <piiindefiniteretentioncheck>
+            <name>PII が無期限に保存</name>
+            <description>標準（実質的に無期限）の保持ポリシーで個人データを収集しているフォームを検出します。</description>
+            <ok>PII に該当するフィールドを持つフォームで標準保持ポリシーで保存されているものはありません。</ok>
+            <found>{0}個のフォームが標準（無期限）の保持ポリシーで PII に該当するフィールドを収集しています。GDPR／プライバシー準拠について確認してください。</found>
+            <details>{0}</details>
+            <andmore>（他{0}件）</andmore>
+          </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>重複フィールドのあるフォーム</name>
+            <description>同じラベルを共有する2つ以上の入力フィールドを持ち、あいまいな送信列を生成するフォームを検出します。</description>
+            <ok>フィールドラベルが重複しているフォームはありません。</ok>
+            <found>{0}個のフォームでフィールドラベルが重複しています。</found>
+            <examples>例：{0}</examples>
+            <andmore>（他{0}件）</andmore>
+          </duplicatefieldscheck>
+        </checks>
+      </cmsdoctor>
+    </editorpowertools>
+  </language>
+</languages>

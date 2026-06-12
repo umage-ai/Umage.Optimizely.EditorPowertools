@@ -1,4 +1,5 @@
 using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.Forms.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.SampleSite.Extensions;
 using EPiServer.Cms.Shell;
 using EPiServer.Cms.UI.AspNetIdentity;
@@ -33,11 +34,17 @@ public class Startup
             .AddAdminUserRegistration()
             .AddEmbeddedLocalization<Startup>();
 
+        
         // Editor Powertools
         services.AddEditorPowertools(options =>
         {
             // Configure options here or in appsettings.json under "CodeArt:EditorPowertools"
         });
+
+        // Editor Powertools — Forms add-on. AddEditorPowertoolsForms() also
+        // wires up EPiServer.Forms itself: a no-op on CMS 12 (5.x self-inits)
+        // and AddFormsUI() on CMS 13 (6.x dropped the InitializableModule).
+        services.AddEditorPowertoolsForms();
 
         // Required by Wangkanai.Detection
         services.AddDetection();
@@ -67,11 +74,13 @@ public class Startup
         app.UseAuthorization();
 
         app.UseEditorPowertools();
+        app.UseEditorPowertoolsForms();
 
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapContent();
             endpoints.MapEditorPowertools();
+            endpoints.MapEditorPowertoolsForms();
         });
     }
 }

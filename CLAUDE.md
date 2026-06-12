@@ -59,6 +59,7 @@ dotnet run --project src/EditorPowertools.SampleSite   # Run sample site
 - Each tool has a corresponding PermissionType and FeatureToggle
 - **JS paths**: Never hardcode API paths. Use `window.EPT_API_URL + '/endpoint'` and `window.EPT_HUB_URL + '/hub'`
 - **Security**: All controllers must have `[Authorize(Policy = "codeart:editorpowertools")]`, all actions must call `_accessChecker.HasAccess()`, POST/DELETE endpoints must have `[RequireAjax]`, content operations must use proper `AccessLevel` (never `NoAccess`), error responses must not expose `ex.Message`
+- **Module paths — NEVER hardcode `/EPiServer/` (or any other prefix) anywhere.** The CMS Shell mount point is configurable and the protected-module virtual path differs between CMS 12 and CMS 13. Always resolve via `EPiServer.Shell.Paths.ToResource(typeof(SomeMenuProvider), "...")` (server) or `window.EPT_BASE_URL` / `window.EPT_FORMS_BASE_URL` (client). This applies to test scripts, curl probes, docs, and code alike — if you find yourself typing `/EPiServer/` to construct a URL, stop and use `Paths.ToResource()`.
 
 ## Localization
 

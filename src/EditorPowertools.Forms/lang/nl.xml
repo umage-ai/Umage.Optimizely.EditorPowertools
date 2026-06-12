@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Nederlands" id="nl">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <FormsOverview>Toegang tot Formulieroverzicht — inventaris van alle Optimizely Forms met inzendingen, velden, gebruik en bewaarbeleid.</FormsOverview>
+              <SubmissionsTimeline>Toegang tot Inzendingentijdlijn — formulieroverstijgende chronologische feed van recente formulierinzendingen.</SubmissionsTimeline>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <formsoverview>Formulieroverzicht</formsoverview>
+        <submissionstimeline>Inzendingentijdlijn</submissionstimeline>
+      </menu>
+      <tools>
+        <formsoverview>
+          <title>Formulieroverzicht</title>
+          <description>Elk Optimizely Form op de site, met aantal inzendingen, laatste activiteit, waar elk formulier wordt gebruikt en welk bewaarbeleid van toepassing is.</description>
+        </formsoverview>
+        <submissionstimeline>
+          <title>Inzendingentijdlijn</title>
+          <description>De meest recente formulierinzendingen over de hele site, chronologisch geordend en gekoppeld aan het formulier dat ze heeft ontvangen.</description>
+        </submissionstimeline>
+      </tools>
+      <ui>
+        <formsoverview>
+          <forms_label>formulieren</forms_label>
+          <filter_placeholder>Filteren op naam of locatie…</filter_placeholder>
+          <retention_all>Elk bewaarbeleid</retention_all>
+          <retention_default>Alleen standaardbewaring</retention_default>
+          <retention_default_short>Standaard</retention_default_short>
+          <retention_custom>Alleen aangepaste bewaring</retention_custom>
+          <retention_custom_short>Aangepast</retention_custom_short>
+          <handler_all>Alle handlers</handler_all>
+          <handler_with>Met e-mail/webhook</handler_with>
+          <handler_without>Geen notificatiehandler</handler_without>
+          <handler_email_tip>E-mailnotificatie geconfigureerd</handler_email_tip>
+          <handler_webhook_tip>Webhook geconfigureerd</handler_webhook_tip>
+          <handler_none>—</handler_none>
+          <usage_only>Alleen formulieren die ergens worden gebruikt</usage_only>
+          <empty>Geen formulieren komen overeen met de huidige filters.</empty>
+          <error_load>Kan formulieren niet laden.</error_load>
+          <col_name>Formulier</col_name>
+          <col_fields>Velden</col_fields>
+          <col_submissions>Inzendingen</col_submissions>
+          <col_last>Laatste inzending</col_last>
+          <col_usage>Gebruikt op</col_usage>
+          <col_handlers>Handlers</col_handlers>
+          <col_retention>Bewaring</col_retention>
+          <no_submissions>geen inzendingen</no_submissions>
+          <unused>ongebruikt</unused>
+          <more>meer</more>
+          <retention_partial>Gedeeltelijk:</retention_partial>
+          <retention_final>Voltooid:</retention_final>
+          <btn_edit>Bewerken</btn_edit>
+          <btn_usage>Gebruikt op</btn_usage>
+          <tip_open>Formulier openen in CMS-bewerkingsmodus</tip_open>
+          <tip_edit>Formulier openen in CMS-bewerkingsmodus</tip_edit>
+          <tip_usage>Toon waar dit formulier wordt gebruikt</tip_usage>
+          <risk_only>Alleen privacyrisico's</risk_only>
+          <flag_privacy>Privacyrisico</flag_privacy>
+          <flag_privacy_live>Privacyrisico — actieve gegevens</flag_privacy_live>
+          <flag_privacy_tip>Legt persoonsgegevens vast en slaat inzendingen op met het standaardbewaarbeleid (onbeperkt).</flag_privacy_tip>
+          <flag_privacy_live_tip>Gepubliceerd formulier dat al inzendingen met persoonsgegevens bevat met het standaardbewaarbeleid (onbeperkt) — oude persoonsgegevens worden waarschijnlijk bewaard.</flag_privacy_live_tip>
+          <flag_pii_fields>Velden met persoonsgegevens:</flag_pii_fields>
+          <flag_duplicate>Dubbele velden</flag_duplicate>
+          <flag_duplicate_tip>Deze veldlabels komen meer dan eens voor en botsen in de inzendingsgegevens:</flag_duplicate_tip>
+        </formsoverview>
+        <submissionstimeline>
+          <events>inzendingen</events>
+          <range_7>Laatste 7 dagen</range_7>
+          <range_30>Laatste 30 dagen</range_30>
+          <range_90>Laatste 90 dagen</range_90>
+          <range_365>Laatste jaar</range_365>
+          <filter_placeholder>Filteren op formuliernaam…</filter_placeholder>
+          <form_filter_tip>Filteren op formulier</form_filter_tip>
+          <all_forms>Alle formulieren</all_forms>
+          <finalized_only>Alleen voltooid</finalized_only>
+          <empty>Geen inzendingen gevonden in het geselecteerde bereik.</empty>
+          <error_load>Kan de inzendingentijdlijn niet laden.</error_load>
+          <finalized>voltooid</finalized>
+          <partial>gedeeltelijk</partial>
+          <btn_details>Details</btn_details>
+          <btn_view>Bekijken</btn_view>
+          <tip_details>Inzendingsgegevens tonen</tip_details>
+          <tip_view>De inzendingsweergave van dit formulier in het CMS openen</tip_view>
+          <loading_details>Details laden…</loading_details>
+          <no_data>Geen gegevens vastgelegd voor deze inzending.</no_data>
+          <live>Live</live>
+          <live_tip>Nieuwe inzendingen streamen zodra ze binnenkomen</live_tip>
+          <submission_id>Inzendings-ID</submission_id>
+          <meta_when>Ingediend</meta_when>
+          <meta_user>Gebruiker</meta_user>
+          <meta_language>Taal</meta_language>
+          <meta_page>Pagina</meta_page>
+          <anonymous>anoniem</anonymous>
+        </submissionstimeline>
+      </ui>
+      <cmsdoctor>
+        <groups>
+          <forms>Formulieren</forms>
+        </groups>
+        <checks>
+          <unusedformscheck>
+            <name>Ongebruikte formulieren</name>
+            <description>Vindt Optimizely Forms waarnaar geen enkele content op de site verwijst.</description>
+            <ok>Naar elk formulier wordt verwezen vanaf ten minste één pagina of blok.</ok>
+            <found>{0} formulieren worden nergens op de site gebruikt.</found>
+            <examples>Voorbeelden: {0}</examples>
+            <andmore>(en nog {0})</andmore>
+          </unusedformscheck>
+          <nonotificationhandlercheck>
+            <name>Formulieren zonder notificatiehandler</name>
+            <description>Vindt formulieren die inzendingen ontvangen maar geen e-mail- of webhook-handler geconfigureerd hebben.</description>
+            <ok>Elk formulier dat inzendingen ontvangt, heeft ten minste één notificatiehandler.</ok>
+            <found>{0} formulieren hebben inzendingen maar geen e-mail-/webhook-handler.</found>
+            <examples>Voorbeelden: {0}</examples>
+            <andmore>(en nog {0})</andmore>
+          </nonotificationhandlercheck>
+          <piiindefiniteretentioncheck>
+            <name>PII onbeperkt opgeslagen</name>
+            <description>Vindt formulieren die persoonsgegevens vastleggen met het standaardbewaarbeleid (in feite onbeperkt).</description>
+            <ok>Geen formulieren met PII-achtige velden worden opgeslagen met het standaardbewaarbeleid.</ok>
+            <found>{0} formulieren leggen PII-achtige velden vast met het standaardbewaarbeleid (onbeperkt). Controleer op AVG-/privacynaleving.</found>
+            <details>{0}</details>
+            <andmore>(en nog {0})</andmore>
+          </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Formulieren met dubbele velden</name>
+            <description>Vindt formulieren met twee of meer invoervelden die hetzelfde label delen, wat dubbelzinnige inzendingskolommen oplevert.</description>
+            <ok>Geen enkel formulier heeft dubbele veldlabels.</ok>
+            <found>{0} formulieren hebben dubbele veldlabels.</found>
+            <examples>Voorbeelden: {0}</examples>
+            <andmore>(en nog {0})</andmore>
+          </duplicatefieldscheck>
+        </checks>
+      </cmsdoctor>
+    </editorpowertools>
+  </language>
+</languages>

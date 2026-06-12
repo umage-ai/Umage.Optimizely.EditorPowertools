@@ -49,13 +49,23 @@ jobs:
           echo "::endgroup::"
 
       - name: Restore
-        run: dotnet restore src/EditorPowertools/EditorPowertools.csproj && dotnet restore src/EditorPowertools.Tests/EditorPowertools.Tests.csproj
+        run: |
+          dotnet restore src/EditorPowertools/EditorPowertools.csproj
+          dotnet restore src/EditorPowertools.Tests/EditorPowertools.Tests.csproj
+          dotnet restore src/EditorPowertools.Forms/EditorPowertools.Forms.csproj
+          dotnet restore src/EditorPowertools.Tests.Forms/EditorPowertools.Tests.Forms.csproj
 
       - name: Build
         run: dotnet build src/EditorPowertools/EditorPowertools.csproj -c Release -p:Version=${{ steps.version.outputs.VERSION }} --no-restore
 
+      - name: Build Forms add-on
+        run: dotnet build src/EditorPowertools.Forms/EditorPowertools.Forms.csproj -c Release -p:Version=${{ steps.version.outputs.VERSION }} --no-restore
+
       - name: Test
         run: dotnet test src/EditorPowertools.Tests/EditorPowertools.Tests.csproj -c Release --logger "trx;LogFileName=test-results.trx"
+
+      - name: Test Forms add-on
+        run: dotnet test src/EditorPowertools.Tests.Forms/EditorPowertools.Tests.Forms.csproj -c Release --logger "trx;LogFileName=test-results-forms.trx"
 
       - name: Pack with release notes
         # PackageReleaseNotes is multi-line, so we pass it via an environment
@@ -64,6 +74,10 @@ jobs:
         run: |
           export PackageReleaseNotes="$(cat release-notes.md)"
           dotnet pack src/EditorPowertools/EditorPowertools.csproj \
+            -c Release \
+            -p:Version=${{ steps.version.outputs.VERSION }} \
+            --no-build -o ./nupkg
+          dotnet pack src/EditorPowertools.Forms/EditorPowertools.Forms.csproj \
             -c Release \
             -p:Version=${{ steps.version.outputs.VERSION }} \
             --no-build -o ./nupkg
@@ -79,7 +93,9 @@ jobs:
         if: always()
         with:
           name: test-results
-          path: src/EditorPowertools.Tests/TestResults/*.trx
+          path: |
+            src/EditorPowertools.Tests/TestResults/*.trx
+            src/EditorPowertools.Tests.Forms/TestResults/*.trx
 
       - name: Create or update GitHub release
         env:

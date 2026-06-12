@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Dansk" id="da">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <FormsOverview>Adgang til Formularoversigt — inventar over alle Optimizely Forms med indsendelser, felter, brug og opbevaringspolitik.</FormsOverview>
+              <SubmissionsTimeline>Adgang til Indsendelsestidslinje — kronologisk feed på tværs af formularer over de seneste formularindsendelser.</SubmissionsTimeline>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <formsoverview>Formularoversigt</formsoverview>
+        <submissionstimeline>Indsendelsestidslinje</submissionstimeline>
+      </menu>
+      <tools>
+        <formsoverview>
+          <title>Formularoversigt</title>
+          <description>Hver Optimizely Form på sitet, med antal indsendelser, seneste aktivitet, hvor hver formular bruges, og hvilken opbevaringspolitik der gælder.</description>
+        </formsoverview>
+        <submissionstimeline>
+          <title>Indsendelsestidslinje</title>
+          <description>De seneste formularindsendelser på tværs af hele sitet, ordnet kronologisk og linket tilbage til den formular, der modtog dem.</description>
+        </submissionstimeline>
+      </tools>
+      <ui>
+        <formsoverview>
+          <forms_label>formularer</forms_label>
+          <filter_placeholder>Filtrér efter navn eller placering…</filter_placeholder>
+          <retention_all>Enhver opbevaring</retention_all>
+          <retention_default>Kun standardopbevaring</retention_default>
+          <retention_default_short>Standard</retention_default_short>
+          <retention_custom>Kun tilpasset opbevaring</retention_custom>
+          <retention_custom_short>Tilpasset</retention_custom_short>
+          <handler_all>Enhver håndtering</handler_all>
+          <handler_with>Med e-mail/webhook</handler_with>
+          <handler_without>Ingen notifikationshåndtering</handler_without>
+          <handler_email_tip>E-mailnotifikation konfigureret</handler_email_tip>
+          <handler_webhook_tip>Webhook konfigureret</handler_webhook_tip>
+          <handler_none>—</handler_none>
+          <usage_only>Kun formularer der bruges et sted</usage_only>
+          <empty>Ingen formularer matcher de aktuelle filtre.</empty>
+          <error_load>Kunne ikke indlæse formularer.</error_load>
+          <col_name>Formular</col_name>
+          <col_fields>Felter</col_fields>
+          <col_submissions>Indsendelser</col_submissions>
+          <col_last>Seneste indsendelse</col_last>
+          <col_usage>Bruges på</col_usage>
+          <col_handlers>Håndteringer</col_handlers>
+          <col_retention>Opbevaring</col_retention>
+          <no_submissions>ingen indsendelser</no_submissions>
+          <unused>ubrugt</unused>
+          <more>flere</more>
+          <retention_partial>Delvis:</retention_partial>
+          <retention_final>Endelig:</retention_final>
+          <btn_edit>Rediger</btn_edit>
+          <btn_usage>Bruges på</btn_usage>
+          <tip_open>Åbn formular i CMS-redigeringstilstand</tip_open>
+          <tip_edit>Åbn formular i CMS-redigeringstilstand</tip_edit>
+          <tip_usage>Vis hvor denne formular bruges</tip_usage>
+          <risk_only>Kun privatlivsrisici</risk_only>
+          <flag_privacy>Privatlivsrisiko</flag_privacy>
+          <flag_privacy_live>Privatlivsrisiko — aktive data</flag_privacy_live>
+          <flag_privacy_tip>Indsamler persondata og gemmer indsendelser med standardpolitikken (ubestemt opbevaring).</flag_privacy_tip>
+          <flag_privacy_live_tip>Publiceret formular, der allerede indeholder indsendelser med persondata på standardpolitikken (ubestemt opbevaring) — gamle persondata bliver sandsynligvis bevaret.</flag_privacy_live_tip>
+          <flag_pii_fields>Persondatafelter:</flag_pii_fields>
+          <flag_duplicate>Duplikerede felter</flag_duplicate>
+          <flag_duplicate_tip>Disse feltetiketter optræder mere end én gang og kolliderer i indsendelsesdataene:</flag_duplicate_tip>
+        </formsoverview>
+        <submissionstimeline>
+          <events>indsendelser</events>
+          <range_7>Seneste 7 dage</range_7>
+          <range_30>Seneste 30 dage</range_30>
+          <range_90>Seneste 90 dage</range_90>
+          <range_365>Seneste år</range_365>
+          <filter_placeholder>Filtrér efter formularnavn…</filter_placeholder>
+          <form_filter_tip>Filtrér efter formular</form_filter_tip>
+          <all_forms>Alle formularer</all_forms>
+          <finalized_only>Kun endelige</finalized_only>
+          <empty>Ingen indsendelser fundet i det valgte interval.</empty>
+          <error_load>Kunne ikke indlæse indsendelsestidslinjen.</error_load>
+          <finalized>endelig</finalized>
+          <partial>delvis</partial>
+          <btn_details>Detaljer</btn_details>
+          <btn_view>Vis</btn_view>
+          <tip_details>Vis indsendelsesdata</tip_details>
+          <tip_view>Åbn denne formulars indsendelsesvisning i CMS</tip_view>
+          <loading_details>Indlæser detaljer…</loading_details>
+          <no_data>Ingen data registreret for denne indsendelse.</no_data>
+          <live>Live</live>
+          <live_tip>Stream nye indsendelser, efterhånden som de ankommer</live_tip>
+          <submission_id>Indsendelses-ID</submission_id>
+          <meta_when>Indsendt</meta_when>
+          <meta_user>Bruger</meta_user>
+          <meta_language>Sprog</meta_language>
+          <meta_page>Side</meta_page>
+          <anonymous>anonym</anonymous>
+        </submissionstimeline>
+      </ui>
+      <cmsdoctor>
+        <groups>
+          <forms>Formularer</forms>
+        </groups>
+        <checks>
+          <unusedformscheck>
+            <name>Ubrugte formularer</name>
+            <description>Finder Optimizely Forms, der ikke refereres af noget indhold på sitet.</description>
+            <ok>Hver formular refereres fra mindst én side eller blok.</ok>
+            <found>{0} formularer bruges ikke nogen steder på sitet.</found>
+            <examples>Eksempler: {0}</examples>
+            <andmore>(og {0} flere)</andmore>
+          </unusedformscheck>
+          <nonotificationhandlercheck>
+            <name>Formularer uden notifikationshåndtering</name>
+            <description>Finder formularer, der modtager indsendelser, men ikke har konfigureret e-mail- eller webhook-håndtering.</description>
+            <ok>Hver formular, der modtager indsendelser, har mindst én notifikationshåndtering.</ok>
+            <found>{0} formularer har indsendelser, men ingen e-mail-/webhook-håndtering.</found>
+            <examples>Eksempler: {0}</examples>
+            <andmore>(og {0} flere)</andmore>
+          </nonotificationhandlercheck>
+          <piiindefiniteretentioncheck>
+            <name>PII opbevaret på ubestemt tid</name>
+            <description>Finder formularer, der indsamler persondata med standardopbevaringspolitikken (reelt på ubestemt tid).</description>
+            <ok>Ingen formularer med PII-lignende felter opbevares med standardopbevaringspolitikken.</ok>
+            <found>{0} formularer indsamler PII-lignende felter med standardopbevaringspolitikken (ubestemt tid). Gennemgå for GDPR-/privatlivsoverholdelse.</found>
+            <details>{0}</details>
+            <andmore>(og {0} flere)</andmore>
+          </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Formularer med duplikerede felter</name>
+            <description>Finder formularer med to eller flere inputfelter, der deler samme etiket, hvilket giver tvetydige indsendelseskolonner.</description>
+            <ok>Ingen formular har duplikerede feltetiketter.</ok>
+            <found>{0} formularer har duplikerede feltetiketter.</found>
+            <examples>Eksempler: {0}</examples>
+            <andmore>(og {0} flere)</andmore>
+          </duplicatefieldscheck>
+        </checks>
+      </cmsdoctor>
+    </editorpowertools>
+  </language>
+</languages>

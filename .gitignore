@@ -86,6 +86,15 @@ modulesbin/
 /src/EditorPowertools/modules/_protected/Profile/
 /src/EditorPowertools/modules/_protected/Settings/
 /src/EditorPowertools/modules/_protected/TinyMce/
+/src/EditorPowertools/modules/_protected/CMS/
+/src/EditorPowertools/modules/_protected/EPiServer.*/
+/src/EditorPowertools/modules/_protected/Shell/
+/src/EditorPowertools.Forms/modules/_protected/CMS/
+/src/EditorPowertools.Forms/modules/_protected/EPiServer.*/
+/src/EditorPowertools.Forms/modules/_protected/Profile/
+/src/EditorPowertools.Forms/modules/_protected/Settings/
+/src/EditorPowertools.Forms/modules/_protected/Shell/
+/src/EditorPowertools.Forms/modules/_protected/TinyMce/
 /src/EditorPowertools.Tests/modules/
 
 # Local settings

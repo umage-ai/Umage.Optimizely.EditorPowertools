@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Norsk" id="no">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <FormsOverview>Tilgang til Skjemaoversikt — inventar over alle Optimizely Forms med innsendinger, felter, bruk og oppbevaringspolicy.</FormsOverview>
+              <SubmissionsTimeline>Tilgang til Innsendingstidslinje — kronologisk strøm på tvers av skjemaer over de nyeste skjemainnsendingene.</SubmissionsTimeline>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <formsoverview>Skjemaoversikt</formsoverview>
+        <submissionstimeline>Innsendingstidslinje</submissionstimeline>
+      </menu>
+      <tools>
+        <formsoverview>
+          <title>Skjemaoversikt</title>
+          <description>Hvert Optimizely Form på nettstedet, med antall innsendinger, siste aktivitet, hvor hvert skjema brukes, og hvilken oppbevaringspolicy som gjelder.</description>
+        </formsoverview>
+        <submissionstimeline>
+          <title>Innsendingstidslinje</title>
+          <description>De nyeste skjemainnsendingene på tvers av hele nettstedet, ordnet kronologisk og lenket tilbake til skjemaet som mottok dem.</description>
+        </submissionstimeline>
+      </tools>
+      <ui>
+        <formsoverview>
+          <forms_label>skjemaer</forms_label>
+          <filter_placeholder>Filtrer etter navn eller plassering…</filter_placeholder>
+          <retention_all>Enhver oppbevaring</retention_all>
+          <retention_default>Kun standardoppbevaring</retention_default>
+          <retention_default_short>Standard</retention_default_short>
+          <retention_custom>Kun tilpasset oppbevaring</retention_custom>
+          <retention_custom_short>Tilpasset</retention_custom_short>
+          <handler_all>Enhver behandler</handler_all>
+          <handler_with>Med e-post/webhook</handler_with>
+          <handler_without>Ingen varslingsbehandler</handler_without>
+          <handler_email_tip>E-postvarsling konfigurert</handler_email_tip>
+          <handler_webhook_tip>Webhook konfigurert</handler_webhook_tip>
+          <handler_none>—</handler_none>
+          <usage_only>Kun skjemaer som brukes et sted</usage_only>
+          <empty>Ingen skjemaer samsvarer med de gjeldende filtrene.</empty>
+          <error_load>Kunne ikke laste inn skjemaer.</error_load>
+          <col_name>Skjema</col_name>
+          <col_fields>Felter</col_fields>
+          <col_submissions>Innsendinger</col_submissions>
+          <col_last>Siste innsending</col_last>
+          <col_usage>Brukes på</col_usage>
+          <col_handlers>Behandlere</col_handlers>
+          <col_retention>Oppbevaring</col_retention>
+          <no_submissions>ingen innsendinger</no_submissions>
+          <unused>ubrukt</unused>
+          <more>flere</more>
+          <retention_partial>Delvis:</retention_partial>
+          <retention_final>Fullført:</retention_final>
+          <btn_edit>Rediger</btn_edit>
+          <btn_usage>Brukes på</btn_usage>
+          <tip_open>Åpne skjema i CMS-redigeringsmodus</tip_open>
+          <tip_edit>Åpne skjema i CMS-redigeringsmodus</tip_edit>
+          <tip_usage>Vis hvor dette skjemaet brukes</tip_usage>
+          <risk_only>Kun personvernrisikoer</risk_only>
+          <flag_privacy>Personvernrisiko</flag_privacy>
+          <flag_privacy_live>Personvernrisiko — aktive data</flag_privacy_live>
+          <flag_privacy_tip>Samler inn persondata og lagrer innsendinger med standardpolicyen (ubestemt oppbevaring).</flag_privacy_tip>
+          <flag_privacy_live_tip>Publisert skjema som allerede inneholder innsendinger med persondata med standardpolicyen (ubestemt oppbevaring) — gamle persondata blir sannsynligvis beholdt.</flag_privacy_live_tip>
+          <flag_pii_fields>Persondatafelter:</flag_pii_fields>
+          <flag_duplicate>Dupliserte felter</flag_duplicate>
+          <flag_duplicate_tip>Disse feltetikettene forekommer mer enn én gang og kolliderer i innsendingsdataene:</flag_duplicate_tip>
+        </formsoverview>
+        <submissionstimeline>
+          <events>innsendinger</events>
+          <range_7>Siste 7 dager</range_7>
+          <range_30>Siste 30 dager</range_30>
+          <range_90>Siste 90 dager</range_90>
+          <range_365>Siste år</range_365>
+          <filter_placeholder>Filtrer etter skjemanavn…</filter_placeholder>
+          <form_filter_tip>Filtrer etter skjema</form_filter_tip>
+          <all_forms>Alle skjemaer</all_forms>
+          <finalized_only>Kun fullførte</finalized_only>
+          <empty>Ingen innsendinger funnet i det valgte intervallet.</empty>
+          <error_load>Kunne ikke laste inn innsendingstidslinjen.</error_load>
+          <finalized>fullført</finalized>
+          <partial>delvis</partial>
+          <btn_details>Detaljer</btn_details>
+          <btn_view>Vis</btn_view>
+          <tip_details>Vis innsendingsdata</tip_details>
+          <tip_view>Åpne dette skjemaets innsendingsvisning i CMS</tip_view>
+          <loading_details>Laster inn detaljer…</loading_details>
+          <no_data>Ingen data registrert for denne innsendingen.</no_data>
+          <live>Live</live>
+          <live_tip>Strøm nye innsendinger etter hvert som de kommer inn</live_tip>
+          <submission_id>Innsendings-ID</submission_id>
+          <meta_when>Innsendt</meta_when>
+          <meta_user>Bruker</meta_user>
+          <meta_language>Språk</meta_language>
+          <meta_page>Side</meta_page>
+          <anonymous>anonym</anonymous>
+        </submissionstimeline>
+      </ui>
+      <cmsdoctor>
+        <groups>
+          <forms>Skjemaer</forms>
+        </groups>
+        <checks>
+          <unusedformscheck>
+            <name>Ubrukte skjemaer</name>
+            <description>Finner Optimizely Forms som ikke refereres av noe innhold på nettstedet.</description>
+            <ok>Hvert skjema refereres fra minst én side eller blokk.</ok>
+            <found>{0} skjemaer brukes ikke noe sted på nettstedet.</found>
+            <examples>Eksempler: {0}</examples>
+            <andmore>(og {0} til)</andmore>
+          </unusedformscheck>
+          <nonotificationhandlercheck>
+            <name>Skjemaer uten varslingsbehandler</name>
+            <description>Finner skjemaer som mottar innsendinger, men ikke har konfigurert e-post- eller webhook-behandler.</description>
+            <ok>Hvert skjema som mottar innsendinger, har minst én varslingsbehandler.</ok>
+            <found>{0} skjemaer har innsendinger, men ingen e-post-/webhook-behandler.</found>
+            <examples>Eksempler: {0}</examples>
+            <andmore>(og {0} til)</andmore>
+          </nonotificationhandlercheck>
+          <piiindefiniteretentioncheck>
+            <name>PII oppbevart på ubestemt tid</name>
+            <description>Finner skjemaer som samler inn persondata med standardoppbevaringspolicyen (i praksis på ubestemt tid).</description>
+            <ok>Ingen skjemaer med PII-lignende felter oppbevares med standardoppbevaringspolicyen.</ok>
+            <found>{0} skjemaer samler inn PII-lignende felter med standardoppbevaringspolicyen (ubestemt tid). Gjennomgå for GDPR-/personvernoverholdelse.</found>
+            <details>{0}</details>
+            <andmore>(og {0} til)</andmore>
+          </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Skjemaer med dupliserte felter</name>
+            <description>Finner skjemaer med to eller flere inndatafelter som deler samme etikett, noe som gir tvetydige innsendingskolonner.</description>
+            <ok>Ingen skjemaer har dupliserte feltetiketter.</ok>
+            <found>{0} skjemaer har dupliserte feltetiketter.</found>
+            <examples>Eksempler: {0}</examples>
+            <andmore>(og {0} til)</andmore>
+          </duplicatefieldscheck>
+        </checks>
+      </cmsdoctor>
+    </editorpowertools>
+  </language>
+</languages>

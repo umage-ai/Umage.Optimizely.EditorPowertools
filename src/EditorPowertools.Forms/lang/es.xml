@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Español" id="es">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <FormsOverview>Acceso a la Vista general de formularios — inventario de todos los Optimizely Forms con envíos, campos, uso y política de retención.</FormsOverview>
+              <SubmissionsTimeline>Acceso a la Cronología de envíos — feed cronológico entre formularios de los envíos de formularios recientes.</SubmissionsTimeline>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <formsoverview>Vista general de formularios</formsoverview>
+        <submissionstimeline>Cronología de envíos</submissionstimeline>
+      </menu>
+      <tools>
+        <formsoverview>
+          <title>Vista general de formularios</title>
+          <description>Cada Optimizely Form del sitio, con el número de envíos, la última actividad, dónde se utiliza cada formulario y qué política de retención se aplica.</description>
+        </formsoverview>
+        <submissionstimeline>
+          <title>Cronología de envíos</title>
+          <description>Los envíos de formularios más recientes de todo el sitio, ordenados cronológicamente y enlazados al formulario que los recibió.</description>
+        </submissionstimeline>
+      </tools>
+      <ui>
+        <formsoverview>
+          <forms_label>formularios</forms_label>
+          <filter_placeholder>Filtrar por nombre o ubicación…</filter_placeholder>
+          <retention_all>Cualquier retención</retention_all>
+          <retention_default>Solo retención predeterminada</retention_default>
+          <retention_default_short>Predeterminada</retention_default_short>
+          <retention_custom>Solo retención personalizada</retention_custom>
+          <retention_custom_short>Personalizada</retention_custom_short>
+          <handler_all>Cualquier controlador</handler_all>
+          <handler_with>Con correo/webhook</handler_with>
+          <handler_without>Sin controlador de notificación</handler_without>
+          <handler_email_tip>Notificación por correo configurada</handler_email_tip>
+          <handler_webhook_tip>Webhook configurado</handler_webhook_tip>
+          <handler_none>—</handler_none>
+          <usage_only>Solo formularios utilizados en algún lugar</usage_only>
+          <empty>Ningún formulario coincide con los filtros actuales.</empty>
+          <error_load>No se pudieron cargar los formularios.</error_load>
+          <col_name>Formulario</col_name>
+          <col_fields>Campos</col_fields>
+          <col_submissions>Envíos</col_submissions>
+          <col_last>Último envío</col_last>
+          <col_usage>Utilizado en</col_usage>
+          <col_handlers>Controladores</col_handlers>
+          <col_retention>Retención</col_retention>
+          <no_submissions>sin envíos</no_submissions>
+          <unused>sin usar</unused>
+          <more>más</more>
+          <retention_partial>Parcial:</retention_partial>
+          <retention_final>Finalizada:</retention_final>
+          <btn_edit>Editar</btn_edit>
+          <btn_usage>Utilizado en</btn_usage>
+          <tip_open>Abrir formulario en modo de edición del CMS</tip_open>
+          <tip_edit>Abrir formulario en modo de edición del CMS</tip_edit>
+          <tip_usage>Mostrar dónde se utiliza este formulario</tip_usage>
+          <risk_only>Solo riesgos de privacidad</risk_only>
+          <flag_privacy>Riesgo de privacidad</flag_privacy>
+          <flag_privacy_live>Riesgo de privacidad — datos activos</flag_privacy_live>
+          <flag_privacy_tip>Captura datos personales y almacena los envíos con la política de retención predeterminada (indefinida).</flag_privacy_tip>
+          <flag_privacy_live_tip>Formulario publicado que ya contiene envíos de datos personales con la política de retención predeterminada (indefinida); es probable que se conserven datos personales antiguos.</flag_privacy_live_tip>
+          <flag_pii_fields>Campos de datos personales:</flag_pii_fields>
+          <flag_duplicate>Campos duplicados</flag_duplicate>
+          <flag_duplicate_tip>Estas etiquetas de campo aparecen más de una vez y colisionan en los datos de los envíos:</flag_duplicate_tip>
+        </formsoverview>
+        <submissionstimeline>
+          <events>envíos</events>
+          <range_7>Últimos 7 días</range_7>
+          <range_30>Últimos 30 días</range_30>
+          <range_90>Últimos 90 días</range_90>
+          <range_365>Último año</range_365>
+          <filter_placeholder>Filtrar por nombre de formulario…</filter_placeholder>
+          <form_filter_tip>Filtrar por formulario</form_filter_tip>
+          <all_forms>Todos los formularios</all_forms>
+          <finalized_only>Solo finalizados</finalized_only>
+          <empty>No se encontraron envíos en el rango seleccionado.</empty>
+          <error_load>No se pudo cargar la cronología de envíos.</error_load>
+          <finalized>finalizado</finalized>
+          <partial>parcial</partial>
+          <btn_details>Detalles</btn_details>
+          <btn_view>Ver</btn_view>
+          <tip_details>Mostrar datos del envío</tip_details>
+          <tip_view>Abrir la vista de envíos de este formulario en el CMS</tip_view>
+          <loading_details>Cargando detalles…</loading_details>
+          <no_data>No se capturaron datos para este envío.</no_data>
+          <live>En vivo</live>
+          <live_tip>Transmitir nuevos envíos a medida que llegan</live_tip>
+          <submission_id>ID de envío</submission_id>
+          <meta_when>Enviado</meta_when>
+          <meta_user>Usuario</meta_user>
+          <meta_language>Idioma</meta_language>
+          <meta_page>Página</meta_page>
+          <anonymous>anónimo</anonymous>
+        </submissionstimeline>
+      </ui>
+      <cmsdoctor>
+        <groups>
+          <forms>Formularios</forms>
+        </groups>
+        <checks>
+          <unusedformscheck>
+            <name>Formularios sin usar</name>
+            <description>Encuentra los Optimizely Forms que no son referenciados por ningún contenido del sitio.</description>
+            <ok>Cada formulario es referenciado desde al menos una página o bloque.</ok>
+            <found>{0} formularios no se utilizan en ningún lugar del sitio.</found>
+            <examples>Ejemplos: {0}</examples>
+            <andmore>(y {0} más)</andmore>
+          </unusedformscheck>
+          <nonotificationhandlercheck>
+            <name>Formularios sin controlador de notificación</name>
+            <description>Encuentra los formularios que reciben envíos pero no tienen ningún controlador de correo o webhook configurado.</description>
+            <ok>Cada formulario que recibe envíos tiene al menos un controlador de notificación.</ok>
+            <found>{0} formularios tienen envíos pero ningún controlador de correo/webhook.</found>
+            <examples>Ejemplos: {0}</examples>
+            <andmore>(y {0} más)</andmore>
+          </nonotificationhandlercheck>
+          <piiindefiniteretentioncheck>
+            <name>PII almacenada indefinidamente</name>
+            <description>Encuentra los formularios que capturan datos personales con la política de retención predeterminada (efectivamente indefinida).</description>
+            <ok>Ningún formulario con campos de tipo PII se almacena con la política de retención predeterminada.</ok>
+            <found>{0} formularios capturan campos de tipo PII con la política de retención predeterminada (indefinida). Revisar para el cumplimiento del RGPD / privacidad.</found>
+            <details>{0}</details>
+            <andmore>(y {0} más)</andmore>
+          </piiindefiniteretentioncheck>
+          <duplicatefieldscheck>
+            <name>Formularios con campos duplicados</name>
+            <description>Encuentra los formularios con dos o más campos de entrada que comparten la misma etiqueta, lo que produce columnas de envío ambiguas.</description>
+            <ok>Ningún formulario tiene etiquetas de campo duplicadas.</ok>
+            <found>{0} formularios tienen etiquetas de campo duplicadas.</found>
+            <examples>Ejemplos: {0}</examples>
+            <andmore>(y {0} más)</andmore>
+          </duplicatefieldscheck>
+        </checks>
+      </cmsdoctor>
+    </editorpowertools>
+  </language>
+</languages>
