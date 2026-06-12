@@ -105,6 +105,7 @@
   <ItemGroup>
     <Content Include="$(IntermediateOutputPath)module-zip\EditorPowertoolsForms.zip" Pack="true" PackagePath="contentFiles\any\any\modules\_protected\EditorPowertoolsForms" BuildAction="None" CopyToPublishDirectory="Never" CopyToOutputDirectory="Never">
       <Link>EditorPowertoolsForms.zip</Link>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
   </ItemGroup>
 
