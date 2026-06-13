@@ -539,7 +539,7 @@ public class FormsAggregationService : IFormsAggregationService
     /// data captured before a field was renamed) are appended at the end.
     /// SYSTEMCOLUMN_* keys are stripped — those go in the metadata header.
     /// </summary>
-    private static List<SubmissionFieldDto> BuildFieldList(IDictionary<string, object> data, List<FriendlyNameInfo>? schema)
+    internal static List<SubmissionFieldDto> BuildFieldList(IDictionary<string, object> data, List<FriendlyNameInfo>? schema)
     {
         var result = new List<SubmissionFieldDto>(data.Count);
         var consumed = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -549,6 +549,12 @@ public class FormsAggregationService : IFormsAggregationService
             foreach (var info in schema)
             {
                 if (string.IsNullOrEmpty(info?.ElementId)) continue;
+                // Skip Forms system columns (SubmitTime, SubmitUser, HostedPage,
+                // FinalizedSubmission, SubmissionId, …). They show up in the form's
+                // friendly-name schema but are surfaced in the submission metadata
+                // header, so listing them here just duplicates that (and the
+                // un-friendly-named ones leak a raw "SYSTEMCOLUMN_…" label).
+                if (info.ElementId.StartsWith(Constants.SYSTEMCOLUMN_PREFIX, StringComparison.Ordinal)) continue;
                 data.TryGetValue(info.ElementId, out var value);
                 consumed.Add(info.ElementId);
                 result.Add(new SubmissionFieldDto
