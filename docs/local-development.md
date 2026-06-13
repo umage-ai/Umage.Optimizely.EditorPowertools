@@ -46,6 +46,11 @@ After logging in, find **Editor Powertools** in the top navigation menu. Or navi
 
 - **Overview**: https://localhost:5000/EPiServer/EditorPowertools/EditorPowertools/Overview
 
+Both sample sites also reference the optional **Forms add-on** (`EditorPowertools.Forms`) and have `EPiServer.Forms` installed, so the Forms tools are available too:
+
+- **Forms Overview**: https://localhost:5000/EPiServer/EditorPowertoolsForms/EditorPowertoolsForms/FormsOverview
+- **Submissions Timeline**: https://localhost:5000/EPiServer/EditorPowertoolsForms/EditorPowertoolsForms/SubmissionsTimeline
+
 ### 3. Set up the CMS 13 sample site (Alloy / .NET 10)
 
 The CMS 13 sample site also ships with a pre-built database and media blobs. Unzip them:
@@ -74,6 +79,8 @@ Log in at https://localhost:5010/Optimizely/CMS (the shell URL changed in CMS 13
 After logging in, find **Editor Powertools** in the top navigation menu. Or navigate directly:
 
 - **Overview**: https://localhost:5010/Optimizely/EditorPowertools/EditorPowertools/Overview
+- **Forms Overview**: https://localhost:5010/Optimizely/EditorPowertoolsForms/EditorPowertoolsForms/FormsOverview
+- **Submissions Timeline**: https://localhost:5010/Optimizely/EditorPowertoolsForms/EditorPowertoolsForms/SubmissionsTimeline
 
 ## Project Structure
 

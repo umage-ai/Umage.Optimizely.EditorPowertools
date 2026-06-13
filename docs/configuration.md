@@ -94,6 +94,42 @@ All features are **enabled by default** (`true`). Set a feature to `false` to di
 | `ActiveEditors` | `activeEditors` | Active Editors | Real-time editor presence and activity. |
 | `ActiveEditorsChat` | `activeEditorsChat` | Active Editors Chat | Team chat within the Active Editors widget. Requires `ActiveEditors` to also be enabled. |
 
+## Forms Add-On Configuration
+
+The optional [Forms add-on](forms.md) (`UmageAI.Optimizely.EditorPowerTools.Forms`) has its own feature toggles, bound from the **`CodeArt:EditorPowertools:Forms`** section (note the nested `Forms` key, separate from the base package's section). Both default to enabled.
+
+```json
+{
+  "CodeArt": {
+    "EditorPowertools": {
+      "Forms": {
+        "features": {
+          "formsOverview": true,
+          "submissionsTimeline": true
+        }
+      }
+    }
+  }
+}
+```
+
+Or in code, via the `AddEditorPowertoolsForms` lambda:
+
+```csharp
+services.AddEditorPowertoolsForms(options =>
+{
+    options.Features.FormsOverview = true;
+    options.Features.SubmissionsTimeline = false;
+});
+```
+
+| Property | JSON Key | Tool |
+|----------|----------|------|
+| `FormsOverview` | `formsOverview` | Forms Overview — inventory of all forms with submissions, fields, usage, retention, and privacy/duplicate diagnostics |
+| `SubmissionsTimeline` | `submissionsTimeline` | Submissions Timeline — cross-form chronological feed with optional live streaming |
+
+The Forms tools reuse the base package's `AuthorizedRoles` / `CheckPermissionForEachFeature` permission model, and add two per-function permissions (`FormsOverview`, `SubmissionsTimeline`). See [Forms Add-On](forms.md) for details.
+
 ## Permission Model
 
 EditorPowertools uses a three-layer permission model. Each layer is checked in order; a user needs to pass all applicable layers to access a tool.

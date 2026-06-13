@@ -191,8 +191,32 @@ Some tools integrate directly into the CMS edit mode:
 
 ![CMS Edit Mode Integration](screenshots/14-cms-edit-mode.png)
 
+## Optional: Forms Add-On
+
+If your site uses [Optimizely Forms](https://docs.developers.optimizely.com/content-management-system/docs/optimizely-forms), install the separate **Forms add-on** package for the Forms Overview and Submissions Timeline tools (plus four Forms-specific CMS Doctor checks):
+
+```bash
+dotnet add package UmageAI.Optimizely.EditorPowerTools.Forms
+```
+
+Register it **after** the base package:
+
+```csharp
+services.AddEditorPowertools();
+services.AddEditorPowertoolsForms();          // ConfigureServices
+
+app.UseEditorPowertools();
+app.UseEditorPowertoolsForms();               // Configure
+
+endpoints.MapEditorPowertools();
+endpoints.MapEditorPowertoolsForms();         // inside UseEndpoints
+```
+
+The Forms tools then appear in the same **Editor Powertools** menu. See the [Forms Add-On guide](forms.md) for the full feature list, configuration, and permissions.
+
 ## Next Steps
 
+- [Forms Add-On](forms.md) -- optional package for Optimizely Forms tooling
 - [Configuration Reference](configuration.md) -- full details on all options, feature toggles, and permission settings
 - [Extending CMS Doctor](extending-cms-doctor.md) -- create custom health checks for your site
 - [Coding Guidelines](coding-guidelines.md) -- architecture and standards for contributing

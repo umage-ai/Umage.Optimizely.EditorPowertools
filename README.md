@@ -149,10 +149,14 @@ Optimizely Forms tooling ships as a separate, optional NuGet package — `UmageA
 
 | Tool | Description |
 |------|-------------|
-| **Forms Overview** | Inventory of every Optimizely Form on the site — submission counts, last activity, field counts, where each form is used (incoming references), notification handlers (email/webhook), and retention policy. Flags **duplicate field labels** and **privacy/GDPR risks** (forms that capture personal data, store submissions, and run on the default indefinite retention policy — elevated when the form is live with existing submissions). Filter by retention, handlers, usage, or privacy risk. |
-| **Submissions Timeline** | Cross-form, chronological feed of recent submissions, linked back to the form that received them. Optional **live mode** streams new submissions as they arrive (Server-Sent Events). Filter by form, date range, and finalized/partial. |
+| **Forms Overview** | Inventory of every Optimizely Form on the site — submission counts, last activity, field counts, where each form is used (incoming references), notification handlers (email/webhook), and retention policy. Flags **duplicate field labels** and **privacy/GDPR risks** (forms that capture personal data, store submissions, and run on the default indefinite retention policy — elevated when the form is live with existing submissions). Filter by retention, handlers, usage, privacy risk, or form language. |
+| **Submissions Timeline** | Cross-form, chronological feed of recent submissions, linked back to the form that received them. Optional **live mode** streams new submissions as they arrive (Server-Sent Events). Filter by form, date range, finalized/partial, and form language. |
 
 It also contributes four checks to the base **CMS Doctor** dashboard: *Unused Forms*, *Forms Without Notification Handlers*, *PII Stored Indefinitely*, and *Forms With Duplicate Fields*.
+
+![Forms Overview](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/20-forms-overview.png)
+
+![Submissions Timeline](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/21-submissions-timeline.png)
 
 ### Installation
 
@@ -184,6 +188,8 @@ public void Configure(IApplicationBuilder app)
 ```
 
 The Forms tools honour the same permission model as the base package and add their own feature toggles (bound from `CodeArt:EditorPowertools:Forms`) and per-tool permissions (`FormsOverview`, `SubmissionsTimeline`).
+
+See the [Forms Add-On guide](docs/forms.md) for the full feature list, configuration, and permissions.
 
 ## Installation
 
@@ -272,6 +278,7 @@ Run these from the CMS admin Scheduled Jobs page, or trigger them from each tool
 ## Documentation
 
 - [Getting Started Guide](docs/getting-started.md) - Step-by-step installation and setup
+- [Forms Add-On](docs/forms.md) - Optional package for Optimizely Forms tooling
 - [Configuration Reference](docs/configuration.md) - All options, feature toggles, and settings
 - [Extending CMS Doctor](docs/extending-cms-doctor.md) - Create custom health checks
 - [Coding Guidelines](docs/coding-guidelines.md) - Architecture patterns and coding standards
