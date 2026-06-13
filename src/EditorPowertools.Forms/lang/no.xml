@@ -44,6 +44,8 @@
           <handler_webhook_tip>Webhook konfigurert</handler_webhook_tip>
           <handler_none>—</handler_none>
           <usage_only>Kun skjemaer som brukes et sted</usage_only>
+          <lang_all>Alle språk</lang_all>
+          <lang_filter_tip>Filtrer etter skjemaspråk</lang_filter_tip>
           <empty>Ingen skjemaer samsvarer med de gjeldende filtrene.</empty>
           <error_load>Kunne ikke laste inn skjemaer.</error_load>
           <col_name>Skjema</col_name>
@@ -81,6 +83,8 @@
           <filter_placeholder>Filtrer etter skjemanavn…</filter_placeholder>
           <form_filter_tip>Filtrer etter skjema</form_filter_tip>
           <all_forms>Alle skjemaer</all_forms>
+          <lang_all>Alle språk</lang_all>
+          <lang_filter_tip>Filtrer etter skjemaspråk</lang_filter_tip>
           <finalized_only>Kun fullførte</finalized_only>
           <empty>Ingen innsendinger funnet i det valgte intervallet.</empty>
           <error_load>Kunne ikke laste inn innsendingstidslinjen.</error_load>

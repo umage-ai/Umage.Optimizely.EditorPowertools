@@ -44,6 +44,8 @@
           <handler_webhook_tip>Webhook määritetty</handler_webhook_tip>
           <handler_none>—</handler_none>
           <usage_only>Vain jossain käytössä olevat lomakkeet</usage_only>
+          <lang_all>Kaikki kielet</lang_all>
+          <lang_filter_tip>Suodata lomakkeen kielen mukaan</lang_filter_tip>
           <empty>Yksikään lomake ei vastaa nykyisiä suodattimia.</empty>
           <error_load>Lomakkeiden lataaminen epäonnistui.</error_load>
           <col_name>Lomake</col_name>
@@ -81,6 +83,8 @@
           <filter_placeholder>Suodata lomakkeen nimen mukaan…</filter_placeholder>
           <form_filter_tip>Suodata lomakkeen mukaan</form_filter_tip>
           <all_forms>Kaikki lomakkeet</all_forms>
+          <lang_all>Kaikki kielet</lang_all>
+          <lang_filter_tip>Suodata lomakkeen kielen mukaan</lang_filter_tip>
           <finalized_only>Vain viimeistellyt</finalized_only>
           <empty>Valitulta aikaväliltä ei löytynyt lähetyksiä.</empty>
           <error_load>Lähetysten aikajanan lataaminen epäonnistui.</error_load>
