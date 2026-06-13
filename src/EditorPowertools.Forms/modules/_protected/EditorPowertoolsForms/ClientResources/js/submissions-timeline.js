@@ -18,6 +18,7 @@
         days: 30,
         top: 200,
         formGuid: '',                 // empty = all forms
+        language: '',                 // '' = all languages (client-side filter)
         finalizedOnly: false,
         expanded: new Set(),          // submissionIds whose details panel is open
         detailsCache: new Map(),      // submissionId -> SubmissionEventDto with .data
@@ -100,7 +101,8 @@
     }
 
     function render() {
-        const events = applyFinalizedFilter(state.events);
+        const events = applyClientFilters(state.events);
+        const langs = [...new Set(state.events.map(e => e.language).filter(Boolean))].sort();
         root.innerHTML = '';
 
         const card = document.createElement('div');
@@ -124,6 +126,11 @@
                     <option value="90">${EPT.s('submissionstimeline.range_90', 'Last 90 days')}</option>
                     <option value="365">${EPT.s('submissionstimeline.range_365', 'Last year')}</option>
                 </select>
+                ${langs.length > 1 ? `
+                <select id="ept-tl-language" class="ept-input" title="${EPT.s('submissionstimeline.lang_filter_tip', 'Filter by form language')}">
+                    <option value="">${EPT.s('submissionstimeline.lang_all', 'All languages')}</option>
+                    ${langs.map(l => `<option value="${escAttr(l)}" ${state.language === l ? 'selected' : ''}>${esc(l)}</option>`).join('')}
+                </select>` : ''}
                 <label class="ept-checkbox">
                     <input type="checkbox" id="ept-tl-finalized" ${state.finalizedOnly ? 'checked' : ''} />
                     ${EPT.s('submissionstimeline.finalized_only', 'Finalized only')}
@@ -156,6 +163,11 @@
         const daysEl = document.getElementById('ept-tl-days');
         daysEl.value = String(state.days);
         daysEl.addEventListener('change', e => { state.days = parseInt(e.target.value, 10) || 30; reload(); });
+        const langEl = document.getElementById('ept-tl-language');
+        if (langEl) {
+            langEl.value = state.language;
+            langEl.addEventListener('change', e => { state.language = e.target.value; render(); });
+        }
         document.getElementById('ept-tl-finalized').addEventListener('change', e => {
             state.finalizedOnly = e.target.checked;
             render();
@@ -167,8 +179,11 @@
         });
     }
 
-    function applyFinalizedFilter(list) {
-        return state.finalizedOnly ? list.filter(e => e.finalized) : list;
+    function applyClientFilters(list) {
+        let out = list;
+        if (state.finalizedOnly) out = out.filter(e => e.finalized);
+        if (state.language) out = out.filter(e => e.language === state.language);
+        return out;
     }
 
     function buildTimeline(events) {

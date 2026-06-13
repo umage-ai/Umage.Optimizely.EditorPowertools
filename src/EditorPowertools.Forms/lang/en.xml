@@ -44,6 +44,8 @@
           <handler_webhook_tip>Webhook configured</handler_webhook_tip>
           <handler_none>—</handler_none>
           <usage_only>Only forms used somewhere</usage_only>
+          <lang_all>All languages</lang_all>
+          <lang_filter_tip>Filter by form language</lang_filter_tip>
           <empty>No forms match the current filters.</empty>
           <error_load>Failed to load forms.</error_load>
           <col_name>Form</col_name>
@@ -81,6 +83,8 @@
           <filter_placeholder>Filter by form name…</filter_placeholder>
           <form_filter_tip>Filter by form</form_filter_tip>
           <all_forms>All forms</all_forms>
+          <lang_all>All languages</lang_all>
+          <lang_filter_tip>Filter by form language</lang_filter_tip>
           <finalized_only>Finalized only</finalized_only>
           <empty>No submissions found in the selected range.</empty>
           <error_load>Failed to load submissions timeline.</error_load>
