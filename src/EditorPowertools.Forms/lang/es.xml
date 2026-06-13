@@ -44,6 +44,8 @@
           <handler_webhook_tip>Webhook configurado</handler_webhook_tip>
           <handler_none>—</handler_none>
           <usage_only>Solo formularios utilizados en algún lugar</usage_only>
+          <lang_all>Todos los idiomas</lang_all>
+          <lang_filter_tip>Filtrar por idioma del formulario</lang_filter_tip>
           <empty>Ningún formulario coincide con los filtros actuales.</empty>
           <error_load>No se pudieron cargar los formularios.</error_load>
           <col_name>Formulario</col_name>
@@ -81,6 +83,8 @@
           <filter_placeholder>Filtrar por nombre de formulario…</filter_placeholder>
           <form_filter_tip>Filtrar por formulario</form_filter_tip>
           <all_forms>Todos los formularios</all_forms>
+          <lang_all>Todos los idiomas</lang_all>
+          <lang_filter_tip>Filtrar por idioma del formulario</lang_filter_tip>
           <finalized_only>Solo finalizados</finalized_only>
           <empty>No se encontraron envíos en el rango seleccionado.</empty>
           <error_load>No se pudo cargar la cronología de envíos.</error_load>

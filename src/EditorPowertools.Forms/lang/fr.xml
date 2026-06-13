@@ -44,6 +44,8 @@
           <handler_webhook_tip>Webhook configuré</handler_webhook_tip>
           <handler_none>—</handler_none>
           <usage_only>Uniquement les formulaires utilisés quelque part</usage_only>
+          <lang_all>Toutes les langues</lang_all>
+          <lang_filter_tip>Filtrer par langue de formulaire</lang_filter_tip>
           <empty>Aucun formulaire ne correspond aux filtres actuels.</empty>
           <error_load>Échec du chargement des formulaires.</error_load>
           <col_name>Formulaire</col_name>
@@ -81,6 +83,8 @@
           <filter_placeholder>Filtrer par nom de formulaire…</filter_placeholder>
           <form_filter_tip>Filtrer par formulaire</form_filter_tip>
           <all_forms>Tous les formulaires</all_forms>
+          <lang_all>Toutes les langues</lang_all>
+          <lang_filter_tip>Filtrer par langue de formulaire</lang_filter_tip>
           <finalized_only>Finalisées uniquement</finalized_only>
           <empty>Aucune soumission trouvée dans la plage sélectionnée.</empty>
           <error_load>Échec du chargement du fil des soumissions.</error_load>

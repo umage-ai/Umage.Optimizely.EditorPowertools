@@ -15,6 +15,7 @@
         filter: '',
         retention: 'all',           // 'all' | 'default' | 'custom'
         handlerFilter: 'all',       // 'all' | 'with' | 'without'
+        language: '',               // '' = all languages
         usageOnly: false,
         riskOnly: false,            // privacy/GDPR risks only
         sortBy: 'lastSubmission',
@@ -34,6 +35,7 @@
 
     function render() {
         const rows = applyFilters(state.all);
+        const langs = [...new Set(state.all.map(r => r.language).filter(Boolean))].sort();
         root.innerHTML = '';
 
         const card = el('div', { className: 'ept-card' });
@@ -59,6 +61,11 @@
                     <option value="with">${EPT.s('formsoverview.handler_with', 'With email/webhook')}</option>
                     <option value="without">${EPT.s('formsoverview.handler_without', 'No notification handler')}</option>
                 </select>
+                ${langs.length > 1 ? `
+                <select id="ept-forms-language" class="ept-input" title="${EPT.s('formsoverview.lang_filter_tip', 'Filter by form language')}">
+                    <option value="">${EPT.s('formsoverview.lang_all', 'All languages')}</option>
+                    ${langs.map(l => `<option value="${escAttr(l)}" ${state.language === l ? 'selected' : ''}>${esc(l)}</option>`).join('')}
+                </select>` : ''}
                 <label class="ept-checkbox">
                     <input type="checkbox" id="ept-forms-usage-only" ${state.usageOnly ? 'checked' : ''} />
                     ${EPT.s('formsoverview.usage_only', 'Only forms used somewhere')}
@@ -98,6 +105,11 @@
         const hand = document.getElementById('ept-forms-handler');
         hand.value = state.handlerFilter;
         hand.addEventListener('change', e => { state.handlerFilter = e.target.value; render(); });
+        const langEl = document.getElementById('ept-forms-language');
+        if (langEl) {
+            langEl.value = state.language;
+            langEl.addEventListener('change', e => { state.language = e.target.value; render(); });
+        }
         document.getElementById('ept-forms-usage-only').addEventListener('change', e => {
             state.usageOnly = e.target.checked;
             render();
@@ -122,6 +134,7 @@
         if (state.retention === 'custom') out = out.filter(r => !r.usesDefaultRetention);
         if (state.handlerFilter === 'with') out = out.filter(r => r.hasEmailHandler || r.hasWebhookHandler);
         if (state.handlerFilter === 'without') out = out.filter(r => !r.hasEmailHandler && !r.hasWebhookHandler);
+        if (state.language) out = out.filter(r => r.language === state.language);
         if (state.usageOnly) out = out.filter(r => (r.usageCount || 0) > 0);
         if (state.riskOnly) out = out.filter(r => r.privacyRisk);
 

@@ -44,6 +44,8 @@
           <handler_webhook_tip>已配置 webhook</handler_webhook_tip>
           <handler_none>—</handler_none>
           <usage_only>仅在某处使用的表单</usage_only>
+          <lang_all>所有语言</lang_all>
+          <lang_filter_tip>按表单语言筛选</lang_filter_tip>
           <empty>没有表单符合当前筛选条件。</empty>
           <error_load>加载表单失败。</error_load>
           <col_name>表单</col_name>
@@ -81,6 +83,8 @@
           <filter_placeholder>按表单名称筛选…</filter_placeholder>
           <form_filter_tip>按表单筛选</form_filter_tip>
           <all_forms>所有表单</all_forms>
+          <lang_all>所有语言</lang_all>
+          <lang_filter_tip>按表单语言筛选</lang_filter_tip>
           <finalized_only>仅已完成</finalized_only>
           <empty>在所选范围内未找到提交。</empty>
           <error_load>加载提交时间线失败。</error_load>

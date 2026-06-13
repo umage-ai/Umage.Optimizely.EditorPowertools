@@ -44,6 +44,8 @@
           <handler_webhook_tip>Webhook が設定済み</handler_webhook_tip>
           <handler_none>—</handler_none>
           <usage_only>どこかで使用されているフォームのみ</usage_only>
+          <lang_all>すべての言語</lang_all>
+          <lang_filter_tip>フォームの言語で絞り込み</lang_filter_tip>
           <empty>現在のフィルターに一致するフォームがありません。</empty>
           <error_load>フォームの読み込みに失敗しました。</error_load>
           <col_name>フォーム</col_name>
@@ -81,6 +83,8 @@
           <filter_placeholder>フォーム名で絞り込み…</filter_placeholder>
           <form_filter_tip>フォームで絞り込み</form_filter_tip>
           <all_forms>すべてのフォーム</all_forms>
+          <lang_all>すべての言語</lang_all>
+          <lang_filter_tip>フォームの言語で絞り込み</lang_filter_tip>
           <finalized_only>確定済みのみ</finalized_only>
           <empty>選択した範囲に送信が見つかりませんでした。</empty>
           <error_load>送信タイムラインの読み込みに失敗しました。</error_load>

@@ -44,6 +44,8 @@
           <handler_webhook_tip>Webhook konfigureret</handler_webhook_tip>
           <handler_none>—</handler_none>
           <usage_only>Kun formularer der bruges et sted</usage_only>
+          <lang_all>Alle sprog</lang_all>
+          <lang_filter_tip>Filtrér efter formularsprog</lang_filter_tip>
           <empty>Ingen formularer matcher de aktuelle filtre.</empty>
           <error_load>Kunne ikke indlæse formularer.</error_load>
           <col_name>Formular</col_name>
@@ -81,6 +83,8 @@
           <filter_placeholder>Filtrér efter formularnavn…</filter_placeholder>
           <form_filter_tip>Filtrér efter formular</form_filter_tip>
           <all_forms>Alle formularer</all_forms>
+          <lang_all>Alle sprog</lang_all>
+          <lang_filter_tip>Filtrér efter formularsprog</lang_filter_tip>
           <finalized_only>Kun endelige</finalized_only>
           <empty>Ingen indsendelser fundet i det valgte interval.</empty>
           <error_load>Kunne ikke indlæse indsendelsestidslinjen.</error_load>

@@ -44,6 +44,8 @@
           <handler_webhook_tip>Webhook konfigurerad</handler_webhook_tip>
           <handler_none>—</handler_none>
           <usage_only>Endast formulär som används någonstans</usage_only>
+          <lang_all>Alla språk</lang_all>
+          <lang_filter_tip>Filtrera efter formulärspråk</lang_filter_tip>
           <empty>Inga formulär matchar de aktuella filtren.</empty>
           <error_load>Det gick inte att läsa in formulär.</error_load>
           <col_name>Formulär</col_name>
@@ -81,6 +83,8 @@
           <filter_placeholder>Filtrera efter formulärnamn…</filter_placeholder>
           <form_filter_tip>Filtrera efter formulär</form_filter_tip>
           <all_forms>Alla formulär</all_forms>
+          <lang_all>Alla språk</lang_all>
+          <lang_filter_tip>Filtrera efter formulärspråk</lang_filter_tip>
           <finalized_only>Endast slutförda</finalized_only>
           <empty>Inga inskickningar hittades i det valda intervallet.</empty>
           <error_load>Det gick inte att läsa in inskickningstidslinjen.</error_load>
