@@ -263,8 +263,9 @@ public class ContentAuditApiController : Controller
         try
         {
             var store  = GetStore();
+            var currentUser = HttpContext.User.Identity?.Name ?? "unknown";
             var record = store.Items<ContentAuditExportJobRequest>()
-                .FirstOrDefault(r => r.RequestId == requestId);
+                .FirstOrDefault(r => r.RequestId == requestId && r.RequestedBy == currentUser);
 
             if (record == null)
                 return NotFound(new { success = false, message = "Export request not found." });

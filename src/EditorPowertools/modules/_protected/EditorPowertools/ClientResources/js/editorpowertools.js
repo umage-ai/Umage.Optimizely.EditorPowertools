@@ -64,7 +64,7 @@ const EPT = {
         backdrop.innerHTML = `
             <div class="ept-dialog${wide}">
                 <div class="ept-dialog__header">
-                    <span class="ept-dialog__title">${title}</span>
+                    <span class="ept-dialog__title">${EPT.escHtml(title)}</span>
                     <button class="ept-dialog__close" title="Close">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                     </button>
@@ -284,6 +284,18 @@ const EPT = {
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;');
+    },
+
+    /**
+     * Returns a URL safe to place in an href, or '#' if its scheme is not allowed.
+     * Permits http(s)/mailto absolute URLs and any scheme-less (relative) URL; blocks
+     * javascript:, data:, vbscript: etc. Still escape the result with escHtml for the attribute.
+     */
+    safeUrl: function(url) {
+        var s = String(url || '').replace(/[\u0000-\u0020]/g, '');
+        var scheme = s.match(/^([a-z][a-z0-9+.\-]*):/i);
+        if (scheme && !/^(https?|mailto)$/i.test(scheme[1])) return '#';
+        return s;
     },
 
     /**

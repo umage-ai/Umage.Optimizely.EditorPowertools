@@ -1,4 +1,7 @@
 using System.Globalization;
+using System.Net;
+using System.Net.Sockets;
+using System.Security.Principal;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.Core.Internal;
@@ -24,6 +27,7 @@ public class ContentImporterService
     private readonly ContentAssetHelper _contentAssetHelper;
     private readonly IBlobFactory _blobFactory;
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IPrincipalAccessor _principalAccessor;
     private readonly ILogger<ContentImporterService> _logger;
 
     // System properties to exclude from mapping
@@ -57,6 +61,7 @@ public class ContentImporterService
         ContentAssetHelper contentAssetHelper,
         IBlobFactory blobFactory,
         IHttpClientFactory httpClientFactory,
+        IPrincipalAccessor principalAccessor,
         ILogger<ContentImporterService> logger)
     {
         _sessionStore = sessionStore;
@@ -67,6 +72,7 @@ public class ContentImporterService
         _contentAssetHelper = contentAssetHelper;
         _blobFactory = blobFactory;
         _httpClientFactory = httpClientFactory;
+        _principalAccessor = principalAccessor;
         _logger = logger;
     }
 
@@ -254,8 +260,13 @@ public class ContentImporterService
             Total = session.Rows.Count
         };
 
+        // Capture the requesting user so the background task enforces *their* content
+        // ACLs. A detached Task in CMS 12+ runs with an unauthenticated principal by
+        // default, so we flow the request principal in and restore it on the worker.
+        var principal = _principalAccessor.Principal;
+
         // Run import in background
-        Task.Run(() => ExecuteImportAsync(session));
+        Task.Run(() => ExecuteImportAsync(session, principal));
 
         return sessionId;
     }
@@ -265,10 +276,15 @@ public class ContentImporterService
         return _sessionStore.Get(sessionId)?.Progress;
     }
 
-    private async Task ExecuteImportAsync(ImportSession session)
+    private async Task ExecuteImportAsync(ImportSession session, IPrincipal principal)
     {
         var mapping = session.Mapping!;
         var progress = session.Progress!;
+
+        // Restore the requesting user's principal on this background thread so that
+        // IContentRepository.Save enforces the caller's per-node access rights.
+        // (PrincipalInfo.CurrentPrincipal is read-only in CMS 12+; set via the accessor.)
+        _principalAccessor.Principal = principal;
 
         try
         {
@@ -312,7 +328,7 @@ public class ContentImporterService
                     progress.Errors.Add(new ImportError
                     {
                         RowIndex = i + 1,
-                        Message = ex.Message
+                        Message = "Failed to import this row. Check server logs for details."
                     });
                     _logger.LogWarning(ex, "Failed to import row {RowIndex}", i + 1);
                 }
@@ -325,7 +341,7 @@ public class ContentImporterService
         catch (Exception ex)
         {
             progress.Status = "failed";
-            progress.Errors.Add(new ImportError { RowIndex = 0, Message = ex.Message });
+            progress.Errors.Add(new ImportError { RowIndex = 0, Message = "Import failed. Check server logs for details." });
             _logger.LogError(ex, "Import failed for session {SessionId}", session.SessionId);
         }
     }
@@ -399,7 +415,7 @@ public class ContentImporterService
             }
             catch (Exception ex)
             {
-                rowWarnings.Add($"Could not set property '{propMapping.TargetProperty}': {ex.Message}");
+                rowWarnings.Add($"Could not set property '{propMapping.TargetProperty}'");
                 _logger.LogWarning(ex, "Failed to set property {Property} on row {Row}",
                     propMapping.TargetProperty, rowIndex + 1);
             }
@@ -408,7 +424,7 @@ public class ContentImporterService
         // Save content first as draft to get a content link for the asset folder
         var hasDeferred = deferredImageMappings.Count > 0 || deferredBlockMappings.Count > 0;
         var initialSaveAction = hasDeferred ? SaveAction.Save : (mapping.PublishAfterImport ? SaveAction.Publish : SaveAction.Save);
-        var saved = _contentRepository.Save(content, initialSaveAction, AccessLevel.NoAccess);
+        var saved = _contentRepository.Save(content, initialSaveAction, RequiredAccess(initialSaveAction));
 
         // Handle deferred mappings (images + inline blocks) — content exists now
         if (hasDeferred)
@@ -427,7 +443,7 @@ public class ContentImporterService
                 }
                 catch (Exception ex)
                 {
-                    rowWarnings.Add($"Could not create inline blocks for property '{blockMapping.TargetProperty}': {ex.Message}");
+                    rowWarnings.Add($"Could not create inline blocks for property '{blockMapping.TargetProperty}'");
                     _logger.LogWarning(ex, "Failed to create inline blocks for {Property} on row {Row}",
                         blockMapping.TargetProperty, rowIndex + 1);
                 }
@@ -448,14 +464,14 @@ public class ContentImporterService
                 }
                 catch (Exception ex)
                 {
-                    rowWarnings.Add($"Could not download image for property '{imgMapping.TargetProperty}' from '{imgUrl}': {ex.Message}");
+                    rowWarnings.Add($"Could not download image for property '{imgMapping.TargetProperty}' from '{imgUrl}'");
                     _logger.LogWarning(ex, "Failed to download image for {Property} from {Url} on row {Row}",
                         imgMapping.TargetProperty, imgUrl, rowIndex + 1);
                 }
             }
 
             var finalAction = mapping.PublishAfterImport ? SaveAction.Publish : SaveAction.Save;
-            saved = _contentRepository.Save(writableContent, finalAction | SaveAction.ForceCurrentVersion, AccessLevel.NoAccess);
+            saved = _contentRepository.Save(writableContent, finalAction | SaveAction.ForceCurrentVersion, RequiredAccess(finalAction));
         }
 
         return saved.ID;
@@ -468,6 +484,14 @@ public class ContentImporterService
             || typeName.Contains("PageReference", StringComparison.OrdinalIgnoreCase);
     }
 
+    /// <summary>
+    /// Maps a save action to the access level the repository must enforce against the
+    /// current principal. Publishing requires Publish rights; any other save requires Edit.
+    /// Never use AccessLevel.NoAccess here — it bypasses per-node ACL checks.
+    /// </summary>
+    private static AccessLevel RequiredAccess(SaveAction action) =>
+        (action & SaveAction.Publish) == SaveAction.Publish ? AccessLevel.Publish : AccessLevel.Edit;
+
     private static bool IsUrl(string? value)
     {
         if (string.IsNullOrWhiteSpace(value)) return false;
@@ -475,9 +499,78 @@ public class ContentImporterService
             || value.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
     }
 
+    /// <summary>
+    /// Returns true only if <paramref name="url"/> is an absolute http/https URL whose host
+    /// resolves exclusively to publicly routable addresses. Used to gate server-side image
+    /// fetches against SSRF (internal services, cloud metadata).
+    /// </summary>
+    private static bool IsPubliclyRoutable(string url)
+    {
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
+            return false;
+        if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps)
+            return false;
+
+        IPAddress[] addresses;
+        if (IPAddress.TryParse(uri.Host, out var literal))
+        {
+            addresses = [literal];
+        }
+        else
+        {
+            try { addresses = Dns.GetHostAddresses(uri.Host); }
+            catch { return false; }
+        }
+
+        return addresses.Length > 0 && addresses.All(IsPublicAddress);
+    }
+
+    private static bool IsPublicAddress(IPAddress ip)
+    {
+        if (ip.IsIPv4MappedToIPv6)
+            ip = ip.MapToIPv4();
+
+        if (IPAddress.IsLoopback(ip))
+            return false;
+
+        if (ip.AddressFamily == AddressFamily.InterNetwork)
+        {
+            var b = ip.GetAddressBytes();
+            return b[0] switch
+            {
+                0 => false,                                   // 0.0.0.0/8
+                10 => false,                                  // 10.0.0.0/8 (private)
+                100 when b[1] is >= 64 and <= 127 => false,   // 100.64.0.0/10 (CGNAT)
+                169 when b[1] == 254 => false,                // 169.254.0.0/16 (link-local + metadata)
+                172 when b[1] is >= 16 and <= 31 => false,    // 172.16.0.0/12 (private)
+                192 when b[1] == 168 => false,                // 192.168.0.0/16 (private)
+                _ => true
+            };
+        }
+
+        if (ip.AddressFamily == AddressFamily.InterNetworkV6)
+        {
+            return !ip.IsIPv6LinkLocal
+                && !ip.IsIPv6SiteLocal
+                && !ip.IsIPv6UniqueLocal
+                && !ip.Equals(IPAddress.IPv6Any);
+        }
+
+        return false;
+    }
+
+    /// <summary>Named <see cref="HttpClient"/> used for image downloads (auto-redirect disabled).</summary>
+    public const string ImageDownloadClientName = "EptImageDownload";
+
     private ContentReference DownloadAndCreateImage(ContentReference ownerContentLink, string imageUrl, string contentName, string propertyName)
     {
-        using var httpClient = _httpClientFactory.CreateClient();
+        // SSRF guard: only fetch URLs that resolve to a publicly routable address. This blocks
+        // loopback, private (RFC1918), CGNAT, link-local and the cloud metadata endpoint
+        // (169.254.169.254) even though the importing user is authenticated.
+        if (!IsPubliclyRoutable(imageUrl))
+            throw new InvalidOperationException("Image URL is not allowed.");
+
+        using var httpClient = _httpClientFactory.CreateClient(ImageDownloadClientName);
         httpClient.Timeout = TimeSpan.FromSeconds(30);
 
         using var response = httpClient.GetAsync(imageUrl).GetAwaiter().GetResult();
@@ -514,7 +607,7 @@ public class ContentImporterService
         }
         imageMedia.BinaryData = blob;
 
-        return _contentRepository.Save(imageMedia, SaveAction.Publish, AccessLevel.NoAccess);
+        return _contentRepository.Save(imageMedia, SaveAction.Publish, AccessLevel.Edit);
     }
 
     private void ApplyBuiltInProperties(IContent content, List<PropertyMapping> mappings, Dictionary<string, string> row)
@@ -751,7 +844,7 @@ public class ContentImporterService
                 }
             }
 
-            var savedBlock = _contentRepository.Save(block, SaveAction.Save, AccessLevel.NoAccess);
+            var savedBlock = _contentRepository.Save(block, SaveAction.Save, AccessLevel.Edit);
             contentArea.Items.Add(new ContentAreaItem { ContentLink = savedBlock });
         }
 

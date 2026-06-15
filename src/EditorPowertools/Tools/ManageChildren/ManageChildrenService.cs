@@ -108,7 +108,7 @@ public class ManageChildrenService
             catch (Exception ex)
             {
                 result.Failed++;
-                result.Errors.Add($"ID {id}: {ex.Message}");
+                result.Errors.Add($"ID {id}: operation failed");
                 _logger.LogWarning(ex, "Failed to delete content {ContentId}", id);
             }
         }
@@ -128,7 +128,7 @@ public class ManageChildrenService
             catch (Exception ex)
             {
                 result.Failed++;
-                result.Errors.Add($"ID {id}: {ex.Message}");
+                result.Errors.Add($"ID {id}: operation failed");
                 _logger.LogWarning(ex, "Failed to trash content {ContentId}", id);
             }
         }
@@ -150,7 +150,7 @@ public class ManageChildrenService
             catch (Exception ex)
             {
                 result.Failed++;
-                result.Errors.Add($"ID {id}: {ex.Message}");
+                result.Errors.Add($"ID {id}: operation failed");
                 _logger.LogWarning(ex, "Failed to publish content {ContentId}", id);
             }
         }
@@ -176,7 +176,7 @@ public class ManageChildrenService
             catch (Exception ex)
             {
                 result.Failed++;
-                result.Errors.Add($"ID {id}: {ex.Message}");
+                result.Errors.Add($"ID {id}: operation failed");
                 _logger.LogWarning(ex, "Failed to unpublish content {ContentId}", id);
             }
         }
@@ -191,13 +191,14 @@ public class ManageChildrenService
         {
             try
             {
-                _contentRepository.Move(new ContentReference(id), targetRef, AccessLevel.Read, AccessLevel.Publish);
+                // Source requires Edit (a move mutates/relocates it); target requires Publish.
+                _contentRepository.Move(new ContentReference(id), targetRef, AccessLevel.Edit, AccessLevel.Publish);
                 result.Succeeded++;
             }
             catch (Exception ex)
             {
                 result.Failed++;
-                result.Errors.Add($"ID {id}: {ex.Message}");
+                result.Errors.Add($"ID {id}: operation failed");
                 _logger.LogWarning(ex, "Failed to move content {ContentId} to {TargetId}", id, targetParentId);
             }
         }

@@ -414,7 +414,11 @@
             case 'paragraph':
                 return `<pre class="ept-submission-fields__pre">${esc(v)}</pre>`;
             case 'fileupload':
-                return `<a href="${escAttr(v)}" target="_blank" rel="noopener" class="ept-link">${esc(shortenUrl(v))}</a>`;
+                // Only render a link for http(s) or site-relative URLs; otherwise show as text.
+                // Guards against a javascript:/data: scheme in the stored submission value.
+                return /^(https?:\/\/|\/)/i.test(v)
+                    ? `<a href="${escAttr(v)}" target="_blank" rel="noopener" class="ept-link">${esc(shortenUrl(v))}</a>`
+                    : esc(v);
             case 'url':
                 return /^https?:\/\//i.test(v)
                     ? `<a href="${escAttr(v)}" target="_blank" rel="noopener" class="ept-link">${esc(v)}</a>`
