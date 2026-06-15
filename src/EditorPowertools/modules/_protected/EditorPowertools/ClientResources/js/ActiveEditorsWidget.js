@@ -389,7 +389,9 @@ define([
                         self._sendChat();
                     }
                 });
-                input.focus();
+                // preventScroll: focusing the chat input must not scroll the gadget,
+                // which would push the Editors/Chat tab bar out of view (issue #60).
+                input.focus({ preventScroll: true });
             }
         },
 
@@ -414,8 +416,8 @@ define([
             var style = document.createElement("style");
             style.id = "ept-ae-widget-styles";
             style.textContent =
-                '.ept-ae-root { font-size: 12px; line-height: 1.4; overflow: hidden; max-width: 100%; box-sizing: border-box; }' +
-                '.ept-ae-container { padding: 0; overflow: hidden; }' +
+                '.ept-ae-root { font-size: 12px; line-height: 1.4; overflow: hidden; max-width: 100%; box-sizing: border-box; display: flex; flex-direction: column; height: 100%; }' +
+                '.ept-ae-container { padding: 0; overflow: hidden; flex: 1; min-height: 0; display: flex; flex-direction: column; }' +
                 '.ept-ae-empty { color: #999; font-style: italic; padding: 8px 10px; font-size: 11px; }' +
 
                 /* Tabs */
