@@ -1514,20 +1514,45 @@ git commit -m "feat(bulkedit): render inline editors from server editor descript
 
 ---
 
-## Task 11: GetaCategoryHandler (reflection, optional)
+## Task 11: GetaCategoryHandler (reflection — full edit)
 
 **Files:**
 - Create: `src/EditorPowertools/PropertyTypes/Handlers/GetaCategoryHandler.cs`
 - Modify: `src/EditorPowertools/Infrastructure/ServiceCollectionExtensions.cs`
 - Test: `src/EditorPowertools.Tests/PropertyTypes/GetaCategoryHandlerTests.cs`
 
-> Background: GETA's `Geta.Optimizely.Categories.CategoryList` is its own type (NOT the native `CategoryList`); its values are `ContentReference`s to category content. We must take **no compile-time dependency** on Geta. Detect by full type name; resolve names by loading the referenced content via `IContentLoader` (works without referencing Geta, since the items enumerate as `ContentReference`). The handler is **inert** when the Geta type is not present.
+> Background: GETA's `Geta.Optimizely.Categories.CategoryList` is its own type (NOT the native
+> `CategoryList`); its values are `ContentReference`s to category content (instances of a model
+> deriving from `Geta.Optimizely.Categories.Category`). We take **no compile-time dependency** on
+> Geta — everything is reflection over loaded assemblies. The handler is **inert** (read-only,
+> `TryParse` false, editor null) when the Geta type is not present. v1 provides **full edit**: a
+> multi-select category picker (options = all Geta category content) and reflective write-back
+> that constructs Geta's `CategoryList` from selected content IDs.
+>
+> **Testability seam:** the type-detection uses an injectable `Func<Type,bool>` predicate and an
+> injectable value-type full name, so tests exercise matching + reflective construction with a
+> stand-in type — no Geta install needed in CI.
 
-- [ ] **Step 1: Write the failing test (inert-when-absent + match-by-name)**
+- [ ] **Step 0: Verification spike (do this first; adjust the code below to match findings)**
+
+Because we can't validate Geta's API from CI, confirm these assumptions against a real install
+(or by inspecting the loaded `Geta.Optimizely.Categories` assembly) BEFORE implementing, and
+adjust Step 3 if they differ. Record findings in the commit message.
+1. The property value type is `Geta.Optimizely.Categories.CategoryList` and it implements
+   `IList` (so `Add(ContentReference)` works) and/or has a `ctor(IEnumerable<ContentReference>)`.
+2. Category content models derive from `Geta.Optimizely.Categories.Category`.
+3. Enumerating a `CategoryList` value yields `ContentReference` items (used for display).
+If any differs, change `valueTypeFullName` / `categoryModelBaseFullName` / the construction
+branch accordingly. The structure (predicate + reflective build) stays the same.
+
+- [ ] **Step 1: Write the failing tests (match, fail-closed, reflective build, display)**
 
 ```csharp
+using System.Collections;
+using System.Collections.Generic;
 using EPiServer;
 using EPiServer.Core;
+using EPiServer.DataAbstraction;
 using FluentAssertions;
 using Moq;
 using UmageAI.Optimizely.EditorPowerTools.PropertyTypes;
@@ -1538,19 +1563,8 @@ namespace UmageAI.Optimizely.EditorPowerTools.Tests.PropertyTypes;
 
 public class GetaCategoryHandlerTests
 {
-    private static PropertyHandlerContext Ctx(PropertyData prop) => new() { Definition = null!, Property = prop };
-
-    [Fact]
-    public void CanHandle_FalseForNonGetaTypes()
-    {
-        var h = new GetaCategoryHandler(Mock.Of<IContentLoader>());
-        h.CanHandle(Ctx(new PropertyString())).Should().BeFalse();
-        h.CanHandle(Ctx(new PropertyContentReference())).Should().BeFalse();
-    }
-
-    // A stand-in whose type name matches what the handler looks for, proving name-based detection
-    // without a Geta dependency.
-    private sealed class CategoryList : PropertyData
+    // Minimal PropertyData stand-in with a settable Value.
+    private sealed class TestProp : PropertyData
     {
         public override PropertyDataType Type => PropertyDataType.LongString;
         public override object? Value { get; set; }
@@ -1558,11 +1572,59 @@ public class GetaCategoryHandlerTests
         public override EPiServer.PageReference OwnerPage { get => default!; set { } }
     }
 
+    // Stand-in for Geta's CategoryList: an IList of ContentReference, resolvable by full name.
+    public sealed class FakeGetaList : List<ContentReference> { }
+
+    private static PropertyHandlerContext Ctx(PropertyData prop) => new() { Definition = null!, Property = prop };
+
+    private static GetaCategoryHandler Handler(
+        IContentLoader? loader = null, string valueTypeFullName = "No.Such.Type", Func<Type, bool>? match = null) =>
+        new(loader ?? Mock.Of<IContentLoader>(), Mock.Of<IContentTypeRepository>(), Mock.Of<IContentModelUsage>(),
+            valueTypeFullName: valueTypeFullName, isGetaCategoryType: match);
+
     [Fact]
-    public void CanHandle_TrueWhenTypeNameMatches()
+    public void CanHandle_FalseForNonGetaTypes()
     {
-        var h = new GetaCategoryHandler(Mock.Of<IContentLoader>(), typeNameMatch: nameof(CategoryList));
-        h.CanHandle(Ctx(new CategoryList())).Should().BeTrue();
+        var h = Handler();
+        h.CanHandle(Ctx(new PropertyString())).Should().BeFalse();
+        h.CanHandle(Ctx(new PropertyContentReference())).Should().BeFalse();
+    }
+
+    [Fact]
+    public void CanHandle_TrueWhenPredicateMatches()
+    {
+        var h = Handler(match: t => t.Name == nameof(TestProp));
+        h.CanHandle(Ctx(new TestProp())).Should().BeTrue();
+    }
+
+    [Fact]
+    public void TryParse_FailsClosed_WhenGetaTypeAbsent()
+    {
+        var h = Handler(valueTypeFullName: "Not.A.Real.Type");
+        h.TryParse("3;4", Ctx(new TestProp()), out _).Should().BeFalse();
+    }
+
+    [Fact]
+    public void TryParse_BuildsListType_WhenResolvable()
+    {
+        var h = Handler(valueTypeFullName: typeof(FakeGetaList).FullName!);
+        h.TryParse("3;4", Ctx(new TestProp()), out var v).Should().BeTrue();
+        ((IList)v!).Count.Should().Be(2);
+    }
+
+    [Fact]
+    public void GetDisplay_ResolvesCategoryNames()
+    {
+        var loader = new Mock<IContentLoader>();
+        var content = new Mock<IContent>();
+        content.SetupGet(c => c.Name).Returns("Cat A");
+        IContent? oc = content.Object;
+        loader.Setup(l => l.TryGet(new ContentReference(3), out oc)).Returns(true);
+
+        var h = Handler(loader.Object);
+        var prop = new TestProp { Value = new FakeGetaList { new ContentReference(3) } };
+
+        h.GetDisplay(Ctx(prop)).Should().Be("Cat A");
     }
 }
 ```
@@ -1576,56 +1638,123 @@ Expected: FAIL — class does not exist.
 
 ```csharp
 using System.Collections;
+using System.Globalization;
 using EPiServer;
 using EPiServer.Core;
+using EPiServer.DataAbstraction;
 
 namespace UmageAI.Optimizely.EditorPowerTools.PropertyTypes.Handlers;
 
 /// <summary>
 /// GETA categories (Geta.Optimizely.Categories.CategoryList) via reflection — no compile-time
-/// dependency on Geta. Inert when Geta is not installed. Priority 50.
+/// dependency on Geta. Full edit (multi-select picker + reflective write-back). Inert (read-only,
+/// no parse) when Geta is not installed. Priority 50.
 /// </summary>
 public sealed class GetaCategoryHandler : IPropertyTypeHandler
 {
     private readonly IContentLoader _contentLoader;
-    private readonly string _typeNameMatch;
+    private readonly IContentTypeRepository _contentTypeRepository;
+    private readonly IContentModelUsage _modelUsage;
+    private readonly Func<Type, bool> _isGetaCategoryType;
+    private readonly Lazy<Type?> _valueType;
+    private readonly Lazy<Type?> _categoryModelBaseType;
 
-    public GetaCategoryHandler(IContentLoader contentLoader, string typeNameMatch = "CategoryList")
+    public GetaCategoryHandler(
+        IContentLoader contentLoader,
+        IContentTypeRepository contentTypeRepository,
+        IContentModelUsage modelUsage,
+        string valueTypeFullName = "Geta.Optimizely.Categories.CategoryList",
+        string categoryModelBaseFullName = "Geta.Optimizely.Categories.Category",
+        Func<Type, bool>? isGetaCategoryType = null)
     {
         _contentLoader = contentLoader;
-        _typeNameMatch = typeNameMatch;
+        _contentTypeRepository = contentTypeRepository;
+        _modelUsage = modelUsage;
+        _isGetaCategoryType = isGetaCategoryType ?? DefaultIsGeta;
+        _valueType = new Lazy<Type?>(() => FindType(valueTypeFullName));
+        _categoryModelBaseType = new Lazy<Type?>(() => FindType(categoryModelBaseFullName));
     }
 
     public int Priority => 50;
 
-    public bool CanHandle(PropertyHandlerContext ctx)
-    {
-        var t = ctx.PropertyClrType;
-        // Match Geta's CategoryList specifically (namespace contains "Geta"), or the test stand-in.
-        return t.Name == _typeNameMatch
-            && (t.Namespace?.Contains("Geta", StringComparison.OrdinalIgnoreCase) == true
-                || t.Namespace?.Contains("Tests", StringComparison.OrdinalIgnoreCase) == true);
-    }
+    public bool CanHandle(PropertyHandlerContext ctx) =>
+        _isGetaCategoryType(ctx.PropertyClrType)
+        || (ctx.Value != null && _isGetaCategoryType(ctx.Value.GetType()));
 
     public string GetDisplay(PropertyHandlerContext ctx)
     {
-        var names = EnumerateReferences(ctx.Value)
-            .Select(r =>
-            {
-                try { return _contentLoader.TryGet<IContent>(r, out var c) ? c.Name : $"ID: {r.ID}"; }
-                catch { return $"ID: {r.ID}"; }
-            });
-        var joined = string.Join(", ", names);
-        return joined;
+        var names = EnumerateReferences(ctx.Value).Select(r =>
+        {
+            try { return _contentLoader.TryGet<IContent>(r, out var c) ? c.Name : $"ID: {r.ID}"; }
+            catch { return $"ID: {r.ID}"; }
+        });
+        return string.Join(", ", names);
     }
 
-    // v1: GETA editing is read-only in the grid (picker is a follow-up). Display only.
-    public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => null;
+    public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx)
+    {
+        // Without the Geta value type we cannot round-trip a written value → read-only.
+        if (_valueType.Value == null) return null;
+        return new PropertyEditorDescriptor { Kind = "category", Multiple = true, Options = LoadCategoryOptions() };
+    }
 
     public bool TryParse(string? input, PropertyHandlerContext ctx, out object? value)
     {
         value = null;
+        var listType = _valueType.Value;
+        if (listType == null) return false; // Geta absent → fail closed
+
+        var refs = ParseReferenceIds(input).Select(id => new ContentReference(id)).ToList();
+        try
+        {
+            var ctor = listType.GetConstructor(new[] { typeof(IEnumerable<ContentReference>) });
+            if (ctor != null) { value = ctor.Invoke(new object[] { refs }); return true; }
+
+            var instance = Activator.CreateInstance(listType);
+            if (instance is IList list)
+            {
+                foreach (var r in refs) list.Add(r);
+                value = instance;
+                return true;
+            }
+        }
+        catch { /* value-type shape differs from the spike assumptions */ }
         return false;
+    }
+
+    private IReadOnlyList<EditorOption> LoadCategoryOptions()
+    {
+        var baseType = _categoryModelBaseType.Value;
+        if (baseType == null) return Array.Empty<EditorOption>();
+        var options = new List<EditorOption>();
+        try
+        {
+            foreach (var ct in _contentTypeRepository.List()
+                         .Where(ct => ct.ModelType != null && baseType.IsAssignableFrom(ct.ModelType)))
+            {
+                foreach (var usage in _modelUsage.ListContentOfContentType(ct))
+                {
+                    var link = usage.ContentLink.ToReferenceWithoutVersion();
+                    if (_contentLoader.TryGet<IContent>(link, out var c))
+                        options.Add(new EditorOption(link.ID.ToString(CultureInfo.InvariantCulture), c.Name));
+                }
+            }
+        }
+        catch { return Array.Empty<EditorOption>(); }
+        return options.GroupBy(o => o.Value).Select(g => g.First()).OrderBy(o => o.Label).ToList();
+    }
+
+    private static bool DefaultIsGeta(Type t) =>
+        t.Namespace?.Contains("Geta.Optimizely.Categories", StringComparison.OrdinalIgnoreCase) == true
+        && t.Name.Contains("Category", StringComparison.OrdinalIgnoreCase);
+
+    private static IEnumerable<int> ParseReferenceIds(string? input)
+    {
+        if (string.IsNullOrWhiteSpace(input)) yield break;
+        var sep = input.Contains(';') ? ';' : input.Contains('|') ? '|' : ',';
+        foreach (var part in input.Split(sep).Select(p => p.Trim()).Where(p => p.Length > 0))
+            if (int.TryParse(part, NumberStyles.Integer, CultureInfo.InvariantCulture, out var id))
+                yield return id;
     }
 
     private static IEnumerable<ContentReference> EnumerateReferences(object? value)
@@ -1635,10 +1764,24 @@ public sealed class GetaCategoryHandler : IPropertyTypeHandler
                 if (item is ContentReference cr && !ContentReference.IsNullOrEmpty(cr))
                     yield return cr;
     }
+
+    private static Type? FindType(string fullName)
+    {
+        foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            try { var t = asm.GetType(fullName); if (t != null) return t; }
+            catch { /* unresolvable assembly — skip */ }
+        }
+        return null;
+    }
 }
 ```
 
-> **Scope note (intentional):** v1 ships GETA as **readable display only** (`GetEditor` returns null). Editing GETA categories in the grid (a Geta-aware picker) is a follow-up — the abstraction supports it later without further structural change. This still closes the core of #54 (no more raw-object cells for GETA) and is honest about the editing gap. Confirm with stakeholders if full GETA *edit* is required for the first release; if so, add an edit task that resolves the Geta category root + writes back `ContentReference`s via reflection.
+> **Note:** editing requires the Geta value type to be loadable (otherwise the handler degrades to
+> read-only — still no raw-object cells). `LoadCategoryOptions` discovers categories via content
+> types whose model derives from Geta's `Category`, using only standard EPiServer services, so it
+> does not need Geta's configured categories root. Adjust per the Step 0 spike if Geta's value
+> type isn't `IList`-shaped or lacks an `IEnumerable<ContentReference>` constructor.
 
 - [ ] **Step 4: Run to verify it passes**
 
@@ -1649,7 +1792,10 @@ Expected: PASS.
 
 ```csharp
         services.AddSingleton<IPropertyTypeHandler>(sp =>
-            new GetaCategoryHandler(sp.GetRequiredService<IContentLoader>()));
+            new GetaCategoryHandler(
+                sp.GetRequiredService<IContentLoader>(),
+                sp.GetRequiredService<IContentTypeRepository>(),
+                sp.GetRequiredService<IContentModelUsage>()));
 ```
 
 - [ ] **Step 6: Full suite + build + commit**
@@ -1658,7 +1804,7 @@ Run: `dotnet test` then `dotnet build src/EditorPowertools/EditorPowertools.cspr
 Expected: all PASS + Build succeeded (both TFMs).
 ```bash
 git add src/EditorPowertools/PropertyTypes/Handlers/GetaCategoryHandler.cs src/EditorPowertools/Infrastructure/ServiceCollectionExtensions.cs src/EditorPowertools.Tests/PropertyTypes/GetaCategoryHandlerTests.cs
-git commit -m "feat(propertytypes): GETA category handler (reflection, display-only v1)"
+git commit -m "feat(propertytypes): GETA category handler (reflection, full edit)"
 ```
 
 ---
@@ -1672,6 +1818,6 @@ git commit -m "feat(propertytypes): GETA category handler (reflection, display-o
 
 ## Notes on scope decisions captured during planning
 
-- **GETA editing** is display-only in v1 (Task 11). If full edit is required for the first release, add a follow-up task; the handler model supports it without restructuring.
+- **GETA editing** is full edit in v1 (Task 11) via reflective write-back + a category picker. It degrades to read-only display if the Geta assembly isn't loaded (no raw-object cells either way). A Step 0 spike verifies Geta's value-type shape before implementation, since it can't be validated in CI.
 - **ContentArea / blocks / LinkItemCollection** fall through to the `FallbackHandler` → readable summary, read-only (per spec non-goals).
 - The plan assumes EPiServer category + selection APIs are stable across CMS 12/13; any divergence is a Tier-1 `#if` inside the single affected handler (no new conditional package refs).
