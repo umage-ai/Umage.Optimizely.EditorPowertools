@@ -5,6 +5,8 @@ using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using UmageAI.Optimizely.EditorPowerTools.Services;
 using UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager;
 using UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor;
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes;
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes.Handlers;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ActivityTimeline;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentDetails;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit;
@@ -92,6 +94,11 @@ public static class ServiceCollectionExtensions
 
         // Bulk Property Editor
         services.AddTransient<BulkPropertyEditorService>();
+
+        // Property-type handlers (shared by Bulk Property Editor + Content Importer).
+        // The registry orders by Priority; registration order is irrelevant.
+        services.AddSingleton<PropertyTypeHandlerRegistry>();
+        services.AddSingleton<IPropertyTypeHandler, FallbackHandler>();
 
         // Scheduled Jobs Gantt
         services.AddTransient<ScheduledJobsGanttService>();
