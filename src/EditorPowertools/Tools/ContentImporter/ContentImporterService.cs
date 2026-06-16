@@ -698,9 +698,9 @@ public class ContentImporterService
             ? PropertyHandlerContext.ForProperty(prop, pd, contentType!.ModelType)
             : PropertyHandlerContext.ForProperty(prop);
         var handler = _handlers.Resolve(ctx);
-        if (handler.TryParse(value, ctx, out var parsed))
-            prop.Value = parsed;
-        // else: leave unset (caller records a generic row warning on failure paths).
+        if (!handler.TryParse(value, ctx, out var parsed))
+            throw new InvalidOperationException($"No property-type handler could parse a value for '{prop.Name}'.");
+        prop.Value = parsed;
     }
 
     private static IEnumerable<Dictionary<string, string>> ApplyRowFilters(
