@@ -5,6 +5,8 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using UmageAI.Optimizely.EditorPowerTools.Abstractions;
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes;
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes.Handlers;
 using UmageAI.Optimizely.EditorPowerTools.Tests.Helpers;
 using UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor;
 
@@ -110,12 +112,17 @@ public class ResolveTargetTypesTests
     private static BulkPropertyEditorService CreateService(
         IContentTypeRepository repo, IContentTypeMetadataProvider meta)
     {
+        var registry = new PropertyTypeHandlerRegistry(new IPropertyTypeHandler[]
+        {
+            new FallbackHandler(),
+        });
         return new BulkPropertyEditorService(
             repo,
             Mock.Of<IContentRepository>(),
             Mock.Of<IContentModelUsage>(),
             Mock.Of<ILanguageBranchRepository>(),
             meta,
+            registry,
             Mock.Of<ILogger<BulkPropertyEditorService>>());
     }
 }

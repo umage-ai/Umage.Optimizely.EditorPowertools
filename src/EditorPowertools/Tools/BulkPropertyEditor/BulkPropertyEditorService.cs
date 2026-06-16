@@ -1,5 +1,5 @@
-using System.Globalization;
 using UmageAI.Optimizely.EditorPowerTools.Abstractions;
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes;
 using UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor.Models;
 using EPiServer;
 using EPiServer.Core;
@@ -18,6 +18,7 @@ public class BulkPropertyEditorService
     private readonly IContentModelUsage _contentModelUsage;
     private readonly ILanguageBranchRepository _languageBranchRepository;
     private readonly IContentTypeMetadataProvider _metadataProvider;
+    private readonly PropertyTypeHandlerRegistry _handlers;
     private readonly ILogger<BulkPropertyEditorService> _logger;
 
     public BulkPropertyEditorService(
@@ -26,6 +27,7 @@ public class BulkPropertyEditorService
         IContentModelUsage contentModelUsage,
         ILanguageBranchRepository languageBranchRepository,
         IContentTypeMetadataProvider metadataProvider,
+        PropertyTypeHandlerRegistry handlers,
         ILogger<BulkPropertyEditorService> logger)
     {
         _contentTypeRepository = contentTypeRepository;
@@ -33,6 +35,7 @@ public class BulkPropertyEditorService
         _contentModelUsage = contentModelUsage;
         _languageBranchRepository = languageBranchRepository;
         _metadataProvider = metadataProvider;
+        _handlers = handlers;
         _logger = logger;
     }
 
@@ -107,13 +110,21 @@ public class BulkPropertyEditorService
             return [];
         }
 
+        var modelType = contentType.ModelType;
         return contentType.PropertyDefinitions
             .Where(pd => !IsSystemProperty(pd.Name))
-            .Select(pd => new PropertyColumnInfo(
-                pd.Name,
-                pd.EditCaption ?? pd.Name,
-                GetPropertyTypeName(pd),
-                IsEditableType(pd.Type?.DataType)))
+            .Select(pd =>
+            {
+                var ctx = PropertyHandlerContext.ForDefinition(pd, modelType);
+                var handler = _handlers.Resolve(ctx);
+                var editor = handler.GetEditor(ctx);
+                return new PropertyColumnInfo(
+                    pd.Name,
+                    pd.EditCaption ?? pd.Name,
+                    editor?.Kind ?? "readonly",
+                    editor != null,
+                    editor);
+            })
             .OrderBy(p => p.DisplayName)
             .ToList();
     }
@@ -243,7 +254,8 @@ public class BulkPropertyEditorService
             throw new InvalidOperationException($"Property '{request.PropertyName}' not found on content {request.ContentId}.");
         }
 
-        property.Value = ConvertPropertyValue(request.Value, property.GetType());
+        var contentType = _contentTypeRepository.Load(content.ContentTypeID);
+        AssignValue(contentType, property, request.Value);
 
         _contentRepository.Save(
             (IContent)writable,
@@ -293,13 +305,14 @@ public class BulkPropertyEditorService
                     new LanguageSelector(item.Language));
 
                 ContentData writable = (ContentData)((ContentData)content).CreateWritableClone();
+                var contentType = _contentTypeRepository.Load(content.ContentTypeID);
 
                 foreach (KeyValuePair<string, string?> change in item.PropertyChanges)
                 {
                     PropertyData? property = ((IContent)writable).Property[change.Key];
                     if (property != null)
                     {
-                        property.Value = ConvertPropertyValue(change.Value, property.GetType());
+                        AssignValue(contentType, property, change.Value);
                     }
                     else
                     {
@@ -313,7 +326,7 @@ public class BulkPropertyEditorService
             }
             catch (Exception ex)
             {
-                errors.Add($"Content {item.ContentId}: {ex.Message}");
+                errors.Add($"Content {item.ContentId}: save failed.");
                 _logger.LogError(ex, "Bulk save failed for content {ContentId}", item.ContentId);
             }
         }
@@ -432,53 +445,12 @@ public class BulkPropertyEditorService
         return systemProperties.Contains(propertyName);
     }
 
-    /// <summary>
-    /// Returns a meaningful type name from a property definition (e.g. "Url", "PageReference", "String").
-    /// </summary>
-    private static string GetPropertyTypeName(PropertyDefinition pd)
-    {
-        var typeName = pd.Type?.DefinitionType?.Name;
-        if (typeName != null)
-        {
-            if (typeName.Contains("Url", StringComparison.OrdinalIgnoreCase)) return "Url";
-            if (typeName.Contains("PageReference", StringComparison.OrdinalIgnoreCase) ||
-                typeName.Contains("ContentReference", StringComparison.OrdinalIgnoreCase)) return "PageReference";
-        }
-        return pd.Type?.DataType.ToString() ?? "Unknown";
-    }
-
-    /// <summary>
-    /// Returns a meaningful type name from a runtime property instance.
-    /// </summary>
-    private static string GetRuntimePropertyTypeName(PropertyData prop)
-    {
-        var clrType = prop.GetType().Name;
-        if (clrType.Contains("Url", StringComparison.OrdinalIgnoreCase)) return "Url";
-        if (clrType.Contains("PageReference", StringComparison.OrdinalIgnoreCase) ||
-            clrType.Contains("ContentReference", StringComparison.OrdinalIgnoreCase)) return "PageReference";
-        return prop.Type.ToString();
-    }
-
-    private static bool IsEditableType(PropertyDataType? dataType)
-    {
-        if (dataType == null)
-        {
-            return false;
-        }
-
-        return dataType.Value is PropertyDataType.String
-            or PropertyDataType.LongString
-            or PropertyDataType.Number
-            or PropertyDataType.FloatNumber
-            or PropertyDataType.Boolean
-            or PropertyDataType.Date
-            or PropertyDataType.PageReference;
-    }
-
     private ContentItemRow BuildContentItemRow(IContent content, ContentFilterRequest request)
     {
         string status = GetContentStatus(content);
         IChangeTrackable? trackable = content as IChangeTrackable;
+
+        ContentType? contentType = _contentTypeRepository.Load(content.ContentTypeID);
 
         Dictionary<string, PropertyValue> properties = [];
         List<string> columns = request.Columns ?? [];
@@ -488,35 +460,21 @@ public class BulkPropertyEditorService
             PropertyData? prop = content.Property[column];
             if (prop != null)
             {
-                var displayValue = prop.Value?.ToString();
-                object? rawValue = prop.Value;
-
-                // Resolve ContentReference to show content name + ID
-                if (prop.Value is ContentReference contentRef && !ContentReference.IsNullOrEmpty(contentRef))
-                {
-                    rawValue = contentRef.ID;
-                    try
-                    {
-                        if (_contentRepository.TryGet<IContent>(contentRef, out var refContent))
-                            displayValue = $"{refContent.Name} (ID: {contentRef.ID})";
-                        else
-                            displayValue = $"ID: {contentRef.ID}";
-                    }
-                    catch
-                    {
-                        displayValue = $"ID: {contentRef.ID}";
-                    }
-                }
-
+                var pd = contentType?.PropertyDefinitions.FirstOrDefault(d => d.Name == column);
+                var ctx = pd != null
+                    ? PropertyHandlerContext.ForProperty(prop, pd, contentType!.ModelType)
+                    : new PropertyHandlerContext { Definition = null!, Property = prop };
+                var handler = _handlers.Resolve(ctx);
+                var editor = handler.GetEditor(ctx);
                 properties[column] = new PropertyValue(
-                    displayValue,
-                    rawValue,
-                    IsEditableType(prop.Type),
-                    GetRuntimePropertyTypeName(prop));
+                    handler.GetDisplay(ctx),
+                    prop.Value,
+                    editor != null,
+                    editor?.Kind ?? "readonly");
             }
             else
             {
-                properties[column] = new PropertyValue(null, null, false, "Unknown");
+                properties[column] = new PropertyValue(null, null, false, "readonly");
             }
         }
 
@@ -561,7 +519,7 @@ public class BulkPropertyEditorService
         return new ContentItemRow(
             content.ContentLink.ID,
             content.Name,
-            _contentTypeRepository.Load(content.ContentTypeID)?.Name ?? "Unknown",
+            contentType?.Name ?? "Unknown",
             status,
             trackable?.Changed,
             trackable?.ChangedBy,
@@ -658,61 +616,16 @@ public class BulkPropertyEditorService
             : items.OrderBy(GetSortKey).ToList();
     }
 
-    private static object? ConvertPropertyValue(string? value, Type propertyType)
+    private void AssignValue(ContentType? contentType, PropertyData property, string? value)
     {
-        if (value == null)
-        {
-            return null;
-        }
-
-        string typeName = propertyType.Name;
-
-        if (typeName.Contains("String", StringComparison.OrdinalIgnoreCase))
-        {
-            return value;
-        }
-
-        if (typeName.Contains("Number", StringComparison.OrdinalIgnoreCase)
-            && !typeName.Contains("Float", StringComparison.OrdinalIgnoreCase))
-        {
-            return int.TryParse(value, CultureInfo.InvariantCulture, out int intResult) ? intResult : null;
-        }
-
-        if (typeName.Contains("Float", StringComparison.OrdinalIgnoreCase))
-        {
-            return double.TryParse(value, CultureInfo.InvariantCulture, out double doubleResult) ? doubleResult : null;
-        }
-
-        if (typeName.Contains("Boolean", StringComparison.OrdinalIgnoreCase))
-        {
-            return bool.TryParse(value, out bool boolResult) ? boolResult : null;
-        }
-
-        if (typeName.Contains("Date", StringComparison.OrdinalIgnoreCase))
-        {
-            return DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateResult)
-                ? dateResult
-                : null;
-        }
-
-        if (typeName.Contains("Url", StringComparison.OrdinalIgnoreCase))
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return null;
-            return new EPiServer.Url(value);
-        }
-
-        if (typeName.Contains("PageReference", StringComparison.OrdinalIgnoreCase)
-            || typeName.Contains("ContentReference", StringComparison.OrdinalIgnoreCase))
-        {
-            if (string.IsNullOrWhiteSpace(value) || value == "0")
-                return ContentReference.EmptyReference;
-            return int.TryParse(value, CultureInfo.InvariantCulture, out int refId)
-                ? new ContentReference(refId)
-                : ContentReference.EmptyReference;
-        }
-
-        // Default: set as string and let the property handle conversion
-        return value;
+        var pd = contentType?.PropertyDefinitions.FirstOrDefault(d => d.Name == property.Name);
+        var ctx = pd != null
+            ? PropertyHandlerContext.ForProperty(property, pd, contentType!.ModelType)
+            : new PropertyHandlerContext { Definition = null!, Property = property };
+        var handler = _handlers.Resolve(ctx);
+        if (handler.TryParse(value, ctx, out var parsed))
+            property.Value = parsed;
+        else
+            throw new InvalidOperationException($"Value not accepted for property '{property.Name}'.");
     }
 }
