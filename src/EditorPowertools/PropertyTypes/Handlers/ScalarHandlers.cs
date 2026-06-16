@@ -10,7 +10,7 @@ public sealed class UrlHandler : IPropertyTypeHandler
     public int Priority => 5;
 
     public bool CanHandle(PropertyHandlerContext ctx) =>
-        ctx.PropertyClrType.Name.Contains("Url", StringComparison.OrdinalIgnoreCase);
+        ctx.PropertyClrType.Name.Contains("Url", StringComparison.Ordinal);
 
     public string GetDisplay(PropertyHandlerContext ctx) => ctx.Value?.ToString() ?? string.Empty;
 
@@ -48,7 +48,7 @@ public sealed class NumberHandler : IPropertyTypeHandler
 
     public bool CanHandle(PropertyHandlerContext ctx) => ctx.DataType == PropertyDataType.Number;
 
-    public string GetDisplay(PropertyHandlerContext ctx) => ctx.Value?.ToString() ?? string.Empty;
+    public string GetDisplay(PropertyHandlerContext ctx) => ctx.Value is int i ? i.ToString(CultureInfo.InvariantCulture) : ctx.Value?.ToString() ?? string.Empty;
 
     public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => new() { Kind = "number" };
 
@@ -70,7 +70,7 @@ public sealed class FloatHandler : IPropertyTypeHandler
 
     public bool CanHandle(PropertyHandlerContext ctx) => ctx.DataType == PropertyDataType.FloatNumber;
 
-    public string GetDisplay(PropertyHandlerContext ctx) => ctx.Value?.ToString() ?? string.Empty;
+    public string GetDisplay(PropertyHandlerContext ctx) => ctx.Value is double d ? d.ToString(CultureInfo.InvariantCulture) : ctx.Value?.ToString() ?? string.Empty;
 
     public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => new() { Kind = "number" };
 

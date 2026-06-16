@@ -57,4 +57,15 @@ public class ScalarHandlerTests
         h.TryParse("https://x.com", Ctx(new PropertyUrl()), out var v).Should().BeTrue();
         v.Should().BeOfType<EPiServer.Url>();
     }
+
+    [Fact]
+    public void FloatHandler_ParsesInvariant_AndDisplaysInvariant()
+    {
+        var h = new FloatHandler();
+        h.CanHandle(Ctx(new PropertyFloatNumber())).Should().BeTrue();
+        h.TryParse("3.14", Ctx(new PropertyFloatNumber()), out var v).Should().BeTrue();
+        v.Should().Be(3.14d);
+        h.TryParse("notanumber", Ctx(new PropertyFloatNumber()), out _).Should().BeFalse();
+        h.GetDisplay(Ctx(new PropertyFloatNumber { Value = 3.14d })).Should().Be("3.14");
+    }
 }
