@@ -35,4 +35,22 @@ public class FallbackHandlerTests
     [Fact]
     public void TryParse_AlwaysFalse() =>
         new FallbackHandler().TryParse("x", Ctx("x"), out _).Should().BeFalse();
+
+    [Fact]
+    public void GetDisplay_String_ReturnsItself() =>
+        new FallbackHandler().GetDisplay(Ctx("hello")).Should().Be("hello");
+
+    [Fact]
+    public void GetDisplay_SingleItemCollection_ReturnsSingular() =>
+        new FallbackHandler().GetDisplay(Ctx(new List<int> { 1 })).Should().Be("(1 item)");
+
+    [Fact]
+    public void GetDisplay_PlainObjectWithToString_ReturnsToString() =>
+        new FallbackHandler().GetDisplay(Ctx(42)).Should().Be("42");
+
+    [Fact]
+    public void GetDisplay_ObjectWithoutToStringOverride_ReturnsTypeName() =>
+        new FallbackHandler().GetDisplay(Ctx(new Plain())).Should().Be("(Plain)");
+
+    private sealed class Plain { }
 }
