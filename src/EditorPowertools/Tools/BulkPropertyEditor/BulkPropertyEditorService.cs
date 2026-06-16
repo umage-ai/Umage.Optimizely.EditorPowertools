@@ -463,7 +463,7 @@ public class BulkPropertyEditorService
                 var pd = contentType?.PropertyDefinitions.FirstOrDefault(d => d.Name == column);
                 var ctx = pd != null
                     ? PropertyHandlerContext.ForProperty(prop, pd, contentType!.ModelType)
-                    : new PropertyHandlerContext { Definition = null!, Property = prop };
+                    : PropertyHandlerContext.ForProperty(prop);
                 var handler = _handlers.Resolve(ctx);
                 var editor = handler.GetEditor(ctx);
                 properties[column] = new PropertyValue(
@@ -621,7 +621,7 @@ public class BulkPropertyEditorService
         var pd = contentType?.PropertyDefinitions.FirstOrDefault(d => d.Name == property.Name);
         var ctx = pd != null
             ? PropertyHandlerContext.ForProperty(property, pd, contentType!.ModelType)
-            : new PropertyHandlerContext { Definition = null!, Property = property };
+            : PropertyHandlerContext.ForProperty(property);
         var handler = _handlers.Resolve(ctx);
         if (handler.TryParse(value, ctx, out var parsed))
             property.Value = parsed;
