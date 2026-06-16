@@ -11,6 +11,7 @@ using EPiServer.DataAccess;
 using EPiServer.Framework.Blobs;
 using EPiServer.Security;
 using EPiServer.SpecializedProperties;
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Models;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Parsers;
 using Microsoft.Extensions.Logging;
@@ -28,6 +29,7 @@ public class ContentImporterService
     private readonly IBlobFactory _blobFactory;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IPrincipalAccessor _principalAccessor;
+    private readonly PropertyTypeHandlerRegistry _handlers;
     private readonly ILogger<ContentImporterService> _logger;
 
     // System properties to exclude from mapping
@@ -62,6 +64,7 @@ public class ContentImporterService
         IBlobFactory blobFactory,
         IHttpClientFactory httpClientFactory,
         IPrincipalAccessor principalAccessor,
+        PropertyTypeHandlerRegistry handlers,
         ILogger<ContentImporterService> logger)
     {
         _sessionStore = sessionStore;
@@ -73,6 +76,7 @@ public class ContentImporterService
         _blobFactory = blobFactory;
         _httpClientFactory = httpClientFactory;
         _principalAccessor = principalAccessor;
+        _handlers = handlers;
         _logger = logger;
     }
 
@@ -394,7 +398,7 @@ public class ContentImporterService
                             if (IsImageProperty(prop) && IsUrl(value))
                                 deferredImageMappings.Add((propMapping, value));
                             else
-                                SetPropertyValue(prop, value);
+                                SetPropertyValue(prop, value, contentType);
                         }
                         break;
                     case "hardcoded":
@@ -402,7 +406,7 @@ public class ContentImporterService
                         if (IsImageProperty(prop) && IsUrl(resolved))
                             deferredImageMappings.Add((propMapping, resolved!));
                         else
-                            SetPropertyValue(prop, resolved);
+                            SetPropertyValue(prop, resolved, contentType);
                         break;
                     case "inline-block":
                         var blocks = propMapping.InlineBlocks ?? (propMapping.InlineBlock != null
@@ -667,7 +671,7 @@ public class ContentImporterService
         }
     }
 
-    private void SetPropertyValue(PropertyData prop, string? value)
+    private void SetPropertyValue(PropertyData prop, string? value, ContentType? contentType = null)
     {
         if (value == null) return;
 
@@ -689,7 +693,14 @@ public class ContentImporterService
             return;
         }
 
-        prop.Value = ConvertValue(value, typeName);
+        var pd = contentType?.PropertyDefinitions.FirstOrDefault(d => d.Name == prop.Name);
+        var ctx = pd != null
+            ? PropertyHandlerContext.ForProperty(prop, pd, contentType!.ModelType)
+            : PropertyHandlerContext.ForProperty(prop);
+        var handler = _handlers.Resolve(ctx);
+        if (handler.TryParse(value, ctx, out var parsed))
+            prop.Value = parsed;
+        // else: leave unset (caller records a generic row warning on failure paths).
     }
 
     private static IEnumerable<Dictionary<string, string>> ApplyRowFilters(
@@ -774,36 +785,6 @@ public class ContentImporterService
         return list;
     }
 
-    private static object? ConvertValue(string value, string typeName)
-    {
-        if (typeName.Contains("String", StringComparison.OrdinalIgnoreCase))
-            return value;
-
-        if (typeName.Contains("Number", StringComparison.OrdinalIgnoreCase)
-            && !typeName.Contains("Float", StringComparison.OrdinalIgnoreCase))
-            return int.TryParse(value, CultureInfo.InvariantCulture, out var intResult) ? intResult : null;
-
-        if (typeName.Contains("Float", StringComparison.OrdinalIgnoreCase))
-            return double.TryParse(value, CultureInfo.InvariantCulture, out var doubleResult) ? doubleResult : null;
-
-        if (typeName.Contains("Boolean", StringComparison.OrdinalIgnoreCase))
-            return bool.TryParse(value, out var boolResult) ? boolResult : null;
-
-        if (typeName.Contains("Date", StringComparison.OrdinalIgnoreCase))
-            return DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateResult)
-                ? dateResult : null;
-
-        if (typeName.Contains("Url", StringComparison.OrdinalIgnoreCase))
-            return string.IsNullOrWhiteSpace(value) ? null : new EPiServer.Url(value);
-
-        if (typeName.Contains("ContentReference", StringComparison.OrdinalIgnoreCase)
-            || typeName.Contains("PageReference", StringComparison.OrdinalIgnoreCase))
-            return int.TryParse(value, CultureInfo.InvariantCulture, out var refId)
-                ? new ContentReference(refId) : ContentReference.EmptyReference;
-
-        return value;
-    }
-
     private void SetContentAreaFromInlineBlocks(
         ContentReference ownerContentLink,
         PropertyData prop,
@@ -835,11 +816,11 @@ public class ContentImporterService
                 {
                     case "column":
                         if (row.TryGetValue(bm.SourceColumn ?? "", out var val))
-                            SetPropertyValue(blockProp, val);
+                            SetPropertyValue(blockProp, val, blockType);
                         break;
                     case "hardcoded":
                         var resolved = ResolveTemplate(bm.HardcodedValue, row);
-                        SetPropertyValue(blockProp, resolved);
+                        SetPropertyValue(blockProp, resolved, blockType);
                         break;
                 }
             }
