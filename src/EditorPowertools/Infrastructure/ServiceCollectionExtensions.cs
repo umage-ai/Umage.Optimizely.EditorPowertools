@@ -99,6 +99,12 @@ public static class ServiceCollectionExtensions
         // The registry orders by Priority; registration order is irrelevant.
         services.AddSingleton<PropertyTypeHandlerRegistry>();
         services.AddSingleton<IPropertyTypeHandler, FallbackHandler>();
+        services.AddSingleton<IPropertyTypeHandler, UrlHandler>();
+        services.AddSingleton<IPropertyTypeHandler, StringHandler>();
+        services.AddSingleton<IPropertyTypeHandler, NumberHandler>();
+        services.AddSingleton<IPropertyTypeHandler, FloatHandler>();
+        services.AddSingleton<IPropertyTypeHandler, BooleanHandler>();
+        services.AddSingleton<IPropertyTypeHandler, DateHandler>();
 
         // Scheduled Jobs Gantt
         services.AddTransient<ScheduledJobsGanttService>();
