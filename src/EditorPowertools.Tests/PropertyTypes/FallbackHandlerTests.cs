@@ -11,7 +11,7 @@ public class FallbackHandlerTests
 {
     private static PropertyHandlerContext Ctx(object? value)
     {
-        var prop = new Mock<EPiServer.Core.PropertyData> { CallBase = false };
+        var prop = new Mock<EPiServer.Core.PropertyData>();
         prop.Setup(p => p.Value).Returns(value!);
         return new PropertyHandlerContext { Definition = null!, Property = prop.Object };
     }
@@ -52,5 +52,10 @@ public class FallbackHandlerTests
     public void GetDisplay_ObjectWithoutToStringOverride_ReturnsTypeName() =>
         new FallbackHandler().GetDisplay(Ctx(new Plain())).Should().Be("(Plain)");
 
+    [Fact]
+    public void GetDisplay_ThrowingToString_ReturnsTypeName() =>
+        new FallbackHandler().GetDisplay(Ctx(new Throws())).Should().Be("(Throws)");
+
     private sealed class Plain { }
+    private sealed class Throws { public override string ToString() => throw new InvalidOperationException(); }
 }

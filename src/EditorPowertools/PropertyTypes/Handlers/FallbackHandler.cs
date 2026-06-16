@@ -15,17 +15,28 @@ public sealed class FallbackHandler : IPropertyTypeHandler
         if (value is null) return string.Empty;
         if (value is string s) return s;
 
+        if (value is System.Collections.ICollection col)
+            return $"({col.Count} item{(col.Count == 1 ? "" : "s")})";
+
         if (value is IEnumerable enumerable)
         {
-            var count = 0;
-            foreach (var _ in enumerable) count++;
-            return $"({count} item{(count == 1 ? "" : "s")})";
+            try
+            {
+                var count = 0;
+                foreach (var _ in enumerable) count++;
+                return $"({count} item{(count == 1 ? "" : "s")})";
+            }
+            catch { return $"({value.GetType().Name})"; }
         }
 
-        var text = value.ToString();
-        if (string.IsNullOrEmpty(text) || text == value.GetType().FullName)
-            return $"({value.GetType().Name})";
-        return text;
+        try
+        {
+            var text = value.ToString();
+            if (string.IsNullOrEmpty(text) || text == value.GetType().FullName)
+                return $"({value.GetType().Name})";
+            return text;
+        }
+        catch { return $"({value.GetType().Name})"; }
     }
 
     public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => null;
