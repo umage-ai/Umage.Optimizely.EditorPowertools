@@ -3,6 +3,7 @@ using System.Globalization;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
+using Microsoft.Extensions.Logging;
 
 namespace UmageAI.Optimizely.EditorPowerTools.PropertyTypes.Handlers;
 
@@ -11,8 +12,14 @@ namespace UmageAI.Optimizely.EditorPowerTools.PropertyTypes.Handlers;
 /// dependency on Geta. Full edit (picker + reflective write-back). Inert when Geta isn't loaded.
 /// Priority 50.
 /// </summary>
+/// <remarks>
+/// NOTE: the Geta API shape (value type name, constructor, category base type,
+/// value-is-IEnumerable&lt;ContentReference&gt;) is assumed and must be verified against a real
+/// Geta install — see docs/superpowers/plans/2026-06-16-shared-property-type-handlers.md Task 11 Step 0.
+/// </remarks>
 public sealed class GetaCategoryHandler : IPropertyTypeHandler
 {
+    private readonly ILogger<GetaCategoryHandler> _logger;
     private readonly IContentLoader _contentLoader;
     private readonly IContentTypeRepository _contentTypeRepository;
     private readonly IContentModelUsage _modelUsage;
@@ -21,6 +28,7 @@ public sealed class GetaCategoryHandler : IPropertyTypeHandler
     private readonly Lazy<Type?> _categoryModelBaseType;
 
     public GetaCategoryHandler(
+        ILogger<GetaCategoryHandler> logger,
         IContentLoader contentLoader,
         IContentTypeRepository contentTypeRepository,
         IContentModelUsage modelUsage,
@@ -28,6 +36,7 @@ public sealed class GetaCategoryHandler : IPropertyTypeHandler
         string categoryModelBaseFullName = "Geta.Optimizely.Categories.Category",
         Func<Type, bool>? isGetaCategoryType = null)
     {
+        _logger = logger;
         _contentLoader = contentLoader;
         _contentTypeRepository = contentTypeRepository;
         _modelUsage = modelUsage;
@@ -78,7 +87,10 @@ public sealed class GetaCategoryHandler : IPropertyTypeHandler
                 return true;
             }
         }
-        catch { /* shape differs from the spike assumptions */ }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Could not construct GETA CategoryList value via reflection for input '{Input}'.", input);
+        }
         return false;
     }
 
@@ -100,7 +112,11 @@ public sealed class GetaCategoryHandler : IPropertyTypeHandler
                 }
             }
         }
-        catch { return Array.Empty<EditorOption>(); }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Could not load GETA category options via reflection; returning none.");
+            return Array.Empty<EditorOption>();
+        }
         return options.GroupBy(o => o.Value).Select(g => g.First()).OrderBy(o => o.Label).ToList();
     }
 

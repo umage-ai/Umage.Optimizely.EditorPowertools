@@ -3,6 +3,7 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using FluentAssertions;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using UmageAI.Optimizely.EditorPowerTools.PropertyTypes;
 using UmageAI.Optimizely.EditorPowerTools.PropertyTypes.Handlers;
@@ -29,7 +30,7 @@ public class GetaCategoryHandlerTests
     /// with only a default constructor (no IEnumerable&lt;ContentReference&gt; ctor), so the handler
     /// falls through to the IList.Add path.
     /// </summary>
-    public sealed class FakeGetaList : List<ContentReference> { }
+    private sealed class FakeGetaList : List<ContentReference> { }
 
     private static PropertyHandlerContext Ctx(PropertyData prop) =>
         PropertyHandlerContext.ForProperty(prop);
@@ -39,6 +40,7 @@ public class GetaCategoryHandlerTests
         string valueTypeFullName = "No.Such.Type",
         Func<Type, bool>? match = null) =>
         new(
+            NullLogger<GetaCategoryHandler>.Instance,
             loader ?? Mock.Of<IContentLoader>(),
             Mock.Of<IContentTypeRepository>(),
             Mock.Of<IContentModelUsage>(),

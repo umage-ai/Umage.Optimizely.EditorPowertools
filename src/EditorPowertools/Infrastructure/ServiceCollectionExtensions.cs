@@ -112,6 +112,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IPropertyTypeHandler, CategoryListHandler>();
         services.AddSingleton<IPropertyTypeHandler>(sp =>
             new GetaCategoryHandler(
+                sp.GetRequiredService<Microsoft.Extensions.Logging.ILogger<GetaCategoryHandler>>(),
                 sp.GetRequiredService<IContentLoader>(),
                 sp.GetRequiredService<IContentTypeRepository>(),
                 sp.GetRequiredService<IContentModelUsage>()));
