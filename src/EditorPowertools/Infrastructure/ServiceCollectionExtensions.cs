@@ -110,6 +110,11 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IPropertyTypeHandler, PropertyListHandler>();
         services.AddSingleton<IPropertyTypeHandler, SelectionHandler>();
         services.AddSingleton<IPropertyTypeHandler, CategoryListHandler>();
+        services.AddSingleton<IPropertyTypeHandler>(sp =>
+            new GetaCategoryHandler(
+                sp.GetRequiredService<IContentLoader>(),
+                sp.GetRequiredService<IContentTypeRepository>(),
+                sp.GetRequiredService<IContentModelUsage>()));
 
         // Scheduled Jobs Gantt
         services.AddTransient<ScheduledJobsGanttService>();
