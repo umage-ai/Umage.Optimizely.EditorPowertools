@@ -18,7 +18,8 @@ public sealed class CategoryListHandler : IPropertyTypeHandler
 
     public bool CanHandle(PropertyHandlerContext ctx)
         => ctx.PropertyClrType == typeof(PropertyCategory)
-           || ctx.PropertyClrType.IsSubclassOf(typeof(PropertyCategory));
+           || ctx.PropertyClrType.IsSubclassOf(typeof(PropertyCategory))
+           || ctx.Value is CategoryList;
 
     public string GetDisplay(PropertyHandlerContext ctx)
     {
@@ -59,10 +60,14 @@ public sealed class CategoryListHandler : IPropertyTypeHandler
 
         var sep = input.Contains(';') ? ';' : input.Contains('|') ? '|' : ',';
         var ids = new List<int>();
-        foreach (var part in input.Split(sep, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        foreach (var part in input.Split(sep).Select(p => p.Trim()).Where(p => p.Length > 0))
         {
-            if (int.TryParse(part, NumberStyles.Integer, CultureInfo.InvariantCulture, out var id))
-                ids.Add(id);
+            if (!int.TryParse(part, NumberStyles.Integer, CultureInfo.InvariantCulture, out var id))
+            {
+                value = null;
+                return false;
+            }
+            ids.Add(id);
         }
 
         value = new CategoryList(ids);

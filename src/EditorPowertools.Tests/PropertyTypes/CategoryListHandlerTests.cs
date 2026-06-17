@@ -223,12 +223,11 @@ public class CategoryListHandlerTests
     }
 
     [Fact]
-    public void TryParse_NonNumericTokensSkipped_ValidIdsKept()
+    public void TryParse_NonNumericToken_ReturnsFalse()
     {
         var h = new CategoryListHandler(Mock.Of<CategoryRepository>());
-        h.TryParse("1,abc,2", Ctx(new PropertyCategory()), out var value).Should().BeTrue();
-        var list = (CategoryList)value!;
-        list.Should().BeEquivalentTo(new[] { 1, 2 });
+        h.TryParse("1,abc,2", Ctx(new PropertyCategory()), out var value).Should().BeFalse();
+        value.Should().BeNull();
     }
 
     // ── Helpers ────────────────────────────────────────────────────────────────
