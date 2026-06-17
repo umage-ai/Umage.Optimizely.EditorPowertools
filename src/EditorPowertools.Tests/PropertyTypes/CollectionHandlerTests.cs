@@ -33,4 +33,37 @@ public class CollectionHandlerTests
         h.TryParse("a;b;c", Ctx(prop), out var v).Should().BeTrue();
         ((IEnumerable)v!).Cast<string>().Should().BeEquivalentTo("a", "b", "c");
     }
+
+    [Fact]
+    public void Xhtml_TryParseEmpty_ReturnsNullTrue()
+    {
+        var h = new XhtmlStringHandler();
+        h.TryParse("", Ctx(new PropertyXhtmlString()), out var v).Should().BeTrue();
+        v.Should().BeNull();
+    }
+
+    [Fact]
+    public void PropertyList_TryParseNull_ReturnsFalse()
+    {
+        var h = new PropertyListHandler();
+        h.TryParse(null, Ctx(new PropertyStringList()), out _).Should().BeFalse();
+    }
+
+    [Fact]
+    public void PropertyList_DisplaysJoined()
+    {
+        var h = new PropertyListHandler();
+        var prop = new PropertyStringList();
+        h.TryParse("x;y", Ctx(prop), out var parsed).Should().BeTrue();
+        prop.Value = (IList<string>?)parsed;
+        h.GetDisplay(Ctx(prop)).Should().Be("x, y");
+    }
+
+    [Fact]
+    public void PropertyList_ParsesJsonArray()
+    {
+        var h = new PropertyListHandler();
+        h.TryParse("[\"a\",\"b\"]", Ctx(new PropertyStringList()), out var v).Should().BeTrue();
+        ((System.Collections.IEnumerable)v!).Cast<string>().Should().BeEquivalentTo("a", "b");
+    }
 }
