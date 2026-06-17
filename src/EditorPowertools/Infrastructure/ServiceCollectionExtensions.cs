@@ -108,6 +108,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IPropertyTypeHandler, ContentReferenceHandler>();
         services.AddSingleton<IPropertyTypeHandler, XhtmlStringHandler>();
         services.AddSingleton<IPropertyTypeHandler, PropertyListHandler>();
+        services.AddSingleton<IPropertyTypeHandler, SelectionHandler>();
 
         // Scheduled Jobs Gantt
         services.AddTransient<ScheduledJobsGanttService>();
