@@ -41,6 +41,10 @@
         return div.innerHTML;
     }
 
+    function escapeAttr(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
     function formatDate(dateStr) {
         if (!dateStr) return '';
         var d = new Date(dateStr);
@@ -667,9 +671,9 @@
                     }
 
                     if (prop.isEditable && item.canEdit) {
-                        var rawAttr = prop.rawValue != null ? ' data-raw="' + escapeHtml(String(prop.rawValue)) + '"' : '';
+                        var rawAttr = prop.rawValue != null ? ' data-raw="' + escapeAttr(String(prop.rawValue)) + '"' : '';
                         var colMeta = findColumn(colName);
-                        var editorAttr = (colMeta && colMeta.editor) ? ' data-editor="' + escapeHtml(JSON.stringify(colMeta.editor)) + '"' : '';
+                        var editorAttr = (colMeta && colMeta.editor) ? ' data-editor="' + escapeAttr(JSON.stringify(colMeta.editor)) + '"' : '';
                         html += '<td class="' + cellClass + '" data-editable="true" data-content-id="' + item.contentId + '" data-prop="' + escapeHtml(colName) + '" data-type="' + escapeHtml(prop.typeName) + '"' + rawAttr + editorAttr + '>' + escapeHtml(displayVal) + '</td>';
                     } else {
                         html += '<td>' + escapeHtml(displayVal) + '</td>';
@@ -797,7 +801,7 @@
             ['', 'true', 'false'].forEach(function (v) {
                 var o = document.createElement('option');
                 o.value = v; o.textContent = v === '' ? '—' : v;
-                if (String(currentValue) === v) o.selected = true;
+                if (String(currentValue).toLowerCase() === v) o.selected = true;
                 sel.appendChild(o);
             });
             return sel;
@@ -827,7 +831,7 @@
             return ta;
         }
         var input = document.createElement('input');
-        input.type = (kind === 'number') ? 'number' : (kind === 'date') ? 'date' : 'text';
+        input.type = (kind === 'number') ? 'number' : (kind === 'date') ? 'date' : (kind === 'url') ? 'url' : 'text';
         input.value = currentValue == null ? '' : String(currentValue);
         return input;
     }
@@ -914,11 +918,18 @@
 
         var contentId = cell.getAttribute('data-content-id');
         var propName = cell.getAttribute('data-prop');
-        var currentValue = cell.textContent.trim();
 
+        // Prefer the raw stored value over display text so multi-select/category options
+        // can match by value/id. Fall back to pending change, then to display text.
+        var rawAttrValue = cell.getAttribute('data-raw');
+        var currentValue;
         if (state.pendingChanges[contentId] && state.pendingChanges[contentId][propName] !== undefined) {
             currentValue = state.pendingChanges[contentId][propName];
             if (currentValue === null) currentValue = '';
+        } else if (rawAttrValue != null) {
+            currentValue = rawAttrValue;
+        } else {
+            currentValue = cell.textContent.trim();
         }
 
         cell.classList.add('bpe-editing');
@@ -1017,13 +1028,20 @@
         }
 
         if (kind === 'bool' || kind === 'select' || kind === 'multiselect' || kind === 'category') {
-            // SELECT elements: commit on change and blur.
-            control.addEventListener('change', function () {
-                finishEditing(cell, contentId, propName, readEditorControl(control));
-            });
-            control.addEventListener('blur', function () {
-                finishEditing(cell, contentId, propName, readEditorControl(control));
-            });
+            if (kind === 'multiselect' || kind === 'category') {
+                // Multi-select: commit on blur only — change fires on every option click
+                // which would destroy the element before the user finishes picking.
+                control.addEventListener('blur', function () {
+                    finishEditing(cell, contentId, propName, readEditorControl(control));
+                });
+            } else {
+                // Single-select (bool, select): commit on change (immediate feedback).
+                // Do NOT also bind blur to avoid a double-commit when the element is
+                // removed from the DOM by finishEditing and blur fires afterwards.
+                control.addEventListener('change', function () {
+                    finishEditing(cell, contentId, propName, readEditorControl(control));
+                });
+            }
         } else {
             // INPUT / TEXTAREA: commit on blur, keyboard shortcuts on keydown.
             control.addEventListener('blur', function () {
@@ -1060,7 +1078,7 @@
         var displayValue = newValue;
         var cellType = (cell.getAttribute('data-type') || '').toLowerCase();
         if (cellType === 'boolean' || cellType === 'bool') {
-            displayValue = newValue === 'true' ? 'True' : 'False';
+            displayValue = newValue === 'true' ? 'True' : newValue === 'false' ? 'False' : '';
         } else if (cellType === 'datetime' || cellType === 'datetimeoffset' || cellType === 'date') {
             if (newValue) displayValue = formatDate(newValue);
         }
