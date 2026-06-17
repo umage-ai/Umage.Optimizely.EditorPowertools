@@ -66,4 +66,19 @@ public class CollectionHandlerTests
         h.TryParse("[\"a\",\"b\"]", Ctx(new PropertyStringList()), out var v).Should().BeTrue();
         ((System.Collections.IEnumerable)v!).Cast<string>().Should().BeEquivalentTo("a", "b");
     }
+
+    [Fact]
+    public void PropertyList_TryParseNonConvertible_ReturnsFalse()
+    {
+        var h = new PropertyListHandler();
+        // "abc" cannot be converted to int, so TryParse must return false rather than throw.
+        h.TryParse("abc", Ctx(new PropertyIntList()), out var v).Should().BeFalse();
+        v.Should().BeNull();
+    }
+
+    /// <summary>Minimal concrete PropertyList&lt;int&gt; for testing — EPiServer ships no int-list type.</summary>
+    private sealed class PropertyIntList : PropertyList<int>
+    {
+        public override EPiServer.Core.PropertyData CreateWritableClone() => new PropertyIntList();
+    }
 }

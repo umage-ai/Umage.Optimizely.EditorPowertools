@@ -13,9 +13,9 @@ namespace UmageAI.Optimizely.EditorPowerTools.PropertyTypes.Handlers;
 /// Priority 50.
 /// </summary>
 /// <remarks>
-/// NOTE: the Geta API shape (value type name, constructor, category base type,
-/// value-is-IEnumerable&lt;ContentReference&gt;) is assumed and must be verified against a real
-/// Geta install — see docs/superpowers/plans/2026-06-16-shared-property-type-handlers.md Task 11 Step 0.
+/// The Geta API shape (value type name, constructor, category base type, and that the value enumerates
+/// as ContentReference) is assumed via reflection and should be verified against a real
+/// Geta.Optimizely.Categories install. The handler degrades to read-only if the Geta types are not loaded.
 /// </remarks>
 public sealed class GetaCategoryHandler : IPropertyTypeHandler
 {

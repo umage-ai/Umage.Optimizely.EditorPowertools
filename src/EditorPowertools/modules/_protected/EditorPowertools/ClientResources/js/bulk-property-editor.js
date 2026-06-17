@@ -1032,12 +1032,21 @@
                 // Multi-select: commit on blur only — change fires on every option click
                 // which would destroy the element before the user finishes picking.
                 control.addEventListener('blur', function () {
-                    finishEditing(cell, contentId, propName, readEditorControl(control));
+                    var labels = Array.prototype.filter.call(control.options, function (o) { return o.selected; })
+                        .map(function (o) { return o.textContent; }).join(', ');
+                    finishEditing(cell, contentId, propName, readEditorControl(control), labels);
                 });
-            } else {
-                // Single-select (bool, select): commit on change (immediate feedback).
+            } else if (kind === 'select') {
+                // Single-select: commit on change (immediate feedback), show option label.
                 // Do NOT also bind blur to avoid a double-commit when the element is
                 // removed from the DOM by finishEditing and blur fires afterwards.
+                control.addEventListener('change', function () {
+                    var labels = Array.prototype.filter.call(control.options, function (o) { return o.selected; })
+                        .map(function (o) { return o.textContent; }).join(', ');
+                    finishEditing(cell, contentId, propName, readEditorControl(control), labels);
+                });
+            } else {
+                // bool: commit on change, no label override needed (True/False formatting in finishEditing).
                 control.addEventListener('change', function () {
                     finishEditing(cell, contentId, propName, readEditorControl(control));
                 });
@@ -1056,7 +1065,7 @@
         }
     }
 
-    function finishEditing(cell, contentId, propName, newValue) {
+    function finishEditing(cell, contentId, propName, newValue, displayOverride) {
         cell.classList.remove('bpe-editing');
 
         var originalValue = getOriginalValue(contentId, propName);
@@ -1074,13 +1083,24 @@
             cell.classList.remove('bpe-edited');
         }
 
-        // Display the value
-        var displayValue = newValue;
-        var cellType = (cell.getAttribute('data-type') || '').toLowerCase();
-        if (cellType === 'boolean' || cellType === 'bool') {
-            displayValue = newValue === 'true' ? 'True' : newValue === 'false' ? 'False' : '';
-        } else if (cellType === 'datetime' || cellType === 'datetimeoffset' || cellType === 'date') {
-            if (newValue) displayValue = formatDate(newValue);
+        // Keep data-raw in sync with the committed raw value so a subsequent re-edit
+        // (after the pending change is cleared) can still read back the correct value.
+        cell.setAttribute('data-raw', newValue);
+
+        // Display the value — use the caller-supplied label string when provided
+        // (e.g. select/multiselect/category commits human-readable labels here
+        //  while newValue still carries the raw IDs sent to the server).
+        var displayValue;
+        if (displayOverride !== undefined) {
+            displayValue = displayOverride;
+        } else {
+            displayValue = newValue;
+            var cellType = (cell.getAttribute('data-type') || '').toLowerCase();
+            if (cellType === 'boolean' || cellType === 'bool') {
+                displayValue = newValue === 'true' ? 'True' : newValue === 'false' ? 'False' : '';
+            } else if (cellType === 'datetime' || cellType === 'datetimeoffset' || cellType === 'date') {
+                if (newValue) displayValue = formatDate(newValue);
+            }
         }
         cell.textContent = displayValue || '';
 

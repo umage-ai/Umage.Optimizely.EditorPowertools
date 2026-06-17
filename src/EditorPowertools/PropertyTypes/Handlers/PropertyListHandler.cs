@@ -25,8 +25,16 @@ public sealed class PropertyListHandler : IPropertyTypeHandler
     {
         var itemType = GetItemType(ctx.PropertyClrType);
         if (itemType == null || input == null) { value = null; return false; }
-        value = ParseListValue(input, itemType);
-        return true;
+        try
+        {
+            value = ParseListValue(input, itemType);
+            return true;
+        }
+        catch
+        {
+            value = null;
+            return false;
+        }
     }
 
     internal static Type? GetItemType(Type propertyClrType)
