@@ -50,6 +50,12 @@ public sealed class CategoryListHandler : IPropertyTypeHandler
             Options = BuildOptions()
         };
 
+    /// <summary>Returns comma-joined category IDs so the multiselect can pre-select current categories. Round-trips through TryParse.</summary>
+    public string GetEditValue(PropertyHandlerContext ctx) =>
+        ctx.Value is CategoryList list
+            ? string.Join(",", list.Select(id => id.ToString(CultureInfo.InvariantCulture)))
+            : string.Empty;
+
     public bool TryParse(string? input, PropertyHandlerContext ctx, out object? value)
     {
         if (string.IsNullOrWhiteSpace(input))

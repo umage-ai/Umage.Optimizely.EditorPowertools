@@ -50,6 +50,21 @@ public class ContentReferenceHandlerTests
         h.GetEditor(Ctx(new PropertyContentReference()))!.Kind.Should().Be("reference");
     }
 
+    [Fact]
+    public void GetEditValue_ReturnsId()
+    {
+        var h = new ContentReferenceHandler(Mock.Of<IContentLoader>());
+        var prop = new PropertyContentReference { Value = new ContentReference(7) };
+        h.GetEditValue(Ctx(prop)).Should().Be("7");
+    }
+
+    [Fact]
+    public void GetEditValue_NullReference_ReturnsEmptyString()
+    {
+        var h = new ContentReferenceHandler(Mock.Of<IContentLoader>());
+        h.GetEditValue(Ctx(new PropertyContentReference())).Should().BeEmpty();
+    }
+
     /// <summary>
     /// Minimal IContentLoader stub. IContentLoader has ContentReference-based TryGet
     /// overloads directly on the interface (not just as extension methods), so a

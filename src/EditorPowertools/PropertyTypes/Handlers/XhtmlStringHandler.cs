@@ -29,6 +29,10 @@ public sealed class XhtmlStringHandler : IPropertyTypeHandler
 
     public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => new() { Kind = "textarea" };
 
+    /// <summary>Returns the raw HTML so the textarea can preserve markup and round-trip through TryParse.</summary>
+    public string GetEditValue(PropertyHandlerContext ctx) =>
+        (ctx.Value as XhtmlString)?.ToHtmlString() ?? ctx.Value?.ToString() ?? string.Empty;
+
     public bool TryParse(string? input, PropertyHandlerContext ctx, out object? value)
     {
         value = string.IsNullOrEmpty(input) ? null : new XhtmlString(input);

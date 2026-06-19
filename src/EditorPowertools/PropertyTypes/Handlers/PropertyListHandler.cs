@@ -21,6 +21,12 @@ public sealed class PropertyListHandler : IPropertyTypeHandler
 
     public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => new() { Kind = "text" };
 
+    /// <summary>Returns semicolon-joined items so the text editor pre-populates, and TryParse can round-trip via its ';' separator path.</summary>
+    public string GetEditValue(PropertyHandlerContext ctx) =>
+        ctx.Value is IEnumerable e and not string
+            ? string.Join(";", e.Cast<object?>().Select(o => o?.ToString()))
+            : string.Empty;
+
     public bool TryParse(string? input, PropertyHandlerContext ctx, out object? value)
     {
         var itemType = GetItemType(ctx.PropertyClrType);

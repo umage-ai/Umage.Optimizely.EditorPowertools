@@ -671,7 +671,10 @@
                     }
 
                     if (prop.isEditable && item.canEdit) {
-                        var rawAttr = prop.rawValue != null ? ' data-raw="' + escapeAttr(String(prop.rawValue)) + '"' : '';
+                        // Prefer editValue (round-trippable through TryParse) over rawValue.toString()
+                        // which stringifies complex objects as "[object Object]".
+                        var seedValue = prop.editValue != null ? prop.editValue : (prop.rawValue != null ? String(prop.rawValue) : null);
+                        var rawAttr = seedValue != null ? ' data-raw="' + escapeAttr(seedValue) + '"' : '';
                         var colMeta = findColumn(colName);
                         var editorAttr = (colMeta && colMeta.editor) ? ' data-editor="' + escapeAttr(JSON.stringify(colMeta.editor)) + '"' : '';
                         html += '<td class="' + cellClass + '" data-editable="true" data-content-id="' + item.contentId + '" data-prop="' + escapeHtml(colName) + '" data-type="' + escapeHtml(prop.typeName) + '"' + rawAttr + editorAttr + '>' + escapeHtml(displayVal) + '</td>';

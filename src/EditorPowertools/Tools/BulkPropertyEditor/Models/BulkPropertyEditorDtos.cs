@@ -62,7 +62,7 @@ public record ContentItemRow(
     Dictionary<string, PropertyValue> Properties,
     List<ContentReferenceInfo>? References);
 
-public record PropertyValue(string? DisplayValue, object? RawValue, bool IsEditable, string TypeName);
+public record PropertyValue(string? DisplayValue, object? RawValue, bool IsEditable, string TypeName, string? EditValue = null);
 
 public record ContentReferenceInfo(int ContentId, string Name, string ContentTypeName, string? EditUrl);
 

@@ -19,4 +19,11 @@ public interface IPropertyTypeHandler
 
     /// <summary>Parses a string into a property value. Returns false if not parseable.</summary>
     bool TryParse(string? input, PropertyHandlerContext ctx, out object? value);
+
+    /// <summary>
+    /// The string used to SEED the inline editor for this property — must round-trip through
+    /// <see cref="TryParse"/>. Defaults to the raw value's string form (correct for scalars).
+    /// Complex handlers override (e.g. XhtmlString returns its HTML; references/categories return ids).
+    /// </summary>
+    string GetEditValue(PropertyHandlerContext ctx) => ctx.Value?.ToString() ?? string.Empty;
 }

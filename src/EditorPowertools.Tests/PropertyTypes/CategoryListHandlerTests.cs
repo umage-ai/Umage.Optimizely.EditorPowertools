@@ -230,6 +230,24 @@ public class CategoryListHandlerTests
         value.Should().BeNull();
     }
 
+    // ── GetEditValue ───────────────────────────────────────────────────────────
+
+    [Fact]
+    public void GetEditValue_ReturnsCommaJoinedIds()
+    {
+        var h = new CategoryListHandler(Mock.Of<CategoryRepository>());
+        var prop = new PropertyCategory { Value = new CategoryList(new[] { 3, 4 }) };
+        h.GetEditValue(Ctx(prop)).Should().Be("3,4");
+    }
+
+    [Fact]
+    public void GetEditValue_EmptyList_ReturnsEmptyString()
+    {
+        var h = new CategoryListHandler(Mock.Of<CategoryRepository>());
+        var prop = new PropertyCategory { Value = new CategoryList() };
+        h.GetEditValue(Ctx(prop)).Should().BeEmpty();
+    }
+
     // ── Helpers ────────────────────────────────────────────────────────────────
 
     private static Category MakeCat(int id, string name,

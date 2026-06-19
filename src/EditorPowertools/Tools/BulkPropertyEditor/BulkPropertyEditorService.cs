@@ -438,7 +438,6 @@ public class BulkPropertyEditorService
             "PageCreatedBy",
             "PageChangedBy",
             "PageChangedOnPublish",
-            "PageCategory",
             "PageVisibleInMenu"
         ];
 
@@ -470,7 +469,8 @@ public class BulkPropertyEditorService
                     handler.GetDisplay(ctx),
                     prop.Value,
                     editor != null,
-                    editor?.Kind ?? "readonly");
+                    editor?.Kind ?? "readonly",
+                    editor != null ? handler.GetEditValue(ctx) : null);
             }
             else
             {

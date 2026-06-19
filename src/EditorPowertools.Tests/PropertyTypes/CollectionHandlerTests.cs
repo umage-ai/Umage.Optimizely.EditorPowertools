@@ -76,6 +76,14 @@ public class CollectionHandlerTests
         v.Should().BeNull();
     }
 
+    [Fact]
+    public void Xhtml_GetEditValue_ReturnsHtmlNotStripped()
+    {
+        var h = new XhtmlStringHandler();
+        var prop = new PropertyXhtmlString { Value = new XhtmlString("<p>Hi</p>") };
+        h.GetEditValue(Ctx(prop)).Should().Contain("<p>");
+    }
+
     /// <summary>Minimal concrete PropertyList&lt;int&gt; for testing — EPiServer ships no int-list type.</summary>
     private sealed class PropertyIntList : PropertyList<int>
     {

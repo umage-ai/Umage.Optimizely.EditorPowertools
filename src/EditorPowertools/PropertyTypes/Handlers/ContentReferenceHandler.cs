@@ -34,6 +34,12 @@ public sealed class ContentReferenceHandler : IPropertyTypeHandler
 
     public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => new() { Kind = "reference" };
 
+    /// <summary>Returns the content ID as a string so the reference picker can pre-populate. Round-trips through TryParse.</summary>
+    public string GetEditValue(PropertyHandlerContext ctx) =>
+        ctx.Value is ContentReference cr && !ContentReference.IsNullOrEmpty(cr)
+            ? cr.ID.ToString(System.Globalization.CultureInfo.InvariantCulture)
+            : string.Empty;
+
     public bool TryParse(string? input, PropertyHandlerContext ctx, out object? value)
     {
         if (string.IsNullOrWhiteSpace(input) || input == "0") { value = ContentReference.EmptyReference; return true; }
