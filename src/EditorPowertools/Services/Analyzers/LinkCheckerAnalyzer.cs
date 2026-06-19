@@ -228,7 +228,8 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
                         if (_contentLoader.TryGet<IContent>(reference.OwnerID, out var owner) && owner is PageData)
                         {
                             pageNames.Add(owner.Name);
-                            var friendlyUrl = _urlResolver.GetUrl(owner.ContentLink);
+                            var ownerLang = (owner as ILocalizable)?.Language?.Name;
+                            var friendlyUrl = _urlResolver.GetUrl(owner.ContentLink, ownerLang, new UrlResolverArguments { ForceCanonical = true });
                             var ownerEditUrl = EditorPowertoolsShellPaths.ContentEditUrl(owner.ContentLink.ID);
                             pageUrls.Add($"{owner.Name}|{friendlyUrl ?? ""}|{ownerEditUrl}");
                         }
@@ -294,7 +295,11 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
                 entry.Record.TargetContentId = contentRef.ID;
                 try
                 {
-                    var friendlyUrl = _urlResolver.GetUrl(contentRef);
+                    // Resolve as an absolute, language-correct URL. This runs in a scheduled
+                    // job (no request context), so ForceCanonical is required to get the host;
+                    // otherwise GetUrl returns a relative / default-language URL (issue #10).
+                    var language = (content as ILocalizable)?.Language?.Name;
+                    var friendlyUrl = _urlResolver.GetUrl(contentRef, language, new UrlResolverArguments { ForceCanonical = true });
                     entry.Record.FriendlyUrl = friendlyUrl;
                     entry.Record.Url = $"{content.Name} (ID: {contentRef.ID})";
                 }
@@ -331,7 +336,8 @@ public class LinkCheckerAnalyzer : IContentAnalyzer
                 entry.Record.TargetContentId = content.ContentLink.ID;
                 try
                 {
-                    var friendlyUrl = _urlResolver.GetUrl(content.ContentLink);
+                    var language = (content as ILocalizable)?.Language?.Name;
+                    var friendlyUrl = _urlResolver.GetUrl(content.ContentLink, language, new UrlResolverArguments { ForceCanonical = true });
                     entry.Record.FriendlyUrl = friendlyUrl ?? url;
                 }
                 catch { entry.Record.FriendlyUrl = url; }
