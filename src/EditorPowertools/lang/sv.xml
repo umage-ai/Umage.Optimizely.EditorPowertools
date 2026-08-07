@@ -173,6 +173,7 @@
           <processing>Bearbetat {0}/{1} innehållsobjekt...</processing>
           <completing>Slutför analysatorer...</completing>
           <completed>Klart. Analyserade {0} innehållsobjekt med {1} analysatorer ({2}).</completed>
+          <initfailed>Hoppade över {0} analysator(er) på grund av initieringsfel: {1}.</initfailed>
         </contentanalysis>
       </jobs>
 

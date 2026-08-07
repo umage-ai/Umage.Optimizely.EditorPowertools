@@ -173,6 +173,7 @@
           <processing>已处理{0}/{1}个内容项...</processing>
           <completing>正在完成分析器...</completing>
           <completed>完成。使用{1}个分析器（{2}）分析了{0}个内容项。</completed>
+          <initfailed>由于初始化错误，跳过了{0}个分析器：{1}。</initfailed>
         </contentanalysis>
       </jobs>
 

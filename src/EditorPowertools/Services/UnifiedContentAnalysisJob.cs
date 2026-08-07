@@ -59,17 +59,27 @@ public class UnifiedContentAnalysisJob : ScheduledJobBase
             return L(Prefix + "noanalyzers", "No analyzers registered.");
 
         OnStatusChanged(string.Format(L(Prefix + "initializing", "Initializing {0} analyzers..."), analyzerList.Count));
+        var failedAnalyzers = new List<IContentAnalyzer>();
         foreach (var analyzer in analyzerList)
         {
             try { analyzer.Initialize(); }
-            catch (Exception ex) { _logger.LogError(ex, "Error initializing {Analyzer}", analyzer.Name); }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error initializing {Analyzer}", analyzer.Name);
+                failedAnalyzers.Add(analyzer);
+            }
         }
+
+        // An analyzer whose Initialize() failed didn't clear its prior data (e.g. a DDS delete
+        // timed out) — running Analyze()/Complete() for it would append new rows on top of
+        // stale ones, so skip it entirely for this run instead of silently compounding the data.
+        var activeAnalyzers = analyzerList.Except(failedAnalyzers).ToList();
 
         var descendants = _contentRepository.GetDescendents(ContentReference.RootPage).ToList();
         var total = descendants.Count;
         var processed = 0;
 
-        OnStatusChanged(string.Format(L(Prefix + "analyzing", "Analyzing {0} content items with {1} analyzers..."), total, analyzerList.Count));
+        OnStatusChanged(string.Format(L(Prefix + "analyzing", "Analyzing {0} content items with {1} analyzers..."), total, activeAnalyzers.Count));
 
         foreach (var contentRef in descendants)
         {
@@ -83,7 +93,7 @@ public class UnifiedContentAnalysisJob : ScheduledJobBase
                 if (!_contentLoader.TryGet<IContent>(contentRef, out var content))
                     continue;
 
-                foreach (var analyzer in analyzerList)
+                foreach (var analyzer in activeAnalyzers)
                 {
                     try { analyzer.Analyze(content, contentRef); }
                     catch (Exception ex) { _logger.LogWarning(ex, "Error in {Analyzer} for {ContentRef}", analyzer.Name, contentRef); }
@@ -100,14 +110,24 @@ public class UnifiedContentAnalysisJob : ScheduledJobBase
         }
 
         OnStatusChanged(L(Prefix + "completing", "Completing analyzers..."));
-        foreach (var analyzer in analyzerList)
+        foreach (var analyzer in activeAnalyzers)
         {
             try { analyzer.Complete(); }
             catch (Exception ex) { _logger.LogError(ex, "Error completing {Analyzer}", analyzer.Name); }
         }
 
-        return string.Format(L(Prefix + "completed", "Completed. Analyzed {0} content items with {1} analyzers ({2})."),
-            processed, analyzerList.Count, string.Join(", ", analyzerList.Select(a => a.Name)));
+        var message = string.Format(L(Prefix + "completed", "Completed. Analyzed {0} content items with {1} analyzers ({2})."),
+            processed, activeAnalyzers.Count, string.Join(", ", activeAnalyzers.Select(a => a.Name)));
+
+        if (failedAnalyzers.Count > 0)
+        {
+            message += " " + string.Format(
+                L(Prefix + "initfailed", "Skipped {0} analyzer(s) due to initialization errors: {1}."),
+                failedAnalyzers.Count,
+                string.Join(", ", failedAnalyzers.Select(a => a.Name)));
+        }
+
+        return message;
     }
 
     public override void Stop()

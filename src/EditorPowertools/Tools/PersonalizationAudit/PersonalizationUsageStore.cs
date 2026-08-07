@@ -1,5 +1,6 @@
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.PersonalizationAudit;
 
@@ -51,7 +52,7 @@ public class PersonalizationUsageRepository
     public void Clear()
     {
         var store = GetStore();
-        store.DeleteAll();
+        store.ClearInBatches<PersonalizationUsageRecord>();
     }
 
     public void Save(PersonalizationUsageRecord record)

@@ -173,6 +173,7 @@
           <processing>{0}/{1} elementos de contenido procesados...</processing>
           <completing>Finalizando analizadores...</completing>
           <completed>Completado. {0} elementos de contenido analizados con {1} analizadores ({2}).</completed>
+          <initfailed>Se omitieron {0} analizador(es) debido a errores de inicialización: {1}.</initfailed>
         </contentanalysis>
       </jobs>
 

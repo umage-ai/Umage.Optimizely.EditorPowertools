@@ -173,6 +173,7 @@
           <processing>Käsitelty {0}/{1} sisältökohdetta...</processing>
           <completing>Viimeistellään analysaattoreita...</completing>
           <completed>Valmis. Analysoitu {0} sisältökohdetta {1} analysaattorilla ({2}).</completed>
+          <initfailed>Ohitettiin {0} analysaattori(a) alustusvirheiden vuoksi: {1}.</initfailed>
         </contentanalysis>
       </jobs>
 

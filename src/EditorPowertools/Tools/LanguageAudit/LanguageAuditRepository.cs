@@ -1,5 +1,6 @@
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.LanguageAudit;
 
@@ -54,7 +55,7 @@ public class LanguageAuditRepository
     public void Clear()
     {
         var store = GetStore();
-        store.DeleteAll();
+        store.ClearInBatches<LanguageAuditRecord>();
     }
 
     public void Save(LanguageAuditRecord record)
