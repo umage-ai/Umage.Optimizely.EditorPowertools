@@ -169,10 +169,11 @@ public static class ServiceCollectionExtensions
         services.AddTransient<LinkCheckerJobStatusService>();
         services.AddHttpClient();
 
-        // Dedicated client for Content Importer image downloads: redirects are disabled so a
-        // validated public URL cannot be redirected to an internal host (SSRF defense-in-depth).
+        // Dedicated client for Content Importer image downloads: redirects are disabled and the
+        // connect callback validates the destination IP on the same DNS answer it connects to,
+        // so neither a redirect nor a DNS rebind can reach an internal/metadata address.
         services.AddHttpClient(ContentImporterService.ImageDownloadClientName)
-            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
+            .ConfigurePrimaryHttpMessageHandler(SsrfProtection.CreatePinnedHandler);
 
         // Security Audit
         services.AddSingleton<SecurityAuditRepository>();

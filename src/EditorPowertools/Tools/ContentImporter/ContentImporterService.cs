@@ -10,6 +10,7 @@ using EPiServer.DataAbstraction;
 using EPiServer.DataAccess;
 using EPiServer.Framework.Blobs;
 using EPiServer.Security;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.PropertyTypes;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Models;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Parsers;
@@ -287,6 +288,7 @@ public class ContentImporterService
         // Restore the requesting user's principal on this background thread so that
         // IContentRepository.Save enforces the caller's per-node access rights.
         // (PrincipalInfo.CurrentPrincipal is read-only in CMS 12+; set via the accessor.)
+        var originalPrincipal = _principalAccessor.Principal;
         _principalAccessor.Principal = principal;
 
         try
@@ -346,6 +348,12 @@ public class ContentImporterService
             progress.Status = "failed";
             progress.Errors.Add(new ImportError { RowIndex = 0, Message = "Import failed. Check server logs for details." });
             _logger.LogError(ex, "Import failed for session {SessionId}", session.SessionId);
+        }
+        finally
+        {
+            // Don't leak the importing user's identity into whatever the accessor's ambient
+            // state outlives this task with — mirror ContentAuditExportJob's restore pattern.
+            _principalAccessor.Principal = originalPrincipal;
         }
     }
 
@@ -525,41 +533,10 @@ public class ContentImporterService
             catch { return false; }
         }
 
-        return addresses.Length > 0 && addresses.All(IsPublicAddress);
-    }
-
-    private static bool IsPublicAddress(IPAddress ip)
-    {
-        if (ip.IsIPv4MappedToIPv6)
-            ip = ip.MapToIPv4();
-
-        if (IPAddress.IsLoopback(ip))
-            return false;
-
-        if (ip.AddressFamily == AddressFamily.InterNetwork)
-        {
-            var b = ip.GetAddressBytes();
-            return b[0] switch
-            {
-                0 => false,                                   // 0.0.0.0/8
-                10 => false,                                  // 10.0.0.0/8 (private)
-                100 when b[1] is >= 64 and <= 127 => false,   // 100.64.0.0/10 (CGNAT)
-                169 when b[1] == 254 => false,                // 169.254.0.0/16 (link-local + metadata)
-                172 when b[1] is >= 16 and <= 31 => false,    // 172.16.0.0/12 (private)
-                192 when b[1] == 168 => false,                // 192.168.0.0/16 (private)
-                _ => true
-            };
-        }
-
-        if (ip.AddressFamily == AddressFamily.InterNetworkV6)
-        {
-            return !ip.IsIPv6LinkLocal
-                && !ip.IsIPv6SiteLocal
-                && !ip.IsIPv6UniqueLocal
-                && !ip.Equals(IPAddress.IPv6Any);
-        }
-
-        return false;
+        // Fast pre-check for a clean error message; the named client's connect callback
+        // (SsrfProtection.CreatePinnedHandler) re-validates on the DNS answer it actually
+        // connects to, so a rebinding between this check and the fetch cannot slip through.
+        return addresses.Length > 0 && addresses.All(SsrfProtection.IsPublicAddress);
     }
 
     /// <summary>Named <see cref="HttpClient"/> used for image downloads (auto-redirect disabled).</summary>
@@ -610,7 +587,7 @@ public class ContentImporterService
         }
         imageMedia.BinaryData = blob;
 
-        return _contentRepository.Save(imageMedia, SaveAction.Publish, AccessLevel.Edit);
+        return _contentRepository.Save(imageMedia, SaveAction.Publish, RequiredAccess(SaveAction.Publish));
     }
 
     private void ApplyBuiltInProperties(IContent content, List<PropertyMapping> mappings, Dictionary<string, string> row)
