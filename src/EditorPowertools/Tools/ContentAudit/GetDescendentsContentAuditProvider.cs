@@ -74,7 +74,8 @@ public class GetDescendentsContentAuditProvider : IContentAuditDataProvider
                 continue;
             }
 
-            var row = BuildRow(content, columns, needsRefCount, needsVersions, needsPersonaliz);
+            var row = TryBuildRow(contentRef, content, columns, needsRefCount, needsVersions, needsPersonaliz);
+            if (row == null) continue;
 
             if (!MatchesRequest(row, request)) continue;
 
@@ -117,7 +118,9 @@ public class GetDescendentsContentAuditProvider : IContentAuditDataProvider
 
             if (!_accessEvaluator.HasAccess(content, principal, AccessLevel.Read)) continue;
 
-            var row = BuildRow(content, columns, needsRefCount, needsVersions, needsPersonaliz);
+            var row = TryBuildRow(contentRef, content, columns, needsRefCount, needsVersions, needsPersonaliz);
+            if (row == null) continue;
+
             if (!MatchesExportRequest(row, request)) continue;
 
             yield return row;
@@ -131,7 +134,24 @@ public class GetDescendentsContentAuditProvider : IContentAuditDataProvider
         try { return _contentRepository.Get<IContent>(contentRef); }
         catch (Exception ex)
         {
-            _logger.LogDebug(ex, "Could not load content {ContentRef}", contentRef);
+            _logger.LogWarning(ex, "Content audit: skipping content {ContentRef} — it could not be loaded", contentRef);
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Builds a row, treating any per-item failure as a skip rather than aborting the whole
+    /// enumeration. Real databases contain items whose property data throws on access
+    /// (e.g. EPiServer's ListPropertyValueConverter NRE for orphaned list-property rows, #63);
+    /// one such item must not fail an entire export.
+    /// </summary>
+    private ContentAuditRow? TryBuildRow(ContentReference contentRef, IContent content, List<string> columns,
+        bool needsRefCount, bool needsVersionCount, bool needsPersonalizations)
+    {
+        try { return BuildRow(content, columns, needsRefCount, needsVersionCount, needsPersonalizations); }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Content audit: skipping content {ContentRef} — reading its data failed", contentRef);
             return null;
         }
     }
