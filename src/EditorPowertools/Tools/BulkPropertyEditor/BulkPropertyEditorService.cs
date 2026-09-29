@@ -204,9 +204,12 @@ public class BulkPropertyEditorService
             .Take(request.PageSize)
             .ToList();
 
-        // Build rows
+        // Build rows. Editor descriptors depend only on the property definition, not the row
+        // value, but building them can be expensive (category tree walks, selection factories),
+        // so they are resolved once per (content type, column, handler) and reused across rows.
+        Dictionary<(int ContentTypeId, string Column, Type HandlerType), PropertyEditorDescriptor?> editorCache = [];
         List<ContentItemRow> rows = pagedItems
-            .Select(content => BuildContentItemRow(content, request))
+            .Select(content => BuildContentItemRow(content, request, editorCache))
             .ToList();
 
         ContentFilterResponse response = new(rows, totalCount, request.Page, request.PageSize, totalPages, resolvedSignal);
@@ -444,7 +447,8 @@ public class BulkPropertyEditorService
         return systemProperties.Contains(propertyName);
     }
 
-    private ContentItemRow BuildContentItemRow(IContent content, ContentFilterRequest request)
+    private ContentItemRow BuildContentItemRow(IContent content, ContentFilterRequest request,
+        Dictionary<(int ContentTypeId, string Column, Type HandlerType), PropertyEditorDescriptor?> editorCache)
     {
         string status = GetContentStatus(content);
         IChangeTrackable? trackable = content as IChangeTrackable;
@@ -464,7 +468,12 @@ public class BulkPropertyEditorService
                     ? PropertyHandlerContext.ForProperty(prop, pd, contentType!.ModelType)
                     : PropertyHandlerContext.ForProperty(prop);
                 var handler = _handlers.Resolve(ctx);
-                var editor = handler.GetEditor(ctx);
+                var cacheKey = (content.ContentTypeID, column, handler.GetType());
+                if (!editorCache.TryGetValue(cacheKey, out var editor))
+                {
+                    editor = handler.GetEditor(ctx);
+                    editorCache[cacheKey] = editor;
+                }
                 properties[column] = new PropertyValue(
                     handler.GetDisplay(ctx),
                     prop.Value,
