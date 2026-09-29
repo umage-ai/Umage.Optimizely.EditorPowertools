@@ -922,6 +922,9 @@
         var contentId = cell.getAttribute('data-content-id');
         var propName = cell.getAttribute('data-prop');
 
+        // What the cell shows right now — Escape must restore this, not the raw edit value.
+        var originalDisplay = cell.textContent.trim();
+
         // Prefer the raw stored value over display text so multi-select/category options
         // can match by value/id. Fall back to pending change, then to display text.
         var rawAttrValue = cell.getAttribute('data-raw');
@@ -1014,7 +1017,7 @@
             });
             dateInput.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter') { dateInput.blur(); }
-                else if (e.key === 'Escape') { cancelEditing(cell, currentValue); }
+                else if (e.key === 'Escape') { cancelEditing(cell, originalDisplay); }
                 else if (e.key === 'ArrowDown') { e.preventDefault(); navigateVertical(cell, 'down'); }
                 else if (e.key === 'ArrowUp') { e.preventDefault(); navigateVertical(cell, 'up'); }
             });
@@ -1061,7 +1064,7 @@
             });
             control.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter' && control.tagName !== 'TEXTAREA') { control.blur(); }
-                else if (e.key === 'Escape') { cancelEditing(cell, currentValue); }
+                else if (e.key === 'Escape') { cancelEditing(cell, originalDisplay); }
                 else if (e.key === 'ArrowDown' && control.tagName !== 'TEXTAREA') { e.preventDefault(); navigateVertical(cell, 'down'); }
                 else if (e.key === 'ArrowUp' && control.tagName !== 'TEXTAREA') { e.preventDefault(); navigateVertical(cell, 'up'); }
             });
@@ -1123,7 +1126,14 @@
             if (item.contentId === parseInt(contentId)) {
                 if (propName === 'Name') return item.name || '';
                 if (item.properties && item.properties[propName]) {
-                    return item.properties[propName].displayValue || '';
+                    // Compare against the same raw value the editor is seeded with (see the
+                    // seedValue logic in renderTable). Comparing against displayValue would
+                    // mark every xhtml/category/reference cell dirty on mere focus+blur,
+                    // since their edit value never equals their display text.
+                    var prop = item.properties[propName];
+                    if (prop.editValue != null) return prop.editValue;
+                    if (prop.rawValue != null) return String(prop.rawValue);
+                    return prop.displayValue || '';
                 }
                 return '';
             }
