@@ -67,6 +67,13 @@ public sealed class GetaCategoryHandler : IPropertyTypeHandler
         return new PropertyEditorDescriptor { Kind = "category", Multiple = true, Options = LoadCategoryOptions() };
     }
 
+    /// <summary>Comma-joined category content IDs — matches the editor's option values and
+    /// round-trips through <see cref="TryParse"/>. The interface default (Value.ToString())
+    /// would seed the editor with the CLR type name and wipe categories on commit.</summary>
+    public string GetEditValue(PropertyHandlerContext ctx) =>
+        string.Join(",", EnumerateReferences(ctx.Value)
+            .Select(r => r.ID.ToString(CultureInfo.InvariantCulture)));
+
     public bool TryParse(string? input, PropertyHandlerContext ctx, out object? value)
     {
         value = null;

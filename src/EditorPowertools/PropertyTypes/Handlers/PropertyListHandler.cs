@@ -19,7 +19,17 @@ public sealed class PropertyListHandler : IPropertyTypeHandler
         return ctx.Value?.ToString() ?? string.Empty;
     }
 
-    public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => new() { Kind = "text" };
+    /// <summary>Editable only when ParseListValue can actually round-trip the item type
+    /// (string or IConvertible). PropertyList&lt;ContentReference&gt; etc. stay read-only —
+    /// offering an editor whose every commit fails Convert.ChangeType would be a trap.</summary>
+    public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx)
+    {
+        var itemType = GetItemType(ctx.PropertyClrType);
+        return itemType != null && IsParseableItemType(itemType) ? new() { Kind = "text" } : null;
+    }
+
+    private static bool IsParseableItemType(Type t) =>
+        t == typeof(string) || typeof(IConvertible).IsAssignableFrom(t);
 
     /// <summary>Returns semicolon-joined items so the text editor pre-populates, and TryParse can round-trip via its ';' separator path.</summary>
     public string GetEditValue(PropertyHandlerContext ctx) =>

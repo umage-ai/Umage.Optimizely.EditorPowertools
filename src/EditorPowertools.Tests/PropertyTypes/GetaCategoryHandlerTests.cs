@@ -82,6 +82,32 @@ public class GetaCategoryHandlerTests
         ((IList)v!).Count.Should().Be(2);
     }
 
+    // ── GetEditValue ───────────────────────────────────────────────────────────
+
+    [Fact]
+    public void GetEditValue_ReturnsIds_RoundTrippableThroughTryParse()
+    {
+        // The bulk editor seeds its category multiselect from GetEditValue and commits the
+        // selection back through TryParse. If GetEditValue is not ID-based (e.g. the interface
+        // default Value.ToString()), nothing pre-selects and committing wipes all categories.
+        IPropertyTypeHandler h = Handler(valueTypeFullName: typeof(FakeGetaList).FullName!);
+        var prop = new TestProp { Value = new FakeGetaList { new ContentReference(12), new ContentReference(15) } };
+
+        var editValue = h.GetEditValue(Ctx(prop));
+
+        editValue.Should().Be("12,15");
+        h.TryParse(editValue, Ctx(prop), out var parsed).Should().BeTrue();
+        ((IList)parsed!).Cast<ContentReference>().Select(r => r.ID).Should().Equal(12, 15);
+    }
+
+    [Fact]
+    public void GetEditValue_EmptyList_ReturnsEmpty()
+    {
+        IPropertyTypeHandler h = Handler(valueTypeFullName: typeof(FakeGetaList).FullName!);
+        h.GetEditValue(Ctx(new TestProp { Value = new FakeGetaList() })).Should().BeEmpty();
+        h.GetEditValue(Ctx(new TestProp())).Should().BeEmpty();
+    }
+
     // ── GetDisplay ─────────────────────────────────────────────────────────────
 
     [Fact]

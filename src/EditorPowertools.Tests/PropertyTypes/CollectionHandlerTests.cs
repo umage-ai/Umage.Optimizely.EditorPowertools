@@ -35,6 +35,19 @@ public class CollectionHandlerTests
     }
 
     [Fact]
+    public void PropertyList_GetEditor_ReadOnly_ForNonConvertibleItemTypes()
+    {
+        // ParseListValue relies on Convert.ChangeType, which cannot produce ContentReference.
+        // Offering an editor for PropertyList<ContentReference> would render an editable cell
+        // whose every commit is rejected — such lists must stay read-only (as before the registry).
+        var h = new PropertyListHandler();
+        var refListProp = new PropertyContentReferenceList();
+        h.CanHandle(Ctx(refListProp)).Should().BeTrue("display should still work for reference lists");
+        h.GetEditor(Ctx(refListProp)).Should().BeNull();
+        h.GetEditor(Ctx(new PropertyStringList())).Should().NotBeNull("convertible item types stay editable");
+    }
+
+    [Fact]
     public void Xhtml_TryParseEmpty_ReturnsNullTrue()
     {
         var h = new XhtmlStringHandler();

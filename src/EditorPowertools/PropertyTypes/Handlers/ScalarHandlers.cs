@@ -18,8 +18,17 @@ public sealed class UrlHandler : IPropertyTypeHandler
 
     public bool TryParse(string? input, PropertyHandlerContext ctx, out object? value)
     {
-        value = string.IsNullOrWhiteSpace(input) ? null : new EPiServer.Url(input);
-        return true;
+        if (string.IsNullOrWhiteSpace(input)) { value = null; return true; }
+        try
+        {
+            value = new EPiServer.Url(input);
+            return true;
+        }
+        catch (Exception) // UriFormatException et al. — TryParse never throws
+        {
+            value = null;
+            return false;
+        }
     }
 }
 
@@ -52,6 +61,9 @@ public sealed class NumberHandler : IPropertyTypeHandler
 
     public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => new() { Kind = "number" };
 
+    public string GetEditValue(PropertyHandlerContext ctx) =>
+        ctx.Value is int i ? i.ToString(CultureInfo.InvariantCulture) : string.Empty;
+
     public bool TryParse(string? input, PropertyHandlerContext ctx, out object? value)
     {
         if (int.TryParse(input, NumberStyles.Integer, CultureInfo.InvariantCulture, out var i))
@@ -73,6 +85,9 @@ public sealed class FloatHandler : IPropertyTypeHandler
     public string GetDisplay(PropertyHandlerContext ctx) => ctx.Value is double d ? d.ToString(CultureInfo.InvariantCulture) : ctx.Value?.ToString() ?? string.Empty;
 
     public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => new() { Kind = "number" };
+
+    public string GetEditValue(PropertyHandlerContext ctx) =>
+        ctx.Value is double d ? d.ToString(CultureInfo.InvariantCulture) : string.Empty;
 
     public bool TryParse(string? input, PropertyHandlerContext ctx, out object? value)
     {
@@ -96,6 +111,11 @@ public sealed class BooleanHandler : IPropertyTypeHandler
 
     public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => new() { Kind = "bool" };
 
+    /// <summary>Lowercase to match the bool editor's option values ("true"/"false") so an
+    /// unchanged re-commit compares equal instead of registering a phantom change.</summary>
+    public string GetEditValue(PropertyHandlerContext ctx) =>
+        ctx.Value is bool b ? (b ? "true" : "false") : string.Empty;
+
     public bool TryParse(string? input, PropertyHandlerContext ctx, out object? value)
     {
         if (bool.TryParse(input, out var b))
@@ -118,6 +138,11 @@ public sealed class DateHandler : IPropertyTypeHandler
         ctx.Value is DateTime dt ? dt.ToString("g", CultureInfo.InvariantCulture) : string.Empty;
 
     public PropertyEditorDescriptor? GetEditor(PropertyHandlerContext ctx) => new() { Kind = "date" };
+
+    /// <summary>ISO date to seed the HTML date input (which rejects any other format) and
+    /// round-trip through <see cref="TryParse"/>'s invariant parsing.</summary>
+    public string GetEditValue(PropertyHandlerContext ctx) =>
+        ctx.Value is DateTime dt ? dt.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) : string.Empty;
 
     public bool TryParse(string? input, PropertyHandlerContext ctx, out object? value)
     {
