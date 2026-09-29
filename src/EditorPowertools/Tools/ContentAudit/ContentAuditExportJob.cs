@@ -167,6 +167,10 @@ public class ContentAuditExportJob : ScheduledJobBase
         }
 
         media.BinaryData = blob;
+        // NoAccess is deliberate here (documented exception to the "never NoAccess" rule):
+        // the scheduled job runs in system context with no principal, and the requester's
+        // access was already enforced during row enumeration via impersonation above. The
+        // ACL lockdown below fails closed, so the report never stays broadly readable.
         var savedRef = _contentRepository.Save(media, SaveAction.Publish, AccessLevel.NoAccess);
 
         // Lock the report file down to its requester (plus administrators) so it cannot be
@@ -182,23 +186,31 @@ public class ContentAuditExportJob : ScheduledJobBase
     /// <summary>
     /// Replaces the report media's ACL so only the requesting user (and administrators) can
     /// read it. Reports may contain content metadata across the tree, so they must not inherit
-    /// the (typically broad) read access of the Global Assets folder.
+    /// the (typically broad) read access of the Global Assets folder. Fails closed: if the
+    /// ACL cannot be applied, the report is deleted and the export request fails — a report
+    /// left readable under the folder's inherited ACL would leak tree-wide metadata.
     /// </summary>
     private void RestrictReportToRequester(ContentReference contentRef, string? requestedBy)
     {
-        if (string.IsNullOrWhiteSpace(requestedBy) || requestedBy == "unknown")
-            return;
-
         try
         {
             var acl = new ContentAccessControlList(contentRef) { IsInherited = false };
-            acl.Add(new AccessControlEntry(requestedBy, AccessLevel.Read | AccessLevel.Delete, SecurityEntityType.User));
+            if (!string.IsNullOrWhiteSpace(requestedBy) && requestedBy != "unknown")
+                acl.Add(new AccessControlEntry(requestedBy, AccessLevel.Read | AccessLevel.Delete, SecurityEntityType.User));
             acl.Add(new AccessControlEntry("Administrators", AccessLevel.FullAccess, SecurityEntityType.Role));
             _contentSecurityRepository.Save(contentRef, acl, SecuritySaveType.Replace);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _logger.LogWarning(ex, "Could not restrict content audit report {ContentRef} to requester", contentRef);
+            try
+            {
+                _contentRepository.Delete(contentRef, forceDelete: true, AccessLevel.NoAccess);
+            }
+            catch (Exception deleteEx)
+            {
+                _logger.LogError(deleteEx, "Could not delete unrestricted content audit report {ContentRef}", contentRef);
+            }
+            throw;
         }
     }
 
