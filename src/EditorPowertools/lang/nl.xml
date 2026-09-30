@@ -173,6 +173,7 @@
           <processing>{0}/{1} inhoudselementen verwerkt...</processing>
           <completing>Analysatoren worden afgerond...</completing>
           <completed>Voltooid. {0} inhoudselementen geanalyseerd met {1} analysatoren ({2}).</completed>
+          <initfailed>{0} analysator(en) overgeslagen wegens initialisatiefouten: {1}.</initfailed>
         </contentanalysis>
       </jobs>
 

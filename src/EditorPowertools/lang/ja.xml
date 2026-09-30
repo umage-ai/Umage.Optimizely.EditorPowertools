@@ -173,6 +173,7 @@
           <processing>{0}/{1}個のコンテンツアイテムを処理済み...</processing>
           <completing>アナライザーを完了中...</completing>
           <completed>完了。{1}個のアナライザー（{2}）で{0}個のコンテンツアイテムを分析しました。</completed>
+          <initfailed>初期化エラーのため{0}個のアナライザーをスキップしました：{1}。</initfailed>
         </contentanalysis>
       </jobs>
 

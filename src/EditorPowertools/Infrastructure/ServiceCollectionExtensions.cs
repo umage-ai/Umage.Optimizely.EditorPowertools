@@ -5,6 +5,8 @@ using UmageAI.Optimizely.EditorPowerTools.Permissions;
 using UmageAI.Optimizely.EditorPowerTools.Services;
 using UmageAI.Optimizely.EditorPowerTools.Tools.AudienceManager;
 using UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor;
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes;
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes.Handlers;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ActivityTimeline;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentDetails;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentTypeAudit;
@@ -93,6 +95,28 @@ public static class ServiceCollectionExtensions
         // Bulk Property Editor
         services.AddTransient<BulkPropertyEditorService>();
 
+        // Property-type handlers (shared by Bulk Property Editor + Content Importer).
+        // The registry orders by Priority; registration order is irrelevant.
+        services.AddSingleton<PropertyTypeHandlerRegistry>();
+        services.AddSingleton<IPropertyTypeHandler, FallbackHandler>();
+        services.AddSingleton<IPropertyTypeHandler, UrlHandler>();
+        services.AddSingleton<IPropertyTypeHandler, StringHandler>();
+        services.AddSingleton<IPropertyTypeHandler, NumberHandler>();
+        services.AddSingleton<IPropertyTypeHandler, FloatHandler>();
+        services.AddSingleton<IPropertyTypeHandler, BooleanHandler>();
+        services.AddSingleton<IPropertyTypeHandler, DateHandler>();
+        services.AddSingleton<IPropertyTypeHandler, ContentReferenceHandler>();
+        services.AddSingleton<IPropertyTypeHandler, XhtmlStringHandler>();
+        services.AddSingleton<IPropertyTypeHandler, PropertyListHandler>();
+        services.AddSingleton<IPropertyTypeHandler, SelectionHandler>();
+        services.AddSingleton<IPropertyTypeHandler, CategoryListHandler>();
+        services.AddSingleton<IPropertyTypeHandler>(sp =>
+            new GetaCategoryHandler(
+                sp.GetRequiredService<Microsoft.Extensions.Logging.ILogger<GetaCategoryHandler>>(),
+                sp.GetRequiredService<IContentLoader>(),
+                sp.GetRequiredService<IContentTypeRepository>(),
+                sp.GetRequiredService<IContentModelUsage>()));
+
         // Scheduled Jobs Gantt
         services.AddTransient<ScheduledJobsGanttService>();
 
@@ -144,6 +168,12 @@ public static class ServiceCollectionExtensions
         services.AddTransient<LinkCheckerService>();
         services.AddTransient<LinkCheckerJobStatusService>();
         services.AddHttpClient();
+
+        // Dedicated client for Content Importer image downloads: redirects are disabled and the
+        // connect callback validates the destination IP on the same DNS answer it connects to,
+        // so neither a redirect nor a DNS rebind can reach an internal/metadata address.
+        services.AddHttpClient(ContentImporterService.ImageDownloadClientName)
+            .ConfigurePrimaryHttpMessageHandler(SsrfProtection.CreatePinnedHandler);
 
         // Security Audit
         services.AddSingleton<SecurityAuditRepository>();

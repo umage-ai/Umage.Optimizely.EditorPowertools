@@ -1,3 +1,4 @@
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Tools.SecurityAudit.Models;
 using EPiServer.Data.Dynamic;
 
@@ -11,7 +12,7 @@ public class SecurityAuditRepository
     public virtual void Clear()
     {
         var store = GetStore();
-        store.DeleteAll();
+        store.ClearInBatches<SecurityAuditRecord>();
     }
 
     public virtual void Save(SecurityAuditRecord record)

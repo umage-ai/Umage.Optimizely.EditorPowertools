@@ -1,0 +1,61 @@
+using System.Collections.Generic;
+using FluentAssertions;
+using Moq;
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes;
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes.Handlers;
+using Xunit;
+
+namespace UmageAI.Optimizely.EditorPowerTools.Tests.PropertyTypes;
+
+public class FallbackHandlerTests
+{
+    private static PropertyHandlerContext Ctx(object? value)
+    {
+        var prop = new Mock<EPiServer.Core.PropertyData>();
+        prop.Setup(p => p.Value).Returns(value!);
+        return new PropertyHandlerContext { Definition = null!, Property = prop.Object };
+    }
+
+    [Fact]
+    public void CanHandle_AlwaysTrue() =>
+        new FallbackHandler().CanHandle(null!).Should().BeTrue();
+
+    [Fact]
+    public void GetDisplay_Null_ReturnsEmpty() =>
+        new FallbackHandler().GetDisplay(Ctx(null)).Should().BeEmpty();
+
+    [Fact]
+    public void GetDisplay_Collection_ReturnsItemCount() =>
+        new FallbackHandler().GetDisplay(Ctx(new List<int> { 1, 2, 3 })).Should().Be("(3 items)");
+
+    [Fact]
+    public void GetEditor_IsNull_ReadOnly() =>
+        new FallbackHandler().GetEditor(Ctx("x")).Should().BeNull();
+
+    [Fact]
+    public void TryParse_AlwaysFalse() =>
+        new FallbackHandler().TryParse("x", Ctx("x"), out _).Should().BeFalse();
+
+    [Fact]
+    public void GetDisplay_String_ReturnsItself() =>
+        new FallbackHandler().GetDisplay(Ctx("hello")).Should().Be("hello");
+
+    [Fact]
+    public void GetDisplay_SingleItemCollection_ReturnsSingular() =>
+        new FallbackHandler().GetDisplay(Ctx(new List<int> { 1 })).Should().Be("(1 item)");
+
+    [Fact]
+    public void GetDisplay_PlainObjectWithToString_ReturnsToString() =>
+        new FallbackHandler().GetDisplay(Ctx(42)).Should().Be("42");
+
+    [Fact]
+    public void GetDisplay_ObjectWithoutToStringOverride_ReturnsTypeName() =>
+        new FallbackHandler().GetDisplay(Ctx(new Plain())).Should().Be("(Plain)");
+
+    [Fact]
+    public void GetDisplay_ThrowingToString_ReturnsTypeName() =>
+        new FallbackHandler().GetDisplay(Ctx(new Throws())).Should().Be("(Throws)");
+
+    private sealed class Plain { }
+    private sealed class Throws { public override string ToString() => throw new InvalidOperationException(); }
+}

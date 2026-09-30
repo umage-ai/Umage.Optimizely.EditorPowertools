@@ -425,7 +425,7 @@
             { key: 'publishCount', label: EPT.s('contentstatistics.col_publishes', 'Publishes'), sortable: true, align: 'right' },
             {
                 key: 'lastActive', label: EPT.s('contentstatistics.col_lastactive', 'Last Active'), sortable: true,
-                render: function (val) { return val ? formatDate(val) : '-'; }
+                render: function (row) { return row.lastActive ? formatDate(row.lastActive) : '-'; }
             }
         ];
 

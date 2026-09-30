@@ -41,6 +41,10 @@
         return div.innerHTML;
     }
 
+    function escapeAttr(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
     function formatDate(dateStr) {
         if (!dateStr) return '';
         var d = new Date(dateStr);
@@ -667,8 +671,13 @@
                     }
 
                     if (prop.isEditable && item.canEdit) {
-                        var rawAttr = prop.rawValue != null ? ' data-raw="' + escapeHtml(String(prop.rawValue)) + '"' : '';
-                        html += '<td class="' + cellClass + '" data-editable="true" data-content-id="' + item.contentId + '" data-prop="' + escapeHtml(colName) + '" data-type="' + escapeHtml(prop.typeName) + '"' + rawAttr + '>' + escapeHtml(displayVal) + '</td>';
+                        // Prefer editValue (round-trippable through TryParse) over rawValue.toString()
+                        // which stringifies complex objects as "[object Object]".
+                        var seedValue = prop.editValue != null ? prop.editValue : (prop.rawValue != null ? String(prop.rawValue) : null);
+                        var rawAttr = seedValue != null ? ' data-raw="' + escapeAttr(seedValue) + '"' : '';
+                        var colMeta = findColumn(colName);
+                        var editorAttr = (colMeta && colMeta.editor) ? ' data-editor="' + escapeAttr(JSON.stringify(colMeta.editor)) + '"' : '';
+                        html += '<td class="' + cellClass + '" data-editable="true" data-content-id="' + item.contentId + '" data-prop="' + escapeHtml(colName) + '" data-type="' + escapeHtml(prop.typeName) + '"' + rawAttr + editorAttr + '>' + escapeHtml(displayVal) + '</td>';
                     } else {
                         html += '<td>' + escapeHtml(displayVal) + '</td>';
                     }
@@ -787,6 +796,58 @@
         return null;
     }
 
+    // Build an inline editor element from a server-supplied descriptor.
+    function buildEditorControl(descriptor, currentValue) {
+        var kind = (descriptor && descriptor.kind) || 'text';
+        if (kind === 'bool') {
+            var sel = document.createElement('select');
+            ['', 'true', 'false'].forEach(function (v) {
+                var o = document.createElement('option');
+                o.value = v; o.textContent = v === '' ? '—' : v;
+                if (String(currentValue).toLowerCase() === v) o.selected = true;
+                sel.appendChild(o);
+            });
+            return sel;
+        }
+        if (kind === 'select' || kind === 'multiselect' || kind === 'category') {
+            var s = document.createElement('select');
+            if (kind !== 'select') s.multiple = true;
+            var selectedValues = (kind !== 'select' && currentValue)
+                ? String(currentValue).split(',').map(function (v) { return v.trim(); })
+                : [];
+            (descriptor.options || []).forEach(function (opt) {
+                var o = document.createElement('option');
+                o.value = opt.value;
+                o.textContent = opt.label;            // textContent escapes automatically
+                if (kind === 'select') {
+                    if (String(currentValue) === String(opt.value)) o.selected = true;
+                } else {
+                    if (selectedValues.indexOf(String(opt.value)) >= 0) o.selected = true;
+                }
+                s.appendChild(o);
+            });
+            return s;
+        }
+        if (kind === 'textarea') {
+            var ta = document.createElement('textarea');
+            ta.value = currentValue == null ? '' : String(currentValue);
+            return ta;
+        }
+        var input = document.createElement('input');
+        input.type = (kind === 'number') ? 'number' : (kind === 'date') ? 'date' : (kind === 'url') ? 'url' : 'text';
+        input.value = currentValue == null ? '' : String(currentValue);
+        return input;
+    }
+
+    // Read the edited value out of a control built by buildEditorControl.
+    function readEditorControl(el) {
+        if (el.tagName === 'SELECT' && el.multiple) {
+            return Array.prototype.filter.call(el.options, function (o) { return o.selected; })
+                .map(function (o) { return o.value; }).join(',');
+        }
+        return el.value;
+    }
+
     function getSelectedContentType() {
         var sel = document.getElementById('bpeContentType');
         if (!sel || !sel.value) return null;
@@ -825,15 +886,11 @@
     // ---- Inline editing ----
 
     function navigateVertical(cell, direction) {
-        var input = cell.querySelector('input');
-        if (input) {
+        var control = cell.querySelector('input, select, textarea');
+        if (control) {
             var contentId = cell.getAttribute('data-content-id');
             var propName = cell.getAttribute('data-prop');
-            if (input.type === 'checkbox') {
-                finishEditing(cell, contentId, propName, input.checked ? 'true' : 'false');
-            } else {
-                finishEditing(cell, contentId, propName, input.value);
-            }
+            finishEditing(cell, contentId, propName, readEditorControl(control));
         }
 
         var row = cell.closest('tr');
@@ -864,74 +921,36 @@
 
         var contentId = cell.getAttribute('data-content-id');
         var propName = cell.getAttribute('data-prop');
-        var typeName = (cell.getAttribute('data-type') || 'String').toLowerCase();
-        var currentValue = cell.textContent.trim();
 
+        // What the cell shows right now — Escape must restore this, not the raw edit value.
+        var originalDisplay = cell.textContent.trim();
+
+        // Prefer the raw stored value over display text so multi-select/category options
+        // can match by value/id. Fall back to pending change, then to display text.
+        var rawAttrValue = cell.getAttribute('data-raw');
+        var currentValue;
         if (state.pendingChanges[contentId] && state.pendingChanges[contentId][propName] !== undefined) {
             currentValue = state.pendingChanges[contentId][propName];
             if (currentValue === null) currentValue = '';
+        } else if (rawAttrValue != null) {
+            currentValue = rawAttrValue;
+        } else {
+            currentValue = cell.textContent.trim();
         }
 
         cell.classList.add('bpe-editing');
 
-        if (typeName === 'boolean' || typeName === 'bool') {
-            var checked = currentValue === 'true' || currentValue === 'True' || currentValue === true;
-            cell.innerHTML = '<input type="checkbox" ' + (checked ? 'checked' : '') + ' />';
-            var cb = cell.querySelector('input');
-            cb.focus();
-            cb.addEventListener('change', function () {
-                finishEditing(cell, contentId, propName, cb.checked ? 'true' : 'false');
-            });
-            cb.addEventListener('blur', function () {
-                finishEditing(cell, contentId, propName, cb.checked ? 'true' : 'false');
-            });
-        } else if (typeName === 'int32' || typeName === 'int64' || typeName === 'double' || typeName === 'decimal' || typeName === 'number') {
-            cell.innerHTML = '<input type="number" value="' + escapeHtml(currentValue) + '" />';
-            var numInput = cell.querySelector('input');
-            numInput.focus();
-            numInput.select();
-            numInput.addEventListener('blur', function () {
-                finishEditing(cell, contentId, propName, numInput.value);
-            });
-            numInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') { numInput.blur(); }
-                else if (e.key === 'Escape') { cancelEditing(cell, currentValue); }
-                else if (e.key === 'ArrowDown') { e.preventDefault(); navigateVertical(cell, 'down'); }
-                else if (e.key === 'ArrowUp') { e.preventDefault(); navigateVertical(cell, 'up'); }
-            });
-        } else if (typeName === 'datetime' || typeName === 'datetimeoffset' || typeName === 'date') {
-            var dateVal = currentValue;
-            if (dateVal) {
-                var d = new Date(dateVal);
-                if (!isNaN(d.getTime())) {
-                    dateVal = d.toISOString().slice(0, 16);
-                }
-            }
-            cell.innerHTML = '<input type="datetime-local" value="' + escapeHtml(dateVal) + '" />';
-            var dateInput = cell.querySelector('input');
-            dateInput.focus();
-            dateInput.addEventListener('blur', function () {
-                finishEditing(cell, contentId, propName, dateInput.value);
-            });
-            dateInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') { dateInput.blur(); }
-                else if (e.key === 'Escape') { cancelEditing(cell, currentValue); }
-                else if (e.key === 'ArrowDown') { e.preventDefault(); navigateVertical(cell, 'down'); }
-                else if (e.key === 'ArrowUp') { e.preventDefault(); navigateVertical(cell, 'up'); }
-            });
-        } else if (typeName === 'url') {
-            cell.innerHTML = '<input type="url" value="' + escapeHtml(currentValue) + '" placeholder="https://..." style="width:100%" />';
-            var urlInput = cell.querySelector('input');
-            urlInput.focus();
-            urlInput.select();
-            urlInput.addEventListener('blur', function () {
-                finishEditing(cell, contentId, propName, urlInput.value);
-            });
-            urlInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') { urlInput.blur(); }
-                else if (e.key === 'Escape') { cancelEditing(cell, currentValue); }
-            });
-        } else if (typeName === 'pagereference' || typeName === 'contentreference') {
+        // Parse the server-supplied editor descriptor from the cell attribute.
+        var descriptor = null;
+        var editorAttrRaw = cell.getAttribute('data-editor');
+        if (editorAttrRaw) {
+            try { descriptor = JSON.parse(editorAttrRaw); } catch (e) { descriptor = null; }
+        }
+
+        var kind = (descriptor && descriptor.kind) || null;
+
+        // Reference picker: handled separately as it requires a dialog, not a simple input.
+        if (kind === 'reference' || (!descriptor && (cell.getAttribute('data-type') || '').toLowerCase().match(/^(pagereference|contentreference)$/))) {
             var rawVal = cell.getAttribute('data-raw') || currentValue;
             // Extract just the ID number from display like "Name (ID: 5)"
             var idMatch = rawVal ? String(rawVal).match(/\d+/) : null;
@@ -958,24 +977,101 @@
                 finishEditing(cell, contentId, propName, '');
             });
             browseBtn.focus();
-        } else {
-            cell.innerHTML = '<input type="text" value="' + escapeHtml(currentValue) + '" />';
-            var textInput = cell.querySelector('input');
-            textInput.focus();
-            textInput.select();
-            textInput.addEventListener('blur', function () {
-                finishEditing(cell, contentId, propName, textInput.value);
+            return;
+        }
+
+        // For the Name column (no descriptor) and any column without a descriptor, fall back
+        // to legacy type-name-based detection so the Name field continues to work.
+        if (!descriptor) {
+            var typeName = (cell.getAttribute('data-type') || 'String').toLowerCase();
+            if (typeName === 'boolean' || typeName === 'bool') {
+                descriptor = { kind: 'bool' };
+            } else if (typeName === 'int32' || typeName === 'int64' || typeName === 'double' || typeName === 'decimal' || typeName === 'number') {
+                descriptor = { kind: 'number' };
+            } else if (typeName === 'datetime' || typeName === 'datetimeoffset') {
+                descriptor = { kind: 'datetime-local' };
+            } else if (typeName === 'date') {
+                descriptor = { kind: 'date' };
+            } else if (typeName === 'url') {
+                descriptor = { kind: 'url' };
+            } else {
+                descriptor = { kind: 'text' };
+            }
+            kind = descriptor.kind;
+        }
+
+        // datetime-local is a special legacy kind handled outside buildEditorControl.
+        if (kind === 'datetime-local') {
+            var dateVal = currentValue;
+            if (dateVal) {
+                var d = new Date(dateVal);
+                if (!isNaN(d.getTime())) {
+                    dateVal = d.toISOString().slice(0, 16);
+                }
+            }
+            cell.innerHTML = '<input type="datetime-local" value="' + escapeHtml(dateVal) + '" />';
+            var dateInput = cell.querySelector('input');
+            dateInput.focus();
+            dateInput.addEventListener('blur', function () {
+                finishEditing(cell, contentId, propName, dateInput.value);
             });
-            textInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') { textInput.blur(); }
-                else if (e.key === 'Escape') { cancelEditing(cell, currentValue); }
+            dateInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') { dateInput.blur(); }
+                else if (e.key === 'Escape') { cancelEditing(cell, originalDisplay); }
                 else if (e.key === 'ArrowDown') { e.preventDefault(); navigateVertical(cell, 'down'); }
                 else if (e.key === 'ArrowUp') { e.preventDefault(); navigateVertical(cell, 'up'); }
+            });
+            return;
+        }
+
+        // Build the control from the descriptor.
+        var control = buildEditorControl(descriptor, currentValue);
+        cell.innerHTML = '';
+        cell.appendChild(control);
+        control.focus();
+        if (typeof control.select === 'function' && control.tagName !== 'SELECT') {
+            control.select();
+        }
+
+        if (kind === 'bool' || kind === 'select' || kind === 'multiselect' || kind === 'category') {
+            if (kind === 'multiselect' || kind === 'category') {
+                // Multi-select: commit on blur only — change fires on every option click
+                // which would destroy the element before the user finishes picking.
+                control.addEventListener('blur', function () {
+                    var labels = Array.prototype.filter.call(control.options, function (o) { return o.selected; })
+                        .map(function (o) { return o.textContent; }).join(', ');
+                    finishEditing(cell, contentId, propName, readEditorControl(control), labels);
+                });
+            } else if (kind === 'select') {
+                // Single-select: commit on change (immediate feedback), show option label.
+                // Do NOT also bind blur to avoid a double-commit when the element is
+                // removed from the DOM by finishEditing and blur fires afterwards.
+                control.addEventListener('change', function () {
+                    var labels = Array.prototype.filter.call(control.options, function (o) { return o.selected; })
+                        .map(function (o) { return o.textContent; }).join(', ');
+                    finishEditing(cell, contentId, propName, readEditorControl(control), labels);
+                });
+            } else {
+                // bool: commit on change, no label override needed (True/False formatting in finishEditing).
+                control.addEventListener('change', function () {
+                    finishEditing(cell, contentId, propName, readEditorControl(control));
+                });
+            }
+        } else {
+            // INPUT / TEXTAREA: commit on blur, keyboard shortcuts on keydown.
+            control.addEventListener('blur', function () {
+                finishEditing(cell, contentId, propName, readEditorControl(control));
+            });
+            control.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && control.tagName !== 'TEXTAREA') { control.blur(); }
+                else if (e.key === 'Escape') { cancelEditing(cell, originalDisplay); }
+                else if (e.key === 'ArrowDown' && control.tagName !== 'TEXTAREA') { e.preventDefault(); navigateVertical(cell, 'down'); }
+                else if (e.key === 'ArrowUp' && control.tagName !== 'TEXTAREA') { e.preventDefault(); navigateVertical(cell, 'up'); }
             });
         }
     }
 
-    function finishEditing(cell, contentId, propName, newValue) {
+    function finishEditing(cell, contentId, propName, newValue, displayOverride) {
         cell.classList.remove('bpe-editing');
 
         var originalValue = getOriginalValue(contentId, propName);
@@ -993,13 +1089,24 @@
             cell.classList.remove('bpe-edited');
         }
 
-        // Display the value
-        var displayValue = newValue;
-        var cellType = (cell.getAttribute('data-type') || '').toLowerCase();
-        if (cellType === 'boolean' || cellType === 'bool') {
-            displayValue = newValue === 'true' ? 'True' : 'False';
-        } else if (cellType === 'datetime' || cellType === 'datetimeoffset' || cellType === 'date') {
-            if (newValue) displayValue = formatDate(newValue);
+        // Keep data-raw in sync with the committed raw value so a subsequent re-edit
+        // (after the pending change is cleared) can still read back the correct value.
+        cell.setAttribute('data-raw', newValue);
+
+        // Display the value — use the caller-supplied label string when provided
+        // (e.g. select/multiselect/category commits human-readable labels here
+        //  while newValue still carries the raw IDs sent to the server).
+        var displayValue;
+        if (displayOverride !== undefined) {
+            displayValue = displayOverride;
+        } else {
+            displayValue = newValue;
+            var cellType = (cell.getAttribute('data-type') || '').toLowerCase();
+            if (cellType === 'boolean' || cellType === 'bool') {
+                displayValue = newValue === 'true' ? 'True' : newValue === 'false' ? 'False' : '';
+            } else if (cellType === 'datetime' || cellType === 'datetimeoffset' || cellType === 'date') {
+                if (newValue) displayValue = formatDate(newValue);
+            }
         }
         cell.textContent = displayValue || '';
 
@@ -1019,7 +1126,14 @@
             if (item.contentId === parseInt(contentId)) {
                 if (propName === 'Name') return item.name || '';
                 if (item.properties && item.properties[propName]) {
-                    return item.properties[propName].displayValue || '';
+                    // Compare against the same raw value the editor is seeded with (see the
+                    // seedValue logic in renderTable). Comparing against displayValue would
+                    // mark every xhtml/category/reference cell dirty on mere focus+blur,
+                    // since their edit value never equals their display text.
+                    var prop = item.properties[propName];
+                    if (prop.editValue != null) return prop.editValue;
+                    if (prop.rawValue != null) return String(prop.rawValue);
+                    return prop.displayValue || '';
                 }
                 return '';
             }

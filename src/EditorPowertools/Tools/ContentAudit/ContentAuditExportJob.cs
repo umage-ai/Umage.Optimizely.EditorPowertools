@@ -36,8 +36,11 @@ public class ContentAuditExportJob : ScheduledJobBase
     private readonly ContentAuditService _service;
     private readonly ContentAuditExportRenderer _renderer;
     private readonly IContentRepository _contentRepository;
+    private readonly IContentSecurityRepository _contentSecurityRepository;
     private readonly IBlobFactory _blobFactory;
     private readonly DynamicDataStoreFactory _storeFactory;
+    private readonly IPrincipalAccessor _principalAccessor;
+    private readonly IUserImpersonation _userImpersonation;
     private readonly EditorPowertoolsOptions _options;
     private readonly ILogger<ContentAuditExportJob> _logger;
     private bool _stopSignaled;
@@ -46,16 +49,22 @@ public class ContentAuditExportJob : ScheduledJobBase
         ContentAuditService service,
         ContentAuditExportRenderer renderer,
         IContentRepository contentRepository,
+        IContentSecurityRepository contentSecurityRepository,
         IBlobFactory blobFactory,
         DynamicDataStoreFactory storeFactory,
+        IPrincipalAccessor principalAccessor,
+        IUserImpersonation userImpersonation,
         IOptions<EditorPowertoolsOptions> options,
         ILogger<ContentAuditExportJob> logger)
     {
         _service         = service;
         _renderer        = renderer;
         _contentRepository = contentRepository;
+        _contentSecurityRepository = contentSecurityRepository;
         _blobFactory     = blobFactory;
         _storeFactory    = storeFactory;
+        _principalAccessor = principalAccessor;
+        _userImpersonation = userImpersonation;
         _options         = options.Value;
         _logger          = logger;
         IsStoppable      = true;
@@ -116,7 +125,24 @@ public class ContentAuditExportJob : ScheduledJobBase
     {
         var exportRequest = BuildExportRequest(jobRequest);
         var ct = _stopSignaled ? new CancellationToken(true) : CancellationToken.None;
-        var rows = _service.GetAllMatchingRows(exportRequest, ct);
+
+        // Enumerate as the requesting user so the report only contains content they may read.
+        // A scheduled job runs unauthenticated by default; without impersonation the per-node
+        // access filter would reflect the job context, not the requester.
+        var originalPrincipal = _principalAccessor.Principal;
+        List<ContentAuditRow> rows;
+        try
+        {
+            if (!string.IsNullOrWhiteSpace(jobRequest.RequestedBy) && jobRequest.RequestedBy != "unknown")
+                _principalAccessor.Principal = _userImpersonation.CreatePrincipalAsync(jobRequest.RequestedBy).GetAwaiter().GetResult();
+
+            // Materialize while impersonated — GetAllMatchingRows is lazily evaluated.
+            rows = _service.GetAllMatchingRows(exportRequest, ct).ToList();
+        }
+        finally
+        {
+            _principalAccessor.Principal = originalPrincipal;
+        }
 
         string ext    = _renderer.GetExtension(jobRequest.Format);
         string mime   = _renderer.GetContentType(jobRequest.Format);
@@ -141,12 +167,51 @@ public class ContentAuditExportJob : ScheduledJobBase
         }
 
         media.BinaryData = blob;
+        // NoAccess is deliberate here (documented exception to the "never NoAccess" rule):
+        // the scheduled job runs in system context with no principal, and the requester's
+        // access was already enforced during row enumeration via impersonation above. The
+        // ACL lockdown below fails closed, so the report never stays broadly readable.
         var savedRef = _contentRepository.Save(media, SaveAction.Publish, AccessLevel.NoAccess);
+
+        // Lock the report file down to its requester (plus administrators) so it cannot be
+        // read by other users who browse or guess the Global Assets report folder.
+        RestrictReportToRequester(savedRef, jobRequest.RequestedBy);
 
         jobRequest.Status          = "Completed";
         jobRequest.ResultContentId = savedRef.ID.ToString();
         jobRequest.CompletedAt     = DateTime.UtcNow;
         store.Save(jobRequest);
+    }
+
+    /// <summary>
+    /// Replaces the report media's ACL so only the requesting user (and administrators) can
+    /// read it. Reports may contain content metadata across the tree, so they must not inherit
+    /// the (typically broad) read access of the Global Assets folder. Fails closed: if the
+    /// ACL cannot be applied, the report is deleted and the export request fails — a report
+    /// left readable under the folder's inherited ACL would leak tree-wide metadata.
+    /// </summary>
+    private void RestrictReportToRequester(ContentReference contentRef, string? requestedBy)
+    {
+        try
+        {
+            var acl = new ContentAccessControlList(contentRef) { IsInherited = false };
+            if (!string.IsNullOrWhiteSpace(requestedBy) && requestedBy != "unknown")
+                acl.Add(new AccessControlEntry(requestedBy, AccessLevel.Read | AccessLevel.Delete, SecurityEntityType.User));
+            acl.Add(new AccessControlEntry("Administrators", AccessLevel.FullAccess, SecurityEntityType.Role));
+            _contentSecurityRepository.Save(contentRef, acl, SecuritySaveType.Replace);
+        }
+        catch (Exception)
+        {
+            try
+            {
+                _contentRepository.Delete(contentRef, forceDelete: true, AccessLevel.NoAccess);
+            }
+            catch (Exception deleteEx)
+            {
+                _logger.LogError(deleteEx, "Could not delete unrestricted content audit report {ContentRef}", contentRef);
+            }
+            throw;
+        }
     }
 
     private ContentAuditExportRequest BuildExportRequest(ContentAuditExportJobRequest jobRequest)

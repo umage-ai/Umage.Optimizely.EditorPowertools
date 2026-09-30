@@ -1,3 +1,5 @@
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes;
+
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.BulkPropertyEditor.Models;
 
 public record ContentTypeListItem(
@@ -9,7 +11,12 @@ public record ContentTypeListItem(
 
 public record LanguageInfo(string Code, string Name, bool IsDefault);
 
-public record PropertyColumnInfo(string Name, string DisplayName, string TypeName, bool IsEditable);
+public record PropertyColumnInfo(
+    string Name,
+    string DisplayName,
+    string TypeName,
+    bool IsEditable,
+    PropertyEditorDescriptor? Editor = null);
 
 public class ContentFilterRequest
 {
@@ -55,7 +62,7 @@ public record ContentItemRow(
     Dictionary<string, PropertyValue> Properties,
     List<ContentReferenceInfo>? References);
 
-public record PropertyValue(string? DisplayValue, object? RawValue, bool IsEditable, string TypeName);
+public record PropertyValue(string? DisplayValue, object? RawValue, bool IsEditable, string TypeName, string? EditValue = null);
 
 public record ContentReferenceInfo(int ContentId, string Name, string ContentTypeName, string? EditUrl);
 

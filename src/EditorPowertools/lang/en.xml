@@ -185,6 +185,7 @@
           <processing>Processed {0}/{1} content items...</processing>
           <completing>Completing analyzers...</completing>
           <completed>Completed. Analyzed {0} content items with {1} analyzers ({2}).</completed>
+          <initfailed>Skipped {0} analyzer(s) due to initialization errors: {1}.</initfailed>
         </contentanalysis>
       </jobs>
 

@@ -173,6 +173,7 @@
           <processing>Behandlet {0}/{1} innholdselementer...</processing>
           <completing>Fullfører analysatorer...</completing>
           <completed>Fullført. Analyserte {0} innholdselementer med {1} analysatorer ({2}).</completed>
+          <initfailed>Hoppet over {0} analysator(er) på grunn av initialiseringsfeil: {1}.</initfailed>
         </contentanalysis>
       </jobs>
 

@@ -112,7 +112,7 @@
                 const truncated = displayUrl.length > 60 ? displayUrl.substring(0, 60) + '...' : displayUrl;
                 let html = '';
                 if (r.linkType === 'External') {
-                    html += `<a href="${escHtml(r.url)}" target="_blank" title="${escHtml(r.url)}">${escHtml(truncated)}</a>`;
+                    html += `<a href="${escHtml(EPT.safeUrl(r.url))}" target="_blank" rel="noopener" title="${escHtml(r.url)}">${escHtml(truncated)}</a>`;
                 } else if (r.targetContentId) {
                     const cmsUrl = (window.EPT_CMS_URL || '') + '#context=epi.cms.contentdata:///' + r.targetContentId;
                     html += `<a href="${escHtml(cmsUrl)}" target="_blank" title="${escHtml(displayUrl)}">${escHtml(truncated)}</a>`;

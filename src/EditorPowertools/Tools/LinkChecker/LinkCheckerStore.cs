@@ -1,5 +1,6 @@
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tools.LinkChecker;
 
@@ -55,7 +56,7 @@ public class LinkCheckerRepository
     public virtual void Clear()
     {
         var store = GetStore();
-        store.DeleteAll();
+        store.ClearInBatches<LinkCheckRecord>();
     }
 
     public virtual void Save(LinkCheckRecord record)

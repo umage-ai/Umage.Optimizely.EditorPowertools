@@ -1,4 +1,7 @@
 using System.Globalization;
+using System.Net;
+using System.Net.Sockets;
+using System.Security.Principal;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.Core.Internal;
@@ -7,7 +10,8 @@ using EPiServer.DataAbstraction;
 using EPiServer.DataAccess;
 using EPiServer.Framework.Blobs;
 using EPiServer.Security;
-using EPiServer.SpecializedProperties;
+using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.PropertyTypes;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Models;
 using UmageAI.Optimizely.EditorPowerTools.Tools.ContentImporter.Parsers;
 using Microsoft.Extensions.Logging;
@@ -24,6 +28,8 @@ public class ContentImporterService
     private readonly ContentAssetHelper _contentAssetHelper;
     private readonly IBlobFactory _blobFactory;
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IPrincipalAccessor _principalAccessor;
+    private readonly PropertyTypeHandlerRegistry _handlers;
     private readonly ILogger<ContentImporterService> _logger;
 
     // System properties to exclude from mapping
@@ -57,6 +63,8 @@ public class ContentImporterService
         ContentAssetHelper contentAssetHelper,
         IBlobFactory blobFactory,
         IHttpClientFactory httpClientFactory,
+        IPrincipalAccessor principalAccessor,
+        PropertyTypeHandlerRegistry handlers,
         ILogger<ContentImporterService> logger)
     {
         _sessionStore = sessionStore;
@@ -67,6 +75,8 @@ public class ContentImporterService
         _contentAssetHelper = contentAssetHelper;
         _blobFactory = blobFactory;
         _httpClientFactory = httpClientFactory;
+        _principalAccessor = principalAccessor;
+        _handlers = handlers;
         _logger = logger;
     }
 
@@ -254,8 +264,13 @@ public class ContentImporterService
             Total = session.Rows.Count
         };
 
+        // Capture the requesting user so the background task enforces *their* content
+        // ACLs. A detached Task in CMS 12+ runs with an unauthenticated principal by
+        // default, so we flow the request principal in and restore it on the worker.
+        var principal = _principalAccessor.Principal;
+
         // Run import in background
-        Task.Run(() => ExecuteImportAsync(session));
+        Task.Run(() => ExecuteImportAsync(session, principal));
 
         return sessionId;
     }
@@ -265,10 +280,16 @@ public class ContentImporterService
         return _sessionStore.Get(sessionId)?.Progress;
     }
 
-    private async Task ExecuteImportAsync(ImportSession session)
+    private async Task ExecuteImportAsync(ImportSession session, IPrincipal principal)
     {
         var mapping = session.Mapping!;
         var progress = session.Progress!;
+
+        // Restore the requesting user's principal on this background thread so that
+        // IContentRepository.Save enforces the caller's per-node access rights.
+        // (PrincipalInfo.CurrentPrincipal is read-only in CMS 12+; set via the accessor.)
+        var originalPrincipal = _principalAccessor.Principal;
+        _principalAccessor.Principal = principal;
 
         try
         {
@@ -312,7 +333,7 @@ public class ContentImporterService
                     progress.Errors.Add(new ImportError
                     {
                         RowIndex = i + 1,
-                        Message = ex.Message
+                        Message = "Failed to import this row. Check server logs for details."
                     });
                     _logger.LogWarning(ex, "Failed to import row {RowIndex}", i + 1);
                 }
@@ -325,8 +346,14 @@ public class ContentImporterService
         catch (Exception ex)
         {
             progress.Status = "failed";
-            progress.Errors.Add(new ImportError { RowIndex = 0, Message = ex.Message });
+            progress.Errors.Add(new ImportError { RowIndex = 0, Message = "Import failed. Check server logs for details." });
             _logger.LogError(ex, "Import failed for session {SessionId}", session.SessionId);
+        }
+        finally
+        {
+            // Don't leak the importing user's identity into whatever the accessor's ambient
+            // state outlives this task with — mirror ContentAuditExportJob's restore pattern.
+            _principalAccessor.Principal = originalPrincipal;
         }
     }
 
@@ -378,7 +405,7 @@ public class ContentImporterService
                             if (IsImageProperty(prop) && IsUrl(value))
                                 deferredImageMappings.Add((propMapping, value));
                             else
-                                SetPropertyValue(prop, value);
+                                SetPropertyValue(prop, value, contentType);
                         }
                         break;
                     case "hardcoded":
@@ -386,7 +413,7 @@ public class ContentImporterService
                         if (IsImageProperty(prop) && IsUrl(resolved))
                             deferredImageMappings.Add((propMapping, resolved!));
                         else
-                            SetPropertyValue(prop, resolved);
+                            SetPropertyValue(prop, resolved, contentType);
                         break;
                     case "inline-block":
                         var blocks = propMapping.InlineBlocks ?? (propMapping.InlineBlock != null
@@ -399,7 +426,7 @@ public class ContentImporterService
             }
             catch (Exception ex)
             {
-                rowWarnings.Add($"Could not set property '{propMapping.TargetProperty}': {ex.Message}");
+                rowWarnings.Add($"Could not set property '{propMapping.TargetProperty}'");
                 _logger.LogWarning(ex, "Failed to set property {Property} on row {Row}",
                     propMapping.TargetProperty, rowIndex + 1);
             }
@@ -408,7 +435,7 @@ public class ContentImporterService
         // Save content first as draft to get a content link for the asset folder
         var hasDeferred = deferredImageMappings.Count > 0 || deferredBlockMappings.Count > 0;
         var initialSaveAction = hasDeferred ? SaveAction.Save : (mapping.PublishAfterImport ? SaveAction.Publish : SaveAction.Save);
-        var saved = _contentRepository.Save(content, initialSaveAction, AccessLevel.NoAccess);
+        var saved = _contentRepository.Save(content, initialSaveAction, RequiredAccess(initialSaveAction));
 
         // Handle deferred mappings (images + inline blocks) — content exists now
         if (hasDeferred)
@@ -427,7 +454,7 @@ public class ContentImporterService
                 }
                 catch (Exception ex)
                 {
-                    rowWarnings.Add($"Could not create inline blocks for property '{blockMapping.TargetProperty}': {ex.Message}");
+                    rowWarnings.Add($"Could not create inline blocks for property '{blockMapping.TargetProperty}'");
                     _logger.LogWarning(ex, "Failed to create inline blocks for {Property} on row {Row}",
                         blockMapping.TargetProperty, rowIndex + 1);
                 }
@@ -448,14 +475,14 @@ public class ContentImporterService
                 }
                 catch (Exception ex)
                 {
-                    rowWarnings.Add($"Could not download image for property '{imgMapping.TargetProperty}' from '{imgUrl}': {ex.Message}");
+                    rowWarnings.Add($"Could not download image for property '{imgMapping.TargetProperty}' from '{imgUrl}'");
                     _logger.LogWarning(ex, "Failed to download image for {Property} from {Url} on row {Row}",
                         imgMapping.TargetProperty, imgUrl, rowIndex + 1);
                 }
             }
 
             var finalAction = mapping.PublishAfterImport ? SaveAction.Publish : SaveAction.Save;
-            saved = _contentRepository.Save(writableContent, finalAction | SaveAction.ForceCurrentVersion, AccessLevel.NoAccess);
+            saved = _contentRepository.Save(writableContent, finalAction | SaveAction.ForceCurrentVersion, RequiredAccess(finalAction));
         }
 
         return saved.ID;
@@ -468,6 +495,14 @@ public class ContentImporterService
             || typeName.Contains("PageReference", StringComparison.OrdinalIgnoreCase);
     }
 
+    /// <summary>
+    /// Maps a save action to the access level the repository must enforce against the
+    /// current principal. Publishing requires Publish rights; any other save requires Edit.
+    /// Never use AccessLevel.NoAccess here — it bypasses per-node ACL checks.
+    /// </summary>
+    private static AccessLevel RequiredAccess(SaveAction action) =>
+        (action & SaveAction.Publish) == SaveAction.Publish ? AccessLevel.Publish : AccessLevel.Edit;
+
     private static bool IsUrl(string? value)
     {
         if (string.IsNullOrWhiteSpace(value)) return false;
@@ -475,9 +510,47 @@ public class ContentImporterService
             || value.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
     }
 
+    /// <summary>
+    /// Returns true only if <paramref name="url"/> is an absolute http/https URL whose host
+    /// resolves exclusively to publicly routable addresses. Used to gate server-side image
+    /// fetches against SSRF (internal services, cloud metadata).
+    /// </summary>
+    private static bool IsPubliclyRoutable(string url)
+    {
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
+            return false;
+        if (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps)
+            return false;
+
+        IPAddress[] addresses;
+        if (IPAddress.TryParse(uri.Host, out var literal))
+        {
+            addresses = [literal];
+        }
+        else
+        {
+            try { addresses = Dns.GetHostAddresses(uri.Host); }
+            catch { return false; }
+        }
+
+        // Fast pre-check for a clean error message; the named client's connect callback
+        // (SsrfProtection.CreatePinnedHandler) re-validates on the DNS answer it actually
+        // connects to, so a rebinding between this check and the fetch cannot slip through.
+        return addresses.Length > 0 && addresses.All(SsrfProtection.IsPublicAddress);
+    }
+
+    /// <summary>Named <see cref="HttpClient"/> used for image downloads (auto-redirect disabled).</summary>
+    public const string ImageDownloadClientName = "EptImageDownload";
+
     private ContentReference DownloadAndCreateImage(ContentReference ownerContentLink, string imageUrl, string contentName, string propertyName)
     {
-        using var httpClient = _httpClientFactory.CreateClient();
+        // SSRF guard: only fetch URLs that resolve to a publicly routable address. This blocks
+        // loopback, private (RFC1918), CGNAT, link-local and the cloud metadata endpoint
+        // (169.254.169.254) even though the importing user is authenticated.
+        if (!IsPubliclyRoutable(imageUrl))
+            throw new InvalidOperationException("Image URL is not allowed.");
+
+        using var httpClient = _httpClientFactory.CreateClient(ImageDownloadClientName);
         httpClient.Timeout = TimeSpan.FromSeconds(30);
 
         using var response = httpClient.GetAsync(imageUrl).GetAwaiter().GetResult();
@@ -514,7 +587,7 @@ public class ContentImporterService
         }
         imageMedia.BinaryData = blob;
 
-        return _contentRepository.Save(imageMedia, SaveAction.Publish, AccessLevel.NoAccess);
+        return _contentRepository.Save(imageMedia, SaveAction.Publish, RequiredAccess(SaveAction.Publish));
     }
 
     private void ApplyBuiltInProperties(IContent content, List<PropertyMapping> mappings, Dictionary<string, string> row)
@@ -574,29 +647,18 @@ public class ContentImporterService
         }
     }
 
-    private void SetPropertyValue(PropertyData prop, string? value)
+    private void SetPropertyValue(PropertyData prop, string? value, ContentType? contentType = null)
     {
         if (value == null) return;
 
-        var typeName = prop.Type.ToString();
-
-        if (typeName.Contains("XhtmlString", StringComparison.OrdinalIgnoreCase))
-        {
-            prop.Value = new XhtmlString(value);
-            return;
-        }
-
-        // PropertyList<T> expects IList<T>. Optimizely always uses a concrete subclass
-        // (e.g. PropertyStringList : PropertyList<string>) so we must walk the base type
-        // chain to find PropertyList<T> — a direct IsGenericType check on the leaf type fails.
-        var itemType = GetPropertyListItemType(prop);
-        if (itemType != null)
-        {
-            prop.Value = ParseListValue(value, itemType);
-            return;
-        }
-
-        prop.Value = ConvertValue(value, typeName);
+        var pd = contentType?.PropertyDefinitions.FirstOrDefault(d => d.Name == prop.Name);
+        var ctx = pd != null
+            ? PropertyHandlerContext.ForProperty(prop, pd, contentType!.ModelType)
+            : PropertyHandlerContext.ForProperty(prop);
+        var handler = _handlers.Resolve(ctx);
+        if (!handler.TryParse(value, ctx, out var parsed))
+            throw new InvalidOperationException($"No property-type handler could parse a value for '{prop.Name}'.");
+        prop.Value = parsed;
     }
 
     private static IEnumerable<Dictionary<string, string>> ApplyRowFilters(
@@ -621,94 +683,6 @@ public class ContentImporterService
             "is_empty" => string.IsNullOrWhiteSpace(value),
             _ => true
         };
-    }
-
-    /// <summary>
-    /// Walks the type hierarchy of <paramref name="prop"/> to find the T in PropertyList&lt;T&gt;.
-    /// Returns null if the property is not a PropertyList.
-    /// </summary>
-    private static Type? GetPropertyListItemType(PropertyData prop)
-    {
-        var t = prop.GetType();
-        while (t != null && t != typeof(object))
-        {
-            if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(PropertyList<>))
-                return t.GetGenericArguments()[0];
-            t = t.BaseType;
-        }
-        return null;
-    }
-
-    /// <summary>
-    /// Converts a raw string value into a List&lt;T&gt; suitable for PropertyList&lt;T&gt;.
-    /// Accepts JSON arrays (["a","b"]) or delimited strings (auto-detects ; | ,).
-    /// </summary>
-    private static System.Collections.IList ParseListValue(string value, Type itemType)
-    {
-        var listType = typeof(List<>).MakeGenericType(itemType);
-        var list = (System.Collections.IList)Activator.CreateInstance(listType)!;
-
-        // Try JSON array first (value starts with '[')
-        if (value.TrimStart().StartsWith("[", StringComparison.Ordinal))
-        {
-            try
-            {
-                var strings = System.Text.Json.JsonSerializer.Deserialize<string[]>(value);
-                if (strings != null)
-                {
-                    foreach (var s in strings)
-                    {
-                        var item = itemType == typeof(string)
-                            ? (object)s
-                            : Convert.ChangeType(s, itemType, CultureInfo.InvariantCulture);
-                        list.Add(item);
-                    }
-                    return list;
-                }
-            }
-            catch { /* fall through to delimiter split */ }
-        }
-
-        // Auto-detect delimiter: prefer ';', then '|', then ','
-        var sep = value.Contains(';') ? ';' : value.Contains('|') ? '|' : ',';
-        foreach (var part in value.Split(sep).Select(v => v.Trim()).Where(v => v.Length > 0))
-        {
-            var item = itemType == typeof(string)
-                ? (object)part
-                : Convert.ChangeType(part, itemType, CultureInfo.InvariantCulture);
-            list.Add(item);
-        }
-        return list;
-    }
-
-    private static object? ConvertValue(string value, string typeName)
-    {
-        if (typeName.Contains("String", StringComparison.OrdinalIgnoreCase))
-            return value;
-
-        if (typeName.Contains("Number", StringComparison.OrdinalIgnoreCase)
-            && !typeName.Contains("Float", StringComparison.OrdinalIgnoreCase))
-            return int.TryParse(value, CultureInfo.InvariantCulture, out var intResult) ? intResult : null;
-
-        if (typeName.Contains("Float", StringComparison.OrdinalIgnoreCase))
-            return double.TryParse(value, CultureInfo.InvariantCulture, out var doubleResult) ? doubleResult : null;
-
-        if (typeName.Contains("Boolean", StringComparison.OrdinalIgnoreCase))
-            return bool.TryParse(value, out var boolResult) ? boolResult : null;
-
-        if (typeName.Contains("Date", StringComparison.OrdinalIgnoreCase))
-            return DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateResult)
-                ? dateResult : null;
-
-        if (typeName.Contains("Url", StringComparison.OrdinalIgnoreCase))
-            return string.IsNullOrWhiteSpace(value) ? null : new EPiServer.Url(value);
-
-        if (typeName.Contains("ContentReference", StringComparison.OrdinalIgnoreCase)
-            || typeName.Contains("PageReference", StringComparison.OrdinalIgnoreCase))
-            return int.TryParse(value, CultureInfo.InvariantCulture, out var refId)
-                ? new ContentReference(refId) : ContentReference.EmptyReference;
-
-        return value;
     }
 
     private void SetContentAreaFromInlineBlocks(
@@ -742,16 +716,16 @@ public class ContentImporterService
                 {
                     case "column":
                         if (row.TryGetValue(bm.SourceColumn ?? "", out var val))
-                            SetPropertyValue(blockProp, val);
+                            SetPropertyValue(blockProp, val, blockType);
                         break;
                     case "hardcoded":
                         var resolved = ResolveTemplate(bm.HardcodedValue, row);
-                        SetPropertyValue(blockProp, resolved);
+                        SetPropertyValue(blockProp, resolved, blockType);
                         break;
                 }
             }
 
-            var savedBlock = _contentRepository.Save(block, SaveAction.Save, AccessLevel.NoAccess);
+            var savedBlock = _contentRepository.Save(block, SaveAction.Save, AccessLevel.Edit);
             contentArea.Items.Add(new ContentAreaItem { ContentLink = savedBlock });
         }
 

@@ -173,6 +173,7 @@
           <processing>Behandlet {0}/{1} indholdselementer...</processing>
           <completing>Fuldfører analysatorer...</completing>
           <completed>Fuldført. Analyserede {0} indholdselementer med {1} analysatorer ({2}).</completed>
+          <initfailed>Sprang {0} analysator(er) over på grund af initialiseringsfejl: {1}.</initfailed>
         </contentanalysis>
       </jobs>
 

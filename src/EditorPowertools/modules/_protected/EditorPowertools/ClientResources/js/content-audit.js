@@ -369,7 +369,7 @@
 
         if (col.key === 'url') {
             if (!val) return '<td></td>';
-            return '<td><a href="' + escapeHtml(val) + '" target="_blank" title="' + escapeHtml(val) + '" style="max-width:250px;display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + escapeHtml(val) + '</a></td>';
+            return '<td><a href="' + escapeHtml(EPT.safeUrl(val)) + '" target="_blank" rel="noopener" title="' + escapeHtml(val) + '" style="max-width:250px;display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + escapeHtml(val) + '</a></td>';
         }
 
         if (col.key === 'editUrl') {
