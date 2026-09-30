@@ -58,6 +58,7 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IGraphAvailability, GraphAvailability>();
         services.AddTransient<IDoctorCheck, GraphHealthCheck>();
+        services.AddScoped<IGraphSearchService, GraphSearchService>();
 
         // ---- end of later-task registrations ----
 
