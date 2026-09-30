@@ -74,18 +74,127 @@ public class BuiltInSlicesTests
             .Select(c => c.Name).Should().Equal("fresh", "edge");
     }
 
+    // Literal values on purpose: the names are stored by the assets-pane widget and the order is UX.
     [Fact]
     public void Slices_are_named_and_ordered_per_the_plan()
     {
         var f = new SliceFixture();
-        Make<MyContentSlice>(f).Name.Should().Be("ept-slice-mycontent");
-        Make<DraftsSlice>(f).SortOrder.Should().Be(30);
-        Make<StaleContentSlice>(f).SortOptions[0].Should().Be(SliceSortOption.Oldest);
+        var slices = new (ContentQueryBase Slice, string Name, int Order, SliceSortOption First)[]
+        {
+            (Make<MyContentSlice>(f), "ept-slice-mycontent", 10, SliceSortOption.Newest),
+            (Make<RecentlyChangedSlice>(f), "ept-slice-recentlychanged", 20, SliceSortOption.Newest),
+            (Make<DraftsSlice>(f), "ept-slice-drafts", 30, SliceSortOption.Newest),
+            (Make<AwaitingApprovalSlice>(f), "ept-slice-awaitingapproval", 40, SliceSortOption.Oldest),
+            (Make<StaleContentSlice>(f), "ept-slice-stalecontent", 50, SliceSortOption.Oldest),
+            (new ScanSlice(f), "ept-slice-unusedblocks", 60, SliceSortOption.Oldest),
+        };
+
+        foreach (var (slice, name, order, first) in slices)
+        {
+            slice.Name.Should().Be(name);
+            slice.SortOrder.Should().Be(order);
+            ((PowerSliceBase)slice).SortOptions[0].Should().Be(first, name);
+        }
+    }
+
+    private static void CaptureFilter(SliceFixture f, out Func<(VersionFilter? Filter, int Max)> read)
+    {
+        VersionFilter? filter = null;
+        var max = -1;
+        f.Versions.Setup(v => v.List(It.IsAny<VersionFilter>(), It.IsAny<int>(), It.IsAny<int>(), out It.Ref<int>.IsAny))
+            .Callback(new ListCallback((VersionFilter fl, int _, int m, out int total) => { filter = fl; max = m; total = 0; }))
+            .Returns(new List<ContentVersion>());
+        read = () => (filter, max);
+    }
+
+    [Fact]
+    public void Drafts_asks_for_unfinished_statuses_newest_first_and_passes_max_versions()
+    {
+        var f = new SliceFixture();
+        f.Options.PowerSlice.MaxVersions = 77;
+        CaptureFilter(f, out var read);
+
+        SlicePipeline.GetContent(Make<DraftsSlice>(f), SliceFixture.Parameters());
+
+        var (filter, max) = read();
+        filter!.Statuses.Should().BeEquivalentTo(new[] { VersionStatus.CheckedOut, VersionStatus.CheckedIn, VersionStatus.Rejected });
+        filter.SortDirection.Should().Be(VersionSortDirection.Descending);
+        filter.ProviderName.Should().BeEmpty();
+        max.Should().Be(77);
+    }
+
+    [Fact]
+    public void AwaitingApproval_asks_only_for_that_status_longest_waiting_first()
+    {
+        var f = new SliceFixture();
+        CaptureFilter(f, out var read);
+
+        SlicePipeline.GetContent(Make<AwaitingApprovalSlice>(f), SliceFixture.Parameters());
+
+        var filter = read().Filter!;
+        filter.Statuses.Should().Equal(VersionStatus.AwaitingApproval);
+        filter.SortDirection.Should().Be(VersionSortDirection.Ascending);
+        filter.ProviderName.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void MyContent_passes_max_versions_to_the_store()
+    {
+        var f = new SliceFixture(user: "anna");
+        f.Options.PowerSlice.MaxVersions = 123;
+        CaptureFilter(f, out var read);
+
+        SlicePipeline.GetContent(Make<MyContentSlice>(f), SliceFixture.Parameters());
+
+        read().Max.Should().Be(123);
+    }
+
+    [Fact]
+    public void Drafts_and_AwaitingApproval_return_the_loaded_content()
+    {
+        var f = new SliceFixture();
+        var now = f.Time.GetLocalNow().DateTime;
+        Serve(f, (1, now, new TestContent("draft", 1)));
+
+        SlicePipeline.GetContent(Make<DraftsSlice>(f), SliceFixture.Parameters()).Select(c => c.Name).Should().Equal("draft");
+        SlicePipeline.GetContent(Make<AwaitingApprovalSlice>(f), SliceFixture.Parameters()).Select(c => c.Name).Should().Equal("draft");
+    }
+
+    [Fact]
+    public void RecentlyChanged_window_includes_the_exact_cutoff_and_excludes_just_before()
+    {
+        var f = new SliceFixture();
+        f.Options.PowerSlice.RecentlyChangedDays = 14;
+        var cutoff = f.Time.GetLocalNow().DateTime.AddDays(-14);
+        Serve(f,
+            (1, cutoff, new TestContent("on", 1)),
+            (2, cutoff.AddSeconds(-1), new TestContent("before", 2)));
+
+        SlicePipeline.GetContent(Make<RecentlyChangedSlice>(f), SliceFixture.Parameters())
+            .Select(c => c.Name).Should().Equal("on");
+    }
+
+    [Fact]
+    public void StaleContent_boundary_is_inclusive_and_newer_rows_or_content_are_excluded()
+    {
+        var f = new SliceFixture();
+        f.Options.PowerSlice.StaleContentMonths = 12;
+        var now = f.Time.GetLocalNow().DateTime;
+        var cutoff = now.AddMonths(-12);
+        Serve(f,
+            (1, cutoff, new TestPage("on the line", 1, cutoff)),
+            (2, cutoff.AddDays(1), new TestPage("row newer than cutoff", 2, cutoff.AddYears(-1))),
+            (3, cutoff.AddYears(-1), new TestPage("draft only", 3, cutoff.AddYears(-1), VersionStatus.CheckedOut)),
+            (4, cutoff.AddYears(-1), new TestContent("not a page", 4, cutoff.AddYears(-1))),
+            (5, cutoff.AddYears(-1), new TestPage("stale", 5, cutoff.AddYears(-1))));
+
+        SlicePipeline.GetContent(Make<StaleContentSlice>(f), SliceFixture.Parameters())
+            .Select(c => c.Name).Should().Equal("on the line", "stale");
     }
 
     private sealed class TestPage : PageData
     {
-        public TestPage(string name, int id, DateTime saved)
+        public TestPage(string name, int id, DateTime saved, VersionStatus status = VersionStatus.Published)
             : base(new AccessControlList(), new PropertyDataCollection
             {
                 { "PageName", new PropertyString() },
@@ -97,7 +206,7 @@ public class BuiltInSlicesTests
             Name = name;
             ContentLink = new ContentReference(id);
             Saved = saved;
-            Status = VersionStatus.Published;
+            Status = status;
         }
     }
 

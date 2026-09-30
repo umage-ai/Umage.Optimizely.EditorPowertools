@@ -118,28 +118,38 @@
 
     // ---- rendering ----
 
-    function render() {
-        var active = document.activeElement;
-        var keepInput = active && active.id === 'ept-ps-input';
-        var caret = keepInput ? active.selectionStart : 0;
-        var focusSel = keepInput ? null : focusSelector(active);
+    // The search bar is built once and never re-rendered: rebuilding the input while a request is in
+    // flight would overwrite characters typed since the debounce fired (and break IME composition).
+    // Only the tab strip, facet rail and results are replaced on each render.
+    var els = {};
 
+    function buildShell() {
         root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
             '<form class="ept-ps__searchbar" id="ept-ps-form" role="search">' +
             '<input type="search" id="ept-ps-input" class="ept-input" autocomplete="off" placeholder="' +
             esc(t('placeholder', 'Search pages, blocks and media…')) + '" aria-label="' + esc(t('search', 'Search')) + '" value="' + esc(state.q) + '" />' +
             '<button type="submit" class="ept-btn ept-btn--primary">' + esc(t('search', 'Search')) + '</button></form>' +
-            renderTabs() +
-            '<div class="ept-ps__layout">' + renderRail() + '<div class="ept-ps__main" aria-live="polite">' + renderMain() + '</div></div>' +
+            '<div id="ept-ps-tabs"></div>' +
+            '<div class="ept-ps__layout"><aside class="ept-ps__rail" id="ept-ps-rail"></aside>' +
+            '<div class="ept-ps__main" id="ept-ps-main" aria-live="polite"></div></div>' +
             '<p class="ept-ps__note">' + esc(t('index_lag', 'Results come from the Optimizely Graph index and may lag behind recent publishing.')) + '</p>' +
             '</div></div>';
-        bind();
+        els.input = document.getElementById('ept-ps-input');
+        els.tabs = document.getElementById('ept-ps-tabs');
+        els.rail = document.getElementById('ept-ps-rail');
+        els.main = document.getElementById('ept-ps-main');
+        bindSearchBar();
+    }
 
-        if (keepInput) {
-            var input = document.getElementById('ept-ps-input');
-            input.focus();
-            try { input.setSelectionRange(caret, caret); } catch (e) { /* ignore */ }
-        } else if (focusSel) {
+    function render() {
+        var focusSel = focusSelector(document.activeElement);
+
+        els.tabs.innerHTML = renderTabs();
+        els.rail.innerHTML = renderRail();
+        els.main.innerHTML = renderMain();
+        bindRegions();
+
+        if (focusSel) {
             var target = root.querySelector(focusSel);
             if (target && !target.disabled) target.focus();
         }
@@ -176,8 +186,8 @@
     function renderRail() {
         var facets = state.response && state.response.facets;
         var anySel = GROUPS.some(function (g) { return state.sel[g.key].length > 0; });
-        if (!facets && !anySel) return '<aside class="ept-ps__rail"></aside>';
-        var out = '<aside class="ept-ps__rail">';
+        if (!facets && !anySel) return '';
+        var out = '';
         GROUPS.forEach(function (g) {
             var values = (facets && facets[g.key]) || [];
             var selected = state.sel[g.key];
@@ -198,7 +208,7 @@
             out += '</fieldset>';
         });
         if (anySel) out += '<button type="button" class="ept-ps__link" id="ept-ps-clear">' + esc(t('clear_filters', 'Clear filters')) + '</button>';
-        return out + '</aside>';
+        return out;
     }
 
     function message(text, cls) { return '<p class="ept-ps__message' + (cls ? ' ' + cls : '') + '">' + esc(text) + '</p>'; }
@@ -243,29 +253,38 @@
 
     // ---- events ----
 
-    function bind() {
+    function bindSearchBar() {
         var form = document.getElementById('ept-ps-form');
-        var input = document.getElementById('ept-ps-input');
+        var input = els.input;
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             clearTimeout(debounceTimer);
             state.q = input.value;
             submit();
         });
-        input.addEventListener('input', function () {
+        input.addEventListener('input', function (e) {
+            if (e && e.isComposing) return; // wait for the IME to commit
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(function () { state.q = input.value; submit(); }, DEBOUNCE_MS);
         });
-        Array.prototype.forEach.call(root.querySelectorAll('[data-tab]'), function (b) {
+        input.addEventListener('compositionend', function () {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function () { state.q = input.value; submit(); }, DEBOUNCE_MS);
+        });
+    }
+
+    function bindRegions() {
+        Array.prototype.forEach.call(els.tabs.querySelectorAll('[data-tab]'), function (b) {
             b.addEventListener('click', function () {
                 if (state.tab === b.getAttribute('data-tab')) return;
                 state.tab = b.getAttribute('data-tab');
                 GROUPS.forEach(function (g) { state.sel[g.key] = []; }); // facets are per tab
-                state.q = input.value;
+                clearTimeout(debounceTimer);
+                state.q = els.input.value;
                 submit();
             });
         });
-        Array.prototype.forEach.call(root.querySelectorAll('input[data-group]'), function (cb) {
+        Array.prototype.forEach.call(els.rail.querySelectorAll('input[data-group]'), function (cb) {
             cb.addEventListener('change', function () {
                 var list = state.sel[cb.getAttribute('data-group')], v = cb.getAttribute('data-value');
                 var i = list.indexOf(v);
@@ -274,7 +293,7 @@
                 submit(); // resets skip: a fresh search starts at 0
             });
         });
-        Array.prototype.forEach.call(root.querySelectorAll('[data-toggle]'), function (b) {
+        Array.prototype.forEach.call(els.rail.querySelectorAll('[data-toggle]'), function (b) {
             b.addEventListener('click', function () {
                 var k = b.getAttribute('data-toggle');
                 state.expanded[k] = !state.expanded[k];
@@ -292,11 +311,15 @@
 
     window.addEventListener('hashchange', function () {
         readHash();
+        if (els.input && els.input.value !== state.q) els.input.value = state.q;
         search(false);
     });
 
+    // Exposed so the Node specs (Tests.Graph/JavaScript) can pin the facet and badge rules.
+    window.EPT_POWERSEARCH_RULES = { tabBadge: tabBadge, visibleFacets: visibleFacets };
+
     readHash();
+    buildShell();
     if (state.q.trim()) search(false); else render();
-    var first = document.getElementById('ept-ps-input');
-    if (first) first.focus();
+    els.input.focus();
 })();

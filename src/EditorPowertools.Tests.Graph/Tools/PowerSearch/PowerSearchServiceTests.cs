@@ -239,6 +239,43 @@ public class PowerSearchServiceTests
         r.Hits[0].IsDraft.Should().BeFalse();
     }
 
+    private delegate bool TryGetBranch(ContentReference reference, LoaderOptions options, out IContent? content);
+
+    [Fact]
+    public async Task Other_language_branches_of_the_same_content_are_kept()
+    {
+        var f = new Fixture();
+        var guid = f.Content(1, "Master");
+        IContent Branch(string lang)
+        {
+            var c = new Mock<IContent>();
+            c.SetupGet(x => x.ContentLink).Returns(new ContentReference(1));
+            c.SetupGet(x => x.ContentGuid).Returns(guid);
+            c.SetupGet(x => x.Name).Returns("Name " + lang);
+            var descriptor = new Mock<ISecurityDescriptor>();
+            descriptor.Setup(d => d.HasAccess(It.IsAny<IPrincipal>(), It.IsAny<AccessLevel>())).Returns(true);
+            c.As<ISecurable>().Setup(s => s.GetSecurityDescriptor()).Returns(descriptor.Object);
+            c.As<ILocalizable>().SetupGet(l => l.Language).Returns(System.Globalization.CultureInfo.GetCultureInfo(lang));
+            return c.Object;
+        }
+
+        var en = Branch("en");
+        var sv = Branch("sv");
+        f.Loader.Setup(l => l.TryGet<IContent>(It.IsAny<ContentReference>(), It.IsAny<LoaderOptions>(), out It.Ref<IContent?>.IsAny))
+            .Returns(new TryGetBranch((ContentReference _, LoaderOptions o, out IContent? c) =>
+            {
+                c = o.Get<LanguageLoaderOption>()?.Language?.Name == "sv" ? sv : en;
+                return true;
+            }));
+        f.Returns(r => r.Scope.ContentTypes.Contains("PageData")
+            ? new GraphSearchResult(new[] { new GraphSearchHit(guid, "n", "en"), new GraphSearchHit(guid, "n", "sv") }, 2, GraphFacets.Empty)
+            : GraphSearchResult.Empty);
+
+        var r = await f.Create().SearchAsync(Q(), CancellationToken.None);
+
+        r.Hits.Select(h => h.Language).Should().Equal("en", "sv");
+    }
+
     [Fact]
     public async Task Cms_loading_is_strictly_sequential()
     {

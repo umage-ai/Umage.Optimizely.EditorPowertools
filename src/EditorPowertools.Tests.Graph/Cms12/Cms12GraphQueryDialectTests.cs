@@ -109,6 +109,78 @@ public class Cms12GraphQueryDialectTests
         result.Facets.Sections.Should().ContainSingle();
     }
 
+    // Returns the text of one aliased facet query (from "Alias:" up to the next alias or the end).
+    private static string Block(string query, string alias)
+    {
+        var start = query.IndexOf(alias + ": Content(", StringComparison.Ordinal);
+        start.Should().BeGreaterThan(-1, $"{alias} should be emitted");
+        var rest = query[start..];
+        var next = new[] { "TypeFacet:", "SectionFacet:", "LanguageFacet:" }
+            .Where(a => a != alias + ":")
+            .Select(a => rest.IndexOf(a, 1, StringComparison.Ordinal))
+            .Where(i => i > 0)
+            .DefaultIfEmpty(rest.Length)
+            .Min();
+        return rest[..next];
+    }
+
+    [Fact]
+    public void Facet_aliases_lift_only_their_own_filter()
+    {
+        var g = Guid.NewGuid();
+        var q = Dialect.BuildSearch(Req(facets: true,
+            f: new GraphSearchFilters(new[] { "ArticlePage" }, new[] { "de" }, new[] { g }))).Query;
+
+        var typeFacet = Block(q, "TypeFacet");
+        typeFacet.Should().NotContain("$selectedTypes").And.Contain("$selectedSections").And.Contain("locale: $locale");
+
+        var sectionFacet = Block(q, "SectionFacet");
+        sectionFacet.Should().NotContain("$selectedSections").And.Contain("$selectedTypes").And.Contain("locale: $locale");
+
+        // Language facet counts every branch (no locale argument) but keeps both other selections.
+        var languageFacet = Block(q, "LanguageFacet");
+        languageFacet.Should().NotContain("locale:").And.Contain("$selectedTypes").And.Contain("$selectedSections");
+
+        // The main query applies every selection.
+        q[..q.IndexOf("TypeFacet:", StringComparison.Ordinal)].Should().Contain("$selectedTypes").And.Contain("$selectedSections");
+    }
+
+    [Fact]
+    public void Language_facet_is_emitted_with_faceting_and_not_without()
+    {
+        Dialect.BuildSearch(Req(facets: true)).Query.Should().Contain("LanguageFacet: Content(");
+        Dialect.BuildSearch(Req(facets: false)).Query.Should().NotContain("LanguageFacet");
+    }
+
+    [Fact]
+    public void Parse_prefers_every_alias_over_the_main_facets()
+    {
+        var data = JsonDocument.Parse("""
+        {"Content":{"total":1,"items":[],
+         "facets":{"ContentType":[{"name":"Main","count":1}],
+                   "Language":{"Name":[{"name":"mainLang","count":1}]},
+                   "Ancestors":[{"name":"mainSection","count":1}]}},
+         "TypeFacet":{"facets":{"ContentType":[{"name":"AliasType","count":2}]}},
+         "LanguageFacet":{"facets":{"Language":{"Name":[{"name":"aliasLang","count":3}]}}},
+         "SectionFacet":{"facets":{"Ancestors":[{"name":"aliasSection","count":4}]}}}
+        """).RootElement;
+
+        var facets = Dialect.ParseSearch(data, includeFacets: true).Facets;
+
+        facets.ContentTypes.Should().Equal(new GraphFacetValue("AliasType", 2));
+        facets.Languages.Should().Equal(new GraphFacetValue("aliasLang", 3));
+        facets.Sections.Should().Equal(new GraphFacetValue("aliasSection", 4));
+    }
+
+    [Fact]
+    public void Parse_falls_back_to_main_facets_without_aliases()
+    {
+        var data = JsonDocument.Parse("""
+        {"Content":{"items":[],"facets":{"ContentType":[{"name":"Main","count":1}]}}}
+        """).RootElement;
+        Dialect.ParseSearch(data, true).Facets.ContentTypes.Should().Equal(new GraphFacetValue("Main", 1));
+    }
+
     [Fact]
     public void Missing_total_is_unknown_not_zero() =>
         Dialect.ParseSearch(JsonDocument.Parse("""{"Content":{"items":[]}}""").RootElement, true).Total.Should().Be(-1);

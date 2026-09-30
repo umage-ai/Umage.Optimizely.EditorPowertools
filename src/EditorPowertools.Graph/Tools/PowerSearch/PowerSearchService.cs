@@ -121,13 +121,13 @@ public class PowerSearchService : IPowerSearchService
 
         // Graph work is done: from here on CMS loading is strictly sequential (shared SQL connection).
         var hits = new List<PowerSearchHitDto>();
-        var seen = new HashSet<int>();
+        var seen = new HashSet<(int Id, string Language)>(); // one row per language branch; only drafts dedupe against published hits
 
         if (options.IncludeDrafts && skip == 0)
         {
             foreach (var draft in LoadDrafts(phrase, query, take))
             {
-                if (seen.Add(draft.ContentId)) hits.Add(draft);
+                if (seen.Add((draft.ContentId, draft.Language.ToLowerInvariant()))) hits.Add(draft);
             }
         }
 
@@ -139,7 +139,7 @@ public class PowerSearchService : IPowerSearchService
 
             var content = Load(raw);
             if (content is null || !content.QueryDistinctAccess(AccessLevel.Read)) continue;
-            if (!seen.Add(content.ContentLink.ID)) continue;
+            if (!seen.Add((content.ContentLink.ID, BranchLanguage(content).ToLowerInvariant()))) continue;
             hits.Add(ToDto(content, isDraft: false));
         }
 
@@ -274,7 +274,7 @@ public class PowerSearchService : IPowerSearchService
 
     private PowerSearchHitDto ToDto(IContent content, bool isDraft)
     {
-        var branch = (content as ILocalizable)?.Language?.Name ?? string.Empty;
+        var branch = BranchLanguage(content);
         var tracked = content as IChangeTrackable;
         var status = isDraft
             ? Status("draft")
@@ -292,6 +292,8 @@ public class PowerSearchService : IPowerSearchService
             isDraft,
             SearchResultFactory.AppendLanguage(ResolveEditUrl(content), branch));
     }
+
+    private static string BranchLanguage(IContent content) => (content as ILocalizable)?.Language?.Name ?? string.Empty;
 
     /// <summary>Overridable because <see cref="PageEditing"/> is a static platform accessor.</summary>
     protected virtual string ResolveEditUrl(IContent content) => PageEditing.GetEditUrl(content.ContentLink);

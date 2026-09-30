@@ -22,11 +22,13 @@ public class GraphSearchProviderBaseTests
 {
     private sealed class TestProvider : GraphSearchProviderBase
     {
+        private readonly Fixture _f;
         public TestProvider(Fixture f) : base(
             f.Service.Object, f.Availability.Object, f.Drafts.Object, f.Results.Object, f.Access.Object,
             f.Http.Object, f.Loader.Object, f.Repository.Object, Microsoft.Extensions.Options.Options.Create(f.Options),
             new MemoryLocalizationService(), f.Logger.Object)
         {
+            _f = f;
         }
 
         protected override string? PreferredLanguage() => "en";
@@ -36,7 +38,7 @@ public class GraphSearchProviderBaseTests
         protected override string IconCssClass => "icon";
         protected override IReadOnlyList<string> ScopeTypes { get; } = new[] { "PageData" };
         protected override bool FilterByLocale => true;
-        protected override bool IsInScope(IContent content) => true;
+        protected override bool IsInScope(IContent content) => _f.InScope(content);
 #if OPTIMIZELY_CMS13
         protected override string KeySuffix => "pages";
 #endif
@@ -55,6 +57,7 @@ public class GraphSearchProviderBaseTests
         public Mock<ILogger> Logger = new();
         public EditorPowertoolsGraphOptions Options = new();
         public List<GraphSearchRequest> Requests = new();
+        public Func<IContent, bool> InScope = _ => true;
 
         public Fixture()
         {
@@ -220,6 +223,68 @@ public class GraphSearchProviderBaseTests
         titles.Should().HaveCount(6);
         titles.Take(2).Should().OnlyContain(t => t.StartsWith("draft:"));
         titles.Skip(2).Should().OnlyContain(t => t.StartsWith("pub:"));
+    }
+
+    private static List<string> DraftTitles(Fixture f, IEnumerable<Mock<IContent>> drafts, params string[] roots)
+    {
+        var list = drafts.ToList();
+        foreach (var d in list)
+        {
+            f.LoaderKnows(d);
+        }
+
+        f.Drafts.Setup(d => d.FindDrafts(It.IsAny<string>(), It.IsAny<string?>(), It.IsAny<int>(), It.IsAny<ISet<int>>()))
+            .Returns(list.Select(d => d.Object.ContentLink).ToList());
+        f.Hits();
+        return f.Create().Search(Q("abc", 10, roots)).Select(r => r.Title).ToList();
+    }
+
+    [Fact]
+    public void Drafts_the_editor_cannot_read_do_not_leak()
+    {
+        var f = new Fixture();
+        var titles = DraftTitles(f, new[] { f.Content(100, "ok"), f.Content(101, "secret", readable: false) });
+        titles.Should().Equal("draft:ok");
+    }
+
+    [Fact]
+    public void Drafts_outside_the_provider_scope_are_dropped()
+    {
+        var f = new Fixture();
+        f.InScope = c => c.Name != "block";
+        var titles = DraftTitles(f, new[] { f.Content(100, "page"), f.Content(101, "block") });
+        titles.Should().Equal("draft:page");
+    }
+
+    [Fact]
+    public void Drafts_outside_the_requested_roots_are_dropped()
+    {
+        var f = new Fixture();
+        var root = f.Content(5, "root");
+        f.LoaderKnows(root);
+        var inside = f.Content(100, "inside");
+        f.Loader.Setup(l => l.GetAncestors(inside.Object.ContentLink)).Returns(new[] { root.Object });
+        var outside = f.Content(101, "outside");
+
+        DraftTitles(f, new[] { inside, outside }, "5").Should().Equal("draft:inside");
+    }
+
+    [Fact]
+    public void Drafts_overfetch_candidates_and_exclude_already_indexed_content()
+    {
+        var f = new Fixture();
+        var indexed = f.Content(1, "indexed");
+        f.Hits(Fixture.Hit(indexed.Object.ContentGuid));
+        int? limit = null;
+        ISet<int>? excluded = null;
+        f.Drafts.Setup(d => d.FindDrafts("abc", It.IsAny<string?>(), It.IsAny<int>(), It.IsAny<ISet<int>>()))
+            .Callback((string _, string? _, int l, ISet<int> e) => { limit = l; excluded = e; })
+            .Returns(Array.Empty<ContentReference>());
+
+        f.Create().Search(Q("abc", 9));
+
+        limit.Should().Be(3 * 8); // budget max(1, 9/3) times the candidate multiplier
+        excluded.Should().BeEquivalentTo(new[] { 1 });
     }
 
     [Fact]
