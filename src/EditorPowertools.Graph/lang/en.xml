@@ -38,6 +38,20 @@
             <empty>Nothing to show in this list.</empty>
           </strings>
         </powerslice>
+        <powersearch>
+          <error>Search failed.</error>
+          <status>
+            <draft>Draft</draft>
+            <notcreated>Not created</notcreated>
+            <rejected>Rejected</rejected>
+            <checkedout>Checked out</checkedout>
+            <checkedin>Ready to publish</checkedin>
+            <published>Published</published>
+            <previouslypublished>Previously published</previouslypublished>
+            <delayedpublish>Scheduled</delayedpublish>
+            <awaitingapproval>Awaiting approval</awaitingapproval>
+          </status>
+        </powersearch>
         <search>
           <category>
             <pages>Pages (Graph)</pages>
@@ -47,6 +61,22 @@
           <unpublisheddraft>Unpublished draft</unpublisheddraft>
         </search>
       </graph>
+      <cmsdoctor>
+        <groups>
+          <graph>Graph</graph>
+        </groups>
+        <checks>
+          <graphhealthcheck>
+            <name>Optimizely Graph for editor search</name>
+            <description>Checks that Optimizely Graph is installed, configured and answering, so editor search can use it.</description>
+            <ok>Optimizely Graph is configured and responding.</ok>
+            <notinstalled>Optimizely Graph is not installed (call AddContentGraph()).</notinstalled>
+            <notconfigured>Graph gateway, app key or secret is missing.</notconfigured>
+            <notverified>Graph search is not yet verified for this CMS version.</notverified>
+            <noresponse>Graph did not respond.</noresponse>
+          </graphhealthcheck>
+        </checks>
+      </cmsdoctor>
       <components>
         <powerslice>
           <title>Power Slice</title>
