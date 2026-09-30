@@ -122,6 +122,7 @@
         var active = document.activeElement;
         var keepInput = active && active.id === 'ept-ps-input';
         var caret = keepInput ? active.selectionStart : 0;
+        var focusSel = keepInput ? null : focusSelector(active);
 
         root.innerHTML = '<div class="ept-card"><div class="ept-card__body">' +
             '<form class="ept-ps__searchbar" id="ept-ps-form" role="search">' +
@@ -138,7 +139,23 @@
             var input = document.getElementById('ept-ps-input');
             input.focus();
             try { input.setSelectionRange(caret, caret); } catch (e) { /* ignore */ }
+        } else if (focusSel) {
+            var target = root.querySelector(focusSel);
+            if (target && !target.disabled) target.focus();
         }
+    }
+
+    // Identify the focused control so focus can be restored after innerHTML is rebuilt.
+    function focusSelector(el) {
+        if (!el || el === document.body || !root.contains(el)) return null;
+        function q(v) { return String(v).replace(/\\/g, '\\\\').replace(/"/g, '\\"'); }
+        if (el.id === 'ept-ps-clear' || el.id === 'ept-ps-more') return '#' + el.id;
+        if (el.hasAttribute('data-tab')) return '[data-tab="' + q(el.getAttribute('data-tab')) + '"]';
+        if (el.hasAttribute('data-toggle')) return '[data-toggle="' + q(el.getAttribute('data-toggle')) + '"]';
+        if (el.hasAttribute('data-group')) {
+            return 'input[data-group="' + q(el.getAttribute('data-group')) + '"][data-value="' + q(el.getAttribute('data-value')) + '"]';
+        }
+        return null;
     }
 
     function tabLabel(tab) {
