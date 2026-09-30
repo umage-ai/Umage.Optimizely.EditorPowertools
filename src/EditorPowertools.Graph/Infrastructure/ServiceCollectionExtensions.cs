@@ -84,6 +84,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IContentQuery, UnusedBlocksSlice>();
 
         services.AddScoped<IPowerSearchService, PowerSearchService>();
+        services.AddSingleton<UmageAI.Optimizely.EditorPowerTools.Localization.IUiStringsContributor, UmageAI.Optimizely.EditorPowerTools.Graph.Localization.GraphUiStringsContributor>();
 
         // ---- end of later-task registrations ----
 

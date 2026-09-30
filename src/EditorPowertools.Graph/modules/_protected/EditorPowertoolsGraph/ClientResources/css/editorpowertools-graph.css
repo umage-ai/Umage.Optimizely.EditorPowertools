@@ -4,3 +4,31 @@
 .ept-slices__row { display: flex; gap: 4px; align-items: center; padding: 2px 4px; }
 .ept-slices__select, .ept-slices__filter, .ept-slices__sort { flex: 1 1 auto; min-width: 0; }
 .ept-slices__message { padding: 12px; color: #999; font-style: italic; }
+
+/* PowerSearch */
+.ept-ps__searchbar { display: flex; gap: 8px; margin-bottom: 12px; }
+.ept-ps__searchbar .ept-input { flex: 1 1 auto; min-width: 0; }
+.ept-ps__tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--ept-border); margin-bottom: 12px; flex-wrap: wrap; }
+.ept-ps__tab { background: none; border: 0; border-bottom: 2px solid transparent; padding: 8px 12px; cursor: pointer; color: var(--ept-text-secondary); font: inherit; }
+.ept-ps__tab:hover { color: var(--ept-text); }
+.ept-ps__tab--active { color: var(--ept-primary); border-bottom-color: var(--ept-primary); font-weight: 600; }
+.ept-ps__layout { display: flex; gap: 24px; align-items: flex-start; }
+.ept-ps__rail { flex: 0 0 240px; }
+.ept-ps__main { flex: 1 1 auto; min-width: 0; }
+.ept-ps__facet { border: 0; padding: 0; margin: 0 0 16px; }
+.ept-ps__facet legend { font-weight: 600; padding: 0; margin-bottom: 6px; }
+.ept-ps__facetvalue { display: flex; gap: 6px; align-items: baseline; padding: 2px 0; cursor: pointer; }
+.ept-ps__facetlabel { flex: 1 1 auto; overflow-wrap: anywhere; }
+.ept-ps__count { color: var(--ept-text-muted); font-size: 12px; }
+.ept-ps__link { background: none; border: 0; padding: 0; color: var(--ept-primary); cursor: pointer; font: inherit; text-decoration: underline; }
+.ept-ps__results { list-style: none; margin: 0 0 12px; padding: 0; }
+.ept-ps__hit { padding: 10px 0; border-bottom: 1px solid var(--ept-border); }
+.ept-ps__name { font-weight: 600; }
+.ept-ps__meta, .ept-ps__breadcrumb, .ept-ps__changed, .ept-ps__summary { font-size: 12px; color: var(--ept-text-secondary); margin-top: 2px; }
+.ept-ps__message { color: var(--ept-text-secondary); font-style: italic; }
+.ept-ps__message--error { color: var(--ept-danger); font-style: normal; }
+.ept-ps__note { margin: 16px 0 0; font-size: 12px; color: var(--ept-text-muted); }
+@media (max-width: 900px) {
+    .ept-ps__layout { flex-direction: column; }
+    .ept-ps__rail { flex: none; width: 100%; }
+}

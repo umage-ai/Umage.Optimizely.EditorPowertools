@@ -62,6 +62,32 @@
           <description>Faceted content search across the whole site, powered by Optimizely Graph.</description>
         </powersearch>
       </tools>
+      <ui>
+        <powersearch>
+          <placeholder>Search pages, blocks and media…</placeholder>
+          <search>Search</search>
+          <tab_pages>Pages</tab_pages>
+          <tab_blocks>Blocks</tab_blocks>
+          <tab_media>Media</tab_media>
+          <tab_other>Other</tab_other>
+          <facet_type>Type</facet_type>
+          <facet_language>Language</facet_language>
+          <facet_section>Section</facet_section>
+          <show_more>Show {0} more</show_more>
+          <show_less>Show less</show_less>
+          <clear_filters>Clear filters</clear_filters>
+          <load_more>Load more</load_more>
+          <no_results>No results found.</no_results>
+          <hint>Type to search the whole site.</hint>
+          <unavailable>Graph search is not available. Check the Optimizely Graph configuration.</unavailable>
+          <unavailable_link>Open CMS Doctor</unavailable_link>
+          <error>Something went wrong while searching. Please try again.</error>
+          <index_lag>Results come from the Optimizely Graph index and may lag behind recent publishing.</index_lag>
+          <draft>Draft</draft>
+          <by>by</by>
+          <results_count>{0} results</results_count>
+        </powersearch>
+      </ui>
     </editorpowertools>
   </language>
 </languages>
