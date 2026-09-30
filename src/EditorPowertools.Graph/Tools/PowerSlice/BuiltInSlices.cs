@@ -178,7 +178,10 @@ public class StaleContentSlice : VersionBackedSlice
         return SliceVersionHelper.LeastRecentlySaved(Versions, Loader, Options.MaxVersions)
             .Where(x => x.Saved <= cutoff)
             .Select(x => x.Content)
-            .Where(c => c is PageData && c is IVersionable { Status: VersionStatus.Published });
+            // The oldest version row says nothing about the current content: a page with a recent
+            // edit must not be listed just because its first version is old.
+            .Where(c => c is PageData && c is IVersionable { Status: VersionStatus.Published }
+                        && c is IChangeTrackable t && t.Saved <= cutoff);
     }
 }
 

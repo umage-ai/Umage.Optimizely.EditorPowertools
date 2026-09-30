@@ -2,6 +2,7 @@ using EPiServer;
 using EPiServer.DataAbstraction;
 using EPiServer.Cms.Shell.UI.Rest.ContentQuery;
 using EPiServer.Core;
+using EPiServer.Security;
 using EPiServer.DataAbstraction;
 using FluentAssertions;
 using Moq;
@@ -80,6 +81,39 @@ public class BuiltInSlicesTests
         Make<MyContentSlice>(f).Name.Should().Be("ept-slice-mycontent");
         Make<DraftsSlice>(f).SortOrder.Should().Be(30);
         Make<StaleContentSlice>(f).SortOptions[0].Should().Be(SliceSortOption.Oldest);
+    }
+
+    private sealed class TestPage : PageData
+    {
+        public TestPage(string name, int id, DateTime saved)
+            : base(new AccessControlList(), new PropertyDataCollection
+            {
+                { "PageName", new PropertyString() },
+                { "PageSaved", new PropertyDate() },
+                { "PageLink", new PropertyContentReference() },
+                { "PageWorkStatus", new PropertyNumber() },
+            })
+        {
+            Name = name;
+            ContentLink = new ContentReference(id);
+            Saved = saved;
+            Status = VersionStatus.Published;
+        }
+    }
+
+    [Fact]
+    public void StaleContent_ignores_old_version_rows_of_recently_edited_pages()
+    {
+        var f = new SliceFixture();
+        f.Options.PowerSlice.StaleContentMonths = 12;
+        var now = f.Time.GetLocalNow().DateTime;
+        // Both rows are old versions; only page 2's current content is also old.
+        Serve(f,
+            (1, now.AddYears(-3), new TestPage("edited yesterday", 1, now.AddDays(-1))),
+            (2, now.AddYears(-2), new TestPage("really stale", 2, now.AddYears(-2))));
+
+        SlicePipeline.GetContent(Make<StaleContentSlice>(f), SliceFixture.Parameters())
+            .Select(c => c.Name).Should().Equal("really stale");
     }
 
     private sealed class TestBlock : BlockData, IContent
