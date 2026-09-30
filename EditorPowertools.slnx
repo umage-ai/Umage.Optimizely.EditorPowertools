@@ -6,5 +6,7 @@
     <Project Path="src/EditorPowertools/EditorPowertools.csproj" />
     <Project Path="src/EditorPowertools.Forms/EditorPowertools.Forms.csproj" />
     <Project Path="src/EditorPowertools.Tests.Forms/EditorPowertools.Tests.Forms.csproj" />
+    <Project Path="src/EditorPowertools.Graph/EditorPowertools.Graph.csproj" />
+    <Project Path="src/EditorPowertools.Tests.Graph/EditorPowertools.Tests.Graph.csproj" />
   </Folder>
 </Solution>

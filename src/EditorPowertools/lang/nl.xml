@@ -125,6 +125,9 @@
         <overview>
           <title>Overzicht</title>
           <description>Dashboardoverzicht van alle Editor Powertools-functies.</description>
+          <group>
+            <search>Zoeken</search>
+          </group>
         </overview>
         <about>
           <title>Over Editor Powertools</title>

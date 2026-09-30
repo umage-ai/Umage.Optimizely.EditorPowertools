@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="English" id="en">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <PowerSearch>Access PowerSearch - faceted, Graph-backed content search.</PowerSearch>
+              <PowerSlice>Access the Power Slice assets-pane widget - ready-made Graph-backed content lists.</PowerSlice>
+              <SearchProviders>Use the Graph-backed search providers in the CMS editing UI.</SearchProviders>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <menu>
+        <powersearch>PowerSearch</powersearch>
+      </menu>
+      <tools>
+        <powersearch>
+          <title>PowerSearch</title>
+          <description>Faceted content search across the whole site, powered by Optimizely Graph.</description>
+        </powersearch>
+      </tools>
+    </editorpowertools>
+  </language>
+</languages>
