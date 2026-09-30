@@ -48,6 +48,11 @@ public static class ServiceCollectionExtensions
 #else
         services.AddScoped<IGraphQueryExecutor, Cms12GraphQueryExecutor>();
 #endif
+#if OPTIMIZELY_CMS13
+        services.AddSingleton<IGraphQueryDialect, Cms13GraphQueryDialect>();
+#else
+        services.AddSingleton<IGraphQueryDialect, Cms12GraphQueryDialect>();
+#endif
 
         // ---- end of later-task registrations ----
 
