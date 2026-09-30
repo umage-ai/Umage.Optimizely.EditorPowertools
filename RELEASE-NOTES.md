@@ -1,5 +1,17 @@
 # Release Notes
 
+## Unreleased
+
+### New add-on
+
+- **Graph add-on** (`UmageAI.Optimizely.EditorPowerTools.Graph`) — PowerSearch (Graph-backed editor search with facets), Power Slice (assets-pane content lists) and Graph-backed search providers and content picker search. Queries run with the editor's roles. Localized in all 11 languages. See [docs/graph.md](docs/graph.md). The CMS 13 GraphQL dialect is not yet verified against a live instance.
+
+### Improvements
+
+- **`IUiStringsContributor`** — add-ons can now contribute translated strings to the JavaScript string table.
+- **Forms add-on** — JavaScript strings are now translated through the new contributor mechanism.
+- **CI** — the release workflow now also builds, tests and packs the Graph add-on.
+
 ## v0.2.0-preview.1
 
 ### New Tools

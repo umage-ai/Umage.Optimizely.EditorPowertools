@@ -130,6 +130,26 @@ services.AddEditorPowertoolsForms(options =>
 
 The Forms tools reuse the base package's `AuthorizedRoles` / `CheckPermissionForEachFeature` permission model, and add two per-function permissions (`FormsOverview`, `SubmissionsTimeline`). See [Forms Add-On](forms.md) for details.
 
+## Graph Add-On Configuration
+
+The optional [Graph add-on](graph.md) (`UmageAI.Optimizely.EditorPowerTools.Graph`) is configured under **`CodeArt:EditorPowertools:Graph`** (nested `Graph` key). Graph connection settings (`GatewayAddress`, `AppKey`, `Secret`, `SingleKey`) stay under the platform client's `Optimizely:ContentGraph` section.
+
+```json
+{
+  "CodeArt": {
+    "EditorPowertools": {
+      "Graph": {
+        "features": { "powerSearch": true, "powerSlice": true, "searchProviders": true },
+        "search": { "disableBuiltInProviders": false, "includeDrafts": true, "powerSearchPageSize": 20 },
+        "powerSlice": { "recentlyChangedDays": 14, "staleContentMonths": 18 }
+      }
+    }
+  }
+}
+```
+
+Or in code via `services.AddEditorPowertoolsGraph(options => ...)`. The full option table is in [Graph Add-On](graph.md). The tools reuse the base `AuthorizedRoles` / `CheckPermissionForEachFeature` model and add three per-function permissions (`PowerSearch`, `PowerSlice`, `SearchProviders`); add `WebEditors` to `AuthorizedRoles` to give ordinary editors access.
+
 ## Permission Model
 
 EditorPowertools uses a three-layer permission model. Each layer is checked in order; a user needs to pass all applicable layers to access a tool.
