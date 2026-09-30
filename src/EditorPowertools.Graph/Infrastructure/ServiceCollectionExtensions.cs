@@ -13,6 +13,8 @@ using UmageAI.Optimizely.EditorPowerTools.Graph.Cms12;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Configuration;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Menu;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Graph.Search;
+using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Graph.Infrastructure;
 
@@ -53,6 +55,9 @@ public static class ServiceCollectionExtensions
 #else
         services.AddSingleton<IGraphQueryDialect, Cms12GraphQueryDialect>();
 #endif
+
+        services.AddScoped<IGraphAvailability, GraphAvailability>();
+        services.AddTransient<IDoctorCheck, GraphHealthCheck>();
 
         // ---- end of later-task registrations ----
 
