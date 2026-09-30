@@ -1,1 +1,6 @@
-/* Graph PowerTools styles (populated in later tasks). */
+/* Graph PowerTools styles */
+
+/* Power Slice widget */
+.ept-slices__row { display: flex; gap: 4px; align-items: center; padding: 2px 4px; }
+.ept-slices__select, .ept-slices__filter, .ept-slices__sort { flex: 1 1 auto; min-width: 0; }
+.ept-slices__message { padding: 12px; color: #999; font-style: italic; }
