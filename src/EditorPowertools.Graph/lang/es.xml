@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Español" id="es">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <PowerSearch>Acceso a PowerSearch - búsqueda de contenido facetada basada en Optimizely Graph.</PowerSearch>
+              <PowerSlice>Acceso al widget de panel de activos Power Slice - listas de contenido listas para usar basadas en Optimizely Graph.</PowerSlice>
+              <SearchProviders>Usar los proveedores de búsqueda basados en Optimizely Graph en la interfaz de edición del CMS.</SearchProviders>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <graph>
+        <powerslice>
+          <slices>
+            <mycontent>Mi contenido</mycontent>
+            <recentlychanged>Cambios recientes</recentlychanged>
+            <drafts>Borradores</drafts>
+            <awaitingapproval>Esperando aprobación</awaitingapproval>
+            <stalecontent>Contenido antiguo</stalecontent>
+            <unusedblocks>Bloques sin usar</unusedblocks>
+          </slices>
+          <sort>
+            <name>Nombre (A-Z)</name>
+            <changed>Cambios recientes</changed>
+            <changedasc>Cambios menos recientes</changedasc>
+            <published>Publicado recientemente</published>
+          </sort>
+          <strings>
+            <filterplaceholder>Filtrar por nombre</filterplaceholder>
+            <reload>Recargar</reload>
+            <notavailable>Power Slice no está disponible para tu cuenta.</notavailable>
+            <empty>Nada que mostrar en esta lista.</empty>
+          </strings>
+        </powerslice>
+        <powersearch>
+          <error>La búsqueda falló.</error>
+          <status>
+            <draft>Borrador</draft>
+            <notcreated>No creado</notcreated>
+            <rejected>Rechazado</rejected>
+            <checkedout>Retirado</checkedout>
+            <checkedin>Listo para publicar</checkedin>
+            <published>Publicado</published>
+            <previouslypublished>Publicado anteriormente</previouslypublished>
+            <delayedpublish>Programado</delayedpublish>
+            <awaitingapproval>Esperando aprobación</awaitingapproval>
+          </status>
+        </powersearch>
+        <search>
+          <category>
+            <pages>Páginas (Graph)</pages>
+            <blocks>Bloques (Graph)</blocks>
+            <media>Medios (Graph)</media>
+          </category>
+          <unpublisheddraft>Borrador no publicado</unpublisheddraft>
+        </search>
+      </graph>
+      <cmsdoctor>
+        <groups>
+          <graph>Graph</graph>
+        </groups>
+        <checks>
+          <graphhealthcheck>
+            <name>Optimizely Graph para búsqueda de editor</name>
+            <description>Comprueba que Optimizely Graph está instalado, configurado y responde, para que la búsqueda del editor pueda usarlo.</description>
+            <ok>Optimizely Graph está configurado y respondiendo.</ok>
+            <notinstalled>Optimizely Graph no está instalado (llama a AddContentGraph()).</notinstalled>
+            <notconfigured>Falta la puerta de enlace de Graph, la clave de aplicación o el secreto.</notconfigured>
+            <notverified>La búsqueda de Graph aún no se verifica para esta versión de CMS.</notverified>
+            <noresponse>Graph no respondió.</noresponse>
+          </graphhealthcheck>
+        </checks>
+      </cmsdoctor>
+      <components>
+        <powerslice>
+          <title>Power Slice</title>
+          <description>Listas de contenido listas para usar: borradores, bloques sin usar, cambios recientes y más.</description>
+        </powerslice>
+      </components>
+      <menu>
+        <powersearch>PowerSearch</powersearch>
+      </menu>
+      <tools>
+        <powersearch>
+          <title>PowerSearch</title>
+          <description>Búsqueda de contenido facetada en todo el sitio, impulsada por Optimizely Graph.</description>
+        </powersearch>
+      </tools>
+      <ui>
+        <powersearch>
+          <placeholder>Buscar páginas, bloques y medios…</placeholder>
+          <search>Buscar</search>
+          <tab_pages>Páginas</tab_pages>
+          <tab_blocks>Bloques</tab_blocks>
+          <tab_media>Medios</tab_media>
+          <tab_other>Otro</tab_other>
+          <facet_type>Tipo</facet_type>
+          <facet_language>Idioma</facet_language>
+          <facet_section>Sección</facet_section>
+          <show_more>Mostrar {0} más</show_more>
+          <show_less>Mostrar menos</show_less>
+          <clear_filters>Borrar filtros</clear_filters>
+          <load_more>Cargar más</load_more>
+          <no_results>No se encontraron resultados.</no_results>
+          <hint>Escribe para buscar en todo el sitio.</hint>
+          <unavailable>La búsqueda de Graph no está disponible. Comprueba la configuración de Optimizely Graph.</unavailable>
+          <unavailable_link>Abrir CMS Doctor</unavailable_link>
+          <error>Algo salió mal durante la búsqueda. Por favor, intenta de nuevo.</error>
+          <index_lag>Los resultados provienen del índice de Optimizely Graph y pueden estar retrasados respecto a la publicación reciente.</index_lag>
+          <draft>Borrador</draft>
+          <by>por</by>
+          <results_count>{0} resultados</results_count>
+        </powersearch>
+      </ui>
+    </editorpowertools>
+  </language>
+</languages>

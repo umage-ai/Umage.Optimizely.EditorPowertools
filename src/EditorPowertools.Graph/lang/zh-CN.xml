@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="简体中文" id="zh-CN">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <PowerSearch>访问 PowerSearch - 分面搜索，由 Optimizely Graph 提供支持的内容搜索。</PowerSearch>
+              <PowerSlice>访问 Power Slice 资源窗格小部件 - 现成的 Graph 支持的内容列表。</PowerSlice>
+              <SearchProviders>在 CMS 编辑 UI 中使用 Graph 支持的搜索提供程序。</SearchProviders>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <graph>
+        <powerslice>
+          <slices>
+            <mycontent>我的内容</mycontent>
+            <recentlychanged>最近更改</recentlychanged>
+            <drafts>草稿</drafts>
+            <awaitingapproval>待批准</awaitingapproval>
+            <stalecontent>过期内容</stalecontent>
+            <unusedblocks>未使用的块</unusedblocks>
+          </slices>
+          <sort>
+            <name>名称 (A-Z)</name>
+            <changed>最近更改</changed>
+            <changedasc>很少更改</changedasc>
+            <published>最近发布</published>
+          </sort>
+          <strings>
+            <filterplaceholder>按名称筛选</filterplaceholder>
+            <reload>重新加载</reload>
+            <notavailable>您的账户无法使用 Power Slice。</notavailable>
+            <empty>此列表中没有内容要显示。</empty>
+          </strings>
+        </powerslice>
+        <powersearch>
+          <error>搜索失败。</error>
+          <status>
+            <draft>草稿</draft>
+            <notcreated>未创建</notcreated>
+            <rejected>已拒绝</rejected>
+            <checkedout>已签出</checkedout>
+            <checkedin>准备发布</checkedin>
+            <published>已发布</published>
+            <previouslypublished>之前已发布</previouslypublished>
+            <delayedpublish>已计划</delayedpublish>
+            <awaitingapproval>待批准</awaitingapproval>
+          </status>
+        </powersearch>
+        <search>
+          <category>
+            <pages>页面 (Graph)</pages>
+            <blocks>块 (Graph)</blocks>
+            <media>媒体 (Graph)</media>
+          </category>
+          <unpublisheddraft>未发布的草稿</unpublisheddraft>
+        </search>
+      </graph>
+      <cmsdoctor>
+        <groups>
+          <graph>Graph</graph>
+        </groups>
+        <checks>
+          <graphhealthcheck>
+            <name>用于编辑器搜索的 Optimizely Graph</name>
+            <description>检查 Optimizely Graph 已安装、配置并响应，以便编辑器搜索可以使用它。</description>
+            <ok>Optimizely Graph 已配置且正在响应。</ok>
+            <notinstalled>Optimizely Graph 未安装（调用 AddContentGraph()）。</notinstalled>
+            <notconfigured>Graph 网关、应用密钥或密钥缺失。</notconfigured>
+            <notverified>Graph 搜索尚未针对此 CMS 版本进行验证。</notverified>
+            <noresponse>Graph 未响应。</noresponse>
+          </graphhealthcheck>
+        </checks>
+      </cmsdoctor>
+      <components>
+        <powerslice>
+          <title>Power Slice</title>
+          <description>现成的内容列表：草稿、未使用的块、最近更改等。</description>
+        </powerslice>
+      </components>
+      <menu>
+        <powersearch>PowerSearch</powersearch>
+      </menu>
+      <tools>
+        <powersearch>
+          <title>PowerSearch</title>
+          <description>跨整个站点的分面内容搜索，由 Optimizely Graph 提供支持。</description>
+        </powersearch>
+      </tools>
+      <ui>
+        <powersearch>
+          <placeholder>搜索页面、块和媒体…</placeholder>
+          <search>搜索</search>
+          <tab_pages>页面</tab_pages>
+          <tab_blocks>块</tab_blocks>
+          <tab_media>媒体</tab_media>
+          <tab_other>其他</tab_other>
+          <facet_type>类型</facet_type>
+          <facet_language>语言</facet_language>
+          <facet_section>栏目</facet_section>
+          <show_more>再显示 {0} 项</show_more>
+          <show_less>显示更少</show_less>
+          <clear_filters>清除筛选</clear_filters>
+          <load_more>加载更多</load_more>
+          <no_results>未找到结果。</no_results>
+          <hint>输入以搜索整个站点。</hint>
+          <unavailable>Graph 搜索不可用。检查 Optimizely Graph 配置。</unavailable>
+          <unavailable_link>打开 CMS Doctor</unavailable_link>
+          <error>搜索时出错。请重试。</error>
+          <index_lag>结果来自 Optimizely Graph 索引，可能滞后于最近的发布。</index_lag>
+          <draft>草稿</draft>
+          <by>作者：</by>
+          <results_count>{0} 个结果</results_count>
+        </powersearch>
+      </ui>
+    </editorpowertools>
+  </language>
+</languages>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Svenska" id="sv">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <PowerSearch>Åtkomst till PowerSearch — facetterad, Graph-driven innehållssökning.</PowerSearch>
+              <PowerSlice>Åtkomst till Power Slice-widgeten i tillgångspanelen — färdiga Graph-drivna innehållslistor.</PowerSlice>
+              <SearchProviders>Använd Graph-drivna sökleverantörer i CMS-redigeringsgränssnittet.</SearchProviders>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <graph>
+        <powerslice>
+          <slices>
+            <mycontent>Mitt innehåll</mycontent>
+            <recentlychanged>Nyligen ändrat</recentlychanged>
+            <drafts>Utkast</drafts>
+            <awaitingapproval>Avvaktar godkännande</awaitingapproval>
+            <stalecontent>Föråldrat innehåll</stalecontent>
+            <unusedblocks>Oanvända block</unusedblocks>
+          </slices>
+          <sort>
+            <name>Namn (A-Z)</name>
+            <changed>Nyligen ändrat</changed>
+            <changedasc>Minst nyligen ändrat</changedasc>
+            <published>Nyligen publicerat</published>
+          </sort>
+          <strings>
+            <filterplaceholder>Filtrera efter namn</filterplaceholder>
+            <reload>Ladda om</reload>
+            <notavailable>Power Slice är inte tillgängligt för ditt konto.</notavailable>
+            <empty>Ingenting att visa i denna lista.</empty>
+          </strings>
+        </powerslice>
+        <powersearch>
+          <error>Sökningen misslyckades.</error>
+          <status>
+            <draft>Utkast</draft>
+            <notcreated>Inte skapad</notcreated>
+            <rejected>Avvisad</rejected>
+            <checkedout>Utcheckad</checkedout>
+            <checkedin>Redo att publicera</checkedin>
+            <published>Publicerad</published>
+            <previouslypublished>Tidigare publicerad</previouslypublished>
+            <delayedpublish>Schemalagd</delayedpublish>
+            <awaitingapproval>Avvaktar godkännande</awaitingapproval>
+          </status>
+        </powersearch>
+        <search>
+          <category>
+            <pages>Sidor (Graph)</pages>
+            <blocks>Block (Graph)</blocks>
+            <media>Media (Graph)</media>
+          </category>
+          <unpublisheddraft>Opublicerad utkast</unpublisheddraft>
+        </search>
+      </graph>
+      <cmsdoctor>
+        <groups>
+          <graph>Graph</graph>
+        </groups>
+        <checks>
+          <graphhealthcheck>
+            <name>Optimizely Graph för redigeringssökning</name>
+            <description>Kontrollerar att Optimizely Graph är installerad, konfigurerad och svarar, så att redigeringssökningen kan använda den.</description>
+            <ok>Optimizely Graph är konfigurerad och svarar.</ok>
+            <notinstalled>Optimizely Graph är inte installerad (anropa AddContentGraph()).</notinstalled>
+            <notconfigured>Graph-gateway, app-nyckel eller hemlighet saknas.</notconfigured>
+            <notverified>Graph-sökning är ännu inte verifierad för denna CMS-version.</notverified>
+            <noresponse>Graph svarade inte.</noresponse>
+          </graphhealthcheck>
+        </checks>
+      </cmsdoctor>
+      <components>
+        <powerslice>
+          <title>Power Slice</title>
+          <description>Färdiga innehållslistor: utkast, oanvända block, nyligen ändrat och mer.</description>
+        </powerslice>
+      </components>
+      <menu>
+        <powersearch>PowerSearch</powersearch>
+      </menu>
+      <tools>
+        <powersearch>
+          <title>PowerSearch</title>
+          <description>Facetterad innehållssökning på hela webbplatsen, driven av Optimizely Graph.</description>
+        </powersearch>
+      </tools>
+      <ui>
+        <powersearch>
+          <placeholder>Sök sidor, block och media…</placeholder>
+          <search>Sök</search>
+          <tab_pages>Sidor</tab_pages>
+          <tab_blocks>Block</tab_blocks>
+          <tab_media>Media</tab_media>
+          <tab_other>Övrigt</tab_other>
+          <facet_type>Typ</facet_type>
+          <facet_language>Språk</facet_language>
+          <facet_section>Avsnitt</facet_section>
+          <show_more>Visa {0} fler</show_more>
+          <show_less>Visa mindre</show_less>
+          <clear_filters>Rensa filter</clear_filters>
+          <load_more>Ladda mer</load_more>
+          <no_results>Inga resultat hittades.</no_results>
+          <hint>Skriv för att söka på hela webbplatsen.</hint>
+          <unavailable>Graph-sökning är inte tillgänglig. Kontrollera Optimizely Graph-konfigurationen.</unavailable>
+          <unavailable_link>Öppna CMS Doctor</unavailable_link>
+          <error>Något gick fel vid sökningen. Försök igen.</error>
+          <index_lag>Resultat kommer från Optimizely Graph-indexet och kan hamna efter den senaste publiceringen.</index_lag>
+          <draft>Utkast</draft>
+          <by>av</by>
+          <results_count>{0} resultat</results_count>
+        </powersearch>
+      </ui>
+    </editorpowertools>
+  </language>
+</languages>

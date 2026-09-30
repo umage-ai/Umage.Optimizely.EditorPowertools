@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Suomi" id="fi">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <PowerSearch>Pääsy PowerSearchiin — jäsennelty, Graph-pohjainen sisältöhaku.</PowerSearch>
+              <PowerSlice>Pääsy Power Slice -widgetiin resurssipaneelissa — valmiit Graph-pohjaiset sisältöluettelot.</PowerSlice>
+              <SearchProviders>Käytä Graph-tuettuja hakupalveluja CMS-muokkausliittymässä.</SearchProviders>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <graph>
+        <powerslice>
+          <slices>
+            <mycontent>Oma sisältö</mycontent>
+            <recentlychanged>Äskettäin muutettu</recentlychanged>
+            <drafts>Luonnokset</drafts>
+            <awaitingapproval>Odottaa hyväksyntää</awaitingapproval>
+            <stalecontent>Vanhentuneet sisällöt</stalecontent>
+            <unusedblocks>Käyttämättömät lohkot</unusedblocks>
+          </slices>
+          <sort>
+            <name>Nimi (A-Z)</name>
+            <changed>Äskettäin muutettu</changed>
+            <changedasc>Vähiten äskettäin muutettu</changedasc>
+            <published>Äskettäin julkaistu</published>
+          </sort>
+          <strings>
+            <filterplaceholder>Suodata nimen perusteella</filterplaceholder>
+            <reload>Lataa uudelleen</reload>
+            <notavailable>Power Slice ei ole käytettävissä tilillesi.</notavailable>
+            <empty>Ei näytettävää tässä luettelossa.</empty>
+          </strings>
+        </powerslice>
+        <powersearch>
+          <error>Haku epäonnistui.</error>
+          <status>
+            <draft>Luonnos</draft>
+            <notcreated>Ei luotu</notcreated>
+            <rejected>Hylätty</rejected>
+            <checkedout>Otettu muokattavaksi</checkedout>
+            <checkedin>Valmis julkaistavaksi</checkedin>
+            <published>Julkaistu</published>
+            <previouslypublished>Aiemmin julkaistu</previouslypublished>
+            <delayedpublish>Ajoitettu</delayedpublish>
+            <awaitingapproval>Odottaa hyväksyntää</awaitingapproval>
+          </status>
+        </powersearch>
+        <search>
+          <category>
+            <pages>Sivut (Graph)</pages>
+            <blocks>Lohkot (Graph)</blocks>
+            <media>Media (Graph)</media>
+          </category>
+          <unpublisheddraft>Julkaisematon luonnos</unpublisheddraft>
+        </search>
+      </graph>
+      <cmsdoctor>
+        <groups>
+          <graph>Graph</graph>
+        </groups>
+        <checks>
+          <graphhealthcheck>
+            <name>Optimizely Graph -editorihakua varten</name>
+            <description>Tarkistaa, että Optimizely Graph on asennettu, konfiguroitu ja vastaa, jotta editorin haku voi käyttää sitä.</description>
+            <ok>Optimizely Graph on konfiguroitu ja vastaa.</ok>
+            <notinstalled>Optimizely Graph ei ole asennettu (kutsu AddContentGraph()).</notinstalled>
+            <notconfigured>Graph gateway, sovelluksen avain tai salaisuus puuttuu.</notconfigured>
+            <notverified>Graph-hakua ei ole vielä vahvistettu tälle CMS-versiolle.</notverified>
+            <noresponse>Graph ei vastannut.</noresponse>
+          </graphhealthcheck>
+        </checks>
+      </cmsdoctor>
+      <components>
+        <powerslice>
+          <title>Power Slice</title>
+          <description>Valmiit sisältöluettelot: luonnokset, käyttämättömät lohkot, äskettäin muutettu ja paljon muuta.</description>
+        </powerslice>
+      </components>
+      <menu>
+        <powersearch>PowerSearch</powersearch>
+      </menu>
+      <tools>
+        <powersearch>
+          <title>PowerSearch</title>
+          <description>Jäsennelty sisältöhaku koko sivuston laajuudella, jota ohjaa Optimizely Graph.</description>
+        </powersearch>
+      </tools>
+      <ui>
+        <powersearch>
+          <placeholder>Etsi sivuja, lohkoja ja mediaa…</placeholder>
+          <search>Haku</search>
+          <tab_pages>Sivut</tab_pages>
+          <tab_blocks>Lohkot</tab_blocks>
+          <tab_media>Media</tab_media>
+          <tab_other>Muuta</tab_other>
+          <facet_type>Tyyppi</facet_type>
+          <facet_language>Kieli</facet_language>
+          <facet_section>Osio</facet_section>
+          <show_more>Näytä {0} lisää</show_more>
+          <show_less>Näytä vähemmän</show_less>
+          <clear_filters>Tyhjennä suodattimet</clear_filters>
+          <load_more>Lataa lisää</load_more>
+          <no_results>Tuloksia ei löytynyt.</no_results>
+          <hint>Kirjoita etsiäksesi koko sivusta.</hint>
+          <unavailable>Graph-haku ei ole käytettävissä. Tarkista Optimizely Graph -konfiguraatio.</unavailable>
+          <unavailable_link>Avaa CMS Doctor</unavailable_link>
+          <error>Hakua suoritettaessa tapahtui virhe. Yritä uudelleen.</error>
+          <index_lag>Tulokset ovat peräisin Optimizely Graph -indeksistä ja saattavat jäädä jäljelle viimeisen julkaisun suhteen.</index_lag>
+          <draft>Luonnos</draft>
+          <by>tekijä:</by>
+          <results_count>{0} tulosta</results_count>
+        </powersearch>
+      </ui>
+    </editorpowertools>
+  </language>
+</languages>

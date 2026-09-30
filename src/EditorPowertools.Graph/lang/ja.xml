@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="日本語" id="ja">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <PowerSearch>PowerSearch へのアクセス — Graph に基づいたファセット検索。</PowerSearch>
+              <PowerSlice>Power Slice アセットペイン ウィジェットへのアクセス — Graph に基づいたコンテンツリスト。</PowerSlice>
+              <SearchProviders>CMS 編集 UI で Graph に基づいた検索プロバイダーを使用します。</SearchProviders>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <graph>
+        <powerslice>
+          <slices>
+            <mycontent>マイ コンテンツ</mycontent>
+            <recentlychanged>最近変更</recentlychanged>
+            <drafts>ドラフト</drafts>
+            <awaitingapproval>承認待ち</awaitingapproval>
+            <stalecontent>古いコンテンツ</stalecontent>
+            <unusedblocks>未使用ブロック</unusedblocks>
+          </slices>
+          <sort>
+            <name>名前 (A-Z)</name>
+            <changed>最近変更</changed>
+            <changedasc>最後に変更</changedasc>
+            <published>最近公開</published>
+          </sort>
+          <strings>
+            <filterplaceholder>名前で絞り込み</filterplaceholder>
+            <reload>再読込</reload>
+            <notavailable>Power Slice はこのアカウントで利用できません。</notavailable>
+            <empty>このリストに表示するものはありません。</empty>
+          </strings>
+        </powerslice>
+        <powersearch>
+          <error>検索に失敗しました。</error>
+          <status>
+            <draft>ドラフト</draft>
+            <notcreated>作成されていない</notcreated>
+            <rejected>却下</rejected>
+            <checkedout>チェックアウト</checkedout>
+            <checkedin>公開準備完了</checkedin>
+            <published>公開済み</published>
+            <previouslypublished>以前公開</previouslypublished>
+            <delayedpublish>スケジュール済み</delayedpublish>
+            <awaitingapproval>承認待ち</awaitingapproval>
+          </status>
+        </powersearch>
+        <search>
+          <category>
+            <pages>ページ (Graph)</pages>
+            <blocks>ブロック (Graph)</blocks>
+            <media>メディア (Graph)</media>
+          </category>
+          <unpublisheddraft>公開されていないドラフト</unpublisheddraft>
+        </search>
+      </graph>
+      <cmsdoctor>
+        <groups>
+          <graph>Graph</graph>
+        </groups>
+        <checks>
+          <graphhealthcheck>
+            <name>エディター検索用 Optimizely Graph</name>
+            <description>Optimizely Graph がインストール、設定され、応答していることを確認し、エディター検索がそれを使用できるようにします。</description>
+            <ok>Optimizely Graph は設定され、応答しています。</ok>
+            <notinstalled>Optimizely Graph がインストールされていません (AddContentGraph() を呼び出してください)。</notinstalled>
+            <notconfigured>Graph ゲートウェイ、アプリ キー、またはシークレットが見つかりません。</notconfigured>
+            <notverified>Graph 検索はこの CMS バージョンではまだ検証されていません。</notverified>
+            <noresponse>Graph が応答しませんでした。</noresponse>
+          </graphhealthcheck>
+        </checks>
+      </cmsdoctor>
+      <components>
+        <powerslice>
+          <title>Power Slice</title>
+          <description>ドラフト、未使用ブロック、最近変更されたコンテンツなどの既成リスト。</description>
+        </powerslice>
+      </components>
+      <menu>
+        <powersearch>PowerSearch</powersearch>
+      </menu>
+      <tools>
+        <powersearch>
+          <title>PowerSearch</title>
+          <description>Optimizely Graph に支えられた、サイト全体のファセット付きコンテンツ検索。</description>
+        </powersearch>
+      </tools>
+      <ui>
+        <powersearch>
+          <placeholder>ページ、ブロック、メディアを検索…</placeholder>
+          <search>検索</search>
+          <tab_pages>ページ</tab_pages>
+          <tab_blocks>ブロック</tab_blocks>
+          <tab_media>メディア</tab_media>
+          <tab_other>その他</tab_other>
+          <facet_type>タイプ</facet_type>
+          <facet_language>言語</facet_language>
+          <facet_section>セクション</facet_section>
+          <show_more>さらに {0} 件表示</show_more>
+          <show_less>表示を減らす</show_less>
+          <clear_filters>フィルターをクリア</clear_filters>
+          <load_more>さらに読み込む</load_more>
+          <no_results>結果が見つかりません。</no_results>
+          <hint>サイト全体を検索するには入力してください。</hint>
+          <unavailable>Graph 検索は利用できません。Optimizely Graph の設定を確認してください。</unavailable>
+          <unavailable_link>CMS Doctor を開く</unavailable_link>
+          <error>検索中に問題が発生しました。もう一度実行してください。</error>
+          <index_lag>結果は Optimizely Graph インデックスから取得されており、最近の公開より遅れている場合があります。</index_lag>
+          <draft>ドラフト</draft>
+          <by>作成者</by>
+          <results_count>{0} 件の結果</results_count>
+        </powersearch>
+      </ui>
+    </editorpowertools>
+  </language>
+</languages>
