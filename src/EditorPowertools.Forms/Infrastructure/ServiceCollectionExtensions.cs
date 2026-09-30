@@ -37,6 +37,8 @@ public static class ServiceCollectionExtensions
             .Configure(configureOptions);
 
         services.AddSingleton<FormsFeatureAccessChecker>();
+        services.AddSingleton<UmageAI.Optimizely.EditorPowerTools.Localization.IUiStringsContributor, UmageAI.Optimizely.EditorPowerTools.Forms.Localization.FormsUiStringsContributor>();
+        services.AddSingleton<UmageAI.Optimizely.EditorPowerTools.Localization.IUiStringsContributor, UmageAI.Optimizely.EditorPowerTools.Forms.Localization.SubmissionsTimelineUiStringsContributor>();
         services.AddTransient<IFormsAggregationService, FormsAggregationService>();
         // Broadcaster is a singleton because it hooks the static FormsEvents
         // exactly once and fans out to many SSE clients. AddHostedService keeps

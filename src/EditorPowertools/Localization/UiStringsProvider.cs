@@ -6,11 +6,40 @@ namespace UmageAI.Optimizely.EditorPowerTools.Localization;
 /// Provides all JavaScript UI strings from the localization service,
 /// serialized to window.EPT_STRINGS in the layout.
 /// </summary>
-public class UiStringsProvider(LocalizationService loc)
+public class UiStringsProvider(LocalizationService loc, IEnumerable<IUiStringsContributor> contributors)
 {
     private string S(string key) => loc.GetString($"/editorpowertools/ui/{key}");
 
-    public object GetAll() => new
+    /// <summary>
+    /// Returns the core UI string sections merged with sections published by add-on contributors.
+    /// Core sections always win over a contributor using the same section name.
+    /// </summary>
+    public IDictionary<string, object> GetAll()
+    {
+        var core = Core();
+        var result = new Dictionary<string, object>(StringComparer.Ordinal);
+        foreach (var prop in core.GetType().GetProperties())
+        {
+            result[prop.Name] = prop.GetValue(core)!;
+        }
+
+        foreach (var c in contributors)
+        {
+            if (result.ContainsKey(c.Section))
+            {
+                continue;
+            }
+
+            result[c.Section] = c.Keys.Distinct(StringComparer.Ordinal).ToDictionary(
+                k => k.Replace('/', '_'),
+                k => loc.GetString($"/editorpowertools/ui/{c.Section}/{k}"),
+                StringComparer.Ordinal);
+        }
+
+        return result;
+    }
+
+    private object Core() => new
     {
         shared = new
         {
