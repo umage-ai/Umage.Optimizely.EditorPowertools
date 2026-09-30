@@ -4,6 +4,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UmageAI.Optimizely.EditorPowerTools.Abstractions;
+using UmageAI.Optimizely.EditorPowerTools.Graph.Abstractions;
+#if OPTIMIZELY_CMS13
+using UmageAI.Optimizely.EditorPowerTools.Graph.Cms13;
+#else
+using UmageAI.Optimizely.EditorPowerTools.Graph.Cms12;
+#endif
 using UmageAI.Optimizely.EditorPowerTools.Graph.Configuration;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Menu;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Permissions;
@@ -36,6 +42,12 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<GraphFeatureAccessChecker>();
 
         // ---- Registrations added by later tasks (search, providers, slices, PowerSearch) go below ----
+        services.AddHttpContextAccessor();
+#if OPTIMIZELY_CMS13
+        services.AddScoped<IGraphQueryExecutor, Cms13GraphQueryExecutor>();
+#else
+        services.AddScoped<IGraphQueryExecutor, Cms12GraphQueryExecutor>();
+#endif
 
         // ---- end of later-task registrations ----
 
