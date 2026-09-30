@@ -33,4 +33,24 @@ public class ServiceRegistrationTests
         services.BuildServiceProvider().GetRequiredService<IOptions<ProtectedModuleOptions>>().Value
             .Items.Should().Contain(m => m.Name == "EditorPowertoolsGraph");
     }
+
+    [Fact]
+    public void Registers_search_providers_and_picker_provider()
+    {
+        var services = new ServiceCollection().AddSingleton<IConfiguration>(new ConfigurationBuilder().Build());
+        services.AddEditorPowertoolsGraph();
+        services.AddEditorPowertoolsGraph(); // idempotent for enumerable providers
+
+        var providers = services.Where(d => d.ServiceType == typeof(EPiServer.Shell.Search.ISearchProvider))
+            .Select(d => d.ImplementationType).ToList();
+        providers.Should().BeEquivalentTo(new[]
+        {
+            typeof(UmageAI.Optimizely.EditorPowerTools.Graph.Providers.GraphPageSearchProvider),
+            typeof(UmageAI.Optimizely.EditorPowerTools.Graph.Providers.GraphBlockSearchProvider),
+            typeof(UmageAI.Optimizely.EditorPowerTools.Graph.Providers.GraphFileSearchProvider)
+        });
+        services.Should().Contain(d =>
+            d.ServiceType == typeof(UmageAI.Optimizely.EditorPowerTools.Abstractions.IContentSearchProvider)
+            && d.ImplementationType == typeof(UmageAI.Optimizely.EditorPowerTools.Graph.Providers.GraphContentPickerSearchProvider));
+    }
 }

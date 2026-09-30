@@ -27,7 +27,7 @@ public class GraphFeatureAccessChecker
         _baseChecker = baseChecker;
     }
 
-    public bool IsFeatureEnabled(string featureName)
+    public virtual bool IsFeatureEnabled(string featureName)
     {
         var toggles = _options.Value.Features;
         var property = typeof(GraphFeatureToggles).GetProperty(featureName);
@@ -37,7 +37,7 @@ public class GraphFeatureAccessChecker
         return (bool)(property.GetValue(toggles) ?? false);
     }
 
-    public bool HasAccess(HttpContext context, string featureName, PermissionType permissionType)
+    public virtual bool HasAccess(HttpContext context, string featureName, PermissionType permissionType)
     {
         return IsFeatureEnabled(featureName) && _baseChecker.HasPermission(context, permissionType);
     }
@@ -47,7 +47,7 @@ public class GraphFeatureAccessChecker
     /// applies the same "codeart:editorpowertools" policy the controllers carry, then the toggle and
     /// permission. Keeps these surfaces on exactly the same audience as every other tool.
     /// </summary>
-    public bool HasUiAccess(HttpContext? context, string featureName, PermissionType permissionType)
+    public virtual bool HasUiAccess(HttpContext? context, string featureName, PermissionType permissionType)
     {
         if (context?.User?.Identity?.IsAuthenticated != true) return false;
         var auth = context.RequestServices.GetService<IAuthorizationService>();

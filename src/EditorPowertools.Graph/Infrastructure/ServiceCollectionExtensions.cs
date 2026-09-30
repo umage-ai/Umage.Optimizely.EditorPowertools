@@ -1,8 +1,10 @@
 using EPiServer.Shell;
 using EPiServer.Shell.Modules;
+using EPiServer.Shell.Search;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using UmageAI.Optimizely.EditorPowerTools.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Abstractions;
 #if OPTIMIZELY_CMS13
@@ -13,6 +15,7 @@ using UmageAI.Optimizely.EditorPowerTools.Graph.Cms12;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Configuration;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Menu;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Graph.Providers;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Search;
 using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
 
@@ -59,6 +62,14 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IGraphAvailability, GraphAvailability>();
         services.AddTransient<IDoctorCheck, GraphHealthCheck>();
         services.AddScoped<IGraphSearchService, GraphSearchService>();
+
+        // CMS UI search providers (Pages/Blocks/Media) and the content picker backing store.
+        services.AddScoped<DraftSearch>();
+        services.AddScoped<SearchResultFactory>();
+        services.TryAddEnumerable(ServiceDescriptor.Scoped<ISearchProvider, GraphPageSearchProvider>());
+        services.TryAddEnumerable(ServiceDescriptor.Scoped<ISearchProvider, GraphBlockSearchProvider>());
+        services.TryAddEnumerable(ServiceDescriptor.Scoped<ISearchProvider, GraphFileSearchProvider>());
+        services.AddScoped<IContentSearchProvider, GraphContentPickerSearchProvider>();
 
         // ---- end of later-task registrations ----
 

@@ -15,6 +15,16 @@
       </permissiontype>
     </admin>
     <editorpowertools>
+      <graph>
+        <search>
+          <category>
+            <pages>Pages (Graph)</pages>
+            <blocks>Blocks (Graph)</blocks>
+            <media>Media (Graph)</media>
+          </category>
+          <unpublisheddraft>Unpublished draft</unpublisheddraft>
+        </search>
+      </graph>
       <menu>
         <powersearch>PowerSearch</powersearch>
       </menu>
