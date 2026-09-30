@@ -1,0 +1,25 @@
+@inject LocalizationService Loc
+@{
+    Layout = "/Views/Shared/_PowertoolsLayout.cshtml";
+    ViewData["Title"] = Loc.GetString("/editorpowertools/tools/powersearch/title");
+    string BaseResource(string path) => Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Menu.EditorPowertoolsMenuProvider), path);
+}
+
+@section NavItems {
+    <a href="@BaseResource("EditorPowertools/Overview")">@Loc.GetString("/editorpowertools/menu/overview")</a>
+}
+
+<div class="ept-page-header">
+    <h1>@Loc.GetString("/editorpowertools/tools/powersearch/title")</h1>
+    <p>@Loc.GetString("/editorpowertools/tools/powersearch/description")</p>
+</div>
+
+<div id="ept-powersearch-root"></div>
+
+<script>
+    window.EPT_GRAPH_BASE_URL = '@Html.Raw(Paths.ToResource(typeof(UmageAI.Optimizely.EditorPowerTools.Graph.Menu.EditorPowertoolsGraphMenuProvider), ""))';
+</script>
+@section Scripts {
+    <link rel="stylesheet" href="@Paths.ToClientResource(typeof(UmageAI.Optimizely.EditorPowerTools.Graph.Menu.EditorPowertoolsGraphMenuProvider), "ClientResources/css/editorpowertools-graph.css")" />
+    <script src="@Paths.ToClientResource(typeof(UmageAI.Optimizely.EditorPowerTools.Graph.Menu.EditorPowertoolsGraphMenuProvider), "ClientResources/js/powersearch.js")"></script>
+}

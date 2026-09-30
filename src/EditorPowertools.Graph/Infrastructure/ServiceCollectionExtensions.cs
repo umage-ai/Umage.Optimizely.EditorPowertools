@@ -17,6 +17,7 @@ using UmageAI.Optimizely.EditorPowerTools.Graph.Menu;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Permissions;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Providers;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Search;
+using UmageAI.Optimizely.EditorPowerTools.Graph.Tools.PowerSearch;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Tools.PowerSlice;
 using EPiServer.Shell.ContentQuery;
 using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
@@ -81,6 +82,8 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IContentQuery, AwaitingApprovalSlice>();
         services.AddTransient<IContentQuery, StaleContentSlice>();
         services.AddTransient<IContentQuery, UnusedBlocksSlice>();
+
+        services.AddScoped<IPowerSearchService, PowerSearchService>();
 
         // ---- end of later-task registrations ----
 
