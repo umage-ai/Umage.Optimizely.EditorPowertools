@@ -15,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="EPiServer.CMS" Version="13.2.0" />
     <PackageReference Include="EPiServer.Cms.UI.AspNetIdentity" Version="13.2.0" />
+    <PackageReference Include="Optimizely.Graph.Cms" Version="13.*" />
     <PackageReference Include="EPiServer.Forms" Version="6.*" />
     <PackageReference Include="Wangkanai.Detection" Version="8.7.0" />
   </ItemGroup>
@@ -26,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EditorPowertools\EditorPowertools.csproj" />
     <ProjectReference Include="..\EditorPowertools.Forms\EditorPowertools.Forms.csproj" />
+    <ProjectReference Include="..\EditorPowertools.Graph\EditorPowertools.Graph.csproj" />
   </ItemGroup>
 
   <!-- Copy module files from the addon project during build (dev only, NuGet handles this via .targets) -->
@@ -47,5 +49,11 @@
       SourceFiles="@(EditorPowertoolsFormsModuleFiles)"
       DestinationFiles="@(EditorPowertoolsFormsModuleFiles->'$(MSBuildProjectDirectory)\modules\_protected\EditorPowertoolsForms\%(RecursiveDir)%(Filename)%(Extension)')"
       SkipUnchangedFiles="true" />
+  </Target>
+  <Target Name="CopyEditorPowertoolsGraphModuleFiles" BeforeTargets="Build">
+    <ItemGroup>
+      <EditorPowertoolsGraphModuleFiles Include="..\EditorPowertools.Graph\modules\_protected\EditorPowertoolsGraph\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(EditorPowertoolsGraphModuleFiles)" DestinationFiles="@(EditorPowertoolsGraphModuleFiles->'$(MSBuildProjectDirectory)\modules\_protected\EditorPowertoolsGraph\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
 </Project>
