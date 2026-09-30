@@ -17,6 +17,8 @@ using UmageAI.Optimizely.EditorPowerTools.Graph.Menu;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Permissions;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Providers;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Search;
+using UmageAI.Optimizely.EditorPowerTools.Graph.Tools.PowerSlice;
+using EPiServer.Shell.ContentQuery;
 using UmageAI.Optimizely.EditorPowerTools.Tools.CmsDoctor.Models;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Graph.Infrastructure;
@@ -70,6 +72,15 @@ public static class ServiceCollectionExtensions
         services.TryAddEnumerable(ServiceDescriptor.Scoped<ISearchProvider, GraphBlockSearchProvider>());
         services.TryAddEnumerable(ServiceDescriptor.Scoped<ISearchProvider, GraphFileSearchProvider>());
         services.AddScoped<IContentSearchProvider, GraphContentPickerSearchProvider>();
+
+        // Power Slice: each slice is an IContentQuery the assets-pane widget discovers by plug-in area.
+        services.TryAddSingleton(TimeProvider.System);
+        services.AddTransient<IContentQuery, MyContentSlice>();
+        services.AddTransient<IContentQuery, RecentlyChangedSlice>();
+        services.AddTransient<IContentQuery, DraftsSlice>();
+        services.AddTransient<IContentQuery, AwaitingApprovalSlice>();
+        services.AddTransient<IContentQuery, StaleContentSlice>();
+        services.AddTransient<IContentQuery, UnusedBlocksSlice>();
 
         // ---- end of later-task registrations ----
 

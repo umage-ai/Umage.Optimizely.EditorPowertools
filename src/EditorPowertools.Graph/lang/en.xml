@@ -16,6 +16,28 @@
     </admin>
     <editorpowertools>
       <graph>
+        <powerslice>
+          <slices>
+            <mycontent>My content</mycontent>
+            <recentlychanged>Recently changed</recentlychanged>
+            <drafts>Drafts</drafts>
+            <awaitingapproval>Awaiting approval</awaitingapproval>
+            <stalecontent>Stale content</stalecontent>
+            <unusedblocks>Unused blocks</unusedblocks>
+          </slices>
+          <sort>
+            <name>Name (A-Z)</name>
+            <changed>Recently changed</changed>
+            <changedasc>Least recently changed</changedasc>
+            <published>Recently published</published>
+          </sort>
+          <strings>
+            <filterplaceholder>Filter by name</filterplaceholder>
+            <reload>Reload</reload>
+            <notavailable>Power Slice is not available for your account.</notavailable>
+            <empty>Nothing to show in this list.</empty>
+          </strings>
+        </powerslice>
         <search>
           <category>
             <pages>Pages (Graph)</pages>
@@ -25,6 +47,12 @@
           <unpublisheddraft>Unpublished draft</unpublisheddraft>
         </search>
       </graph>
+      <components>
+        <powerslice>
+          <title>Power Slice</title>
+          <description>Ready-made lists of content: drafts, unused blocks, recently changed and more.</description>
+        </powerslice>
+      </components>
       <menu>
         <powersearch>PowerSearch</powersearch>
       </menu>
