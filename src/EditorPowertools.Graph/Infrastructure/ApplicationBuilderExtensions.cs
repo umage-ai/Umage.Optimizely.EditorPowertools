@@ -18,7 +18,7 @@ public static class ApplicationBuilderExtensions
 
     /// <summary>
     /// Registers an MVC route under the Graph module's protected path so its
-    /// controllers are reachable at <c>/EPiServer/EditorPowertoolsGraph/{controller}/{action}</c>.
+    /// controllers are reachable at <c>{shell-module-path}/EditorPowertoolsGraph/{controller}/{action}</c>.
     /// Call this from the host's endpoint mapping alongside
     /// <c>endpoints.MapEditorPowertools()</c>.
     /// </summary>
