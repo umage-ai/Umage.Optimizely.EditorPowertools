@@ -98,7 +98,7 @@ services.AddEditorPowertoolsGraph(options =>
 | `Search.DisableBuiltInProviders` | `false` | Hide the CMS built-in page/block/media search providers while Graph is available. |
 | `Search.IncludeDrafts` | `true` | Merge the editor's own drafts (read from the CMS, not Graph) into results, shown first. |
 | `Search.OverfetchFactor` | `5` | Graph is asked for this multiple of the requested page size, so post-filtering does not leave short pages. |
-| `Search.MaxOverfetch` | `250` | Upper bound on the overfetch. |
+| `Search.MaxOverfetch` | `100` | Upper bound on the overfetch. Graph accepts at most 100 per request, so higher values are capped. |
 | `Search.ContentTypeFacetLimit` | `100` | Maximum content type facet values. |
 | `Search.SectionFacetLimit` | `200` | Maximum section facet values. |
 | `Search.PowerSearchPageSize` | `20` | Results per page in PowerSearch. |

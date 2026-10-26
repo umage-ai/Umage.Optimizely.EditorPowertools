@@ -14,7 +14,7 @@ public class GraphSearchOptions
     public bool DisableBuiltInProviders { get; set; }
     public bool IncludeDrafts { get; set; } = true;
     public int OverfetchFactor { get; set; } = 5;
-    public int MaxOverfetch { get; set; } = 250;
+    public int MaxOverfetch { get; set; } = 100;
     public int ContentTypeFacetLimit { get; set; } = 100;
     public int SectionFacetLimit { get; set; } = 200;
     public int PowerSearchPageSize { get; set; } = 20;

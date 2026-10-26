@@ -6,7 +6,8 @@ namespace UmageAI.Optimizely.EditorPowerTools.Graph.Search;
 /// <summary>Single entry point for all Graph search surfaces. Clamps paging and allow-lists content type names.</summary>
 public sealed class GraphSearchService : IGraphSearchService
 {
-    internal const int MaxLimit = 250;
+    /// <summary>Graph rejects a <c>limit</c> above 100 for a single request.</summary>
+    internal const int MaxLimit = 100;
 
     private static readonly string[] BaseTypes = { "PageData", "BlockData", "MediaData", "ContentFolder" };
 

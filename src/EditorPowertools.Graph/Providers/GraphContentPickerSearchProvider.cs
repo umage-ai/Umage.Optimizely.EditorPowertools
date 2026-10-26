@@ -2,6 +2,7 @@ using EPiServer.Security;
 using Microsoft.Extensions.Logging;
 using UmageAI.Optimizely.EditorPowerTools.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Abstractions;
+using UmageAI.Optimizely.EditorPowerTools.Graph.Search;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Graph.Providers;
 
@@ -53,7 +54,7 @@ public sealed class GraphContentPickerSearchProvider : IContentSearchProvider
 
             var scope = new GraphSearchScope(_search.ValidateContentTypes(PickerTypes), ancestors, false);
             // Over-fetch when a root is given or permissions may drop rows, then cap.
-            var limit = Math.Min(Math.Max(maxResults * 3, maxResults), 250);
+            var limit = Math.Min(Math.Max(maxResults * 3, maxResults), GraphSearchService.MaxLimit);
             var request = new GraphSearchRequest(query, scope, null, GraphSearchFilters.None, limit, 0, false);
             var result = _search.SearchAsync(request, CancellationToken.None).GetAwaiter().GetResult();
 

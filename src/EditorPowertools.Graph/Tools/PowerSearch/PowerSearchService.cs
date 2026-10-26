@@ -81,7 +81,9 @@ public class PowerSearchService : IPowerSearchService
 
         var phrase = query.Q.Trim();
         var filters = new GraphSearchFilters(query.Types, query.Languages, query.Sections);
-        var limit = Math.Min(take * Math.Max(1, options.OverfetchFactor), Math.Max(1, options.MaxOverfetch));
+        var limit = Math.Min(
+            Math.Min(take * Math.Max(1, options.OverfetchFactor), Math.Max(1, options.MaxOverfetch)),
+            GraphSearchService.MaxLimit);
 
         GraphSearchResult active;
         var counts = new Dictionary<PowerSearchTab, int>();

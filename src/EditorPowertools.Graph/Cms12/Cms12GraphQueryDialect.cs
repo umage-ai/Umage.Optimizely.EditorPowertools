@@ -158,7 +158,7 @@ internal sealed partial class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGr
                     where: {{BuildWhere(scope, Array.Empty<string>(), selectedSections)}}
                 ) {
                     facets {
-                        ContentType(limit: {{Search.ContentTypeFacetLimit}}) { name count }
+                        _concreteType(limit: {{Search.ContentTypeFacetLimit}}) { name count }
                     }
                 }
             """.TrimEnd();
@@ -210,7 +210,7 @@ internal sealed partial class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGr
                         Language { Name }
                     }
                     facets {
-                        ContentType(limit: {{Search.ContentTypeFacetLimit}}) { name count }
+                        _concreteType(limit: {{Search.ContentTypeFacetLimit}}) { name count }
                         Language { Name { name count } }
                         Ancestors(limit: {{Search.SectionFacetLimit}}) { name count }
                     }
@@ -235,11 +235,13 @@ internal sealed partial class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGr
               + string.Join(", ", scope.AncestorGuids.Select(g => $"{{ Ancestors: {{ eq: \"{g:D}\" }} }}"))
               + "] }";
 
+        // Selections match the concrete type: ContentType also lists every ancestor type, so
+        // filtering on it would let "Standard Page" match its subtypes too.
         // Facet selections narrow inside the scope's own types rather than replacing them, and
         // travel as variables: no caller-supplied value belongs in query text.
         var selectedTypeClause = selectedTypes.Count == 0
             ? string.Empty
-            : "\n{ ContentType: { in: $selectedTypes } }";
+            : "\n{ _concreteType: { in: $selectedTypes } }";
 
         var selectedSectionClause = selectedSections.Count == 0
             ? string.Empty
@@ -248,7 +250,8 @@ internal sealed partial class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGr
         return $$"""
             {
                 _and: [
-                    { ContentType: { in: [{{types}}] } }{{ancestorClause}}{{selectedTypeClause}}{{selectedSectionClause}}
+                    { ContentType: { in: [{{types}}] } }
+                    { Status: { eq: "Published" } }{{ancestorClause}}{{selectedTypeClause}}{{selectedSectionClause}}
                     { _or: [
                         { Name: { contains: $phrase, boost: {{NameBoost}} } }
                         { Name: { contains: $phrase, fuzzy: true, boost: {{FuzzyNameBoost}} } }
@@ -312,7 +315,7 @@ internal sealed partial class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGr
 
         // Prefer the alias where one was asked for: it carries that group's counts with its own
         // filter lifted, so a selected value does not erase the alternatives beside it.
-        var contentTypes = ReadAliasFacet(data, "TypeFacet", "ContentType") ?? ReadFacet(facets, "ContentType");
+        var contentTypes = ReadAliasFacet(data, "TypeFacet", "_concreteType") ?? ReadFacet(facets, "_concreteType");
         var languages = ReadAliasFacet(data, "LanguageFacet", "Language", "Name") ?? ReadFacet(facets, "Language", "Name");
         var sections = ReadAliasFacet(data, "SectionFacet", "Ancestors") ?? ReadFacet(facets, "Ancestors");
 

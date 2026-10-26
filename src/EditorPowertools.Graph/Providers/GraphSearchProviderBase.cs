@@ -180,7 +180,7 @@ public abstract class GraphSearchProviderBase : ISearchProvider
     {
         var guids = SearchRoots.ToGuids(roots, _loader);
         var limit = guids.Count > 0
-            ? Math.Min(maxResults * Math.Max(1, options.OverfetchFactor), Math.Max(1, options.MaxOverfetch))
+            ? Math.Min(Math.Min(maxResults * Math.Max(1, options.OverfetchFactor), Math.Max(1, options.MaxOverfetch)), GraphSearchService.MaxLimit)
             : maxResults;
 
         var scope = new GraphSearchScope(types, guids, FilterByLocale);

@@ -72,7 +72,7 @@ public class GraphSearchServiceTests
     [InlineData(0, 1)]
     [InlineData(-5, 1)]
     [InlineData(10, 10)]
-    [InlineData(9999, 250)]
+    [InlineData(9999, 100)] // Graph rejects limit > 100
     public async Task Limit_is_clamped(int limit, int expected)
     {
         await Create().SearchAsync(Req(limit: limit), CancellationToken.None);

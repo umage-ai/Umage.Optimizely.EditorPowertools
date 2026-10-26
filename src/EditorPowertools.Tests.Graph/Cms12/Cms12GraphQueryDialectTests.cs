@@ -87,6 +87,23 @@ public class Cms12GraphQueryDialectTests
         act.Should().Throw<ArgumentException>();
     }
 
+    // Live-verified against Graph: the sync indexes checked-out drafts next to published versions,
+    // so without this filter totals and facets count a page once per draft.
+    [Fact]
+    public void Searches_published_versions_only() =>
+        Dialect.BuildSearch(Req()).Query.Should().Contain("{ Status: { eq: \"Published\" } }");
+
+    // ContentType lists every ancestor type when inheritance is indexed, so a "Standard Page"
+    // facet would also count and match every subtype. _concreteType is the instance's own type.
+    [Fact]
+    public void Type_facet_and_filter_use_the_concrete_type()
+    {
+        var r = Dialect.BuildSearch(Req(facets: true, f: new GraphSearchFilters(new[] { "ArticlePage" }, Array.Empty<string>(), Array.Empty<Guid>())));
+        r.Query.Should().Contain("_concreteType: { in: $selectedTypes }");
+        r.Query.Should().Contain("_concreteType(limit:");
+        r.Query.Should().NotContain("ContentType(limit:").And.NotContain("ContentType: { in: $selectedTypes }");
+    }
+
     [Fact]
     public void Parses_hits_total_and_facets_dropping_zero_counts_and_preferring_aliases()
     {
@@ -94,10 +111,10 @@ public class Cms12GraphQueryDialectTests
         {"Content":{"total":42,"items":[
             {"Name":"A","ContentLink":{"GuidValue":"6a4b3f3e-7f0e-4a7c-9d0b-0a2c3e4f5a6b"},"Language":{"Name":"en"}},
             {"Name":"broken","ContentLink":{"GuidValue":"not-a-guid"}}],
-         "facets":{"ContentType":[{"name":"PageData","count":42},{"name":"Dead","count":0}],
+         "facets":{"_concreteType":[{"name":"PageData","count":42},{"name":"Dead","count":0}],
                    "Language":{"Name":[{"name":"en","count":40}]},
                    "Ancestors":[{"name":"11111111-1111-1111-1111-111111111111","count":5}]}},
-         "TypeFacet":{"facets":{"ContentType":[{"name":"ArticlePage","count":7}]}}}
+         "TypeFacet":{"facets":{"_concreteType":[{"name":"ArticlePage","count":7}]}}}
         """).RootElement;
 
         var result = Dialect.ParseSearch(data, includeFacets: true);
@@ -157,10 +174,10 @@ public class Cms12GraphQueryDialectTests
     {
         var data = JsonDocument.Parse("""
         {"Content":{"total":1,"items":[],
-         "facets":{"ContentType":[{"name":"Main","count":1}],
+         "facets":{"_concreteType":[{"name":"Main","count":1}],
                    "Language":{"Name":[{"name":"mainLang","count":1}]},
                    "Ancestors":[{"name":"mainSection","count":1}]}},
-         "TypeFacet":{"facets":{"ContentType":[{"name":"AliasType","count":2}]}},
+         "TypeFacet":{"facets":{"_concreteType":[{"name":"AliasType","count":2}]}},
          "LanguageFacet":{"facets":{"Language":{"Name":[{"name":"aliasLang","count":3}]}}},
          "SectionFacet":{"facets":{"Ancestors":[{"name":"aliasSection","count":4}]}}}
         """).RootElement;
@@ -176,7 +193,7 @@ public class Cms12GraphQueryDialectTests
     public void Parse_falls_back_to_main_facets_without_aliases()
     {
         var data = JsonDocument.Parse("""
-        {"Content":{"items":[],"facets":{"ContentType":[{"name":"Main","count":1}]}}}
+        {"Content":{"items":[],"facets":{"_concreteType":[{"name":"Main","count":1}]}}}
         """).RootElement;
         Dialect.ParseSearch(data, true).Facets.ContentTypes.Should().Equal(new GraphFacetValue("Main", 1));
     }
