@@ -7,6 +7,7 @@ using UmageAI.Optimizely.EditorPowerTools.Tools.ActivityTimeline.Models;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
+using UmageAI.Optimizely.EditorPowerTools.Tests.Helpers;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Tests.Tools.ActivityTimeline;
 
@@ -33,6 +34,8 @@ public class ActivityTimelineServiceTests
     private readonly Mock<IContentTypeRepository> _contentTypeRepo = new();
     private readonly Mock<ILanguageBranchRepository> _languageBranchRepo = new();
     private readonly Mock<ILogger<ActivityTimelineService>> _logger = new();
+
+    public ActivityTimelineServiceTests() => EpiServerTestSetup.EnsureInitialized();
 
     private ActivityTimelineService CreateService()
     {

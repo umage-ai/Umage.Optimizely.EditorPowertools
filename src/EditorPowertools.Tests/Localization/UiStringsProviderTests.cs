@@ -17,11 +17,21 @@ public class UiStringsProviderTests
     [Fact]
     public void Merges_contributor_sections_with_core_sections()
     {
-        var loc = new MemoryLocalizationService();
-        loc.AddString(CultureInfo.CurrentUICulture, "/editorpowertools/ui/graphtest/hello", "Hi");
-        var provider = new UiStringsProvider(loc, new[] { new TestContributor() });
-
-        var all = provider.GetAll();
+        // A real culture, not whatever the host has: a Linux CI runner without LANG runs under
+        // the invariant culture, where the lookup misses the string.
+        var previous = CultureInfo.CurrentUICulture;
+        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("en");
+        IDictionary<string, object> all;
+        try
+        {
+            var loc = new MemoryLocalizationService();
+            loc.AddString(CultureInfo.CurrentUICulture, "/editorpowertools/ui/graphtest/hello", "Hi");
+            all = new UiStringsProvider(loc, new[] { new TestContributor() }).GetAll();
+        }
+        finally
+        {
+            CultureInfo.CurrentUICulture = previous;
+        }
 
         all.Should().ContainKey("shared");
         var section = all["graphtest"].Should().BeAssignableTo<IDictionary<string, string>>().Subject;
