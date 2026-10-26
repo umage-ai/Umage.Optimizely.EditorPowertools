@@ -423,18 +423,10 @@ public class PowerSearchService : IPowerSearchService
     /// <summary>Graph locale <c>fr_CH</c> to CMS culture <c>fr-CH</c>.</summary>
     internal static string ToCmsCulture(string graphLocale) => graphLocale.Replace('_', '-');
 
-    private static string CultureLabel(string code)
-    {
-        try
-        {
-            var native = CultureInfo.GetCultureInfo(code).NativeName;
-            return string.IsNullOrWhiteSpace(native) ? code : native;
-        }
-        catch (CultureNotFoundException)
-        {
-            return code;
-        }
-    }
+    private static string CultureLabel(string code) =>
+        KnownCultures.TryGet(code, out var culture) && !string.IsNullOrWhiteSpace(culture.NativeName)
+            ? culture.NativeName
+            : code;
 
     // ---- Helpers ----
 

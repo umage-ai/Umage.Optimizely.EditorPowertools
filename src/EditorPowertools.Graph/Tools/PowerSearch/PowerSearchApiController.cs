@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Configuration;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Permissions;
+using UmageAI.Optimizely.EditorPowerTools.Graph.Search;
 using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Graph.Tools.PowerSearch;
@@ -89,15 +90,7 @@ public class PowerSearchApiController : Controller
         foreach (var name in names ?? Array.Empty<string>())
         {
             if (list.Count >= MaxLanguages) break;
-            if (string.IsNullOrWhiteSpace(name)) continue;
-            try
-            {
-                CultureInfo.GetCultureInfo(name);
-            }
-            catch (CultureNotFoundException)
-            {
-                continue;
-            }
+            if (!KnownCultures.TryGet(name, out _)) continue;
 
             if (!list.Contains(name, StringComparer.OrdinalIgnoreCase)) list.Add(name);
         }
