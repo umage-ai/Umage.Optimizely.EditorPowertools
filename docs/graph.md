@@ -146,13 +146,21 @@ The widget discovers every `IContentQuery` whose `PlugInAreas` contains `PowerSl
 
 ## CMS 12 and CMS 13 notes
 
+Both versions are verified against a live Optimizely Graph instance. The add-on picks the right query dialect for the target framework.
+
 | | CMS 12 (.NET 8) | CMS 13 (.NET 10) |
 |---|---|---|
 | Graph client package | `Optimizely.ContentGraph.Core` 4.x | `Optimizely.Graph.Core` 13.x |
-| GraphQL dialect | Verified | **Not yet verified** against a live instance |
-| Availability state | Available once configured | Reports `DialectNotVerified` until the CMS 13 dialect is verified |
+| Graph schema | `Content` root, PascalCase fields (`Name`, `ContentType`, `Ancestors`) | `_Content` root, fields under `_metadata` and `_itemMetadata` (shared with SaaS CMS) |
+| Access-rights changes | Reach Graph on the next synchronization job run | Reach Graph immediately |
+| Asset folders in ancestor paths | Included | Not included, so the block and media providers check "shared assets only" in the CMS instead |
 
-The CMS 13 GraphQL field names differ from CMS 12 and are being confirmed against a live Graph instance. Until then, the add-on on CMS 13 loads and registers everything but the CMS Doctor check and the tools report that Graph is unavailable, rather than guessing. See the verification status in the release notes.
+Behaviour common to both:
+
+- Only **published** versions are searched in Graph. Graph also indexes checked-out drafts, which would otherwise double-count totals and facets. Drafts come from the CMS version store instead, with CMS access checks.
+- The **content type facet** uses the item's own type, so filtering on "Standard Page" does not also return page types that inherit from it.
+- Graph accepts at most 100 items per request, so page sizes and overfetch are capped at 100.
+- Optimizely's own Graph package registers its own Graph search providers ("Pages (from Graph)" and so on). They appear next to this add-on's providers ("Pages (Graph)"). `DisableBuiltInProviders` only affects the CMS built-in providers.
 
 ## Troubleshooting
 
@@ -162,12 +170,11 @@ The **Graph** check in CMS Doctor reports one of these states:
 |-------|---------|-----|
 | Client not registered | The platform Graph client is not in DI. | Install the Graph client package and call its registration (`AddContentGraph()` on CMS 12). |
 | Not configured | `GatewayAddress`, `AppKey` or `Secret` is empty. | Set all three under `Optimizely:ContentGraph` (user-secrets or environment). |
-| Dialect not verified | CMS 13 dialect is not verified yet. | Wait for the verified release. |
 | Available | Ready. | |
 
-- **New or changed content is missing:** Graph is updated by the content synchronization job and has some indexing lag. Run the job and retry.
+- **New or changed content is missing:** Graph is updated by the content synchronization job and has some indexing lag. Run the job and retry. On CMS 12 this also applies to access-rights changes.
 - **Results are empty for an editor but not an administrator:** the editor's roles lack read access to the content, or `WebEditors` is not in `AuthorizedRoles`.
-- **Derived page types are not found:** enable `IncludeInheritanceInContentType` on the Graph client.
+- **Derived page types are not found (CMS 12):** enable `IncludeInheritanceInContentType` on the Graph client.
 
 ## Screenshots
 

@@ -10,7 +10,6 @@ namespace UmageAI.Optimizely.EditorPowerTools.Graph.Search;
 public class GraphHealthCheck : DoctorCheckBase
 {
     private const string Prefix = "/editorpowertools/cmsdoctor/checks/graphhealthcheck/";
-    private const string SmokeQuery = "query { Content(limit: 1) { total } }";
 
     // Doctor checks are transient but captured by a singleton service, while the availability and
     // executor services are scoped, so a scope is created per check run.
@@ -48,7 +47,8 @@ public class GraphHealthCheck : DoctorCheckBase
         try
         {
             var executor = scope.ServiceProvider.GetRequiredService<IGraphQueryExecutor>();
-            executor.ExecuteAsync(new GraphRequest(SmokeQuery, new Dictionary<string, object?>()), CancellationToken.None)
+            var dialect = scope.ServiceProvider.GetRequiredService<IGraphQueryDialect>();
+            executor.ExecuteAsync(new GraphRequest(dialect.HealthQuery, new Dictionary<string, object?>()), CancellationToken.None)
                 .GetAwaiter().GetResult();
             return Ok(L(Prefix + "ok", "Optimizely Graph is configured and responding."));
         }

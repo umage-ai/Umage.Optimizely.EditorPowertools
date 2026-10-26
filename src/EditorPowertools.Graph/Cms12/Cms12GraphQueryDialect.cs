@@ -1,5 +1,4 @@
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using Microsoft.Extensions.Options;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Configuration;
@@ -20,40 +19,32 @@ namespace UmageAI.Optimizely.EditorPowerTools.Graph.Cms12;
 /// SearchableStringFilterInput (contains/match/fuzzy/boost) while RouteSegment is a plain
 /// StringFilterInput with no "contains" - it needs like "%...%".
 /// </remarks>
-internal sealed partial class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGraphOptions> options) : IGraphQueryDialect
+internal sealed class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGraphOptions> options) : IGraphQueryDialect
 {
     // Hand-tuned weights, deliberately far apart so a title match cannot be displaced by body text.
     private const int NameBoost = 10;
     private const int RouteSegmentBoost = 5;
     private const int FuzzyNameBoost = 3;
 
-    [GeneratedRegex("^[A-Za-z_][A-Za-z0-9_]*$")]
-    private static partial Regex TypeNamePattern();
 
     private GraphSearchOptions Search => options.Value.Search;
 
     public bool IsVerified => true;
 
+    public string HealthQuery => "query { Content(limit: 1) { total } }";
+
     public GraphRequest BuildSearch(GraphSearchRequest request)
     {
-        // Scope type names are interpolated into the query text. That is only safe for plain
-        // identifiers, so refuse anything else rather than trusting every caller to validate.
-        foreach (var type in request.Scope.ContentTypes)
-        {
-            if (!TypeNamePattern().IsMatch(type))
-            {
-                throw new ArgumentException("Invalid content type name in search scope.", nameof(request));
-            }
-        }
+        GraphQueryText.EnsureTypeNames(request.Scope.ContentTypes, nameof(request));
 
         var filters = request.Filters ?? GraphSearchFilters.None;
 
         var variables = new Dictionary<string, object?>
         {
             ["phrase"] = request.Phrase,
-            ["pattern"] = BuildRouteSegmentPattern(request.Phrase),
+            ["pattern"] = GraphQueryText.LikePattern(request.Phrase),
             ["limit"] = request.Limit,
-            ["locale"] = ResolveLocales(request.Scope, request.Language, filters)
+            ["locale"] = GraphQueryText.ResolveLocales(request.Scope, request.Language, filters)
         };
 
         if (!request.IncludeFacets)
@@ -80,44 +71,7 @@ internal sealed partial class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGr
     }
 
     public GraphSearchResult ParseSearch(JsonElement data, bool includeFacets) =>
-        new(ReadHits(data), ReadTotal(data), includeFacets ? ReadFacets(data) : GraphFacets.Empty);
-
-    // An explicit language choice wins over the scope's locale rule. Otherwise picking "de" in a
-    // page search would be intersected with the editor's branch and return nothing.
-    private static string[]? ResolveLocales(GraphSearchScope scope, string? language, GraphSearchFilters filters)
-    {
-        if (filters.Languages.Count > 0)
-        {
-            var mapped = filters.Languages
-                .Select(GraphLocaleMapper.ToGraphLocale)
-                .OfType<string>()
-                .Distinct(StringComparer.Ordinal)
-                .ToArray();
-            if (mapped.Length > 0)
-            {
-                return mapped;
-            }
-        }
-
-        if (scope.FilterByLocale && GraphLocaleMapper.ToGraphLocale(language) is { } locale)
-        {
-            return new[] { locale };
-        }
-
-        return null;
-    }
-
-    // The phrase comes straight from a search box and "like" treats % and _ as wildcards, so
-    // neutralise them with a backslash (the convention Graph's like accepts). This is about
-    // relevance, not injection: the phrase itself only ever travels as a variable.
-    private static string BuildRouteSegmentPattern(string phrase)
-    {
-        var escaped = phrase
-            .Replace("\\", "\\\\", StringComparison.Ordinal)
-            .Replace("%", "\\%", StringComparison.Ordinal)
-            .Replace("_", "\\_", StringComparison.Ordinal);
-        return $"%{escaped}%";
-    }
+        new(ReadHits(data), GraphQueryText.ReadTotal(data, "Content"), includeFacets ? ReadFacets(data) : GraphFacets.Empty);
 
     private string BuildPlainQuery(GraphSearchScope scope) => $$"""
         query EditorSearch($phrase: String!, $pattern: String!, $limit: Int!, $locale: [Locales!]) {
@@ -295,82 +249,22 @@ internal sealed partial class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGr
         return hits;
     }
 
-    // -1 means "Graph did not say" - unknown, not zero.
-    private static int ReadTotal(JsonElement data) =>
-        data.ValueKind == JsonValueKind.Object
-        && data.TryGetProperty("Content", out var content)
-        && content.TryGetProperty("total", out var total)
-        && total.TryGetInt32(out var value)
-            ? value
-            : -1;
-
     private static GraphFacets ReadFacets(JsonElement data)
     {
-        if (data.ValueKind != JsonValueKind.Object
-            || !data.TryGetProperty("Content", out var content)
-            || !content.TryGetProperty("facets", out var facets))
+        if (!GraphQueryText.TryGet(data, out var facets, "Content", "facets"))
         {
             return GraphFacets.Empty;
         }
 
         // Prefer the alias where one was asked for: it carries that group's counts with its own
         // filter lifted, so a selected value does not erase the alternatives beside it.
-        var contentTypes = ReadAliasFacet(data, "TypeFacet", "_concreteType") ?? ReadFacet(facets, "_concreteType");
-        var languages = ReadAliasFacet(data, "LanguageFacet", "Language", "Name") ?? ReadFacet(facets, "Language", "Name");
-        var sections = ReadAliasFacet(data, "SectionFacet", "Ancestors") ?? ReadFacet(facets, "Ancestors");
+        var contentTypes = GraphQueryText.ReadFacet(data, "TypeFacet", "facets", "_concreteType")
+            ?? GraphQueryText.ReadFacet(facets, "_concreteType") ?? Array.Empty<GraphFacetValue>();
+        var languages = GraphQueryText.ReadFacet(data, "LanguageFacet", "facets", "Language", "Name")
+            ?? GraphQueryText.ReadFacet(facets, "Language", "Name") ?? Array.Empty<GraphFacetValue>();
+        var sections = GraphQueryText.ReadFacet(data, "SectionFacet", "facets", "Ancestors")
+            ?? GraphQueryText.ReadFacet(facets, "Ancestors") ?? Array.Empty<GraphFacetValue>();
 
         return new GraphFacets(contentTypes, languages, sections);
-    }
-
-    private static IReadOnlyList<GraphFacetValue>? ReadAliasFacet(
-        JsonElement data, string alias, string name, string? subField = null)
-    {
-        if (!data.TryGetProperty(alias, out var aliased)
-            || aliased.ValueKind != JsonValueKind.Object
-            || !aliased.TryGetProperty("facets", out var facets))
-        {
-            return null;
-        }
-
-        return ReadFacet(facets, name, subField);
-    }
-
-    private static IReadOnlyList<GraphFacetValue> ReadFacet(JsonElement facets, string name, string? subField = null)
-    {
-        if (facets.ValueKind != JsonValueKind.Object || !facets.TryGetProperty(name, out var values))
-        {
-            return Array.Empty<GraphFacetValue>();
-        }
-
-        if (subField is not null && (values.ValueKind != JsonValueKind.Object || !values.TryGetProperty(subField, out values)))
-        {
-            return Array.Empty<GraphFacetValue>();
-        }
-
-        if (values.ValueKind != JsonValueKind.Array)
-        {
-            return Array.Empty<GraphFacetValue>();
-        }
-
-        var results = new List<GraphFacetValue>();
-        foreach (var value in values.EnumerateArray())
-        {
-            if (!value.TryGetProperty("name", out var facetName)
-                || facetName.ValueKind != JsonValueKind.String
-                || facetName.GetString() is not { Length: > 0 } text)
-            {
-                continue;
-            }
-
-            var count = value.TryGetProperty("count", out var c) && c.TryGetInt32(out var parsed) ? parsed : 0;
-
-            // A zero-count value is a dead end: offering it means offering a click that empties the page.
-            if (count > 0)
-            {
-                results.Add(new GraphFacetValue(text, count));
-            }
-        }
-
-        return results;
     }
 }

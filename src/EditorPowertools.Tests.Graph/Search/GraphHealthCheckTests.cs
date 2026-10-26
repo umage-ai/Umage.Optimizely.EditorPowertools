@@ -12,7 +12,7 @@ namespace EditorPowertools.Tests.Graph.Search;
 
 public class GraphHealthCheckTests
 {
-    private static GraphHealthCheck Create(GraphAvailabilityState state, Exception? executorFailure = null)
+    private static GraphHealthCheck Create(GraphAvailabilityState state, Exception? executorFailure = null, List<GraphRequest>? sent = null)
     {
         GraphTestSetup.EnsureInitialized();
         var availability = new Mock<IGraphAvailability>();
@@ -20,6 +20,7 @@ public class GraphHealthCheckTests
         var executor = new Mock<IGraphQueryExecutor>();
         if (executorFailure is null)
             executor.Setup(e => e.ExecuteAsync(It.IsAny<GraphRequest>(), It.IsAny<CancellationToken>()))
+                .Callback((GraphRequest r, CancellationToken _) => sent?.Add(r))
                 .ReturnsAsync(JsonDocument.Parse("{}").RootElement.Clone());
         else
             executor.Setup(e => e.ExecuteAsync(It.IsAny<GraphRequest>(), It.IsAny<CancellationToken>()))
@@ -28,6 +29,9 @@ public class GraphHealthCheckTests
         var services = new ServiceCollection();
         services.AddScoped(_ => availability.Object);
         services.AddScoped(_ => executor.Object);
+        var dialect = new Mock<IGraphQueryDialect>();
+        dialect.SetupGet(d => d.HealthQuery).Returns("query { Probe }");
+        services.AddSingleton(dialect.Object);
         var provider = services.BuildServiceProvider();
         return new GraphHealthCheck(provider.GetRequiredService<IServiceScopeFactory>(), NullLogger<GraphHealthCheck>.Instance);
     }
@@ -47,6 +51,15 @@ public class GraphHealthCheckTests
         result.Status.Should().Be(HealthStatus.Fault);
         (result.Details ?? "").Should().NotContain("secret-marker");
         result.StatusText.Should().NotContain("secret-marker");
+    }
+
+    // The probe must match the schema: CMS 12 has Content, CMS 13 only _Content.
+    [Fact]
+    public void Probes_with_the_dialect_health_query()
+    {
+        var sent = new List<GraphRequest>();
+        Create(GraphAvailabilityState.Available, sent: sent).PerformCheck();
+        sent.Should().ContainSingle().Which.Query.Should().Be("query { Probe }");
     }
 
     [Fact]

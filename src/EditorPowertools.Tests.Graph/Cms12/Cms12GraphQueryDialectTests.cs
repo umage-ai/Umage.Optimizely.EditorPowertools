@@ -19,6 +19,9 @@ public class Cms12GraphQueryDialectTests
     public void Is_verified() => Dialect.IsVerified.Should().BeTrue();
 
     [Fact]
+    public void Health_query_uses_the_cms12_root() => Dialect.HealthQuery.Should().Contain("Content(limit: 1)").And.NotContain("_Content");
+
+    [Fact]
     public void Phrase_travels_only_as_variable()
     {
         var r = Dialect.BuildSearch(Req("\"} ) { __schema { types { name } } } #"));

@@ -59,24 +59,7 @@ public class DialectWiringTests
         using var sp = Build();
         using var scope = sp.CreateScope();
         var state = scope.ServiceProvider.GetRequiredService<IGraphAvailability>().State;
-#if OPTIMIZELY_CMS13
-        // CMS 13 schema is not verified against a real instance: search must stay off.
-        state.Should().Be(GraphAvailabilityState.DialectNotVerified);
-#else
         state.Should().Be(GraphAvailabilityState.Available);
-#endif
     }
 
-#if OPTIMIZELY_CMS13
-    [Fact]
-    public void Unverified_cms13_dialect_refuses_to_build_or_parse()
-    {
-        var dialect = new Cms13GraphQueryDialect();
-        dialect.IsVerified.Should().BeFalse();
-        var build = () => dialect.BuildSearch(null!);
-        build.Should().Throw<NotSupportedException>();
-        var parse = () => dialect.ParseSearch(default, true);
-        parse.Should().Throw<NotSupportedException>();
-    }
-#endif
 }

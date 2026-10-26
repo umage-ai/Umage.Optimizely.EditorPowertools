@@ -148,14 +148,15 @@ public abstract class GraphSearchProviderBase : ISearchProvider
             var roots = explicitRoots.Count > 0 ? explicitRoots : DefaultRoots();
             var types = _search.ValidateContentTypes(ScopeTypes);
 
-            var hits = Query(query.SearchQuery, types, roots, graphLanguage, maxResults, options);
+            var rootGuids = SearchRoots.ToGuids(roots, _loader);
+            var hits = Query(query.SearchQuery, types, rootGuids, overfetch: roots.Count > 0, graphLanguage, maxResults, options);
 
-            // A root Graph cannot express yields nothing; retry unconstrained. Every hit is still checked
-            // against the roots afterwards, so this widens what is considered, never what is returned.
-            if (hits.Count == 0 && explicitRoots.Count > 0
-                && SearchRoots.ToGuids(explicitRoots, _loader).Count > 0)
+            // A root Graph cannot express yields nothing (CMS 13 paths omit the root folders, such as
+            // global and site assets); retry without it. Every hit is still checked against the roots
+            // afterwards, so this widens what is considered, never what is returned.
+            if (hits.Count == 0 && rootGuids.Count > 0)
             {
-                hits = Query(query.SearchQuery, types, new HashSet<ContentReference>(), graphLanguage, maxResults, options);
+                hits = Query(query.SearchQuery, types, Array.Empty<Guid>(), overfetch: true, graphLanguage, maxResults, options);
             }
 
             var published = BuildPublished(hits, roots, language);
@@ -175,11 +176,11 @@ public abstract class GraphSearchProviderBase : ISearchProvider
     }
 
     private IReadOnlyList<GraphSearchHit> Query(
-        string phrase, IReadOnlyList<string> types, IReadOnlySet<ContentReference> roots,
+        string phrase, IReadOnlyList<string> types, IReadOnlyList<Guid> guids, bool overfetch,
         string? language, int maxResults, GraphSearchOptions options)
     {
-        var guids = SearchRoots.ToGuids(roots, _loader);
-        var limit = guids.Count > 0
+        // Hits are filtered against the roots after loading, so a rooted search asks for more.
+        var limit = overfetch
             ? Math.Min(Math.Min(maxResults * Math.Max(1, options.OverfetchFactor), Math.Max(1, options.MaxOverfetch)), GraphSearchService.MaxLimit)
             : maxResults;
 

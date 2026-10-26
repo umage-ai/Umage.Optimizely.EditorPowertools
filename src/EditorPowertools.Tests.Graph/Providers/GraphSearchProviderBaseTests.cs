@@ -39,6 +39,7 @@ public class GraphSearchProviderBaseTests
         protected override IReadOnlyList<string> ScopeTypes { get; } = new[] { "PageData" };
         protected override bool FilterByLocale => true;
         protected override bool IsInScope(IContent content) => _f.InScope(content);
+        protected override IReadOnlySet<ContentReference> DefaultRoots() => _f.DefaultRoots;
 #if OPTIMIZELY_CMS13
         protected override string KeySuffix => "pages";
 #endif
@@ -58,6 +59,7 @@ public class GraphSearchProviderBaseTests
         public EditorPowertoolsGraphOptions Options = new();
         public List<GraphSearchRequest> Requests = new();
         public Func<IContent, bool> InScope = _ => true;
+        public IReadOnlySet<ContentReference> DefaultRoots = new HashSet<ContentReference>();
 
         public Fixture()
         {
@@ -200,6 +202,36 @@ public class GraphSearchProviderBaseTests
         f.Requests.Should().HaveCount(2);
         f.Requests[0].Scope.AncestorGuids.Should().NotBeEmpty();
         f.Requests[1].Scope.AncestorGuids.Should().BeEmpty();
+    }
+
+    // CMS 13 Graph paths omit the root folders (global/site assets), so a default root such as
+    // "shared blocks only" matches nothing in Graph. The provider must retry without it, overfetch,
+    // and keep only hits the CMS confirms are under the root.
+    [Fact]
+    public void Default_roots_zero_hits_retries_overfetched_and_keeps_in_root_hits()
+    {
+        var f = new Fixture();
+        var root = f.Content(5, "assets");
+        f.LoaderKnows(root);
+        f.DefaultRoots = new HashSet<ContentReference> { root.Object.ContentLink };
+        var inside = f.Content(6, "shared");
+        f.Loader.Setup(l => l.GetAncestors(inside.Object.ContentLink)).Returns(new[] { root.Object });
+        var outside = f.Content(9, "for-this-page");
+        f.Options.Search.OverfetchFactor = 5;
+        f.Options.Search.MaxOverfetch = 30;
+
+        var calls = 0;
+        f.Service.Setup(s => s.SearchAsync(It.IsAny<GraphSearchRequest>(), It.IsAny<CancellationToken>()))
+            .Callback((GraphSearchRequest r, CancellationToken _) => f.Requests.Add(r))
+            .ReturnsAsync(() => ++calls == 1
+                ? GraphSearchResult.Empty
+                : new GraphSearchResult(new[] { Fixture.Hit(outside.Object.ContentGuid), Fixture.Hit(inside.Object.ContentGuid) }, 2, GraphFacets.Empty));
+
+        f.Create().Search(Q("abc", 10)).Select(r => r.Title).Should().Equal("pub:shared");
+
+        f.Requests.Should().HaveCount(2);
+        f.Requests[1].Scope.AncestorGuids.Should().BeEmpty();
+        f.Requests[1].Limit.Should().Be(30);
     }
 
     [Fact]

@@ -193,7 +193,7 @@ See the [Forms Add-On guide](docs/forms.md) for the full feature list, configura
 
 ## Graph add-on (separate package)
 
-Optimizely Graph tooling ships as a separate, optional NuGet package, `UmageAI.Optimizely.EditorPowerTools.Graph`, for sites that run [Optimizely Graph](https://docs.developers.optimizely.com/platform-optimizely/docs/optimizely-graph). It multi-targets CMS 12 (.NET 8) and CMS 13 (.NET 10) and depends on the base package. The CMS 13 GraphQL dialect is pending live verification.
+Optimizely Graph tooling ships as a separate, optional NuGet package, `UmageAI.Optimizely.EditorPowerTools.Graph`, for sites that run [Optimizely Graph](https://docs.developers.optimizely.com/platform-optimizely/docs/optimizely-graph). It multi-targets CMS 12 (.NET 8) and CMS 13 (.NET 10) and depends on the base package.
 
 | Tool | Description |
 |------|-------------|
