@@ -122,14 +122,20 @@ public class PowerSearchServiceTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public async Task Empty_query_makes_no_graph_call_and_is_ok(string? q)
+    public async Task Empty_query_browses_the_tab_with_facets_and_skips_drafts(string? q)
     {
         var f = new Fixture();
-        var r = await f.Create().SearchAsync(Q(q), CancellationToken.None);
+        f.Options.Search.IncludeDrafts = true;
+        var hit = f.Content(1, "Newest");
+        f.Returns(r => r.Scope.ContentTypes.Contains("PageData") ? Result(1, null, hit) : GraphSearchResult.Empty);
+
+        var r = await f.Create().SearchAsync(Q(q, types: new[] { "ArticlePage" }), CancellationToken.None);
+
         r.State.Should().Be("ok");
-        r.Hits.Should().BeEmpty();
-        r.NextSkip.Should().BeNull();
-        f.Search.Verify(s => s.SearchAsync(It.IsAny<GraphSearchRequest>(), It.IsAny<CancellationToken>()), Times.Never);
+        r.Hits.Should().ContainSingle().Which.Name.Should().Be("Newest");
+        f.Requests.Should().OnlyContain(req => req.Phrase == string.Empty);
+        f.Requests.Single(req => req.Limit > 1).Filters.ContentTypes.Should().Equal("ArticlePage");
+        f.Drafts.Verify(d => d.FindDrafts(It.IsAny<string>(), It.IsAny<string?>(), It.IsAny<int>(), It.IsAny<ISet<int>>()), Times.Never);
     }
 
     [Fact]

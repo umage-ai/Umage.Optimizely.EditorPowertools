@@ -69,17 +69,13 @@ public class PowerSearchService : IPowerSearchService
         var take = Math.Clamp(query.Take <= 0 ? defaultTake : query.Take, 1, MaxTake);
         var skip = Math.Max(0, query.Skip);
 
-        if (string.IsNullOrWhiteSpace(query.Q))
-        {
-            return Response(Array.Empty<PowerSearchHitDto>(), 0, null, PowerSearchFacetsDto.Empty, UnknownTabs(), "ok");
-        }
-
         if (!_availability.IsAvailable)
         {
             return Response(Array.Empty<PowerSearchHitDto>(), 0, null, PowerSearchFacetsDto.Empty, UnknownTabs(), "unavailable");
         }
 
-        var phrase = query.Q.Trim();
+        // An empty box browses: everything in the tab, newest first, narrowed by the facets.
+        var phrase = query.Q?.Trim() ?? string.Empty;
         var filters = new GraphSearchFilters(query.Types, query.Languages, query.Sections);
         var limit = Math.Min(
             Math.Min(take * Math.Max(1, options.OverfetchFactor), Math.Max(1, options.MaxOverfetch)),
@@ -125,7 +121,8 @@ public class PowerSearchService : IPowerSearchService
         var hits = new List<PowerSearchHitDto>();
         var seen = new HashSet<(int Id, string Language)>(); // one row per language branch; only drafts dedupe against published hits
 
-        if (options.IncludeDrafts && skip == 0)
+        // Drafts are found by name, so there is nothing to match them against while browsing.
+        if (options.IncludeDrafts && skip == 0 && phrase.Length > 0)
         {
             foreach (var draft in LoadDrafts(phrase, query, take))
             {

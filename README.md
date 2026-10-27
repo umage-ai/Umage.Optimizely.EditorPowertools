@@ -197,7 +197,7 @@ Optimizely Graph tooling ships as a separate, optional NuGet package, `UmageAI.O
 
 | Tool | Description |
 |------|-------------|
-| **PowerSearch** | Full-page Graph-backed editor search with tabs, facets, drafts first, and paging. |
+| **PowerSearch** | Full-page Graph-backed editor search with tabs, facets, drafts first, and paging. An empty search box browses newest first. |
 | **Power Slice** | Assets-pane widget with ready-made content lists (recently changed, stale content, unused blocks, and more). Extensible with your own slices. |
 | **Search providers** | Graph-backed Pages, Blocks and Media search providers and content picker search. Queries run with the editor's own roles. |
 

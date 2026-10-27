@@ -10,8 +10,8 @@ Like the base package it is multi-targeted: **Optimizely CMS 12 (.NET 8)** and *
 
 | Tool | Description |
 |------|-------------|
-| **PowerSearch** | A full-page editor search tool backed by Graph: full-text search, tabs per content kind, facets (content type, section), drafts shown first, and "load more" paging. |
-| **Power Slice** | An assets-pane widget with ready-made content lists (my content, recently changed, stale content, unused blocks, and so on). Each slice is an `IContentQuery`, so you can add your own. |
+| **PowerSearch** | A full-page editor search tool backed by Graph: full-text search, tabs per content kind, facets (content type, section, language), drafts shown first, and "load more" paging. With an empty search box it lists the tab newest first, so editors can browse by facets alone. |
+| **Power Slice** | An assets-pane widget with ready-made content lists (my content, recently changed, stale content, unused blocks, and so on). The list loads more rows as you scroll. Each slice is an `IContentQuery`, so you can add your own. |
 | **Search providers** | Replaces or supplements the CMS built-in Pages, Blocks and Media search providers (quick search, page-tree filter, assets pane) and the content picker search with Graph-backed results. |
 
 It also adds a **Graph** check to the base **CMS Doctor** dashboard.
@@ -107,6 +107,20 @@ services.AddEditorPowertoolsGraph(options =>
 | `PowerSlice.MaxVersions` | `2000` | Maximum versions read by version-based slices. |
 | `PowerSlice.MaxUnusedBlocksScanned` | `5000` | Maximum blocks examined by the "unused blocks" slice. |
 
+## Choosing search providers
+
+Which search providers editors see is the site owner's choice. The add-on registers its own providers, **Pages (Graph)**, **Blocks (Graph)** and **Media (Graph)**, next to the ones already there:
+
+- the CMS built-in providers (**Pages**, **Blocks**, **Media**), which search the CMS database;
+- the providers from Optimizely's own Graph package (**Pages (from Graph)** and so on), when that package is installed.
+
+To choose, open **Search Configuration** in the CMS admin. Tick the providers editors should get and drag them into the order their results should appear in. For example, to switch fully to this add-on's providers, enable the three **(Graph)** providers and clear the others.
+
+Two options in this add-on also help:
+
+- `Search.DisableBuiltInProviders` hides the CMS built-in providers while Graph is available, and brings them back automatically when Graph is not. It does not affect Optimizely's own Graph providers; use Search Configuration for those.
+- `Features.SearchProviders = false` removes this add-on's providers and content picker search entirely.
+
 ## Permissions
 
 The Graph tools use the same three-layer model as the base package (feature toggle, then `AuthorizedRoles`, then optional per-function permissions). The add-on registers three permission entries, `PowerSearch`, `PowerSlice` and `SearchProviders`, which appear under **Admin, Permissions For Functions** when `CheckPermissionForEachFeature` is enabled on the base package.
@@ -160,7 +174,8 @@ Behaviour common to both:
 - Only **published** versions are searched in Graph. Graph also indexes checked-out drafts, which would otherwise double-count totals and facets. Drafts come from the CMS version store instead, with CMS access checks.
 - The **content type facet** uses the item's own type, so filtering on "Standard Page" does not also return page types that inherit from it.
 - Graph accepts at most 100 items per request, so page sizes and overfetch are capped at 100.
-- Optimizely's own Graph package registers its own Graph search providers ("Pages (from Graph)" and so on). They appear next to this add-on's providers ("Pages (Graph)"). `DisableBuiltInProviders` only affects the CMS built-in providers.
+- Optimizely's own Graph package registers its own Graph search providers ("Pages (from Graph)" and so on). They appear next to this add-on's providers ("Pages (Graph)"); see [Choosing search providers](#choosing-search-providers).
+- An empty PowerSearch box lists content newest first: by `Saved` on CMS 12 and by `_metadata.lastModified` on CMS 13. Drafts are not merged in while browsing, because drafts are found by name.
 
 ## Troubleshooting
 

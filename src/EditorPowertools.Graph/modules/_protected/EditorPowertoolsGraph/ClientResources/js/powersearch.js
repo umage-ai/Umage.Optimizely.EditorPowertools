@@ -26,7 +26,7 @@
         q: '', tab: 'Pages',
         sel: { types: [], languages: [], sections: [] },
         expanded: {},          // group key -> bool
-        hits: [], response: null, status: 'hint', // hint | loading | ok | unavailable | error
+        hits: [], response: null, status: 'loading', // loading | ok | unavailable | error
         loadingMore: false
     };
     var seq = 0, debounceTimer = 0;
@@ -84,11 +84,6 @@
 
     function search(append) {
         var mine = ++seq;
-        if (!state.q.trim()) {
-            state.status = 'hint'; state.hits = []; state.response = null; state.loadingMore = false;
-            render();
-            return;
-        }
         var skip = append && state.response && state.response.nextSkip != null ? state.response.nextSkip : 0;
         if (append) state.loadingMore = true; else state.status = 'loading';
         render();
@@ -215,7 +210,6 @@
 
     function renderMain() {
         switch (state.status) {
-            case 'hint': return message(t('hint', 'Type to search the whole site.'));
             case 'loading': return '<div class="ept-loading" role="status">…</div>';
             case 'unavailable':
                 return message(t('unavailable', 'Graph search is not available. Check the Optimizely Graph configuration.')) +
@@ -225,6 +219,8 @@
         var r = state.response;
         if (!state.hits.length) return message(t('no_results', 'No results found.'));
         var out = '';
+        // An empty box browses newest first; say so, or the order looks arbitrary.
+        if (!state.q.trim()) out += message(t('browsing', 'Most recently changed first. Type to search.'));
         if (r && typeof r.total === 'number' && r.total >= 0) {
             out += '<p class="ept-ps__summary">' + esc(t('results_count', '{0} results').replace('{0}', r.total)) + '</p>';
         }
@@ -320,6 +316,6 @@
 
     readHash();
     buildShell();
-    if (state.q.trim()) search(false); else render();
+    search(false);
     els.input.focus();
 })();

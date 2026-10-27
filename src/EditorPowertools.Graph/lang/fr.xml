@@ -108,7 +108,7 @@
           <clear_filters>Effacer les filtres</clear_filters>
           <load_more>Charger plus</load_more>
           <no_results>Aucun résultat trouvé.</no_results>
-          <hint>Tapez pour rechercher l'ensemble du site.</hint>
+          <browsing>Les plus récemment modifiés en premier. Tapez pour rechercher.</browsing>
           <unavailable>La recherche Graph n'est pas disponible. Vérifiez la configuration d'Optimizely Graph.</unavailable>
           <unavailable_link>Ouvrir CMS Doctor</unavailable_link>
           <error>Une erreur s'est produite lors de la recherche. Veuillez réessayer.</error>

@@ -108,7 +108,7 @@
           <clear_filters>Ryd filtre</clear_filters>
           <load_more>Indlæs mere</load_more>
           <no_results>Ingen resultater fundet.</no_results>
-          <hint>Skriv for at søge på hele siden.</hint>
+          <browsing>Senest ændret først. Skriv for at søge.</browsing>
           <unavailable>Graph-søgning er ikke tilgængelig. Kontroller Optimizely Graph-konfigurationen.</unavailable>
           <unavailable_link>Åbn CMS Doctor</unavailable_link>
           <error>Der gik noget galt under søgningen. Prøv igen.</error>

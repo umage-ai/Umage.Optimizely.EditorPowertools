@@ -108,7 +108,7 @@
           <clear_filters>フィルターをクリア</clear_filters>
           <load_more>さらに読み込む</load_more>
           <no_results>結果が見つかりません。</no_results>
-          <hint>サイト全体を検索するには入力してください。</hint>
+          <browsing>最近変更された順に表示しています。入力して検索します。</browsing>
           <unavailable>Graph 検索は利用できません。Optimizely Graph の設定を確認してください。</unavailable>
           <unavailable_link>CMS Doctor を開く</unavailable_link>
           <error>検索中に問題が発生しました。もう一度実行してください。</error>

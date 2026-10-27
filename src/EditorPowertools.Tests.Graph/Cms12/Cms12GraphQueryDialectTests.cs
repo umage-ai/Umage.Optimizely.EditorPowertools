@@ -30,6 +30,16 @@ public class Cms12GraphQueryDialectTests
     }
 
     [Fact]
+    public void Blank_phrase_browses_newest_first_without_phrase_variables()
+    {
+        var r = Dialect.BuildSearch(Req("", facets: true));
+        r.Query.Should().Contain("orderBy: { Saved: DESC }");
+        r.Query.Should().NotContain("$phrase").And.NotContain("$pattern").And.NotContain("_ranking").And.NotContain("_fulltext");
+        r.Query.Should().Contain("Status: { eq: \"Published\" }");
+        r.Variables.Should().NotContainKey("phrase").And.NotContainKey("pattern");
+    }
+
+    [Fact]
     public void Uses_field_specific_operators()
     {
         var q = Dialect.BuildSearch(Req()).Query;

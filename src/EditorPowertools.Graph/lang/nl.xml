@@ -108,7 +108,7 @@
           <clear_filters>Filters wissen</clear_filters>
           <load_more>Meer laden</load_more>
           <no_results>Geen resultaten gevonden.</no_results>
-          <hint>Type om de hele site te doorzoeken.</hint>
+          <browsing>Meest recent gewijzigd eerst. Typ om te zoeken.</browsing>
           <unavailable>Graph-zoeking is niet beschikbaar. Controleer de Optimizely Graph-configuratie.</unavailable>
           <unavailable_link>Open CMS Doctor</unavailable_link>
           <error>Er is iets fout gegaan bij het zoeken. Probeer het opnieuw.</error>

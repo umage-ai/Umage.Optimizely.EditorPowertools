@@ -108,7 +108,7 @@
           <clear_filters>Filter löschen</clear_filters>
           <load_more>Mehr laden</load_more>
           <no_results>Keine Ergebnisse gefunden.</no_results>
-          <hint>Eingeben, um die gesamte Website zu durchsuchen.</hint>
+          <browsing>Zuletzt geändert zuerst. Zum Suchen eingeben.</browsing>
           <unavailable>Graph-Suche ist nicht verfügbar. Überprüfen Sie die Optimizely Graph-Konfiguration.</unavailable>
           <unavailable_link>CMS Doctor öffnen</unavailable_link>
           <error>Bei der Suche ist etwas schief gelaufen. Bitte versuchen Sie es erneut.</error>

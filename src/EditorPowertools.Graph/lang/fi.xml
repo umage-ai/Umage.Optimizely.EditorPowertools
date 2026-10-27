@@ -108,7 +108,7 @@
           <clear_filters>Tyhjennä suodattimet</clear_filters>
           <load_more>Lataa lisää</load_more>
           <no_results>Tuloksia ei löytynyt.</no_results>
-          <hint>Kirjoita etsiäksesi koko sivusta.</hint>
+          <browsing>Viimeksi muutetut ensin. Kirjoita hakeaksesi.</browsing>
           <unavailable>Graph-haku ei ole käytettävissä. Tarkista Optimizely Graph -konfiguraatio.</unavailable>
           <unavailable_link>Avaa CMS Doctor</unavailable_link>
           <error>Hakua suoritettaessa tapahtui virhe. Yritä uudelleen.</error>

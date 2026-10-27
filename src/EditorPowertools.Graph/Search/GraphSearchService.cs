@@ -30,14 +30,17 @@ public sealed class GraphSearchService : IGraphSearchService
 
     public async Task<GraphSearchResult> SearchAsync(GraphSearchRequest request, CancellationToken ct)
     {
-        if (string.IsNullOrWhiteSpace(request.Phrase) || !_availability.IsAvailable)
+        if (!_availability.IsAvailable)
         {
             return GraphSearchResult.Empty;
         }
 
+        // A blank phrase is a browse request (newest first); callers that need text check for it themselves.
+
         var known = KnownNames();
         var safe = request with
         {
+            Phrase = request.Phrase?.Trim() ?? string.Empty,
             Limit = Math.Clamp(request.Limit, 1, MaxLimit),
             Skip = Math.Max(0, request.Skip),
             Scope = request.Scope with { ContentTypes = Filter(request.Scope.ContentTypes, known) },

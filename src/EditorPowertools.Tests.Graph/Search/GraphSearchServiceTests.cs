@@ -41,11 +41,11 @@ public class GraphSearchServiceTests
     [Theory]
     [InlineData("")]
     [InlineData("   ")]
-    public async Task Blank_phrase_returns_empty_without_calling_executor(string phrase)
+    public async Task Blank_phrase_is_sent_as_an_empty_browse_request(string phrase)
     {
-        var result = await Create().SearchAsync(Req(phrase), CancellationToken.None);
-        result.Should().BeSameAs(GraphSearchResult.Empty);
-        _executor.Verify(e => e.ExecuteAsync(It.IsAny<GraphRequest>(), It.IsAny<CancellationToken>()), Times.Never);
+        await Create().SearchAsync(Req(phrase), CancellationToken.None);
+        _built!.Phrase.Should().BeEmpty();
+        _executor.Verify(e => e.ExecuteAsync(It.IsAny<GraphRequest>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]

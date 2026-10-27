@@ -39,17 +39,23 @@ internal sealed class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGraphOptio
 
         var filters = request.Filters ?? GraphSearchFilters.None;
 
+        // No phrase means browsing: no relevance clause, newest first. The phrase variables are then
+        // left out entirely - Graph rejects a declared variable the query does not use.
+        var browse = string.IsNullOrWhiteSpace(request.Phrase);
         var variables = new Dictionary<string, object?>
         {
-            ["phrase"] = request.Phrase,
-            ["pattern"] = GraphQueryText.LikePattern(request.Phrase),
             ["limit"] = request.Limit,
             ["locale"] = GraphQueryText.ResolveLocales(request.Scope, request.Language, filters)
         };
+        if (!browse)
+        {
+            variables["phrase"] = request.Phrase;
+            variables["pattern"] = GraphQueryText.LikePattern(request.Phrase);
+        }
 
         if (!request.IncludeFacets)
         {
-            return new GraphRequest(BuildPlainQuery(request.Scope), variables);
+            return new GraphRequest(BuildPlainQuery(request.Scope, browse), variables);
         }
 
         variables["skip"] = Math.Max(request.Skip, 0);
@@ -67,19 +73,19 @@ internal sealed class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGraphOptio
             variables["selectedSections"] = selectedSections;
         }
 
-        return new GraphRequest(BuildFacetedQuery(request.Scope, selectedTypes, selectedSections), variables);
+        return new GraphRequest(BuildFacetedQuery(request.Scope, browse, selectedTypes, selectedSections), variables);
     }
 
     public GraphSearchResult ParseSearch(JsonElement data, bool includeFacets) =>
         new(ReadHits(data), GraphQueryText.ReadTotal(data, "Content"), includeFacets ? ReadFacets(data) : GraphFacets.Empty);
 
-    private string BuildPlainQuery(GraphSearchScope scope) => $$"""
-        query EditorSearch($phrase: String!, $pattern: String!, $limit: Int!, $locale: [Locales!]) {
+    private string BuildPlainQuery(GraphSearchScope scope, bool browse) => $$"""
+        query EditorSearch({{PhraseVariables(browse)}}$limit: Int!, $locale: [Locales!]) {
             Content(
                 limit: $limit
                 locale: $locale
-                where: {{BuildWhere(scope, Array.Empty<string>(), Array.Empty<string>())}}
-                orderBy: { _ranking: RELEVANCE }
+                where: {{BuildWhere(scope, browse, Array.Empty<string>(), Array.Empty<string>())}}
+                orderBy: {{OrderBy(browse)}}
             ) {
                 items {
                     Name
@@ -92,7 +98,7 @@ internal sealed class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGraphOptio
         """;
 
     private string BuildFacetedQuery(
-        GraphSearchScope scope, IReadOnlyList<string> selectedTypes, IReadOnlyList<string> selectedSections)
+        GraphSearchScope scope, bool browse, IReadOnlyList<string> selectedTypes, IReadOnlyList<string> selectedSections)
     {
         // A facet group must not narrow itself: once "Article" is selected the content-type facet
         // would contain only "Article" and the editor could not switch type or widen back out.
@@ -109,7 +115,7 @@ internal sealed class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGraphOptio
                 TypeFacet: Content(
                     limit: 1
                     locale: $locale
-                    where: {{BuildWhere(scope, Array.Empty<string>(), selectedSections)}}
+                    where: {{BuildWhere(scope, browse, Array.Empty<string>(), selectedSections)}}
                 ) {
                     facets {
                         _concreteType(limit: {{Search.ContentTypeFacetLimit}}) { name count }
@@ -124,7 +130,7 @@ internal sealed class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGraphOptio
                 SectionFacet: Content(
                     limit: 1
                     locale: $locale
-                    where: {{BuildWhere(scope, selectedTypes, Array.Empty<string>())}}
+                    where: {{BuildWhere(scope, browse, selectedTypes, Array.Empty<string>())}}
                 ) {
                     facets {
                         Ancestors(limit: {{Search.SectionFacetLimit}}) { name count }
@@ -139,7 +145,7 @@ internal sealed class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGraphOptio
 
                 LanguageFacet: Content(
                     limit: 1
-                    where: {{BuildWhere(scope, selectedTypes, selectedSections)}}
+                    where: {{BuildWhere(scope, browse, selectedTypes, selectedSections)}}
                 ) {
                     facets {
                         Language { Name { name count } }
@@ -148,13 +154,13 @@ internal sealed class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGraphOptio
             """.TrimEnd();
 
         return $$"""
-            query EditorSearch($phrase: String!, $pattern: String!, $limit: Int!, $locale: [Locales!], $skip: Int!{{selectedTypesVariable}}{{selectedSectionsVariable}}) {
+            query EditorSearch({{PhraseVariables(browse)}}$limit: Int!, $locale: [Locales!], $skip: Int!{{selectedTypesVariable}}{{selectedSectionsVariable}}) {
                 Content(
                     limit: $limit
                     skip: $skip
                     locale: $locale
-                    where: {{BuildWhere(scope, selectedTypes, selectedSections)}}
-                    orderBy: { _ranking: RELEVANCE }
+                    where: {{BuildWhere(scope, browse, selectedTypes, selectedSections)}}
+                    orderBy: {{OrderBy(browse)}}
                 ) {
                     total
                     items {
@@ -175,8 +181,10 @@ internal sealed class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGraphOptio
 
     // Shared by the main query and the facet aliases, which differ only in which facet filters
     // they apply - built once so relevance rules cannot drift between results and counts.
+    private static string PhraseVariables(bool browse) => browse ? string.Empty : "$phrase: String!, $pattern: String!, ";
+
     private static string BuildWhere(
-        GraphSearchScope scope, IReadOnlyList<string> selectedTypes, IReadOnlyList<string> selectedSections)
+        GraphSearchScope scope, bool browse, IReadOnlyList<string> selectedTypes, IReadOnlyList<string> selectedSections)
     {
         // Safe to interpolate: names were validated as identifiers in BuildSearch.
         var types = string.Join(", ", scope.ContentTypes.Select(t => $"\"{t}\""));
@@ -205,17 +213,24 @@ internal sealed class Cms12GraphQueryDialect(IOptions<EditorPowertoolsGraphOptio
             {
                 _and: [
                     { ContentType: { in: [{{types}}] } }
-                    { Status: { eq: "Published" } }{{ancestorClause}}{{selectedTypeClause}}{{selectedSectionClause}}
+                    { Status: { eq: "Published" } }{{ancestorClause}}{{selectedTypeClause}}{{selectedSectionClause}}{{(browse ? string.Empty : RelevanceClause)}}
+                ]
+            }
+            """;
+    }
+
+    private static readonly string RelevanceClause = $$"""
+
                     { _or: [
                         { Name: { contains: $phrase, boost: {{NameBoost}} } }
                         { Name: { contains: $phrase, fuzzy: true, boost: {{FuzzyNameBoost}} } }
                         { RouteSegment: { like: $pattern, boost: {{RouteSegmentBoost}} } }
                         { _fulltext: { match: $phrase } }
                     ] }
-                ]
-            }
-            """;
-    }
+        """.TrimEnd();
+
+    // Browsing has no relevance to rank by: last saved first, the order the CMS lists recent work in.
+    private static string OrderBy(bool browse) => browse ? "{ Saved: DESC }" : "{ _ranking: RELEVANCE }";
 
     private static List<GraphSearchHit> ReadHits(JsonElement data)
     {

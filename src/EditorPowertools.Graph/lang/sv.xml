@@ -108,7 +108,7 @@
           <clear_filters>Rensa filter</clear_filters>
           <load_more>Ladda mer</load_more>
           <no_results>Inga resultat hittades.</no_results>
-          <hint>Skriv för att söka på hela webbplatsen.</hint>
+          <browsing>Senast ändrade först. Skriv för att söka.</browsing>
           <unavailable>Graph-sökning är inte tillgänglig. Kontrollera Optimizely Graph-konfigurationen.</unavailable>
           <unavailable_link>Öppna CMS Doctor</unavailable_link>
           <error>Något gick fel vid sökningen. Försök igen.</error>

@@ -158,23 +158,25 @@ test('text typed while a request is in flight survives the response render', asy
     const ui = load('');
     const input = ui.get('ept-ps-input');
 
+    assert.equal(ui.fetches.length, 1);     // the empty box browses on load
+
     input.value = 'ab';
     input.fire('input', { isComposing: false });
     ui.flushTimers();                       // debounce fires: search for "ab" starts
-    assert.equal(ui.fetches.length, 1);
-    assert.match(ui.fetches[0].url, /q=ab/);
+    assert.equal(ui.fetches.length, 2);
+    assert.match(ui.fetches[1].url, /q=ab/);
 
     input.value = 'abc';                    // typed while "ab" is still in flight
     input.fire('input', { isComposing: false });
 
-    ui.fetches[0].respond({ state: 'ok', total: 0, nextSkip: null, hits: [], tabs: [], facets: NO_FACETS });
+    ui.fetches[1].respond({ state: 'ok', total: 0, nextSkip: null, hits: [], tabs: [], facets: NO_FACETS });
     await ui.settle();
 
     assert.equal(input.value, 'abc', 'the response render must not overwrite the live input');
     assert.equal(ui.rootWrites, 1, 'the search bar shell is built once and never re-rendered');
 
     ui.flushTimers();                       // pending debounce now searches for what was actually typed
-    assert.match(ui.fetches[1].url, /q=abc/);
+    assert.match(ui.fetches[2].url, /q=abc/);
 });
 
 test('input events during IME composition do not trigger a search until composition ends', () => {
@@ -183,8 +185,22 @@ test('input events during IME composition do not trigger a search until composit
     input.value = 'kana';
     input.fire('input', { isComposing: true });
     ui.flushTimers();
-    assert.equal(ui.fetches.length, 0);
+    assert.equal(ui.fetches.length, 1);     // only the browse request from load
     input.fire('compositionend');
     ui.flushTimers();
+    assert.equal(ui.fetches.length, 2);
+});
+
+test('an empty box browses on load and says the list is newest first', async () => {
+    const ui = load('');
     assert.equal(ui.fetches.length, 1);
+    assert.match(ui.fetches[0].url, /q=&/);
+    ui.fetches[0].respond({
+        state: 'ok', total: 3, nextSkip: null,
+        hits: [{ name: 'Newest', editUrl: '/e/1' }], tabs: [], facets: NO_FACETS
+    });
+    await ui.settle();
+    const main = ui.get('ept-ps-main').innerHTML;
+    assert.ok(main.includes('Most recently changed first'));
+    assert.ok(main.includes('Newest'));
 });

@@ -23,7 +23,7 @@ internal sealed class GraphUiStringsContributor : IUiStringsContributor
         "clear_filters",
         "load_more",
         "no_results",
-        "hint",
+        "browsing",
         "unavailable",
         "unavailable_link",
         "error",

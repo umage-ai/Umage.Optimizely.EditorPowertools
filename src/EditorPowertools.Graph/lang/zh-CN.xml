@@ -108,7 +108,7 @@
           <clear_filters>清除筛选</clear_filters>
           <load_more>加载更多</load_more>
           <no_results>未找到结果。</no_results>
-          <hint>输入以搜索整个站点。</hint>
+          <browsing>按最近修改排序。输入以搜索。</browsing>
           <unavailable>Graph 搜索不可用。检查 Optimizely Graph 配置。</unavailable>
           <unavailable_link>打开 CMS Doctor</unavailable_link>
           <error>搜索时出错。请重试。</error>

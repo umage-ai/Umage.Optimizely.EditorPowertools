@@ -4,7 +4,7 @@
 
 ### New add-on
 
-- **Graph add-on** (`UmageAI.Optimizely.EditorPowerTools.Graph`) — PowerSearch (Graph-backed editor search with facets), Power Slice (assets-pane content lists) and Graph-backed search providers and content picker search. Queries run with the editor's roles. Localized in all 11 languages. See [docs/graph.md](docs/graph.md). Verified against live Graph instances on CMS 12 and CMS 13.
+- **Graph add-on** (`UmageAI.Optimizely.EditorPowerTools.Graph`) — PowerSearch (Graph-backed editor search with facets; an empty box browses newest first), Power Slice (assets-pane content lists) and Graph-backed search providers and content picker search. Queries run with the editor's roles. Localized in all 11 languages. See [docs/graph.md](docs/graph.md). Verified against live Graph instances on CMS 12 and CMS 13.
 
 ### Improvements
 
