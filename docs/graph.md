@@ -114,7 +114,7 @@ Which search providers editors see is the site owner's choice. The add-on regist
 - the CMS built-in providers (**Pages**, **Blocks**, **Media**), which search the CMS database;
 - the providers from Optimizely's own Graph package (**Pages (from Graph)** and so on), when that package is installed.
 
-To choose, open **Search Configuration** in the CMS admin. Tick the providers editors should get and drag them into the order their results should appear in. For example, to switch fully to this add-on's providers, enable the three **(Graph)** providers and clear the others.
+To choose, open **Search Configuration** (under Admin on CMS 12, Settings on CMS 13). Tick the providers editors should get and drag them into the order their results should appear in. For example, to switch fully to this add-on's providers, enable the three **(Graph)** providers and clear the others.
 
 Two options in this add-on also help:
 
