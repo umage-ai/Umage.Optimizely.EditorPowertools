@@ -14,4 +14,24 @@
     <EptContentGraph4Range>[4.3.1, 5.0.0)</EptContentGraph4Range>
     <EptGraph13Range>[13.2.0, 14.0.0)</EptGraph13Range>
   </PropertyGroup>
+
+  <!--
+    Package flavor. NuGet picks assets by target framework alone, so a CMS 12 site on .NET 10 would
+    get our net10.0 (CMS 13) build from the main packages. `-p:EptCmsFlavor=Cms12` builds the same
+    libraries as net8.0-only packages with a ".Cms12" id suffix for those sites; CMS 12's own
+    assemblies are net6.0 and roll forward onto .NET 10 the same way ours do.
+    The flavor gets its own obj/bin folders so its restore never mixes with the default build.
+  -->
+  <PropertyGroup>
+    <EptTargetFrameworks>net8.0;net10.0</EptTargetFrameworks>
+    <EptPackageIdSuffix></EptPackageIdSuffix>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(EptCmsFlavor)' == 'Cms12'">
+    <EptTargetFrameworks>net8.0</EptTargetFrameworks>
+    <EptPackageIdSuffix>.Cms12</EptPackageIdSuffix>
+    <BaseIntermediateOutputPath>obj\cms12\</BaseIntermediateOutputPath>
+    <BaseOutputPath>bin\cms12\</BaseOutputPath>
+    <!-- The default build's obj/bin sit outside this flavor's own, so keep their generated sources out. -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);obj\**;bin\**</DefaultItemExcludes>
+  </PropertyGroup>
 </Project>

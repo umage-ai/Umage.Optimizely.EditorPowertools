@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <TargetFrameworks>$(EptTargetFrameworks)</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 
     <!-- NuGet package properties -->
-    <PackageId>UmageAI.Optimizely.EditorPowerTools</PackageId>
+    <PackageId>UmageAI.Optimizely.EditorPowerTools$(EptPackageIdSuffix)</PackageId>
     <Version>0.1.0-local</Version>
     <Authors>UmageAI</Authors>
     <Company>UmageAI</Company>
@@ -94,8 +94,11 @@
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="" />
     <None Include="icon.png" Pack="true" PackagePath="" />
-    <None Include="build\net8.0\UmageAI.Optimizely.EditorPowerTools.targets" Pack="true" PackagePath="build\net8.0\" />
-    <None Include="build\net10.0\UmageAI.Optimizely.EditorPowerTools.targets" Pack="true" PackagePath="build\net10.0\" />
+    <!-- NuGet only imports buildTransitive/<tfm>/<PackageId>.targets, so the file is packed under the flavor's id.
+         buildTransitive (not build/) so the module zip is copied also when this package arrives as a
+         dependency of another (for example core under Forms). -->
+    <None Include="build\net8.0\UmageAI.Optimizely.EditorPowerTools.targets" Pack="true" PackagePath="buildTransitive\net8.0\$(PackageId).targets" />
+    <None Include="build\net10.0\UmageAI.Optimizely.EditorPowerTools.targets" Pack="true" PackagePath="buildTransitive\net10.0\$(PackageId).targets" Condition="$(EptTargetFrameworks.Contains('net10.0'))" />
   </ItemGroup>
 
   <!--

@@ -28,6 +28,8 @@ It also adds a **Graph** check to the base **CMS Doctor** dashboard.
 dotnet add package UmageAI.Optimizely.EditorPowerTools.Graph
 ```
 
+On a CMS 12 site running .NET 10, install `UmageAI.Optimizely.EditorPowerTools.Graph.Cms12` instead (see [Moving a CMS 12 site to .NET 10](getting-started.md#moving-a-cms-12-site-to-net-10)).
+
 The add-on declares a dependency on the base package, so a package manager pulls it in automatically, but you register each explicitly.
 
 ## Registration

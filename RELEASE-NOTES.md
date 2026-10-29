@@ -6,6 +6,14 @@
 
 - **Graph add-on** (`UmageAI.Optimizely.EditorPowerTools.Graph`) — PowerSearch (Graph-backed editor search with facets; an empty box browses newest first), Power Slice (assets-pane content lists) and Graph-backed search providers and content picker search. Queries run with the editor's roles. Localized in all 11 languages. See [docs/graph.md](docs/graph.md). Verified against live Graph instances on CMS 12 and CMS 13.
 
+### New packages
+
+- **CMS 12 on .NET 10** — `UmageAI.Optimizely.EditorPowerTools.Cms12`, `.Forms.Cms12` and `.Graph.Cms12`: the CMS 12 build on its own, for CMS 12 sites running .NET 10 (#62). The main packages are unchanged. See [Moving a CMS 12 site to .NET 10](docs/getting-started.md#moving-a-cms-12-site-to-net-10).
+
+### Fixes
+
+- **Module files with add-ons only** — when a site referenced only an add-on (for example Forms), the core package's module zip was not copied into the site. The `.targets` files now ship in `buildTransitive/`.
+
 ### Improvements
 
 - **`IUiStringsContributor`** — add-ons can now contribute translated strings to the JavaScript string table.

@@ -79,25 +79,18 @@ jobs:
         # PackageReleaseNotes is multi-line, so we pass it via an environment
         # variable (which MSBuild reads as a property) instead of -p:... on the
         # command line, where newlines would be re-split into separate args.
+        # Packs the main ids and the net8.0-only .Cms12 ids (CMS 12 on .NET 10).
         run: |
           export PackageReleaseNotes="$(cat release-notes.md)"
-          dotnet pack src/EditorPowertools/EditorPowertools.csproj \
-            -c Release \
-            -p:Version=${{ steps.version.outputs.VERSION }} \
-            --no-build -o ./nupkg
-          dotnet pack src/EditorPowertools.Forms/EditorPowertools.Forms.csproj \
-            -c Release \
-            -p:Version=${{ steps.version.outputs.VERSION }} \
-            --no-build -o ./nupkg
-          dotnet pack src/EditorPowertools.Graph/EditorPowertools.Graph.csproj \
-            -c Release \
-            -p:Version=${{ steps.version.outputs.VERSION }} \
-            --no-build -o ./nupkg
+          bash scripts/pack-all.sh "${{ steps.version.outputs.VERSION }}" ./nupkg
+
+      - name: Install packages into consumer sites
+        run: bash scripts/pack-smoke.sh ./nupkg "${{ steps.version.outputs.VERSION }}"
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v7
         with:
-          name: UmageAI.Optimizely.EditorPowerTools.${{ steps.version.outputs.VERSION }}
+          name: UmageAI.Optimizely.EditorPowerTools-packages.${{ steps.version.outputs.VERSION }}
           path: ./nupkg/*.nupkg
 
       - name: Upload test results
