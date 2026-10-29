@@ -1,10 +1,12 @@
 define([
+    "require",
     "dojo/_base/declare",
     "epi/_Module",
     "epi/locator",
     "editorpowertools/commands/ContentTimelineCommand",
     "editorpowertools/commands/ManageChildrenCommand"
 ], function (
+    require,
     declare,
     _Module,
     locator,
@@ -15,9 +17,14 @@ define([
         initialize: function () {
             this.inherited(arguments);
 
-            // Set base URLs (also set in _PowertoolsLayout for full-page tools)
-            if (!window.EPT_BASE_URL) window.EPT_BASE_URL = '/episerver/EditorPowertools/';
-            if (!window.EPT_HUB_URL) window.EPT_HUB_URL = '/episerver/EditorPowertools/hubs';
+            // Base URLs (the layout sets them for full-page tools). In the edit UI, derive them from where
+            // the shell serves this module's scripts: the mount point differs between CMS 12 and 13 and
+            // can be reconfigured, so it is never hard-coded.
+            if (!window.EPT_BASE_URL) {
+                window.EPT_BASE_URL = require.toUrl("editorpowertools/").split("?")[0]
+                    .replace(/ClientResources\/js\/?$/, "");
+            }
+            if (!window.EPT_HUB_URL) window.EPT_HUB_URL = window.EPT_BASE_URL + "hubs";
 
             var self = this;
             try {

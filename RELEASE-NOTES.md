@@ -12,6 +12,8 @@
 
 ### Fixes
 
+- **Notification bell on tool pages** — every Powertools page showed a broken notification bell in the CMS header (its request failed with 400 and threw a script error), because the page did not carry the antiforgery token the CMS navigation reads.
+- **Active Editors in the CMS 13 edit UI** — the edit-UI scripts fell back to a hard-coded `/episerver/` path, so on CMS 13 (mounted at `/Optimizely`) the Active Editors connection and feature switches failed. The path is now derived from where the shell serves the module.
 - **Module files with add-ons only** — when a site referenced only an add-on (for example Forms), the core package's module zip was not copied into the site. The `.targets` files now ship in `buildTransitive/`.
 
 ### Improvements
