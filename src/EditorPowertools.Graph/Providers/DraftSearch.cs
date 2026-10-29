@@ -80,7 +80,8 @@ public class DraftSearch
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Draft search failed for '{SearchPhrase}'.", phrase);
+            // The phrase is editor-typed text; keep it out of the log.
+            _logger.LogError(ex, "Draft search failed.");
             return Array.Empty<ContentReference>();
         }
     }

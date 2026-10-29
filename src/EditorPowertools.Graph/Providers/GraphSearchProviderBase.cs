@@ -91,7 +91,8 @@ public abstract class GraphSearchProviderBase : ISearchProvider
     /// <see cref="GraphSearchOptions.DisableBuiltInProviders"/> on and Graph available we use the
     /// built-in spelling: the platform's provider manager (CMS 12 and 13) drops the built-in providers
     /// (<c>ISortable.SortOrder == int.MinValue</c>) when another provider registers the identical area
-    /// string. When Graph is unavailable the built-ins come back automatically.
+    /// string. When Graph is not configured the built-ins come back automatically; a Graph outage does
+    /// not bring them back (searches then return nothing until Graph answers again).
     /// </summary>
     public string Area => ReplacesBuiltIn() ? BuiltInArea : BuiltInArea.ToLowerInvariant();
 
@@ -119,6 +120,20 @@ public abstract class GraphSearchProviderBase : ISearchProvider
         }
     }
 
+    /// <summary>
+    /// While replacing the built-in providers this is the CMS search for every editor, so any signed-in
+    /// user may use it (the shell already requires edit access); otherwise it is a Powertools surface with
+    /// the Powertools audience. Results are access-checked against the CMS either way.
+    /// </summary>
+    private bool MaySearch()
+    {
+        var context = _http.HttpContext;
+        return ReplacesBuiltIn()
+            ? context?.User?.Identity?.IsAuthenticated == true
+            : _access.HasUiAccess(context, nameof(GraphFeatureToggles.SearchProviders),
+                EditorPowertoolsGraphPermissions.SearchProviders);
+    }
+
     public IEnumerable<SearchResult> Search(Query query)
     {
         if (query is null || string.IsNullOrWhiteSpace(query.SearchQuery))
@@ -128,8 +143,7 @@ public abstract class GraphSearchProviderBase : ISearchProvider
 
         try
         {
-            if (!_access.HasUiAccess(_http.HttpContext, nameof(GraphFeatureToggles.SearchProviders),
-                    EditorPowertoolsGraphPermissions.SearchProviders))
+            if (!MaySearch())
             {
                 return Array.Empty<SearchResult>();
             }

@@ -1,7 +1,10 @@
 using EPiServer.Security;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using UmageAI.Optimizely.EditorPowerTools.Abstractions;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Abstractions;
+using UmageAI.Optimizely.EditorPowerTools.Graph.Configuration;
+using UmageAI.Optimizely.EditorPowerTools.Graph.Permissions;
 using UmageAI.Optimizely.EditorPowerTools.Graph.Search;
 
 namespace UmageAI.Optimizely.EditorPowerTools.Graph.Providers;
@@ -18,6 +21,8 @@ public sealed class GraphContentPickerSearchProvider : IContentSearchProvider
     private readonly IContentLoader _loader;
     private readonly IContentRepository _repository;
     private readonly IContentTypeRepository _types;
+    private readonly GraphFeatureAccessChecker _access;
+    private readonly IHttpContextAccessor _http;
     private readonly ILogger<GraphContentPickerSearchProvider> _logger;
 
     public GraphContentPickerSearchProvider(
@@ -25,12 +30,16 @@ public sealed class GraphContentPickerSearchProvider : IContentSearchProvider
         IContentLoader loader,
         IContentRepository repository,
         IContentTypeRepository types,
+        GraphFeatureAccessChecker access,
+        IHttpContextAccessor http,
         ILogger<GraphContentPickerSearchProvider> logger)
     {
         _search = search;
         _loader = loader;
         _repository = repository;
         _types = types;
+        _access = access;
+        _http = http;
         _logger = logger;
     }
 
@@ -43,31 +52,49 @@ public sealed class GraphContentPickerSearchProvider : IContentSearchProvider
 
         try
         {
+            if (!_access.HasUiAccess(_http.HttpContext, nameof(GraphFeatureToggles.SearchProviders),
+                    EditorPowertoolsGraphPermissions.SearchProviders))
+            {
+                return Array.Empty<ContentSearchHit>();
+            }
+
+            var roots = new HashSet<ContentReference>();
             var ancestors = new List<Guid>();
             if (!ContentReference.IsNullOrEmpty(root)
                 && _loader.TryGet<IContent>(root!, out var rootContent)
                 && rootContent is not null
                 && rootContent.ContentGuid != Guid.Empty)
             {
+                roots.Add(rootContent.ContentLink.ToReferenceWithoutVersion());
                 ancestors.Add(rootContent.ContentGuid);
             }
 
-            var scope = new GraphSearchScope(_search.ValidateContentTypes(PickerTypes), ancestors, false);
+            var types = _search.ValidateContentTypes(PickerTypes);
             // Over-fetch when a root is given or permissions may drop rows, then cap.
             var limit = Math.Min(Math.Max(maxResults * 3, maxResults), GraphSearchService.MaxLimit);
-            var request = new GraphSearchRequest(query, scope, null, GraphSearchFilters.None, limit, 0, false);
-            var result = _search.SearchAsync(request, CancellationToken.None).GetAwaiter().GetResult();
+            var hits = Query(query, types, ancestors, limit);
 
-            var hits = new List<ContentSearchHit>();
-            foreach (var hit in result.Hits)
+            // A root Graph cannot express yields nothing (CMS 13 paths omit the root folders, such as
+            // global and site assets); retry without it. Hits are checked against the root below.
+            if (hits.Count == 0 && ancestors.Count > 0)
             {
+                hits = Query(query, types, Array.Empty<Guid>(), GraphSearchService.MaxLimit);
+            }
+
+            var seen = new HashSet<int>();
+            var list = new List<ContentSearchHit>();
+            foreach (var hit in hits)
+            {
+                // Graph returns one item per language branch; the picker lists content once.
                 if (!_repository.TryGet<IContent>(hit.ContentGuid, out var content) || content is null
-                    || !content.QueryDistinctAccess(AccessLevel.Read))
+                    || !seen.Add(content.ContentLink.ID)
+                    || !content.QueryDistinctAccess(AccessLevel.Read)
+                    || !SearchRoots.Contains(content, roots, _loader))
                 {
                     continue;
                 }
 
-                hits.Add(new ContentSearchHit
+                list.Add(new ContentSearchHit
                 {
                     ContentId = content.ContentLink.ID,
                     Name = content.Name,
@@ -75,18 +102,25 @@ public sealed class GraphContentPickerSearchProvider : IContentSearchProvider
                     HasChildren = _loader.GetChildren<IContent>(content.ContentLink).Any()
                 });
 
-                if (hits.Count >= maxResults)
+                if (list.Count >= maxResults)
                 {
                     break;
                 }
             }
 
-            return hits;
+            return list;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Graph content picker search failed.");
             return Array.Empty<ContentSearchHit>();
         }
+    }
+
+    private IReadOnlyList<GraphSearchHit> Query(string query, IReadOnlyList<string> types, IReadOnlyList<Guid> ancestors, int limit)
+    {
+        var scope = new GraphSearchScope(types, ancestors, false);
+        var request = new GraphSearchRequest(query, scope, null, GraphSearchFilters.None, limit, 0, false);
+        return _search.SearchAsync(request, CancellationToken.None).GetAwaiter().GetResult().Hits;
     }
 }

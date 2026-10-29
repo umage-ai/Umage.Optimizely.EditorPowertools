@@ -54,6 +54,10 @@ public class PowerSearchApiController : Controller
             EditorPowertoolsGraphPermissions.PowerSearch))
             return Forbid();
 
+        // Model binding accepts any integer for an enum.
+        if (!Enum.IsDefined(tab))
+            return BadRequest();
+
         try
         {
             var sections = (section ?? Array.Empty<string>())

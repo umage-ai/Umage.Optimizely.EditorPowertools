@@ -95,7 +95,7 @@ services.AddEditorPowertoolsGraph(options =>
 | `Features.PowerSearch` | `true` | Enables the PowerSearch tool. |
 | `Features.PowerSlice` | `true` | Enables the Power Slice widget. |
 | `Features.SearchProviders` | `true` | Enables the Graph-backed search providers and content picker search. |
-| `Search.DisableBuiltInProviders` | `false` | Hide the CMS built-in page/block/media search providers while Graph is available. |
+| `Search.DisableBuiltInProviders` | `false` | Hide the CMS built-in page/block/media search providers while Graph is configured. See [Choosing search providers](#choosing-search-providers) for the side effects. |
 | `Search.IncludeDrafts` | `true` | Merge the editor's own drafts (read from the CMS, not Graph) into results, shown first. |
 | `Search.OverfetchFactor` | `5` | Graph is asked for this multiple of the requested page size, so post-filtering does not leave short pages. |
 | `Search.MaxOverfetch` | `100` | Upper bound on the overfetch. Graph accepts at most 100 per request, so higher values are capped. |
@@ -118,7 +118,9 @@ To choose, open **Search Configuration** (under Admin on CMS 12, Settings on CMS
 
 Two options in this add-on also help:
 
-- `Search.DisableBuiltInProviders` hides the CMS built-in providers while Graph is available, and brings them back automatically when Graph is not. It does not affect Optimizely's own Graph providers; use Search Configuration for those.
+- `Search.DisableBuiltInProviders` hides the CMS built-in providers while Graph is configured, and brings them back automatically when it is not. It does not affect Optimizely's own Graph providers; use Search Configuration for those.
+  - While it is on, the **(Graph)** providers are the CMS search for every signed-in editor, not only the Powertools audience (`AuthorizedRoles`), and the `SearchProviders` per-function permission does not apply to them. Results are still limited to what each editor may read.
+  - A Graph outage does not bring the built-ins back: searches return nothing until Graph answers again. If that is not acceptable, leave the option off and choose providers in Search Configuration instead.
 - `Features.SearchProviders = false` removes this add-on's providers and content picker search entirely.
 
 ## Permissions

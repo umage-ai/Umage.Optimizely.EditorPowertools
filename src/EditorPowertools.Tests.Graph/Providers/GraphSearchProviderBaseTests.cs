@@ -347,6 +347,22 @@ public class GraphSearchProviderBaseTests
         sut.Area.Should().Be("cms/pages");
     }
 
+    [Theory]
+    [InlineData(true, 1)]
+    [InlineData(false, 0)]
+    public void Replacing_builtin_serves_every_signed_in_editor(bool signedIn, int expected)
+    {
+        var f = new Fixture();
+        f.Options.Search.DisableBuiltInProviders = true;
+        f.Access.Setup(a => a.HasUiAccess(It.IsAny<HttpContext?>(), It.IsAny<string>(), It.IsAny<PermissionType>())).Returns(false);
+        var identity = signedIn ? new GenericIdentity("editor") : new GenericIdentity("");
+        f.Http.SetupGet(h => h.HttpContext).Returns(new DefaultHttpContext { User = new GenericPrincipal(identity, new[] { "WebEditors" }) });
+        var page = f.Content(1, "page");
+        f.Hits(Fixture.Hit(page.Object.ContentGuid));
+
+        f.Create().Search(Q()).Should().HaveCount(expected);
+    }
+
     [Fact]
     public void Category_falls_back_to_english()
     {

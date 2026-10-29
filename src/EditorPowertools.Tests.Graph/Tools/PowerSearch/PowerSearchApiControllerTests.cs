@@ -52,6 +52,14 @@ public class PowerSearchApiControllerTests
     }
 
     [Fact]
+    public async Task Unknown_tab_is_a_bad_request()
+    {
+        var result = await Create().Search("abc", tab: (PowerSearchTab)99);
+        result.Should().BeOfType<BadRequestResult>();
+        _service.Verify(s => s.SearchAsync(It.IsAny<PowerSearchQuery>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
     public async Task Invalid_section_guids_are_dropped()
     {
         var good = Guid.NewGuid();
