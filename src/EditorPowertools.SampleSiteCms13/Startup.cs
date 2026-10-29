@@ -2,14 +2,16 @@ using EditorPowertools.SampleSiteCms13.Extensions;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Data;
 using EPiServer.DependencyInjection;
+using Optimizely.Graph.DependencyInjection;
 using EPiServer.Scheduler;
 using EPiServer.Web.Routing;
 using UmageAI.Optimizely.EditorPowerTools.Infrastructure;
 using UmageAI.Optimizely.EditorPowerTools.Forms.Infrastructure;
+using UmageAI.Optimizely.EditorPowerTools.Graph.Infrastructure;
 
 namespace EditorPowertools.SampleSiteCms13;
 
-public class Startup(IWebHostEnvironment webHostingEnvironment)
+public class Startup(IWebHostEnvironment webHostingEnvironment, IConfiguration configuration)
 {
     public void ConfigureServices(IServiceCollection services)
     {
@@ -35,6 +37,18 @@ public class Startup(IWebHostEnvironment webHostingEnvironment)
 
         services.AddEditorPowertools();
         services.AddEditorPowertoolsForms();
+
+        // Optimizely Graph content sync + Graph add-on. On CMS 13 AddContentGraph makes the
+        // schema-sync init module call the gateway at startup and throws on an empty
+        // GatewayAddress, so it is only registered when credentials are configured.
+        if (!string.IsNullOrEmpty(configuration["Optimizely:ContentGraph:AppKey"]))
+        {
+            services.AddContentGraph(options =>
+            {
+                // CMS 13 Graph 13.2.0 exposes no IncludeInheritanceInContentType option (see plan Task 16).
+            });
+        }
+        services.AddEditorPowertoolsGraph();
 
         // Required by Wangkanai.Detection
         services.AddDetection();
@@ -64,12 +78,14 @@ public class Startup(IWebHostEnvironment webHostingEnvironment)
         app.UseAuthorization();
         app.UseEditorPowertools();
         app.UseEditorPowertoolsForms();
+        app.UseEditorPowertoolsGraph();
 
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapContent();
             endpoints.MapEditorPowertools();
             endpoints.MapEditorPowertoolsForms();
+            endpoints.MapEditorPowertoolsGraph();
         });
     }
 }

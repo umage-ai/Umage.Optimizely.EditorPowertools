@@ -125,6 +125,9 @@
         <overview>
           <title>Vue d'ensemble</title>
           <description>Tableau de bord de toutes les fonctionnalités Editor Powertools.</description>
+          <group>
+            <search>Recherche</search>
+          </group>
         </overview>
         <about>
           <title>À propos d'Editor Powertools</title>

@@ -1,5 +1,68 @@
 # Release Notes
 
+## Unreleased
+
+### New add-on
+
+- **Graph add-on** (`UmageAI.Optimizely.EditorPowerTools.Graph`) — PowerSearch (Graph-backed editor search with facets; an empty box browses newest first), Power Slice (assets-pane content lists) and Graph-backed search providers and content picker search. Queries run with the editor's roles. Localized in all 11 languages. See [docs/graph.md](docs/graph.md). Verified against live Graph instances on CMS 12 and CMS 13.
+
+### Improvements
+
+- **`IUiStringsContributor`** — add-ons can now contribute translated strings to the JavaScript string table.
+- **Forms add-on** — JavaScript strings are now translated through the new contributor mechanism.
+- **CI** — the release workflow now also builds, tests and packs the Graph add-on. Pull requests also build both sample sites.
+- **Dependency ranges** — packages now declare bounded CMS ranges (CMS 12: `[12.34.4, 13.0.0)`, CMS 13: `[13.2.0, 14.0.0)`; Forms 5.10.1+ / 6.x). Previously the minimum CMS version silently rose to whatever was newest when each release was packed.
+
+## v0.10.0
+
+- Shared property-type handlers for bulk edit and import, with bulk-edit and import fixes; batched Dynamic Data Store clears (#54, #55, #61).
+- **Content Audit** — one corrupt content item no longer aborts the whole export (#63).
+
+## v0.9.1
+
+- **Forms add-on** — form-language filter in Forms Overview and Submissions Timeline; system columns removed from submission details; documentation and screenshots.
+- **CI** — publish workflow moved to Node 24 actions.
+
+## v0.9.0
+
+- **Forms add-on** (`UmageAI.Optimizely.EditorPowerTools.Forms`) — Forms overview, submissions timeline, and privacy and duplicate diagnostics.
+- **Scheduled Jobs Gantt** — row alignment fixed; jobs with duplicate names are told apart.
+
+## v0.8.1
+
+- **Packaging** — `EditorPowertools.zip` is now copied to the consuming site's publish output.
+
+## v0.8.0
+
+- Opti-ID routing fixes, performance clean-up, and a pre-release security pass.
+
+## v0.7.0
+
+- **Permissions** — localized descriptions on the admin Permissions for Functions page; removed two permissions for tools that no longer exist.
+- **Audience Manager** — the Usage column now fills in.
+- **Content Audit** — the CMS 13 filter row is hidden on CMS 12.
+
+## v0.6.1
+
+- **Packaging** — corrected the repository URL.
+
+## v0.6.0
+
+- **Packaging** — Excel export moved from EPPlusFree to ClosedXML; added SECURITY.md.
+
+## v0.5.1
+
+- **Packaging** — CMS dependencies relaxed from exact versions so sites on other patch versions can install; patched transitive System.* security dependencies; release notes generated from merged pull requests.
+
+## v0.5.0
+
+- **CMS 13 support** — one package now supports CMS 12 (.NET 8) and CMS 13 (.NET 10).
+- **Content Type Audit** — Contract, Section and Element badges, kind and composition filters, and an applied-contracts panel (CMS 13).
+- **Content Statistics** — contracts summary and block breakdown (CMS 13).
+- **Bulk Property Editor** — content types and contracts tabs; choosing a contract selects every type that implements it.
+- **Content Audit** — CMS 13 contract and composition filters.
+- "Orphaned" renamed to "Code-less" in the UI and all 11 languages.
+
 ## v0.2.0-preview.1
 
 ### New Tools

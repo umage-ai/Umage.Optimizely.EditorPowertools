@@ -204,6 +204,15 @@ Tools carried over from the old project (re-implemented with new UI) and new add
 
 ---
 
+## Graph Tools (Separate NuGet: `UmageAI.Optimizely.EditorPowerTools.Graph`)
+
+*Separate project/NuGet package with dependency on the Optimizely Graph client.*
+
+- [~] **Graph-backed editor search (#65, in progress)** - PowerSearch tool, Power Slice widget, and Graph-backed search providers; implemented on CMS 12, CMS 13 GraphQL dialect pending live verification. See [graph.md](graph.md).
+- [ ] **Semantic / AI search over Graph (#67)** - follow-up to #65, out of scope for the first release.
+
+---
+
 ## Shared Infrastructure
 
 - [x] **Unified Scheduled Job** - Merge the three current jobs (Content Type Statistics, Personalization Analysis, Link Checker) into a single pluggable job that traverses content once. Each "analyzer" plugin registers via DI and receives each content item during traversal. This avoids scanning all content 3+ times. Architecture: `IContentAnalyzer` interface with `Analyze(IContent, ContentReference)` method, registered as `IEnumerable<IContentAnalyzer>`. The job iterates all content once and calls each analyzer. Each analyzer stores its own results in its own DDS store.

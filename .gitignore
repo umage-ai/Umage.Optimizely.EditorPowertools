@@ -95,6 +95,17 @@ modulesbin/
 /src/EditorPowertools.Forms/modules/_protected/Settings/
 /src/EditorPowertools.Forms/modules/_protected/Shell/
 /src/EditorPowertools.Forms/modules/_protected/TinyMce/
+/src/EditorPowertools.Forms/modules/_protected/OpalChat/
+/src/EditorPowertools/modules/_protected/OpalChat/
+/src/EditorPowertools.Tests.Forms/modules/
+/src/EditorPowertools.Graph/modules/_protected/CMS/
+/src/EditorPowertools.Graph/modules/_protected/EPiServer.*/
+/src/EditorPowertools.Graph/modules/_protected/Profile/
+/src/EditorPowertools.Graph/modules/_protected/Settings/
+/src/EditorPowertools.Graph/modules/_protected/Shell/
+/src/EditorPowertools.Graph/modules/_protected/TinyMce/
+/src/EditorPowertools.Graph/modules/_protected/OpalChat/
+/src/EditorPowertools.Tests.Graph/modules/
 /src/EditorPowertools.Tests/modules/
 
 # Local settings

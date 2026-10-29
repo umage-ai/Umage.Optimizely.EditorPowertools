@@ -31,5 +31,6 @@ public static class PowertoolGroups
     public const string ContentEditorial = "ContentEditorial";
     public const string AuditsAnalysis   = "AuditsAnalysis";
     public const string Forms            = "Forms";
+    public const string Search           = "Search";
     public const string ConfigurationAdmin = "ConfigurationAdmin";
 }

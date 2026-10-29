@@ -1,0 +1,17 @@
+<Project>
+  <!--
+    Version ranges for the packages our libraries depend on. Each range packs into the nuspec
+    as-is, so it is the contract with consuming sites: the lower bound is the oldest version we
+    support and is what we compile and test against (NuGet resolves the lowest match).
+    Never use floating versions (12.*) here: they pack as ">= newest at pack time" and silently
+    raise the minimum CMS version every release.
+  -->
+  <PropertyGroup>
+    <EptCms12Range>[12.34.4, 13.0.0)</EptCms12Range>
+    <EptCms13Range>[13.2.0, 14.0.0)</EptCms13Range>
+    <EptForms5Range>[5.10.1, 6.0.0)</EptForms5Range>
+    <EptForms6Range>[6.0.0, 7.0.0)</EptForms6Range>
+    <EptContentGraph4Range>[4.3.1, 5.0.0)</EptContentGraph4Range>
+    <EptGraph13Range>[13.2.0, 14.0.0)</EptGraph13Range>
+  </PropertyGroup>
+</Project>

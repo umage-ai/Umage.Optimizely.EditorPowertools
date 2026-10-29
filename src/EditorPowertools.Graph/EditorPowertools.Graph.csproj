@@ -1,0 +1,121 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <RootNamespace>UmageAI.Optimizely.EditorPowerTools.Graph</RootNamespace>
+    <AssemblyName>EditorPowertools.Graph</AssemblyName>
+
+    <!-- NuGet package properties -->
+    <PackageId>UmageAI.Optimizely.EditorPowerTools.Graph</PackageId>
+    <Version>0.1.0-local</Version>
+    <Authors>UmageAI</Authors>
+    <Company>UmageAI</Company>
+    <Description>Optimizely Graph add-on for UmageAI Editor Powertools. Graph-backed editor search providers, Power Slice content lists and faceted PowerSearch. Supports Optimizely CMS 12 and CMS 13.</Description>
+    <PackageTags>Optimizely;CMS;EPiServer;Graph;Search;Editor;Tools;Admin;Audit;PowerTools</PackageTags>
+    <PackageProjectUrl>https://github.com/umage-ai/Umage.Optimizely.EditorPowertools</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/umage-ai/Umage.Optimizely.EditorPowertools</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <!-- Compile-time version symbols -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <DefineConstants>$(DefineConstants);OPTIMIZELY_CMS12</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <DefineConstants>$(DefineConstants);OPTIMIZELY_CMS13</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="EPiServer" />
+    <Using Include="EPiServer.Core" />
+    <Using Include="EPiServer.DataAbstraction" />
+    <Using Include="EPiServer.DataAnnotations" />
+  </ItemGroup>
+
+  <!-- Expose internal heuristics to the Graph test project for direct unit testing. -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="EditorPowertools.Tests.Graph" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <!--
+    Reference the base library by ProjectReference during dev. `dotnet pack` converts
+    this to a NuGet <dependency> on UmageAI.Optimizely.EditorPowerTools at the same version,
+    so consumers automatically pull in the base package.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\EditorPowertools\EditorPowertools.csproj" />
+  </ItemGroup>
+
+  <!-- CMS 12 / CMS 13 conditional package references -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="EPiServer.CMS" Version="$(EptCms12Range)" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="$(EptCms12Range)" />
+    <PackageReference Include="Optimizely.ContentGraph.Core" Version="$(EptContentGraph4Range)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <PackageReference Include="EPiServer.CMS" Version="$(EptCms13Range)" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="$(EptCms13Range)" />
+    <PackageReference Include="Optimizely.Graph.Core" Version="$(EptGraph13Range)" />
+  </ItemGroup>
+
+  <!-- Localization language files -->
+  <ItemGroup>
+    <EmbeddedResource Include="lang\*.xml" />
+  </ItemGroup>
+
+  <!-- Version-specific compile folders -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <Compile Remove="Cms13\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <Compile Remove="Cms12\**\*.cs" />
+  </ItemGroup>
+
+  <!-- Include README, icon and BOTH .targets files in the NuGet package -->
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    <None Include="..\EditorPowertools\icon.png" Pack="true" PackagePath="" />
+    <None Include="build\net8.0\UmageAI.Optimizely.EditorPowerTools.Graph.targets" Pack="true" PackagePath="build\net8.0\" />
+    <None Include="build\net10.0\UmageAI.Optimizely.EditorPowerTools.Graph.targets" Pack="true" PackagePath="build\net10.0\" />
+  </ItemGroup>
+
+  <!--
+    Graph module zip: created during build, packed as contentFiles with BuildAction=None.
+    The .targets file copies it to the consuming project's modules/_protected/ on first build.
+  -->
+  <Target Name="CreateGraphModuleZip" BeforeTargets="Build">
+    <MakeDir Directories="$(IntermediateOutputPath)module-zip" />
+    <ZipDirectory SourceDirectory="modules\_protected\EditorPowertoolsGraph" DestinationFile="$(IntermediateOutputPath)module-zip\EditorPowertoolsGraph.zip" Overwrite="true" />
+  </Target>
+
+  <ItemGroup>
+    <Content Include="$(IntermediateOutputPath)module-zip\EditorPowertoolsGraph.zip" Pack="true" PackagePath="contentFiles\any\any\modules\_protected\EditorPowertoolsGraph" BuildAction="None" CopyToPublishDirectory="Never" CopyToOutputDirectory="Never">
+      <Link>EditorPowertoolsGraph.zip</Link>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+  </ItemGroup>
+
+  <!-- Exclude the source modules/_protected folder from build output -->
+  <ItemGroup>
+    <Content Remove="modules\_protected\**" />
+    <None Remove="modules\_protected\**" />
+  </ItemGroup>
+
+  <!-- Keep source files visible in IDE -->
+  <ItemGroup>
+    <None Include="modules\_protected\EditorPowertoolsGraph\**\*" />
+  </ItemGroup>
+
+</Project>

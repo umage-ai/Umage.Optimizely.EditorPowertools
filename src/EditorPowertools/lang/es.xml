@@ -125,6 +125,9 @@
         <overview>
           <title>Vista general</title>
           <description>Panel de control con vista general de todas las funciones de Editor Powertools.</description>
+          <group>
+            <search>Búsqueda</search>
+          </group>
         </overview>
         <about>
           <title>Acerca de Editor Powertools</title>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="English" id="en">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <PowerSearch>Access PowerSearch - faceted, Graph-backed content search.</PowerSearch>
+              <PowerSlice>Access the Power Slice assets-pane widget - ready-made Graph-backed content lists.</PowerSlice>
+              <SearchProviders>Use the Graph-backed search providers in the CMS editing UI.</SearchProviders>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <graph>
+        <powerslice>
+          <slices>
+            <mycontent>My content</mycontent>
+            <recentlychanged>Recently changed</recentlychanged>
+            <drafts>Drafts</drafts>
+            <awaitingapproval>Awaiting approval</awaitingapproval>
+            <stalecontent>Stale content</stalecontent>
+            <unusedblocks>Unused blocks</unusedblocks>
+          </slices>
+          <sort>
+            <name>Name (A-Z)</name>
+            <changed>Recently changed</changed>
+            <changedasc>Least recently changed</changedasc>
+            <published>Recently published</published>
+          </sort>
+          <strings>
+            <filterplaceholder>Filter by name</filterplaceholder>
+            <reload>Reload</reload>
+            <notavailable>Power Slice is not available for your account.</notavailable>
+            <empty>Nothing to show in this list.</empty>
+          </strings>
+        </powerslice>
+        <powersearch>
+          <error>Search failed.</error>
+          <status>
+            <draft>Draft</draft>
+            <notcreated>Not created</notcreated>
+            <rejected>Rejected</rejected>
+            <checkedout>Checked out</checkedout>
+            <checkedin>Ready to publish</checkedin>
+            <published>Published</published>
+            <previouslypublished>Previously published</previouslypublished>
+            <delayedpublish>Scheduled</delayedpublish>
+            <awaitingapproval>Awaiting approval</awaitingapproval>
+          </status>
+        </powersearch>
+        <search>
+          <category>
+            <pages>Pages (Graph)</pages>
+            <blocks>Blocks (Graph)</blocks>
+            <media>Media (Graph)</media>
+          </category>
+          <unpublisheddraft>Unpublished draft</unpublisheddraft>
+        </search>
+      </graph>
+      <cmsdoctor>
+        <groups>
+          <graph>Graph</graph>
+        </groups>
+        <checks>
+          <graphhealthcheck>
+            <name>Optimizely Graph for editor search</name>
+            <description>Checks that Optimizely Graph is installed, configured and answering, so editor search can use it.</description>
+            <ok>Optimizely Graph is configured and responding.</ok>
+            <notinstalled>Optimizely Graph is not installed (call AddContentGraph()).</notinstalled>
+            <notconfigured>Graph gateway, app key or secret is missing.</notconfigured>
+            <notverified>Graph search is not yet verified for this CMS version.</notverified>
+            <noresponse>Graph did not respond.</noresponse>
+          </graphhealthcheck>
+        </checks>
+      </cmsdoctor>
+      <components>
+        <powerslice>
+          <title>Power Slice</title>
+          <description>Ready-made lists of content: drafts, unused blocks, recently changed and more.</description>
+        </powerslice>
+      </components>
+      <menu>
+        <powersearch>PowerSearch</powersearch>
+      </menu>
+      <tools>
+        <powersearch>
+          <title>PowerSearch</title>
+          <description>Faceted content search across the whole site, powered by Optimizely Graph.</description>
+        </powersearch>
+      </tools>
+      <ui>
+        <powersearch>
+          <placeholder>Search pages, blocks and media…</placeholder>
+          <search>Search</search>
+          <tab_pages>Pages</tab_pages>
+          <tab_blocks>Blocks</tab_blocks>
+          <tab_media>Media</tab_media>
+          <tab_other>Other</tab_other>
+          <facet_type>Type</facet_type>
+          <facet_language>Language</facet_language>
+          <facet_section>Section</facet_section>
+          <show_more>Show {0} more</show_more>
+          <show_less>Show less</show_less>
+          <clear_filters>Clear filters</clear_filters>
+          <load_more>Load more</load_more>
+          <no_results>No results found.</no_results>
+          <browsing>Most recently changed first. Type to search.</browsing>
+          <unavailable>Graph search is not available. Check the Optimizely Graph configuration.</unavailable>
+          <unavailable_link>Open CMS Doctor</unavailable_link>
+          <error>Something went wrong while searching. Please try again.</error>
+          <index_lag>Results come from the Optimizely Graph index and may lag behind recent publishing.</index_lag>
+          <draft>Draft</draft>
+          <by>by</by>
+          <results_count>{0} results</results_count>
+        </powersearch>
+      </ui>
+    </editorpowertools>
+  </language>
+</languages>

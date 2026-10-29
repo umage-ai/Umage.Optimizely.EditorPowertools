@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Nederlands" id="nl">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <PowerSearch>Toegang tot PowerSearch — gefacetteerd, Graph-gebaseerd zoeken naar inhoud.</PowerSearch>
+              <PowerSlice>Toegang tot de Power Slice-widget in het assets-venster — kant-en-klare, Graph-gebaseerde inhoudslijsten.</PowerSlice>
+              <SearchProviders>Gebruik de Graph-gebaseerde zoekproviders in de CMS-bewerkingsinterface.</SearchProviders>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <graph>
+        <powerslice>
+          <slices>
+            <mycontent>Mijn inhoud</mycontent>
+            <recentlychanged>Recent gewijzigd</recentlychanged>
+            <drafts>Concepten</drafts>
+            <awaitingapproval>Wacht op goedkeuring</awaitingapproval>
+            <stalecontent>Verouderde inhoud</stalecontent>
+            <unusedblocks>Ongebruikte blokken</unusedblocks>
+          </slices>
+          <sort>
+            <name>Naam (A-Z)</name>
+            <changed>Recent gewijzigd</changed>
+            <changedasc>Minst recent gewijzigd</changedasc>
+            <published>Recent gepubliceerd</published>
+          </sort>
+          <strings>
+            <filterplaceholder>Filteren op naam</filterplaceholder>
+            <reload>Opnieuw laden</reload>
+            <notavailable>Power Slice is niet beschikbaar voor uw account.</notavailable>
+            <empty>Niets om weer te geven in deze lijst.</empty>
+          </strings>
+        </powerslice>
+        <powersearch>
+          <error>Zoekopdracht mislukt.</error>
+          <status>
+            <draft>Concept</draft>
+            <notcreated>Niet gemaakt</notcreated>
+            <rejected>Afgewezen</rejected>
+            <checkedout>Uitgecheckt</checkedout>
+            <checkedin>Klaar om te publiceren</checkedin>
+            <published>Gepubliceerd</published>
+            <previouslypublished>Eerder gepubliceerd</previouslypublished>
+            <delayedpublish>Gepland</delayedpublish>
+            <awaitingapproval>Wacht op goedkeuring</awaitingapproval>
+          </status>
+        </powersearch>
+        <search>
+          <category>
+            <pages>Pagina's (Graph)</pages>
+            <blocks>Blokken (Graph)</blocks>
+            <media>Media (Graph)</media>
+          </category>
+          <unpublisheddraft>Onbekendgemaakt concept</unpublisheddraft>
+        </search>
+      </graph>
+      <cmsdoctor>
+        <groups>
+          <graph>Graph</graph>
+        </groups>
+        <checks>
+          <graphhealthcheck>
+            <name>Optimizely Graph voor editorzoeking</name>
+            <description>Controleert of Optimizely Graph is geïnstalleerd, geconfigureerd en reageert, zodat editorzoeking het kan gebruiken.</description>
+            <ok>Optimizely Graph is geconfigureerd en reageert.</ok>
+            <notinstalled>Optimizely Graph is niet geïnstalleerd (roep AddContentGraph() aan).</notinstalled>
+            <notconfigured>Graph-gateway, app-sleutel of geheim ontbreekt.</notconfigured>
+            <notverified>Graph-zoeking is nog niet geverifieerd voor deze CMS-versie.</notverified>
+            <noresponse>Graph heeft niet gereageerd.</noresponse>
+          </graphhealthcheck>
+        </checks>
+      </cmsdoctor>
+      <components>
+        <powerslice>
+          <title>Power Slice</title>
+          <description>Kant-en-klare inhoudslijsten: concepten, ongebruikte blokken, recent gewijzigd en meer.</description>
+        </powerslice>
+      </components>
+      <menu>
+        <powersearch>PowerSearch</powersearch>
+      </menu>
+      <tools>
+        <powersearch>
+          <title>PowerSearch</title>
+          <description>Gelaagde inhoudszoeking op de hele site, aangedreven door Optimizely Graph.</description>
+        </powersearch>
+      </tools>
+      <ui>
+        <powersearch>
+          <placeholder>Zoek in pagina's, blokken en media…</placeholder>
+          <search>Zoeken</search>
+          <tab_pages>Pagina's</tab_pages>
+          <tab_blocks>Blokken</tab_blocks>
+          <tab_media>Media</tab_media>
+          <tab_other>Overige</tab_other>
+          <facet_type>Type</facet_type>
+          <facet_language>Taal</facet_language>
+          <facet_section>Sectie</facet_section>
+          <show_more>Toon {0} meer</show_more>
+          <show_less>Toon minder</show_less>
+          <clear_filters>Filters wissen</clear_filters>
+          <load_more>Meer laden</load_more>
+          <no_results>Geen resultaten gevonden.</no_results>
+          <browsing>Meest recent gewijzigd eerst. Typ om te zoeken.</browsing>
+          <unavailable>Graph-zoeking is niet beschikbaar. Controleer de Optimizely Graph-configuratie.</unavailable>
+          <unavailable_link>Open CMS Doctor</unavailable_link>
+          <error>Er is iets fout gegaan bij het zoeken. Probeer het opnieuw.</error>
+          <index_lag>Resultaten komen uit de Optimizely Graph-index en kunnen achter lopen op recente publicatie.</index_lag>
+          <draft>Concept</draft>
+          <by>door</by>
+          <results_count>{0} resultaten</results_count>
+        </powersearch>
+      </ui>
+    </editorpowertools>
+  </language>
+</languages>

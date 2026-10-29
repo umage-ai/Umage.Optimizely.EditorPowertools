@@ -59,17 +59,17 @@
 
   <!-- CMS 12 / CMS 13 conditional package references -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="EPiServer.CMS" Version="12.*" />
-    <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.*" />
-    <PackageReference Include="EPiServer.Forms" Version="5.*" />
-    <PackageReference Include="EPiServer.Forms.UI" Version="5.*" />
+    <PackageReference Include="EPiServer.CMS" Version="$(EptCms12Range)" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="$(EptCms12Range)" />
+    <PackageReference Include="EPiServer.Forms" Version="$(EptForms5Range)" />
+    <PackageReference Include="EPiServer.Forms.UI" Version="$(EptForms5Range)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-    <PackageReference Include="EPiServer.CMS" Version="13.*" />
-    <PackageReference Include="EPiServer.CMS.UI.Core" Version="13.*" />
-    <PackageReference Include="EPiServer.Forms" Version="6.*" />
-    <PackageReference Include="EPiServer.Forms.UI" Version="6.*" />
+    <PackageReference Include="EPiServer.CMS" Version="$(EptCms13Range)" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="$(EptCms13Range)" />
+    <PackageReference Include="EPiServer.Forms" Version="$(EptForms6Range)" />
+    <PackageReference Include="EPiServer.Forms.UI" Version="$(EptForms6Range)" />
   </ItemGroup>
 
   <!-- Localization language files -->

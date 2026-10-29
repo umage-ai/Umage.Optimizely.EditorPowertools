@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Dansk" id="da">
+    <admin>
+      <permissiontype>
+        <groups>
+          <EditorPowertools>
+            <permissions>
+              <PowerSearch>Adgang til PowerSearch - facetteret, Graph-baseret indholdssøgning.</PowerSearch>
+              <PowerSlice>Adgang til Power Slice-widgetten i aktivpanelet - færdige Graph-baserede indholdslister.</PowerSlice>
+              <SearchProviders>Brug Graph-baserede søgeudbydere i CMS-redigeringsgrænsefladen.</SearchProviders>
+            </permissions>
+          </EditorPowertools>
+        </groups>
+      </permissiontype>
+    </admin>
+    <editorpowertools>
+      <graph>
+        <powerslice>
+          <slices>
+            <mycontent>Mit indhold</mycontent>
+            <recentlychanged>Nyligt ændret</recentlychanged>
+            <drafts>Udkast</drafts>
+            <awaitingapproval>Venter på godkendelse</awaitingapproval>
+            <stalecontent>Forældet indhold</stalecontent>
+            <unusedblocks>Ubrugte blokke</unusedblocks>
+          </slices>
+          <sort>
+            <name>Navn (A-Z)</name>
+            <changed>Nyligt ændret</changed>
+            <changedasc>Mindst nyligt ændret</changedasc>
+            <published>Nyligt publiceret</published>
+          </sort>
+          <strings>
+            <filterplaceholder>Filtrér efter navn</filterplaceholder>
+            <reload>Genindlæs</reload>
+            <notavailable>Power Slice er ikke tilgængelig for din konto.</notavailable>
+            <empty>Intet at vise på denne liste.</empty>
+          </strings>
+        </powerslice>
+        <powersearch>
+          <error>Søgning mislykkedes.</error>
+          <status>
+            <draft>Udkast</draft>
+            <notcreated>Ikke oprettet</notcreated>
+            <rejected>Afvist</rejected>
+            <checkedout>Tjekket ud</checkedout>
+            <checkedin>Klar til publicering</checkedin>
+            <published>Publiceret</published>
+            <previouslypublished>Tidligere publiceret</previouslypublished>
+            <delayedpublish>Planlagt</delayedpublish>
+            <awaitingapproval>Venter på godkendelse</awaitingapproval>
+          </status>
+        </powersearch>
+        <search>
+          <category>
+            <pages>Sider (Graph)</pages>
+            <blocks>Blokke (Graph)</blocks>
+            <media>Medie (Graph)</media>
+          </category>
+          <unpublisheddraft>Upubliceret udkast</unpublisheddraft>
+        </search>
+      </graph>
+      <cmsdoctor>
+        <groups>
+          <graph>Graph</graph>
+        </groups>
+        <checks>
+          <graphhealthcheck>
+            <name>Optimizely Graph til redigerersøgning</name>
+            <description>Kontrollerer, at Optimizely Graph er installeret, konfigureret og svarer, så editorsøgning kan bruge det.</description>
+            <ok>Optimizely Graph er konfigureret og svarer.</ok>
+            <notinstalled>Optimizely Graph er ikke installeret (kald AddContentGraph()).</notinstalled>
+            <notconfigured>Graph gateway, appnøgle eller hemmelighed mangler.</notconfigured>
+            <notverified>Graph-søgning er endnu ikke verificeret for denne CMS-version.</notverified>
+            <noresponse>Graph svarede ikke.</noresponse>
+          </graphhealthcheck>
+        </checks>
+      </cmsdoctor>
+      <components>
+        <powerslice>
+          <title>Power Slice</title>
+          <description>Klar-til-brug indholdslisteninger: udkast, ubrugte blokke, nyligt ændret og mere.</description>
+        </powerslice>
+      </components>
+      <menu>
+        <powersearch>PowerSearch</powersearch>
+      </menu>
+      <tools>
+        <powersearch>
+          <title>PowerSearch</title>
+          <description>Facetkategoriseret indholdssøgning på hele siden, styret af Optimizely Graph.</description>
+        </powersearch>
+      </tools>
+      <ui>
+        <powersearch>
+          <placeholder>Søg sider, blokke og medie…</placeholder>
+          <search>Søg</search>
+          <tab_pages>Sider</tab_pages>
+          <tab_blocks>Blokke</tab_blocks>
+          <tab_media>Medie</tab_media>
+          <tab_other>Øvrig</tab_other>
+          <facet_type>Type</facet_type>
+          <facet_language>Sprog</facet_language>
+          <facet_section>Sektion</facet_section>
+          <show_more>Vis {0} mere</show_more>
+          <show_less>Vis mindre</show_less>
+          <clear_filters>Ryd filtre</clear_filters>
+          <load_more>Indlæs mere</load_more>
+          <no_results>Ingen resultater fundet.</no_results>
+          <browsing>Senest ændret først. Skriv for at søge.</browsing>
+          <unavailable>Graph-søgning er ikke tilgængelig. Kontroller Optimizely Graph-konfigurationen.</unavailable>
+          <unavailable_link>Åbn CMS Doctor</unavailable_link>
+          <error>Der gik noget galt under søgningen. Prøv igen.</error>
+          <index_lag>Resultater kommer fra Optimizely Graph-indekset og kan være bagud efter nylig publicering.</index_lag>
+          <draft>Udkast</draft>
+          <by>af</by>
+          <results_count>{0} resultater</results_count>
+        </powersearch>
+      </ui>
+    </editorpowertools>
+  </language>
+</languages>
