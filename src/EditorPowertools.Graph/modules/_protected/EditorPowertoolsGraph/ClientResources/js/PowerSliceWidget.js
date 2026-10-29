@@ -57,6 +57,12 @@ define([
         //      False when the current user has no access to the Power Slice feature.
         enabled: true,
 
+        // minHeight: Number
+        //      Read by the shell's ComponentContainer for the gadget's minimum height (default 200),
+        //      which also raises saved layouts below it. At 200 the two-row toolbar leaves the list
+        //      no room, so the slice looked empty.
+        minHeight: 400,
+
         // _filterPhrase: [private] String
         //      Contents of the filter box, passed to the slice as its "q" parameter.
         _filterPhrase: "",

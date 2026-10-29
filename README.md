@@ -201,6 +201,10 @@ Optimizely Graph tooling ships as a separate, optional NuGet package, `UmageAI.O
 | **Power Slice** | Assets-pane widget with ready-made content lists (recently changed, stale content, unused blocks, and more). Extensible with your own slices. |
 | **Search providers** | Graph-backed Pages, Blocks and Media search providers and content picker search. Queries run with the editor's own roles. |
 
+![PowerSearch](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/22-powersearch.png)
+
+![Power Slice](https://raw.githubusercontent.com/umage-ai/Umage.Optimizely.EditorPowertools/main/docs/screenshots/24-power-slice.png)
+
 ```bash
 dotnet add package UmageAI.Optimizely.EditorPowerTools.Graph
 ```
