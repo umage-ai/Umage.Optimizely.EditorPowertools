@@ -24,6 +24,8 @@ dotnet run --project src/EditorPowertools.SampleSite   # Run sample site
 bash scripts/check-conventions.sh                      # Mechanical rules (CI runs it)
 ```
 
+Browser tests (`e2e/`, Playwright) run against a running sample site and are not in CI: `docs/local-development.md` §Browser tests. Run them against all three sample sites before a release.
+
 Before the first run, unzip the sample site database and blobs: `docs/local-development.md` §2.
 
 ## Release & distribution

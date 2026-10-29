@@ -76,11 +76,13 @@ Thumbs.db
 /src/EditorPowertools.SampleSite/App_Data/*.mdf
 /src/EditorPowertools.SampleSite/App_Data/*.ldf
 /src/EditorPowertools.SampleSite/App_Data/blobs/
+/src/EditorPowertools.SampleSiteCms12Net10/App_Data/
 modulesbin/
 
 # Sample site modules (copied during build, not source)
 /src/EditorPowertools.SampleSite/modules/
 /src/EditorPowertools.SampleSiteCms13/modules/
+/src/EditorPowertools.SampleSiteCms12Net10/modules/
 
 # NuGet-deployed module zips (not source files)
 /src/EditorPowertools/modules/_protected/Profile/
