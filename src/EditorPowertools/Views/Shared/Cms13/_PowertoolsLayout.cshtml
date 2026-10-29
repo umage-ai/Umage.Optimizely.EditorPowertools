@@ -27,6 +27,11 @@
     @RenderSection("Styles", required: false)
 </head>
 <body class="Sleek">
+    @* The navigation's own requests (e.g. the notification bell) read the antiforgery token from this
+       field when the navigation starts, so it must come first, as in the CMS shell. Without it they fail
+       with 400 and an uncaught script error. *@
+    @Html.AntiForgeryToken()
+
     @* CMS 13 navigation bar — TagHelper from EPiServer.Shell.UI.
        Outputs the navigation root div + loads navigation.bundle.js/css. *@
     <platform-navigation render-navigation="true" />

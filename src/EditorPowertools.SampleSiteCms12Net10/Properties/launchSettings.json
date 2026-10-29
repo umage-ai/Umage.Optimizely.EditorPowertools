@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "EditorPowertools.SampleSiteCms12Net10": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:5020/",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

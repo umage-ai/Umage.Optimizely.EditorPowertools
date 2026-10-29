@@ -51,6 +51,8 @@ The Forms add-on is a separate package from the base Editor Powertools package. 
 dotnet add package UmageAI.Optimizely.EditorPowerTools.Forms
 ```
 
+On a CMS 12 site running .NET 10, install `UmageAI.Optimizely.EditorPowerTools.Forms.Cms12` instead (see [Moving a CMS 12 site to .NET 10](getting-started.md#moving-a-cms-12-site-to-net-10)).
+
 ## Registration
 
 Register the Forms add-on **after** the base package in `Startup.cs`:

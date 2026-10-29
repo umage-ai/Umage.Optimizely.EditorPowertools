@@ -1,10 +1,21 @@
 # Release Notes
 
-## Unreleased
+## v0.11.0
 
 ### New add-on
 
 - **Graph add-on** (`UmageAI.Optimizely.EditorPowerTools.Graph`) — PowerSearch (Graph-backed editor search with facets; an empty box browses newest first), Power Slice (assets-pane content lists) and Graph-backed search providers and content picker search. Queries run with the editor's roles. Localized in all 11 languages. See [docs/graph.md](docs/graph.md). Verified against live Graph instances on CMS 12 and CMS 13.
+
+### New packages
+
+- **CMS 12 on .NET 10** — `UmageAI.Optimizely.EditorPowerTools.Cms12`, `.Forms.Cms12` and `.Graph.Cms12`: the CMS 12 build on its own, for CMS 12 sites running .NET 10 (#62). The main packages are unchanged. See [Moving a CMS 12 site to .NET 10](docs/getting-started.md#moving-a-cms-12-site-to-net-10).
+
+### Fixes
+
+- **Aggregation job** — since v0.10.0 every run failed to initialize four analyzers (Personalization, Link Checker, Language Audit, Security Audit), so their stores were not cleared before re-analysis. The batched Dynamic Data Store clear asked the store for item ids, which it cannot do; it now loads whole items in batches (#79).
+- **Notification bell on tool pages** — every Powertools page showed a broken notification bell in the CMS header (its request failed with 400 and threw a script error), because the page did not carry the antiforgery token the CMS navigation reads.
+- **Active Editors in the CMS 13 edit UI** — the edit-UI scripts fell back to a hard-coded `/episerver/` path, so on CMS 13 (mounted at `/Optimizely`) the Active Editors connection and feature switches failed. The path is now derived from where the shell serves the module.
+- **Module files with add-ons only** — when a site referenced only an add-on (for example Forms), the core package's module zip was not copied into the site. The `.targets` files now ship in `buildTransitive/`.
 
 ### Improvements
 

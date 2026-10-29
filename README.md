@@ -134,7 +134,7 @@ Power Content Details widget, Manage Children dialog, and Visitor Group Tester i
 
 ## CMS 13 support
 
-EditorPowertools is multi-targeted: the same NuGet package supports both Optimizely CMS 12 (.NET 8) and CMS 13 (.NET 10). CMS 13 unlocks the following additional capabilities:
+EditorPowertools is multi-targeted: the same NuGet package supports both Optimizely CMS 12 (.NET 8) and CMS 13 (.NET 10). CMS 12 sites on .NET 10 use the `.Cms12` packages (see [Installation](#installation)). CMS 13 unlocks the following additional capabilities:
 
 - **Content Type Audit** — Contract / Section / Element badges, Kind and Composition filters, Contracts summary stat, and an "Applied contracts" detail panel with drill-through to each contract.
 - **Content Statistics** — Contracts summary card and block breakdown (Sections / Elements / Plain blocks).
@@ -212,6 +212,16 @@ Register with `services.AddEditorPowertoolsGraph()`, `app.UseEditorPowertoolsGra
 ```
 dotnet add package UmageAI.Optimizely.EditorPowerTools
 ```
+
+| Your site | Packages |
+|---|---|
+| CMS 12 on .NET 8 | `UmageAI.Optimizely.EditorPowerTools` (or the `.Cms12` packages) |
+| CMS 13 on .NET 10 | `UmageAI.Optimizely.EditorPowerTools` |
+| **CMS 12 on .NET 10** | `UmageAI.Optimizely.EditorPowerTools.Cms12` |
+
+Add-ons follow the same rule: `.Forms` / `.Graph` normally, `.Forms.Cms12` / `.Graph.Cms12` on a CMS 12 site running .NET 10. Use one family per site, at the same version.
+
+Why a separate package for CMS 12 on .NET 10: NuGet chooses a package's build by target framework alone, so a `net10.0` site gets the CMS 13 build of the main package. On a CMS 12 site that quietly pulls CMS 13 UI packages in (restore shows NU1608 warnings for `EPiServer.CMS.UI.Core`). The `.Cms12` packages contain only the CMS 12 build, which runs on .NET 10 the same way Optimizely's own CMS 12 packages do. See [Moving a CMS 12 site to .NET 10](docs/getting-started.md#moving-a-cms-12-site-to-net-10).
 
 ### Registration
 
@@ -303,7 +313,7 @@ Run these from the CMS admin Scheduled Jobs page, or trigger them from each tool
 
 ## Tech Stack
 
-- .NET 8 / .NET 10 / C# / Optimizely CMS 12 and CMS 13 (single multi-targeting NuGet package)
+- .NET 8 / .NET 10 / C# / Optimizely CMS 12 and CMS 13 (multi-targeting NuGet package, plus `.Cms12` packages for CMS 12 on .NET 10)
 - Vanilla JavaScript (no framework dependencies)
 - Razor SDK class library with embedded views and static assets
 - DynamicDataStore (DDS) for persistence

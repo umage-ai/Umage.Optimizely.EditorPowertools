@@ -95,6 +95,38 @@ After logging in, find **Editor Powertools** in the top navigation menu. Or navi
 - **Forms Overview**: https://localhost:5010/Optimizely/EditorPowertoolsForms/EditorPowertoolsForms/FormsOverview
 - **Submissions Timeline**: https://localhost:5010/Optimizely/EditorPowertoolsForms/EditorPowertoolsForms/SubmissionsTimeline
 
+### 4. CMS 12 on .NET 10 sample site (optional)
+
+`src/EditorPowertools.SampleSiteCms12Net10` is a copy of the CMS 12 sample site on .NET 10 and the newest CMS 12 packages (CMS 12.35, TinyMCE 5.0.4, Forms 5.10, ContentGraph 4.4). It uses the libraries' `.Cms12` build, the same one the `.Cms12` NuGet packages ship.
+
+```bash
+dotnet run --project src/EditorPowertools.SampleSiteCms12Net10 -p:EptCmsFlavor=Cms12
+```
+
+- The `-p:EptCmsFlavor=Cms12` is required; without it the build stops and says so. NuGet restore only honours it as a global property, which is also why this site is not in the solution file.
+- On first build it unzips the CMS 12 sample site's `database.zip` and `blobs.zip` into its own `App_Data`, under its own LocalDB catalog. Same admin login as the CMS 12 site.
+- Runs at **https://localhost:5020/**.
+
+## Browser tests (Playwright)
+
+`e2e/` holds Playwright tests that run against a running sample site: every tool on the Overview page must open and settle without script errors, console errors or failed requests; PowerSearch must boot and search; and the CMS edit UI must load with the add-ons and start TinyMCE.
+
+```bash
+cd e2e
+npm install
+npx playwright install chromium   # first time only
+EPT_BASE_URL=https://localhost:5000 EPT_PASSWORD=... npx playwright test
+```
+
+| Variable | Default | |
+|---|---|---|
+| `EPT_BASE_URL` | `https://localhost:5000` | Site root. CMS 13 sample: `https://localhost:5010`; CMS 12 on .NET 10: `https://localhost:5020`. |
+| `EPT_USER` / `EPT_PASSWORD` | `Admin` / none | A CMS administrator. The password is never committed. |
+| `EPT_SHELL_PATH` | `/EPiServer` | CMS shell mount point. The CMS 13 sample uses `/Optimizely`. |
+| `EPT_OVERVIEW_PATH` | `{shell}/EditorPowertools/EditorPowertools/Overview` | Only if the module is mounted elsewhere. |
+
+In Git Bash, prefix the command with `MSYS_NO_PATHCONV=1` when passing `EPT_SHELL_PATH`, or Git Bash rewrites `/Optimizely` into a Windows path. The suite does not run in CI: the sample sites need SQL Server LocalDB. Run it against all three sample sites before a release.
+
 ## Project Structure
 
 ```

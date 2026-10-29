@@ -26,17 +26,36 @@ Navigate to `https://localhost:5010/Optimizely/CMS` and log in.
 
 - **.NET 8 SDK** — for Optimizely CMS 12
 - **.NET 10 SDK** — for Optimizely CMS 13
-- **Optimizely CMS 12** (EPiServer.CMS 12.29.0 or later) or **Optimizely CMS 13**
+- **Optimizely CMS 12** (EPiServer.CMS 12.34.4 or later) or **Optimizely CMS 13** (13.2.0 or later)
 - An Optimizely CMS 12 or CMS 13 site project
 
 The NuGet package targets both `net8.0` and `net10.0` and works with both CMS versions from a single package.
 
 ### Runtime requirements
 
-- **Optimizely CMS 12** — requires .NET 8.
-- **Optimizely CMS 13** — requires .NET 10.
+- **Optimizely CMS 12** — .NET 8, or .NET 10 with the `.Cms12` packages.
+- **Optimizely CMS 13** — .NET 10.
 
-The NuGet package ships both target frameworks. Your host project's target framework picks the correct build automatically.
+The main package ships both target frameworks, and your site's target framework picks the build. That only works while the framework implies the CMS version, so CMS 12 on .NET 10 needs its own packages:
+
+| Your site | Packages |
+|---|---|
+| CMS 12 on .NET 8 | `UmageAI.Optimizely.EditorPowerTools` (or the `.Cms12` packages) |
+| CMS 13 on .NET 10 | `UmageAI.Optimizely.EditorPowerTools` |
+| **CMS 12 on .NET 10** | `UmageAI.Optimizely.EditorPowerTools.Cms12` |
+
+Add-ons follow the same rule: `.Forms` / `.Graph` normally, `.Forms.Cms12` / `.Graph.Cms12` on a CMS 12 site running .NET 10. Use one family per site, at the same version.
+
+### Moving a CMS 12 site to .NET 10
+
+1. Meet Optimizely's .NET 10 minimums for CMS 12: `EPiServer.CMS.Core` 12.24.0, `EPiServer.CMS.UI` 12.34.4, and `EPiServer.CMS.TinyMce` 5.0.4 if you use TinyMCE.
+2. Replace each `UmageAI.Optimizely.EditorPowerTools*` reference with its `.Cms12` counterpart at the same version.
+3. Change the site's `TargetFramework` to `net10.0`.
+4. Delete `modules/_protected/EditorPowertools*` once, so the build copies the module zips again.
+
+Nothing else changes: same assemblies, namespaces, registration calls and `CodeArt:EditorPowertools` configuration. When the site later moves to CMS 13, switch back to the main packages.
+
+**Symptom of the wrong package:** after retargeting a CMS 12 site to `net10.0` with the main packages, restore warns `NU1608 ... EPiServer.CMS.UI.Core 13.x was resolved`, and the site fails at startup or in the edit UI. Switch to the `.Cms12` packages.
 
 ## Step 1: Install the NuGet Package
 

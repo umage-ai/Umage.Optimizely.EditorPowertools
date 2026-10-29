@@ -27,6 +27,10 @@
 </head>
 <body class="Sleek">
     @* CMS top navigation bar and left sidebar *@
+    @* The navigation's own requests (e.g. the notification bell) read the antiforgery token from this
+       field when the navigation starts, so it must come first, as in the CMS shell. Without it they fail
+       with 400 and an uncaught script error. *@
+    @Html.AntiForgeryToken()
     @Html.CreatePlatformNavigationMenu()
 
     <div @Html.ApplyPlatformNavigation()>

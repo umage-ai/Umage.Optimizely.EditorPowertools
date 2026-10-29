@@ -3,9 +3,10 @@
 set -u
 fail=0
 
-# Module paths: resolve via Paths.ToResource() / window.EPT_*_BASE_URL, never a literal /EPiServer/ prefix.
-hits=$(grep -rIn --include='*.cs' --include='*.js' --include='*.cshtml' '/EPiServer/' src \
-  --exclude-dir=bin --exclude-dir=obj --exclude-dir=node_modules --exclude-dir=modules || true)
+# Module paths: resolve via Paths.ToResource() / window.EPT_*_BASE_URL, never a literal /EPiServer/ prefix
+# (any casing). Tracked files only: the client scripts live under modules/_protected, while the copies the
+# sample sites make of them are untracked.
+hits=$(git ls-files -- 'src/*.cs' 'src/*.js' 'src/*.cshtml' | xargs grep -In -i '/EPiServer/' || true)
 if [ -n "$hits" ]; then
   echo "Hardcoded /EPiServer/ path (use Paths.ToResource or window.EPT_BASE_URL):"; echo "$hits"; fail=1
 fi

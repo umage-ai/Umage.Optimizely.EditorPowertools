@@ -7,9 +7,10 @@
 // Strip 'ClientResources/js/' to get the module root.
 if (!window.EPT_BASE_URL && typeof require !== 'undefined' && typeof require.toUrl === 'function') {
     try {
-        window.EPT_BASE_URL = require.toUrl('editorpowertools/').replace(/ClientResources\/js\/?$/, '');
+        window.EPT_BASE_URL = require.toUrl('editorpowertools/').split('?')[0].replace(/ClientResources\/js\/?$/, '');
     } catch(e) {}
 }
+if (window.EPT_BASE_URL && !window.EPT_HUB_URL) window.EPT_HUB_URL = window.EPT_BASE_URL + 'hubs';
 
 const EPT = {
     /**

@@ -50,3 +50,18 @@ jobs:
         run: |
           dotnet build src/EditorPowertools.SampleSite/EditorPowertools.SampleSite.csproj -c Release
           dotnet build src/EditorPowertools.SampleSiteCms13/EditorPowertools.SampleSiteCms13.csproj -c Release
+          dotnet build src/EditorPowertools.SampleSiteCms12Net10/EditorPowertools.SampleSiteCms12Net10.csproj -c Release -p:EptCmsFlavor=Cms12
+
+      # CMS 12 is supported on .NET 10 through our net8.0 build rolling forward (the .Cms12 packages).
+      - name: Test CMS 12 build on the .NET 10 runtime
+        env:
+          DOTNET_ROLL_FORWARD: LatestMajor
+        run: |
+          dotnet test src/EditorPowertools.Tests/EditorPowertools.Tests.csproj -c Release -f net8.0
+          dotnet test src/EditorPowertools.Tests.Forms/EditorPowertools.Tests.Forms.csproj -c Release -f net8.0
+          dotnet test src/EditorPowertools.Tests.Graph/EditorPowertools.Tests.Graph.csproj -c Release -f net8.0
+
+      - name: Pack both flavors and install them into consumer sites
+        run: |
+          bash scripts/pack-all.sh "0.0.0-ci.${{ github.run_id }}.${{ github.run_attempt }}" ./nupkg
+          bash scripts/pack-smoke.sh ./nupkg "0.0.0-ci.${{ github.run_id }}.${{ github.run_attempt }}"

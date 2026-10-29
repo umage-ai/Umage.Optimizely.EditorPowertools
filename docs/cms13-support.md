@@ -2,6 +2,10 @@
 
 This page lists every tool's CMS 13-specific behavior and how it's gated.
 
+## Packaging
+
+Every library builds as `net8.0` against CMS 12 and `net10.0` against CMS 13, and the main packages ship both. NuGet picks a build by target framework alone, so CMS 12 sites on .NET 10 cannot use them. `-p:EptCmsFlavor=Cms12` builds the same libraries as `net8.0`-only packages with a `.Cms12` id suffix (`src/Directory.Build.props`). `scripts/pack-all.sh` packs both flavors and `scripts/pack-smoke.sh` installs them into throwaway sites for each supported combination; CI and the release workflow run both. Dependency ranges for CMS, Forms and Graph live in `src/Directory.Build.props`, and the libraries compile against their lower bounds.
+
 ## Foundation — content-type metadata
 
 All CMS 13 content-type reads go through `IContentTypeMetadataProvider`:

@@ -24,6 +24,8 @@ dotnet run --project src/EditorPowertools.SampleSite   # Run sample site
 bash scripts/check-conventions.sh                      # Mechanical rules (CI runs it)
 ```
 
+Browser tests (`e2e/`, Playwright) run against a running sample site and are not in CI: `docs/local-development.md` §Browser tests. Run them against all three sample sites before a release.
+
 Before the first run, unzip the sample site database and blobs: `docs/local-development.md` §2.
 
 ## Release & distribution
@@ -88,6 +90,7 @@ Resolve each version difference at the lowest tier:
 3. **Internal interface** (`Abstractions/I…`, registered via `#if` in the DI extension) when a subsystem changed architecture. Example: `IGraphQueryExecutor` in the Graph add-on.
 
 Rules:
-- Gate version-specific package references with a TFM condition.
+- Gate version-specific package references with a TFM condition, using the version-range properties in `src/Directory.Build.props` (never `12.*`).
+- Releases also ship net8.0-only `.Cms12` packages for CMS 12 on .NET 10 (`EptCmsFlavor`, see `docs/cms13-support.md` §Packaging); `scripts/pack-smoke.sh` is the check.
 - Verify a CMS 13 API against the package assemblies and XML docs in `~/.nuget/packages` before using it.
 - Build and test both TFMs before committing: `dotnet test` (no `--no-build`).
