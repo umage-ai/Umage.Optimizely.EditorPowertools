@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <!-- CMS 12 on .NET 10, with the libraries' .Cms12 (net8.0-only) build: -p:EptCmsFlavor=Cms12 -->
+    <TargetFramework Condition="'$(EptCmsFlavor)' == 'Cms12'">net10.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>5f57d826-0265-4684-b1c7-0c200e3450ae</UserSecretsId>
@@ -15,6 +17,8 @@
   
   <ItemGroup>
     <PackageReference Include="EPiServer.CMS" Version="12.34.8" />
+    <!-- Optimizely's .NET 10 minimum for CMS 12: TinyMCE 4.x does not load on .NET 10. -->
+    <PackageReference Include="EPiServer.CMS.TinyMce" Version="5.0.4" Condition="'$(EptCmsFlavor)' == 'Cms12'" />
     <PackageReference Include="Optimizely.ContentGraph.Cms" Version="4.*" />
     <PackageReference Include="EPiServer.Forms" Version="5.*" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.3" />
