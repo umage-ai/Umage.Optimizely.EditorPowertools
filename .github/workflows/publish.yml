@@ -54,6 +54,8 @@ jobs:
           dotnet restore src/EditorPowertools.Tests/EditorPowertools.Tests.csproj
           dotnet restore src/EditorPowertools.Forms/EditorPowertools.Forms.csproj
           dotnet restore src/EditorPowertools.Tests.Forms/EditorPowertools.Tests.Forms.csproj
+          dotnet restore src/EditorPowertools.Graph/EditorPowertools.Graph.csproj
+          dotnet restore src/EditorPowertools.Tests.Graph/EditorPowertools.Tests.Graph.csproj
 
       - name: Build
         run: dotnet build src/EditorPowertools/EditorPowertools.csproj -c Release -p:Version=${{ steps.version.outputs.VERSION }} --no-restore
@@ -61,11 +63,17 @@ jobs:
       - name: Build Forms add-on
         run: dotnet build src/EditorPowertools.Forms/EditorPowertools.Forms.csproj -c Release -p:Version=${{ steps.version.outputs.VERSION }} --no-restore
 
+      - name: Build Graph add-on
+        run: dotnet build src/EditorPowertools.Graph/EditorPowertools.Graph.csproj -c Release -p:Version=${{ steps.version.outputs.VERSION }} --no-restore
+
       - name: Test
         run: dotnet test src/EditorPowertools.Tests/EditorPowertools.Tests.csproj -c Release --logger "trx;LogFileName=test-results.trx"
 
       - name: Test Forms add-on
         run: dotnet test src/EditorPowertools.Tests.Forms/EditorPowertools.Tests.Forms.csproj -c Release --logger "trx;LogFileName=test-results-forms.trx"
+
+      - name: Test Graph add-on
+        run: dotnet test src/EditorPowertools.Tests.Graph/EditorPowertools.Tests.Graph.csproj -c Release --logger "trx;LogFileName=test-results-graph.trx"
 
       - name: Pack with release notes
         # PackageReleaseNotes is multi-line, so we pass it via an environment
@@ -78,6 +86,10 @@ jobs:
             -p:Version=${{ steps.version.outputs.VERSION }} \
             --no-build -o ./nupkg
           dotnet pack src/EditorPowertools.Forms/EditorPowertools.Forms.csproj \
+            -c Release \
+            -p:Version=${{ steps.version.outputs.VERSION }} \
+            --no-build -o ./nupkg
+          dotnet pack src/EditorPowertools.Graph/EditorPowertools.Graph.csproj \
             -c Release \
             -p:Version=${{ steps.version.outputs.VERSION }} \
             --no-build -o ./nupkg
@@ -96,6 +108,7 @@ jobs:
           path: |
             src/EditorPowertools.Tests/TestResults/*.trx
             src/EditorPowertools.Tests.Forms/TestResults/*.trx
+            src/EditorPowertools.Tests.Graph/TestResults/*.trx
 
       - name: Create or update GitHub release
         env:

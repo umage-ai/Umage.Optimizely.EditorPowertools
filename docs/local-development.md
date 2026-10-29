@@ -51,6 +51,19 @@ Both sample sites also reference the optional **Forms add-on** (`EditorPowertool
 - **Forms Overview**: https://localhost:5000/EPiServer/EditorPowertoolsForms/EditorPowertoolsForms/FormsOverview
 - **Submissions Timeline**: https://localhost:5000/EPiServer/EditorPowertoolsForms/EditorPowertoolsForms/SubmissionsTimeline
 
+### Optimizely Graph (optional)
+
+Both sample sites also reference the **Graph add-on** (`EditorPowertools.Graph`). It needs an Optimizely Graph instance with the content synchronized. Use a separate Graph instance per CMS version (CMS 12 and CMS 13 sites must not share one). Store the credentials in user-secrets, never in source control:
+
+```bash
+dotnet user-secrets set "Optimizely:ContentGraph:GatewayAddress" "<gateway>" --project src/EditorPowertools.SampleSite
+dotnet user-secrets set "Optimizely:ContentGraph:AppKey" "<key>" --project src/EditorPowertools.SampleSite
+dotnet user-secrets set "Optimizely:ContentGraph:Secret" "<secret>" --project src/EditorPowertools.SampleSite
+dotnet user-secrets set "Optimizely:ContentGraph:SingleKey" "<single key>" --project src/EditorPowertools.SampleSite
+```
+
+Repeat with `--project src/EditorPowertools.SampleSiteCms13` for the CMS 13 site and its own instance. Then run the Graph content synchronization job from the CMS admin. Without credentials the sites still start and the Graph tools show an unavailable state.
+
 ### 3. Set up the CMS 13 sample site (Alloy / .NET 10)
 
 The CMS 13 sample site also ships with a pre-built database and media blobs. Unzip them:

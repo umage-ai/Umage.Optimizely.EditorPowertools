@@ -1,6 +1,6 @@
 # EditorPowertools
 
-An Optimizely CMS 12 plugin providing a collection of power tools for editors and admins.
+An Optimizely CMS 12/13 plugin providing a collection of power tools for editors and admins.
 Distributed as NuGet package `UmageAI.Optimizely.EditorPowerTools`.
 
 ## Project Structure
@@ -12,7 +12,7 @@ Distributed as NuGet package `UmageAI.Optimizely.EditorPowerTools`.
 
 ## Tech Stack
 
-- .NET 8 / C# / Optimizely CMS 12 (EPiServer.CMS 12.29.0)
+- C# on .NET 8 / CMS 12 and .NET 10 / CMS 13 (see Multi-targeting)
 - UI: Vanilla JS or React (NOT Blazor - the old project was Blazor, this is a rewrite)
 - Razor class library for embedded views and static assets
 
@@ -21,7 +21,10 @@ Distributed as NuGet package `UmageAI.Optimizely.EditorPowerTools`.
 ```bash
 dotnet build                                           # Build solution
 dotnet run --project src/EditorPowertools.SampleSite   # Run sample site
+bash scripts/check-conventions.sh                      # Mechanical rules (CI runs it)
 ```
+
+Before the first run, unzip the sample site database and blobs: `docs/local-development.md` §2.
 
 ## Release & distribution
 
@@ -59,7 +62,7 @@ dotnet run --project src/EditorPowertools.SampleSite   # Run sample site
 - Each tool has a corresponding PermissionType and FeatureToggle
 - **JS paths**: Never hardcode API paths. Use `window.EPT_API_URL + '/endpoint'` and `window.EPT_HUB_URL + '/hub'`
 - **Security**: All controllers must have `[Authorize(Policy = "codeart:editorpowertools")]`, all actions must call `_accessChecker.HasAccess()`, POST/DELETE endpoints must have `[RequireAjax]`, content operations must use proper `AccessLevel` (never `NoAccess`), error responses must not expose `ex.Message`
-- **Module paths — NEVER hardcode `/EPiServer/` (or any other prefix) anywhere.** The CMS Shell mount point is configurable and the protected-module virtual path differs between CMS 12 and CMS 13. Always resolve via `EPiServer.Shell.Paths.ToResource(typeof(SomeMenuProvider), "...")` (server) or `window.EPT_BASE_URL` / `window.EPT_FORMS_BASE_URL` (client). This applies to test scripts, curl probes, docs, and code alike — if you find yourself typing `/EPiServer/` to construct a URL, stop and use `Paths.ToResource()`.
+- **Module paths — NEVER hardcode `/EPiServer/` (or any other prefix) anywhere.** The CMS Shell mount point is configurable and the protected-module virtual path differs between CMS 12 and CMS 13. Always resolve via `EPiServer.Shell.Paths.ToResource(typeof(SomeMenuProvider), "...")` (server) or `window.EPT_BASE_URL` / `window.EPT_FORMS_BASE_URL` (client). `scripts/check-conventions.sh` enforces this for `.cs`, `.js` and `.cshtml`; use the same resolution in test scripts and curl probes.
 
 ## Localization
 
@@ -74,172 +77,17 @@ All user-facing strings MUST go through Optimizely's localization system — nev
 - **Fallback**: If a key is missing, `GetString()` returns the key path — always provide English as the base language
 
 
-# Multi-targeting: Optimizely CMS 12 (.NET 8) + CMS 13 (.NET 10)
+# Multi-targeting: CMS 12 (.NET 8) + CMS 13 (.NET 10)
 
-## Context
+One codebase and one NuGet package per project, built as `net8.0;net10.0` (library and test projects). Symbols `OPTIMIZELY_CMS12` / `OPTIMIZELY_CMS13` are defined per TFM; copy the csproj wiring from `src/EditorPowertools.Graph/EditorPowertools.Graph.csproj`. Details and CMS 13 API differences: `docs/cms13-support.md`.
 
-This project is a NuGet add-on for Optimizely CMS. It currently targets **CMS 12 / .NET 8**
-and must be extended to **also support CMS 13 / .NET 10** — without splitting into two
-codebases. Consumers should get a single NuGet package that works with both CMS versions.
+Resolve each version difference at the lowest tier:
 
----
+1. **`#if OPTIMIZELY_CMS13`** (CMS 13 first, `#else` CMS 12) for 1–10 lines in one place; at most ~3 blocks per method.
+2. **TFM-specific files** (`Cms12/`, `Cms13/`, wired by csproj `Compile Include`) once a file is over ~30% `#if`.
+3. **Internal interface** (`Abstractions/I…`, registered via `#if` in the DI extension) when a subsystem changed architecture. Example: `IGraphQueryExecutor` in the Graph add-on.
 
-## Target project structure
-
-All library `.csproj` files must be changed from single- to multi-target:
-
-```xml
-<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
-```
-
-Conditional Optimizely package references must follow this pattern:
-
-```xml
-<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-  <PackageReference Include="EPiServer.CMS.Core" Version="12.*" />
-</ItemGroup>
-<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-  <PackageReference Include="EPiServer.CMS.Core" Version="13.*" />
-</ItemGroup>
-```
-
-Define compile-time symbols for use in C# code:
-
-```xml
-<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
-  <DefineConstants>$(DefineConstants);OPTIMIZELY_CMS12</DefineConstants>
-</PropertyGroup>
-<PropertyGroup Condition="'$(TargetFramework)' == 'net10.0'">
-  <DefineConstants>$(DefineConstants);OPTIMIZELY_CMS13</DefineConstants>
-</PropertyGroup>
-```
-
----
-
-## Handling code differences — apply in order
-
-### Tier 1 — Small differences: use `#if`
-
-For renamed types, changed method signatures, or small API differences spanning fewer than
-~10 lines in a single location:
-
-```csharp
-#if OPTIMIZELY_CMS13
-    // CMS 13 / .NET 10 code path
-#else
-    // CMS 12 / .NET 8 code path
-#endif
-```
-
-Prefer `#if OPTIMIZELY_CMS13` as the leading condition (newer version first).
-
-### Tier 2 — Medium differences: TFM-specific files
-
-When a file accumulates many `#if` blocks, extract the divergent parts into version-specific
-files and wire them conditionally in the `.csproj`:
-
-```xml
-<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-  <Compile Include="Cms12\**\*.cs" />
-</ItemGroup>
-<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-  <Compile Include="Cms13\**\*.cs" />
-</ItemGroup>
-```
-
-Use this folder layout:
-
-```
-MyAddon/
-├── MyFeature.cs          ← shared (~80% of code)
-├── Cms12/
-│   └── Cms12Adapter.cs   ← CMS 12-specific implementation
-└── Cms13/
-    └── Cms13Adapter.cs   ← CMS 13-specific implementation
-```
-
-### Tier 3 — Larger API changes: internal abstraction
-
-When a significant architectural difference exists between versions, introduce a thin internal
-interface shared by both adapters:
-
-```
-/Abstractions/IMyFeatureAdapter.cs   ← internal interface
-/Cms12/Cms12FeatureAdapter.cs        ← implements interface, compiled for net8.0 only
-/Cms13/Cms13FeatureAdapter.cs        ← implements interface, compiled for net10.0 only
-/MyFeature.cs                        ← public API, depends only on the interface
-```
-
-Register the correct adapter using `#if` in the DI extension method:
-
-```csharp
-public static IServiceCollection AddMyAddon(this IServiceCollection services)
-{
-#if OPTIMIZELY_CMS13
-    services.AddSingleton<IMyFeatureAdapter, Cms13FeatureAdapter>();
-#else
-    services.AddSingleton<IMyFeatureAdapter, Cms12FeatureAdapter>();
-#endif
-    services.AddSingleton<MyFeature>();
-    return services;
-}
-```
-
----
-
-## Decision rules
-
-| Situation | Action |
-|---|---|
-| 1–10 lines differ in one place | Tier 1 `#if` |
-| A whole file is >30% `#if` blocks | Promote to Tier 2 (separate files) |
-| A subsystem changed architecture between CMS 12 and 13 | Tier 3 (internal interface) |
-| A dependency only exists in one version | Conditional `<PackageReference>` in csproj |
-| Shared logic, no version difference | Leave as-is, no `#if` needed |
-
----
-
-## Test projects
-
-Multi-target test projects the same way:
-
-```xml
-<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
-```
-
-Running `dotnet test` will then execute the full suite against both TFMs. Use the same
-`OPTIMIZELY_CMS12` / `OPTIMIZELY_CMS13` symbols in test fixtures where needed.
-
----
-
-## Migration workflow
-
-When working on a file or feature:
-
-1. Try building with `dotnet build` targeting both frameworks.
-2. Fix each compiler error using the lowest applicable tier (prefer Tier 1, escalate only
-   when the file becomes hard to read).
-3. After fixing errors, check for runtime/behavioural differences that the compiler cannot
-   catch — look for deprecated APIs, changed default behaviours, and removed types.
-4. Ensure both `net8.0` and `net10.0` builds produce valid output before committing.
-
----
-
-## What NOT to do
-
-- Do not create a separate `MyAddon.Cms13` project that duplicates the full library.
-- Do not use `#if` for more than ~3 blocks in a single method — extract to Tier 2 instead.
-- Do not reference CMS-version-specific packages without a TFM condition.
-- Do not add a `[Obsolete]` shim layer unless you have a specific deprecation plan.
-- Do not guess at CMS 13 API changes — if uncertain, ask before modifying shared code.
-
----
-
-## NuGet packaging notes
-
-- Keep a single version number across both TFMs — the `.nupkg` will contain both
-  `lib/net8.0/` and `lib/net10.0/` automatically.
-- Set `<PackageValidationBaselineVersion>` if you want SDK Pack to enforce API compatibility
-  between releases.
-- If the public API surface must differ between CMS 12 and 13 (rare), document it clearly
-  in the package release notes.
+Rules:
+- Gate version-specific package references with a TFM condition.
+- Verify a CMS 13 API against the package assemblies and XML docs in `~/.nuget/packages` before using it.
+- Build and test both TFMs before committing: `dotnet test` (no `--no-build`).

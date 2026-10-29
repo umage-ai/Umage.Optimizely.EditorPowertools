@@ -125,6 +125,9 @@
         <overview>
           <title>概览</title>
           <description>Editor Powertools所有功能的仪表板概览。</description>
+          <group>
+            <search>搜索</search>
+          </group>
         </overview>
         <about>
           <title>关于 Editor Powertools</title>

@@ -191,6 +191,22 @@ The Forms tools honour the same permission model as the base package and add the
 
 See the [Forms Add-On guide](docs/forms.md) for the full feature list, configuration, and permissions.
 
+## Graph add-on (separate package)
+
+Optimizely Graph tooling ships as a separate, optional NuGet package, `UmageAI.Optimizely.EditorPowerTools.Graph`, for sites that run [Optimizely Graph](https://docs.developers.optimizely.com/platform-optimizely/docs/optimizely-graph). It multi-targets CMS 12 (.NET 8) and CMS 13 (.NET 10) and depends on the base package.
+
+| Tool | Description |
+|------|-------------|
+| **PowerSearch** | Full-page Graph-backed editor search with tabs, facets, drafts first, and paging. An empty search box browses newest first. |
+| **Power Slice** | Assets-pane widget with ready-made content lists (recently changed, stale content, unused blocks, and more). Extensible with your own slices. |
+| **Search providers** | Graph-backed Pages, Blocks and Media search providers and content picker search. Queries run with the editor's own roles. |
+
+```bash
+dotnet add package UmageAI.Optimizely.EditorPowerTools.Graph
+```
+
+Register with `services.AddEditorPowertoolsGraph()`, `app.UseEditorPowertoolsGraph()` and `endpoints.MapEditorPowertoolsGraph()`. See the [Graph Add-On guide](docs/graph.md) for prerequisites, configuration, permissions and troubleshooting.
+
 ## Installation
 
 ```
@@ -279,6 +295,7 @@ Run these from the CMS admin Scheduled Jobs page, or trigger them from each tool
 
 - [Getting Started Guide](docs/getting-started.md) - Step-by-step installation and setup
 - [Forms Add-On](docs/forms.md) - Optional package for Optimizely Forms tooling
+- [Graph Add-On](docs/graph.md) - Optional package for Optimizely Graph search and Power Slice
 - [Configuration Reference](docs/configuration.md) - All options, feature toggles, and settings
 - [Extending CMS Doctor](docs/extending-cms-doctor.md) - Create custom health checks
 - [Coding Guidelines](docs/coding-guidelines.md) - Architecture patterns and coding standards

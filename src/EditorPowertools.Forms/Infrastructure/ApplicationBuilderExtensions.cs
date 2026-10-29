@@ -18,7 +18,7 @@ public static class ApplicationBuilderExtensions
 
     /// <summary>
     /// Registers an MVC route under the Forms module's protected path so its
-    /// controllers are reachable at <c>/EPiServer/EditorPowertoolsForms/{controller}/{action}</c>.
+    /// controllers are reachable at <c>{shell-module-path}/EditorPowertoolsForms/{controller}/{action}</c>.
     /// Call this from the host's endpoint mapping alongside
     /// <c>endpoints.MapEditorPowertools()</c>.
     /// </summary>
