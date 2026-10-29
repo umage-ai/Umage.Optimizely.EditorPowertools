@@ -43,3 +43,10 @@ jobs:
 
       - name: Test Graph add-on
         run: dotnet test src/EditorPowertools.Tests.Graph/EditorPowertools.Tests.Graph.csproj -c Release
+
+      # Sample sites are not packed, but they catch package-version conflicts between our
+      # dependency ranges and real CMS/Graph/Forms package sets.
+      - name: Build sample sites
+        run: |
+          dotnet build src/EditorPowertools.SampleSite/EditorPowertools.SampleSite.csproj -c Release
+          dotnet build src/EditorPowertools.SampleSiteCms13/EditorPowertools.SampleSiteCms13.csproj -c Release

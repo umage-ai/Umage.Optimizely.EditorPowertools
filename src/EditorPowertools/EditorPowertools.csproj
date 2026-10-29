@@ -53,13 +53,13 @@
     project may also reference at a different patch level.
   -->
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <PackageReference Include="EPiServer.CMS" Version="12.*" />
-    <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.*" />
+    <PackageReference Include="EPiServer.CMS" Version="$(EptCms12Range)" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="$(EptCms12Range)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-    <PackageReference Include="EPiServer.CMS" Version="13.*" />
-    <PackageReference Include="EPiServer.CMS.UI.Core" Version="13.*" />
+    <PackageReference Include="EPiServer.CMS" Version="$(EptCms13Range)" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="$(EptCms13Range)" />
   </ItemGroup>
 
   <!-- Packages compatible with both TFMs -->

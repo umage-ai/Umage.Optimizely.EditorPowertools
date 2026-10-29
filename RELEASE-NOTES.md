@@ -10,7 +10,8 @@
 
 - **`IUiStringsContributor`** — add-ons can now contribute translated strings to the JavaScript string table.
 - **Forms add-on** — JavaScript strings are now translated through the new contributor mechanism.
-- **CI** — the release workflow now also builds, tests and packs the Graph add-on.
+- **CI** — the release workflow now also builds, tests and packs the Graph add-on. Pull requests also build both sample sites.
+- **Dependency ranges** — packages now declare bounded CMS ranges (CMS 12: `[12.34.4, 13.0.0)`, CMS 13: `[13.2.0, 14.0.0)`; Forms 5.10.1+ / 6.x). Previously the minimum CMS version silently rose to whatever was newest when each release was packed.
 
 ## v0.2.0-preview.1
 
