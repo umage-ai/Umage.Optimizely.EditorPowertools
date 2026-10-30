@@ -1,5 +1,15 @@
 # Release Notes
 
+## Unreleased
+
+### Fixes
+
+- **Power Slice looked empty** — a newly added Power Slice gadget got the shell's default height of 200 pixels, and its two-row toolbar left the list no room, so the slice appeared to have no content. The gadget now asks for 400 pixels, which also enlarges gadgets already added at the old height.
+
+### Documentation
+
+- Screenshots of PowerSearch and Power Slice in the README and the [Graph Add-On guide](docs/graph.md), and how editors add Power Slice to the assets pane.
+
 ## v0.11.0
 
 ### New add-on

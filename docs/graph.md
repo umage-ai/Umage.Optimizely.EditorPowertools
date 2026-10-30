@@ -4,14 +4,12 @@ Optimizely Graph tooling for Editor Powertools ships as a **separate, optional N
 
 Like the base package it is multi-targeted: **Optimizely CMS 12 (.NET 8)** and **CMS 13 (.NET 10)** from a single package. It depends on the base `UmageAI.Optimizely.EditorPowerTools` package (pinned to the same version) and on the Graph client for the CMS version (`Optimizely.ContentGraph.Core` 4.x on CMS 12, `Optimizely.Graph.Core` 13.x on CMS 13).
 
-> **Screenshots: pending live verification.** Screenshots of PowerSearch, Power Slice and the quick search will be added once the add-on has been verified against live Graph instances.
-
 ## What it does
 
 | Tool | Description |
 |------|-------------|
 | **PowerSearch** | A full-page editor search tool backed by Graph: full-text search, tabs per content kind, facets (content type, section, language), drafts shown first, and "load more" paging. With an empty search box it lists the tab newest first, so editors can browse by facets alone. |
-| **Power Slice** | An assets-pane widget with ready-made content lists (my content, recently changed, stale content, unused blocks, and so on). The list loads more rows as you scroll. Each slice is an `IContentQuery`, so you can add your own. |
+| **Power Slice** | An assets-pane widget with ready-made content lists (my content, recently changed, stale content, unused blocks, and so on). The list loads more rows as you scroll. Each slice is an `IContentQuery`, so you can add your own. Editors add it to the assets pane through the pane's settings menu, **Add Gadgets**. |
 | **Search providers** | Replaces or supplements the CMS built-in Pages, Blocks and Media search providers (quick search, page-tree filter, assets pane) and the content picker search with Graph-backed results. |
 
 It also adds a **Graph** check to the base **CMS Doctor** dashboard.
@@ -197,4 +195,16 @@ The **Graph** check in CMS Doctor reports one of these states:
 
 ## Screenshots
 
-Screenshots: pending live verification.
+Taken on the CMS 13 sample site.
+
+**PowerSearch, searching.** Results for "alloy" on the Pages tab, with the type, language and section facets and a count per tab.
+
+![PowerSearch results with facets](screenshots/22-powersearch.png)
+
+**PowerSearch, browsing.** With an empty search box each tab lists its content newest first, so the facets work as a browser.
+
+![PowerSearch browsing newest first](screenshots/23-powersearch-browse.png)
+
+**Power Slice.** The "Stale content" slice in the assets pane: published content nobody has changed for 18 months (`StaleContentMonths`), least recently changed first.
+
+![Power Slice in the assets pane](screenshots/24-power-slice.png)
